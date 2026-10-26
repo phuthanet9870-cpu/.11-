@@ -264,6 +264,35 @@ try {
   const alive = await page.evaluate(() => ({ dead: window.__veyloria.world.player.dead, map: window.__veyloria.world.map.def.id }));
   check('death modal respawns the player at the save point', !alive.dead && alive.map === 'willowbrook', JSON.stringify(alive));
 
+  // Drop part of a stack through the context menu + quantity dialog.
+  await page.keyboard.press('i');
+  await page.waitForSelector('#win-inventory:not(.hidden)');
+  const potIdx = await page.evaluate(() => window.__veyloria.world.char.inventory.findIndex((i) => i.itemId === 'red_potion'));
+  const potBefore = await page.evaluate(() => window.__veyloria.world.char.inventory.filter((i) => i.itemId === 'red_potion').reduce((n, i) => n + i.qty, 0));
+  await page.click(`#win-inventory .islot >> nth=${potIdx}`, { button: 'right' });
+  await page.click('.ctx-menu >> text=Drop');
+  await page.fill('#qty-input', '2');
+  await page.keyboard.press('Enter');
+  await sleep(200);
+  const potAfter = await page.evaluate(() => window.__veyloria.world.char.inventory.filter((i) => i.itemId === 'red_potion').reduce((n, i) => n + i.qty, 0));
+  const onGround = await page.evaluate(() => [...window.__veyloria.world.groundItems.values()].some((g) => g.itemId === 'red_potion' && g.qty === 2));
+  check('drop part of a stack via context menu & quantity dialog', potAfter === potBefore - 2 && onGround, `${potBefore}→${potAfter}`);
+  await page.keyboard.press('Escape');
+
+  // Delete the character from the select screen (typed-name confirmation).
+  await page.evaluate(() => window.__veyloria.exitToSelect());
+  await page.waitForSelector('.slot .name');
+  await page.click('.slot:has(.name)');
+  await page.click('button:has-text("Delete")');
+  await page.fill('#confirm-input', 'wrong name');
+  await page.click('.modal button:has-text("Delete forever")');
+  const stillThere = await page.evaluate(() => !!window.__veyloria.save.characters.find((c) => c?.name === 'E2E Hero'));
+  await page.fill('#confirm-input', 'E2E Hero');
+  await page.click('.modal button:has-text("Delete forever")');
+  await sleep(200);
+  const gone = await page.evaluate(() => !window.__veyloria.save.characters.some((c) => c?.name === 'E2E Hero'));
+  check('character deletion requires typing the name, then deletes', stillThere && gone);
+
   check('no uncaught page errors', errors.length === 0, errors.slice(0, 5).join(' | '));
 } catch (err) {
   check('e2e run completed', false, String(err));

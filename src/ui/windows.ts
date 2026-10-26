@@ -233,9 +233,36 @@ export class WindowManager {
 
   private qtyPrompt(inst: ItemInstance, msg: string, fn: (n: number) => void) {
     if (inst.qty === 1) { fn(1); return; }
-    const v = prompt(`${msg} (1–${inst.qty})`, String(inst.qty));
-    const n = Math.floor(Number(v));
-    if (v != null && n > 0 && n <= inst.qty) fn(n);
+    this.askNumber(msg, inst.qty, fn);
+  }
+
+  /** In-game number input dialog (browser prompt() is not used). */
+  askNumber(title: string, max: number, onOk: (n: number) => void) {
+    const input = h('input', { class: 'text-input', id: 'qty-input', type: 'number', min: 1, max, value: max, style: 'width:120px;text-align:center' });
+    const err = h('div', { class: 'error-text' });
+    const submit = () => {
+      const n = Math.floor(Number(input.value));
+      if (!(n >= 1 && n <= max)) { err.textContent = `Enter a number from 1 to ${max}.`; return; }
+      this.closeModal();
+      onOk(n);
+    };
+    input.addEventListener('keydown', (e) => { e.stopPropagation(); if (e.key === 'Enter') submit(); if (e.key === 'Escape') this.closeModal(); });
+    this.modal(title, [h('div', { class: 'muted' }, `1 – ${max}`), input, err], [['OK', submit], ['Cancel', () => this.closeModal()]], true);
+    setTimeout(() => { input.focus(); input.select(); }, 0);
+  }
+
+  /** In-game confirmation dialog (browser confirm() is not used). */
+  confirmAction(title: string, text: string, okLabel: string, onOk: () => void) {
+    this.modal(title, [h('p', {}, text)], [[okLabel, () => { this.closeModal(); onOk(); }], ['Cancel', () => this.closeModal()]], true);
+  }
+
+  /** Confirmation that requires typing an exact word (e.g. a character name before deletion). */
+  confirmTyped(title: string, text: string, expected: string, okLabel: string, onOk: () => void) {
+    const input = h('input', { class: 'text-input', id: 'confirm-input', placeholder: expected, style: 'margin-top:6px' });
+    const btnRow: [string, () => void][] = [[okLabel, () => { if (input.value.trim() === expected) { this.closeModal(); onOk(); } else { input.style.borderColor = 'var(--bad)'; } }], ['Cancel', () => this.closeModal()]];
+    input.addEventListener('keydown', (e) => e.stopPropagation());
+    this.modal(title, [h('p', {}, text), input], btnRow, true);
+    setTimeout(() => input.focus(), 0);
   }
 
   private sellPrompt(inst: ItemInstance) {
@@ -492,8 +519,8 @@ export class WindowManager {
       if (s.type === 'storage') opts.push(['Open storage', () => { this.closeDialog(); this.open('inventory'); this.open('storage'); }]);
       if (s.type === 'heal') opts.push([`Rest at the inn (${s.cost} Luma)`, () => { const r = w.healAtInn(s.cost); this.app.hud?.toast(r.ok ? r.message! : r.error, !r.ok); this.closeDialog(); }]);
       if (s.type === 'save') opts.push(['Set save point here', () => { w.setSavePoint(); this.app.saveNow(false); this.app.hud?.toast('Save point set.'); this.closeDialog(); }]);
-      if (s.type === 'resetStats') opts.push([`Reset stat points${s.cost ? ` (${s.cost} Luma)` : ' (free)'}`, () => { if (confirm('Reset all allocated stat points?')) w.doResetStats(s.cost); this.closeDialog(); }]);
-      if (s.type === 'resetSkills') opts.push([`Reset skill points${s.cost ? ` (${s.cost} Luma)` : ' (free)'}`, () => { if (confirm('Reset all learned skills?')) w.doResetSkills(s.cost); this.closeDialog(); }]);
+      if (s.type === 'resetStats') opts.push([`Reset stat points${s.cost ? ` (${s.cost} Luma)` : ' (free)'}`, () => { this.closeDialog(); this.confirmAction('Reset stats', 'Refund every allocated stat point so you can spend them again?', 'Reset stats', () => w.doResetStats(s.cost)); }]);
+      if (s.type === 'resetSkills') opts.push([`Reset skill points${s.cost ? ` (${s.cost} Luma)` : ' (free)'}`, () => { this.closeDialog(); this.confirmAction('Reset skills', 'Forget every learned skill and refund the skill points? Hotbar skill slots are cleared.', 'Reset skills', () => w.doResetSkills(s.cost)); }]);
     }
     opts.push(['Goodbye', () => this.closeDialog()]);
     const text = npc.greeting[Math.floor(Math.random() * npc.greeting.length)];
@@ -556,10 +583,14 @@ export class WindowManager {
 
   // ---------------------------------------------------------------- modal
   showModal(title: string, text: string, buttons: [string, () => void][], dismissable = false) {
+    this.modal(title, [h('p', {}, text)], buttons.map(([l, fn]) => [l, () => { this.closeModal(); fn(); }]), dismissable);
+  }
+
+  private modal(title: string, body: HTMLElement[], buttons: [string, () => void][], dismissable: boolean) {
     this.closeModal();
     this.modalEl = h('div', { class: 'modal-back', dataset: { dismissable: dismissable ? '1' : '0' } },
-      h('div', { class: 'panel modal' }, h('h3', {}, title), h('p', {}, text),
-        h('div', { class: 'row', style: 'justify-content:center' }, buttons.map(([l, fn], i) => h('button', { class: `btn${i === 0 ? ' primary' : ''}`, onclick: () => { this.closeModal(); fn(); } }, l)))));
+      h('div', { class: 'panel modal col', style: 'align-items:center' }, h('h3', {}, title), body,
+        h('div', { class: 'row', style: 'justify-content:center;margin-top:8px' }, buttons.map(([l, fn], i) => h('button', { class: `btn${i === 0 ? ' primary' : ''}`, onclick: fn }, l)))));
     this.root.appendChild(this.modalEl);
   }
   closeModal() { this.modalEl?.remove(); this.modalEl = null; }

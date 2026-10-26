@@ -60,7 +60,7 @@ export function titleScreen(onPlay: () => void, onSettings: () => void): HTMLEle
 
 export function characterSelectScreen(
   data: GameData, save: SaveFile,
-  handlers: { onPlay: (slot: number) => void; onCreate: (slot: number) => void; onDelete: (slot: number) => void; onBack: () => void },
+  handlers: { onPlay: (slot: number) => void; onCreate: (slot: number) => void; onDelete: (slot: number, name: string) => void; onBack: () => void },
 ): HTMLElement {
   let selected = save.characters.findIndex((c) => !!c);
   const slotsEl = h('div', { class: 'slots' });
@@ -68,9 +68,7 @@ export function characterSelectScreen(
   const delBtn = h('button', {
     class: 'btn danger', onclick: () => {
       const c = save.characters[selected];
-      if (!c) return;
-      const typed = prompt(`Delete ${c.name}? This cannot be undone.\nType the character name to confirm:`);
-      if (typed === c.name) handlers.onDelete(selected);
+      if (c) handlers.onDelete(selected, c.name);
     },
   }, 'Delete');
   const render = () => {

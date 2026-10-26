@@ -125,7 +125,11 @@ export class App implements GameHost {
     this.setScreen(characterSelectScreen(this.data, this.save, {
       onPlay: (slot) => this.enterWorld(slot),
       onCreate: (slot) => this.showCreate(slot),
-      onDelete: (slot) => { this.save.characters[slot] = null; this.persist(); this.showSelect(); },
+      onDelete: (slot, name) => this.windows.confirmTyped('Delete character', `Delete ${name}? This cannot be undone. Type the character's name to confirm.`, name, 'Delete forever', () => {
+        this.save.characters[slot] = null;
+        this.persist();
+        this.showSelect();
+      }),
       onBack: () => this.showTitle(),
     }));
   }
