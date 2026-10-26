@@ -2,7 +2,7 @@
   "name": "veyloria-online",
   "version": "0.1.0",
   "private": true,
-  "description": "Veyloria Online — 2D Fantasy MMORPG (Phase 1: playable single-player foundation)",
+  "description": "Veyloria Online \u2014 2D Fantasy MMORPG (Phase 1: playable single-player foundation)",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,7 +13,8 @@
     "test:unit": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration",
     "test:e2e": "npm run build && node tests/e2e/run-e2e.mjs",
-    "validate:data": "vitest run tests/unit/data.test.ts"
+    "validate:data": "vitest run tests/unit/data.test.ts",
+    "assets:manifest": "node scripts/generate-asset-manifest.mjs"
   },
   "license": "UNLICENSED",
   "dependencies": {

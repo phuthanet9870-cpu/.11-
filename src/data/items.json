@@ -1,65 +1,1198 @@
 [
-  { "id": "red_potion", "name": "Red Potion", "type": "consumable", "rarity": "common", "description": "Restores 50 HP.", "weight": 7, "price": 25, "stackable": true, "maxStack": 99, "icon": { "shape": "potion", "color": "#e0413a" }, "use": [ { "type": "heal", "hp": 50 } ], "cooldownMs": 500 },
-  { "id": "orange_potion", "name": "Orange Potion", "type": "consumable", "rarity": "common", "description": "Restores 120 HP.", "weight": 10, "price": 80, "stackable": true, "maxStack": 99, "icon": { "shape": "potion", "color": "#f08a2a" }, "use": [ { "type": "heal", "hp": 120 } ], "cooldownMs": 500 },
-  { "id": "yellow_potion", "name": "Yellow Potion", "type": "consumable", "rarity": "uncommon", "description": "Restores 250 HP.", "weight": 13, "price": 220, "stackable": true, "maxStack": 99, "icon": { "shape": "potion", "color": "#f2d23a" }, "use": [ { "type": "heal", "hp": 250 } ], "cooldownMs": 500 },
-  { "id": "blue_potion", "name": "Blue Potion", "type": "consumable", "rarity": "uncommon", "description": "Restores 60 MP.", "weight": 10, "price": 150, "stackable": true, "maxStack": 99, "icon": { "shape": "potion", "color": "#3a7be0" }, "use": [ { "type": "heal", "mp": 60 } ], "cooldownMs": 500 },
-  { "id": "green_potion", "name": "Green Potion", "type": "consumable", "rarity": "common", "description": "Cures Poison, Silence, Blind and Curse.", "weight": 7, "price": 40, "stackable": true, "maxStack": 99, "icon": { "shape": "potion", "color": "#4fc44a" }, "use": [ { "type": "cure", "statuses": ["poison", "silence", "blind", "curse", "burn"] } ], "cooldownMs": 500 },
-  { "id": "meadow_apple", "name": "Meadow Apple", "type": "consumable", "rarity": "common", "description": "A crisp apple. Restores 20 HP.", "weight": 2, "price": 8, "stackable": true, "maxStack": 99, "icon": { "shape": "apple", "color": "#d83a3a" }, "use": [ { "type": "heal", "hp": 20 } ], "cooldownMs": 300 },
-  { "id": "wing_of_return", "name": "Wing of Return", "type": "consumable", "rarity": "common", "description": "Returns you to your save point.", "weight": 5, "price": 60, "stackable": true, "maxStack": 99, "icon": { "shape": "wing", "color": "#f2f2ff", "accent": "#7fb0ff" }, "use": [ { "type": "returnToSave" } ], "cooldownMs": 1000 },
-  { "id": "swiftness_tonic", "name": "Swiftness Tonic", "type": "consumable", "rarity": "uncommon", "description": "Attack speed +12% for 3 minutes.", "weight": 8, "price": 350, "stackable": true, "maxStack": 30, "icon": { "shape": "flask", "color": "#ffb84d" }, "use": [ { "type": "buff", "buffId": "swiftness_tonic", "durationMs": 180000, "mods": { "aspdPct": 12 } } ], "cooldownMs": 1000 },
-  { "id": "token_of_renewal", "name": "Token of Renewal", "type": "consumable", "rarity": "rare", "description": "Resets all allocated stat points.", "weight": 1, "price": 0, "stackable": true, "maxStack": 10, "bound": true, "icon": { "shape": "coin", "color": "#9a7aff" }, "use": [ { "type": "resetStats" } ] },
-
-  { "id": "jelly", "name": "Leafy Jelly", "type": "material", "rarity": "common", "description": "Sticky green jelly from a Leaf Slime.", "weight": 1, "price": 6, "stackable": true, "maxStack": 999, "icon": { "shape": "blob", "color": "#7ccf5a" } },
-  { "id": "rabbit_horn", "name": "Rabbit Horn", "type": "material", "rarity": "common", "description": "A small spiral horn.", "weight": 1, "price": 10, "stackable": true, "maxStack": 999, "icon": { "shape": "horn", "color": "#efe2c0" } },
-  { "id": "mushling_cap", "name": "Mushling Cap", "type": "material", "rarity": "common", "description": "A springy red cap. Smells earthy.", "weight": 1, "price": 12, "stackable": true, "maxStack": 999, "icon": { "shape": "mushroom", "color": "#d84a3a", "accent": "#fff0e0" } },
-  { "id": "wasp_stinger", "name": "Wasp Stinger", "type": "material", "rarity": "common", "description": "Sharp and faintly venomous.", "weight": 1, "price": 16, "stackable": true, "maxStack": 999, "icon": { "shape": "fang", "color": "#f2c12e" } },
-  { "id": "goblin_fang", "name": "Goblin Fang", "type": "material", "rarity": "common", "description": "A chipped fang from a forest goblin.", "weight": 1, "price": 20, "stackable": true, "maxStack": 999, "icon": { "shape": "fang", "color": "#e8e0c8" } },
-  { "id": "spore_dust", "name": "Spore Dust", "type": "material", "rarity": "common", "description": "Glowing toxic spores. Handle with care.", "weight": 1, "price": 22, "stackable": true, "maxStack": 999, "icon": { "shape": "dust", "color": "#a9e04a" } },
-  { "id": "wolf_pelt", "name": "Thorn Wolf Pelt", "type": "material", "rarity": "common", "description": "Coarse fur bristling with thorns.", "weight": 3, "price": 28, "stackable": true, "maxStack": 999, "icon": { "shape": "pelt", "color": "#7a6a52" } },
-  { "id": "old_bone", "name": "Old Bone", "type": "material", "rarity": "common", "description": "Bone of an ancient soldier.", "weight": 2, "price": 30, "stackable": true, "maxStack": 999, "icon": { "shape": "bone", "color": "#e9e4d4" } },
-  { "id": "thorn_crown", "name": "Thorn Crown", "type": "material", "rarity": "rare", "description": "The bramble crown of the Thornking. Pulses with forest magic.", "weight": 5, "price": 900, "stackable": true, "maxStack": 99, "icon": { "shape": "crown", "color": "#6fae3a", "accent": "#f2d23a" } },
-  { "id": "astral_shard", "name": "Astral Shard", "type": "material", "rarity": "uncommon", "description": "A faintly glowing fragment of an Astral Rune.", "weight": 1, "price": 120, "stackable": true, "maxStack": 999, "icon": { "shape": "gem", "color": "#9ad8ff" } },
-
-  { "id": "lost_pendant", "name": "Elwin's Pendant", "type": "quest", "rarity": "uncommon", "description": "A silver pendant engraved with a falcon.", "weight": 0, "price": 0, "stackable": false, "maxStack": 1, "bound": true, "icon": { "shape": "amulet", "color": "#d8dce8" } },
-  { "id": "well_water", "name": "Wellspring Water", "type": "quest", "rarity": "common", "description": "Clear water drawn from Willowbrook's old well.", "weight": 1, "price": 0, "stackable": true, "maxStack": 10, "bound": true, "icon": { "shape": "flask", "color": "#6fc6ff" } },
-
-  { "id": "training_knife", "name": "Training Knife", "type": "equipment", "rarity": "common", "description": "A dull practice blade given to new adventurers.", "weight": 40, "price": 50, "stackable": false, "maxStack": 1, "slot": "weapon", "weaponType": "dagger", "attackKind": "melee", "attackRange": 52, "attackIntervalPct": 95, "equipLevel": 1, "mods": { "patk": 12 }, "icon": { "shape": "dagger", "color": "#c8ccd8" } },
-  { "id": "oak_club", "name": "Oak Club", "type": "equipment", "rarity": "common", "description": "A sturdy knobbly club.", "weight": 60, "price": 120, "stackable": false, "maxStack": 1, "slot": "weapon", "weaponType": "club", "attackKind": "melee", "attackRange": 52, "attackIntervalPct": 105, "equipLevel": 1, "mods": { "patk": 20 }, "icon": { "shape": "club", "color": "#8b5a2b" } },
-  { "id": "iron_sword", "name": "Iron Sword", "type": "equipment", "rarity": "common", "description": "Standard issue sword of the Silvercrest guard.", "weight": 80, "price": 480, "stackable": false, "maxStack": 1, "slot": "weapon", "weaponType": "sword", "attackKind": "melee", "attackRange": 56, "equipLevel": 8, "classes": ["knight"], "mods": { "patk": 38 }, "icon": { "shape": "sword", "color": "#c8ccd8" } },
-  { "id": "steel_sword", "name": "Steel Sword", "type": "equipment", "rarity": "uncommon", "description": "Well-balanced steel forged by Garrick.", "weight": 90, "price": 1500, "stackable": false, "maxStack": 1, "slot": "weapon", "weaponType": "sword", "attackKind": "melee", "attackRange": 56, "equipLevel": 14, "classes": ["knight"], "mods": { "patk": 62, "hit": 3 }, "icon": { "shape": "sword", "color": "#e0e6f2", "accent": "#4a6fa5" } },
-  { "id": "knight_spear", "name": "Knight's Spear", "type": "equipment", "rarity": "uncommon", "description": "Long reach, longer memory.", "weight": 110, "price": 1700, "stackable": false, "maxStack": 1, "slot": "weapon", "weaponType": "spear", "twoHanded": true, "attackKind": "melee", "attackRange": 80, "attackIntervalPct": 110, "equipLevel": 14, "classes": ["knight"], "mods": { "patk": 78 }, "icon": { "shape": "spear", "color": "#c8ccd8", "accent": "#b33a3a" } },
-  { "id": "thornbane_blade", "name": "Thornbane Blade", "type": "equipment", "rarity": "epic", "description": "Forged from the Thornking's crown. Earth-touched, it bites deep.", "weight": 100, "price": 6000, "stackable": false, "maxStack": 1, "slot": "weapon", "weaponType": "sword", "attackKind": "melee", "attackRange": 58, "element": "earth", "equipLevel": 18, "classes": ["knight"], "mods": { "patk": 95, "str": 3, "crit": 3 }, "icon": { "shape": "sword", "color": "#7fd65a", "accent": "#f2d23a" } },
-  { "id": "short_bow", "name": "Short Bow", "type": "equipment", "rarity": "common", "description": "A hunter's first bow.", "weight": 50, "price": 450, "stackable": false, "maxStack": 1, "slot": "weapon", "weaponType": "bow", "twoHanded": true, "attackKind": "ranged", "attackRange": 280, "equipLevel": 8, "classes": ["ranger"], "mods": { "patk": 30, "hit": 3 }, "icon": { "shape": "bow", "color": "#9a6a3a" } },
-  { "id": "hunter_bow", "name": "Hunter's Bow", "type": "equipment", "rarity": "uncommon", "description": "Strung with wolf sinew.", "weight": 60, "price": 1500, "stackable": false, "maxStack": 1, "slot": "weapon", "weaponType": "bow", "twoHanded": true, "attackKind": "ranged", "attackRange": 300, "equipLevel": 14, "classes": ["ranger"], "mods": { "patk": 52, "hit": 5 }, "icon": { "shape": "bow", "color": "#6a4a2a", "accent": "#d9c27a" } },
-  { "id": "thornwood_longbow", "name": "Thornwood Longbow", "type": "equipment", "rarity": "epic", "description": "Grown, not carved, from the Thornking's bramble.", "weight": 70, "price": 6000, "stackable": false, "maxStack": 1, "slot": "weapon", "weaponType": "bow", "twoHanded": true, "attackKind": "ranged", "attackRange": 320, "element": "earth", "equipLevel": 18, "classes": ["ranger"], "mods": { "patk": 78, "dex": 3, "crit": 3 }, "icon": { "shape": "bow", "color": "#4f8f3a", "accent": "#f2d23a" } },
-  { "id": "apprentice_wand", "name": "Apprentice Wand", "type": "equipment", "rarity": "common", "description": "Channels small sparks of astral power.", "weight": 30, "price": 450, "stackable": false, "maxStack": 1, "slot": "weapon", "weaponType": "wand", "attackKind": "magic", "attackRange": 220, "attackIntervalPct": 105, "equipLevel": 8, "classes": ["mage"], "mods": { "patk": 10, "matk": 35, "int": 1 }, "icon": { "shape": "wand", "color": "#b48a5a", "accent": "#7fd6ff" } },
-  { "id": "oak_staff", "name": "Oak Staff", "type": "equipment", "rarity": "uncommon", "description": "Old oak carved with runes.", "weight": 60, "price": 1500, "stackable": false, "maxStack": 1, "slot": "weapon", "weaponType": "staff", "twoHanded": true, "attackKind": "magic", "attackRange": 230, "attackIntervalPct": 110, "equipLevel": 14, "classes": ["mage"], "mods": { "patk": 15, "matk": 62, "int": 2, "maxMpPct": 5 }, "icon": { "shape": "staff", "color": "#8b5a2b", "accent": "#9a7aff" } },
-  { "id": "thornheart_staff", "name": "Thornheart Staff", "type": "equipment", "rarity": "epic", "description": "A living staff that hums with the forest's fury.", "weight": 70, "price": 6000, "stackable": false, "maxStack": 1, "slot": "weapon", "weaponType": "staff", "twoHanded": true, "attackKind": "magic", "attackRange": 240, "attackIntervalPct": 108, "equipLevel": 18, "classes": ["mage"], "mods": { "patk": 20, "matk": 92, "int": 3, "castTimePct": -8 }, "icon": { "shape": "staff", "color": "#4f8f3a", "accent": "#f2d23a" } },
-
-  { "id": "cotton_shirt", "name": "Cotton Shirt", "type": "equipment", "rarity": "common", "description": "Simple and comfortable.", "weight": 10, "price": 40, "stackable": false, "maxStack": 1, "slot": "armor", "equipLevel": 1, "mods": { "pdef": 3 }, "icon": { "shape": "shirt", "color": "#e8dcc0" } },
-  { "id": "leather_jacket", "name": "Leather Jacket", "type": "equipment", "rarity": "common", "description": "Tough tanned leather.", "weight": 60, "price": 380, "stackable": false, "maxStack": 1, "slot": "armor", "equipLevel": 6, "mods": { "pdef": 9, "mdef": 1 }, "icon": { "shape": "shirt", "color": "#8b5a2b" } },
-  { "id": "chain_mail", "name": "Chain Mail", "type": "equipment", "rarity": "uncommon", "description": "Interlocked iron rings.", "weight": 150, "price": 1400, "stackable": false, "maxStack": 1, "slot": "armor", "equipLevel": 12, "classes": ["knight"], "mods": { "pdef": 22, "maxHp": 40 }, "icon": { "shape": "armor", "color": "#aab4c4" } },
-  { "id": "hunter_vest", "name": "Hunter's Vest", "type": "equipment", "rarity": "uncommon", "description": "Light and quiet, with many pockets.", "weight": 50, "price": 1200, "stackable": false, "maxStack": 1, "slot": "armor", "equipLevel": 12, "classes": ["ranger"], "mods": { "pdef": 14, "flee": 5 }, "icon": { "shape": "shirt", "color": "#3f7a45" } },
-  { "id": "apprentice_robe", "name": "Apprentice Robe", "type": "equipment", "rarity": "uncommon", "description": "Embroidered with minor wards.", "weight": 30, "price": 1200, "stackable": false, "maxStack": 1, "slot": "armor", "equipLevel": 12, "classes": ["mage"], "mods": { "pdef": 9, "mdef": 10, "maxMp": 30 }, "icon": { "shape": "robe", "color": "#5b3d8f" } },
-
-  { "id": "bandana", "name": "Bandana", "type": "equipment", "rarity": "common", "description": "Keeps the sweat out of your eyes.", "weight": 5, "price": 60, "stackable": false, "maxStack": 1, "slot": "headgear", "equipLevel": 1, "mods": { "pdef": 1 }, "icon": { "shape": "hat", "color": "#c83a3a" } },
-  { "id": "leaf_cap", "name": "Leaf Cap", "type": "equipment", "rarity": "rare", "description": "A cap of living leaves. Smells of the meadow.", "weight": 5, "price": 600, "stackable": false, "maxStack": 1, "slot": "headgear", "equipLevel": 1, "mods": { "pdef": 2, "maxHp": 30, "hpRegen": 2 }, "icon": { "shape": "hat", "color": "#6fbf4a" } },
-  { "id": "iron_helm", "name": "Iron Helm", "type": "equipment", "rarity": "uncommon", "description": "Heavy but reliable.", "weight": 60, "price": 900, "stackable": false, "maxStack": 1, "slot": "headgear", "equipLevel": 10, "classes": ["knight"], "mods": { "pdef": 6 }, "icon": { "shape": "helm", "color": "#aab4c4" } },
-  { "id": "goblin_mask", "name": "Goblin Mask", "type": "equipment", "rarity": "rare", "description": "Ugly, but strangely empowering.", "weight": 15, "price": 700, "stackable": false, "maxStack": 1, "slot": "headgear", "equipLevel": 8, "mods": { "pdef": 3, "str": 1, "patk": 5 }, "icon": { "shape": "mask", "color": "#6f9a3a" } },
-
-  { "id": "wooden_buckler", "name": "Wooden Buckler", "type": "equipment", "rarity": "common", "description": "A small round shield.", "weight": 30, "price": 150, "stackable": false, "maxStack": 1, "slot": "shield", "equipLevel": 1, "mods": { "pdef": 3 }, "icon": { "shape": "shield", "color": "#9a6a3a" } },
-  { "id": "iron_shield", "name": "Iron Shield", "type": "equipment", "rarity": "uncommon", "description": "Emblazoned with the Silvercrest eagle.", "weight": 100, "price": 1100, "stackable": false, "maxStack": 1, "slot": "shield", "equipLevel": 10, "classes": ["knight"], "mods": { "pdef": 9, "maxHp": 20 }, "icon": { "shape": "shield", "color": "#aab4c4", "accent": "#4a6fa5" } },
-
-  { "id": "travel_cape", "name": "Traveler's Cape", "type": "equipment", "rarity": "common", "description": "Weathered by many roads.", "weight": 15, "price": 200, "stackable": false, "maxStack": 1, "slot": "garment", "equipLevel": 1, "mods": { "pdef": 1, "flee": 2 }, "icon": { "shape": "cape", "color": "#6a4a8a" } },
-  { "id": "wolfhide_cloak", "name": "Wolfhide Cloak", "type": "equipment", "rarity": "rare", "description": "Thorny fur that turns blades.", "weight": 40, "price": 900, "stackable": false, "maxStack": 1, "slot": "garment", "equipLevel": 10, "mods": { "pdef": 4, "flee": 3, "elementResistPct": { "earth": 10 } }, "icon": { "shape": "cape", "color": "#7a6a52" } },
-
-  { "id": "sandals", "name": "Sandals", "type": "equipment", "rarity": "common", "description": "Breezy footwear.", "weight": 10, "price": 50, "stackable": false, "maxStack": 1, "slot": "boots", "equipLevel": 1, "mods": { "pdef": 1 }, "icon": { "shape": "boots", "color": "#b48a5a" } },
-  { "id": "leather_boots", "name": "Leather Boots", "type": "equipment", "rarity": "common", "description": "Sturdy walking boots.", "weight": 30, "price": 400, "stackable": false, "maxStack": 1, "slot": "boots", "equipLevel": 6, "mods": { "pdef": 3, "maxHp": 15 }, "icon": { "shape": "boots", "color": "#6a4a2a" } },
-  { "id": "swift_boots", "name": "Swiftwind Boots", "type": "equipment", "rarity": "rare", "description": "Wind runes stitched into the soles.", "weight": 20, "price": 1800, "stackable": false, "maxStack": 1, "slot": "boots", "equipLevel": 12, "mods": { "pdef": 3, "moveSpeedPct": 8, "agi": 1 }, "icon": { "shape": "boots", "color": "#7ad0e0" } },
-
-  { "id": "copper_ring", "name": "Copper Ring", "type": "equipment", "rarity": "common", "description": "+1 STR.", "weight": 5, "price": 500, "stackable": false, "maxStack": 1, "slot": "accessory", "equipLevel": 1, "mods": { "str": 1 }, "icon": { "shape": "ring", "color": "#d88a4a" } },
-  { "id": "clover_charm", "name": "Clover Charm", "type": "equipment", "rarity": "uncommon", "description": "+2 LUK, +1 critical.", "weight": 5, "price": 700, "stackable": false, "maxStack": 1, "slot": "accessory", "equipLevel": 1, "mods": { "luk": 2, "crit": 1 }, "icon": { "shape": "amulet", "color": "#4fc44a" } },
-  { "id": "sapphire_pendant", "name": "Sapphire Pendant", "type": "equipment", "rarity": "uncommon", "description": "+2 INT, +20 Max MP.", "weight": 5, "price": 900, "stackable": false, "maxStack": 1, "slot": "accessory", "equipLevel": 5, "mods": { "int": 2, "maxMp": 20 }, "icon": { "shape": "amulet", "color": "#3a7be0" } },
-  { "id": "bone_earring", "name": "Bone Earring", "type": "equipment", "rarity": "rare", "description": "+2 VIT. Resists shadow.", "weight": 5, "price": 1000, "stackable": false, "maxStack": 1, "slot": "accessory", "equipLevel": 10, "mods": { "vit": 2, "elementResistPct": { "shadow": 8, "undead": 8 } }, "icon": { "shape": "ring", "color": "#e9e4d4" } },
-  { "id": "falcon_pendant", "name": "Falcon Feather Charm", "type": "equipment", "rarity": "rare", "description": "Elwin's thanks. +2 DEX, +2 AGI.", "weight": 3, "price": 0, "stackable": false, "maxStack": 1, "bound": true, "slot": "accessory", "equipLevel": 1, "mods": { "dex": 2, "agi": 2 }, "icon": { "shape": "amulet", "color": "#d8b46a" } }
+ {
+  "id": "red_potion",
+  "name": "Red Potion",
+  "type": "consumable",
+  "rarity": "common",
+  "description": "Restores 50 HP.",
+  "weight": 7,
+  "price": 25,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "potion",
+   "color": "#e0413a"
+  },
+  "use": [
+   {
+    "type": "heal",
+    "hp": 50
+   }
+  ],
+  "cooldownMs": 500
+ },
+ {
+  "id": "orange_potion",
+  "name": "Orange Potion",
+  "type": "consumable",
+  "rarity": "common",
+  "description": "Restores 120 HP.",
+  "weight": 10,
+  "price": 80,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "potion",
+   "color": "#f08a2a"
+  },
+  "use": [
+   {
+    "type": "heal",
+    "hp": 120
+   }
+  ],
+  "cooldownMs": 500
+ },
+ {
+  "id": "yellow_potion",
+  "name": "Yellow Potion",
+  "type": "consumable",
+  "rarity": "uncommon",
+  "description": "Restores 250 HP.",
+  "weight": 13,
+  "price": 220,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "potion",
+   "color": "#f2d23a"
+  },
+  "use": [
+   {
+    "type": "heal",
+    "hp": 250
+   }
+  ],
+  "cooldownMs": 500
+ },
+ {
+  "id": "blue_potion",
+  "name": "Blue Potion",
+  "type": "consumable",
+  "rarity": "uncommon",
+  "description": "Restores 60 MP.",
+  "weight": 10,
+  "price": 150,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "potion",
+   "color": "#3a7be0"
+  },
+  "use": [
+   {
+    "type": "heal",
+    "mp": 60
+   }
+  ],
+  "cooldownMs": 500
+ },
+ {
+  "id": "green_potion",
+  "name": "Green Potion",
+  "type": "consumable",
+  "rarity": "common",
+  "description": "Cures Poison, Silence, Blind and Curse.",
+  "weight": 7,
+  "price": 40,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "potion",
+   "color": "#4fc44a"
+  },
+  "use": [
+   {
+    "type": "cure",
+    "statuses": [
+     "poison",
+     "silence",
+     "blind",
+     "curse",
+     "burn"
+    ]
+   }
+  ],
+  "cooldownMs": 500
+ },
+ {
+  "id": "meadow_apple",
+  "name": "Meadow Apple",
+  "type": "consumable",
+  "rarity": "common",
+  "description": "A crisp apple. Restores 20 HP.",
+  "weight": 2,
+  "price": 8,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "apple",
+   "color": "#d83a3a"
+  },
+  "use": [
+   {
+    "type": "heal",
+    "hp": 20
+   }
+  ],
+  "cooldownMs": 300
+ },
+ {
+  "id": "wing_of_return",
+  "name": "Wing of Return",
+  "type": "consumable",
+  "rarity": "common",
+  "description": "Returns you to your save point.",
+  "weight": 5,
+  "price": 60,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "wing",
+   "color": "#f2f2ff",
+   "accent": "#7fb0ff"
+  },
+  "use": [
+   {
+    "type": "returnToSave"
+   }
+  ],
+  "cooldownMs": 1000
+ },
+ {
+  "id": "swiftness_tonic",
+  "name": "Swiftness Tonic",
+  "type": "consumable",
+  "rarity": "uncommon",
+  "description": "Attack speed +12% for 3 minutes.",
+  "weight": 8,
+  "price": 350,
+  "stackable": true,
+  "maxStack": 30,
+  "icon": {
+   "shape": "flask",
+   "color": "#ffb84d"
+  },
+  "use": [
+   {
+    "type": "buff",
+    "buffId": "swiftness_tonic",
+    "durationMs": 180000,
+    "mods": {
+     "aspdPct": 12
+    }
+   }
+  ],
+  "cooldownMs": 1000
+ },
+ {
+  "id": "token_of_renewal",
+  "name": "Token of Renewal",
+  "type": "consumable",
+  "rarity": "rare",
+  "description": "Resets all allocated stat points.",
+  "weight": 1,
+  "price": 0,
+  "stackable": true,
+  "maxStack": 10,
+  "bound": true,
+  "icon": {
+   "shape": "coin",
+   "color": "#9a7aff"
+  },
+  "use": [
+   {
+    "type": "resetStats"
+   }
+  ]
+ },
+ {
+  "id": "jelly",
+  "name": "Leafy Jelly",
+  "type": "material",
+  "rarity": "common",
+  "description": "Sticky green jelly from a Leaf Slime.",
+  "weight": 1,
+  "price": 6,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "blob",
+   "color": "#7ccf5a"
+  }
+ },
+ {
+  "id": "rabbit_horn",
+  "name": "Rabbit Horn",
+  "type": "material",
+  "rarity": "common",
+  "description": "A small spiral horn.",
+  "weight": 1,
+  "price": 10,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "horn",
+   "color": "#efe2c0"
+  }
+ },
+ {
+  "id": "mushling_cap",
+  "name": "Mushling Cap",
+  "type": "material",
+  "rarity": "common",
+  "description": "A springy red cap. Smells earthy.",
+  "weight": 1,
+  "price": 12,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "mushroom",
+   "color": "#d84a3a",
+   "accent": "#fff0e0"
+  }
+ },
+ {
+  "id": "wasp_stinger",
+  "name": "Wasp Stinger",
+  "type": "material",
+  "rarity": "common",
+  "description": "Sharp and faintly venomous.",
+  "weight": 1,
+  "price": 16,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#f2c12e"
+  }
+ },
+ {
+  "id": "goblin_fang",
+  "name": "Goblin Fang",
+  "type": "material",
+  "rarity": "common",
+  "description": "A chipped fang from a forest goblin.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#e8e0c8"
+  }
+ },
+ {
+  "id": "spore_dust",
+  "name": "Spore Dust",
+  "type": "material",
+  "rarity": "common",
+  "description": "Glowing toxic spores. Handle with care.",
+  "weight": 1,
+  "price": 22,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#a9e04a"
+  }
+ },
+ {
+  "id": "wolf_pelt",
+  "name": "Thorn Wolf Pelt",
+  "type": "material",
+  "rarity": "common",
+  "description": "Coarse fur bristling with thorns.",
+  "weight": 3,
+  "price": 28,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#7a6a52"
+  }
+ },
+ {
+  "id": "old_bone",
+  "name": "Old Bone",
+  "type": "material",
+  "rarity": "common",
+  "description": "Bone of an ancient soldier.",
+  "weight": 2,
+  "price": 30,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "bone",
+   "color": "#e9e4d4"
+  }
+ },
+ {
+  "id": "thorn_crown",
+  "name": "Thorn Crown",
+  "type": "material",
+  "rarity": "rare",
+  "description": "The bramble crown of the Thornking. Pulses with forest magic.",
+  "weight": 5,
+  "price": 900,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "crown",
+   "color": "#6fae3a",
+   "accent": "#f2d23a"
+  }
+ },
+ {
+  "id": "astral_shard",
+  "name": "Astral Shard",
+  "type": "material",
+  "rarity": "uncommon",
+  "description": "A faintly glowing fragment of an Astral Rune.",
+  "weight": 1,
+  "price": 120,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#9ad8ff"
+  }
+ },
+ {
+  "id": "lost_pendant",
+  "name": "Elwin's Pendant",
+  "type": "quest",
+  "rarity": "uncommon",
+  "description": "A silver pendant engraved with a falcon.",
+  "weight": 0,
+  "price": 0,
+  "stackable": false,
+  "maxStack": 1,
+  "bound": true,
+  "icon": {
+   "shape": "amulet",
+   "color": "#d8dce8"
+  }
+ },
+ {
+  "id": "well_water",
+  "name": "Wellspring Water",
+  "type": "quest",
+  "rarity": "common",
+  "description": "Clear water drawn from Willowbrook's old well.",
+  "weight": 1,
+  "price": 0,
+  "stackable": true,
+  "maxStack": 10,
+  "bound": true,
+  "icon": {
+   "shape": "flask",
+   "color": "#6fc6ff"
+  }
+ },
+ {
+  "id": "training_knife",
+  "name": "Training Knife",
+  "type": "equipment",
+  "rarity": "common",
+  "description": "A dull practice blade given to new adventurers.",
+  "weight": 40,
+  "price": 50,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "weapon",
+  "weaponType": "dagger",
+  "attackKind": "melee",
+  "attackRange": 52,
+  "attackIntervalPct": 95,
+  "equipLevel": 1,
+  "mods": {
+   "patk": 12
+  },
+  "icon": {
+   "shape": "dagger",
+   "color": "#c8ccd8"
+  }
+ },
+ {
+  "id": "oak_club",
+  "name": "Oak Club",
+  "type": "equipment",
+  "rarity": "common",
+  "description": "A sturdy knobbly club.",
+  "weight": 60,
+  "price": 120,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "weapon",
+  "weaponType": "club",
+  "attackKind": "melee",
+  "attackRange": 52,
+  "attackIntervalPct": 105,
+  "equipLevel": 1,
+  "mods": {
+   "patk": 20
+  },
+  "icon": {
+   "shape": "club",
+   "color": "#8b5a2b"
+  }
+ },
+ {
+  "id": "iron_sword",
+  "name": "Iron Sword",
+  "type": "equipment",
+  "rarity": "common",
+  "description": "Standard issue sword of the Silvercrest guard.",
+  "weight": 80,
+  "price": 480,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "weapon",
+  "weaponType": "sword",
+  "attackKind": "melee",
+  "attackRange": 56,
+  "equipLevel": 8,
+  "classes": [
+   "knight"
+  ],
+  "mods": {
+   "patk": 38
+  },
+  "icon": {
+   "shape": "sword",
+   "color": "#c8ccd8"
+  }
+ },
+ {
+  "id": "steel_sword",
+  "name": "Steel Sword",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Well-balanced steel forged by Garrick.",
+  "weight": 90,
+  "price": 1500,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "weapon",
+  "weaponType": "sword",
+  "attackKind": "melee",
+  "attackRange": 56,
+  "equipLevel": 14,
+  "classes": [
+   "knight"
+  ],
+  "mods": {
+   "patk": 62,
+   "hit": 3
+  },
+  "icon": {
+   "shape": "sword",
+   "color": "#e0e6f2",
+   "accent": "#4a6fa5"
+  }
+ },
+ {
+  "id": "knight_spear",
+  "name": "Knight's Spear",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Long reach, longer memory.",
+  "weight": 110,
+  "price": 1700,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "weapon",
+  "weaponType": "spear",
+  "twoHanded": true,
+  "attackKind": "melee",
+  "attackRange": 80,
+  "attackIntervalPct": 110,
+  "equipLevel": 14,
+  "classes": [
+   "knight"
+  ],
+  "mods": {
+   "patk": 78
+  },
+  "icon": {
+   "shape": "spear",
+   "color": "#c8ccd8",
+   "accent": "#b33a3a"
+  }
+ },
+ {
+  "id": "thornbane_blade",
+  "name": "Thornbane Blade",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "Forged from the Thornking's crown. Earth-touched, it bites deep.",
+  "weight": 100,
+  "price": 6000,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "weapon",
+  "weaponType": "sword",
+  "attackKind": "melee",
+  "attackRange": 58,
+  "element": "earth",
+  "equipLevel": 18,
+  "classes": [
+   "knight"
+  ],
+  "mods": {
+   "patk": 95,
+   "str": 3,
+   "crit": 3
+  },
+  "icon": {
+   "shape": "sword",
+   "color": "#7fd65a",
+   "accent": "#f2d23a"
+  }
+ },
+ {
+  "id": "short_bow",
+  "name": "Short Bow",
+  "type": "equipment",
+  "rarity": "common",
+  "description": "A hunter's first bow.",
+  "weight": 50,
+  "price": 450,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "weapon",
+  "weaponType": "bow",
+  "twoHanded": true,
+  "attackKind": "ranged",
+  "attackRange": 280,
+  "equipLevel": 8,
+  "classes": [
+   "ranger"
+  ],
+  "mods": {
+   "patk": 30,
+   "hit": 3
+  },
+  "icon": {
+   "shape": "bow",
+   "color": "#9a6a3a"
+  }
+ },
+ {
+  "id": "hunter_bow",
+  "name": "Hunter's Bow",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Strung with wolf sinew.",
+  "weight": 60,
+  "price": 1500,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "weapon",
+  "weaponType": "bow",
+  "twoHanded": true,
+  "attackKind": "ranged",
+  "attackRange": 300,
+  "equipLevel": 14,
+  "classes": [
+   "ranger"
+  ],
+  "mods": {
+   "patk": 58,
+   "hit": 5
+  },
+  "icon": {
+   "shape": "bow",
+   "color": "#6a4a2a",
+   "accent": "#d9c27a"
+  }
+ },
+ {
+  "id": "thornwood_longbow",
+  "name": "Thornwood Longbow",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "Grown, not carved, from the Thornking's bramble.",
+  "weight": 70,
+  "price": 6000,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "weapon",
+  "weaponType": "bow",
+  "twoHanded": true,
+  "attackKind": "ranged",
+  "attackRange": 320,
+  "element": "earth",
+  "equipLevel": 18,
+  "classes": [
+   "ranger"
+  ],
+  "mods": {
+   "patk": 78,
+   "dex": 3,
+   "crit": 3
+  },
+  "icon": {
+   "shape": "bow",
+   "color": "#4f8f3a",
+   "accent": "#f2d23a"
+  }
+ },
+ {
+  "id": "apprentice_wand",
+  "name": "Apprentice Wand",
+  "type": "equipment",
+  "rarity": "common",
+  "description": "Channels small sparks of astral power.",
+  "weight": 30,
+  "price": 450,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "weapon",
+  "weaponType": "wand",
+  "attackKind": "magic",
+  "attackRange": 220,
+  "attackIntervalPct": 105,
+  "equipLevel": 8,
+  "classes": [
+   "mage"
+  ],
+  "mods": {
+   "patk": 10,
+   "matk": 35,
+   "int": 1
+  },
+  "icon": {
+   "shape": "wand",
+   "color": "#b48a5a",
+   "accent": "#7fd6ff"
+  }
+ },
+ {
+  "id": "oak_staff",
+  "name": "Oak Staff",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Old oak carved with runes.",
+  "weight": 60,
+  "price": 1500,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "weapon",
+  "weaponType": "staff",
+  "twoHanded": true,
+  "attackKind": "magic",
+  "attackRange": 230,
+  "attackIntervalPct": 110,
+  "equipLevel": 14,
+  "classes": [
+   "mage"
+  ],
+  "mods": {
+   "patk": 15,
+   "matk": 62,
+   "int": 2,
+   "maxMpPct": 5
+  },
+  "icon": {
+   "shape": "staff",
+   "color": "#8b5a2b",
+   "accent": "#9a7aff"
+  }
+ },
+ {
+  "id": "thornheart_staff",
+  "name": "Thornheart Staff",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "A living staff that hums with the forest's fury.",
+  "weight": 70,
+  "price": 6000,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "weapon",
+  "weaponType": "staff",
+  "twoHanded": true,
+  "attackKind": "magic",
+  "attackRange": 240,
+  "attackIntervalPct": 108,
+  "equipLevel": 18,
+  "classes": [
+   "mage"
+  ],
+  "mods": {
+   "patk": 20,
+   "matk": 92,
+   "int": 3,
+   "castTimePct": -8
+  },
+  "icon": {
+   "shape": "staff",
+   "color": "#4f8f3a",
+   "accent": "#f2d23a"
+  }
+ },
+ {
+  "id": "cotton_shirt",
+  "name": "Cotton Shirt",
+  "type": "equipment",
+  "rarity": "common",
+  "description": "Simple and comfortable.",
+  "weight": 10,
+  "price": 40,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "armor",
+  "equipLevel": 1,
+  "mods": {
+   "pdef": 3
+  },
+  "icon": {
+   "shape": "shirt",
+   "color": "#e8dcc0"
+  }
+ },
+ {
+  "id": "leather_jacket",
+  "name": "Leather Jacket",
+  "type": "equipment",
+  "rarity": "common",
+  "description": "Tough tanned leather.",
+  "weight": 60,
+  "price": 380,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "armor",
+  "equipLevel": 6,
+  "mods": {
+   "pdef": 9,
+   "mdef": 1
+  },
+  "icon": {
+   "shape": "shirt",
+   "color": "#8b5a2b"
+  }
+ },
+ {
+  "id": "chain_mail",
+  "name": "Chain Mail",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Interlocked iron rings.",
+  "weight": 150,
+  "price": 1400,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "armor",
+  "equipLevel": 12,
+  "classes": [
+   "knight"
+  ],
+  "mods": {
+   "pdef": 22,
+   "maxHp": 40
+  },
+  "icon": {
+   "shape": "armor",
+   "color": "#aab4c4"
+  }
+ },
+ {
+  "id": "hunter_vest",
+  "name": "Hunter's Vest",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Light and quiet, with many pockets.",
+  "weight": 50,
+  "price": 1200,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "armor",
+  "equipLevel": 12,
+  "classes": [
+   "ranger"
+  ],
+  "mods": {
+   "pdef": 14,
+   "flee": 5
+  },
+  "icon": {
+   "shape": "shirt",
+   "color": "#3f7a45"
+  }
+ },
+ {
+  "id": "apprentice_robe",
+  "name": "Apprentice Robe",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Embroidered with minor wards.",
+  "weight": 30,
+  "price": 1200,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "armor",
+  "equipLevel": 12,
+  "classes": [
+   "mage"
+  ],
+  "mods": {
+   "pdef": 9,
+   "mdef": 10,
+   "maxMp": 30
+  },
+  "icon": {
+   "shape": "robe",
+   "color": "#5b3d8f"
+  }
+ },
+ {
+  "id": "bandana",
+  "name": "Bandana",
+  "type": "equipment",
+  "rarity": "common",
+  "description": "Keeps the sweat out of your eyes.",
+  "weight": 5,
+  "price": 60,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "headgear",
+  "equipLevel": 1,
+  "mods": {
+   "pdef": 1
+  },
+  "icon": {
+   "shape": "hat",
+   "color": "#c83a3a"
+  }
+ },
+ {
+  "id": "leaf_cap",
+  "name": "Leaf Cap",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A cap of living leaves. Smells of the meadow.",
+  "weight": 5,
+  "price": 600,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "headgear",
+  "equipLevel": 1,
+  "mods": {
+   "pdef": 2,
+   "maxHp": 30,
+   "hpRegen": 2
+  },
+  "icon": {
+   "shape": "hat",
+   "color": "#6fbf4a"
+  }
+ },
+ {
+  "id": "iron_helm",
+  "name": "Iron Helm",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Heavy but reliable.",
+  "weight": 60,
+  "price": 900,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "headgear",
+  "equipLevel": 10,
+  "classes": [
+   "knight"
+  ],
+  "mods": {
+   "pdef": 6
+  },
+  "icon": {
+   "shape": "helm",
+   "color": "#aab4c4"
+  }
+ },
+ {
+  "id": "goblin_mask",
+  "name": "Goblin Mask",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Ugly, but strangely empowering.",
+  "weight": 15,
+  "price": 700,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "headgear",
+  "equipLevel": 8,
+  "mods": {
+   "pdef": 3,
+   "str": 1,
+   "patk": 5
+  },
+  "icon": {
+   "shape": "mask",
+   "color": "#6f9a3a"
+  }
+ },
+ {
+  "id": "wooden_buckler",
+  "name": "Wooden Buckler",
+  "type": "equipment",
+  "rarity": "common",
+  "description": "A small round shield.",
+  "weight": 30,
+  "price": 150,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "shield",
+  "equipLevel": 1,
+  "mods": {
+   "pdef": 3
+  },
+  "icon": {
+   "shape": "shield",
+   "color": "#9a6a3a"
+  }
+ },
+ {
+  "id": "iron_shield",
+  "name": "Iron Shield",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Emblazoned with the Silvercrest eagle.",
+  "weight": 100,
+  "price": 1100,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "shield",
+  "equipLevel": 10,
+  "classes": [
+   "knight"
+  ],
+  "mods": {
+   "pdef": 9,
+   "maxHp": 20
+  },
+  "icon": {
+   "shape": "shield",
+   "color": "#aab4c4",
+   "accent": "#4a6fa5"
+  }
+ },
+ {
+  "id": "travel_cape",
+  "name": "Traveler's Cape",
+  "type": "equipment",
+  "rarity": "common",
+  "description": "Weathered by many roads.",
+  "weight": 15,
+  "price": 200,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "garment",
+  "equipLevel": 1,
+  "mods": {
+   "pdef": 1,
+   "flee": 2
+  },
+  "icon": {
+   "shape": "cape",
+   "color": "#6a4a8a"
+  }
+ },
+ {
+  "id": "wolfhide_cloak",
+  "name": "Wolfhide Cloak",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Thorny fur that turns blades.",
+  "weight": 40,
+  "price": 900,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "garment",
+  "equipLevel": 10,
+  "mods": {
+   "pdef": 4,
+   "flee": 3,
+   "elementResistPct": {
+    "earth": 10
+   }
+  },
+  "icon": {
+   "shape": "cape",
+   "color": "#7a6a52"
+  }
+ },
+ {
+  "id": "sandals",
+  "name": "Sandals",
+  "type": "equipment",
+  "rarity": "common",
+  "description": "Breezy footwear.",
+  "weight": 10,
+  "price": 50,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "boots",
+  "equipLevel": 1,
+  "mods": {
+   "pdef": 1
+  },
+  "icon": {
+   "shape": "boots",
+   "color": "#b48a5a"
+  }
+ },
+ {
+  "id": "leather_boots",
+  "name": "Leather Boots",
+  "type": "equipment",
+  "rarity": "common",
+  "description": "Sturdy walking boots.",
+  "weight": 30,
+  "price": 400,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "boots",
+  "equipLevel": 6,
+  "mods": {
+   "pdef": 3,
+   "maxHp": 15
+  },
+  "icon": {
+   "shape": "boots",
+   "color": "#6a4a2a"
+  }
+ },
+ {
+  "id": "swift_boots",
+  "name": "Swiftwind Boots",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Wind runes stitched into the soles.",
+  "weight": 20,
+  "price": 1800,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "boots",
+  "equipLevel": 12,
+  "mods": {
+   "pdef": 3,
+   "moveSpeedPct": 8,
+   "agi": 1
+  },
+  "icon": {
+   "shape": "boots",
+   "color": "#7ad0e0"
+  }
+ },
+ {
+  "id": "copper_ring",
+  "name": "Copper Ring",
+  "type": "equipment",
+  "rarity": "common",
+  "description": "+1 STR.",
+  "weight": 5,
+  "price": 500,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "accessory",
+  "equipLevel": 1,
+  "mods": {
+   "str": 1
+  },
+  "icon": {
+   "shape": "ring",
+   "color": "#d88a4a"
+  }
+ },
+ {
+  "id": "clover_charm",
+  "name": "Clover Charm",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "+2 LUK, +1 critical.",
+  "weight": 5,
+  "price": 700,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "accessory",
+  "equipLevel": 1,
+  "mods": {
+   "luk": 2,
+   "crit": 1
+  },
+  "icon": {
+   "shape": "amulet",
+   "color": "#4fc44a"
+  }
+ },
+ {
+  "id": "sapphire_pendant",
+  "name": "Sapphire Pendant",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "+2 INT, +20 Max MP.",
+  "weight": 5,
+  "price": 900,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "accessory",
+  "equipLevel": 5,
+  "mods": {
+   "int": 2,
+   "maxMp": 20
+  },
+  "icon": {
+   "shape": "amulet",
+   "color": "#3a7be0"
+  }
+ },
+ {
+  "id": "bone_earring",
+  "name": "Bone Earring",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "+2 VIT. Resists shadow.",
+  "weight": 5,
+  "price": 1000,
+  "stackable": false,
+  "maxStack": 1,
+  "slot": "accessory",
+  "equipLevel": 10,
+  "mods": {
+   "vit": 2,
+   "elementResistPct": {
+    "shadow": 8,
+    "undead": 8
+   }
+  },
+  "icon": {
+   "shape": "ring",
+   "color": "#e9e4d4"
+  }
+ },
+ {
+  "id": "falcon_pendant",
+  "name": "Falcon Feather Charm",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Elwin's thanks. +2 DEX, +2 AGI.",
+  "weight": 3,
+  "price": 0,
+  "stackable": false,
+  "maxStack": 1,
+  "bound": true,
+  "slot": "accessory",
+  "equipLevel": 1,
+  "mods": {
+   "dex": 2,
+   "agi": 2
+  },
+  "icon": {
+   "shape": "amulet",
+   "color": "#d8b46a"
+  }
+ }
 ]

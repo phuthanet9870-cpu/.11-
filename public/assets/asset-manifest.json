@@ -1,0 +1,2069 @@
+{
+  "version": 1,
+  "generated": "scripts/generate-asset-manifest.mjs",
+  "namingConvention": {
+    "chr_<classId>": "Player class body sprite sheet",
+    "npc_<npcId>": "NPC sprite sheet",
+    "portrait_<npcId>": "NPC portrait",
+    "mon_<monsterId>": "Monster sprite sheet",
+    "map_<mapId>_<layer>": "Map layer artwork (ground|walls|above)",
+    "obj_<tilesetId>_<objectKind>_<variant>": "World object sprite",
+    "icon_item_<itemId>": "Item icon",
+    "icon_skill_<skillId>": "Skill icon",
+    "fx_<name>": "Effect / particle texture",
+    "bgm_<trackId>": "Music track",
+    "sfx_<name>": "Sound effect"
+  },
+  "entries": [
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "chr_novice",
+      "type": "spritesheet",
+      "frameWidth": 48,
+      "frameHeight": 64,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 520,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 130,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 90,
+          "loop": false
+        },
+        "cast": {
+          "start": 9,
+          "count": 3,
+          "frameMs": 160,
+          "loop": true
+        },
+        "hit": {
+          "start": 12,
+          "count": 1,
+          "frameMs": 200,
+          "loop": false
+        },
+        "death": {
+          "start": 13,
+          "count": 3,
+          "frameMs": 220,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "collisionBox": {
+        "w": 18,
+        "h": 12
+      },
+      "notes": "Novice base body; player sheets are composed from appearance + class outfit + weapon at runtime"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "chr_knight",
+      "type": "spritesheet",
+      "frameWidth": 48,
+      "frameHeight": 64,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 520,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 130,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 90,
+          "loop": false
+        },
+        "cast": {
+          "start": 9,
+          "count": 3,
+          "frameMs": 160,
+          "loop": true
+        },
+        "hit": {
+          "start": 12,
+          "count": 1,
+          "frameMs": 200,
+          "loop": false
+        },
+        "death": {
+          "start": 13,
+          "count": 3,
+          "frameMs": 220,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "collisionBox": {
+        "w": 18,
+        "h": 12
+      },
+      "notes": "Knight base body; player sheets are composed from appearance + class outfit + weapon at runtime"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "chr_ranger",
+      "type": "spritesheet",
+      "frameWidth": 48,
+      "frameHeight": 64,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 520,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 130,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 90,
+          "loop": false
+        },
+        "cast": {
+          "start": 9,
+          "count": 3,
+          "frameMs": 160,
+          "loop": true
+        },
+        "hit": {
+          "start": 12,
+          "count": 1,
+          "frameMs": 200,
+          "loop": false
+        },
+        "death": {
+          "start": 13,
+          "count": 3,
+          "frameMs": 220,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "collisionBox": {
+        "w": 18,
+        "h": 12
+      },
+      "notes": "Ranger base body; player sheets are composed from appearance + class outfit + weapon at runtime"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "chr_mage",
+      "type": "spritesheet",
+      "frameWidth": 48,
+      "frameHeight": 64,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 520,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 130,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 90,
+          "loop": false
+        },
+        "cast": {
+          "start": 9,
+          "count": 3,
+          "frameMs": 160,
+          "loop": true
+        },
+        "hit": {
+          "start": 12,
+          "count": 1,
+          "frameMs": 200,
+          "loop": false
+        },
+        "death": {
+          "start": 13,
+          "count": 3,
+          "frameMs": 220,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "collisionBox": {
+        "w": 18,
+        "h": 12
+      },
+      "notes": "Mage base body; player sheets are composed from appearance + class outfit + weapon at runtime"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "npc_lyra",
+      "type": "spritesheet",
+      "frameWidth": 48,
+      "frameHeight": 64,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 520,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 130,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 90,
+          "loop": false
+        },
+        "cast": {
+          "start": 9,
+          "count": 3,
+          "frameMs": 160,
+          "loop": true
+        },
+        "hit": {
+          "start": 12,
+          "count": 1,
+          "frameMs": 200,
+          "loop": false
+        },
+        "death": {
+          "start": 13,
+          "count": 3,
+          "frameMs": 220,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "collisionBox": {
+        "w": 32,
+        "h": 32
+      },
+      "notes": "Lyra Starborn"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "portrait_lyra",
+      "type": "image",
+      "notes": "Lyra Starborn dialogue portrait (96x96 or larger)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "npc_garrick",
+      "type": "spritesheet",
+      "frameWidth": 48,
+      "frameHeight": 64,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 520,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 130,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 90,
+          "loop": false
+        },
+        "cast": {
+          "start": 9,
+          "count": 3,
+          "frameMs": 160,
+          "loop": true
+        },
+        "hit": {
+          "start": 12,
+          "count": 1,
+          "frameMs": 200,
+          "loop": false
+        },
+        "death": {
+          "start": 13,
+          "count": 3,
+          "frameMs": 220,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "collisionBox": {
+        "w": 32,
+        "h": 32
+      },
+      "notes": "Garrick Ironhand"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "portrait_garrick",
+      "type": "image",
+      "notes": "Garrick Ironhand dialogue portrait (96x96 or larger)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "npc_seraphine",
+      "type": "spritesheet",
+      "frameWidth": 48,
+      "frameHeight": 64,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 520,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 130,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 90,
+          "loop": false
+        },
+        "cast": {
+          "start": 9,
+          "count": 3,
+          "frameMs": 160,
+          "loop": true
+        },
+        "hit": {
+          "start": 12,
+          "count": 1,
+          "frameMs": 200,
+          "loop": false
+        },
+        "death": {
+          "start": 13,
+          "count": 3,
+          "frameMs": 220,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "collisionBox": {
+        "w": 32,
+        "h": 32
+      },
+      "notes": "Seraphine Vale"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "portrait_seraphine",
+      "type": "image",
+      "notes": "Seraphine Vale dialogue portrait (96x96 or larger)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "npc_marla",
+      "type": "spritesheet",
+      "frameWidth": 48,
+      "frameHeight": 64,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 520,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 130,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 90,
+          "loop": false
+        },
+        "cast": {
+          "start": 9,
+          "count": 3,
+          "frameMs": 160,
+          "loop": true
+        },
+        "hit": {
+          "start": 12,
+          "count": 1,
+          "frameMs": 200,
+          "loop": false
+        },
+        "death": {
+          "start": 13,
+          "count": 3,
+          "frameMs": 220,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "collisionBox": {
+        "w": 32,
+        "h": 32
+      },
+      "notes": "Marla"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "portrait_marla",
+      "type": "image",
+      "notes": "Marla dialogue portrait (96x96 or larger)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "npc_pip",
+      "type": "spritesheet",
+      "frameWidth": 48,
+      "frameHeight": 64,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 520,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 130,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 90,
+          "loop": false
+        },
+        "cast": {
+          "start": 9,
+          "count": 3,
+          "frameMs": 160,
+          "loop": true
+        },
+        "hit": {
+          "start": 12,
+          "count": 1,
+          "frameMs": 200,
+          "loop": false
+        },
+        "death": {
+          "start": 13,
+          "count": 3,
+          "frameMs": 220,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "collisionBox": {
+        "w": 32,
+        "h": 32
+      },
+      "notes": "Pip Tumbleweed"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "portrait_pip",
+      "type": "image",
+      "notes": "Pip Tumbleweed dialogue portrait (96x96 or larger)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "npc_bram",
+      "type": "spritesheet",
+      "frameWidth": 48,
+      "frameHeight": 64,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 520,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 130,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 90,
+          "loop": false
+        },
+        "cast": {
+          "start": 9,
+          "count": 3,
+          "frameMs": 160,
+          "loop": true
+        },
+        "hit": {
+          "start": 12,
+          "count": 1,
+          "frameMs": 200,
+          "loop": false
+        },
+        "death": {
+          "start": 13,
+          "count": 3,
+          "frameMs": 220,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "collisionBox": {
+        "w": 32,
+        "h": 32
+      },
+      "notes": "Bram"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "portrait_bram",
+      "type": "image",
+      "notes": "Bram dialogue portrait (96x96 or larger)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "npc_theo",
+      "type": "spritesheet",
+      "frameWidth": 48,
+      "frameHeight": 64,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 520,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 130,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 90,
+          "loop": false
+        },
+        "cast": {
+          "start": 9,
+          "count": 3,
+          "frameMs": 160,
+          "loop": true
+        },
+        "hit": {
+          "start": 12,
+          "count": 1,
+          "frameMs": 200,
+          "loop": false
+        },
+        "death": {
+          "start": 13,
+          "count": 3,
+          "frameMs": 220,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "collisionBox": {
+        "w": 32,
+        "h": 32
+      },
+      "notes": "Old Man Theo"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "portrait_theo",
+      "type": "image",
+      "notes": "Old Man Theo dialogue portrait (96x96 or larger)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "npc_rowan",
+      "type": "spritesheet",
+      "frameWidth": 48,
+      "frameHeight": 64,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 520,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 130,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 90,
+          "loop": false
+        },
+        "cast": {
+          "start": 9,
+          "count": 3,
+          "frameMs": 160,
+          "loop": true
+        },
+        "hit": {
+          "start": 12,
+          "count": 1,
+          "frameMs": 200,
+          "loop": false
+        },
+        "death": {
+          "start": 13,
+          "count": 3,
+          "frameMs": 220,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "collisionBox": {
+        "w": 32,
+        "h": 32
+      },
+      "notes": "Guard Rowan"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "portrait_rowan",
+      "type": "image",
+      "notes": "Guard Rowan dialogue portrait (96x96 or larger)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "npc_hollis",
+      "type": "spritesheet",
+      "frameWidth": 48,
+      "frameHeight": 64,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 520,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 130,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 90,
+          "loop": false
+        },
+        "cast": {
+          "start": 9,
+          "count": 3,
+          "frameMs": 160,
+          "loop": true
+        },
+        "hit": {
+          "start": 12,
+          "count": 1,
+          "frameMs": 200,
+          "loop": false
+        },
+        "death": {
+          "start": 13,
+          "count": 3,
+          "frameMs": 220,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "collisionBox": {
+        "w": 32,
+        "h": 32
+      },
+      "notes": "Farmer Hollis"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "portrait_hollis",
+      "type": "image",
+      "notes": "Farmer Hollis dialogue portrait (96x96 or larger)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "npc_elwin",
+      "type": "spritesheet",
+      "frameWidth": 48,
+      "frameHeight": 64,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 520,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 130,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 90,
+          "loop": false
+        },
+        "cast": {
+          "start": 9,
+          "count": 3,
+          "frameMs": 160,
+          "loop": true
+        },
+        "hit": {
+          "start": 12,
+          "count": 1,
+          "frameMs": 200,
+          "loop": false
+        },
+        "death": {
+          "start": 13,
+          "count": 3,
+          "frameMs": 220,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "collisionBox": {
+        "w": 32,
+        "h": 32
+      },
+      "notes": "Ranger Elwin"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "portrait_elwin",
+      "type": "image",
+      "notes": "Ranger Elwin dialogue portrait (96x96 or larger)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "mon_leaf_slime",
+      "type": "spritesheet",
+      "frameWidth": 40,
+      "frameHeight": 36,
+      "rows": [
+        "left (mirrored for right)"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 450,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 140,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 110,
+          "loop": false
+        },
+        "hit": {
+          "start": 9,
+          "count": 1,
+          "frameMs": 180,
+          "loop": false
+        },
+        "death": {
+          "start": 10,
+          "count": 3,
+          "frameMs": 200,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      },
+      "collisionBox": {
+        "w": 17,
+        "h": 11
+      },
+      "notes": "Leaf Slime"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "mon_horn_rabbit",
+      "type": "spritesheet",
+      "frameWidth": 40,
+      "frameHeight": 40,
+      "rows": [
+        "left (mirrored for right)"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 450,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 140,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 110,
+          "loop": false
+        },
+        "hit": {
+          "start": 9,
+          "count": 1,
+          "frameMs": 180,
+          "loop": false
+        },
+        "death": {
+          "start": 10,
+          "count": 3,
+          "frameMs": 200,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      },
+      "collisionBox": {
+        "w": 17,
+        "h": 11
+      },
+      "notes": "Horn Rabbit"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "mon_mushling",
+      "type": "spritesheet",
+      "frameWidth": 40,
+      "frameHeight": 44,
+      "rows": [
+        "left (mirrored for right)"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 450,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 140,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 110,
+          "loop": false
+        },
+        "hit": {
+          "start": 9,
+          "count": 1,
+          "frameMs": 180,
+          "loop": false
+        },
+        "death": {
+          "start": 10,
+          "count": 3,
+          "frameMs": 200,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      },
+      "collisionBox": {
+        "w": 18,
+        "h": 12
+      },
+      "notes": "Mushling"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "mon_buzz_wasp",
+      "type": "spritesheet",
+      "frameWidth": 40,
+      "frameHeight": 40,
+      "rows": [
+        "left (mirrored for right)"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 450,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 140,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 110,
+          "loop": false
+        },
+        "hit": {
+          "start": 9,
+          "count": 1,
+          "frameMs": 180,
+          "loop": false
+        },
+        "death": {
+          "start": 10,
+          "count": 3,
+          "frameMs": 200,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      },
+      "collisionBox": {
+        "w": 17,
+        "h": 11
+      },
+      "notes": "Buzz Wasp"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "mon_forest_goblin",
+      "type": "spritesheet",
+      "frameWidth": 44,
+      "frameHeight": 52,
+      "rows": [
+        "left (mirrored for right)"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 450,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 140,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 110,
+          "loop": false
+        },
+        "hit": {
+          "start": 9,
+          "count": 1,
+          "frameMs": 180,
+          "loop": false
+        },
+        "death": {
+          "start": 10,
+          "count": 3,
+          "frameMs": 200,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      },
+      "collisionBox": {
+        "w": 20,
+        "h": 13
+      },
+      "notes": "Forest Goblin"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "mon_venom_spore",
+      "type": "spritesheet",
+      "frameWidth": 40,
+      "frameHeight": 44,
+      "rows": [
+        "left (mirrored for right)"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 450,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 140,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 110,
+          "loop": false
+        },
+        "hit": {
+          "start": 9,
+          "count": 1,
+          "frameMs": 180,
+          "loop": false
+        },
+        "death": {
+          "start": 10,
+          "count": 3,
+          "frameMs": 200,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      },
+      "collisionBox": {
+        "w": 18,
+        "h": 12
+      },
+      "notes": "Venom Spore"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "mon_thorn_wolf",
+      "type": "spritesheet",
+      "frameWidth": 56,
+      "frameHeight": 44,
+      "rows": [
+        "left (mirrored for right)"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 450,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 140,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 110,
+          "loop": false
+        },
+        "hit": {
+          "start": 9,
+          "count": 1,
+          "frameMs": 180,
+          "loop": false
+        },
+        "death": {
+          "start": 10,
+          "count": 3,
+          "frameMs": 200,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      },
+      "collisionBox": {
+        "w": 21,
+        "h": 14
+      },
+      "notes": "Thorn Wolf"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "mon_bone_soldier",
+      "type": "spritesheet",
+      "frameWidth": 44,
+      "frameHeight": 56,
+      "rows": [
+        "left (mirrored for right)"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 450,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 140,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 110,
+          "loop": false
+        },
+        "hit": {
+          "start": 9,
+          "count": 1,
+          "frameMs": 180,
+          "loop": false
+        },
+        "death": {
+          "start": 10,
+          "count": 3,
+          "frameMs": 200,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      },
+      "collisionBox": {
+        "w": 20,
+        "h": 13
+      },
+      "notes": "Bone Soldier"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "mon_grukk_thornking",
+      "type": "spritesheet",
+      "frameWidth": 96,
+      "frameHeight": 104,
+      "rows": [
+        "left (mirrored for right)"
+      ],
+      "animations": {
+        "idle": {
+          "start": 0,
+          "count": 2,
+          "frameMs": 450,
+          "loop": true
+        },
+        "walk": {
+          "start": 2,
+          "count": 4,
+          "frameMs": 140,
+          "loop": true
+        },
+        "attack": {
+          "start": 6,
+          "count": 3,
+          "frameMs": 110,
+          "loop": false
+        },
+        "hit": {
+          "start": 9,
+          "count": 1,
+          "frameMs": 180,
+          "loop": false
+        },
+        "death": {
+          "start": 10,
+          "count": 3,
+          "frameMs": 200,
+          "loop": false
+        }
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      },
+      "collisionBox": {
+        "w": 34,
+        "h": 22
+      },
+      "notes": "Grukk the Thornking"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "map_willowbrook_ground",
+      "type": "image",
+      "notes": "Willowbrook Village ground layer, 1600x1216px"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "map_willowbrook_walls",
+      "type": "image",
+      "notes": "Willowbrook Village walls layer, 1600x1216px"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "map_willowbrook_above",
+      "type": "image",
+      "notes": "Willowbrook Village above layer, 1600x1216px"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "map_sunny_meadow_ground",
+      "type": "image",
+      "notes": "Sunny Meadow ground layer, 1920x1408px"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "map_sunny_meadow_walls",
+      "type": "image",
+      "notes": "Sunny Meadow walls layer, 1920x1408px"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "map_sunny_meadow_above",
+      "type": "image",
+      "notes": "Sunny Meadow above layer, 1920x1408px"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "map_whispering_forest_ground",
+      "type": "image",
+      "notes": "Whispering Forest ground layer, 1920x1536px"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "map_whispering_forest_walls",
+      "type": "image",
+      "notes": "Whispering Forest walls layer, 1920x1536px"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "map_whispering_forest_above",
+      "type": "image",
+      "notes": "Whispering Forest above layer, 1920x1536px"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_red_potion",
+      "type": "image",
+      "notes": "Red Potion icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_orange_potion",
+      "type": "image",
+      "notes": "Orange Potion icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_yellow_potion",
+      "type": "image",
+      "notes": "Yellow Potion icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_blue_potion",
+      "type": "image",
+      "notes": "Blue Potion icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_green_potion",
+      "type": "image",
+      "notes": "Green Potion icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_meadow_apple",
+      "type": "image",
+      "notes": "Meadow Apple icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_wing_of_return",
+      "type": "image",
+      "notes": "Wing of Return icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_swiftness_tonic",
+      "type": "image",
+      "notes": "Swiftness Tonic icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_token_of_renewal",
+      "type": "image",
+      "notes": "Token of Renewal icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_jelly",
+      "type": "image",
+      "notes": "Leafy Jelly icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_rabbit_horn",
+      "type": "image",
+      "notes": "Rabbit Horn icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_mushling_cap",
+      "type": "image",
+      "notes": "Mushling Cap icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_wasp_stinger",
+      "type": "image",
+      "notes": "Wasp Stinger icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_goblin_fang",
+      "type": "image",
+      "notes": "Goblin Fang icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_spore_dust",
+      "type": "image",
+      "notes": "Spore Dust icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_wolf_pelt",
+      "type": "image",
+      "notes": "Thorn Wolf Pelt icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_old_bone",
+      "type": "image",
+      "notes": "Old Bone icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_thorn_crown",
+      "type": "image",
+      "notes": "Thorn Crown icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_astral_shard",
+      "type": "image",
+      "notes": "Astral Shard icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_lost_pendant",
+      "type": "image",
+      "notes": "Elwin's Pendant icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_well_water",
+      "type": "image",
+      "notes": "Wellspring Water icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_training_knife",
+      "type": "image",
+      "notes": "Training Knife icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_oak_club",
+      "type": "image",
+      "notes": "Oak Club icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_iron_sword",
+      "type": "image",
+      "notes": "Iron Sword icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_steel_sword",
+      "type": "image",
+      "notes": "Steel Sword icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_knight_spear",
+      "type": "image",
+      "notes": "Knight's Spear icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_thornbane_blade",
+      "type": "image",
+      "notes": "Thornbane Blade icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_short_bow",
+      "type": "image",
+      "notes": "Short Bow icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_hunter_bow",
+      "type": "image",
+      "notes": "Hunter's Bow icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_thornwood_longbow",
+      "type": "image",
+      "notes": "Thornwood Longbow icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_apprentice_wand",
+      "type": "image",
+      "notes": "Apprentice Wand icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_oak_staff",
+      "type": "image",
+      "notes": "Oak Staff icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_thornheart_staff",
+      "type": "image",
+      "notes": "Thornheart Staff icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_cotton_shirt",
+      "type": "image",
+      "notes": "Cotton Shirt icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_leather_jacket",
+      "type": "image",
+      "notes": "Leather Jacket icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_chain_mail",
+      "type": "image",
+      "notes": "Chain Mail icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_hunter_vest",
+      "type": "image",
+      "notes": "Hunter's Vest icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_apprentice_robe",
+      "type": "image",
+      "notes": "Apprentice Robe icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_bandana",
+      "type": "image",
+      "notes": "Bandana icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_leaf_cap",
+      "type": "image",
+      "notes": "Leaf Cap icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_iron_helm",
+      "type": "image",
+      "notes": "Iron Helm icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_goblin_mask",
+      "type": "image",
+      "notes": "Goblin Mask icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_wooden_buckler",
+      "type": "image",
+      "notes": "Wooden Buckler icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_iron_shield",
+      "type": "image",
+      "notes": "Iron Shield icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_travel_cape",
+      "type": "image",
+      "notes": "Traveler's Cape icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_wolfhide_cloak",
+      "type": "image",
+      "notes": "Wolfhide Cloak icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_sandals",
+      "type": "image",
+      "notes": "Sandals icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_leather_boots",
+      "type": "image",
+      "notes": "Leather Boots icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_swift_boots",
+      "type": "image",
+      "notes": "Swiftwind Boots icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_copper_ring",
+      "type": "image",
+      "notes": "Copper Ring icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_clover_charm",
+      "type": "image",
+      "notes": "Clover Charm icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_sapphire_pendant",
+      "type": "image",
+      "notes": "Sapphire Pendant icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_bone_earring",
+      "type": "image",
+      "notes": "Bone Earring icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_item_falcon_pendant",
+      "type": "image",
+      "notes": "Falcon Feather Charm icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_basic_training",
+      "type": "image",
+      "notes": "Basic Training icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_first_aid",
+      "type": "image",
+      "notes": "First Aid icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_bash",
+      "type": "image",
+      "notes": "Bash icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_provoke",
+      "type": "image",
+      "notes": "Provoke icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_shield_guard",
+      "type": "image",
+      "notes": "Shield Guard icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_sword_mastery",
+      "type": "image",
+      "notes": "Sword Mastery icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_spiral_pierce",
+      "type": "image",
+      "notes": "Spiral Pierce icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_war_cry",
+      "type": "image",
+      "notes": "War Cry icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_counter_attack",
+      "type": "image",
+      "notes": "Counter Attack icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_blade_storm",
+      "type": "image",
+      "notes": "Blade Storm icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_double_shot",
+      "type": "image",
+      "notes": "Double Shot icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_arrow_rain",
+      "type": "image",
+      "notes": "Arrow Rain icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_falcon_strike",
+      "type": "image",
+      "notes": "Falcon Strike icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_wind_trap",
+      "type": "image",
+      "notes": "Wind Trap icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_eagle_eye",
+      "type": "image",
+      "notes": "Eagle Eye icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_rapid_fire",
+      "type": "image",
+      "notes": "Rapid Fire icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_camouflage",
+      "type": "image",
+      "notes": "Camouflage icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_piercing_arrow",
+      "type": "image",
+      "notes": "Piercing Arrow icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_fire_bolt",
+      "type": "image",
+      "notes": "Fire Bolt icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_ice_bolt",
+      "type": "image",
+      "notes": "Ice Bolt icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_lightning_bolt",
+      "type": "image",
+      "notes": "Lightning Bolt icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_fire_wall",
+      "type": "image",
+      "notes": "Fire Wall icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_frost_nova",
+      "type": "image",
+      "notes": "Frost Nova icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_thunderstorm",
+      "type": "image",
+      "notes": "Thunderstorm icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_meteor",
+      "type": "image",
+      "notes": "Meteor icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_mana_shield",
+      "type": "image",
+      "notes": "Mana Shield icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "icon_skill_astral_attunement",
+      "type": "image",
+      "notes": "Astral Attunement icon (32x32)"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "fx_dot",
+      "type": "image",
+      "notes": "particle texture"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "fx_glow",
+      "type": "image",
+      "notes": "particle texture"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "fx_spark",
+      "type": "image",
+      "notes": "particle texture"
+    },
+    {
+      "source": "procedural",
+      "placeholder": true,
+      "key": "fx_arrow",
+      "type": "image",
+      "notes": "particle texture"
+    }
+  ]
+}

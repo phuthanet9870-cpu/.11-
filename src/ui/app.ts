@@ -1,0 +1,375 @@
+// Application shell: screen flow, save management, input mapping, and the
+// bridge between the Phaser scenes (GameHost) and the HTML UI.
+import Phaser from 'phaser';
+import { loadGameData, type GameData } from '../core/data';
+import { createCharacter } from '../core/character';
+import { loadSave, newSaveFile, SAVE_KEY, writeSave } from '../core/save';
+import type { Appearance, HotbarSlot, SaveFile, Settings } from '../core/types';
+import { World, type WorldEvent } from '../core/world';
+import { audio } from '../game/audio/audio';
+import type { GameHost } from '../game/host';
+import { BootScene } from '../game/scenes/BootScene';
+import { GameScene } from '../game/scenes/GameScene';
+import { MenuScene } from '../game/scenes/MenuScene';
+import { h, setChildren } from './dom';
+import { Hud } from './hud';
+import { characterCreateScreen, characterSelectScreen, titleScreen } from './screens';
+import { WindowManager, type WindowId } from './windows';
+
+const WINDOW_ACTIONS: Record<string, WindowId> = {
+  inventory: 'inventory', equipment: 'equipment', status: 'status', skills: 'skills', quests: 'quests', worldMap: 'worldMap', settings: 'settings',
+};
+
+export class App implements GameHost {
+  data: GameData;
+  save: SaveFile;
+  world!: World;
+  slot = -1;
+  paused = false;
+  pointerWorld: { x: number; y: number } | null = null;
+  game!: Phaser.Game;
+  hud: Hud | null = null;
+  windows!: WindowManager;
+  uiScale = 1;
+  private screenEl: HTMLElement | null = null;
+  private uiRoot: HTMLElement;
+  private held = new Set<string>();
+  private windowsDirty = false;
+  private lastWindowRefresh = 0;
+  private lastAutosave = 0;
+  private storageOk = true;
+
+  constructor() {
+    this.data = loadGameData();
+    this.uiRoot = document.getElementById('ui')!;
+    this.save = this.loadOrRecover();
+    this.windows = new WindowManager(this, this.uiRoot);
+    audio.setVolumes(this.settings.volume);
+    this.fitToWindow();
+    window.addEventListener('resize', () => this.fitToWindow());
+    window.addEventListener('keydown', (e) => this.onKeyDown(e));
+    window.addEventListener('keyup', (e) => this.onKeyUp(e));
+    window.addEventListener('blur', () => { this.held.clear(); this.updateMoveDir(); });
+    window.addEventListener('beforeunload', () => { if (this.world) this.saveNow(false); });
+    (window as unknown as { __veyloria: App }).__veyloria = this; // debug/testing hook
+  }
+
+  get settings(): Settings { return this.save.settings; }
+
+  // ---------------------------------------------------------------- boot
+  start() {
+    const loading = h('div', { class: 'loading', id: 'loading' }, h('div', { class: 'logo', style: 'font-size:40px' }, 'VEYLORIA ONLINE'),
+      h('div', { class: 'bar' }, h('div', { class: 'fill' })), h('div', { class: 'muted' }, 'Forging placeholder artwork…'));
+    this.uiRoot.appendChild(loading);
+    window.addEventListener('veyloria:loading', (e) => {
+      const p = (e as CustomEvent<number>).detail;
+      (loading.querySelector('.fill') as HTMLElement).style.width = `${p * 100}%`;
+      if (p >= 1) setTimeout(() => { loading.remove(); this.showTitle(); }, 150);
+    });
+    this.game = new Phaser.Game({
+      type: Phaser.AUTO,
+      parent: 'game',
+      width: 1280,
+      height: 720,
+      backgroundColor: '#0c0a12',
+      pixelArt: true,
+      roundPixels: true,
+      scene: [BootScene, MenuScene, GameScene],
+      fps: { target: 60 },
+      audio: { noAudio: true },
+    });
+  }
+
+  private loadOrRecover(): SaveFile {
+    try {
+      return loadSave(window.localStorage, this.data);
+    } catch (err) {
+      console.error('Save load failed', err);
+      let backup: SaveFile | null = null;
+      try {
+        const raw = window.localStorage.getItem(`${SAVE_KEY}.backup`);
+        if (raw) { window.localStorage.setItem(SAVE_KEY, raw); backup = loadSave(window.localStorage, this.data); }
+      } catch { backup = null; }
+      setTimeout(() => this.windows.showModal('Save data problem',
+        backup ? 'Your save file was damaged, so the most recent backup was restored.' : 'Your save file could not be read and no backup was available. A new save was started.',
+        [['OK', () => undefined]], true), 500);
+      if (!backup) this.storageOk = this.testStorage();
+      return backup ?? newSaveFile();
+    }
+  }
+
+  private testStorage(): boolean {
+    try { localStorage.setItem('veyloria.test', '1'); localStorage.removeItem('veyloria.test'); return true; } catch { return false; }
+  }
+
+  private fitToWindow() {
+    const frame = document.getElementById('frame')!;
+    this.uiScale = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+    frame.style.transform = `scale(${this.uiScale})`;
+    this.game?.scale.refresh();
+  }
+
+  // ---------------------------------------------------------------- screens
+  private setScreen(el: HTMLElement | null) {
+    this.screenEl?.remove();
+    this.screenEl = el;
+    if (el) this.uiRoot.appendChild(el);
+  }
+
+  showTitle() {
+    audio.playMusic('title');
+    this.setScreen(titleScreen(() => this.showSelect(), () => this.windows.open('settings')));
+  }
+
+  showSelect() {
+    this.setScreen(characterSelectScreen(this.data, this.save, {
+      onPlay: (slot) => this.enterWorld(slot),
+      onCreate: (slot) => this.showCreate(slot),
+      onDelete: (slot) => { this.save.characters[slot] = null; this.persist(); this.showSelect(); },
+      onBack: () => this.showTitle(),
+    }));
+  }
+
+  showCreate(slot: number) {
+    this.setScreen(characterCreateScreen((name: string, ap: Appearance) => {
+      if (this.save.characters.some((c) => c && c.name.toLowerCase() === name.toLowerCase())) return 'You already have a character with that name.';
+      const c = createCharacter(this.data, name, ap);
+      this.save.characters[slot] = c;
+      this.persist();
+      this.enterWorld(slot);
+      return null;
+    }, () => this.showSelect()));
+  }
+
+  enterWorld(slot: number) {
+    const c = this.save.characters[slot];
+    if (!c) return;
+    audio.unlock();
+    this.slot = slot;
+    this.world = new World(this.data, c, { autoLoot: this.settings.autoLoot });
+    this.setScreen(null);
+    this.hud?.root.remove();
+    this.hud = new Hud(this);
+    this.uiRoot.insertBefore(this.hud.root, this.uiRoot.firstChild);
+    this.hud.resetMinimap();
+    this.game.scene.stop('Menu');
+    this.game.scene.start('Game', { host: this });
+    this.hud.banner(this.world.map.def.name, `Welcome, ${c.name}`);
+    this.hud.log(`Welcome to Veyloria, ${c.name}! Click to move, click monsters to attack. Talk to NPCs marked with ! for quests.`, 'system');
+    this.hud.log('Keys: I inventory · E equipment · C status · K skills · Q quests · M map · O settings · 1-0 hotbar · Tab target · Z loot · F talk', 'system');
+    this.lastAutosave = performance.now();
+  }
+
+  exitToSelect() {
+    this.saveNow(false);
+    this.windows.closeAll();
+    this.windows.closeModal();
+    this.game.scene.stop('Game');
+    this.game.scene.start('Menu');
+    this.hud?.root.remove();
+    this.hud = null;
+    this.slot = -1;
+    this.showSelect();
+  }
+
+  // ---------------------------------------------------------------- saving
+  private persist(): boolean {
+    try {
+      writeSave(window.localStorage, this.save);
+      return true;
+    } catch (err) {
+      console.error('Save failed', err);
+      this.hud?.toast('Could not save — browser storage is unavailable or full.', true);
+      return false;
+    }
+  }
+
+  saveNow(manual: boolean) {
+    if (!this.world || this.slot < 0) return;
+    this.save.characters[this.slot] = this.world.char;
+    if (this.persist() && manual) this.hud?.toast('Game saved.');
+    this.lastAutosave = performance.now();
+  }
+
+  applySettings() {
+    audio.setVolumes(this.settings.volume);
+    if (this.world) this.world.autoLoot = this.settings.autoLoot;
+    const scene = this.game.scene.getScene('Game') as GameScene | null;
+    if (scene && scene.scene.isActive()) scene.setCollisionVisible(this.settings.showCollision);
+    this.hud?.buildHotbar();
+    this.persist();
+  }
+
+  // ---------------------------------------------------------------- GameHost
+  onWorldEvents(events: WorldEvent[]) {
+    const hud = this.hud;
+    if (!hud) return;
+    for (const e of events) {
+      switch (e.type) {
+        case 'message':
+          hud.log(e.text, e.channel);
+          if (e.channel === 'error') hud.toast(e.text, true);
+          break;
+        case 'npcInteract': this.windows.openNpcDialog(e.npcId); break;
+        case 'objectInteract': this.windows.showObjectText(e.name, e.text); break;
+        case 'levelUp': hud.banner(e.kind === 'base' ? `Level ${e.level}!` : `Job Level ${e.level}!`, e.kind === 'base' ? 'Stat points gained — open Status (C)' : 'Skill point gained — open Skills (K)'); this.windowsDirty = true; break;
+        case 'bossIntro': hud.banner(e.name, e.title, 'boss'); hud.log(e.text, 'combat'); break;
+        case 'bossPhase': hud.banner(e.name, e.text, 'boss'); break;
+        case 'bossEnrage': hud.banner(`${e.name} is ENRAGED!`, 'Its attacks grow faster and stronger', 'boss'); break;
+        case 'bossDefeated': hud.banner('VICTORY', `${e.name} has fallen!`); break;
+        case 'mapChanged':
+          hud.resetMinimap();
+          hud.banner(this.world.map.def.name, this.world.map.def.levelRange ? `Lv.${this.world.map.def.levelRange.join('–')}` : this.world.map.def.region);
+          this.windows.closeDialog();
+          this.saveNow(false);
+          break;
+        case 'playerDied':
+          this.windows.closeDialog();
+          setTimeout(() => this.windows.showModal('You have been defeated',
+            `You will return to your save point (${this.data.maps.get(this.world.char.savePoint.mapId)?.name}) with half HP.`,
+            [['Return to save point', () => this.world.respawn()]]), 1200);
+          break;
+        case 'jobChanged': hud.buildHotbar(); this.windowsDirty = true; break;
+        case 'questUpdate': case 'statsChanged': case 'loot': this.windowsDirty = true; break;
+        default: break;
+      }
+    }
+  }
+
+  onFrame() {
+    this.hud?.update();
+    const now = performance.now();
+    if (this.windowsDirty && now - this.lastWindowRefresh > 200) {
+      this.windowsDirty = false;
+      this.lastWindowRefresh = now;
+      this.windows.refresh();
+    }
+    if (now - this.lastAutosave > this.data.balance.save.autosaveIntervalMs) this.saveNow(false);
+  }
+
+  // ---------------------------------------------------------------- hotbar & chat
+  keyLabel(action: string): string {
+    const k = this.settings.keybinds[action] ?? '';
+    return k === ' ' ? 'Space' : k.length === 1 ? k.toUpperCase() : k;
+  }
+
+  assignHotbar(i: number, slot: HotbarSlot) {
+    if (!this.world) return;
+    const bar = this.world.char.hotbar;
+    if (i < 0) i = bar.findIndex((s) => !s);
+    if (i < 0) { this.hud?.toast('Hotbar is full — drag onto a slot to replace it.', true); return; }
+    for (let k = 0; k < bar.length; k++) if (bar[k]?.type === slot.type && bar[k]?.id === slot.id) bar[k] = null;
+    bar[i] = slot;
+    this.hud?.buildHotbar();
+  }
+
+  useHotbar(i: number) {
+    const w = this.world;
+    if (!w) return;
+    const s = w.char.hotbar[i];
+    if (!s) return;
+    if (s.type === 'item') { w.useItemById(s.id); return; }
+    const sk = this.data.skills.get(s.id);
+    if (!sk) return;
+    const target = w.currentTarget;
+    if (sk.targeting === 'ground') {
+      if (target && !target.dead) w.castSkill(sk.id, { targetId: target.id });
+      else if (this.pointerWorld) w.castSkill(sk.id, { x: this.pointerWorld.x, y: this.pointerWorld.y });
+      else w.castSkill(sk.id);
+    } else if (sk.targeting === 'enemy') {
+      const t = target && !target.dead ? target : w.targetNearestMonster();
+      if (t) w.castSkill(sk.id, { targetId: t.id }); else w.castSkill(sk.id);
+    } else w.castSkill(sk.id);
+  }
+
+  chatCommand(cmd: string) {
+    const w = this.world;
+    const [name] = cmd.slice(1).split(/\s+/);
+    switch (name) {
+      case 'help': this.hud?.log('Commands: /where /save /stuck /played /help', 'system'); break;
+      case 'where': this.hud?.log(`${w.map.def.name} (${Math.floor(w.player.x / 32)}, ${Math.floor(w.player.y / 32)})`, 'system'); break;
+      case 'save': this.saveNow(true); break;
+      case 'played': this.hud?.log(`Played ${Math.floor(w.char.stats_meta.playTimeMs / 60000)} minutes.`, 'system'); break;
+      case 'stuck': w.enterMap(w.map.def.id, 'default'); break;
+      default: this.hud?.log(`Unknown command ${cmd}. Try /help`, 'error');
+    }
+  }
+
+  // ---------------------------------------------------------------- input
+  private actionForKey(key: string): string | null {
+    const k = key.length === 1 ? key.toLowerCase() : key;
+    for (const [action, bound] of Object.entries(this.settings.keybinds)) if (bound === k) return action;
+    return null;
+  }
+
+  private onKeyDown(e: KeyboardEvent) {
+    if (this.windows.captureKey(e)) return;
+    const target = e.target as HTMLElement;
+    if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT')) return;
+    audio.unlock();
+    if (!this.world || !this.hud) {
+      if (e.key === 'Escape') this.windows.closeTop();
+      return;
+    }
+    if (e.key === 'Enter') { e.preventDefault(); this.hud.focusChat(); return; }
+    if (e.key === 'Escape') { e.preventDefault(); if (!this.windows.closeTop()) this.windows.open('settings'); return; }
+    if (e.key === 'Tab') { e.preventDefault(); this.world.targetNearestMonster(); return; }
+    if (this.windows.dialogOpen && /^[1-9]$/.test(e.key)) { if (this.windows.dialogKey(Number(e.key))) return; }
+    const action = this.actionForKey(e.key);
+    const moveKey = this.moveDirKey(e.key);
+    if (moveKey && this.settings.wasdMovement && (!action || ['up', 'down', 'left', 'right'].includes(action))) {
+      this.held.add(moveKey);
+      this.updateMoveDir();
+      e.preventDefault();
+      return;
+    }
+    if (!action || e.repeat) return;
+    if (action.startsWith('hotbar')) { this.useHotbar(Number(action.slice(6)) - 1); return; }
+    if (WINDOW_ACTIONS[action]) { this.windows.toggle(WINDOW_ACTIONS[action]); return; }
+    if (action === 'pickup') { this.world.pickupNearest(); return; }
+    if (action === 'interact') { this.interactNearest(); return; }
+  }
+
+  private onKeyUp(e: KeyboardEvent) {
+    const k = this.moveDirKey(e.key);
+    if (k) { this.held.delete(k); this.updateMoveDir(); }
+  }
+
+  private moveDirKey(key: string): 'up' | 'down' | 'left' | 'right' | null {
+    if (key === 'ArrowUp') return 'up';
+    if (key === 'ArrowDown') return 'down';
+    if (key === 'ArrowLeft') return 'left';
+    if (key === 'ArrowRight') return 'right';
+    const action = this.actionForKey(key);
+    return action === 'up' || action === 'down' || action === 'left' || action === 'right' ? action : null;
+  }
+
+  private updateMoveDir() {
+    if (!this.world) return;
+    const dx = (this.held.has('right') ? 1 : 0) - (this.held.has('left') ? 1 : 0);
+    const dy = (this.held.has('down') ? 1 : 0) - (this.held.has('up') ? 1 : 0);
+    this.world.setMoveDir(dx, dy);
+  }
+
+  private interactNearest() {
+    const w = this.world;
+    let best: string | null = null, bd = 220;
+    for (const n of w.npcs) {
+      const d = Math.hypot(n.x - w.player.x, n.y - w.player.y);
+      if (d < bd) { bd = d; best = n.npcId; }
+    }
+    if (best) { w.interactNpc(best); return; }
+    for (const o of w.map.def.objects) {
+      const d = Math.hypot((o.x + 0.5) * 32 - w.player.x, (o.y + 0.5) * 32 - w.player.y);
+      if (d < bd) { bd = d; best = o.id; }
+    }
+    if (best) w.interactObjectCmd(best);
+  }
+
+  showFatal(msg: string) {
+    setChildren(this.uiRoot, h('div', { class: 'screen' }, h('div', { class: 'panel modal' }, h('h3', {}, 'Something went wrong'), h('p', {}, msg),
+      h('button', { class: 'btn primary', onclick: () => location.reload() }, 'Reload'))));
+  }
+
+  get storageAvailable() { return this.storageOk; }
+}

@@ -72,7 +72,7 @@
   "parent": "novice",
   "description": "Keen-eyed hunters of the wilds who strike from afar and lay cunning traps.",
   "maxJobLevel": 50,
-  "hpPerLevel": 10,
+  "hpPerLevel": 11,
   "mpPerLevel": 4,
   "baseAttackIntervalMs": 960,
   "weaponTypes": [

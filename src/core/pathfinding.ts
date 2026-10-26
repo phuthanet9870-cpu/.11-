@@ -104,7 +104,7 @@ export function findPath(map: CompiledMap, fromX: number, fromY: number, toX: nu
   const pts = cells.map((i) => ({ x: (i % W) * TILE + TILE / 2, y: Math.floor(i / W) * TILE + TILE / 2 }));
   // Final point: exact click position if walkable, otherwise the goal cell centre.
   const tcx = Math.floor(toX / TILE), tcy = Math.floor(toY / TILE);
-  if (tcx === goal.x && tcy === goal.y) pts[pts.length - 1] = { x: toX, y: toY };
+  if (tcx === goal.x && tcy === goal.y && !boxBlocked(map, toX, toY, 9, 6)) pts[pts.length - 1] = { x: toX, y: toY };
   return smoothPath(map, fromX, fromY, pts);
 }
 

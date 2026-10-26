@@ -38,7 +38,7 @@ export interface Buff {
 
 export interface StatusInst { id: StatusId; expiresAt: number; stacks: number; nextTickAt: number }
 
-interface MoveState { path: { x: number; y: number }[]; goalX: number; goalY: number; repathAt: number }
+interface MoveState { path: { x: number; y: number }[]; goalX: number; goalY: number; repathAt: number; stuckMs?: number }
 
 interface ActorBase {
   id: string;
@@ -502,11 +502,12 @@ export class World {
     if (dist(a.x, a.y, gx, gy) <= stopDist) { a.move = null; return true; }
     const needRepath = !a.move || a.move.repathAt <= this.time || dist(a.move.goalX, a.move.goalY, gx, gy) > 24;
     if (needRepath) {
+      const stuckMs = a.move?.stuckMs ?? 0;
       if (lineClear(this.map, a.x, a.y, gx, gy, a.halfW, a.halfH)) {
-        a.move = { path: [{ x: gx, y: gy }], goalX: gx, goalY: gy, repathAt: this.time + 250 };
+        a.move = { path: [{ x: gx, y: gy }], goalX: gx, goalY: gy, repathAt: this.time + 250, stuckMs };
       } else {
         const path = findPath(this.map, a.x, a.y, gx, gy);
-        a.move = { path: path ?? [], goalX: gx, goalY: gy, repathAt: this.time + 600 };
+        a.move = { path: path ?? [], goalX: gx, goalY: gy, repathAt: this.time + 600, stuckMs };
         if (!path) return false;
       }
     }
@@ -517,9 +518,14 @@ export class World {
       const before = { x: a.x, y: a.y };
       const arrived = this.stepActor(a, wp.x, wp.y, speed, budget);
       const moved = dist(before.x, before.y, a.x, a.y);
-      if (arrived) { mv.path.shift(); budget -= (moved / speed) * 1000 + 1; }
+      if (arrived) { mv.path.shift(); budget -= (moved / speed) * 1000 + 1; mv.stuckMs = 0; }
       else {
-        if (moved < 0.05) { mv.repathAt = 0; }
+        if (moved < 0.05) {
+          // No progress (e.g. squeezed against an obstacle): repath, and give up after a moment.
+          mv.repathAt = 0;
+          mv.stuckMs = (mv.stuckMs ?? 0) + dt;
+          if (mv.stuckMs > 800) { a.move = null; return true; }
+        } else mv.stuckMs = 0;
         break;
       }
       if (dist(a.x, a.y, gx, gy) <= stopDist) { a.move = null; return true; }

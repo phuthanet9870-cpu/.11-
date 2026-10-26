@@ -1,0 +1,80 @@
+# Asset Pipeline & Replacement Guide
+
+**Phase 1 ships with procedural placeholder art and audio.** It's generated at runtime by
+`src/game/art/*` and `src/game/audio/audio.ts`. Every visual and every sound is original, and
+none of it comes from another game. The placeholders are still pixel art, not grey boxes, but they
+are placeholders. Each one is listed in `public/assets/asset-manifest.json` with
+`"placeholder": true`.
+
+## How replacement works
+
+1. Put the image in `public/assets/` (for example `public/assets/sprites/mon_leaf_slime.png`).
+2. In `public/assets/asset-manifest.json`, change the entry with that key:
+   ```json
+   { "key": "mon_leaf_slime", "type": "spritesheet", "source": "file", "file": "sprites/mon_leaf_slime.png",
+     "frameWidth": 40, "frameHeight": 36, ... }
+   ```
+3. Reload the game. `BootScene` loads every entry where `source` is `file`, and the
+   procedural generator is skipped for that key. You don't need to change any game logic.
+
+`npm run assets:manifest` regenerates the manifest from the data files and **keeps** every
+`source: "file"` entry you've added.
+
+## Naming convention
+
+| Key pattern | Asset |
+|---|---|
+| `chr_<classId>` | Player class sprite sheet |
+| `npc_<npcId>` | NPC sprite sheet |
+| `portrait_<npcId>` | NPC dialogue portrait |
+| `mon_<monsterId>` | Monster sprite sheet |
+| `map_<mapId>_ground` / `_walls` / `_above` | Map layer artwork (full map size, 32 px per tile) |
+| `obj_<tilesetId>_<objectKind>_<variant>` | World object (tree, rock, well, etc.) |
+| `icon_item_<itemId>` / `icon_skill_<skillId>` | 32×32 icons (also used by the HTML UI) |
+| `fx_<name>` | Particle / effect texture |
+| `bgm_<trackId>` / `sfx_<name>` | Audio (reserved; the Phase 1 audio is synthesized) |
+
+## Sprite contracts
+
+### Characters (`chr_*`, `npc_*`)
+- Frame: **48 × 64 px**, transparent background, 16 columns × 4 rows.
+- Rows (directions): `down`, `left`, `right`, `up`.
+- Columns (animations):
+
+| Animation | Start column | Frames | Frame ms | Loop |
+|---|---|---|---|---|
+| idle | 0 | 2 | 520 | yes |
+| walk | 2 | 4 | 130 | yes |
+| attack | 6 | 3 | 90 | no |
+| cast | 9 | 3 | 160 | yes |
+| hit | 12 | 1 | 200 | no |
+| death | 13 | 3 | 220 | no |
+
+- Pivot / origin: `(0.5, 0.9375)`, so the feet sit at y = 60.
+- Collision box: 18 × 12 px centred on the feet (`CHAR_COLLISION_BOX`).
+- Source of truth: `src/game/art/spriteMeta.ts`.
+
+### Monsters (`mon_*`)
+- One row facing **left** (the game mirrors it for right), with 13 columns.
+- Frame size comes from `art.w` / `art.h` in `src/data/monsters.json`.
+- Animations: idle (0, 2), walk (2, 4), attack (6, 3), hit (9, 1), death (10, 3).
+- Pivot `(0.5, 1)`. The collision radius is `collisionRadius` in the monster data.
+
+### Map layers
+Maps are data (`src/data/maps/*.json`) that the compiler (`src/core/mapCompiler.ts`) turns into
+these layers:
+
+1. **Ground**, 2. **Ground decoration**: composed into `map_<id>_ground`
+3. **Walls / buildings**: `map_<id>_walls`, plus y-sorted building sprites
+4. **Objects**: y-sorted sprites (trees, rocks, crates…)
+5. **Above player**: `map_<id>_above` (the canopy overhang that's drawn over characters)
+6. **Collision**: derived from the same tile and object definitions the art uses, so it always matches the artwork
+7. **Spawn points**, 8. **Interaction zones**, 9. **Teleport portals**: data in the map JSON
+
+Replacement map art has to keep the same tile grid, because collision comes from the data and not
+from the image. To check alignment, turn on *Settings → Show collision / spawn debug overlay*.
+
+## Production targets (long term)
+See section 30 of the master spec: 30 maps, 18 class sprite sets, 60 monsters, 18 bosses, 25 NPCs,
+120 equipment sets, 60 card artworks, 150 skill icons, and 80 effects. The manifest is the
+checklist: every entry that still says `"placeholder": true` still needs real art.
