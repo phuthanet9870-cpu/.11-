@@ -1,0 +1,117 @@
+{
+  "$comment": "All tunable balance values. Formulas in src/core/formulas.ts read from here; change numbers here, not in code.",
+  "levels": {
+    "maxBaseLevel": 120,
+    "baseExp": {
+      "a": 15,
+      "b": 1.75,
+      "c": 10
+    },
+    "jobExp": {
+      "a": 10,
+      "b": 1.6,
+      "c": 8
+    },
+    "statPointsPerLevel": {
+      "base": 3,
+      "perFiveLevels": 1
+    },
+    "skillPointsPerJobLevel": 1,
+    "startingStats": {
+      "str": 5,
+      "agi": 5,
+      "vit": 5,
+      "int": 5,
+      "dex": 5,
+      "luk": 5
+    },
+    "startingStatPoints": 6,
+    "maxStat": 99,
+    "deathExpPenaltyPct": 1,
+    "firstJobLevel": 10,
+    "advancedJob": {
+      "baseLevel": 50,
+      "jobLevel": 40
+    }
+  },
+  "stats": {
+    "hpBase": 40,
+    "hpVitPct": 1.0,
+    "mpBase": 10,
+    "mpIntPct": 1.0,
+    "patkStr": 2,
+    "patkDexDiv": 5,
+    "patkLukDiv": 5,
+    "patkLevelDiv": 4,
+    "matkInt": 2.2,
+    "matkDexDiv": 5,
+    "matkLevelDiv": 4,
+    "pdefVit": 1,
+    "mdefInt": 0.5,
+    "mdefVit": 0.2,
+    "hitBase": 0,
+    "hitDex": 1,
+    "fleeAgi": 1,
+    "fleeLuk": 0.2,
+    "critBase": 1,
+    "critLuk": 0.3,
+    "critDmgBase": 150,
+    "aspdAgiPct": 0.6,
+    "aspdDexPct": 0.1,
+    "minAttackIntervalMs": 280,
+    "moveSpeed": 130,
+    "castDexDivisor": 150,
+    "hpRegenVitDiv": 5,
+    "hpRegenPctMax": 0.02,
+    "mpRegenIntDiv": 6,
+    "mpRegenPctMax": 0.02,
+    "regenIntervalMs": 4000,
+    "weightBase": 2000,
+    "weightStr": 30,
+    "overweightRegenStopPct": 70,
+    "outOfCombatRegenMul": 3
+  },
+  "combat": {
+    "hitChanceBase": 80,
+    "hitChanceMin": 5,
+    "hitChanceMax": 97,
+    "defenseConstant": 100,
+    "variance": [
+      0.92,
+      1.08
+    ],
+    "critIgnoresDefense": true,
+    "meleeRange": 52,
+    "unarmedAtk": 4,
+    "monsterHitPerLevel": 1.5,
+    "monsterHitBase": 18,
+    "monsterFleePerLevel": 1.0,
+    "monsterFleeBase": 5,
+    "knockbackMs": 180,
+    "aggroRange": 220,
+    "leashRange": 520,
+    "assistRange": 150,
+    "returnRegenPctPerSec": 0.25,
+    "groundItemLifetimeMs": 90000,
+    "pickupRange": 48,
+    "combatTagMs": 5000,
+    "playerRespawnHpPct": 0.5,
+    "deathSlowmoMs": 1500,
+    "projectileSpeed": 520,
+    "assistMax": 2
+  },
+  "economy": {
+    "sellPriceRatio": 0.5,
+    "storageFee": 20,
+    "storageSlots": 120,
+    "inventorySlots": 60,
+    "startingLuma": 150
+  },
+  "boss": {
+    "enrageWarningMs": 5000,
+    "telegraphColor": "#ff3b30"
+  },
+  "save": {
+    "autosaveIntervalMs": 30000
+  }
+}

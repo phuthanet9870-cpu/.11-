@@ -1,0 +1,15 @@
+{
+  "$comment": "Element damage modifier (%). rows = attacking element, columns = defending element. Tune freely.",
+  "order": ["neutral", "fire", "water", "wind", "earth", "holy", "shadow", "poison", "undead"],
+  "table": {
+    "neutral": { "neutral": 100, "fire": 100, "water": 100, "wind": 100, "earth": 100, "holy": 100, "shadow": 100, "poison": 100, "undead": 100 },
+    "fire":    { "neutral": 100, "fire": 25,  "water": 50,  "wind": 100, "earth": 150, "holy": 100, "shadow": 100, "poison": 100, "undead": 125 },
+    "water":   { "neutral": 100, "fire": 150, "water": 25,  "wind": 50,  "earth": 100, "holy": 100, "shadow": 100, "poison": 100, "undead": 100 },
+    "wind":    { "neutral": 100, "fire": 100, "water": 150, "wind": 25,  "earth": 50,  "holy": 100, "shadow": 100, "poison": 100, "undead": 100 },
+    "earth":   { "neutral": 100, "fire": 50,  "water": 100, "wind": 150, "earth": 25,  "holy": 100, "shadow": 100, "poison": 100, "undead": 100 },
+    "holy":    { "neutral": 100, "fire": 100, "water": 100, "wind": 100, "earth": 100, "holy": 0,   "shadow": 150, "poison": 100, "undead": 175 },
+    "shadow":  { "neutral": 100, "fire": 100, "water": 100, "wind": 100, "earth": 100, "holy": 150, "shadow": 0,   "poison": 75,  "undead": 25 },
+    "poison":  { "neutral": 100, "fire": 100, "water": 100, "wind": 100, "earth": 125, "holy": 75,  "shadow": 75,  "poison": 0,   "undead": 25 },
+    "undead":  { "neutral": 100, "fire": 100, "water": 100, "wind": 100, "earth": 100, "holy": 125, "shadow": 25,  "poison": 50,  "undead": 0 }
+  }
+}

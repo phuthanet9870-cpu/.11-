@@ -1,0 +1,15 @@
+[
+  { "id": "willowbrook", "name": "Willowbrook Village",
+    "palette": { "grass1": "#5fae4a", "grass2": "#6cbf55", "grass3": "#4f9a3e", "dirt1": "#b48a5a", "dirt2": "#9a7448", "stone1": "#b9b2a4", "stone2": "#9a9386",
+      "water1": "#3a8ad8", "water2": "#5aa8ee", "sand1": "#e2cf96", "thicket1": "#2f6a35", "thicket2": "#245a2b", "leaf1": "#4f9a3e", "leaf2": "#6cbf55",
+      "trunk": "#6a4a2a", "flower1": "#ff7aa8", "flower2": "#ffe14d", "flower3": "#ffffff", "fence": "#8b5a2b", "accent": "#e8dcc0", "shadow": "#00000033" } },
+  { "id": "sunny_meadow", "name": "Sunny Meadow",
+    "palette": { "grass1": "#7cc456", "grass2": "#8fd666", "grass3": "#68b046", "dirt1": "#c49a62", "dirt2": "#a8804e", "stone1": "#c2bcae", "stone2": "#a29c90",
+      "water1": "#3a9ae0", "water2": "#6ac0f4", "sand1": "#ead9a0", "thicket1": "#3f7f3a", "thicket2": "#326c2e", "leaf1": "#5fae4a", "leaf2": "#8fd666",
+      "trunk": "#7a5634", "flower1": "#ffd34d", "flower2": "#ff8ad8", "flower3": "#9ad8ff", "fence": "#9a6a3a", "accent": "#f2ead8", "soil1": "#7a5634", "soil2": "#634428", "shadow": "#00000033" } },
+  { "id": "whispering_forest", "name": "Whispering Forest",
+    "palette": { "grass1": "#3f7a3a", "grass2": "#4a8a42", "grass3": "#346a30", "dirt1": "#7a6040", "dirt2": "#655034", "stone1": "#8a8a8a", "stone2": "#6e6e72",
+      "water1": "#2a6a9a", "water2": "#3a8aba", "sand1": "#b8a678", "thicket1": "#1f4a24", "thicket2": "#173a1c", "leaf1": "#2f6a35", "leaf2": "#3f8a40",
+      "trunk": "#4a3220", "flower1": "#c9a6ff", "flower2": "#7fd6ff", "flower3": "#a9e04a", "fence": "#5a4028", "accent": "#a9e04a",
+      "floor1": "#3a5a30", "floor2": "#33502b", "ruin1": "#8a8a90", "ruin2": "#6a6a74", "thorn1": "#4a3a2a", "thorn2": "#5a7a2e", "shadow": "#00000044" } }
+]

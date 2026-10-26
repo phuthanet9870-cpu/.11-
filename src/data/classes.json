@@ -1,0 +1,144 @@
+[
+ {
+  "id": "novice",
+  "name": "Novice",
+  "tier": 0,
+  "role": "Beginner",
+  "description": "Every legend in Veyloria begins as a Novice from Willowbrook.",
+  "maxJobLevel": 10,
+  "hpPerLevel": 8,
+  "mpPerLevel": 2,
+  "baseAttackIntervalMs": 1050,
+  "weaponTypes": [
+   "dagger",
+   "club"
+  ],
+  "skills": [
+   "basic_training",
+   "first_aid"
+  ],
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#7a5634",
+   "accent": "#e8dcc0",
+   "style": "tunic"
+  }
+ },
+ {
+  "id": "knight",
+  "name": "Knight",
+  "tier": 1,
+  "role": "Tank / Melee DPS",
+  "parent": "novice",
+  "description": "Sworn defenders who hold the line with sword, spear and shield.",
+  "maxJobLevel": 50,
+  "hpPerLevel": 15,
+  "mpPerLevel": 3,
+  "baseAttackIntervalMs": 920,
+  "weaponTypes": [
+   "dagger",
+   "club",
+   "sword",
+   "spear",
+   "twohand_sword"
+  ],
+  "skills": [
+   "bash",
+   "provoke",
+   "shield_guard",
+   "sword_mastery",
+   "spiral_pierce",
+   "war_cry",
+   "counter_attack",
+   "blade_storm"
+  ],
+  "requirements": {
+   "jobLevel": 10,
+   "fromClass": "novice",
+   "questId": "job_knight"
+  },
+  "outfit": {
+   "primary": "#4a6fa5",
+   "secondary": "#b8c4d6",
+   "accent": "#e2c14f",
+   "style": "plate"
+  }
+ },
+ {
+  "id": "ranger",
+  "name": "Ranger",
+  "tier": 1,
+  "role": "Ranged DPS / Trapper",
+  "parent": "novice",
+  "description": "Keen-eyed hunters of the wilds who strike from afar and lay cunning traps.",
+  "maxJobLevel": 50,
+  "hpPerLevel": 10,
+  "mpPerLevel": 4,
+  "baseAttackIntervalMs": 960,
+  "weaponTypes": [
+   "dagger",
+   "bow",
+   "crossbow"
+  ],
+  "skills": [
+   "double_shot",
+   "arrow_rain",
+   "falcon_strike",
+   "wind_trap",
+   "eagle_eye",
+   "rapid_fire",
+   "camouflage",
+   "piercing_arrow"
+  ],
+  "requirements": {
+   "jobLevel": 10,
+   "fromClass": "novice",
+   "questId": "job_ranger"
+  },
+  "outfit": {
+   "primary": "#3f7a45",
+   "secondary": "#8b6b3e",
+   "accent": "#d9c27a",
+   "style": "hood"
+  }
+ },
+ {
+  "id": "mage",
+  "name": "Mage",
+  "tier": 1,
+  "role": "Magic DPS / Area Control",
+  "parent": "novice",
+  "description": "Scholars of the Astral Runes who bend fire, frost and lightning to their will.",
+  "maxJobLevel": 50,
+  "hpPerLevel": 7,
+  "mpPerLevel": 9,
+  "baseAttackIntervalMs": 1100,
+  "weaponTypes": [
+   "dagger",
+   "wand",
+   "staff"
+  ],
+  "skills": [
+   "fire_bolt",
+   "ice_bolt",
+   "lightning_bolt",
+   "fire_wall",
+   "frost_nova",
+   "thunderstorm",
+   "meteor",
+   "mana_shield",
+   "astral_attunement"
+  ],
+  "requirements": {
+   "jobLevel": 10,
+   "fromClass": "novice",
+   "questId": "job_mage"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#2b2347",
+   "accent": "#7fd6ff",
+   "style": "robe"
+  }
+ }
+]

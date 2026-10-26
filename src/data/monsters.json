@@ -1,0 +1,342 @@
+[
+ {
+  "id": "leaf_slime",
+  "name": "Leaf Slime",
+  "level": 1,
+  "element": "earth",
+  "race": "plant",
+  "size": "small",
+  "maxHp": 80,
+  "attack": 8,
+  "defense": 2,
+  "magicDefense": 0,
+  "exp": 12,
+  "jobExp": 8,
+  "attackRange": 35,
+  "attackIntervalMs": 1600,
+  "moveSpeed": 45,
+  "aiType": "passive",
+  "respawnSeconds": 12,
+  "dropTableId": "leaf_slime_drops",
+  "collisionRadius": 12,
+  "art": {
+   "shape": "slime",
+   "w": 40,
+   "h": 36,
+   "colors": [
+    "#7ccf5a",
+    "#4f9a3a",
+    "#e8ffd0"
+   ]
+  }
+ },
+ {
+  "id": "horn_rabbit",
+  "name": "Horn Rabbit",
+  "level": 3,
+  "element": "neutral",
+  "race": "beast",
+  "size": "small",
+  "maxHp": 140,
+  "attack": 11,
+  "defense": 4,
+  "magicDefense": 2,
+  "exp": 22,
+  "jobExp": 15,
+  "flee": 14,
+  "attackRange": 38,
+  "attackIntervalMs": 1300,
+  "moveSpeed": 85,
+  "aiType": "passive",
+  "aiFlags": [
+   "assist"
+  ],
+  "respawnSeconds": 14,
+  "dropTableId": "horn_rabbit_drops",
+  "collisionRadius": 12,
+  "art": {
+   "shape": "rabbit",
+   "w": 40,
+   "h": 40,
+   "colors": [
+    "#f2ead8",
+    "#c9b89a",
+    "#efe2c0"
+   ]
+  }
+ },
+ {
+  "id": "mushling",
+  "name": "Mushling",
+  "level": 5,
+  "element": "earth",
+  "race": "plant",
+  "size": "small",
+  "maxHp": 230,
+  "attack": 16,
+  "defense": 8,
+  "magicDefense": 4,
+  "exp": 38,
+  "jobExp": 26,
+  "attackRange": 38,
+  "attackIntervalMs": 1500,
+  "moveSpeed": 55,
+  "aiType": "assist",
+  "respawnSeconds": 15,
+  "dropTableId": "mushling_drops",
+  "collisionRadius": 13,
+  "onHitStatus": {
+   "status": "sleep",
+   "chance": 0.04,
+   "durationMs": 2500
+  },
+  "art": {
+   "shape": "mushroom",
+   "w": 40,
+   "h": 44,
+   "colors": [
+    "#d84a3a",
+    "#fff0e0",
+    "#f2d2b0"
+   ]
+  }
+ },
+ {
+  "id": "buzz_wasp",
+  "name": "Buzz Wasp",
+  "level": 7,
+  "element": "wind",
+  "race": "insect",
+  "size": "small",
+  "maxHp": 280,
+  "attack": 22,
+  "defense": 6,
+  "magicDefense": 4,
+  "exp": 58,
+  "jobExp": 40,
+  "flee": 28,
+  "attackRange": 40,
+  "attackIntervalMs": 1100,
+  "moveSpeed": 110,
+  "aiType": "aggressive",
+  "aggroRange": 200,
+  "respawnSeconds": 16,
+  "dropTableId": "buzz_wasp_drops",
+  "collisionRadius": 12,
+  "onHitStatus": {
+   "status": "poison",
+   "chance": 0.08,
+   "durationMs": 6000
+  },
+  "art": {
+   "shape": "wasp",
+   "w": 40,
+   "h": 40,
+   "colors": [
+    "#f2c12e",
+    "#2b2b2b",
+    "#d8f0ff"
+   ]
+  }
+ },
+ {
+  "id": "forest_goblin",
+  "name": "Forest Goblin",
+  "level": 9,
+  "element": "neutral",
+  "race": "humanoid",
+  "size": "medium",
+  "maxHp": 340,
+  "attack": 24,
+  "defense": 12,
+  "magicDefense": 6,
+  "exp": 85,
+  "jobExp": 60,
+  "attackRange": 46,
+  "attackIntervalMs": 1400,
+  "moveSpeed": 80,
+  "aiType": "aggressive",
+  "aggroRange": 150,
+  "respawnSeconds": 18,
+  "dropTableId": "forest_goblin_drops",
+  "collisionRadius": 14,
+  "art": {
+   "shape": "goblin",
+   "w": 44,
+   "h": 52,
+   "colors": [
+    "#6f9a3a",
+    "#6a4a2a",
+    "#c83a3a"
+   ]
+  }
+ },
+ {
+  "id": "venom_spore",
+  "name": "Venom Spore",
+  "level": 11,
+  "element": "poison",
+  "race": "plant",
+  "size": "small",
+  "maxHp": 380,
+  "attack": 24,
+  "magicAttack": 32,
+  "defense": 8,
+  "magicDefense": 20,
+  "exp": 105,
+  "jobExp": 78,
+  "attackRange": 190,
+  "attackIntervalMs": 2200,
+  "moveSpeed": 40,
+  "aiType": "magic",
+  "aggroRange": 150,
+  "respawnSeconds": 18,
+  "dropTableId": "venom_spore_drops",
+  "collisionRadius": 13,
+  "projectile": {
+   "element": "poison",
+   "color": "#a9e04a"
+  },
+  "onHitStatus": {
+   "status": "poison",
+   "chance": 0.25,
+   "durationMs": 8000
+  },
+  "statusImmune": [
+   "poison"
+  ],
+  "art": {
+   "shape": "spore",
+   "w": 40,
+   "h": 44,
+   "colors": [
+    "#8a4fbf",
+    "#a9e04a",
+    "#f2e0ff"
+   ]
+  }
+ },
+ {
+  "id": "thorn_wolf",
+  "name": "Thorn Wolf",
+  "level": 13,
+  "element": "earth",
+  "race": "beast",
+  "size": "medium",
+  "maxHp": 640,
+  "attack": 44,
+  "defense": 16,
+  "magicDefense": 8,
+  "exp": 140,
+  "jobExp": 100,
+  "flee": 30,
+  "attackRange": 44,
+  "attackIntervalMs": 1150,
+  "moveSpeed": 120,
+  "aiType": "aggressive",
+  "aggroRange": 240,
+  "respawnSeconds": 20,
+  "dropTableId": "thorn_wolf_drops",
+  "collisionRadius": 15,
+  "onHitStatus": {
+   "status": "bleed",
+   "chance": 0.1,
+   "durationMs": 6000
+  },
+  "art": {
+   "shape": "wolf",
+   "w": 56,
+   "h": 44,
+   "colors": [
+    "#7a6a52",
+    "#4a3f32",
+    "#7fd65a"
+   ]
+  }
+ },
+ {
+  "id": "bone_soldier",
+  "name": "Bone Soldier",
+  "level": 15,
+  "element": "undead",
+  "race": "undead",
+  "size": "medium",
+  "maxHp": 820,
+  "attack": 52,
+  "defense": 26,
+  "magicDefense": 10,
+  "exp": 185,
+  "jobExp": 130,
+  "attackRange": 50,
+  "attackIntervalMs": 1500,
+  "moveSpeed": 70,
+  "aiType": "aggressive",
+  "aggroRange": 220,
+  "respawnSeconds": 22,
+  "dropTableId": "bone_soldier_drops",
+  "collisionRadius": 14,
+  "onHitStatus": {
+   "status": "curse",
+   "chance": 0.05,
+   "durationMs": 6000
+  },
+  "statusImmune": [
+   "poison",
+   "sleep",
+   "blind",
+   "bleed"
+  ],
+  "art": {
+   "shape": "skeleton",
+   "w": 44,
+   "h": 56,
+   "colors": [
+    "#e9e4d4",
+    "#5a5a6a",
+    "#7fb0ff"
+   ]
+  }
+ },
+ {
+  "id": "grukk_thornking",
+  "name": "Grukk the Thornking",
+  "level": 20,
+  "element": "earth",
+  "race": "humanoid",
+  "size": "large",
+  "maxHp": 6500,
+  "attack": 64,
+  "defense": 30,
+  "magicDefense": 20,
+  "hit": 60,
+  "flee": 20,
+  "exp": 3200,
+  "jobExp": 2200,
+  "attackRange": 62,
+  "attackIntervalMs": 1700,
+  "moveSpeed": 75,
+  "aiType": "boss",
+  "aggroRange": 260,
+  "leashRange": 640,
+  "respawnSeconds": 300,
+  "dropTableId": "grukk_drops",
+  "collisionRadius": 24,
+  "bossId": "grukk",
+  "statusImmune": [
+   "stun",
+   "freeze",
+   "sleep",
+   "silence"
+  ],
+  "art": {
+   "shape": "goblin_king",
+   "w": 96,
+   "h": 104,
+   "colors": [
+    "#557a2e",
+    "#4a3220",
+    "#f2d23a"
+   ]
+  }
+ }
+]

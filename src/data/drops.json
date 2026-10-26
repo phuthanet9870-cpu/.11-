@@ -1,0 +1,22 @@
+[
+  { "id": "leaf_slime_drops", "luma": [2, 6], "entries": [
+    { "itemId": "jelly", "chance": 0.7 }, { "itemId": "meadow_apple", "chance": 0.15 }, { "itemId": "red_potion", "chance": 0.05 }, { "itemId": "leaf_cap", "chance": 0.004 } ] },
+  { "id": "horn_rabbit_drops", "luma": [4, 10], "entries": [
+    { "itemId": "rabbit_horn", "chance": 0.6 }, { "itemId": "meadow_apple", "chance": 0.2 }, { "itemId": "red_potion", "chance": 0.06 }, { "itemId": "clover_charm", "chance": 0.003 } ] },
+  { "id": "mushling_drops", "luma": [6, 14], "entries": [
+    { "itemId": "mushling_cap", "chance": 0.6 }, { "itemId": "red_potion", "chance": 0.08 }, { "itemId": "green_potion", "chance": 0.05 }, { "itemId": "sandals", "chance": 0.01 } ] },
+  { "id": "buzz_wasp_drops", "luma": [8, 18], "entries": [
+    { "itemId": "wasp_stinger", "chance": 0.55 }, { "itemId": "green_potion", "chance": 0.08 }, { "itemId": "red_potion", "chance": 0.08 }, { "itemId": "swift_boots", "chance": 0.002 } ] },
+  { "id": "forest_goblin_drops", "luma": [12, 26], "entries": [
+    { "itemId": "goblin_fang", "chance": 0.55 }, { "itemId": "orange_potion", "chance": 0.06 }, { "itemId": "oak_club", "chance": 0.02 }, { "itemId": "goblin_mask", "chance": 0.006 }, { "itemId": "astral_shard", "chance": 0.01 } ] },
+  { "id": "venom_spore_drops", "luma": [12, 28], "entries": [
+    { "itemId": "spore_dust", "chance": 0.6 }, { "itemId": "green_potion", "chance": 0.12 }, { "itemId": "blue_potion", "chance": 0.03 }, { "itemId": "sapphire_pendant", "chance": 0.004 } ] },
+  { "id": "thorn_wolf_drops", "luma": [16, 34], "entries": [
+    { "itemId": "wolf_pelt", "chance": 0.5 }, { "itemId": "orange_potion", "chance": 0.08 }, { "itemId": "wolfhide_cloak", "chance": 0.006 }, { "itemId": "astral_shard", "chance": 0.015 } ] },
+  { "id": "bone_soldier_drops", "luma": [20, 40], "entries": [
+    { "itemId": "old_bone", "chance": 0.55 }, { "itemId": "orange_potion", "chance": 0.1 }, { "itemId": "iron_helm", "chance": 0.008 }, { "itemId": "bone_earring", "chance": 0.005 }, { "itemId": "astral_shard", "chance": 0.02 } ] },
+  { "id": "grukk_drops", "luma": [600, 900], "entries": [
+    { "itemId": "thorn_crown", "chance": 1.0 }, { "itemId": "yellow_potion", "chance": 1.0, "min": 2, "max": 4 }, { "itemId": "astral_shard", "chance": 0.8, "min": 1, "max": 3 },
+    { "itemId": "thornbane_blade", "chance": 0.25 }, { "itemId": "thornwood_longbow", "chance": 0.25 }, { "itemId": "thornheart_staff", "chance": 0.25 },
+    { "itemId": "goblin_mask", "chance": 0.3 }, { "itemId": "wolfhide_cloak", "chance": 0.2 } ] }
+]

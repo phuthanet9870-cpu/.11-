@@ -1,0 +1,977 @@
+[
+ {
+  "id": "basic_training",
+  "name": "Basic Training",
+  "classId": "novice",
+  "kind": "passive",
+  "targeting": "passive",
+  "description": "Fundamental adventuring drills. +6 Max HP and +1 Accuracy per level.",
+  "maxLevel": 5,
+  "range": 0,
+  "mpCost": 0,
+  "mpCostPerLevel": 0,
+  "castTimeMs": 0,
+  "cooldownMs": 0,
+  "passive": {
+   "maxHp": 6,
+   "hit": 1
+  },
+  "effects": [],
+  "fx": "none",
+  "icon": {
+   "glyph": "BT",
+   "color": "#c8a26b"
+  }
+ },
+ {
+  "id": "first_aid",
+  "name": "First Aid",
+  "classId": "novice",
+  "kind": "active",
+  "targeting": "self",
+  "description": "Patch up wounds, restoring a small amount of HP.",
+  "maxLevel": 3,
+  "range": 0,
+  "mpCost": 3,
+  "mpCostPerLevel": 0,
+  "castTimeMs": 0,
+  "cooldownMs": 4000,
+  "effects": [
+   {
+    "type": "heal",
+    "base": 10,
+    "perLevel": 8,
+    "intScale": 0.5
+   }
+  ],
+  "fx": "heal",
+  "icon": {
+   "glyph": "+",
+   "color": "#6fe08a"
+  }
+ },
+ {
+  "id": "bash",
+  "name": "Bash",
+  "classId": "knight",
+  "kind": "active",
+  "targeting": "enemy",
+  "description": "A powerful strike. Higher levels can stun the target.",
+  "maxLevel": 10,
+  "range": 60,
+  "mpCost": 6,
+  "mpCostPerLevel": 1,
+  "castTimeMs": 0,
+  "cooldownMs": 700,
+  "effects": [
+   {
+    "type": "damage",
+    "kind": "physical",
+    "multiplier": 1.3,
+    "perLevel": 0.3,
+    "element": "weapon"
+   },
+   {
+    "type": "status",
+    "status": "stun",
+    "chance": 0,
+    "perLevel": 0.03,
+    "durationMs": 1500
+   }
+  ],
+  "fx": "slash",
+  "icon": {
+   "glyph": "Ba",
+   "color": "#e05a4a"
+  }
+ },
+ {
+  "id": "provoke",
+  "name": "Provoke",
+  "classId": "knight",
+  "kind": "active",
+  "targeting": "enemy",
+  "description": "Taunts the target and nearby monsters, forcing them to attack you.",
+  "maxLevel": 5,
+  "range": 260,
+  "mpCost": 4,
+  "mpCostPerLevel": 0,
+  "castTimeMs": 0,
+  "cooldownMs": 3000,
+  "effects": [
+   {
+    "type": "taunt",
+    "radius": 140
+   }
+  ],
+  "fx": "shout",
+  "icon": {
+   "glyph": "Pv",
+   "color": "#ff8d3a"
+  }
+ },
+ {
+  "id": "shield_guard",
+  "name": "Shield Guard",
+  "classId": "knight",
+  "kind": "buff",
+  "targeting": "self",
+  "description": "Brace behind your guard, greatly increasing defense.",
+  "maxLevel": 5,
+  "range": 0,
+  "mpCost": 12,
+  "mpCostPerLevel": 2,
+  "castTimeMs": 0,
+  "cooldownMs": 20000,
+  "requires": [
+   {
+    "skillId": "bash",
+    "level": 2
+   }
+  ],
+  "effects": [
+   {
+    "type": "buff",
+    "buffId": "shield_guard",
+    "durationMs": 20000,
+    "perLevelMs": 2000,
+    "mods": {
+     "pdef": 5,
+     "pdefPct": 10
+    },
+    "modsPerLevel": {
+     "pdef": 4,
+     "pdefPct": 5
+    }
+   }
+  ],
+  "fx": "holy",
+  "icon": {
+   "glyph": "SG",
+   "color": "#7fb0ff"
+  }
+ },
+ {
+  "id": "sword_mastery",
+  "name": "Sword Mastery",
+  "classId": "knight",
+  "kind": "passive",
+  "targeting": "passive",
+  "description": "Weapon discipline. +4 Physical Attack and +1 Accuracy per level.",
+  "maxLevel": 10,
+  "range": 0,
+  "mpCost": 0,
+  "mpCostPerLevel": 0,
+  "castTimeMs": 0,
+  "cooldownMs": 0,
+  "passive": {
+   "patk": 4,
+   "hit": 1
+  },
+  "effects": [],
+  "fx": "none",
+  "icon": {
+   "glyph": "SM",
+   "color": "#c0c8d8"
+  }
+ },
+ {
+  "id": "spiral_pierce",
+  "name": "Spiral Pierce",
+  "classId": "knight",
+  "kind": "active",
+  "targeting": "enemy",
+  "description": "A spinning thrust that pierces armor and knocks the target back.",
+  "maxLevel": 10,
+  "range": 110,
+  "mpCost": 14,
+  "mpCostPerLevel": 1,
+  "castTimeMs": 300,
+  "cooldownMs": 2500,
+  "requires": [
+   {
+    "skillId": "bash",
+    "level": 5
+   }
+  ],
+  "effects": [
+   {
+    "type": "damage",
+    "kind": "physical",
+    "multiplier": 2.0,
+    "perLevel": 0.35,
+    "element": "weapon",
+    "ignoreDefPct": 30
+   },
+   {
+    "type": "knockback",
+    "distance": 64
+   }
+  ],
+  "fx": "pierce",
+  "icon": {
+   "glyph": "SP",
+   "color": "#ffd34d"
+  }
+ },
+ {
+  "id": "war_cry",
+  "name": "War Cry",
+  "classId": "knight",
+  "kind": "buff",
+  "targeting": "self",
+  "description": "A rallying shout that raises the attack of you and nearby allies.",
+  "maxLevel": 5,
+  "range": 0,
+  "mpCost": 20,
+  "mpCostPerLevel": 2,
+  "castTimeMs": 0,
+  "cooldownMs": 30000,
+  "requires": [
+   {
+    "skillId": "provoke",
+    "level": 3
+   }
+  ],
+  "effects": [
+   {
+    "type": "buff",
+    "buffId": "war_cry",
+    "durationMs": 45000,
+    "radius": 260,
+    "mods": {
+     "patkPct": 5
+    },
+    "modsPerLevel": {
+     "patkPct": 3
+    }
+   }
+  ],
+  "fx": "shout",
+  "icon": {
+   "glyph": "WC",
+   "color": "#ff5a3a"
+  }
+ },
+ {
+  "id": "counter_attack",
+  "name": "Counter Attack",
+  "classId": "knight",
+  "kind": "buff",
+  "targeting": "self",
+  "description": "Enter a counter stance: chance to strike back whenever hit in melee.",
+  "maxLevel": 5,
+  "range": 0,
+  "mpCost": 15,
+  "mpCostPerLevel": 1,
+  "castTimeMs": 0,
+  "cooldownMs": 25000,
+  "requires": [
+   {
+    "skillId": "shield_guard",
+    "level": 2
+   }
+  ],
+  "effects": [
+   {
+    "type": "buff",
+    "buffId": "counter_attack",
+    "durationMs": 20000,
+    "mods": {
+     "counterChance": 15
+    },
+    "modsPerLevel": {
+     "counterChance": 7
+    }
+   }
+  ],
+  "fx": "slash",
+  "icon": {
+   "glyph": "CA",
+   "color": "#e8e8e8"
+  }
+ },
+ {
+  "id": "blade_storm",
+  "name": "Blade Storm",
+  "classId": "knight",
+  "kind": "ultimate",
+  "targeting": "self",
+  "description": "ULTIMATE. Spin into a storm of steel, striking all nearby foes three times.",
+  "maxLevel": 5,
+  "range": 0,
+  "mpCost": 40,
+  "mpCostPerLevel": 5,
+  "castTimeMs": 400,
+  "cooldownMs": 18000,
+  "requiresJobLevel": 20,
+  "requires": [
+   {
+    "skillId": "spiral_pierce",
+    "level": 3
+   },
+   {
+    "skillId": "war_cry",
+    "level": 1
+   }
+  ],
+  "effects": [
+   {
+    "type": "damage",
+    "kind": "physical",
+    "multiplier": 1.3,
+    "perLevel": 0.2,
+    "element": "weapon",
+    "hits": 3,
+    "radius": 140
+   }
+  ],
+  "fx": "whirl",
+  "icon": {
+   "glyph": "BS",
+   "color": "#ffef8a"
+  }
+ },
+ {
+  "id": "double_shot",
+  "name": "Double Shot",
+  "classId": "ranger",
+  "kind": "active",
+  "targeting": "enemy",
+  "description": "Loose two arrows at once.",
+  "maxLevel": 10,
+  "range": 300,
+  "mpCost": 8,
+  "mpCostPerLevel": 1,
+  "castTimeMs": 0,
+  "cooldownMs": 600,
+  "effects": [
+   {
+    "type": "damage",
+    "kind": "physical",
+    "multiplier": 0.9,
+    "perLevel": 0.12,
+    "element": "weapon",
+    "hits": 2
+   }
+  ],
+  "fx": "arrow",
+  "icon": {
+   "glyph": "DS",
+   "color": "#9fe07a"
+  },
+  "requiresWeapon": [
+   "bow",
+   "crossbow"
+  ]
+ },
+ {
+  "id": "arrow_rain",
+  "name": "Arrow Rain",
+  "classId": "ranger",
+  "kind": "active",
+  "targeting": "ground",
+  "description": "Rain arrows on an area, striking every enemy inside.",
+  "maxLevel": 10,
+  "range": 300,
+  "mpCost": 15,
+  "mpCostPerLevel": 1,
+  "castTimeMs": 500,
+  "cooldownMs": 3000,
+  "requires": [
+   {
+    "skillId": "double_shot",
+    "level": 3
+   }
+  ],
+  "effects": [
+   {
+    "type": "damage",
+    "kind": "physical",
+    "multiplier": 1.2,
+    "perLevel": 0.2,
+    "element": "weapon",
+    "radius": 96
+   }
+  ],
+  "fx": "arrow_rain",
+  "icon": {
+   "glyph": "AR",
+   "color": "#7ad0e0"
+  },
+  "requiresWeapon": [
+   "bow",
+   "crossbow"
+  ]
+ },
+ {
+  "id": "falcon_strike",
+  "name": "Falcon Strike",
+  "classId": "ranger",
+  "kind": "active",
+  "targeting": "enemy",
+  "description": "Your falcon dives at the target. Never misses.",
+  "maxLevel": 10,
+  "range": 340,
+  "mpCost": 12,
+  "mpCostPerLevel": 1,
+  "castTimeMs": 0,
+  "cooldownMs": 2000,
+  "requires": [
+   {
+    "skillId": "eagle_eye",
+    "level": 2
+   }
+  ],
+  "effects": [
+   {
+    "type": "damage",
+    "kind": "physical",
+    "multiplier": 1.8,
+    "perLevel": 0.3,
+    "element": "neutral",
+    "alwaysHit": true
+   }
+  ],
+  "fx": "falcon",
+  "icon": {
+   "glyph": "FS",
+   "color": "#d8b46a"
+  }
+ },
+ {
+  "id": "wind_trap",
+  "name": "Wind Trap",
+  "classId": "ranger",
+  "kind": "active",
+  "targeting": "ground",
+  "description": "Set a whirling wind trap that damages and slows enemies passing over it.",
+  "maxLevel": 5,
+  "range": 200,
+  "mpCost": 14,
+  "mpCostPerLevel": 2,
+  "castTimeMs": 300,
+  "cooldownMs": 6000,
+  "requires": [
+   {
+    "skillId": "double_shot",
+    "level": 2
+   }
+  ],
+  "effects": [
+   {
+    "type": "groundZone",
+    "zoneId": "wind_trap",
+    "durationMs": 12000,
+    "radius": 64,
+    "tickMs": 700,
+    "kind": "physical",
+    "multiplier": 0.5,
+    "perLevel": 0.12,
+    "element": "wind",
+    "status": "slow",
+    "statusChance": 0.6,
+    "statusDurationMs": 3000
+   }
+  ],
+  "fx": "wind",
+  "icon": {
+   "glyph": "WT",
+   "color": "#b6f0d0"
+  }
+ },
+ {
+  "id": "eagle_eye",
+  "name": "Eagle Eye",
+  "classId": "ranger",
+  "kind": "passive",
+  "targeting": "passive",
+  "description": "Sharpened sight. +2 Accuracy, +1 Critical and +8 attack range per level.",
+  "maxLevel": 10,
+  "range": 0,
+  "mpCost": 0,
+  "mpCostPerLevel": 0,
+  "castTimeMs": 0,
+  "cooldownMs": 0,
+  "passive": {
+   "hit": 2,
+   "crit": 1,
+   "attackRange": 8
+  },
+  "effects": [],
+  "fx": "none",
+  "icon": {
+   "glyph": "EE",
+   "color": "#ffe27a"
+  }
+ },
+ {
+  "id": "rapid_fire",
+  "name": "Rapid Fire",
+  "classId": "ranger",
+  "kind": "buff",
+  "targeting": "self",
+  "description": "Fire arrows in rapid succession, increasing attack speed.",
+  "maxLevel": 5,
+  "range": 0,
+  "mpCost": 18,
+  "mpCostPerLevel": 2,
+  "castTimeMs": 0,
+  "cooldownMs": 30000,
+  "requires": [
+   {
+    "skillId": "double_shot",
+    "level": 4
+   }
+  ],
+  "effects": [
+   {
+    "type": "buff",
+    "buffId": "rapid_fire",
+    "durationMs": 30000,
+    "mods": {
+     "aspdPct": 10
+    },
+    "modsPerLevel": {
+     "aspdPct": 5
+    }
+   }
+  ],
+  "fx": "wind",
+  "icon": {
+   "glyph": "RF",
+   "color": "#ffa94d"
+  },
+  "requiresWeapon": [
+   "bow",
+   "crossbow"
+  ]
+ },
+ {
+  "id": "camouflage",
+  "name": "Camouflage",
+  "classId": "ranger",
+  "kind": "buff",
+  "targeting": "self",
+  "description": "Blend into the surroundings. Monsters lose track of you until you attack.",
+  "maxLevel": 5,
+  "range": 0,
+  "mpCost": 15,
+  "mpCostPerLevel": 0,
+  "castTimeMs": 0,
+  "cooldownMs": 20000,
+  "requires": [
+   {
+    "skillId": "eagle_eye",
+    "level": 3
+   }
+  ],
+  "effects": [
+   {
+    "type": "buff",
+    "buffId": "camouflage",
+    "durationMs": 8000,
+    "perLevelMs": 2000,
+    "mods": {
+     "stealth": 1,
+     "moveSpeedPct": -20
+    },
+    "flags": [
+     "breakOnAttack"
+    ]
+   }
+  ],
+  "fx": "shadow",
+  "icon": {
+   "glyph": "Cm",
+   "color": "#6f8f6f"
+  }
+ },
+ {
+  "id": "piercing_arrow",
+  "name": "Piercing Arrow",
+  "classId": "ranger",
+  "kind": "ultimate",
+  "targeting": "enemy",
+  "description": "ULTIMATE. A charged arrow that pierces through every enemy in a line.",
+  "maxLevel": 5,
+  "range": 360,
+  "mpCost": 35,
+  "mpCostPerLevel": 4,
+  "castTimeMs": 900,
+  "cooldownMs": 14000,
+  "requiresJobLevel": 20,
+  "requires": [
+   {
+    "skillId": "arrow_rain",
+    "level": 3
+   },
+   {
+    "skillId": "falcon_strike",
+    "level": 3
+   }
+  ],
+  "effects": [
+   {
+    "type": "line",
+    "length": 380,
+    "width": 44
+   },
+   {
+    "type": "damage",
+    "kind": "physical",
+    "multiplier": 2.6,
+    "perLevel": 0.5,
+    "element": "weapon",
+    "ignoreDefPct": 20
+   }
+  ],
+  "fx": "pierce",
+  "icon": {
+   "glyph": "PA",
+   "color": "#ffffff"
+  },
+  "requiresWeapon": [
+   "bow",
+   "crossbow"
+  ]
+ },
+ {
+  "id": "fire_bolt",
+  "name": "Fire Bolt",
+  "classId": "mage",
+  "kind": "active",
+  "targeting": "enemy",
+  "description": "Hurl a bolt of fire. Strong against earth.",
+  "maxLevel": 10,
+  "range": 300,
+  "mpCost": 8,
+  "mpCostPerLevel": 2,
+  "castTimeMs": 700,
+  "cooldownMs": 400,
+  "element": "fire",
+  "effects": [
+   {
+    "type": "damage",
+    "kind": "magic",
+    "multiplier": 1.2,
+    "perLevel": 0.35,
+    "element": "fire"
+   },
+   {
+    "type": "status",
+    "status": "burn",
+    "chance": 0.05,
+    "perLevel": 0.02,
+    "durationMs": 4000
+   }
+  ],
+  "fx": "fire",
+  "icon": {
+   "glyph": "Fi",
+   "color": "#ff6a2e"
+  }
+ },
+ {
+  "id": "ice_bolt",
+  "name": "Ice Bolt",
+  "classId": "mage",
+  "kind": "active",
+  "targeting": "enemy",
+  "description": "A shard of ice that can freeze the target. Strong against fire.",
+  "maxLevel": 10,
+  "range": 300,
+  "mpCost": 9,
+  "mpCostPerLevel": 2,
+  "castTimeMs": 700,
+  "cooldownMs": 400,
+  "element": "water",
+  "effects": [
+   {
+    "type": "damage",
+    "kind": "magic",
+    "multiplier": 1.1,
+    "perLevel": 0.32,
+    "element": "water"
+   },
+   {
+    "type": "status",
+    "status": "freeze",
+    "chance": 0.05,
+    "perLevel": 0.03,
+    "durationMs": 2500
+   }
+  ],
+  "fx": "ice",
+  "icon": {
+   "glyph": "Ic",
+   "color": "#7fd6ff"
+  }
+ },
+ {
+  "id": "lightning_bolt",
+  "name": "Lightning Bolt",
+  "classId": "mage",
+  "kind": "active",
+  "targeting": "enemy",
+  "description": "Call lightning onto the target. Strong against water.",
+  "maxLevel": 10,
+  "range": 300,
+  "mpCost": 10,
+  "mpCostPerLevel": 2,
+  "castTimeMs": 800,
+  "cooldownMs": 400,
+  "element": "wind",
+  "effects": [
+   {
+    "type": "damage",
+    "kind": "magic",
+    "multiplier": 1.3,
+    "perLevel": 0.36,
+    "element": "wind"
+   },
+   {
+    "type": "status",
+    "status": "stun",
+    "chance": 0.03,
+    "perLevel": 0.01,
+    "durationMs": 1000
+   }
+  ],
+  "fx": "lightning",
+  "icon": {
+   "glyph": "Li",
+   "color": "#ffe94d"
+  }
+ },
+ {
+  "id": "fire_wall",
+  "name": "Fire Wall",
+  "classId": "mage",
+  "kind": "active",
+  "targeting": "ground",
+  "description": "Ignite the ground. Enemies standing in the flames are burned repeatedly.",
+  "maxLevel": 10,
+  "range": 260,
+  "mpCost": 20,
+  "mpCostPerLevel": 2,
+  "castTimeMs": 600,
+  "cooldownMs": 5000,
+  "element": "fire",
+  "requires": [
+   {
+    "skillId": "fire_bolt",
+    "level": 4
+   }
+  ],
+  "effects": [
+   {
+    "type": "groundZone",
+    "zoneId": "fire_wall",
+    "durationMs": 7000,
+    "radius": 60,
+    "tickMs": 500,
+    "kind": "magic",
+    "multiplier": 0.45,
+    "perLevel": 0.08,
+    "element": "fire",
+    "status": "burn",
+    "statusChance": 0.15,
+    "statusDurationMs": 4000
+   }
+  ],
+  "fx": "fire",
+  "icon": {
+   "glyph": "FW",
+   "color": "#ff3d1e"
+  }
+ },
+ {
+  "id": "frost_nova",
+  "name": "Frost Nova",
+  "classId": "mage",
+  "kind": "active",
+  "targeting": "self",
+  "description": "Release a burst of frost around you that can freeze enemies in place.",
+  "maxLevel": 10,
+  "range": 0,
+  "mpCost": 24,
+  "mpCostPerLevel": 2,
+  "castTimeMs": 300,
+  "cooldownMs": 8000,
+  "element": "water",
+  "requires": [
+   {
+    "skillId": "ice_bolt",
+    "level": 3
+   }
+  ],
+  "effects": [
+   {
+    "type": "damage",
+    "kind": "magic",
+    "multiplier": 1.0,
+    "perLevel": 0.18,
+    "element": "water",
+    "radius": 120
+   },
+   {
+    "type": "status",
+    "status": "freeze",
+    "chance": 0.25,
+    "perLevel": 0.05,
+    "durationMs": 3000,
+    "radius": 120
+   }
+  ],
+  "fx": "ice",
+  "icon": {
+   "glyph": "FN",
+   "color": "#bdf0ff"
+  }
+ },
+ {
+  "id": "thunderstorm",
+  "name": "Thunderstorm",
+  "classId": "mage",
+  "kind": "active",
+  "targeting": "ground",
+  "description": "Summon a storm that strikes an area three times.",
+  "maxLevel": 10,
+  "range": 300,
+  "mpCost": 28,
+  "mpCostPerLevel": 3,
+  "castTimeMs": 1400,
+  "cooldownMs": 4000,
+  "element": "wind",
+  "requires": [
+   {
+    "skillId": "lightning_bolt",
+    "level": 4
+   }
+  ],
+  "effects": [
+   {
+    "type": "damage",
+    "kind": "magic",
+    "multiplier": 0.75,
+    "perLevel": 0.12,
+    "element": "wind",
+    "hits": 3,
+    "radius": 110
+   }
+  ],
+  "fx": "lightning",
+  "icon": {
+   "glyph": "TS",
+   "color": "#fff27a"
+  }
+ },
+ {
+  "id": "meteor",
+  "name": "Meteor",
+  "classId": "mage",
+  "kind": "ultimate",
+  "targeting": "ground",
+  "description": "ULTIMATE. Call down falling stars that devastate a wide area and stun.",
+  "maxLevel": 5,
+  "range": 300,
+  "mpCost": 60,
+  "mpCostPerLevel": 8,
+  "castTimeMs": 2400,
+  "cooldownMs": 25000,
+  "element": "fire",
+  "requiresJobLevel": 20,
+  "requires": [
+   {
+    "skillId": "fire_wall",
+    "level": 3
+   },
+   {
+    "skillId": "thunderstorm",
+    "level": 3
+   }
+  ],
+  "effects": [
+   {
+    "type": "damage",
+    "kind": "magic",
+    "multiplier": 1.6,
+    "perLevel": 0.3,
+    "element": "fire",
+    "hits": 4,
+    "radius": 150
+   },
+   {
+    "type": "status",
+    "status": "stun",
+    "chance": 0.2,
+    "perLevel": 0.05,
+    "durationMs": 2000,
+    "radius": 150
+   }
+  ],
+  "fx": "meteor",
+  "icon": {
+   "glyph": "Me",
+   "color": "#ff9a3d"
+  }
+ },
+ {
+  "id": "mana_shield",
+  "name": "Mana Shield",
+  "classId": "mage",
+  "kind": "buff",
+  "targeting": "self",
+  "description": "A barrier of mana absorbs part of incoming damage using MP instead of HP.",
+  "maxLevel": 5,
+  "range": 0,
+  "mpCost": 20,
+  "mpCostPerLevel": 3,
+  "castTimeMs": 0,
+  "cooldownMs": 30000,
+  "effects": [
+   {
+    "type": "buff",
+    "buffId": "mana_shield",
+    "durationMs": 60000,
+    "mods": {
+     "damageToMpPct": 25
+    },
+    "modsPerLevel": {
+     "damageToMpPct": 7
+    }
+   }
+  ],
+  "fx": "arcane",
+  "icon": {
+   "glyph": "MS",
+   "color": "#9a7aff"
+  }
+ },
+ {
+  "id": "astral_attunement",
+  "name": "Astral Attunement",
+  "classId": "mage",
+  "kind": "passive",
+  "targeting": "passive",
+  "description": "Your mind resonates with the Astral Runes. +3 Magic Attack, +2 MP regeneration and -1% cast time per level.",
+  "maxLevel": 10,
+  "range": 0,
+  "mpCost": 0,
+  "mpCostPerLevel": 0,
+  "castTimeMs": 0,
+  "cooldownMs": 0,
+  "passive": {
+   "matk": 3,
+   "mpRegen": 2,
+   "castTimePct": -1
+  },
+  "effects": [],
+  "fx": "none",
+  "icon": {
+   "glyph": "AA",
+   "color": "#b9a6ff"
+  }
+ }
+]

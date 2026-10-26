@@ -1,0 +1,559 @@
+{
+ "id": "whispering_forest",
+ "name": "Whispering Forest",
+ "region": "Willowbrook Region",
+ "type": "field",
+ "levelRange": [
+  8,
+  18
+ ],
+ "width": 60,
+ "height": 48,
+ "tileset": "whispering_forest",
+ "base": "forest_floor",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "field_forest",
+ "ambient": "forest",
+ "weather": [
+  "sunny",
+  "fog",
+  "rain"
+ ],
+ "worldMapPos": {
+  "x": 0.42,
+  "y": 0.45
+ },
+ "paint": [
+  {
+   "op": "blob",
+   "tile": "grass_dark",
+   "cx": 10,
+   "cy": 33,
+   "rx": 7,
+   "ry": 5,
+   "seed": 31
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     0,
+     35
+    ],
+    [
+     12,
+     35
+    ],
+    [
+     18,
+     30
+    ],
+    [
+     30,
+     30
+    ],
+    [
+     30,
+     24
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     30,
+     24
+    ],
+    [
+     24,
+     18
+    ],
+    [
+     17,
+     13
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     30,
+     24
+    ],
+    [
+     38,
+     18
+    ],
+    [
+     46,
+     11
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     30,
+     30
+    ],
+    [
+     38,
+     34
+    ],
+    [
+     44,
+     37
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     34,
+     22
+    ],
+    [
+     42,
+     26
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "blob",
+   "tile": "dirt",
+   "cx": 16,
+   "cy": 12,
+   "rx": 8,
+   "ry": 6,
+   "seed": 32
+  },
+  {
+   "op": "blob",
+   "tile": "grass_dark",
+   "cx": 22,
+   "cy": 24,
+   "rx": 6,
+   "ry": 4,
+   "seed": 33
+  },
+  {
+   "op": "blob",
+   "tile": "grass_dark",
+   "cx": 45,
+   "cy": 26,
+   "rx": 8,
+   "ry": 5,
+   "seed": 34
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_floor",
+   "x": 40,
+   "y": 4,
+   "w": 16,
+   "h": 11
+  },
+  {
+   "op": "blob",
+   "tile": "thorn_ground",
+   "cx": 47,
+   "cy": 38,
+   "rx": 9,
+   "ry": 6,
+   "seed": 35
+  },
+  {
+   "op": "clear",
+   "x": 4,
+   "y": 29,
+   "w": 12,
+   "h": 9
+  },
+  {
+   "op": "clear",
+   "x": 9,
+   "y": 7,
+   "w": 15,
+   "h": 10
+  },
+  {
+   "op": "clear",
+   "x": 17,
+   "y": 21,
+   "w": 11,
+   "h": 7
+  },
+  {
+   "op": "clear",
+   "x": 38,
+   "y": 22,
+   "w": 14,
+   "h": 9
+  },
+  {
+   "op": "clear",
+   "x": 40,
+   "y": 4,
+   "w": 16,
+   "h": 11
+  },
+  {
+   "op": "clear",
+   "x": 38,
+   "y": 32,
+   "w": 18,
+   "h": 13
+  },
+  {
+   "op": "object",
+   "kind": "tent",
+   "x": 5,
+   "y": 29
+  },
+  {
+   "op": "object",
+   "kind": "campfire",
+   "x": 11,
+   "y": 32
+  },
+  {
+   "op": "object",
+   "kind": "crate",
+   "x": 9,
+   "y": 29
+  },
+  {
+   "op": "object",
+   "kind": "goblin_tent",
+   "x": 11,
+   "y": 7
+  },
+  {
+   "op": "object",
+   "kind": "goblin_tent",
+   "x": 19,
+   "y": 8
+  },
+  {
+   "op": "object",
+   "kind": "campfire",
+   "x": 16,
+   "y": 12
+  },
+  {
+   "op": "object",
+   "kind": "crate",
+   "x": 22,
+   "y": 13
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 9,
+   "y": 14
+  },
+  {
+   "op": "object",
+   "kind": "glint",
+   "x": 20,
+   "y": 26,
+   "id": "pendant_glint"
+  },
+  {
+   "op": "object",
+   "kind": "ruin_pillar",
+   "x": 41,
+   "y": 5
+  },
+  {
+   "op": "object",
+   "kind": "ruin_pillar",
+   "x": 54,
+   "y": 5
+  },
+  {
+   "op": "object",
+   "kind": "ruin_pillar",
+   "x": 41,
+   "y": 13
+  },
+  {
+   "op": "object",
+   "kind": "ruin_pillar",
+   "x": 54,
+   "y": 13
+  },
+  {
+   "op": "object",
+   "kind": "gravestone",
+   "x": 45,
+   "y": 6
+  },
+  {
+   "op": "object",
+   "kind": "gravestone",
+   "x": 48,
+   "y": 6
+  },
+  {
+   "op": "object",
+   "kind": "gravestone",
+   "x": 51,
+   "y": 6
+  },
+  {
+   "op": "object",
+   "kind": "gravestone",
+   "x": 46,
+   "y": 9
+  },
+  {
+   "op": "object",
+   "kind": "gravestone",
+   "x": 50,
+   "y": 9
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "x": 43,
+   "y": 12,
+   "w": 3,
+   "h": 1,
+   "layer": "wall"
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "x": 50,
+   "y": 12,
+   "w": 3,
+   "h": 1,
+   "layer": "wall"
+  },
+  {
+   "op": "object",
+   "kind": "thorn_throne",
+   "x": 46,
+   "y": 33
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:bramble",
+   "area": {
+    "x": 38,
+    "y": 32,
+    "w": 18,
+    "h": 13
+   },
+   "density": 0.12,
+   "seed": 36
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_dark",
+   "density": 0.11,
+   "seed": 41
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_pine",
+   "density": 0.05,
+   "seed": 42
+  },
+  {
+   "op": "scatter",
+   "kind": "bush",
+   "density": 0.03,
+   "seed": 43
+  },
+  {
+   "op": "scatter",
+   "kind": "stump",
+   "density": 0.01,
+   "seed": 44
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:leaves",
+   "density": 0.12,
+   "seed": 45
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:small_mushrooms",
+   "density": 0.04,
+   "seed": 46
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:small_mushrooms",
+   "area": {
+    "x": 17,
+    "y": 21,
+    "w": 11,
+    "h": 7
+   },
+   "density": 0.2,
+   "seed": 47
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_meadow",
+   "x": 0,
+   "y": 34,
+   "w": 2,
+   "h": 4,
+   "targetMap": "sunny_meadow",
+   "targetSpawn": "from_forest",
+   "label": "Sunny Meadow"
+  }
+ ],
+ "spawnPoints": {
+  "default": {
+   "x": 4,
+   "y": 35
+  },
+  "from_meadow": {
+   "x": 4,
+   "y": 35
+  },
+  "camp": {
+   "x": 8,
+   "y": 34
+  }
+ },
+ "npcs": [
+  {
+   "npcId": "elwin",
+   "x": 9,
+   "y": 33,
+   "facing": "down"
+  }
+ ],
+ "monsterSpawns": [
+  {
+   "monsterId": "forest_goblin",
+   "count": 7,
+   "area": {
+    "x": 9,
+    "y": 7,
+    "w": 15,
+    "h": 10
+   }
+  },
+  {
+   "monsterId": "venom_spore",
+   "count": 6,
+   "area": {
+    "x": 17,
+    "y": 21,
+    "w": 11,
+    "h": 7
+   }
+  },
+  {
+   "monsterId": "thorn_wolf",
+   "count": 6,
+   "area": {
+    "x": 38,
+    "y": 22,
+    "w": 14,
+    "h": 9
+   }
+  },
+  {
+   "monsterId": "bone_soldier",
+   "count": 6,
+   "area": {
+    "x": 42,
+    "y": 5,
+    "w": 12,
+    "h": 7
+   }
+  }
+ ],
+ "bossSpawn": {
+  "bossId": "grukk",
+  "x": 47,
+  "y": 38,
+  "respawnSeconds": 300
+ },
+ "objects": [
+  {
+   "id": "pendant_glint",
+   "kind": "glint",
+   "x": 20,
+   "y": 26,
+   "name": "Something glinting",
+   "interact": {
+    "text": "Half-buried in the moss you find a silver pendant engraved with a falcon.",
+    "questFlag": "pendant_glint",
+    "giveItem": {
+     "itemId": "lost_pendant",
+     "qty": 1
+    }
+   }
+  }
+ ],
+ "areas": [
+  {
+   "id": "goblin_camp",
+   "name": "Goblin Camp",
+   "rect": {
+    "x": 9,
+    "y": 7,
+    "w": 15,
+    "h": 10
+   }
+  },
+  {
+   "id": "spore_grove",
+   "name": "Spore Grove",
+   "rect": {
+    "x": 17,
+    "y": 21,
+    "w": 11,
+    "h": 7
+   }
+  },
+  {
+   "id": "old_shrine",
+   "name": "Old Shrine Ruins",
+   "rect": {
+    "x": 40,
+    "y": 4,
+    "w": 16,
+    "h": 11
+   }
+  },
+  {
+   "id": "thorn_clearing",
+   "name": "Thorn Clearing",
+   "rect": {
+    "x": 38,
+    "y": 32,
+    "w": 18,
+    "h": 13
+   }
+  }
+ ]
+}

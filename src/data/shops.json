@@ -1,0 +1,8 @@
+[
+  { "id": "pip_tools", "name": "Pip's Tool Shop", "items": ["red_potion", "orange_potion", "blue_potion", "green_potion", "wing_of_return", "swiftness_tonic"] },
+  { "id": "garrick_smithy", "name": "Ironhand Smithy", "items": [
+    "training_knife", "oak_club", "iron_sword", "steel_sword", "knight_spear", "short_bow", "hunter_bow", "apprentice_wand", "oak_staff",
+    "cotton_shirt", "leather_jacket", "chain_mail", "hunter_vest", "apprentice_robe",
+    "bandana", "iron_helm", "wooden_buckler", "iron_shield", "travel_cape", "sandals", "leather_boots", "copper_ring", "sapphire_pendant"] },
+  { "id": "elwin_camp", "name": "Warden's Camp", "items": ["red_potion", "orange_potion", "green_potion", "wing_of_return"] }
+]
