@@ -16,8 +16,9 @@ import type { EquipSlot, ItemDef, ItemInstance, ItemType, NpcDef, QuestDef, Stat
 import { EQUIP_SLOTS, STAT_KEYS } from '../core/types';
 import { DEFAULT_KEYBINDS } from '../core/save';
 import { audio } from '../game/audio/audio';
+import * as gm from '../core/gm';
 
-export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage';
+export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin';
 
 interface WinState { el: HTMLElement; body: HTMLElement; render: () => void; open: boolean }
 
@@ -66,6 +67,7 @@ export class WindowManager {
     this.define('settings', 'Settings', 420, 70, () => this.renderSettings());
     this.define('shop', 'Shop', 16, 90, () => this.renderShop());
     this.define('storage', 'Storage', 16, 90, () => this.renderStorage());
+    this.define('admin', 'GM / Admin Tools', 820, 70, () => this.renderAdmin());
   }
 
   get anyOpen() { return [...this.wins.values()].some((w) => w.open) || !!this.dialogEl || !!this.modalEl; }
@@ -486,6 +488,55 @@ export class WindowManager {
         app.world ? h('div', { class: 'row', style: 'margin-top:12px' },
           h('button', { class: 'btn primary', onclick: () => app.saveNow(true) }, 'Save Game'),
           h('button', { class: 'btn', onclick: () => app.exitToSelect() }, 'Character Select')) : null));
+  }
+
+  // ---------------------------------------------------------------- GM / admin
+  private adminSel: Record<string, string> = {};
+  private renderAdmin() {
+    const app = this.app, w = app.world, body = this.wins.get('admin')!.body;
+    if (!w) { setChildren(body, h('div', {}, 'Enter the game to use GM tools.')); return; }
+    const d = w.data;
+    const run = (r: { ok: boolean; message?: string; error?: string }) => {
+      app.hud?.toast(r.ok ? r.message ?? 'Done.' : r.error ?? 'Failed.', !r.ok);
+      this.refresh(); // re-renders every open window, this one included
+    };
+    const sel = (key: string, opts: [string, string][]) => {
+      const el = h('select', { id: `gm-${key}`, style: 'flex:1;min-width:0' }, opts.map(([v, label]) => h('option', { value: v }, label)));
+      el.value = this.adminSel[key] ?? opts[0]?.[0] ?? '';
+      this.adminSel[key] = el.value;
+      el.addEventListener('change', () => { this.adminSel[key] = el.value; });
+      return el;
+    };
+    const num = (key: string, value: number, width = 56) => {
+      const el = h('input', { id: `gm-${key}`, type: 'number', value: String(this.adminSel[key] ?? value), style: `width:${width}px` });
+      el.addEventListener('change', () => { this.adminSel[key] = el.value; });
+      return el;
+    };
+    const val = (key: string, dflt = 0) => Number(this.adminSel[key] ?? dflt);
+    const btn = (label: string, fn: () => void, cls = 'btn small') => h('button', { class: cls, onclick: fn }, label);
+    const section = (title: string, ...rows: HTMLElement[]) => h('div', { style: 'margin-bottom:8px' },
+      h('div', { class: 'gold', style: 'font-weight:bold;margin-bottom:3px' }, title), ...rows.map((r) => { r.style.marginBottom = '4px'; return r; }));
+    const row = (...c: (HTMLElement | string)[]) => h('div', { class: 'row' }, ...c);
+    const c = w.char;
+    setChildren(body, h('div', { style: 'width:400px' },
+      h('div', { style: 'font-size:11px;opacity:0.75;margin-bottom:6px' }, 'Local single-player tools. Changes apply to this save only; using them marks the character as GM-edited.'),
+      section('Character',
+        row(`${c.name} · ${d.classes.get(c.classId)!.name} · Base Lv ${c.baseLevel} · Job Lv ${c.jobLevel} · ${c.luma} Luma`),
+        row(btn('Full heal', () => run(gm.gmHeal(w))), btn(`God mode: ${w.godMode ? 'ON' : 'OFF'}`, () => run(gm.gmGodMode(w, !w.godMode)), w.godMode ? 'btn small primary' : 'btn small')),
+        row('Base +', num('lvB', 1, 48), 'Job +', num('lvJ', 0, 48), btn('Level up', () => run(gm.gmAddLevels(w, val('lvB', 1), val('lvJ'))))),
+        row('Luma', num('luma', 1000, 80), btn('Give', () => run(gm.gmGiveLuma(w, val('luma', 1000))))),
+        row('Stat pts', num('sp', 5, 48), 'Skill pts', num('kp', 1, 48), btn('Give', () => run(gm.gmGivePoints(w, val('sp', 5), val('kp', 1))))),
+        row('Class', sel('cls', [...d.classes.values()].map((x) => [x.id, x.name])), btn('Set class', () => run(gm.gmSetClass(w, this.adminSel.cls))))),
+      section('Items',
+        row(sel('item', [...d.items.values()].sort((a, b) => a.name.localeCompare(b.name)).map((x) => [x.id, `${x.name} (${x.type})`])), num('qty', 1, 48), btn('Give', () => run(gm.gmGiveItem(w, this.adminSel.item, val('qty', 1)))))),
+      section('World',
+        row(sel('map', [...d.maps.values()].map((x) => [x.id, x.name])), btn('Teleport', () => run(gm.gmTeleport(w, this.adminSel.map)))),
+        row(sel('mon', [...d.monsters.values()].map((x) => [x.id, `${x.name} Lv.${x.level}`])), num('cnt', 3, 44), btn('Spawn near me', () => run(gm.gmSpawn(w, this.adminSel.mon, val('cnt', 3))))),
+        row(btn('Defeat all monsters here', () => run(gm.gmKillAll(w))), btn('…incl. boss', () => run(gm.gmKillAll(w, true)), 'btn small danger'))),
+      section('Quests',
+        row(sel('quest', [...d.quests.values()].map((x) => [x.id, `${x.name}${c.quests[x.id] ? ` [${c.quests[x.id].status}]` : ''}`])),
+          btn('Fill objectives', () => run(gm.gmQuest(w, this.adminSel.quest, 'complete'))), btn('Reset', () => run(gm.gmQuest(w, this.adminSel.quest, 'reset'))))),
+      row(btn('Save game', () => app.saveNow(true), 'btn small primary'), btn('Toggle collision overlay', () => { app.settings.showCollision = !app.settings.showCollision; app.applySettings(); }))));
   }
 
   /** Called by the app's key handler while rebinding. Returns true if consumed. */

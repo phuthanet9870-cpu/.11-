@@ -79,14 +79,24 @@ Ground-target skills (Arrow Rain, Wind Trap, Fire Wall, Thunderstorm, Meteor) la
 | Audio: BGM per map, boss music, ambience, SFX; Master/Music/SFX/Ambient volume | ✅ (procedural) | `src/game/audio/audio.ts` |
 | Asset manifest and replacement system with sprite metadata | ✅ | `docs/ASSET_PIPELINE.md` |
 
+## GM / admin tools
+
+Open them with the **GM** button (bottom right), **F8**, or `/gm` in chat. You can:
+- heal, toggle god mode, add levels / Luma / stat and skill points, change class
+- give any item
+- teleport, spawn monsters near you, defeat all monsters on the map
+- fill or reset quest objectives
+
+The tools edit the local save only, and any use sets `flags.gmUsed` on the character. The commands live in `src/core/gm.ts`. When the game moves to a server (Phase 3), they must become server-side commands behind an admin role.
+
 ## Test results (this commit)
 
 | Suite | Result |
 |---|---|
-| Unit (`tests/unit`, 6 files) | **85 / 85 passed**: data validation and map reachability, formulas, combat and elements, inventory/shop/storage, quests, save/migrations, world simulation (collision, portals, AI, skills, boss, invalid commands, no double-spend) |
+| Unit (`tests/unit`, 7 files) | **94 / 94 passed**: GM commands, data validation and map reachability, formulas, combat and elements, inventory/shop/storage, quests, save/migrations, world simulation (collision, portals, AI, skills, boss, invalid commands, no double-spend) |
 | Integration: full playthrough | **passed**. A bot using only player commands creates a Novice, runs the main quest line, becomes a Knight, defeats Grukk, and completes Chapter 1 (≈71 simulated minutes, Base Lv 18) |
 | Integration: class balance | **passed**. First-try boss wins at Lv 17: Knight 6/6, Ranger 6/6, Mage 4/6 (fixed seeds) |
-| E2E in Chromium (`npm run test:e2e`) | **22 / 22 checks passed**: boot, create character via UI, WASD, click NPC → dialogue → accept quest, windows by hotkey, portal travel, mouse-click combat kill with EXP, save and reload persistence, shop purchase, drag & drop equip, stat allocation, job change via dialogue, learn skill, drag skill to hotbar, cast by hotkey, death → respawn, drop part of a stack via the quantity dialog, delete a character with typed-name confirmation, zero page errors |
+| E2E in Chromium (`npm run test:e2e`) | **23 / 23 checks passed** (incl. GM window): boot, create character via UI, WASD, click NPC → dialogue → accept quest, windows by hotkey, portal travel, mouse-click combat kill with EXP, save and reload persistence, shop purchase, drag & drop equip, stat allocation, job change via dialogue, learn skill, drag skill to hotbar, cast by hotkey, death → respawn, drop part of a stack via the quantity dialog, delete a character with typed-name confirmation, zero page errors |
 
 Screenshots from the e2e run are written to `tests/e2e/screenshots/` (git-ignored).
 

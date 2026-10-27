@@ -279,6 +279,26 @@ try {
   check('drop part of a stack via context menu & quantity dialog', potAfter === potBefore - 2 && onGround, `${potBefore}→${potAfter}`);
   await page.keyboard.press('Escape');
 
+  // GM / admin window: open from the HUD button, give Luma, spawn monsters, teleport.
+  await page.click('#btn-gm');
+  await page.waitForSelector('#win-admin:not(.hidden)');
+  const gmBefore = await page.evaluate(() => ({ luma: window.__veyloria.world.char.luma, mons: window.__veyloria.world.monsters.size }));
+  await page.fill('#gm-luma', '777');
+  await page.dispatchEvent('#gm-luma', 'change');
+  await page.click('#win-admin button:has-text("Give") >> nth=0');
+  await page.selectOption('#gm-mon', 'leaf_slime');
+  await page.click('#win-admin button:has-text("Spawn near me")');
+  await sleep(300);
+  await page.screenshot({ path: join(shots, '16-gm-tools.png') });
+  const gmMid = await page.evaluate(() => ({ luma: window.__veyloria.world.char.luma, mons: window.__veyloria.world.monsters.size, flag: window.__veyloria.world.char.flags.gmUsed }));
+  await page.selectOption('#gm-map', 'sunny_meadow');
+  await page.click('#win-admin button:has-text("Teleport")');
+  await sleep(800);
+  const gmMap = await page.evaluate(() => window.__veyloria.world.map.def.id);
+  check('GM window: give Luma, spawn monsters, teleport', gmMid.luma === gmBefore.luma + 777 && gmMid.mons === gmBefore.mons + 3 && gmMid.flag === true && gmMap === 'sunny_meadow',
+    `luma +${gmMid.luma - gmBefore.luma}, monsters +${gmMid.mons - gmBefore.mons}, map ${gmMap}`);
+  await page.click('#win-admin .x');
+
   // Delete the character from the select screen (typed-name confirmation).
   await page.evaluate(() => window.__veyloria.exitToSelect());
   await page.waitForSelector('.slot .name');

@@ -107,6 +107,8 @@ export interface MonsterActor extends ActorBase {
   respawnAt: number;
   boss: BossRuntime | null;
   summoned: boolean;
+  /** Spawned by a GM command: gives normal rewards but never respawns. */
+  temporary?: boolean;
   tauntUntil: number;
 }
 
@@ -193,6 +195,8 @@ export class World {
   npcs: NpcActor[] = [];
   groundItems = new Map<string, GroundItem>();
   zones: GroundZone[] = [];
+  /** GM god mode: the player takes no damage. */
+  godMode = false;
   telegraphs: Telegraph[] = [];
   private pending: { at: number; fn: () => void }[] = [];
   private events: WorldEvent[] = [];
@@ -356,6 +360,17 @@ export class World {
     const pt = this.randomSpawnPoint(group);
     const m = this.makeMonster(def, pt.x, pt.y, group);
     this.monsters.set(m.id, m);
+    return m;
+  }
+
+  /** Places a monster at a point (GM tool). It fights and rewards normally but does not respawn. */
+  spawnMonsterAt(monsterId: string, x: number, y: number): MonsterActor | null {
+    const def = this.data.monsters.get(monsterId);
+    if (!def) return null;
+    const m = this.makeMonster(def, x, y, -1);
+    m.temporary = true;
+    this.monsters.set(m.id, m);
+    this.emit({ type: 'fx', fx: 'spawn', x, y });
     return m;
   }
 
@@ -798,6 +813,7 @@ export class World {
   damagePlayer(amount: number, kind: 'physical' | 'magic' | 'dot', element: Element, attacker: MonsterActor | null, crit: boolean) {
     const p = this.player;
     if (p.dead) return;
+    if (this.godMode) { this.emit({ type: 'damage', targetId: 'player', amount: 0, crit: false, miss: true, kind: kind === 'dot' ? 'dot' : kind }); return; }
     const special = specialMods(p.buffs.map((b) => b.mods));
     let hpDmg = amount;
     if (special.damageToMpPct > 0 && kind !== 'dot' && this.char.mp > 0) {
@@ -905,6 +921,8 @@ export class World {
         if (this.map.def.id === mapId) { this.monsters.delete(m.id); this.spawnBoss(); this.message('You feel a malevolent presence return to the forest...'); }
       });
       this.telegraphs = [];
+    } else if (m.temporary) {
+      this.schedule(1500, () => this.monsters.delete(m.id));
     } else {
       m.respawnAt = this.time + m.def.respawnSeconds * 1000;
     }

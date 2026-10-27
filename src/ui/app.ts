@@ -290,7 +290,8 @@ export class App implements GameHost {
     const w = this.world;
     const [name] = cmd.slice(1).split(/\s+/);
     switch (name) {
-      case 'help': this.hud?.log('Commands: /where /save /stuck /played /help', 'system'); break;
+      case 'help': this.hud?.log('Commands: /where /save /stuck /played /gm /help · F8 opens GM tools', 'system'); break;
+      case 'gm': case 'admin': this.windows.toggle('admin'); break;
       case 'where': this.hud?.log(`${w.map.def.name} (${Math.floor(w.player.x / 32)}, ${Math.floor(w.player.y / 32)})`, 'system'); break;
       case 'save': this.saveNow(true); break;
       case 'played': this.hud?.log(`Played ${Math.floor(w.char.stats_meta.playTimeMs / 60000)} minutes.`, 'system'); break;
@@ -318,6 +319,7 @@ export class App implements GameHost {
     if (e.key === 'Enter') { e.preventDefault(); this.hud.focusChat(); return; }
     if (e.key === 'Escape') { e.preventDefault(); if (!this.windows.closeTop()) this.windows.open('settings'); return; }
     if (e.key === 'Tab') { e.preventDefault(); this.world.targetNearestMonster(); return; }
+    if (e.key === 'F8') { e.preventDefault(); this.windows.toggle('admin'); return; }
     if (this.windows.dialogOpen && /^[1-9]$/.test(e.key)) { if (this.windows.dialogKey(Number(e.key))) return; }
     const action = this.actionForKey(e.key);
     const moveKey = this.moveDirKey(e.key);

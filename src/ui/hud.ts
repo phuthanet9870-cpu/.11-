@@ -70,7 +70,8 @@ export class Hud {
     });
     const menu = h('div', { class: 'menu-buttons' },
       ...([['status', 'Status'], ['inventory', 'Items'], ['equipment', 'Equip'], ['skills', 'Skills'], ['quests', 'Quests'], ['worldMap', 'Map'], ['settings', 'Menu']] as const)
-        .map(([id, label]) => h('button', { class: 'btn', title: `${label} (${this.app.keyLabel(id)})`, onclick: () => this.app.windows.toggle(id) }, label)));
+        .map(([id, label]) => h('button', { class: 'btn', title: `${label} (${this.app.keyLabel(id)})`, onclick: () => this.app.windows.toggle(id) }, label)),
+      h('button', { class: 'btn', id: 'btn-gm', title: 'GM / Admin tools (F8 or /gm)', onclick: () => this.app.windows.toggle('admin') }, 'GM'));
     this.root = h('div', { id: 'hud', class: 'passthrough', style: 'position:absolute;inset:0' },
       h('div', { class: 'panel hud-status' }, this.portrait, this.whoName, this.hpBar.el, this.mpBar.el),
       this.buffsEl,
