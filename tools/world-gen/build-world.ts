@@ -416,7 +416,7 @@ function bossDef(b: typeof BOSSES[number], grukk: J): J {
       { id: `${b.id}_ring`, name: 'Cataclysm', kind: 'ring', telegraphMs: 1700, radius: 230, multiplier: 1.4, element: el, cooldownMs: 13000, minPhase: 2, fx: b.fx },
     ],
     contributionRewards: { minDamagePct: 10, items: [{ itemId: 'starsteel_ore', qty: 3 }, { itemId: 'moonstone_ore', qty: 3 }], luma: 500 + b.monster.lv * 40 },
-    mvp: { expPct: 50, items: [{ itemId: 'elder_sap', chance: 0.4 }, { itemId: 'elder_seed', chance: 0.6 }, { itemId: 'starsteel_ore', chance: 0.5 }, { itemId: 'moonstone_ore', chance: 0.5 }] },
+    mvp: { expPct: 50, items: [{ itemId: 'elder_sap', chance: 0.4 }, { itemId: 'elder_seed', chance: 0.6 }, { itemId: 'starsteel_ore', chance: 0.5 }, { itemId: 'moonstone_ore', chance: 0.5 }, { itemId: 'enriched_starsteel', chance: 0.2 }, { itemId: 'enriched_moonstone', chance: 0.2 }] },
     generated: true,
   };
 }
@@ -502,6 +502,15 @@ export async function main() {
   for (const t of drops) {
     t.entries = t.entries.filter((e: J) => !e.oreHint);
     if (!t.entries.some((e: J) => e.itemId === 'moonstone_ore')) t.entries.push({ itemId: 'moonstone_ore', chance: 0.005, oreHint: true }, { itemId: 'starsteel_ore', chance: 0.003, oreHint: true });
+  }
+  // Enriched ores (RO's enriched refine materials): any weapon level / any armor, better chances above the safe limit.
+  for (const [id, name, desc, col] of [
+    ['enriched_starsteel', 'Enriched Starsteel', 'Starsteel purified in moonlight. Refines a weapon of any level with better odds above the safe limit.', '#ffe9a8'],
+    ['enriched_moonstone', 'Enriched Moonstone', 'Moonstone purified in starlight. Refines armor with better odds above the safe limit.', '#e0f0ff'],
+  ] as const) items.push({ id, name, type: 'material', rarity: 'rare', description: desc, weight: 2, price: 2500, stackable: true, maxStack: 999, icon: { shape: 'ore', color: col, accent: '#ffffff' }, generated: true });
+  for (const m of monsters) {
+    const t = drops.find((d: J) => d.id === m.dropTableId);
+    if (t && m.level >= 40 && m.aiType !== 'boss') t.entries.push({ itemId: m.level % 2 ? 'enriched_moonstone' : 'enriched_starsteel', chance: 0.002, oreHint: true });
   }
 
   // Card slots on equipment (Ragnarok-style: daggers 3, other weapons 2, rarer weapons 1; armor pieces 1).

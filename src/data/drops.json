@@ -1519,6 +1519,11 @@
     "card": true
    },
    {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
@@ -1553,6 +1558,11 @@
     "itemId": "card_gilded_scarab",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
    },
    {
     "itemId": "terra_stone",
@@ -1878,6 +1888,11 @@
     "card": true
    },
    {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
     "itemId": "frost_stone",
     "chance": 0.01,
     "forge": true
@@ -1917,6 +1932,11 @@
     "itemId": "card_snow_wolf",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
    },
    {
     "itemId": "frost_stone",
@@ -1960,6 +1980,11 @@
     "card": true
    },
    {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
     "itemId": "frost_stone",
     "chance": 0.01,
     "forge": true
@@ -1999,6 +2024,11 @@
     "itemId": "card_ice_bat",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
    },
    {
     "itemId": "frost_stone",
@@ -2042,6 +2072,11 @@
     "card": true
    },
    {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
     "itemId": "frost_stone",
     "chance": 0.01,
     "forge": true
@@ -2081,6 +2116,11 @@
     "itemId": "card_glacier_golem",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
    },
    {
     "itemId": "frost_stone",
@@ -2124,6 +2164,11 @@
     "card": true
    },
    {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
     "itemId": "flame_stone",
     "chance": 0.01,
     "forge": true
@@ -2163,6 +2208,11 @@
     "itemId": "card_ash_scorpion",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
    },
    {
     "itemId": "flame_stone",
@@ -2206,6 +2256,11 @@
     "card": true
    },
    {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
     "itemId": "flame_stone",
     "chance": 0.01,
     "forge": true
@@ -2245,6 +2300,11 @@
     "itemId": "card_magma_golem",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
    },
    {
     "itemId": "flame_stone",
@@ -2288,6 +2348,11 @@
     "card": true
    },
    {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
     "itemId": "flame_stone",
     "chance": 0.01,
     "forge": true
@@ -2329,6 +2394,11 @@
     "card": true
    },
    {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
@@ -2363,6 +2433,11 @@
     "itemId": "card_marsh_spore",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
    },
    {
     "itemId": "star_crumb",
@@ -2401,6 +2476,11 @@
     "card": true
    },
    {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
@@ -2435,6 +2515,11 @@
     "itemId": "card_raven_bat",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
    },
    {
     "itemId": "star_crumb",
@@ -2473,6 +2558,11 @@
     "card": true
    },
    {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
@@ -2507,6 +2597,11 @@
     "itemId": "card_banshee",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
    },
    {
     "itemId": "star_crumb",
@@ -2545,6 +2640,11 @@
     "card": true
    },
    {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
@@ -2579,6 +2679,11 @@
     "itemId": "card_lich_spirit",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
    },
    {
     "itemId": "star_crumb",

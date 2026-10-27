@@ -94,4 +94,24 @@ describe('Ragnarok-style character rules', () => {
     expect(w.majorOverweight).toBe(true);
     expect(w.canUseSkill('first_aid').ok).toBe(false);
   });
+  it('enriched ore works on any weapon level with the better table, and costs classic fees', () => {
+    const { c, knife, shirt } = withKnife();
+    addItem(data, c, 'enriched_starsteel', 5);
+    knife.refine = 7;
+    const n = refineInfo(data, c, knife.uid), e = refineInfo(data, c, knife.uid, true);
+    expect([n.chance, e.chance]).toEqual([0.6, 0.9]);
+    expect(e.ore).toBe('enriched_starsteel');
+    expect(refineItem(data, c, knife.uid, 0.85, true).outcome).toBe('success');
+    expect(countItem(c, 'enriched_starsteel')).toBe(4);
+    shirt.refine = 4;
+    expect(refineInfo(data, c, shirt.uid).fee).toBe(2000);
+    expect(refineInfo(data, c, shirt.uid, true).error).toMatch(/Enriched Moonstone/);
+  });
+
+  it('armor refine gives 0.7 DEF per level, rounded', () => {
+    const { c, shirt } = withKnife();
+    const base = computeDerivedStats(data, { ...c, equipment: { armor: { ...shirt, refine: 0 } } }).pdef;
+    const at = (r: number) => computeDerivedStats(data, { ...c, equipment: { armor: { ...shirt, refine: r } } }).pdef - base;
+    expect([1, 2, 3, 4, 10].map(at)).toEqual([1, 1, 2, 3, 7]);
+  });
 });

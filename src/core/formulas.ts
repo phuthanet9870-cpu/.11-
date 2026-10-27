@@ -94,7 +94,8 @@ export function refineMods(item: ItemDef, refine: number): StatModifiers {
     const per = [2, 3, 5, 7][Math.min(4, Math.max(1, item.weaponLevel ?? 1)) - 1];
     return { patk: refine * per, matk: item.attackKind === 'magic' ? refine * per : 0 };
   }
-  return { pdef: refine };
+  // Armor: 0.7 DEF per refine level, rounded (classic rule).
+  return { pdef: Math.floor((refine * 70 + 50) / 100) };
 }
 
 export function equipmentMods(data: GameData, c: CharacterState): StatModifiers {

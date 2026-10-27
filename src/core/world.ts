@@ -1841,9 +1841,9 @@ export class World {
   }
 
   /** Refine an equipped or carried item at a refine NPC. */
-  refine(uid: string): RefineResult {
+  refine(uid: string, enriched = false): RefineResult {
     if (!this.nearService((s) => s.type === 'refine')) return this.err('You are too far from the refiner.');
-    const r = refineItem(this.data, this.char, uid, this.rng.next());
+    const r = refineItem(this.data, this.char, uid, this.rng.next(), enriched);
     if (!r.ok) return this.err(r.error);
     this.message(r.message!, r.outcome === 'broken' ? 'error' : 'system');
     this.emit({ type: 'sound', key: r.outcome === 'success' ? 'level_up' : 'error' });

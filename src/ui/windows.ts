@@ -786,7 +786,7 @@ export class WindowManager {
   }
 
   /** Refine flow: pick an item, see the chance and cost, then try. */
-  private refineDialog(npc: NpcDef, picked?: string) {
+  private refineDialog(npc: NpcDef, picked?: string, enriched = false) {
     const w = this.app.world!, d = w.data, c = w.char;
     const label = (inst: ItemInstance) => `${inst.refine ? `+${inst.refine} ` : ''}${d.items.get(inst.itemId)!.name}`;
     if (!picked) {
@@ -794,10 +794,10 @@ export class WindowManager {
         .filter((i) => { const def = d.items.get(i.itemId)!; return def.type === 'equipment' && def.slot && def.slot !== 'accessory'; });
       const opts: [string, () => void][] = items.slice(0, 8).map((i) => [`${label(i)}${Object.values(c.equipment).includes(i) ? ' (equipped)' : ''}`, () => this.refineDialog(npc, i.uid)]);
       opts.push(['Never mind', () => this.openNpcDialog(npc.id)]);
-      this.showDialog(npc, [items.length ? 'Which piece shall I work on? Weapons need ore of their level (Glimmer Lv1, Bright Lv2, Starsteel Lv3–4); armor takes Moonstone Ore.' : 'You have nothing I can refine. Bring me a weapon or some armor.'], opts, null, 'Refine');
+      this.showDialog(npc, [items.length ? 'Which piece shall I work on? Weapons need ore of their level (Glimmer Lv1, Bright Lv2, Starsteel Lv3–4); armor takes Moonstone Ore. Enriched ores work on any level and fail less often.' : 'You have nothing I can refine. Bring me a weapon or some armor.'], opts, null, 'Refine');
       return;
     }
-    const info = refineInfo(d, c, picked);
+    const info = refineInfo(d, c, picked, enriched);
     const inst = c.inventory.find((i) => i.uid === picked) ?? Object.values(c.equipment).find((i) => i?.uid === picked);
     if (!inst) { this.refineDialog(npc); return; }
     const pct = Math.round(info.chance * 100);
@@ -808,13 +808,14 @@ export class WindowManager {
     ];
     const opts: [string, () => void][] = [];
     const go = () => {
-      const r = w.refine(picked);
+      const r = w.refine(picked, enriched);
       if (r.ok) this.app.hud?.banner(r.outcome === 'success' ? `Refine success: +${r.level}` : 'Refine failed', r.message!);
-      if (r.ok && r.outcome === 'success' && (inst.refine ?? 0) < MAX_REFINE) this.refineDialog(npc, picked); else this.refineDialog(npc);
+      if (r.ok && r.outcome === 'success' && (inst.refine ?? 0) < MAX_REFINE) this.refineDialog(npc, picked, enriched); else this.refineDialog(npc);
     };
     if (info.ok) opts.push([`Refine (${pct}%)`, () => (info.chance < 1 ? this.confirmTyped(
       'Risky refine', `${label(inst)} has a ${100 - pct}% chance to be destroyed. Type REFINE to continue.`, 'REFINE', 'Refine', go) : go())]);
     else lines.push(info.error ?? '');
+    opts.push([enriched ? 'Use normal ore' : 'Use enriched ore (better odds)', () => this.refineDialog(npc, picked, !enriched)]);
     opts.push(['Choose another item', () => this.refineDialog(npc)]);
     opts.push(['Done', () => this.openNpcDialog(npc.id)]);
     this.showDialog(npc, lines, opts, null, 'Refine');

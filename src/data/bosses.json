@@ -273,6 +273,14 @@
     {
      "itemId": "moonstone_ore",
      "chance": 0.5
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "chance": 0.2
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "chance": 0.2
     }
    ]
   },
@@ -412,6 +420,14 @@
     {
      "itemId": "moonstone_ore",
      "chance": 0.5
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "chance": 0.2
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "chance": 0.2
     }
    ]
   },
@@ -551,6 +567,14 @@
     {
      "itemId": "moonstone_ore",
      "chance": 0.5
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "chance": 0.2
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "chance": 0.2
     }
    ]
   },
@@ -690,6 +714,14 @@
     {
      "itemId": "moonstone_ore",
      "chance": 0.5
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "chance": 0.2
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "chance": 0.2
     }
    ]
   },
@@ -829,6 +861,14 @@
     {
      "itemId": "moonstone_ore",
      "chance": 0.5
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "chance": 0.2
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "chance": 0.2
     }
    ]
   },

@@ -4189,6 +4189,40 @@
   "generated": true
  },
  {
+  "id": "enriched_starsteel",
+  "name": "Enriched Starsteel",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Starsteel purified in moonlight. Refines a weapon of any level with better odds above the safe limit.",
+  "weight": 2,
+  "price": 2500,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "ore",
+   "color": "#ffe9a8",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "enriched_moonstone",
+  "name": "Enriched Moonstone",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Moonstone purified in starlight. Refines armor with better odds above the safe limit.",
+  "weight": 2,
+  "price": 2500,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "ore",
+   "color": "#e0f0ff",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
   "id": "flame_stone",
   "name": "Flame Stone",
   "type": "material",
