@@ -14,8 +14,9 @@ export interface CombatProfile {
   flee: number;
   crit: number;
   critDmg: number;
-  /** Element of the defender's body. */
+  /** Element of the defender's body, and its level (1–4). */
   element: Element;
+  elementLevel?: number;
   elementDamagePct: Partial<Record<Element, number>>;
   elementResistPct: Partial<Record<Element, number>>;
   /** Race / size of this combatant (players are demihuman, medium). */
@@ -44,8 +45,8 @@ export interface AttackResult {
   elementMul: number;
 }
 
-export function elementModifier(data: GameData, attack: Element, defend: Element): number {
-  return (data.elementTable[attack]?.[defend] ?? 100) / 100;
+export function elementModifier(data: GameData, attack: Element, defend: Element, defendLevel = 1): number {
+  return (data.elementTables[String(Math.min(4, Math.max(1, defendLevel)))]?.[attack]?.[defend] ?? 100) / 100;
 }
 
 export function hitChance(data: GameData, attackerHit: number, defenderFlee: number): number {
@@ -79,7 +80,7 @@ export function resolveAttack(
   if (!(crit && c.critIgnoresDefense)) dmg *= defenseMultiplier(data, def);
   if (crit) dmg *= attacker.critDmg / 100;
 
-  const elementMul = elementModifier(data, opts.element, defender.element);
+  const elementMul = elementModifier(data, opts.element, defender.element, defender.elementLevel ?? 1);
   dmg *= elementMul;
   dmg *= 1 + (attacker.elementDamagePct[opts.element] ?? 0) / 100;
   dmg *= 1 - Math.min(80, defender.elementResistPct[opts.element] ?? 0) / 100;
@@ -116,6 +117,7 @@ export function profileFromMonster(data: GameData, m: MonsterDef, atkMul = 1): C
     crit: m.aiType === 'boss' || m.aiType === 'elite' ? 5 : 1,
     critDmg: 140,
     element: m.element,
+    elementLevel: m.elementLevel ?? 1,
     elementDamagePct: {},
     elementResistPct: {},
     race: m.race, size: m.size, raceDamagePct: {}, sizeDamagePct: {}, raceResistPct: {}, perfectDodge: 0, weaponType: 'monster',

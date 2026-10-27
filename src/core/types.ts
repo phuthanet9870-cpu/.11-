@@ -3,10 +3,10 @@
 
 export type Element =
   | 'neutral' | 'fire' | 'water' | 'wind' | 'earth'
-  | 'holy' | 'shadow' | 'poison' | 'undead';
+  | 'holy' | 'shadow' | 'poison' | 'undead' | 'ghost';
 
 export const ELEMENTS: Element[] = [
-  'neutral', 'fire', 'water', 'wind', 'earth', 'holy', 'shadow', 'poison', 'undead',
+  'neutral', 'fire', 'water', 'wind', 'earth', 'holy', 'shadow', 'poison', 'undead', 'ghost',
 ];
 
 export type StatKey = 'str' | 'agi' | 'vit' | 'int' | 'dex' | 'luk';
@@ -132,6 +132,8 @@ export type UseEffect =
   | { type: 'buff'; buffId: string; durationMs: number; mods: StatModifiers }
   | { type: 'returnToSave' }
   | { type: 'randomTeleport' }
+  /** Temporarily gives the weapon an element (like an elemental converter). */
+  | { type: 'endow'; element: Element; durationMs: number }
   | { type: 'resetStats' }
   | { type: 'resetSkills' };
 
@@ -192,6 +194,8 @@ export interface MonsterDef {
   name: string;
   level: number;
   element: Element;
+  /** Element level 1–4 (Ragnarok-style): higher levels resist more and change the matchups. */
+  elementLevel?: number;
   race: string;
   size: 'small' | 'medium' | 'large';
   maxHp: number;

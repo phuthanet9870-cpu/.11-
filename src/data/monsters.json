@@ -28,7 +28,8 @@
     "#4f9a3a",
     "#e8ffd0"
    ]
-  }
+  },
+  "elementLevel": 1
  },
  {
   "id": "horn_rabbit",
@@ -63,7 +64,8 @@
     "#c9b89a",
     "#efe2c0"
    ]
-  }
+  },
+  "elementLevel": 1
  },
  {
   "id": "mushling",
@@ -99,7 +101,8 @@
     "#fff0e0",
     "#f2d2b0"
    ]
-  }
+  },
+  "elementLevel": 1
  },
  {
   "id": "buzz_wasp",
@@ -137,7 +140,8 @@
     "#2b2b2b",
     "#d8f0ff"
    ]
-  }
+  },
+  "elementLevel": 1
  },
  {
   "id": "forest_goblin",
@@ -169,7 +173,8 @@
     "#6a4a2a",
     "#c83a3a"
    ]
-  }
+  },
+  "elementLevel": 1
  },
  {
   "id": "venom_spore",
@@ -214,7 +219,8 @@
     "#a9e04a",
     "#f2e0ff"
    ]
-  }
+  },
+  "elementLevel": 1
  },
  {
   "id": "thorn_wolf",
@@ -252,7 +258,8 @@
     "#4a3f32",
     "#7fd65a"
    ]
-  }
+  },
+  "elementLevel": 1
  },
  {
   "id": "bone_soldier",
@@ -295,7 +302,8 @@
     "#5a5a6a",
     "#7fb0ff"
    ]
-  }
+  },
+  "elementLevel": 1
  },
  {
   "id": "grukk_thornking",
@@ -337,7 +345,8 @@
     "#4a3220",
     "#f2d23a"
    ]
-  }
+  },
+  "elementLevel": 3
  },
  {
   "id": "dusk_bat",
@@ -371,7 +380,8 @@
     "#ff5a5a"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 1
  },
  {
   "id": "clover_slime",
@@ -405,7 +415,8 @@
     "#ffffff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 1
  },
  {
   "id": "plains_wolf",
@@ -440,7 +451,8 @@
     "#c8b89a"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 1
  },
  {
   "id": "pebble_golem",
@@ -474,7 +486,8 @@
     "#7fd6ff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 1
  },
  {
   "id": "road_goblin",
@@ -509,7 +522,8 @@
     "#3a6ab8"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 1
  },
  {
   "id": "crypt_bat",
@@ -548,13 +562,14 @@
     "#a9e04a"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "wailing_spirit",
   "name": "Wailing Spirit",
   "level": 25,
-  "element": "undead",
+  "element": "ghost",
   "race": "undead",
   "size": "small",
   "maxHp": 1448,
@@ -575,7 +590,7 @@
   "dropTableId": "wailing_spirit_drops",
   "collisionRadius": 12,
   "projectile": {
-   "element": "shadow",
+   "element": "ghost",
    "color": "#a8c8ff"
   },
   "statusImmune": [
@@ -592,7 +607,8 @@
     "#7fd6ff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "grave_soldier",
@@ -631,7 +647,8 @@
     "#ff5a3a"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "mist_spore",
@@ -671,7 +688,8 @@
     "#e0f0ff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 1
  },
  {
   "id": "pine_goblin",
@@ -706,7 +724,8 @@
     "#c8a26b"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "elder_mushling",
@@ -740,7 +759,8 @@
     "#e8d0b0"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "shadow_wolf",
@@ -775,7 +795,8 @@
     "#c83a4a"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "bramble_hornet",
@@ -815,7 +836,8 @@
     "#d8f0ff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "cave_bat",
@@ -850,7 +872,8 @@
     "#ffd34d"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "moss_golem",
@@ -885,13 +908,14 @@
     "#a9e04a"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "lantern_ghost",
   "name": "Lantern Ghost",
   "level": 33,
-  "element": "shadow",
+  "element": "ghost",
   "race": "undead",
   "size": "small",
   "maxHp": 2080,
@@ -912,7 +936,7 @@
   "dropTableId": "lantern_ghost_drops",
   "collisionRadius": 12,
   "projectile": {
-   "element": "shadow",
+   "element": "ghost",
    "color": "#ffb03a"
   },
   "statusImmune": [
@@ -929,7 +953,8 @@
     "#ffb03a"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "crystal_slime",
@@ -963,7 +988,8 @@
     "#ffffff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "moon_hare",
@@ -997,13 +1023,14 @@
     "#c8a6ff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "arcane_wisp",
   "name": "Arcane Wisp",
   "level": 27,
-  "element": "shadow",
+  "element": "ghost",
   "race": "formless",
   "size": "small",
   "maxHp": 1600,
@@ -1024,7 +1051,7 @@
   "dropTableId": "arcane_wisp_drops",
   "collisionRadius": 12,
   "projectile": {
-   "element": "shadow",
+   "element": "ghost",
    "color": "#c9a6ff"
   },
   "art": {
@@ -1037,7 +1064,8 @@
     "#ffffff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "animated_armor",
@@ -1072,7 +1100,8 @@
     "#7fd6ff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "rune_golem",
@@ -1107,7 +1136,8 @@
     "#d8c8ff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "mana_wisp",
@@ -1147,7 +1177,8 @@
     "#ffffff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "dune_slime",
@@ -1181,7 +1212,8 @@
     "#fff4d0"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "sand_scorpion",
@@ -1221,7 +1253,8 @@
     "#e8e0c0"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "desert_wolf",
@@ -1256,7 +1289,8 @@
     "#fff0c0"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "oasis_crab",
@@ -1290,7 +1324,8 @@
     "#ffffff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "mirage_wisp",
@@ -1330,7 +1365,8 @@
     "#ffffff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "giant_scorpion",
@@ -1370,7 +1406,8 @@
     "#ffd34d"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "tomb_mummy",
@@ -1409,7 +1446,8 @@
     "#ffd34d"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "gilded_scarab",
@@ -1444,7 +1482,8 @@
     "#3ad8a8"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "tomb_bat",
@@ -1479,7 +1518,8 @@
     "#ffd34d"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "shore_crab",
@@ -1513,7 +1553,8 @@
     "#ffffff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 1
  },
  {
   "id": "sea_slime",
@@ -1547,7 +1588,8 @@
     "#ffffff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "reef_gull",
@@ -1582,7 +1624,8 @@
     "#ffb03a"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "grotto_crab",
@@ -1617,7 +1660,8 @@
     "#ffffff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "kelp_spore",
@@ -1657,7 +1701,8 @@
     "#e0ffe0"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "drowned_spirit",
@@ -1696,7 +1741,8 @@
     "#ffffff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "frost_slime",
@@ -1730,7 +1776,8 @@
     "#ffffff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "snow_wolf",
@@ -1765,7 +1812,8 @@
     "#7fd6ff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 2
  },
  {
   "id": "ice_golem",
@@ -1805,7 +1853,8 @@
     "#ffffff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 3
  },
  {
   "id": "ice_bat",
@@ -1840,7 +1889,8 @@
     "#ffffff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 3
  },
  {
   "id": "frost_wraith",
@@ -1884,7 +1934,8 @@
     "#7fd6ff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 3
  },
  {
   "id": "glacier_golem",
@@ -1924,7 +1975,8 @@
     "#e0ffff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 3
  },
  {
   "id": "ember_slime",
@@ -1964,7 +2016,8 @@
     "#ffe08a"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 3
  },
  {
   "id": "ash_scorpion",
@@ -1999,7 +2052,8 @@
     "#ff6a2e"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 3
  },
  {
   "id": "fire_drake",
@@ -2039,7 +2093,8 @@
     "#ffd34d"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 3
  },
  {
   "id": "magma_golem",
@@ -2079,7 +2134,8 @@
     "#ff8a2e"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 3
  },
  {
   "id": "flame_drake",
@@ -2119,7 +2175,8 @@
     "#fff08a"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 3
  },
  {
   "id": "bog_slime",
@@ -2159,7 +2216,8 @@
     "#c8e07a"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 3
  },
  {
   "id": "marsh_spore",
@@ -2199,7 +2257,8 @@
     "#e0d0ff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 3
  },
  {
   "id": "mire_crab",
@@ -2234,7 +2293,8 @@
     "#c8e07a"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 3
  },
  {
   "id": "raven_bat",
@@ -2269,7 +2329,8 @@
     "#c83a4a"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 3
  },
  {
   "id": "cursed_knight",
@@ -2313,13 +2374,14 @@
     "#c83a4a"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 3
  },
  {
   "id": "banshee",
   "name": "Banshee",
   "level": 72,
-  "element": "shadow",
+  "element": "ghost",
   "race": "undead",
   "size": "small",
   "maxHp": 5850,
@@ -2340,7 +2402,7 @@
   "dropTableId": "banshee_drops",
   "collisionRadius": 12,
   "projectile": {
-   "element": "shadow",
+   "element": "ghost",
    "color": "#ff8ab0"
   },
   "statusImmune": [
@@ -2357,7 +2419,8 @@
     "#ff5a7a"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 4
  },
  {
   "id": "grave_knight",
@@ -2396,7 +2459,8 @@
     "#7fd6ff"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 4
  },
  {
   "id": "lich_spirit",
@@ -2440,7 +2504,8 @@
     "#a9e04a"
    ]
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 4
  },
  {
   "id": "bone_warden_boss",
@@ -2482,7 +2547,8 @@
    ],
    "scale": 2
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 3
  },
  {
   "id": "valdris_boss",
@@ -2524,7 +2590,8 @@
    ],
    "scale": 2.2
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 3
  },
  {
   "id": "sun_king_boss",
@@ -2566,7 +2633,8 @@
    ],
    "scale": 2.2
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 4
  },
  {
   "id": "pyrewyrm_boss",
@@ -2604,7 +2672,8 @@
    ],
    "scale": 2.4
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 4
  },
  {
   "id": "dread_lord_boss",
@@ -2646,6 +2715,7 @@
    ],
    "scale": 2.5
   },
-  "generated": true
+  "generated": true,
+  "elementLevel": 4
  }
 ]

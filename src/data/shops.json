@@ -64,7 +64,13 @@
    "green_potion",
    "wing_of_return",
    "wandering_feather",
-   "swiftness_tonic"
+   "swiftness_tonic",
+   "ember_oil",
+   "frost_oil",
+   "gale_oil",
+   "terra_oil",
+   "blessed_water",
+   "wraith_oil"
   ],
   "generated": true
  },
@@ -123,7 +129,13 @@
    "yellow_potion",
    "blue_potion",
    "wing_of_return",
-   "wandering_feather"
+   "wandering_feather",
+   "ember_oil",
+   "frost_oil",
+   "gale_oil",
+   "terra_oil",
+   "blessed_water",
+   "wraith_oil"
   ],
   "generated": true
  },
@@ -210,7 +222,13 @@
    "blue_potion",
    "green_potion",
    "wing_of_return",
-   "wandering_feather"
+   "wandering_feather",
+   "ember_oil",
+   "frost_oil",
+   "gale_oil",
+   "terra_oil",
+   "blessed_water",
+   "wraith_oil"
   ],
   "generated": true
  },

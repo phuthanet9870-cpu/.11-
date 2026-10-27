@@ -9,7 +9,7 @@ import type { OpResult } from './inventory';
 export interface OptionDef { key: string; label: string; min: number; max: number; weight: number; pool: 'weapon' | 'armor' | 'any' }
 
 const RACES = ['undead', 'beast', 'plant', 'insect', 'formless', 'demihuman', 'dragon', 'fish'];
-const ELEMENTS = ['fire', 'water', 'wind', 'earth', 'shadow', 'holy', 'poison'];
+const ELEMENTS = ['neutral', 'fire', 'water', 'wind', 'earth', 'shadow', 'holy', 'poison', 'undead', 'ghost'];
 
 export const OPTIONS: OptionDef[] = [
   ...['str', 'agi', 'vit', 'int', 'dex', 'luk'].map((k): OptionDef => ({ key: k, label: `${k.toUpperCase()} +{v}`, min: 1, max: 3, weight: 6, pool: 'any' })),

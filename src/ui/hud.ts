@@ -329,7 +329,7 @@ export class Hud {
     this.targetEl.classList.remove('hidden');
     const sts = t.statuses.map((s) => w.data.statuses.get(s.id)!.name).join(', ');
     setChildren(this.targetEl,
-      h('div', { class: 'tname' }, `${t.def.name}  `, h('span', { class: 'muted' }, `Lv.${t.def.level} · ${t.def.element} · ${t.def.race}`)),
+      h('div', { class: 'tname' }, `${t.def.name}  `, h('span', { class: 'muted' }, `Lv.${t.def.level} · ${t.def.element} ${t.def.elementLevel ?? 1} · ${t.def.race}`)),
       barEl('hp', t.hp, t.maxHp, `${Math.ceil(t.hp)} / ${t.maxHp}`),
       sts ? h('div', { class: 'muted', style: 'font-size:11px;margin-top:2px' }, sts) : null);
   }

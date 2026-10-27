@@ -83,7 +83,7 @@ const MONSTERS: MonSpec[] = [
   M('pebble_golem', 'Pebble Golem', 15, 'golem', ['#a49a8a', '#7a7064', '#7fd6ff'], 'earth', 'formless', 'passive', { size: 'medium' }),
   M('road_goblin', 'Road Goblin', 17, 'goblin', ['#7a9a3a', '#5a4a3a', '#3a6ab8'], 'neutral', 'demihuman'),
   M('crypt_bat', 'Crypt Bat', 21, 'bat', ['#4a4a52', '#2a2a32', '#a9e04a'], 'undead', 'undead'),
-  M('wailing_spirit', 'Wailing Spirit', 25, 'ghost', ['#c8d4e0', '#2a2a3a', '#7fd6ff'], 'undead', 'undead', 'magic', { projectile: '#a8c8ff' }),
+  M('wailing_spirit', 'Wailing Spirit', 25, 'ghost', ['#c8d4e0', '#2a2a3a', '#7fd6ff'], 'ghost', 'undead', 'magic', { projectile: '#a8c8ff' }),
   M('grave_soldier', 'Grave Soldier', 27, 'skeleton', ['#d8d2bc', '#4a4a5a', '#ff5a3a'], 'undead', 'undead'),
   M('mist_spore', 'Mist Spore', 18, 'spore', ['#5a8aaa', '#c8e8ff', '#e0f0ff'], 'water', 'plant', 'magic', { projectile: '#9ad8ff' }),
   M('pine_goblin', 'Pinewood Goblin', 21, 'goblin', ['#5a8a3a', '#3a4a2a', '#c8a26b'], 'earth', 'demihuman'),
@@ -92,10 +92,10 @@ const MONSTERS: MonSpec[] = [
   M('bramble_hornet', 'Bramble Hornet', 26, 'wasp', ['#c88a2e', '#2b2b2b', '#d8f0ff'], 'wind', 'insect', 'aggressive', { status: ['poison', 0.12, 6000] }),
   M('cave_bat', 'Cave Bat', 27, 'bat', ['#6a5a4a', '#4a3e32', '#ffd34d'], 'neutral', 'beast'),
   M('moss_golem', 'Moss Golem', 31, 'golem', ['#6a7a5a', '#4a5a3a', '#a9e04a'], 'earth', 'formless', 'aggressive', { size: 'large' }),
-  M('lantern_ghost', 'Lantern Ghost', 33, 'ghost', ['#f2e8b0', '#3a2a1a', '#ffb03a'], 'shadow', 'undead', 'magic', { projectile: '#ffb03a' }),
+  M('lantern_ghost', 'Lantern Ghost', 33, 'ghost', ['#f2e8b0', '#3a2a1a', '#ffb03a'], 'ghost', 'undead', 'magic', { projectile: '#ffb03a' }),
   M('crystal_slime', 'Crystal Slime', 21, 'slime', ['#7ab8f0', '#4a7ac8', '#ffffff'], 'water', 'formless', 'passive'),
   M('moon_hare', 'Moon Hare', 23, 'rabbit', ['#d8d8f0', '#a8a8c8', '#c8a6ff'], 'holy', 'beast', 'passive'),
-  M('arcane_wisp', 'Arcane Wisp', 27, 'ghost', ['#b89af0', '#2a1a4a', '#ffffff'], 'shadow', 'formless', 'magic', { projectile: '#c9a6ff' }),
+  M('arcane_wisp', 'Arcane Wisp', 27, 'ghost', ['#b89af0', '#2a1a4a', '#ffffff'], 'ghost', 'formless', 'magic', { projectile: '#c9a6ff' }),
   M('animated_armor', 'Animated Armor', 34, 'skeleton', ['#a8b0c0', '#3a4a6a', '#7fd6ff'], 'neutral', 'formless', 'aggressive', { size: 'medium' }),
   M('rune_golem', 'Rune Golem', 38, 'golem', ['#6a5a9a', '#4a3a7a', '#d8c8ff'], 'shadow', 'formless', 'aggressive', { size: 'large' }),
   M('mana_wisp', 'Mana Wisp', 36, 'ghost', ['#7ab8ff', '#1a2a4a', '#ffffff'], 'water', 'formless', 'magic', { projectile: '#7ab8ff' }),
@@ -130,7 +130,7 @@ const MONSTERS: MonSpec[] = [
   M('mire_crab', 'Mire Crab', 66, 'crab', ['#4a5a3a', '#2e3a22', '#c8e07a'], 'poison', 'fish', 'aggressive', { size: 'medium' }),
   M('raven_bat', 'Raven Bat', 67, 'bat', ['#2a2a32', '#16161c', '#c83a4a'], 'shadow', 'beast'),
   M('cursed_knight', 'Cursed Knight', 69, 'skeleton', ['#6a6a7a', '#2a2a3a', '#c83a4a'], 'shadow', 'undead', 'aggressive', { size: 'medium', status: ['curse', 0.1, 6000] }),
-  M('banshee', 'Banshee', 72, 'ghost', ['#c8c8d8', '#3a2a4a', '#ff5a7a'], 'shadow', 'undead', 'magic', { projectile: '#ff8ab0' }),
+  M('banshee', 'Banshee', 72, 'ghost', ['#c8c8d8', '#3a2a4a', '#ff5a7a'], 'ghost', 'undead', 'magic', { projectile: '#ff8ab0' }),
   M('grave_knight', 'Grave Knight', 76, 'skeleton', ['#4a4a5a', '#1e1e28', '#7fd6ff'], 'undead', 'undead', 'aggressive', { size: 'medium' }),
   M('lich_spirit', 'Lich Spirit', 79, 'ghost', ['#8a7aaa', '#1a1028', '#a9e04a'], 'undead', 'undead', 'magic', { projectile: '#a9e04a' }),
 ];
@@ -449,6 +449,9 @@ export async function main() {
       { itemId: 'starsteel_ore', chance: b ? 0.5 : Math.min(0.04, 0.004 + s.lv * 0.0004) }, { itemId: 'moonstone_ore', chance: b ? 0.5 : Math.min(0.04, 0.004 + s.lv * 0.0004) },
     ], generated: true });
   }
+  // Element levels 1–4 (Ragnarok-style), by level tier; bosses one level higher.
+  for (const m of monsters) m.elementLevel = Math.min(4, (m.level < 20 ? 1 : m.level < 45 ? 2 : m.level < 70 ? 3 : 4) + (m.aiType === 'boss' ? 1 : 0));
+
   // ---------------------------------------------------------------- cards (one per monster)
   const CARD_SLOTS = ['weapon', 'armor', 'shield', 'garment', 'boots', 'headgear', 'accessory'] as const;
   const RACES = ['formless', 'undead', 'beast', 'plant', 'insect', 'fish', 'demon', 'demihuman', 'dragon'];
@@ -518,6 +521,13 @@ export async function main() {
     ['star_crumb', 'Star Crumb', 'A fragment of a fallen star. Up to three can be forged into a weapon for bonus ATK.', 'gem', '#ffe14d'],
   ];
   for (const [id, name, desc, icon, col] of FORGE_ITEMS) items.push({ id, name, type: 'material', rarity: 'uncommon', description: desc, weight: 1, price: id === 'star_crumb' ? 400 : 300, stackable: true, maxStack: 999, icon: { shape: icon, color: col, accent: '#ffffff' }, generated: true });
+  // Elemental converters: a consumable that gives the weapon an element for 10 minutes (RO's converters / holy water).
+  const CONVERTERS: [string, string, string, string, number][] = [
+    ['ember_oil', 'Ember Oil', 'fire', '#ff6a2e', 300], ['frost_oil', 'Frost Oil', 'water', '#7ab8ff', 300],
+    ['gale_oil', 'Gale Oil', 'wind', '#b6f0d0', 300], ['terra_oil', 'Terra Oil', 'earth', '#8b6b3e', 300],
+    ['blessed_water', 'Blessed Water', 'holy', '#fff6c0', 450], ['wraith_oil', 'Wraith Oil', 'ghost', '#c8d4ff', 600],
+  ];
+  for (const [id, name, el, col, price] of CONVERTERS) items.push({ id, name, type: 'consumable', rarity: 'uncommon', description: `Coats your weapon: attacks become ${el} for 10 minutes.`, weight: 2, price, stackable: true, maxStack: 99, cooldownMs: 1000, use: [{ type: 'endow', element: el, durationMs: 600000 }], icon: { shape: 'potion', color: col, accent: '#ffffff' }, generated: true });
   const STONE_OF: Record<string, string> = { fire: 'flame_stone', water: 'frost_stone', wind: 'gale_stone', earth: 'terra_stone' };
   for (const t of drops) t.entries = t.entries.filter((e: J) => !e.forge);
   for (const m of monsters) {
@@ -562,6 +572,7 @@ export async function main() {
   }
   const built = NEW_MAPS.map((s) => (s.type === 'town' ? buildTown(s) : s.type === 'field' ? buildField(s) : buildDungeon(s)));
   for (const b of built) { npcs.push(...b.npcs); shops.push(...b.shops); }
+  for (const sh of shops) if (['aurelion_tools', 'arcanthe_tools', 'frostholm_tools'].includes(sh.id)) sh.items = [...sh.items.filter((i: string) => !CONVERTERS.some((c) => c[0] === i)), ...CONVERTERS.map((c) => c[0])];
   // Courier in Willowbrook too, so the warp network starts at home.
   npcs.push(npc('willowbrook_courier', 'Courier Fiona', 'Courier Guild Service', 77, 'coat',
     [{ type: 'save' }, { type: 'storage' }, { type: 'warp', destinations: TOWN_IDS().filter((t) => t !== 'willowbrook').map((t) => ({ mapId: t, spawn: 'default', cost: 600 })) }],

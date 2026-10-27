@@ -39,6 +39,8 @@ export interface Buff {
   durationMs: number;
   flags?: string[];
   color: string;
+  /** Weapon element while the buff lasts. */
+  endow?: Element;
 }
 
 export interface StatusInst { id: StatusId; expiresAt: number; stacks: number; nextTickAt: number }
@@ -269,6 +271,8 @@ export class World {
   recomputeStats() {
     const before = this.stats;
     this.stats = computeDerivedStats(this.data, this.char, this.runtimeMods());
+    const endow = this.player.buffs.find((b) => b.endow)?.endow;
+    if (endow) this.stats.weaponElement = endow;
     this.player.maxHp = this.stats.maxHp;
     this.char.hp = Math.min(this.char.hp, this.stats.maxHp);
     this.char.mp = Math.min(this.char.mp, this.stats.maxMp);
@@ -1738,6 +1742,13 @@ export class World {
         }
         case 'buff':
           this.addBuff(p, { id: u.buffId, name: def.name, mods: u.mods, durationMs: u.durationMs, color: def.icon.color });
+          this.emit({ type: 'fx', fx: 'buff', x: p.x, y: p.y, targetId: 'player' });
+          break;
+        case 'endow':
+          this.player.buffs = this.player.buffs.filter((b) => !b.endow);
+          this.addBuff(p, { id: `endow_${u.element}`, name: def.name, mods: {}, durationMs: u.durationMs, color: def.icon.color, endow: u.element });
+          this.invalidateStats();
+          this.message(`Your weapon is now ${u.element}.`);
           this.emit({ type: 'fx', fx: 'buff', x: p.x, y: p.y, targetId: 'player' });
           break;
         case 'randomTeleport': {

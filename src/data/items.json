@@ -3002,7 +3002,7 @@
    "equip": "garment",
    "mods": {
     "elementResistPct": {
-     "shadow": 20
+     "ghost": 20
     },
     "flee": 4
    },
@@ -3077,7 +3077,7 @@
    "equip": "garment",
    "mods": {
     "elementResistPct": {
-     "shadow": 20
+     "ghost": 20
     },
     "flee": 4
    },
@@ -4269,6 +4269,156 @@
   "icon": {
    "shape": "gem",
    "color": "#ffe14d",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "ember_oil",
+  "name": "Ember Oil",
+  "type": "consumable",
+  "rarity": "uncommon",
+  "description": "Coats your weapon: attacks become fire for 10 minutes.",
+  "weight": 2,
+  "price": 300,
+  "stackable": true,
+  "maxStack": 99,
+  "cooldownMs": 1000,
+  "use": [
+   {
+    "type": "endow",
+    "element": "fire",
+    "durationMs": 600000
+   }
+  ],
+  "icon": {
+   "shape": "potion",
+   "color": "#ff6a2e",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "frost_oil",
+  "name": "Frost Oil",
+  "type": "consumable",
+  "rarity": "uncommon",
+  "description": "Coats your weapon: attacks become water for 10 minutes.",
+  "weight": 2,
+  "price": 300,
+  "stackable": true,
+  "maxStack": 99,
+  "cooldownMs": 1000,
+  "use": [
+   {
+    "type": "endow",
+    "element": "water",
+    "durationMs": 600000
+   }
+  ],
+  "icon": {
+   "shape": "potion",
+   "color": "#7ab8ff",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "gale_oil",
+  "name": "Gale Oil",
+  "type": "consumable",
+  "rarity": "uncommon",
+  "description": "Coats your weapon: attacks become wind for 10 minutes.",
+  "weight": 2,
+  "price": 300,
+  "stackable": true,
+  "maxStack": 99,
+  "cooldownMs": 1000,
+  "use": [
+   {
+    "type": "endow",
+    "element": "wind",
+    "durationMs": 600000
+   }
+  ],
+  "icon": {
+   "shape": "potion",
+   "color": "#b6f0d0",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "terra_oil",
+  "name": "Terra Oil",
+  "type": "consumable",
+  "rarity": "uncommon",
+  "description": "Coats your weapon: attacks become earth for 10 minutes.",
+  "weight": 2,
+  "price": 300,
+  "stackable": true,
+  "maxStack": 99,
+  "cooldownMs": 1000,
+  "use": [
+   {
+    "type": "endow",
+    "element": "earth",
+    "durationMs": 600000
+   }
+  ],
+  "icon": {
+   "shape": "potion",
+   "color": "#8b6b3e",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "blessed_water",
+  "name": "Blessed Water",
+  "type": "consumable",
+  "rarity": "uncommon",
+  "description": "Coats your weapon: attacks become holy for 10 minutes.",
+  "weight": 2,
+  "price": 450,
+  "stackable": true,
+  "maxStack": 99,
+  "cooldownMs": 1000,
+  "use": [
+   {
+    "type": "endow",
+    "element": "holy",
+    "durationMs": 600000
+   }
+  ],
+  "icon": {
+   "shape": "potion",
+   "color": "#fff6c0",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "wraith_oil",
+  "name": "Wraith Oil",
+  "type": "consumable",
+  "rarity": "uncommon",
+  "description": "Coats your weapon: attacks become ghost for 10 minutes.",
+  "weight": 2,
+  "price": 600,
+  "stackable": true,
+  "maxStack": 99,
+  "cooldownMs": 1000,
+  "use": [
+   {
+    "type": "endow",
+    "element": "ghost",
+    "durationMs": 600000
+   }
+  ],
+  "icon": {
+   "shape": "potion",
+   "color": "#c8d4ff",
    "accent": "#ffffff"
   },
   "generated": true

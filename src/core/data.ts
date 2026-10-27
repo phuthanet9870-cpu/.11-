@@ -26,6 +26,9 @@ export type Balance = typeof balanceJson;
 
 export interface GameData {
   balance: Balance;
+  /** elementTables[level 1-4][attack][defend] in %. */
+  elementTables: Record<string, Record<Element, Record<Element, number>>>;
+  /** Level-1 table (kept for callers that ignore element levels). */
   elementTable: Record<Element, Record<Element, number>>;
   statuses: Map<StatusId, StatusDef>;
   classes: Map<string, JobClassDef>;
@@ -59,7 +62,8 @@ export function loadGameData(): GameData {
   if (cached) return cached;
   cached = {
     balance: balanceJson,
-    elementTable: elementsJson.table as GameData['elementTable'],
+    elementTables: elementsJson.levels as unknown as GameData['elementTables'],
+    elementTable: elementsJson.levels['1'] as unknown as GameData['elementTable'],
     statuses: byId(statusJson as StatusDef[]) as Map<StatusId, StatusDef>,
     classes: byId(classesJson as JobClassDef[]),
     skills: byId(skillsJson as SkillDef[]),
@@ -98,6 +102,7 @@ export function validateGameData(d: GameData): string[] {
     need(d.drops.has(m.dropTableId), `monster ${m.id}: drop table ${m.dropTableId} missing`);
     need(m.maxHp > 0 && m.level > 0, `monster ${m.id}: invalid hp/level`);
     need(d.elementTable[m.element], `monster ${m.id}: element ${m.element}`);
+    need(m.elementLevel === undefined || (m.elementLevel >= 1 && m.elementLevel <= 4), `monster ${m.id}: element level ${m.elementLevel}`);
     if (m.bossId) need(d.bosses.has(m.bossId), `monster ${m.id}: boss ${m.bossId} missing`);
   }
   for (const b of d.bosses.values()) {

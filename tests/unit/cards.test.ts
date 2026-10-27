@@ -103,4 +103,14 @@ describe('MVP system and feather', () => {
     const cx = Math.floor(w.player.x / 32), cy = Math.floor(w.player.y / 32);
     expect(w.map.reachable[cy * w.map.width + cx]).toBe(1);
   });
+  it('Wraith Oil makes the weapon ghost for 10 minutes, then wears off', async () => {
+    const { newWorld } = await import('../helpers/fixtures');
+    const w = newWorld();
+    addItem(data, w.char, 'wraith_oil', 1);
+    expect(w.useItemById('wraith_oil').ok).toBe(true);
+    w.update(16);
+    expect(w.stats.weaponElement).toBe('ghost');
+    for (let t = 0; t < 600_100; t += 100) w.update(100);
+    expect(w.stats.weaponElement).toBe('neutral');
+  });
 });

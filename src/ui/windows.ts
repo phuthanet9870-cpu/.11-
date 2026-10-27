@@ -625,7 +625,7 @@ export class WindowManager {
     if (st.tab === 'monsters') {
       filters = [['', 'All races'], ...[...new Set([...d.monsters.values()].map((m) => m.race))].sort().map((r): [string, string] => [r, r])];
       rows = [...d.monsters.values()].filter((m) => (!st.filter || m.race === st.filter) && m.name.toLowerCase().includes(q))
-        .sort((a, b) => a.level - b.level).map((m) => ({ id: m.id, label: `${m.name}`, sub: `Lv ${m.level} · ${m.element} · ${m.size}${m.aiType === 'boss' ? ' · MVP' : ''}` }));
+        .sort((a, b) => a.level - b.level).map((m) => ({ id: m.id, label: `${m.name}`, sub: `Lv ${m.level} · ${m.element} ${m.elementLevel ?? 1} · ${m.size}${m.aiType === 'boss' ? ' · MVP' : ''}` }));
     } else {
       const cards = st.tab === 'cards';
       filters = cards ? [['', 'All slots'], ...['weapon', 'armor', 'shield', 'garment', 'boots', 'headgear', 'accessory'].map((s): [string, string] => [s, s])]
@@ -652,7 +652,7 @@ export class WindowManager {
       const m = d.monsters.get(st.sel)!;
       const table = d.drops.get(m.dropTableId);
       detail.push(h('h3', { style: 'margin:0 0 4px' }, `${m.name}${m.aiType === 'boss' ? ' (MVP)' : ''}`),
-        h('table', {}, kv('Level', m.level), kv('Race / Size', `${m.race} / ${m.size}`), kv('Element', m.element), kv('HP', m.maxHp),
+        h('table', {}, kv('Level', m.level), kv('Race / Size', `${m.race} / ${m.size}`), kv('Element', `${m.element} ${m.elementLevel ?? 1}`), kv('HP', m.maxHp),
           kv('ATK / DEF / MDEF', `${m.attack} / ${m.defense} / ${m.magicDefense ?? 0}`), kv('Base / Job EXP', `${m.exp} / ${m.jobExp}`),
           kv('Behaviour', m.aiType), kv('Luma', table?.luma ? `${table.luma[0]}–${table.luma[1]}` : '—')),
         h('div', { class: 'gold', style: 'margin-top:6px' }, 'Found in'), h('div', {}, mapsOf(m.id).join(', ') || '—'),

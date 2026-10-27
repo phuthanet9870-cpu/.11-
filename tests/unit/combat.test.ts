@@ -38,13 +38,19 @@ describe('Ragnarok-style modifiers', () => {
 });
 
 describe('element table', () => {
-  it('is complete 9x9', () => {
-    for (const a of ELEMENTS) for (const d of ELEMENTS) expect(typeof data.elementTable[a][d]).toBe('number');
+  it('is complete 10x10 at every level 1-4', () => {
+    for (const lv of ['1', '2', '3', '4']) for (const a of ELEMENTS) for (const d of ELEMENTS) expect(typeof data.elementTables[lv][a][d]).toBe('number');
+  });
+  it('scales with the defender element level', () => {
+    expect(elementModifier(data, 'neutral', 'ghost', 1)).toBe(0.25);
+    expect(elementModifier(data, 'neutral', 'ghost', 4)).toBe(0);
+    expect(elementModifier(data, 'holy', 'undead', 4)).toBeGreaterThan(elementModifier(data, 'holy', 'undead', 1));
+    expect(elementModifier(data, 'fire', 'earth', 4)).toBe(2);
   });
   it('applies classic counters', () => {
     expect(elementModifier(data, 'fire', 'earth')).toBe(1.5);
     expect(elementModifier(data, 'water', 'fire')).toBe(1.5);
-    expect(elementModifier(data, 'holy', 'undead')).toBeGreaterThan(1.5);
+    expect(elementModifier(data, 'holy', 'undead')).toBeGreaterThanOrEqual(1.5);
     expect(elementModifier(data, 'poison', 'poison')).toBe(0);
   });
 });
