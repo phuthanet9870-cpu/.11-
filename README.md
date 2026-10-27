@@ -8,6 +8,7 @@ A 2D fantasy MMORPG with a top-down 3/4 view. It's built with TypeScript, Phaser
 
 ## ภาพรวม (Thai summary)
 - **เปลี่ยนภาษาได้ อังกฤษ / ไทย** ที่มุมขวาบนของหน้าแรก หรือ ตั้งค่า → ภาษา ในเกม (ชื่อไอเทม มอนสเตอร์ สกิล แผนที่ คงเป็นภาษาอังกฤษ)
+- **NPC เปลี่ยนอาชีพ (Job Master) มีทุกเมือง** รวมทุกการเปลี่ยนอาชีพไว้ที่เดียว: อาชีพแรก (Job Lv 10) อาชีพขั้นสอง (Job Lv 40) เกิดใหม่ (Base 99 / Job 50) อาชีพ High และอาชีพขั้นสูง แสดงเฉพาะอาชีพที่ตัวละครเปลี่ยนไปได้
 - **ระบบ GM ควบคุมได้ทุกอย่าง** หน้าต่าง GM 4 แท็บ + คำสั่ง `@` ในแชท (`@help`) และคำสั่ง GM ฝั่งเซิร์ฟเวอร์ด้วยรหัสแอดมิน
 - **โลกสไตล์ Ragnarok Online มี 30 แมพใน 9 ภูมิภาค** มีเมือง 7 เมือง ทุ่ง และดันเจี้ยน แต่ละภูมิภาคมีสี สภาพอากาศ เพลง และมอนสเตอร์ของตัวเอง (ดู [docs/WORLD.md](docs/WORLD.md))
 - **เควสมีแค่เควสฝึกสอน 5 เควส** ได้แก่ ลงทะเบียนกิลด์ → ล่า Leaf Slime → ซื้อและสวมอาวุธ → ตีบวก +1 → เก็บ Job Lv 10
@@ -110,6 +111,10 @@ npm run dev           # then in the game: Social window (G) → server ws://loca
 ```
 Chat: plain text = map, `/p` party, `/g` guild, `/gl` global, `/w name` whisper. The Arena Master in Aurelion warps to the Proving Grounds (PvP) and Castle Veyl (guild war, daily 20:00–21:00 server time; `npm run server -- --woe-always` keeps it open).
 
+## Job Master (class change in every town)
+
+Every town, Willowbrook included, has a **Job Master** next to the plaza. It handles every class change in one place, with the normal requirements: first job (Novice, Job Lv 10), second job (Job Lv 40), rebirth (second job, Base 99 / Job 50), the High first jobs and the transcendent jobs. The dialog lists only the jobs open to your current class and path. The class guild masters and the Oracle of Rebirth still work as before.
+
 ## Language (English / ไทย)
 
 Pick **English** or **ภาษาไทย** at the top right of the title screen, or under **Settings → Language** in game. The choice is saved with your settings and applies at once, without reloading.
@@ -136,7 +141,7 @@ Single-player GM tools edit the local save only, and any use sets `flags.gmUsed`
 
 | Suite | Result |
 |---|---|
-| Unit (`tests/unit`, 27 files) | **992 / 992 passed** (most are per-map checks for all 136 maps): second jobs and rebirth, over-upgrade, homunculus, mount, cart, pet evolution, runes, raids, 100-floor Spire, element levels, enriched refine and fees, jobs (bonus stats, weight, ASPD, steal, haggle, coin cost, cure), pets, combos, card album, autocast, elites, looters, memorial dungeons, database calculators, plus forge, random options, refine, cards, quests, GM, data validation and per-map reachability (44 maps), formulas, combat, inventory, save/migrations, world simulation |
+| Unit (`tests/unit`, 28 files) | **995 / 995 passed** (most are per-map checks for all 136 maps): second jobs and rebirth, over-upgrade, homunculus, mount, cart, pet evolution, runes, raids, 100-floor Spire, element levels, enriched refine and fees, jobs (bonus stats, weight, ASPD, steal, haggle, coin cost, cure), pets, combos, card album, autocast, elites, looters, memorial dungeons, database calculators, plus forge, random options, refine, cards, quests, GM, data validation and per-map reachability (44 maps), formulas, combat, inventory, save/migrations, world simulation |
 | Integration: full playthrough | **passed**. A bot using only player commands finishes the 5 tutorial quests, becomes a Knight at the guild in Aurelion, switches to a spear for the Large boss (RO size rule), refines, and defeats Grukk (≈94 simulated minutes, Base Lv 24, 1 attempt). A second test walks through portals to all 30 world maps |
 | Integration: Auto Quest / Auto Farm | **passed**. Auto Quest takes a new character through all 5 tutorial quests by itself (≈11 simulated minutes, no deaths); Auto Farm got 147 kills in 10 simulated minutes and stayed within its radius; it stops when overweight |
 | Integration: class balance | **passed**. First-try wins against Grukk at Lv 17 over 24 fixed seeds: Knight 24, Ranger 19, Mage 20, Cleric 11, Rogue 10, Merchant 22. Second jobs vs Archmage Valdris (12 seeds): 6–12 wins each (table in `docs/RO_SYSTEMS.md`) |

@@ -257,6 +257,12 @@
    "x": 18,
    "y": 28,
    "facing": "down"
+  },
+  {
+   "npcId": "fernhollow_jobmaster",
+   "x": 17,
+   "y": 21,
+   "facing": "down"
   }
  ],
  "monsterSpawns": [],

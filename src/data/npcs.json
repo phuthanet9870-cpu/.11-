@@ -1999,6 +1999,482 @@
   "generated": true
  },
  {
+  "id": "willowbrook_jobmaster",
+  "name": "Master Corvin",
+  "title": "Job Master",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "long",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "robe"
+  },
+  "greeting": [
+   "I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "knight",
+     "ranger",
+     "mage",
+     "cleric",
+     "rogue",
+     "merchant",
+     "dragoon",
+     "templar",
+     "beastmaster",
+     "minstrel",
+     "sorcerer",
+     "sage",
+     "bishop",
+     "ascetic",
+     "shadowblade",
+     "outlaw",
+     "artisan",
+     "alchemist",
+     "high_knight",
+     "high_ranger",
+     "high_mage",
+     "high_cleric",
+     "high_rogue",
+     "high_merchant",
+     "dragon_lord",
+     "high_templar",
+     "wildlord",
+     "maestro",
+     "archsorcerer",
+     "archsage",
+     "archbishop",
+     "grandmaster",
+     "shadow_reaper",
+     "phantom_outlaw",
+     "mastersmith",
+     "grand_alchemist"
+    ]
+   },
+   {
+    "type": "rebirth"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "aurelion_jobmaster",
+  "name": "Master Elodie",
+  "title": "Job Master",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "robe"
+  },
+  "greeting": [
+   "I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "knight",
+     "ranger",
+     "mage",
+     "cleric",
+     "rogue",
+     "merchant",
+     "dragoon",
+     "templar",
+     "beastmaster",
+     "minstrel",
+     "sorcerer",
+     "sage",
+     "bishop",
+     "ascetic",
+     "shadowblade",
+     "outlaw",
+     "artisan",
+     "alchemist",
+     "high_knight",
+     "high_ranger",
+     "high_mage",
+     "high_cleric",
+     "high_rogue",
+     "high_merchant",
+     "dragon_lord",
+     "high_templar",
+     "wildlord",
+     "maestro",
+     "archsorcerer",
+     "archsage",
+     "archbishop",
+     "grandmaster",
+     "shadow_reaper",
+     "phantom_outlaw",
+     "mastersmith",
+     "grand_alchemist"
+    ]
+   },
+   {
+    "type": "rebirth"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_jobmaster",
+  "name": "Master Faramir",
+  "title": "Job Master",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "robe"
+  },
+  "greeting": [
+   "I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "knight",
+     "ranger",
+     "mage",
+     "cleric",
+     "rogue",
+     "merchant",
+     "dragoon",
+     "templar",
+     "beastmaster",
+     "minstrel",
+     "sorcerer",
+     "sage",
+     "bishop",
+     "ascetic",
+     "shadowblade",
+     "outlaw",
+     "artisan",
+     "alchemist",
+     "high_knight",
+     "high_ranger",
+     "high_mage",
+     "high_cleric",
+     "high_rogue",
+     "high_merchant",
+     "dragon_lord",
+     "high_templar",
+     "wildlord",
+     "maestro",
+     "archsorcerer",
+     "archsage",
+     "archbishop",
+     "grandmaster",
+     "shadow_reaper",
+     "phantom_outlaw",
+     "mastersmith",
+     "grand_alchemist"
+    ]
+   },
+   {
+    "type": "rebirth"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_jobmaster",
+  "name": "Master Ilse",
+  "title": "Job Master",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "ponytail",
+   "hairColor": "#2a2a3a",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "robe"
+  },
+  "greeting": [
+   "I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "knight",
+     "ranger",
+     "mage",
+     "cleric",
+     "rogue",
+     "merchant",
+     "dragoon",
+     "templar",
+     "beastmaster",
+     "minstrel",
+     "sorcerer",
+     "sage",
+     "bishop",
+     "ascetic",
+     "shadowblade",
+     "outlaw",
+     "artisan",
+     "alchemist",
+     "high_knight",
+     "high_ranger",
+     "high_mage",
+     "high_cleric",
+     "high_rogue",
+     "high_merchant",
+     "dragon_lord",
+     "high_templar",
+     "wildlord",
+     "maestro",
+     "archsorcerer",
+     "archsage",
+     "archbishop",
+     "grandmaster",
+     "shadow_reaper",
+     "phantom_outlaw",
+     "mastersmith",
+     "grand_alchemist"
+    ]
+   },
+   {
+    "type": "rebirth"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sandara_jobmaster",
+  "name": "Master Oren",
+  "title": "Job Master",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "robe"
+  },
+  "greeting": [
+   "I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "knight",
+     "ranger",
+     "mage",
+     "cleric",
+     "rogue",
+     "merchant",
+     "dragoon",
+     "templar",
+     "beastmaster",
+     "minstrel",
+     "sorcerer",
+     "sage",
+     "bishop",
+     "ascetic",
+     "shadowblade",
+     "outlaw",
+     "artisan",
+     "alchemist",
+     "high_knight",
+     "high_ranger",
+     "high_mage",
+     "high_cleric",
+     "high_rogue",
+     "high_merchant",
+     "dragon_lord",
+     "high_templar",
+     "wildlord",
+     "maestro",
+     "archsorcerer",
+     "archsage",
+     "archbishop",
+     "grandmaster",
+     "shadow_reaper",
+     "phantom_outlaw",
+     "mastersmith",
+     "grand_alchemist"
+    ]
+   },
+   {
+    "type": "rebirth"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_jobmaster",
+  "name": "Master Talia",
+  "title": "Job Master",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "bob",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#e8dcc0",
+   "accent": "#c8ccd8",
+   "style": "robe"
+  },
+  "greeting": [
+   "I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "knight",
+     "ranger",
+     "mage",
+     "cleric",
+     "rogue",
+     "merchant",
+     "dragoon",
+     "templar",
+     "beastmaster",
+     "minstrel",
+     "sorcerer",
+     "sage",
+     "bishop",
+     "ascetic",
+     "shadowblade",
+     "outlaw",
+     "artisan",
+     "alchemist",
+     "high_knight",
+     "high_ranger",
+     "high_mage",
+     "high_cleric",
+     "high_rogue",
+     "high_merchant",
+     "dragon_lord",
+     "high_templar",
+     "wildlord",
+     "maestro",
+     "archsorcerer",
+     "archsage",
+     "archbishop",
+     "grandmaster",
+     "shadow_reaper",
+     "phantom_outlaw",
+     "mastersmith",
+     "grand_alchemist"
+    ]
+   },
+   {
+    "type": "rebirth"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frostholm_jobmaster",
+  "name": "Master Wendel",
+  "title": "Job Master",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "robe"
+  },
+  "greeting": [
+   "I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "knight",
+     "ranger",
+     "mage",
+     "cleric",
+     "rogue",
+     "merchant",
+     "dragoon",
+     "templar",
+     "beastmaster",
+     "minstrel",
+     "sorcerer",
+     "sage",
+     "bishop",
+     "ascetic",
+     "shadowblade",
+     "outlaw",
+     "artisan",
+     "alchemist",
+     "high_knight",
+     "high_ranger",
+     "high_mage",
+     "high_cleric",
+     "high_rogue",
+     "high_merchant",
+     "dragon_lord",
+     "high_templar",
+     "wildlord",
+     "maestro",
+     "archsorcerer",
+     "archsage",
+     "archbishop",
+     "grandmaster",
+     "shadow_reaper",
+     "phantom_outlaw",
+     "mastersmith",
+     "grand_alchemist"
+    ]
+   },
+   {
+    "type": "rebirth"
+   }
+  ],
+  "generated": true
+ },
+ {
   "id": "aurelion_arena",
   "name": "Arena Master Kord",
   "title": "Proving Grounds & Castle Veyl",

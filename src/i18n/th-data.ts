@@ -69,6 +69,8 @@ const NPC: Record<string, string> = {
   'Alchemy supplies': 'อุปกรณ์เล่นแร่แปรธาตุ',
   '{} Come back as a {} of Job Level 40 and I will promote you.': '{} กลับมาหาข้าเมื่อเป็น {} Job Level 40 แล้วข้าจะเลื่อนขั้นให้',
   'Oracle of Rebirth': 'ผู้พยากรณ์แห่งการเกิดใหม่',
+  'Job Master': 'ผู้เปลี่ยนอาชีพ',
+  'I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs.': 'ข้าเปลี่ยนอาชีพให้เจ้าได้ที่นี่: อาชีพแรกที่ Job Level 10 อาชีพขั้นสองที่ Job Level 40 เกิดใหม่ที่ Base 99 / Job 50 แล้วต่อด้วยอาชีพ High และอาชีพขั้นสูง',
   'At Base Level 99 and Job Level 50 a second job may be reborn: you start again as a High Novice with 100 stat points, and your body grows stronger (+25% HP and MP).': 'เมื่อถึง Base Level 99 และ Job Level 50 อาชีพขั้นสองเกิดใหม่ได้: เริ่มใหม่เป็น High Novice พร้อมแต้มสเตตัส 100 แต้ม และร่างกายแข็งแกร่งขึ้น (HP และ MP +25%)',
   'Reborn ones return to me to take their High job, and later the transcendent job of the path they walked before.': 'ผู้เกิดใหม่กลับมาหาข้าเพื่อรับอาชีพ High และต่อมาคืออาชีพขั้นสูงของเส้นทางที่เคยเดิน',
   'Proving Grounds & Castle Veyl': 'สนามประลองและปราสาท Veyl',

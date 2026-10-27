@@ -611,6 +611,7 @@ const UI: Record<string, string> = {
   'You have cleared it {}×.': 'คุณเคลียร์แล้ว {} ครั้ง',
   'Become a {}{}': 'เปลี่ยนเป็น {}{}',
   '(needs Job Lv {})': '(ต้องการ Job Lv {})',
+  'needs Job Lv {}': 'ต้องการ Job Lv {}',
   'Become a {}': 'เปลี่ยนเป็น {}',
   '{} Your job level resets to 1; base level, stats and learned skills are kept.': '{} จ็อบเลเวลจะกลับเป็น 1 ส่วน Base Level สเตตัส และสกิลที่เรียนจะคงอยู่',
   'Change job': 'เปลี่ยนอาชีพ',

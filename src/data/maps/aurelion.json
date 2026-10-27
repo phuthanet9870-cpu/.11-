@@ -312,6 +312,12 @@
    "facing": "down"
   },
   {
+   "npcId": "aurelion_jobmaster",
+   "x": 17,
+   "y": 21,
+   "facing": "down"
+  },
+  {
    "npcId": "aurelion_arena",
    "x": 26,
    "y": 32,

@@ -30,6 +30,7 @@ describe('language switch (English / Thai)', () => {
   it('handles built-up lines: numbered options, joined stats, rune rows', () => {
     setLang('th');
     expect(t('1. Goodbye')).toBe('1. ลาก่อน');
+    expect(t('Become a Knight (needs Job Lv 10)')).toBe('เปลี่ยนเป็น Knight (ต้องการ Job Lv 10)');
     expect(t('[GM] HP / MP fully restored.')).toBe('[GM] ฟื้นฟู HP / MP เต็มแล้ว');
     expect(t('Refine (85%)')).toBe('ตีบวก (85%)');
     expect(t('Leaf Slime Card (card)')).toBe('Leaf Slime Card (การ์ด)');

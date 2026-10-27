@@ -488,6 +488,12 @@
    "x": 27,
    "y": 24,
    "facing": "down"
+  },
+  {
+   "npcId": "willowbrook_jobmaster",
+   "x": 21,
+   "y": 24,
+   "facing": "down"
   }
  ],
  "monsterSpawns": [],

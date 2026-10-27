@@ -234,6 +234,12 @@
    "facing": "down"
   },
   {
+   "npcId": "frostholm_jobmaster",
+   "x": 17,
+   "y": 21,
+   "facing": "down"
+  },
+  {
    "npcId": "crypt_keeper",
    "x": 30,
    "y": 32,

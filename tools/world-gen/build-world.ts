@@ -738,6 +738,18 @@ export async function main() {
     ['At Base Level 99 and Job Level 50 a second job may be reborn: you start again as a High Novice with 100 stat points, and your body grows stronger (+25% HP and MP).',
       'Reborn ones return to me to take their High job, and later the transcendent job of the path they walked before.']));
   built.find((b) => b.map.id === 'aurelion')!.map.npcs.push({ npcId: 'oracle_rebirth', x: 22, y: 28, facing: 'down' });
+
+  // Job Master in every town: every job change (first, second, High, transcendent) and rebirth in one place.
+  // The dialog lists only the jobs open to the character's current class and path.
+  const allJobs = classes.filter((c: J) => c.requirements?.fromClass).map((c: J) => c.id);
+  const JOB_MASTER = ['Master Corvin', 'Master Elodie', 'Master Faramir', 'Master Ilse', 'Master Oren', 'Master Talia', 'Master Wendel'];
+  for (const [i, town] of TOWN_IDS().entries()) {
+    npcs.push(npc(`${town}_jobmaster`, JOB_MASTER[i % JOB_MASTER.length], 'Job Master', hash(`${town}_jobmaster`), 'robe', [{ type: 'jobChange', classIds: allJobs }, { type: 'rebirth' }],
+      ['I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs.']));
+    const m = town === 'willowbrook' ? hand.willowbrook : built.find((x) => x.map.id === town)!.map;
+    m.npcs = m.npcs.filter((n: J) => n.npcId !== `${town}_jobmaster`);
+    m.npcs.push({ npcId: `${town}_jobmaster`, ...(town === 'willowbrook' ? { x: 21, y: 24 } : { x: 17, y: 21 }), facing: 'down' });
+  }
   for (const sh of shops) if (sh.id === 'frostholm_arms') for (const x of ['stellar_shard', 'lunar_shard']) if (!sh.items.includes(x)) sh.items.push(x);
   for (const it of items) {
     for (const town of it.soldIn ?? []) { const sh = shops.find((x: J) => x.id === `${town}_arms`); if (sh && !sh.items.includes(it.id)) sh.items.push(it.id); }

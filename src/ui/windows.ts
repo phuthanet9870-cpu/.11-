@@ -1179,7 +1179,8 @@ export class WindowManager {
       if (s.type === 'runeReset') opts.push([`Reset the constellations (${s.cost.toLocaleString()} Luma)`, () => { this.closeDialog(); this.confirmAction('Reset runes', 'Clear every star and get all rune points back?', 'Reset', () => w.resetRunesCmd()); }]);
       if (s.type === 'stable') opts.push([w.char.flags.mountOwned ? 'You already own a war-drake' : `Buy a war-drake (${s.cost} Luma)`, () => { this.closeDialog(); w.rentMount(); }]);
       if (s.type === 'cart') opts.push([w.char.cart ? 'You already have a pushcart' : `Rent a pushcart (${s.cost} Luma)`, () => { this.closeDialog(); w.rentCart(); }]);
-      if (s.type === 'rebirth') {
+      // Job Masters / the Oracle list rebirth only to second jobs, the class that can use it.
+      if (s.type === 'rebirth' && w.data.classes.get(w.char.classId)!.tier === 2) {
         const chk = canRebirth(w.data, w.char);
         opts.push([`Be reborn${chk.ok ? '' : ` (${chk.error})`}`, () => {
           this.closeDialog();
