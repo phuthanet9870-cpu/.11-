@@ -14,6 +14,7 @@ import shopsJson from '../data/shops.json';
 import recipesJson from '../data/recipes.json';
 import petsJson from '../data/pets.json';
 import combosJson from '../data/combos.json';
+import instancesJson from '../data/instances.json';
 import questsJson from '../data/quests.json';
 import tilesJson from '../data/tiles.json';
 import tilesetsJson from '../data/tilesets.json';
@@ -21,7 +22,7 @@ import objectsJson from '../data/objects.json';
 import { MAP_FILES } from '../data/maps';
 import type {
   BossDef, DropTable, Element, ItemDef, JobClassDef, MapDef, MonsterDef, NpcDef,
-  ComboDef, ObjectKindDef, PetDef, QuestDef, RecipeDef, ShopDef, SkillDef, StatusDef, StatusId, TileDef, TilesetDef,
+  ComboDef, InstanceDef, ObjectKindDef, PetDef, QuestDef, RecipeDef, ShopDef, SkillDef, StatusDef, StatusId, TileDef, TilesetDef,
 } from './types';
 
 export type Balance = typeof balanceJson;
@@ -44,6 +45,7 @@ export interface GameData {
   recipes: Map<string, RecipeDef>;
   pets: Map<string, PetDef>;
   combos: Map<string, ComboDef>;
+  instances: Map<string, InstanceDef>;
   quests: Map<string, QuestDef>;
   tiles: Map<string, TileDef>;
   tilesets: Map<string, TilesetDef>;
@@ -80,6 +82,7 @@ export function loadGameData(): GameData {
     recipes: byId(recipesJson as unknown as RecipeDef[]),
     pets: byId(petsJson as unknown as PetDef[]),
     combos: byId(combosJson as unknown as ComboDef[]),
+    instances: byId(instancesJson as unknown as InstanceDef[]),
     quests: byId(questsJson as QuestDef[]),
     tiles: byId(tilesJson.tiles as TileDef[]),
     tilesets: byId(tilesetsJson as unknown as TilesetDef[]),
@@ -124,6 +127,11 @@ export function validateGameData(d: GameData): string[] {
     need(!!it.card && d.monsters.has(it.card.monsterId), `card ${it.id}: monster`);
     need(!!it.card && ['weapon', 'armor', 'headgear', 'shield', 'garment', 'boots', 'accessory'].includes(it.card.equip), `card ${it.id}: slot`);
   }
+  for (const ins of d.instances.values()) {
+    for (const f of ins.floors) need(d.maps.get(f)?.instanceId === ins.id, `instance ${ins.id}: floor ${f}`);
+    need(d.maps.has(ins.exitMap), `instance ${ins.id}: exit ${ins.exitMap}`);
+    for (const r of ins.reward.items) need(d.items.has(r.itemId), `instance ${ins.id}: reward ${r.itemId}`);
+  }
   for (const cb of d.combos.values()) for (const part of cb.parts) need(d.items.has(part), `combo ${cb.id}: ${part}`);
   for (const it of d.items.values()) for (const ac of [it.autocast, it.card?.autocast]) if (ac) need(d.skills.has(ac.skillId), `item ${it.id}: autocast ${ac.skillId}`);
   for (const p of d.pets.values()) {
@@ -134,6 +142,7 @@ export function validateGameData(d: GameData): string[] {
   for (const n of d.npcs.values()) for (const s of n.services) {
     if (s.type === 'shop') need(d.shops.has(s.shopId), `npc ${n.id}: shop ${s.shopId}`);
     if (s.type === 'jobChange') for (const c of s.classIds) need(d.classes.has(c), `npc ${n.id}: class ${c}`);
+    if (s.type === 'instance') need(d.instances.has(s.instanceId), `npc ${n.id}: instance ${s.instanceId}`);
     if (s.type === 'warp') for (const t of s.destinations) need(!!d.maps.get(t.mapId)?.spawnPoints[t.spawn], `npc ${n.id}: warp ${t.mapId}/${t.spawn}`);
   }
   for (const it of d.items.values()) {

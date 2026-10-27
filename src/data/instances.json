@@ -1,0 +1,86 @@
+[
+ {
+  "id": "endless_spire",
+  "name": "Endless Spire",
+  "description": "Ten floors, each sealed until every monster on it is defeated. Floors 5 and 10 hold an elite guardian. 30 minutes; once per hour.",
+  "minLevel": 20,
+  "timeLimitMs": 1800000,
+  "cooldownMs": 3600000,
+  "floors": [
+   "endless_spire_f1",
+   "endless_spire_f2",
+   "endless_spire_f3",
+   "endless_spire_f4",
+   "endless_spire_f5",
+   "endless_spire_f6",
+   "endless_spire_f7",
+   "endless_spire_f8",
+   "endless_spire_f9",
+   "endless_spire_f10"
+  ],
+  "exitMap": "aurelion",
+  "reward": {
+   "exp": 20000,
+   "jobExp": 14000,
+   "luma": 15000,
+   "items": [
+    {
+     "itemId": "card_album",
+     "qty": 1
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "qty": 2
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "qty": 2
+    },
+    {
+     "itemId": "elder_sap",
+     "qty": 1
+    }
+   ]
+  },
+  "generated": true
+ },
+ {
+  "id": "sealed_crypt",
+  "name": "Sealed Crypt",
+  "description": "Four sealed rooms of restless dead and a Revenant guardian at the bottom. 20 minutes; once per hour.",
+  "minLevel": 45,
+  "timeLimitMs": 1200000,
+  "cooldownMs": 3600000,
+  "floors": [
+   "sealed_crypt_f1",
+   "sealed_crypt_f2",
+   "sealed_crypt_f3",
+   "sealed_crypt_f4"
+  ],
+  "exitMap": "frostholm",
+  "reward": {
+   "exp": 90000,
+   "jobExp": 60000,
+   "luma": 40000,
+   "items": [
+    {
+     "itemId": "card_album",
+     "qty": 2
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "qty": 4
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "qty": 4
+    },
+    {
+     "itemId": "elder_sap",
+     "qty": 2
+    }
+   ]
+  },
+  "generated": true
+ }
+]

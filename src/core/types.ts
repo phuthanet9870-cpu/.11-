@@ -217,6 +217,14 @@ export interface Autocast { skillId: string; level: number; chancePct: number }
 /** Item/card combo: all parts equipped (or compounded into equipped items) grants mods. */
 export interface ComboDef { id: string; name: string; parts: string[]; mods: StatModifiers }
 
+/** Memorial dungeon (timed instance): floors cleared in order within a time limit; entry cooldown in real time. */
+export interface InstanceDef {
+  id: string; name: string; description: string; minLevel: number;
+  timeLimitMs: number; cooldownMs: number;
+  floors: string[]; exitMap: string;
+  reward: { exp: number; jobExp: number; luma: number; items: { itemId: string; qty: number }[] };
+}
+
 // ---------------------------------------------------------------- pets
 /** Ragnarok-style pet: tamed from a monster with its lure item. */
 export interface PetDef {
@@ -379,7 +387,10 @@ export interface MapDef {
   id: string;
   name: string;
   region: string;
-  type: 'town' | 'field' | 'dungeon' | 'boss';
+  type: 'town' | 'field' | 'dungeon' | 'boss' | 'instance';
+  /** Memorial-dungeon floors: which instance and which floor (1-based). */
+  instanceId?: string;
+  floor?: number;
   levelRange?: [number, number];
   width: number;
   height: number;
@@ -440,6 +451,7 @@ export type NpcService =
   | { type: 'storage' }
   | { type: 'heal'; cost: number }
   | { type: 'jobChange'; classIds: string[] }
+  | { type: 'instance'; instanceId: string }
   | { type: 'refine' }
   | { type: 'forge' }
   | { type: 'enchant' }

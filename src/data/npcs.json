@@ -1513,5 +1513,61 @@
    }
   ],
   "generated": true
+ },
+ {
+  "id": "spire_warden",
+  "name": "Warden Isolde",
+  "title": "Keeper of the Endless Spire",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#2a2a3a",
+   "accent": "#c8ccd8",
+   "style": "robe"
+  },
+  "greeting": [
+   "Ten floors, each sealed until every monster on it is defeated. Floors 5 and 10 hold an elite guardian. 30 minutes; once per hour."
+  ],
+  "services": [
+   {
+    "type": "instance",
+    "instanceId": "endless_spire"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "crypt_keeper",
+  "name": "Brother Halvard",
+  "title": "Keeper of the Sealed Crypt",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "bob",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "robe"
+  },
+  "greeting": [
+   "Four sealed rooms of restless dead and a Revenant guardian at the bottom. 20 minutes; once per hour."
+  ],
+  "services": [
+   {
+    "type": "instance",
+    "instanceId": "sealed_crypt"
+   }
+  ],
+  "generated": true
  }
 ]

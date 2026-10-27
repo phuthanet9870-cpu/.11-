@@ -692,9 +692,49 @@ export async function main() {
   wb.region = REG.wb; hand.sunny_meadow.region = REG.wb; hand.whispering_forest.region = REG.wb;
   wb.worldMapPos = { x: 0.19, y: 0.6 }; hand.sunny_meadow.worldMapPos = { x: 0.29, y: 0.59 }; hand.whispering_forest.worldMapPos = { x: 0.31, y: 0.43 };
 
+  // ---------------------------------------------------------------- memorial dungeons (timed instances)
+  const INSTANCES = [
+    { id: 'endless_spire', name: 'Endless Spire', town: 'aurelion', npc: ['spire_warden', 'Warden Isolde', 'Keeper of the Endless Spire', [30, 32]], tileset: 'dg_tower', minLevel: 20,
+      timeLimitMs: 30 * 60000, cooldownMs: 60 * 60000, bgm: 'dungeon_dark',
+      description: 'Ten floors, each sealed until every monster on it is defeated. Floors 5 and 10 hold an elite guardian. 30 minutes; once per hour.',
+      floors: [['leaf_slime', 'horn_rabbit'], ['forest_goblin', 'plains_wolf'], ['bone_soldier', 'pebble_golem'], ['road_goblin', 'crypt_bat'], ['crystal_slime', 'elite_road_goblin'],
+        ['wailing_spirit', 'bramble_hornet'], ['grave_soldier', 'shadow_wolf'], ['grotto_crab', 'moss_golem'], ['lantern_ghost', 'animated_armor'], ['mana_wisp', 'elite_arcane_wisp']],
+      reward: { exp: 20000, jobExp: 14000, luma: 15000, items: [['card_album', 1], ['enriched_starsteel', 2], ['enriched_moonstone', 2], ['elder_sap', 1]] } },
+    { id: 'sealed_crypt', name: 'Sealed Crypt', town: 'frostholm', npc: ['crypt_keeper', 'Brother Halvard', 'Keeper of the Sealed Crypt', [30, 32]], tileset: 'dg_crypt', minLevel: 45,
+      timeLimitMs: 20 * 60000, cooldownMs: 60 * 60000, bgm: 'dungeon_dark',
+      description: 'Four sealed rooms of restless dead and a Revenant guardian at the bottom. 20 minutes; once per hour.',
+      floors: [['tomb_mummy', 'lantern_ghost'], ['frost_wraith', 'cursed_knight'], ['banshee', 'grave_knight'], ['lich_spirit', 'elite_banshee']],
+      reward: { exp: 90000, jobExp: 60000, luma: 40000, items: [['card_album', 2], ['enriched_starsteel', 4], ['enriched_moonstone', 4], ['elder_sap', 2]] } },
+  ];
+  const instances: J[] = [];
+  for (const inst of INSTANCES) {
+    const floorIds = inst.floors.map((_, i) => `${inst.id}_f${i + 1}`);
+    inst.floors.forEach((mobs, i) => {
+      const W = 30, H = 24, id = floorIds[i], last = i === floorIds.length - 1, r = rng(hash(id));
+      const paint: J[] = [];
+      for (let k = 0; k < 6; k++) paint.push({ op: 'object', kind: 'ruin_pillar', x: 5 + Math.floor(r() * (W - 10)), y: 5 + Math.floor(r() * (H - 12)) });
+      paint.push({ op: 'scatter', kind: 'deco:pebbles', density: 0.05, seed: hash(id) });
+      const spawns = mobs.map((m, k) => ({ monsterId: m, count: m.startsWith('elite_') ? 1 : 4 + (i % 3), area: { x: 4 + k * 11, y: 4, w: 10, h: 10 } }));
+      const map = {
+        id, name: `${inst.name} — ${inst.floors.length > 4 ? 'Floor' : 'Room'} ${i + 1}`, region: inst.name, type: 'instance', instanceId: inst.id, floor: i + 1,
+        width: W, height: H, tileset: inst.tileset, base: 'ruin_floor', border: { kind: 'ruin_wall', thickness: 2 }, bgm: inst.bgm, ambient: 'cave', weather: [],
+        worldMapPos: { x: -1, y: -1 }, paint, spawnPoints: { default: { x: Math.floor(W / 2), y: H - 4 } },
+        portals: [{ id: last ? 'exit' : 'next', x: Math.floor(W / 2) - 1, y: 1, w: 3, h: 2, targetMap: last ? inst.town : floorIds[i + 1], targetSpawn: 'default', label: last ? 'Exit' : `Floor ${i + 2}` }],
+        npcs: [], monsterSpawns: spawns, objects: [], areas: [], generated: true,
+      };
+      built.push({ map, npcs: [], shops: [] });
+    });
+    instances.push({ id: inst.id, name: inst.name, description: inst.description, minLevel: inst.minLevel, timeLimitMs: inst.timeLimitMs, cooldownMs: inst.cooldownMs,
+      floors: floorIds, exitMap: inst.town, reward: { exp: inst.reward.exp, jobExp: inst.reward.jobExp, luma: inst.reward.luma, items: inst.reward.items.map(([itemId, qty]) => ({ itemId, qty })) }, generated: true });
+    const [nid, nname, ntitle, [nx, ny]] = inst.npc as [string, string, string, [number, number]];
+    npcs.push(npc(nid, nname, ntitle, hash(nid), 'robe', [{ type: 'instance', instanceId: inst.id }], [`${inst.description}`]));
+    built.find((b) => b.map.id === inst.town)!.map.npcs.push({ npcId: nid, x: nx, y: ny, facing: 'down' });
+  }
+  write('instances.json', instances);
+
   // Portal labels from target names.
   const allMaps: J[] = [...Object.values(hand), ...built.map((b) => b.map)];
-  for (const m of allMaps) for (const p of m.portals) p.label = MAP_NAME[p.targetMap] ?? p.label;
+  for (const m of allMaps) for (const p of m.portals) if (m.type !== 'instance') p.label = MAP_NAME[p.targetMap] ?? p.label;
   // Make every portal's target spawn exist (two-way links).
   const byId = new Map(allMaps.map((m) => [m.id, m]));
   for (const m of allMaps) for (const p of m.portals) {

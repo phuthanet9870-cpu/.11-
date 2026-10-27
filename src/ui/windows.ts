@@ -558,6 +558,7 @@ export class WindowManager {
     svg.style.position = 'absolute'; svg.style.inset = '0';
     for (const m of w.data.maps.values()) for (const p of m.portals) {
       const t = w.data.maps.get(p.targetMap)!;
+      if (m.type === 'instance' || t.type === 'instance') continue;
       const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
       line.setAttribute('x1', String(m.worldMapPos.x * MW)); line.setAttribute('y1', String(m.worldMapPos.y * MH));
       line.setAttribute('x2', String(t.worldMapPos.x * MW)); line.setAttribute('y2', String(t.worldMapPos.y * MH));
@@ -566,6 +567,7 @@ export class WindowManager {
     }
     box.appendChild(svg);
     for (const m of w.data.maps.values()) {
+      if (m.type === 'instance') continue;
       const here = m.id === w.map.def.id;
       const col = m.type === 'town' ? '#ffd34d' : m.type === 'field' ? '#6fe08a' : '#ff6a5a';
       const node = h('div', { class: `wm-node ${m.type}${here ? ' here' : ''}`, title: `${m.name} — ${m.region}${m.levelRange ? ` (Lv.${m.levelRange[0]}–${m.levelRange[1]})` : ''}`, style: { left: `${m.worldMapPos.x * MW}px`, top: `${m.worldMapPos.y * MH}px` } },
@@ -810,6 +812,15 @@ export class WindowManager {
       if (s.type === 'enchant') opts.push(['Enchant equipment', () => { this.closeDialog(); this.enchantDialog(); }]);
       if (s.type === 'forge') opts.push(['Forge a weapon', () => { this.closeDialog(); this.forgeDialog(); }]);
       if (s.type === 'warp') opts.push(['Warp service', () => this.warpDialog(npc, s.destinations)]);
+      if (s.type === 'instance') {
+        const ins = w.data.instances.get(s.instanceId)!;
+        const cd = w.instanceCooldownLeft(ins.id);
+        const clears = Number(w.char.flags[`instclear_${ins.id}`] ?? 0);
+        opts.push([`Enter the ${ins.name}${cd > 0 ? ` (ready in ${Math.ceil(cd / 60000)} min)` : ''}`, () => {
+          this.closeDialog();
+          this.confirmAction(ins.name, `${ins.description} Requires Base Level ${ins.minLevel}. Leaving, dying or running out of time ends the run, and the cooldown starts when you enter.${clears ? ` You have cleared it ${clears}×.` : ''}`, 'Enter', () => w.enterInstance(ins.id));
+        }]);
+      }
       if (s.type === 'jobChange') for (const id of s.classIds) {
         const cls = w.data.classes.get(id)!;
         const req = cls.requirements ?? {};

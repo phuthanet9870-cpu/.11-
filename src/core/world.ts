@@ -295,6 +295,19 @@ export class World {
   // ---------------------------------------------------------------- map lifecycle
   enterMap(mapId: string, spawn: string | { x: number; y: number }) {
     const map = this.getCompiledMap(mapId);
+    if (this.instance) {
+      const ins = this.instance;
+      if (map.def.instanceId === ins.id) { ins.floor = map.def.floor ?? ins.floor; ins.cleared = false; }
+      else {
+        if (!ins.done) this.message(`You left the ${this.data.instances.get(ins.id)?.name}. The run is over.`, 'error');
+        this.instance = null;
+      }
+    } else if (map.def.instanceId) {
+      // Arriving on an instance floor without a run (e.g. a saved position): send the player back out.
+      const def = this.data.instances.get(map.def.instanceId)!;
+      this.enterMap(def.exitMap, 'default');
+      return;
+    }
     this.map = map;
     this.monsters.clear();
     this.petActor = null;
@@ -418,6 +431,7 @@ export class World {
     this.updatePending();
     this.updateGroundItems();
     this.updatePet(dt);
+    this.updateInstance();
     this.telegraphs = this.telegraphs.filter((t) => t.endsAt > this.time - 200);
     if (this.statsDirty) this.recomputeStats();
     this.char.position = { mapId: this.map.def.id, x: this.player.x, y: this.player.y };
@@ -452,6 +466,61 @@ export class World {
       a.x += (dx / d) * step; a.y += (dy / d) * step;
       a.dir = dirFromVector(dx, dy, a.dir);
     }
+  }
+
+  // ---------------------------------------------------------------- memorial dungeons
+  /** The running instance: floor progress and time limit (world time). */
+  instance: { id: string; floor: number; endsAt: number; cleared: boolean; done: boolean } | null = null;
+  private lastSealMsgAt = 0;
+
+  /** Real-time ms until this instance can be entered again (0 = ready). */
+  instanceCooldownLeft(id: string): number {
+    const until = Number(this.char.flags[`instcd_${id}`] ?? 0);
+    return Math.max(0, until - this.now());
+  }
+
+  enterInstance(id: string): OpResult {
+    const def = this.data.instances.get(id);
+    if (!def) return this.err('Unknown dungeon.');
+    if (!this.nearService((s) => s.type === 'instance' && s.instanceId === id)) return this.err('Talk to the dungeon keeper first.');
+    if (this.char.baseLevel < def.minLevel) return this.err(`${def.name} requires Base Level ${def.minLevel}.`);
+    const cd = this.instanceCooldownLeft(id);
+    if (cd > 0) return this.err(`${def.name} can be entered again in ${Math.ceil(cd / 60000)} min.`);
+    this.char.flags[`instcd_${id}`] = this.now() + def.cooldownMs;
+    this.instance = { id, floor: 1, endsAt: this.time + def.timeLimitMs, cleared: false, done: false };
+    this.emit({ type: 'fx', fx: 'teleport', x: this.player.x, y: this.player.y });
+    this.enterMap(def.floors[0], 'default');
+    this.message(`${def.name} — Floor 1. Defeat every monster to unseal the way up. Time limit ${Math.round(def.timeLimitMs / 60000)} min.`, 'quest');
+    return { ok: true };
+  }
+
+  private updateInstance() {
+    const ins = this.instance;
+    if (!ins) return;
+    const def = this.data.instances.get(ins.id)!;
+    if (!ins.done && this.time >= ins.endsAt) {
+      this.message(`Time is up! You are pulled out of the ${def.name}.`, 'error');
+      this.instance = null;
+      this.enterMap(def.exitMap, 'default');
+      return;
+    }
+    if (ins.cleared || this.map.def.instanceId !== ins.id) return;
+    if ([...this.monsters.values()].some((m) => !m.dead)) return;
+    ins.cleared = true;
+    if (ins.floor < def.floors.length) {
+      this.message(`Floor ${ins.floor} cleared! The seal on the portal breaks.`, 'quest');
+      this.emit({ type: 'sound', key: 'level_up' });
+      return;
+    }
+    ins.done = true;
+    const r = def.reward;
+    this.message(`${def.name} conquered! Step into the exit portal to leave. Rewards: ${r.luma.toLocaleString()} Luma and ${r.items.map((x) => `${x.qty}× ${this.data.items.get(x.itemId)?.name}`).join(', ')}.`, 'quest');
+    this.char.luma += r.luma;
+    for (const it of r.items) addItem(this.data, this.char, it.itemId, it.qty, { ignoreWeight: true });
+    this.grantExp(r.exp, r.jobExp, def.name);
+    this.char.flags[`instclear_${def.id}`] = Number(this.char.flags[`instclear_${def.id}`] ?? 0) + 1;
+    this.emit({ type: 'sound', key: 'level_up' });
+    this.afterInventoryChange();
   }
 
   // ---------------------------------------------------------------- pets
@@ -807,6 +876,10 @@ export class World {
     const inAny = this.map.def.portals.find((pt) => cx >= pt.x && cx < pt.x + pt.w && cy >= pt.y && cy < pt.y + pt.h);
     if (!inAny) p.portalArmed = true;
     else if (p.portalArmed) {
+      if (this.map.def.instanceId && !this.instance?.cleared) {
+        if (this.time - this.lastSealMsgAt > 2000) { this.lastSealMsgAt = this.time; this.message('The portal is sealed. Defeat every monster on this floor first.', 'error'); }
+        return;
+      }
       this.message(`Travelling to ${inAny.label}...`);
       this.emit({ type: 'sound', key: 'teleport' });
       this.emit({ type: 'fx', fx: 'teleport', x: p.x, y: p.y });
@@ -1227,7 +1300,7 @@ export class World {
   private updateMonster(m: MonsterActor, dt: number) {
     m.moving = false;
     if (m.dead) {
-      if (!m.boss && !m.summoned && m.respawnAt && this.time >= m.respawnAt) this.respawnMonster(m);
+      if (!m.boss && !m.summoned && m.respawnAt && this.time >= m.respawnAt && !this.map.def.instanceId) this.respawnMonster(m);
       return;
     }
     this.tickStatuses(m);

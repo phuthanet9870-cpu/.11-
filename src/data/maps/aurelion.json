@@ -274,6 +274,12 @@
    "x": 34,
    "y": 32,
    "facing": "down"
+  },
+  {
+   "npcId": "spire_warden",
+   "x": 30,
+   "y": 32,
+   "facing": "down"
   }
  ],
  "monsterSpawns": [],

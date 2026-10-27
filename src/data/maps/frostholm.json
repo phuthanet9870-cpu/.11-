@@ -232,6 +232,12 @@
    "x": 27,
    "y": 21,
    "facing": "down"
+  },
+  {
+   "npcId": "crypt_keeper",
+   "x": 30,
+   "y": 32,
+   "facing": "down"
   }
  ],
  "monsterSpawns": [],

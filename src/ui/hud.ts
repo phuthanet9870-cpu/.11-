@@ -27,6 +27,8 @@ export class Hud {
   root: HTMLElement;
   private portrait = h('canvas', { class: 'portrait', width: 96, height: 96 });
   private whoName = h('div', { class: 'who' });
+  /** Memorial-dungeon timer (floor and time left). */
+  private instTimer = h('div', { id: 'inst-timer', style: 'position:absolute;top:8px;left:50%;transform:translateX(-50%);padding:4px 12px;background:#1c1622dd;border:1px solid #c8a26b;border-radius:6px;color:#ffe9a8;font-size:13px;display:none;z-index:5' });
   private hpBar = bar('hp');
   private mpBar = bar('mp');
   private expBar = bar('exp');
@@ -278,6 +280,13 @@ export class Hud {
     this.updateBoss();
     if (now - this.lastSlow < 120) return;
     this.lastSlow = now;
+    if (!this.instTimer.parentElement) this.root.appendChild(this.instTimer);
+    const ins = w.instance, idef = ins && w.data.instances.get(ins.id);
+    if (ins && idef) {
+      const left = Math.max(0, Math.ceil((ins.endsAt - w.time) / 1000));
+      this.instTimer.style.display = 'block';
+      this.instTimer.textContent = ins.done ? `${idef.name} — cleared!` : `${idef.name} · ${idef.floors.length > 4 ? 'Floor' : 'Room'} ${ins.floor}/${idef.floors.length}${ins.cleared ? ' · cleared' : ''} · ${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
+    } else this.instTimer.style.display = 'none';
     const cls = w.data.classes.get(c.classId)!;
     setChildren(this.whoName, c.name, h('span', {}, `${cls.name} · Lv ${c.baseLevel} / ${c.jobLevel}`));
     const bn = expToNextBase(w.data, c.baseLevel), jn = expToNextJob(w.data, c.jobLevel);
