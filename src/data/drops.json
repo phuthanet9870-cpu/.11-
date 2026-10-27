@@ -2877,5 +2877,583 @@
    }
   ],
   "generated": true
+ },
+ {
+  "id": "elite_dusk_bat_drops",
+  "luma": [
+   64,
+   160
+  ],
+  "entries": [
+   {
+    "itemId": "dusk_bat_wing",
+    "chance": 1
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0216
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0216
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_dusk_bat",
+    "chance": 0.0001,
+    "card": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_road_goblin_drops",
+  "luma": [
+   136,
+   340
+  ],
+  "entries": [
+   {
+    "itemId": "road_goblin_tusk",
+    "chance": 1
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0324
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0324
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_road_goblin",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_pine_goblin_drops",
+  "luma": [
+   168,
+   420
+  ],
+  "entries": [
+   {
+    "itemId": "pine_goblin_tusk",
+    "chance": 1
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.037200000000000004
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.037200000000000004
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_pine_goblin",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_shadow_wolf_drops",
+  "luma": [
+   224,
+   560
+  ],
+  "entries": [
+   {
+    "itemId": "shadow_wolf_fang",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0456
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0456
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_shadow_wolf",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_arcane_wisp_drops",
+  "luma": [
+   216,
+   540
+  ],
+  "entries": [
+   {
+    "itemId": "arcane_wisp_ectoplasm",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0444
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0444
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_arcane_wisp",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_desert_wolf_drops",
+  "luma": [
+   248,
+   620
+  ],
+  "entries": [
+   {
+    "itemId": "desert_wolf_fang",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04920000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04920000000000001
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_desert_wolf",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_giant_scorpion_drops",
+  "luma": [
+   304,
+   760
+  ],
+  "entries": [
+   {
+    "itemId": "giant_scorpion_venom_tail",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.057600000000000005
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.057600000000000005
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_giant_scorpion",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_reef_gull_drops",
+  "luma": [
+   192,
+   480
+  ],
+  "entries": [
+   {
+    "itemId": "reef_gull_wing",
+    "chance": 1
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0408
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0408
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_reef_gull",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "gale_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_ice_golem_drops",
+  "luma": [
+   376,
+   940
+  ],
+  "entries": [
+   {
+    "itemId": "ice_golem_core_stone",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0684
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0684
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_ice_golem",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_fire_drake_drops",
+  "luma": [
+   504,
+   1260
+  ],
+  "entries": [
+   {
+    "itemId": "fire_drake_scale",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0876
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0876
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_fire_drake",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_mire_crab_drops",
+  "luma": [
+   528,
+   1320
+  ],
+  "entries": [
+   {
+    "itemId": "mire_crab_shell",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0912
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0912
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_mire_crab",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_banshee_drops",
+  "luma": [
+   576,
+   1440
+  ],
+  "entries": [
+   {
+    "itemId": "banshee_ectoplasm",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.09840000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.09840000000000002
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_banshee",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
  }
 ]

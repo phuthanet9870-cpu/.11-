@@ -200,6 +200,16 @@
     "w": 23,
     "h": 16
    }
+  },
+  {
+   "monsterId": "elite_dusk_bat",
+   "count": 1,
+   "area": {
+    "x": 3,
+    "y": 24,
+    "w": 23,
+    "h": 16
+   }
   }
  ],
  "objects": [

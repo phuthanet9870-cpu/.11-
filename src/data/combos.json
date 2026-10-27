@@ -1,0 +1,223 @@
+[
+ {
+  "id": "combo_clover_hills",
+  "name": "Clover Hills Set",
+  "parts": [
+   "card_clover_slime",
+   "card_horn_rabbit",
+   "card_dusk_bat"
+  ],
+  "mods": {
+   "hit": 12,
+   "aspdPct": 5
+  },
+  "generated": true
+ },
+ {
+  "id": "combo_aurelion_fields_south",
+  "name": "Aurelion Fields South Set",
+  "parts": [
+   "card_plains_wolf",
+   "card_pebble_golem",
+   "card_road_goblin"
+  ],
+  "mods": {
+   "flee": 10,
+   "crit": 5
+  },
+  "generated": true
+ },
+ {
+  "id": "combo_aurelion_fields_north",
+  "name": "Aurelion Fields North Set",
+  "parts": [
+   "card_thorn_wolf",
+   "card_road_goblin",
+   "card_pebble_golem"
+  ],
+  "mods": {
+   "pdef": 6,
+   "mdef": 6
+  },
+  "generated": true
+ },
+ {
+  "id": "combo_mistpine_woods",
+  "name": "Mistpine Woods Set",
+  "parts": [
+   "card_mist_spore",
+   "card_pine_goblin",
+   "card_venom_spore"
+  ],
+  "mods": {
+   "agi": 3,
+   "luk": 3
+  },
+  "generated": true
+ },
+ {
+  "id": "combo_deepwood_hollow",
+  "name": "Deepwood Hollow Set",
+  "parts": [
+   "card_elder_mushling",
+   "card_shadow_wolf",
+   "card_bramble_hornet"
+  ],
+  "mods": {
+   "maxHpPct": 8,
+   "patk": 10
+  },
+  "generated": true
+ },
+ {
+  "id": "combo_arcanthe_heath",
+  "name": "Arcanthe Heath Set",
+  "parts": [
+   "card_crystal_slime",
+   "card_moon_hare",
+   "card_arcane_wisp"
+  ],
+  "mods": {
+   "flee": 10,
+   "crit": 5
+  },
+  "generated": true
+ },
+ {
+  "id": "combo_sunscar_dunes",
+  "name": "Sunscar Dunes Set",
+  "parts": [
+   "card_dune_slime",
+   "card_sand_scorpion",
+   "card_desert_wolf"
+  ],
+  "mods": {
+   "maxHpPct": 8,
+   "patk": 10
+  },
+  "generated": true
+ },
+ {
+  "id": "combo_mirage_oasis",
+  "name": "Mirage Oasis Set",
+  "parts": [
+   "card_oasis_crab",
+   "card_mirage_wisp",
+   "card_giant_scorpion"
+  ],
+  "mods": {
+   "maxHpPct": 8,
+   "patk": 10
+  },
+  "generated": true
+ },
+ {
+  "id": "combo_coral_beach",
+  "name": "Coral Beach Set",
+  "parts": [
+   "card_shore_crab",
+   "card_sea_slime",
+   "card_reef_gull"
+  ],
+  "mods": {
+   "int": 2,
+   "vit": 2
+  },
+  "generated": true
+ },
+ {
+  "id": "combo_frostpeak_slopes",
+  "name": "Frostpeak Slopes Set",
+  "parts": [
+   "card_frost_slime",
+   "card_snow_wolf",
+   "card_ice_golem"
+  ],
+  "mods": {
+   "agi": 3,
+   "luk": 3
+  },
+  "generated": true
+ },
+ {
+  "id": "combo_cinder_wastes",
+  "name": "Cinder Wastes Set",
+  "parts": [
+   "card_ember_slime",
+   "card_ash_scorpion",
+   "card_fire_drake"
+  ],
+  "mods": {
+   "flee": 10,
+   "crit": 5
+  },
+  "generated": true
+ },
+ {
+  "id": "combo_shadowmere_marsh",
+  "name": "Shadowmere Marsh Set",
+  "parts": [
+   "card_bog_slime",
+   "card_marsh_spore",
+   "card_mire_crab"
+  ],
+  "mods": {
+   "int": 2,
+   "vit": 2
+  },
+  "generated": true
+ },
+ {
+  "id": "combo_ravenhold_ruins",
+  "name": "Ravenhold Castle Ruins Set",
+  "parts": [
+   "card_raven_bat",
+   "card_cursed_knight",
+   "card_banshee"
+  ],
+  "mods": {
+   "pdef": 6,
+   "mdef": 6
+  },
+  "generated": true
+ },
+ {
+  "id": "set_shadow",
+  "name": "Alley Shadow Set",
+  "parts": [
+   "shadow_garb",
+   "gutting_knife"
+  ],
+  "mods": {
+   "flee": 8,
+   "crit": 6
+  },
+  "generated": true
+ },
+ {
+  "id": "set_trader",
+  "name": "Harbor Trader Set",
+  "parts": [
+   "merchant_apron",
+   "war_axe"
+  ],
+  "mods": {
+   "patk": 15,
+   "weightLimit": 500
+  },
+  "generated": true
+ },
+ {
+  "id": "set_dawn",
+  "name": "Dawn Chapel Set",
+  "parts": [
+   "pilgrim_vestment",
+   "dawn_scepter"
+  ],
+  "mods": {
+   "matk": 15,
+   "maxMpPct": 10
+  },
+  "generated": true
+ }
+]

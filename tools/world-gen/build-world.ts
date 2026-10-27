@@ -417,7 +417,7 @@ function bossDef(b: typeof BOSSES[number], grukk: J): J {
       { id: `${b.id}_ring`, name: 'Cataclysm', kind: 'ring', telegraphMs: 1700, radius: 230, multiplier: 1.4, element: el, cooldownMs: 13000, minPhase: 2, fx: b.fx },
     ],
     contributionRewards: { minDamagePct: 10, items: [{ itemId: 'starsteel_ore', qty: 3 }, { itemId: 'moonstone_ore', qty: 3 }], luma: 500 + b.monster.lv * 40 },
-    mvp: { expPct: 50, items: [{ itemId: 'elder_sap', chance: 0.4 }, { itemId: 'elder_seed', chance: 0.6 }, { itemId: 'starsteel_ore', chance: 0.5 }, { itemId: 'moonstone_ore', chance: 0.5 }, { itemId: 'enriched_starsteel', chance: 0.2 }, { itemId: 'enriched_moonstone', chance: 0.2 }] },
+    mvp: { expPct: 50, items: [{ itemId: 'elder_sap', chance: 0.4 }, { itemId: 'elder_seed', chance: 0.6 }, { itemId: 'starsteel_ore', chance: 0.5 }, { itemId: 'moonstone_ore', chance: 0.5 }, { itemId: 'enriched_starsteel', chance: 0.2 }, { itemId: 'enriched_moonstone', chance: 0.2 }, { itemId: 'card_album', chance: 0.1 }] },
     generated: true,
   };
 }
@@ -450,6 +450,26 @@ export async function main() {
       { itemId: 'starsteel_ore', chance: b ? 0.5 : Math.min(0.04, 0.004 + s.lv * 0.0004) }, { itemId: 'moonstone_ore', chance: b ? 0.5 : Math.min(0.04, 0.004 + s.lv * 0.0004) },
     ], generated: true });
   }
+  // Looters (Ragnarok-style): goblins, crabs and gulls pick up items lying on the ground.
+  for (const m of monsters) if (/goblin|crab|gull/.test(m.id) && m.aiType !== 'boss') m.looter = true; else delete m.looter;
+  // Elite mini-bosses: one per field map, a tougher version of its strongest monster.
+  const ELITE_TITLE: Record<string, string> = { beast: 'Alpha', humanoid: 'Chieftain', demihuman: 'Chieftain', undead: 'Revenant', plant: 'Ancient', insect: 'Queen', formless: 'Prime', fish: 'Elder', dragon: 'Elder', demon: 'Elder' };
+  const eliteOf: Record<string, string> = {};
+  for (const spec of NEW_MAPS.filter((x) => x.type === 'field' && x.monsters?.length)) {
+    const base = spec.monsters!.map(([id]) => monsters.find((m: J) => m.id === id)).filter(Boolean).sort((a: J, b: J) => b.level - a.level)[0];
+    if (!base || eliteOf[base.id]) continue;
+    const id = `elite_${base.id}`;
+    eliteOf[base.id] = id;
+    const baseDrops = drops.find((d: J) => d.id === base.dropTableId);
+    drops.push({ id: `${id}_drops`, luma: [base.level * 8, base.level * 20], entries: [
+      ...(baseDrops?.entries ?? []).filter((e: J) => !e.card && !e.oreHint).map((e: J) => ({ ...e, chance: Math.min(1, e.chance * 3) })),
+      { itemId: 'card_album', chance: 0.02 }, { itemId: base.level >= 30 ? 'enriched_starsteel' : 'starsteel_ore', chance: 0.05 },
+    ], generated: true });
+    monsters.push({ ...base, id, name: `${ELITE_TITLE[base.race] ?? 'Elder'} ${base.name}`, level: base.level + 5, maxHp: base.maxHp * 6, attack: Math.round(base.attack * 1.5),
+      defense: Math.round(base.defense * 1.3), magicDefense: Math.round(base.magicDefense * 1.3), exp: base.exp * 6, jobExp: base.jobExp * 6, aiType: 'elite', aggroRange: 220,
+      respawnSeconds: 600, dropTableId: `${id}_drops`, elite: true, looter: false, art: { ...base.art, scale: 1.35 }, generated: true });
+  }
+
   // Element levels 1–4 (Ragnarok-style), by level tier; bosses one level higher.
   for (const m of monsters) m.elementLevel = Math.min(4, (m.level < 20 ? 1 : m.level < 45 ? 2 : m.level < 70 ? 3 : 4) + (m.aiType === 'boss' ? 1 : 0));
 
@@ -478,15 +498,35 @@ export async function main() {
       case 'headgear': mods = [{ int: 1, mdef: 3 }, { dex: 1, hit: 5 }, { luk: 1, crit: 3 }][h % 3]; break;
       default: mods = [{ [pick(STATS, 4)]: 2 }, { crit: 4 }, { hit: 10 }][h % 3];
     }
+    // Spell-casting monsters' cards autocast a bolt on basic attacks (Ragnarok autocast cards).
+    const BOLT: Record<string, string> = { fire: 'fire_bolt', water: 'ice_bolt', holy: 'holy_light', ghost: 'lightning_bolt', shadow: 'lightning_bolt' };
+    const autocast = m.aiType === 'magic' && !boss ? { skillId: BOLT[m.element] ?? 'lightning_bolt', level: 3, chancePct: 5 } : undefined;
     items.push({
       id: `card_${m.id}`, name: `${m.name.replace(/ Boss$/, '')} Card`, type: 'card', rarity: boss ? 'epic' : 'rare',
       description: `A card holding the essence of the ${m.name}. Compound it into ${equip === 'armor' ? 'body armor' : equip === 'boots' ? 'footgear' : equip} with a free slot.`,
       weight: 1, price: 20, stackable: true, maxStack: 999, icon: { shape: 'card', color: m.art.colors[0], accent: m.art.colors[2] },
-      card: { equip, mods, monsterId: m.id }, generated: true,
+      card: { equip, mods, monsterId: m.id, ...(autocast ? { autocast } : {}) }, generated: true,
     });
     const t = drops.find((d: J) => d.id === m.dropTableId);
     if (t) t.entries.push({ itemId: `card_${m.id}`, chance: cardChance, card: true });
   });
+  // Card album (Ragnarok's Old Card Album): opens into one random non-boss card.
+  items.push({ id: 'card_album', name: 'Faded Card Album', type: 'consumable', rarity: 'epic', description: 'An old album with one card still inside. Open it to get a random monster card (never a boss card).', weight: 5, price: 1000, stackable: true, maxStack: 99, use: [{ type: 'randomCard' }], cooldownMs: 1000, icon: { shape: 'card', color: '#c8a26b', accent: '#ffe27a' }, generated: true });
+  // Combos (Ragnarok item_combos): every card from one field map together, and class gear sets.
+  const combos: J[] = [];
+  const COMBO_BONUS: J[] = [{ maxHpPct: 8, patk: 10 }, { maxMpPct: 10, matk: 12 }, { flee: 10, crit: 5 }, { hit: 12, aspdPct: 5 }, { pdef: 6, mdef: 6 }, { str: 2, dex: 2 }, { int: 2, vit: 2 }, { agi: 3, luk: 3 }];
+  for (const spec of NEW_MAPS.filter((x) => x.type === 'field' && (x.monsters?.length ?? 0) >= 2)) {
+    const parts = spec.monsters!.map(([id]) => `card_${id}`).filter((id) => items.some((i: J) => i.id === id)).slice(0, 3);
+    if (parts.length < 2) continue;
+    const mods = COMBO_BONUS[hash(spec.id) % COMBO_BONUS.length];
+    combos.push({ id: `combo_${spec.id}`, name: `${spec.name} Set`, parts, mods, generated: true });
+  }
+  for (const [id, name, parts, mods] of [
+    ['set_shadow', 'Alley Shadow Set', ['shadow_garb', 'gutting_knife'], { flee: 8, crit: 6 }],
+    ['set_trader', 'Harbor Trader Set', ['merchant_apron', 'war_axe'], { patk: 15, weightLimit: 500 }],
+    ['set_dawn', 'Dawn Chapel Set', ['pilgrim_vestment', 'dawn_scepter'], { matk: 15, maxMpPct: 10 }],
+  ] as const) if (parts.every((x) => items.some((i: J) => i.id === x))) combos.push({ id, name, parts, mods, generated: true });
+  write('combos.json', combos);
   // Refining ores: grades 1–2 are sold by NPCs, Starsteel (weapon Lv 3–4) and Moonstone (armor) only drop.
   for (const [id, name, price, desc, col] of [
     ['glimmer_ore', 'Glimmer Ore', 50, 'Soft, shiny ore. Used to refine level 1 weapons.', '#c8a86a'],
@@ -582,6 +622,11 @@ export async function main() {
   }
   const built = NEW_MAPS.map((s) => (s.type === 'town' ? buildTown(s) : s.type === 'field' ? buildField(s) : buildDungeon(s)));
   for (const b of built) { npcs.push(...b.npcs); shops.push(...b.shops); }
+  for (const b of built) {
+    if (b.map.type !== 'field') continue;
+    const sp = b.map.monsterSpawns.find((x: J) => eliteOf[x.monsterId]);
+    if (sp) b.map.monsterSpawns.push({ monsterId: eliteOf[sp.monsterId], count: 1, area: sp.area });
+  }
   for (const sh of shops) if (['aurelion_tools', 'arcanthe_tools', 'frostholm_tools'].includes(sh.id)) sh.items = [...sh.items.filter((i: string) => !CONVERTERS.some((c) => c[0] === i)), ...CONVERTERS.map((c) => c[0])];
   // ---------------------------------------------------------------- pets (Ragnarok-style taming)
   const PET_FOOD: Record<string, [string, string, string, number]> = {
@@ -594,7 +639,7 @@ export async function main() {
     undead: [{ mdef: 4, elementResistPct: { shadow: 5 } }, 'MDEF +4, shadow resist +5%'], formless: [{ matk: 6 }, 'MATK +6'], fish: [{ maxMp: 60 }, 'Max MP +60'],
     dragon: [{ crit: 3 }, 'CRIT +3'], demihuman: [{ hit: 6 }, 'HIT +6'], humanoid: [{ hit: 6 }, 'HIT +6'],
   };
-  const petCandidates = monsters.filter((m) => m.aiType !== 'boss' && !m.bossId && m.level <= 50 && m.size !== 'large')
+  const petCandidates = monsters.filter((m) => m.aiType !== 'boss' && !m.elite && !m.bossId && m.level <= 50 && m.size !== 'large')
     .sort((a, b) => a.level - b.level).filter((m, i, arr) => i % Math.max(1, Math.floor(arr.length / 14)) === 0).slice(0, 14);
   const pets: J[] = [];
   const foodsUsed = new Set<string>();

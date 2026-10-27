@@ -174,7 +174,8 @@
     "#c83a3a"
    ]
   },
-  "elementLevel": 1
+  "elementLevel": 1,
+  "looter": true
  },
  {
   "id": "venom_spore",
@@ -523,6 +524,7 @@
    ]
   },
   "generated": true,
+  "looter": true,
   "elementLevel": 1
  },
  {
@@ -725,6 +727,7 @@
    ]
   },
   "generated": true,
+  "looter": true,
   "elementLevel": 2
  },
  {
@@ -1325,6 +1328,7 @@
    ]
   },
   "generated": true,
+  "looter": true,
   "elementLevel": 2
  },
  {
@@ -1554,6 +1558,7 @@
    ]
   },
   "generated": true,
+  "looter": true,
   "elementLevel": 1
  },
  {
@@ -1625,6 +1630,7 @@
    ]
   },
   "generated": true,
+  "looter": true,
   "elementLevel": 2
  },
  {
@@ -1661,6 +1667,7 @@
    ]
   },
   "generated": true,
+  "looter": true,
   "elementLevel": 2
  },
  {
@@ -2294,6 +2301,7 @@
    ]
   },
   "generated": true,
+  "looter": true,
   "elementLevel": 3
  },
  {
@@ -2716,6 +2724,503 @@
    "scale": 2.5
   },
   "generated": true,
+  "elementLevel": 4
+ },
+ {
+  "id": "elite_dusk_bat",
+  "name": "Alpha Dusk Bat",
+  "level": 13,
+  "element": "shadow",
+  "race": "beast",
+  "size": "small",
+  "maxHp": 2148,
+  "attack": 47,
+  "defense": 12,
+  "magicDefense": 7,
+  "hit": 23,
+  "flee": 16,
+  "exp": 474,
+  "jobExp": 354,
+  "attackRange": 38,
+  "attackIntervalMs": 1500,
+  "moveSpeed": 120,
+  "aiType": "elite",
+  "respawnSeconds": 600,
+  "dropTableId": "elite_dusk_bat_drops",
+  "collisionRadius": 12,
+  "art": {
+   "shape": "bat",
+   "w": 44,
+   "h": 44,
+   "colors": [
+    "#5a4a6a",
+    "#3a2e48",
+    "#ff5a5a"
+   ],
+   "scale": 1.35
+  },
+  "generated": true,
+  "aggroRange": 220,
+  "elite": true,
+  "looter": false,
+  "elementLevel": 1
+ },
+ {
+  "id": "elite_road_goblin",
+  "name": "Chieftain Road Goblin",
+  "level": 22,
+  "element": "neutral",
+  "race": "demihuman",
+  "size": "small",
+  "maxHp": 5310,
+  "attack": 89,
+  "defense": 25,
+  "magicDefense": 13,
+  "hit": 37,
+  "flee": 29,
+  "exp": 1326,
+  "jobExp": 996,
+  "attackRange": 38,
+  "attackIntervalMs": 1500,
+  "moveSpeed": 80,
+  "aiType": "elite",
+  "aggroRange": 220,
+  "respawnSeconds": 600,
+  "dropTableId": "elite_road_goblin_drops",
+  "collisionRadius": 12,
+  "art": {
+   "shape": "goblin",
+   "w": 44,
+   "h": 44,
+   "colors": [
+    "#7a9a3a",
+    "#5a4a3a",
+    "#3a6ab8"
+   ],
+   "scale": 1.35
+  },
+  "generated": true,
+  "looter": false,
+  "elite": true,
+  "elementLevel": 2
+ },
+ {
+  "id": "elite_pine_goblin",
+  "name": "Chieftain Pinewood Goblin",
+  "level": 26,
+  "element": "earth",
+  "race": "demihuman",
+  "size": "small",
+  "maxHp": 6942,
+  "attack": 108,
+  "defense": 30,
+  "magicDefense": 17,
+  "hit": 44,
+  "flee": 34,
+  "exp": 1782,
+  "jobExp": 1338,
+  "attackRange": 38,
+  "attackIntervalMs": 1500,
+  "moveSpeed": 80,
+  "aiType": "elite",
+  "aggroRange": 220,
+  "respawnSeconds": 600,
+  "dropTableId": "elite_pine_goblin_drops",
+  "collisionRadius": 12,
+  "art": {
+   "shape": "goblin",
+   "w": 44,
+   "h": 44,
+   "colors": [
+    "#5a8a3a",
+    "#3a4a2a",
+    "#c8a26b"
+   ],
+   "scale": 1.35
+  },
+  "generated": true,
+  "looter": false,
+  "elite": true,
+  "elementLevel": 2
+ },
+ {
+  "id": "elite_shadow_wolf",
+  "name": "Alpha Shadow Wolf",
+  "level": 33,
+  "element": "shadow",
+  "race": "beast",
+  "size": "small",
+  "maxHp": 10068,
+  "attack": 143,
+  "defense": 40,
+  "magicDefense": 22,
+  "hit": 55,
+  "flee": 44,
+  "exp": 2682,
+  "jobExp": 2010,
+  "attackRange": 38,
+  "attackIntervalMs": 1500,
+  "moveSpeed": 120,
+  "aiType": "elite",
+  "aggroRange": 220,
+  "respawnSeconds": 600,
+  "dropTableId": "elite_shadow_wolf_drops",
+  "collisionRadius": 12,
+  "art": {
+   "shape": "wolf",
+   "w": 44,
+   "h": 44,
+   "colors": [
+    "#3a3a4a",
+    "#22222e",
+    "#c83a4a"
+   ],
+   "scale": 1.35
+  },
+  "generated": true,
+  "elite": true,
+  "looter": false,
+  "elementLevel": 2
+ },
+ {
+  "id": "elite_arcane_wisp",
+  "name": "Prime Arcane Wisp",
+  "level": 32,
+  "element": "ghost",
+  "race": "formless",
+  "size": "small",
+  "maxHp": 9600,
+  "attack": 137,
+  "magicAttack": 98,
+  "defense": 39,
+  "magicDefense": 21,
+  "hit": 53,
+  "flee": 43,
+  "exp": 2544,
+  "jobExp": 1908,
+  "attackRange": 220,
+  "attackIntervalMs": 2000,
+  "moveSpeed": 80,
+  "aiType": "elite",
+  "aggroRange": 220,
+  "respawnSeconds": 600,
+  "dropTableId": "elite_arcane_wisp_drops",
+  "collisionRadius": 12,
+  "projectile": {
+   "element": "ghost",
+   "color": "#c9a6ff"
+  },
+  "art": {
+   "shape": "ghost",
+   "w": 44,
+   "h": 44,
+   "colors": [
+    "#b89af0",
+    "#2a1a4a",
+    "#ffffff"
+   ],
+   "scale": 1.35
+  },
+  "generated": true,
+  "elite": true,
+  "looter": false,
+  "elementLevel": 2
+ },
+ {
+  "id": "elite_desert_wolf",
+  "name": "Alpha Desert Wolf",
+  "level": 36,
+  "element": "fire",
+  "race": "beast",
+  "size": "small",
+  "maxHp": 11496,
+  "attack": 156,
+  "defense": 44,
+  "magicDefense": 25,
+  "hit": 60,
+  "flee": 48,
+  "exp": 3102,
+  "jobExp": 2328,
+  "attackRange": 38,
+  "attackIntervalMs": 1500,
+  "moveSpeed": 120,
+  "aiType": "elite",
+  "aggroRange": 220,
+  "respawnSeconds": 600,
+  "dropTableId": "elite_desert_wolf_drops",
+  "collisionRadius": 12,
+  "art": {
+   "shape": "wolf",
+   "w": 44,
+   "h": 44,
+   "colors": [
+    "#c8a46a",
+    "#8a6a42",
+    "#fff0c0"
+   ],
+   "scale": 1.35
+  },
+  "generated": true,
+  "elite": true,
+  "looter": false,
+  "elementLevel": 2
+ },
+ {
+  "id": "elite_giant_scorpion",
+  "name": "Queen Giant Scorpion",
+  "level": 43,
+  "element": "fire",
+  "race": "insect",
+  "size": "large",
+  "maxHp": 21030,
+  "attack": 191,
+  "defense": 55,
+  "magicDefense": 30,
+  "hit": 71,
+  "flee": 58,
+  "exp": 4152,
+  "jobExp": 3114,
+  "attackRange": 38,
+  "attackIntervalMs": 1500,
+  "moveSpeed": 80,
+  "aiType": "elite",
+  "aggroRange": 220,
+  "respawnSeconds": 600,
+  "dropTableId": "elite_giant_scorpion_drops",
+  "collisionRadius": 16,
+  "onHitStatus": {
+   "status": "poison",
+   "chance": 0.2,
+   "durationMs": 7000
+  },
+  "art": {
+   "shape": "scorpion",
+   "w": 56,
+   "h": 56,
+   "colors": [
+    "#8a3a2a",
+    "#5a1e14",
+    "#ffd34d"
+   ],
+   "scale": 1.35
+  },
+  "generated": true,
+  "elite": true,
+  "looter": false,
+  "elementLevel": 2
+ },
+ {
+  "id": "elite_reef_gull",
+  "name": "Alpha Reef Gull",
+  "level": 29,
+  "element": "wind",
+  "race": "beast",
+  "size": "small",
+  "maxHp": 8244,
+  "attack": 123,
+  "defense": 34,
+  "magicDefense": 18,
+  "hit": 48,
+  "flee": 39,
+  "exp": 2154,
+  "jobExp": 1614,
+  "attackRange": 38,
+  "attackIntervalMs": 1500,
+  "moveSpeed": 120,
+  "aiType": "elite",
+  "aggroRange": 220,
+  "respawnSeconds": 600,
+  "dropTableId": "elite_reef_gull_drops",
+  "collisionRadius": 12,
+  "art": {
+   "shape": "bat",
+   "w": 44,
+   "h": 44,
+   "colors": [
+    "#f2f2f2",
+    "#b8c4d4",
+    "#ffb03a"
+   ],
+   "scale": 1.35
+  },
+  "generated": true,
+  "looter": false,
+  "elite": true,
+  "elementLevel": 2
+ },
+ {
+  "id": "elite_ice_golem",
+  "name": "Prime Ice Golem",
+  "level": 52,
+  "element": "water",
+  "race": "formless",
+  "size": "large",
+  "maxHp": 27852,
+  "attack": 233,
+  "defense": 68,
+  "magicDefense": 36,
+  "hit": 85,
+  "flee": 71,
+  "exp": 5628,
+  "jobExp": 4224,
+  "attackRange": 38,
+  "attackIntervalMs": 1500,
+  "moveSpeed": 55,
+  "aiType": "elite",
+  "aggroRange": 220,
+  "respawnSeconds": 600,
+  "dropTableId": "elite_ice_golem_drops",
+  "collisionRadius": 16,
+  "onHitStatus": {
+   "status": "freeze",
+   "chance": 0.08,
+   "durationMs": 2000
+  },
+  "art": {
+   "shape": "golem",
+   "w": 56,
+   "h": 56,
+   "colors": [
+    "#a8d8f0",
+    "#6aa8d0",
+    "#ffffff"
+   ],
+   "scale": 1.35
+  },
+  "generated": true,
+  "elite": true,
+  "looter": false,
+  "elementLevel": 3
+ },
+ {
+  "id": "elite_fire_drake",
+  "name": "Elder Fire Drake",
+  "level": 68,
+  "element": "fire",
+  "race": "dragon",
+  "size": "medium",
+  "maxHp": 33774,
+  "attack": 311,
+  "defense": 90,
+  "magicDefense": 49,
+  "hit": 111,
+  "flee": 93,
+  "exp": 8586,
+  "jobExp": 6438,
+  "attackRange": 38,
+  "attackIntervalMs": 1500,
+  "moveSpeed": 80,
+  "aiType": "elite",
+  "aggroRange": 220,
+  "respawnSeconds": 600,
+  "dropTableId": "elite_fire_drake_drops",
+  "collisionRadius": 16,
+  "onHitStatus": {
+   "status": "burn",
+   "chance": 0.15,
+   "durationMs": 5000
+  },
+  "art": {
+   "shape": "drake",
+   "w": 56,
+   "h": 56,
+   "colors": [
+    "#c83a2a",
+    "#8a1e14",
+    "#ffd34d"
+   ],
+   "scale": 1.35
+  },
+  "generated": true,
+  "elite": true,
+  "looter": false,
+  "elementLevel": 3
+ },
+ {
+  "id": "elite_mire_crab",
+  "name": "Elder Mire Crab",
+  "level": 71,
+  "element": "poison",
+  "race": "fish",
+  "size": "medium",
+  "maxHp": 35934,
+  "attack": 324,
+  "defense": 95,
+  "magicDefense": 52,
+  "hit": 116,
+  "flee": 97,
+  "exp": 9180,
+  "jobExp": 6888,
+  "attackRange": 38,
+  "attackIntervalMs": 1500,
+  "moveSpeed": 80,
+  "aiType": "elite",
+  "aggroRange": 220,
+  "respawnSeconds": 600,
+  "dropTableId": "elite_mire_crab_drops",
+  "collisionRadius": 16,
+  "art": {
+   "shape": "crab",
+   "w": 56,
+   "h": 56,
+   "colors": [
+    "#4a5a3a",
+    "#2e3a22",
+    "#c8e07a"
+   ],
+   "scale": 1.35
+  },
+  "generated": true,
+  "looter": false,
+  "elite": true,
+  "elementLevel": 4
+ },
+ {
+  "id": "elite_banshee",
+  "name": "Revenant Banshee",
+  "level": 77,
+  "element": "ghost",
+  "race": "undead",
+  "size": "small",
+  "maxHp": 35100,
+  "attack": 353,
+  "magicAttack": 251,
+  "defense": 103,
+  "magicDefense": 56,
+  "hit": 125,
+  "flee": 106,
+  "exp": 10410,
+  "jobExp": 7806,
+  "attackRange": 220,
+  "attackIntervalMs": 2000,
+  "moveSpeed": 80,
+  "aiType": "elite",
+  "aggroRange": 220,
+  "respawnSeconds": 600,
+  "dropTableId": "elite_banshee_drops",
+  "collisionRadius": 12,
+  "projectile": {
+   "element": "ghost",
+   "color": "#ff8ab0"
+  },
+  "statusImmune": [
+   "poison",
+   "bleed"
+  ],
+  "art": {
+   "shape": "ghost",
+   "w": 44,
+   "h": 44,
+   "colors": [
+    "#c8c8d8",
+    "#3a2a4a",
+    "#ff5a7a"
+   ],
+   "scale": 1.35
+  },
+  "generated": true,
+  "elite": true,
+  "looter": false,
   "elementLevel": 4
  }
 ]

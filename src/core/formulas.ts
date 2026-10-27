@@ -2,7 +2,7 @@
 // src/config/balance.json so balance can be tuned without touching code.
 import type { GameData } from './data';
 import type {
-  BaseStats, CharacterState, DerivedStats, EquipSlot, ItemDef, StatModifiers, StatKey,
+  Autocast, BaseStats, CharacterState, DerivedStats, EquipSlot, ItemDef, StatModifiers, StatKey,
 } from './types';
 import { STAT_KEYS } from './types';
 
@@ -110,7 +110,33 @@ export function equipmentMods(data: GameData, c: CharacterState): StatModifiers 
     if (inst.starCrumbs) mergeMods(mods, { patk: [0, 5, 10, 40][inst.starCrumbs] });
     for (const o of inst.options ?? []) mergeMods(mods, optionMods(o));
   }
+  for (const id of activeCombos(data, c)) mergeMods(mods, data.combos.get(id)!.mods);
   return mods;
+}
+
+/** Item ids and compounded card ids on the character's equipment. */
+function equippedParts(c: CharacterState): Set<string> {
+  const out = new Set<string>();
+  for (const inst of Object.values(c.equipment)) if (inst) { out.add(inst.itemId); for (const cd of inst.cards ?? []) out.add(cd); }
+  return out;
+}
+
+/** Combos whose parts are all equipped / compounded. */
+export function activeCombos(data: GameData, c: CharacterState): string[] {
+  const have = equippedParts(c);
+  return [...data.combos.values()].filter((cb) => cb.parts.every((p) => have.has(p))).map((cb) => cb.id);
+}
+
+/** Autocasts from equipped items and their cards. */
+export function equipmentAutocasts(data: GameData, c: CharacterState): Autocast[] {
+  const out: Autocast[] = [];
+  for (const inst of Object.values(c.equipment)) {
+    if (!inst) continue;
+    const def = data.items.get(inst.itemId);
+    if (def?.autocast) out.push(def.autocast);
+    for (const cd of inst.cards ?? []) { const a = data.items.get(cd)?.card?.autocast; if (a) out.push(a); }
+  }
+  return out;
 }
 
 export function passiveSkillMods(data: GameData, c: CharacterState): StatModifiers {
@@ -195,6 +221,8 @@ export function computeDerivedStats(data: GameData, c: CharacterState, runtimeMo
     weightLimit: B.weightBase + str * B.weightStr + (cls.weightBonus ?? 0) + (mods.weightLimit ?? 0),
     doubleAttackPct: weapon?.weaponType === 'dagger' ? Math.min(50, mods.doubleAttackPct ?? 0) : 0,
     jobBonusStats,
+    autocasts: equipmentAutocasts(data, c),
+    activeCombos: activeCombos(data, c),
     elementDamagePct: mods.elementDamagePct ?? {},
     elementResistPct: mods.elementResistPct ?? {},
     raceDamagePct: mods.raceDamagePct ?? {},

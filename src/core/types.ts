@@ -149,6 +149,8 @@ export type UseEffect =
   | { type: 'randomTeleport' }
   /** Temporarily gives the weapon an element (like an elemental converter). */
   | { type: 'endow'; element: Element; durationMs: number }
+  /** Opens into a random non-boss card. */
+  | { type: 'randomCard' }
   | { type: 'resetStats' }
   | { type: 'resetSkills' };
 
@@ -179,7 +181,9 @@ export interface ItemDef {
   mods?: StatModifiers;
   cardSlots?: number;
   /** Card items: which equipment slot they compound into, and what they add. */
-  card?: { equip: 'weapon' | 'armor' | 'headgear' | 'shield' | 'garment' | 'boots' | 'accessory'; mods: StatModifiers; monsterId: string };
+  card?: { equip: 'weapon' | 'armor' | 'headgear' | 'shield' | 'garment' | 'boots' | 'accessory'; mods: StatModifiers; monsterId: string; autocast?: Autocast };
+  /** Equipment that casts a skill by itself on basic-attack hits. */
+  autocast?: Autocast;
   /** Pets: this item tames that monster / is that pet's egg / is pet food. */
   lure?: string;
   petEgg?: string;
@@ -206,6 +210,12 @@ export interface ItemInstance {
   /** A pet egg remembers its pet. */
   pet?: PetState;
 }
+
+/** Ragnarok-style autocast: chancePct per basic-attack hit to cast skillId at level, for free. */
+export interface Autocast { skillId: string; level: number; chancePct: number }
+
+/** Item/card combo: all parts equipped (or compounded into equipped items) grants mods. */
+export interface ComboDef { id: string; name: string; parts: string[]; mods: StatModifiers }
 
 // ---------------------------------------------------------------- pets
 /** Ragnarok-style pet: tamed from a monster with its lure item. */
@@ -243,6 +253,10 @@ export interface MonsterDef {
   element: Element;
   /** Element level 1–4 (Ragnarok-style): higher levels resist more and change the matchups. */
   elementLevel?: number;
+  /** Picks up items lying on the ground and drops them when killed. */
+  looter?: boolean;
+  /** Field mini-boss (tougher, rarer, better drops). */
+  elite?: boolean;
   race: string;
   size: 'small' | 'medium' | 'large';
   maxHp: number;
@@ -546,6 +560,9 @@ export interface DerivedStats {
   /** Ragnarok-style ASPD (0–190): 200 − attack delay / 20 ms. */
   aspd: number;
   doubleAttackPct: number;
+  autocasts: Autocast[];
+  /** Combos currently active. */
+  activeCombos: string[];
   /** Stats granted by job level (shown as +N in the status window). */
   jobBonusStats: BaseStats;
   castTimeMul: number; cdrPct: number;

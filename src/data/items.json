@@ -2786,7 +2786,12 @@
     },
     "patk": 2
    },
-   "monsterId": "venom_spore"
+   "monsterId": "venom_spore",
+   "autocast": {
+    "skillId": "lightning_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
   },
   "generated": true
  },
@@ -3037,7 +3042,12 @@
      "medium": 15
     }
    },
-   "monsterId": "wailing_spirit"
+   "monsterId": "wailing_spirit",
+   "autocast": {
+    "skillId": "lightning_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
   },
   "generated": true
  },
@@ -3089,7 +3099,12 @@
     "int": 1,
     "mdef": 3
    },
-   "monsterId": "mist_spore"
+   "monsterId": "mist_spore",
+   "autocast": {
+    "skillId": "ice_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
   },
   "generated": true
  },
@@ -3263,7 +3278,12 @@
     },
     "flee": 4
    },
-   "monsterId": "lantern_ghost"
+   "monsterId": "lantern_ghost",
+   "autocast": {
+    "skillId": "lightning_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
   },
   "generated": true
  },
@@ -3338,7 +3358,12 @@
     },
     "flee": 4
    },
-   "monsterId": "arcane_wisp"
+   "monsterId": "arcane_wisp",
+   "autocast": {
+    "skillId": "lightning_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
   },
   "generated": true
  },
@@ -3412,7 +3437,12 @@
     "vit": 1,
     "maxHpPct": 10
    },
-   "monsterId": "mana_wisp"
+   "monsterId": "mana_wisp",
+   "autocast": {
+    "skillId": "ice_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
   },
   "generated": true
  },
@@ -3538,7 +3568,12 @@
     "maxMpPct": 10,
     "mpRegen": 2
    },
-   "monsterId": "mirage_wisp"
+   "monsterId": "mirage_wisp",
+   "autocast": {
+    "skillId": "fire_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
   },
   "generated": true
  },
@@ -3763,7 +3798,12 @@
    "mods": {
     "crit": 4
    },
-   "monsterId": "kelp_spore"
+   "monsterId": "kelp_spore",
+   "autocast": {
+    "skillId": "ice_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
   },
   "generated": true
  },
@@ -3919,7 +3959,12 @@
     "dex": 1,
     "hit": 5
    },
-   "monsterId": "frost_wraith"
+   "monsterId": "frost_wraith",
+   "autocast": {
+    "skillId": "ice_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
   },
   "generated": true
  },
@@ -4073,7 +4118,12 @@
     "int": 1,
     "mdef": 3
    },
-   "monsterId": "flame_drake"
+   "monsterId": "flame_drake",
+   "autocast": {
+    "skillId": "fire_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
   },
   "generated": true
  },
@@ -4125,7 +4175,12 @@
     "luk": 1,
     "crit": 3
    },
-   "monsterId": "marsh_spore"
+   "monsterId": "marsh_spore",
+   "autocast": {
+    "skillId": "lightning_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
   },
   "generated": true
  },
@@ -4226,7 +4281,12 @@
     "patk": 16,
     "hit": 20
    },
-   "monsterId": "banshee"
+   "monsterId": "banshee",
+   "autocast": {
+    "skillId": "lightning_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
   },
   "generated": true
  },
@@ -4276,7 +4336,12 @@
    "mods": {
     "maxHp": 320
    },
-   "monsterId": "lich_spirit"
+   "monsterId": "lich_spirit",
+   "autocast": {
+    "skillId": "lightning_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
   },
   "generated": true
  },
@@ -4408,6 +4473,331 @@
     }
    },
    "monsterId": "dread_lord_boss"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elite_dusk_bat",
+  "name": "Alpha Dusk Bat Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Alpha Dusk Bat. Compound it into footgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#5a4a6a",
+   "accent": "#ff5a5a"
+  },
+  "card": {
+   "equip": "boots",
+   "mods": {
+    "agi": 1,
+    "moveSpeedPct": 5
+   },
+   "monsterId": "elite_dusk_bat"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elite_road_goblin",
+  "name": "Chieftain Road Goblin Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Chieftain Road Goblin. Compound it into garment with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#7a9a3a",
+   "accent": "#3a6ab8"
+  },
+  "card": {
+   "equip": "garment",
+   "mods": {
+    "flee": 11
+   },
+   "monsterId": "elite_road_goblin"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elite_pine_goblin",
+  "name": "Chieftain Pinewood Goblin Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Chieftain Pinewood Goblin. Compound it into garment with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#5a8a3a",
+   "accent": "#c8a26b"
+  },
+  "card": {
+   "equip": "garment",
+   "mods": {
+    "elementResistPct": {
+     "earth": 20
+    },
+    "flee": 4
+   },
+   "monsterId": "elite_pine_goblin"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elite_shadow_wolf",
+  "name": "Alpha Shadow Wolf Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Alpha Shadow Wolf. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#3a3a4a",
+   "accent": "#c83a4a"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "raceDamagePct": {
+     "demon": 20
+    }
+   },
+   "monsterId": "elite_shadow_wolf"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elite_arcane_wisp",
+  "name": "Prime Arcane Wisp Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Prime Arcane Wisp. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#b89af0",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "formless": 25
+    }
+   },
+   "monsterId": "elite_arcane_wisp"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elite_desert_wolf",
+  "name": "Alpha Desert Wolf Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Alpha Desert Wolf. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#c8a46a",
+   "accent": "#fff0c0"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "hit": 10
+   },
+   "monsterId": "elite_desert_wolf"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elite_giant_scorpion",
+  "name": "Queen Giant Scorpion Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Queen Giant Scorpion. Compound it into footgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#8a3a2a",
+   "accent": "#ffd34d"
+  },
+  "card": {
+   "equip": "boots",
+   "mods": {
+    "maxMpPct": 10,
+    "mpRegen": 2
+   },
+   "monsterId": "elite_giant_scorpion"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elite_reef_gull",
+  "name": "Alpha Reef Gull Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Alpha Reef Gull. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#f2f2f2",
+   "accent": "#ffb03a"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "beast": 25
+    }
+   },
+   "monsterId": "elite_reef_gull"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elite_ice_golem",
+  "name": "Prime Ice Golem Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Prime Ice Golem. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#a8d8f0",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "hit": 10
+   },
+   "monsterId": "elite_ice_golem"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elite_fire_drake",
+  "name": "Elder Fire Drake Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Elder Fire Drake. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#c83a2a",
+   "accent": "#ffd34d"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "maxHp": 320
+   },
+   "monsterId": "elite_fire_drake"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elite_mire_crab",
+  "name": "Elder Mire Crab Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Elder Mire Crab. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#4a5a3a",
+   "accent": "#c8e07a"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "fish": 25
+    }
+   },
+   "monsterId": "elite_mire_crab"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elite_banshee",
+  "name": "Revenant Banshee Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Revenant Banshee. Compound it into footgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#c8c8d8",
+   "accent": "#ff5a7a"
+  },
+  "card": {
+   "equip": "boots",
+   "mods": {
+    "maxMpPct": 10,
+    "mpRegen": 2
+   },
+   "monsterId": "elite_banshee"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_album",
+  "name": "Faded Card Album",
+  "type": "consumable",
+  "rarity": "epic",
+  "description": "An old album with one card still inside. Open it to get a random monster card (never a boss card).",
+  "weight": 5,
+  "price": 1000,
+  "stackable": true,
+  "maxStack": 99,
+  "use": [
+   {
+    "type": "randomCard"
+   }
+  ],
+  "cooldownMs": 1000,
+  "icon": {
+   "shape": "card",
+   "color": "#c8a26b",
+   "accent": "#ffe27a"
   },
   "generated": true
  },

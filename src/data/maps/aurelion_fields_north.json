@@ -207,6 +207,16 @@
     "w": 23,
     "h": 16
    }
+  },
+  {
+   "monsterId": "elite_road_goblin",
+   "count": 1,
+   "area": {
+    "x": 31,
+    "y": 3,
+    "w": 23,
+    "h": 16
+   }
   }
  ],
  "objects": [

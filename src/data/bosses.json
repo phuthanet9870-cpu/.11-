@@ -281,6 +281,10 @@
     {
      "itemId": "enriched_moonstone",
      "chance": 0.2
+    },
+    {
+     "itemId": "card_album",
+     "chance": 0.1
     }
    ]
   },
@@ -428,6 +432,10 @@
     {
      "itemId": "enriched_moonstone",
      "chance": 0.2
+    },
+    {
+     "itemId": "card_album",
+     "chance": 0.1
     }
    ]
   },
@@ -575,6 +583,10 @@
     {
      "itemId": "enriched_moonstone",
      "chance": 0.2
+    },
+    {
+     "itemId": "card_album",
+     "chance": 0.1
     }
    ]
   },
@@ -722,6 +734,10 @@
     {
      "itemId": "enriched_moonstone",
      "chance": 0.2
+    },
+    {
+     "itemId": "card_album",
+     "chance": 0.1
     }
    ]
   },
@@ -869,6 +885,10 @@
     {
      "itemId": "enriched_moonstone",
      "chance": 0.2
+    },
+    {
+     "itemId": "card_album",
+     "chance": 0.1
     }
    ]
   },

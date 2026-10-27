@@ -173,6 +173,12 @@ export class WindowManager {
       out.push(h('div', { class: 'tt' }, `Compounds into: ${def.card.equip}`));
       for (const line of modsText(def.card.mods)) out.push(h('div', { class: 'good' }, line));
     }
+    for (const ac of [def.autocast, def.card?.autocast]) if (ac) out.push(h('div', { style: 'color:#7fd6ff' }, `${ac.chancePct}% on hit: cast ${w.data.skills.get(ac.skillId)?.name ?? ac.skillId} Lv.${ac.level}`));
+    const active = new Set(w.stats.activeCombos);
+    for (const cb of w.data.combos.values()) if (cb.parts.includes(def.id)) {
+      out.push(h('div', { style: `color:${active.has(cb.id) ? '#6fe08a' : '#b0a890'}` }, `${active.has(cb.id) ? '✓' : '○'} ${cb.name}: ${modsText(cb.mods).join(', ')}`));
+      out.push(h('div', { class: 'muted', style: 'font-size:10px' }, `   with ${cb.parts.filter((x) => x !== def.id).map((x) => w.data.items.get(x)?.name ?? x).join(' + ')}`));
+    }
     for (const o of inst?.options ?? []) out.push(h('div', { style: `color:${optCol}` }, `✦ ${optionLabel(o)}`));
     if (inst?.crafter) out.push(h('div', { class: 'muted' }, `Forged by ${inst.crafter}${inst.starCrumbs ? ` · +${CRUMB_ATK[inst.starCrumbs]} ATK from star crumbs` : ''}`));
     for (const cardId of inst?.cards ?? []) {
@@ -662,7 +668,7 @@ export class WindowManager {
     if (st.tab === 'monsters') {
       filters = [['', 'All races'], ...[...new Set([...d.monsters.values()].map((m) => m.race))].sort().map((r): [string, string] => [r, r])];
       rows = [...d.monsters.values()].filter((m) => (!st.filter || m.race === st.filter) && m.name.toLowerCase().includes(q))
-        .sort((a, b) => a.level - b.level).map((m) => ({ id: m.id, label: `${m.name}`, sub: `Lv ${m.level} · ${m.element} ${m.elementLevel ?? 1} · ${m.size}${m.aiType === 'boss' ? ' · MVP' : ''}` }));
+        .sort((a, b) => a.level - b.level).map((m) => ({ id: m.id, label: `${m.name}`, sub: `Lv ${m.level} · ${m.element} ${m.elementLevel ?? 1} · ${m.size}${m.aiType === 'boss' ? ' · MVP' : m.elite ? ' · Elite' : ''}${m.looter ? ' · Looter' : ''}` }));
     } else {
       const cards = st.tab === 'cards';
       filters = cards ? [['', 'All slots'], ...['weapon', 'armor', 'shield', 'garment', 'boots', 'headgear', 'accessory'].map((s): [string, string] => [s, s])]
@@ -689,7 +695,7 @@ export class WindowManager {
       const m = d.monsters.get(st.sel)!;
       const table = d.drops.get(m.dropTableId);
       detail.push(h('h3', { style: 'margin:0 0 4px' }, `${m.name}${m.aiType === 'boss' ? ' (MVP)' : ''}`),
-        h('table', {}, kv('Level', m.level), kv('Race / Size', `${m.race} / ${m.size}`), kv('Element', `${m.element} ${m.elementLevel ?? 1}`), kv('HP', m.maxHp),
+        h('table', {}, kv('Level', m.level), kv('Race / Size', `${m.race} / ${m.size}`), kv('Element', `${m.element} ${m.elementLevel ?? 1}`), kv('Type', m.aiType === 'boss' ? 'MVP boss' : m.elite ? 'Elite mini-boss' : m.aiType), ...(m.looter ? [kv('Looter', 'Picks up items on the ground')] : []), kv('HP', m.maxHp),
           kv('ATK / DEF / MDEF', `${m.attack} / ${m.defense} / ${m.magicDefense ?? 0}`), kv('Base / Job EXP', `${m.exp} / ${m.jobExp}`),
           kv('Behaviour', m.aiType), kv('Luma', table?.luma ? `${table.luma[0]}–${table.luma[1]}` : '—')),
         h('div', { class: 'gold', style: 'margin-top:6px' }, 'Found in'), h('div', {}, mapsOf(m.id).join(', ') || '—'),

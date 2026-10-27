@@ -13,6 +13,7 @@ import npcsJson from '../data/npcs.json';
 import shopsJson from '../data/shops.json';
 import recipesJson from '../data/recipes.json';
 import petsJson from '../data/pets.json';
+import combosJson from '../data/combos.json';
 import questsJson from '../data/quests.json';
 import tilesJson from '../data/tiles.json';
 import tilesetsJson from '../data/tilesets.json';
@@ -20,7 +21,7 @@ import objectsJson from '../data/objects.json';
 import { MAP_FILES } from '../data/maps';
 import type {
   BossDef, DropTable, Element, ItemDef, JobClassDef, MapDef, MonsterDef, NpcDef,
-  ObjectKindDef, PetDef, QuestDef, RecipeDef, ShopDef, SkillDef, StatusDef, StatusId, TileDef, TilesetDef,
+  ComboDef, ObjectKindDef, PetDef, QuestDef, RecipeDef, ShopDef, SkillDef, StatusDef, StatusId, TileDef, TilesetDef,
 } from './types';
 
 export type Balance = typeof balanceJson;
@@ -42,6 +43,7 @@ export interface GameData {
   shops: Map<string, ShopDef>;
   recipes: Map<string, RecipeDef>;
   pets: Map<string, PetDef>;
+  combos: Map<string, ComboDef>;
   quests: Map<string, QuestDef>;
   tiles: Map<string, TileDef>;
   tilesets: Map<string, TilesetDef>;
@@ -77,6 +79,7 @@ export function loadGameData(): GameData {
     shops: byId(shopsJson as ShopDef[]),
     recipes: byId(recipesJson as unknown as RecipeDef[]),
     pets: byId(petsJson as unknown as PetDef[]),
+    combos: byId(combosJson as unknown as ComboDef[]),
     quests: byId(questsJson as QuestDef[]),
     tiles: byId(tilesJson.tiles as TileDef[]),
     tilesets: byId(tilesetsJson as unknown as TilesetDef[]),
@@ -121,6 +124,8 @@ export function validateGameData(d: GameData): string[] {
     need(!!it.card && d.monsters.has(it.card.monsterId), `card ${it.id}: monster`);
     need(!!it.card && ['weapon', 'armor', 'headgear', 'shield', 'garment', 'boots', 'accessory'].includes(it.card.equip), `card ${it.id}: slot`);
   }
+  for (const cb of d.combos.values()) for (const part of cb.parts) need(d.items.has(part), `combo ${cb.id}: ${part}`);
+  for (const it of d.items.values()) for (const ac of [it.autocast, it.card?.autocast]) if (ac) need(d.skills.has(ac.skillId), `item ${it.id}: autocast ${ac.skillId}`);
   for (const p of d.pets.values()) {
     need(d.monsters.has(p.monsterId), `pet ${p.id}: monster`);
     for (const i of [p.lureItem, p.eggItem, p.foodItem]) need(d.items.has(i), `pet ${p.id}: item ${i}`);

@@ -120,6 +120,8 @@ export interface MonsterActor extends ActorBase {
   tauntUntil: number;
   /** A thief already stole from this monster. */
   stolen?: boolean;
+  /** Items a looter monster picked up; dropped when it dies. */
+  loot?: { itemId: string; qty: number; options?: { key: string; value: number }[] }[];
 }
 
 export interface NpcActor { id: string; npcId: string; def: NpcDef; x: number; y: number; dir: Direction }
@@ -889,6 +891,14 @@ export class World {
         this.damageMonster(m, res2.damage, opts.kind, opts.element, res2.crit, false);
         this.emit({ type: 'fx', fx: 'slash_small', x: m.x, y: m.y - 18, targetId: m.id, offsetY: -18 });
       }
+      // Autocast (cards / gear): a free spell at the target.
+      for (const ac of this.stats.autocasts) {
+        if (m.dead || !this.rng.chance(ac.chancePct / 100)) continue;
+        const sk = this.data.skills.get(ac.skillId);
+        if (!sk) continue;
+        this.emit({ type: 'message', text: `Autocast: ${sk.name} Lv.${ac.level}!`, channel: 'combat' });
+        this.executeSkill(sk.id, ac.level, sk.targeting === 'enemy' ? m.id : undefined, m.x, m.y, true);
+      }
       // Card / option procs on basic attacks: status on hit and HP drain.
       for (const [st, pct] of Object.entries(this.stats.onHitStatusPct)) if (pct && !m.dead) this.applyStatus(m, st as StatusId, pct / 100);
       if (this.stats.hpDrainPct > 0 && !this.player.dead) {
@@ -1030,6 +1040,8 @@ export class World {
       this.char.stats_meta.kills++;
       this.grantExp(m.def.exp, m.def.jobExp, m.def.name);
       this.rollDrops(m);
+      for (const l of m.loot ?? []) { const g = this.dropToGround(l.itemId, l.qty, m.x + this.rng.range(-16, 16), m.y + this.rng.range(-10, 10), true); if (l.options) g.options = l.options; if (this.autoLoot) this.pickup(g.id, true); }
+      m.loot = [];
       const updated = questEvents.kill(this.data, this.char, m.def.id);
       if (m.boss) {
         updated.push(...questEvents.bossKill(this.data, this.char, m.boss.def.id));
@@ -1075,6 +1087,26 @@ export class World {
     } else {
       m.respawnAt = this.time + m.def.respawnSeconds * 1000;
     }
+  }
+
+  /** Looter AI: walk to a nearby item that has lain on the ground a few seconds and take it. */
+  private updateLooter(m: MonsterActor, speed: number, dt: number): boolean {
+    let best: GroundItem | null = null, bd = 170;
+    for (const g of this.groundItems.values()) {
+      if (this.time - g.droppedAt < 3000) continue;
+      const d = dist(m.x, m.y, g.x, g.y);
+      if (d < bd) { bd = d; best = g; }
+    }
+    if (!best) return false;
+    if (bd <= 14) {
+      this.groundItems.delete(best.id);
+      (m.loot ??= []).push({ itemId: best.itemId, qty: best.qty, options: best.options });
+      this.emit({ type: 'fx', fx: 'drop', x: best.x, y: best.y });
+      return true;
+    }
+    m.state = 'patrol';
+    this.moveToward(m, best.x, best.y, speed * 0.7, dt, 4);
+    return true;
   }
 
   private killMinionSilently(m: MonsterActor) {
@@ -1222,6 +1254,7 @@ export class World {
           this.onBossEngage(m);
           break;
         }
+        if (m.def.looter && !cannotMove && this.updateLooter(m, speed, dt)) break;
         if (m.state === 'idle') {
           if (this.time >= m.stateUntil && !m.boss) {
             const cells = this.spawnCells[m.spawnGroup];
@@ -1290,7 +1323,7 @@ export class World {
     const pt = this.randomSpawnPoint(m.spawnGroup);
     Object.assign(m, {
       x: pt.x, y: pt.y, hp: m.def.maxHp, dead: false, state: 'idle', stateUntil: this.time + 1500, targetId: null,
-      threat: {}, damageBy: {}, statuses: [], buffs: [], move: null, kb: null, respawnAt: 0,
+      threat: {}, damageBy: {}, statuses: [], buffs: [], move: null, kb: null, respawnAt: 0, loot: [], stolen: false,
     });
     m.home = { x: pt.x, y: pt.y };
     this.setAnim(m, 'idle');
@@ -1596,23 +1629,26 @@ export class World {
     p.cast = null;
   }
 
-  private executeSkill(skillId: string, level: number, targetId?: string, x?: number, y?: number) {
+  /** `free`: an autocast — no MP/Luma cost, no cooldown, no animation or attack delay. */
+  private executeSkill(skillId: string, level: number, targetId?: string, x?: number, y?: number, free = false) {
     const skill = this.data.skills.get(skillId)!;
     const p = this.player;
-    const cost = this.skillMpCost(skill, level);
+    const cost = free ? 0 : this.skillMpCost(skill, level);
     if (this.char.mp < cost) { this.message('Not enough MP.', 'error'); return; }
     let target = targetId ? this.monsters.get(targetId) : undefined;
-    if (skill.targeting === 'enemy' && (!target || target.dead)) { this.message('Target lost.', 'error'); return; }
-    const luma = this.skillLumaCost(skill, level);
+    if (skill.targeting === 'enemy' && (!target || target.dead)) { if (!free) this.message('Target lost.', 'error'); return; }
+    const luma = free ? 0 : this.skillLumaCost(skill, level);
     if (this.char.luma < luma) { this.message(`${skill.name} needs ${luma} Luma.`, 'error'); return; }
     this.char.mp -= cost;
     this.char.luma -= luma;
-    p.cooldowns[skillId] = this.time + skill.cooldownMs * (1 - this.stats.cdrPct / 100);
     p.lastCombatAt = this.time;
-    this.setAnim(p, skill.targeting === 'self' && skill.kind === 'buff' ? 'cast' : 'attack');
-    p.animAt = this.time;
-    // Basic attack resets after a skill to prevent double-dipping.
-    p.attackReadyAt = Math.max(p.attackReadyAt, this.time + 300);
+    if (!free) {
+      p.cooldowns[skillId] = this.time + skill.cooldownMs * (1 - this.stats.cdrPct / 100);
+      this.setAnim(p, skill.targeting === 'self' && skill.kind === 'buff' ? 'cast' : 'attack');
+      p.animAt = this.time;
+      // Basic attack resets after a skill to prevent double-dipping.
+      p.attackReadyAt = Math.max(p.attackReadyAt, this.time + 300);
+    }
 
     const cx = target ? target.x : x ?? p.x;
     const cy = target ? target.y : y ?? p.y;
@@ -1911,6 +1947,14 @@ export class World {
           this.emit({ type: 'fx', fx: 'teleport', x: p.x, y: p.y });
           this.enterMap(this.char.savePoint.mapId, this.char.savePoint.spawn);
           break;
+        case 'randomCard': {
+          const pool = [...this.data.items.values()].filter((i) => i.type === 'card' && i.card && this.data.monsters.get(i.card.monsterId)?.aiType !== 'boss');
+          const card = pool[Math.floor(this.rng.next() * pool.length)];
+          addItem(this.data, this.char, card.id, 1, { ignoreWeight: true });
+          this.message(`The album held a ${card.name}!`, 'loot');
+          this.emit({ type: 'fx', fx: 'drop_rare', x: p.x, y: p.y });
+          break;
+        }
         case 'resetStats':
           resetStats(this.data, this.char);
           this.message('Your stat points have been refunded.');
