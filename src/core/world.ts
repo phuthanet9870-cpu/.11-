@@ -13,6 +13,7 @@ import {
 } from './inventory';
 import { allocateStat, changeJob, learnSkill, resetSkills, resetStats } from './character';
 import { refineItem, type RefineResult } from './refine';
+import { compoundCard } from './cards';
 import {
   acceptQuest, abandonQuest, questEvents, refreshAllQuests, turnInQuest, type TurnInResult,
 } from './quests';
@@ -148,6 +149,7 @@ export type WorldEvent =
   | { type: 'bossPhase'; name: string; text: string }
   | { type: 'bossEnrage'; name: string }
   | { type: 'bossDefeated'; name: string }
+  | { type: 'mvp'; name: string; killer: string; exp: number; items: string[] }
   | { type: 'telegraph'; telegraph: Telegraph }
   | { type: 'mapChanged'; mapId: string }
   | { type: 'sound'; key: string }
@@ -205,6 +207,8 @@ export class World {
   private compiled = new Map<string, CompiledMap>();
   private spawnCells: { x: number; y: number }[][] = [];
   private bossRespawnAt: Record<string, number> = {};
+  /** MVP tombstones (Ragnarok-style): where a boss fell, who took MVP, when it returns. */
+  tombstones: Record<string, { mapId: string; x: number; y: number; boss: string; killer: string; killedAt: number; respawnAt: number }> = {};
   private nextId = 1;
   private statsDirty = true;
   private visitedAreas = new Set<string>();
@@ -377,6 +381,7 @@ export class World {
   }
 
   private spawnBoss() {
+    delete this.tombstones[this.map.def.bossSpawn!.bossId];
     const bs = this.map.def.bossSpawn!;
     const bossDef = this.data.bosses.get(bs.bossId)!;
     const def = this.data.monsters.get(bossDef.monsterId)!;
@@ -614,7 +619,10 @@ export class World {
         } else {
           p.move = null;
           p.dir = dirFromVector(m.x - p.x, m.y - p.y, p.dir);
-          if (!cannotAct && this.time >= p.attackReadyAt) this.playerBasicAttack(m);
+          if (!cannotAct && this.time >= p.attackReadyAt) {
+            if (this.majorOverweight) { p.intent = { type: 'none' }; this.err('You are carrying too much to attack (90%+ weight).'); }
+            else this.playerBasicAttack(m);
+          }
         }
         break;
       }
@@ -718,6 +726,9 @@ export class World {
     if (hp > 0) { this.char.hp += hp; p.hp = this.char.hp; }
     if (mp > 0) this.char.mp += mp;
   }
+
+  /** Ragnarok rule: at 90%+ of the weight limit you cannot attack or use skills. */
+  get majorOverweight(): boolean { return this.weight >= (this.weightLimit * this.data.balance.stats.overweightActionStopPct) / 100; }
 
   playerProfile(): CombatProfile {
     return profileFromDerived(this.char.baseLevel, this.stats, 'neutral');
@@ -916,11 +927,25 @@ export class World {
         for (const r of cr.items) this.giveItem(r.itemId, r.qty, 'Contribution reward');
         this.message(`Contribution reward: ${cr.luma} Luma.`, 'loot');
       }
+      // MVP goes to the top damage dealer, and only if they are still alive (Ragnarok rule).
+      const top = Object.entries(m.damageBy).sort((a, c) => c[1] - a[1])[0]?.[0];
+      const isMvp = top === 'player' && !this.player.dead;
       const respawnSec = this.map.def.bossSpawn?.respawnSeconds ?? m.def.respawnSeconds;
+      if (isMvp) {
+        const mvp = b.def.mvp ?? { expPct: 50, items: [] };
+        const exp = Math.round((m.def.exp * mvp.expPct) / 100);
+        const got: string[] = [];
+        for (const it of mvp.items) if (this.rng.chance(it.chance)) { this.giveItem(it.itemId, 1, 'MVP reward'); got.push(it.itemId); }
+        this.grantExp(exp, 0, 'MVP');
+        this.message(`MVP! ${this.char.name} is the MVP of ${m.def.name}! +${exp} MVP EXP.`, 'quest');
+        this.emit({ type: 'mvp', name: m.def.name, killer: this.char.name, exp, items: got });
+        this.emit({ type: 'fx', fx: 'level_up', x: this.player.x, y: this.player.y, targetId: 'player', offsetY: 0 });
+      }
       this.bossRespawnAt[b.def.id] = this.time + respawnSec * 1000;
+      this.tombstones[b.def.id] = { mapId: this.map.def.id, x: m.x, y: m.y, boss: m.def.name, killer: isMvp ? this.char.name : 'unknown', killedAt: this.now(), respawnAt: this.time + respawnSec * 1000 };
       const mapId = this.map.def.id;
       this.schedule(respawnSec * 1000, () => {
-        if (this.map.def.id === mapId) { this.monsters.delete(m.id); this.spawnBoss(); this.message('You feel a malevolent presence return to the forest...'); }
+        if (this.map.def.id === mapId) { this.monsters.delete(m.id); this.spawnBoss(); this.message(`${m.def.name} has returned to ${this.map.def.name}...`); }
       });
       this.telegraphs = [];
     } else if (m.temporary) {
@@ -1365,6 +1390,7 @@ export class World {
     if (!skill) return { ok: false, error: 'Unknown skill.' };
     if (lvl <= 0) return { ok: false, error: `You have not learned ${skill.name}.` };
     if (skill.kind === 'passive') return { ok: false, error: `${skill.name} is a passive skill.` };
+    if (this.majorOverweight) return { ok: false, error: 'You are carrying too much to use skills (90%+ weight).' };
     if (p.dead) return { ok: false, error: 'You are dead.' };
     if (this.hasStatusFlag(p, 'preventsSkills')) return { ok: false, error: 'You are silenced!' };
     if (this.hasStatusFlag(p, 'preventsAction')) return { ok: false, error: 'You cannot act right now.' };
@@ -1685,7 +1711,7 @@ export class World {
           p.hp = this.char.hp;
           if (hp > 0) this.emit({ type: 'damage', targetId: 'player', amount: hp, crit: false, miss: false, kind: 'heal' });
           if (mp > 0) this.emit({ type: 'damage', targetId: 'player', amount: mp, crit: false, miss: false, kind: 'mp' });
-          this.emit({ type: 'fx', fx: 'heal', x: p.x, y: p.y, targetId: 'player' });
+          this.emit({ type: 'fx', fx: 'heal', x: p.x, y: p.y, targetId: 'player', offsetY: 0 });
           break;
         }
         case 'cure': {
@@ -1698,6 +1724,17 @@ export class World {
           this.addBuff(p, { id: u.buffId, name: def.name, mods: u.mods, durationMs: u.durationMs, color: def.icon.color });
           this.emit({ type: 'fx', fx: 'buff', x: p.x, y: p.y, targetId: 'player' });
           break;
+        case 'randomTeleport': {
+          // Random walkable spot on this map (reachable from the spawn), like a fly wing.
+          const cells: number[] = [];
+          this.map.reachable.forEach((v, i) => { if (v) cells.push(i); });
+          const cell = cells[Math.floor(this.rng.next() * cells.length)];
+          this.emit({ type: 'fx', fx: 'teleport', x: p.x, y: p.y });
+          p.x = (cell % this.map.width) * TILE + TILE / 2; p.y = Math.floor(cell / this.map.width) * TILE + TILE / 2;
+          p.move = null; p.intent = { type: 'none' };
+          this.emit({ type: 'fx', fx: 'teleport', x: p.x, y: p.y });
+          break;
+        }
         case 'returnToSave':
           this.emit({ type: 'fx', fx: 'teleport', x: p.x, y: p.y });
           this.enterMap(this.char.savePoint.mapId, this.char.savePoint.spawn);
@@ -1744,6 +1781,14 @@ export class World {
       this.emit({ type: 'sound', key: 'equip' });
       const s = EQUIP_SLOTS.find((k) => this.char.equipment[k]?.uid === uid) ?? def?.slot;
       if (s) this.questTick(questEvents.equip(this.data, this.char, s));
+    });
+  }
+
+  /** Compound a card into an unequipped piece of equipment (permanent). */
+  compound(cardUid: string, equipUid: string): OpResult {
+    return this.wrap(compoundCard(this.data, this.char, cardUid, equipUid), () => {
+      this.emit({ type: 'sound', key: 'equip' });
+      this.emit({ type: 'fx', fx: 'sparkle', x: this.player.x, y: this.player.y - 20 });
     });
   }
 

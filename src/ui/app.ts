@@ -221,6 +221,7 @@ export class App implements GameHost {
         case 'bossPhase': hud.banner(e.name, e.text, 'boss'); break;
         case 'bossEnrage': hud.banner(`${e.name} is ENRAGED!`, 'Its attacks grow faster and stronger', 'boss'); break;
         case 'bossDefeated': hud.banner('VICTORY', `${e.name} has fallen!`); break;
+        case 'mvp': hud.banner('MVP!', `${e.killer} is the MVP of ${e.name} · +${e.exp} EXP${e.items.length ? ` · ${e.items.map((i) => this.world!.data.items.get(i)?.name).join(', ')}` : ''}`); break;
         case 'mapChanged':
           hud.resetMinimap();
           hud.banner(this.world.map.def.name, this.world.map.def.levelRange ? `Lv.${this.world.map.def.levelRange.join('–')}` : this.world.map.def.region);

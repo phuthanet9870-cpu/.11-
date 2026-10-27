@@ -105,6 +105,10 @@ export function validateGameData(d: GameData): string[] {
   }
   for (const t of d.drops.values()) for (const e of t.entries) need(d.items.has(e.itemId), `drops ${t.id}: item ${e.itemId}`);
   for (const sh of d.shops.values()) for (const i of sh.items) need(d.items.has(i), `shop ${sh.id}: item ${i}`);
+  for (const it of d.items.values()) if (it.type === 'card') {
+    need(!!it.card && d.monsters.has(it.card.monsterId), `card ${it.id}: monster`);
+    need(!!it.card && ['weapon', 'armor', 'headgear', 'shield', 'garment', 'boots', 'accessory'].includes(it.card.equip), `card ${it.id}: slot`);
+  }
   for (const n of d.npcs.values()) for (const s of n.services) {
     if (s.type === 'shop') need(d.shops.has(s.shopId), `npc ${n.id}: shop ${s.shopId}`);
     if (s.type === 'jobChange') for (const c of s.classIds) need(d.classes.has(c), `npc ${n.id}: class ${c}`);

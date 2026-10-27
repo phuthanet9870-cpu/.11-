@@ -60,3 +60,27 @@ describe('refinement', () => {
     expect(computeDerivedStats(data, c).patk).toBeGreaterThan(before);
   });
 });
+
+describe('Ragnarok-style character rules', () => {
+  it('stat raise cost grows every 10 points: floor((x-1)/10)+2', async () => {
+    const { statRaiseCost } = await import('../../src/core/formulas');
+    const { allocateStat } = await import('../../src/core/character');
+    const ro = { ...data, balance: { ...data.balance, levels: { ...data.balance.levels, statCost: { ...data.balance.levels.statCost, mode: 'ro' } } } } as typeof data;
+    expect([1, 9, 10, 11, 20, 21, 50, 98].map((v) => statRaiseCost(ro, v))).toEqual([2, 2, 2, 3, 3, 4, 6, 11]);
+    expect(statRaiseCost(data, 50)).toBe(1); // default: flat
+    const c = newChar(); c.stats.str = 10; c.statPoints = 4;
+    expect(allocateStat(ro, c, 'str', 2).ok).toBe(false); // 10→11 costs 2, 11→12 costs 3
+    expect(allocateStat(ro, c, 'str', 1).ok).toBe(true);
+    expect(c.statPoints).toBe(2);
+  });
+
+  it('at 90% weight the player cannot attack or use skills', async () => {
+    const { newWorld } = await import('../helpers/fixtures');
+    const w = newWorld();
+    w.char.skills.first_aid = 1;
+    expect(w.canUseSkill('first_aid').ok).toBe(true);
+    addItem(data, w.char, 'red_potion', Math.ceil((w.weightLimit * 0.9) / 7), { ignoreWeight: true } as never);
+    expect(w.majorOverweight).toBe(true);
+    expect(w.canUseSkill('first_aid').ok).toBe(false);
+  });
+});

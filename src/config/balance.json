@@ -32,6 +32,12 @@
     "advancedJob": {
       "baseLevel": 50,
       "jobLevel": 40
+    },
+    "statCost": {
+      "$comment": "'flat' (default) = 1 point per stat. 'ro' = Ragnarok rule floor((x-1)/10)+2. Measured with the bots: 'ro' drops first-try Grukk wins to Knight 2/6, Ranger 0/6, Mage 3/6, because ATK/DEF formulas and monsters are tuned for flat costs. Enable only together with a rebalance.",
+      "mode": "flat",
+      "every": 10,
+      "base": 2
     }
   },
   "stats": {
@@ -55,7 +61,7 @@
     "fleeLuk": 0.2,
     "critBase": 1,
     "critLuk": 0.3,
-    "critDmgBase": 150,
+    "critDmgBase": 140,
     "aspdAgiPct": 0.6,
     "aspdDexPct": 0.1,
     "minAttackIntervalMs": 280,
@@ -69,7 +75,10 @@
     "weightBase": 2000,
     "weightStr": 30,
     "overweightRegenStopPct": 70,
-    "outOfCombatRegenMul": 3
+    "outOfCombatRegenMul": 3,
+    "perfectDodgeBase": 1,
+    "perfectDodgeLukDiv": 10,
+    "overweightActionStopPct": 90
   },
   "combat": {
     "hitChanceBase": 80,
@@ -98,7 +107,50 @@
     "playerRespawnHpPct": 0.5,
     "deathSlowmoMs": 1500,
     "projectileSpeed": 520,
-    "assistMax": 2
+    "assistMax": 2,
+    "sizeModifiers": {
+      "$comment": "% damage by weapon type vs target size (Ragnarok-style table).",
+      "unarmed": {
+        "small": 100,
+        "medium": 100,
+        "large": 100
+      },
+      "dagger": {
+        "small": 100,
+        "medium": 75,
+        "large": 50
+      },
+      "sword": {
+        "small": 75,
+        "medium": 100,
+        "large": 75
+      },
+      "spear": {
+        "small": 75,
+        "medium": 75,
+        "large": 100
+      },
+      "club": {
+        "small": 75,
+        "medium": 100,
+        "large": 100
+      },
+      "bow": {
+        "small": 100,
+        "medium": 100,
+        "large": 75
+      },
+      "staff": {
+        "small": 100,
+        "medium": 100,
+        "large": 100
+      },
+      "wand": {
+        "small": 100,
+        "medium": 100,
+        "large": 100
+      }
+    }
   },
   "economy": {
     "sellPriceRatio": 0.5,
@@ -113,5 +165,9 @@
   },
   "save": {
     "autosaveIntervalMs": 30000
+  },
+  "drops": {
+    "$comment": "Card drop chance per kill (Ragnarok: 0.01%).",
+    "cardChance": 0.0001
   }
 }

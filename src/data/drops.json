@@ -21,6 +21,11 @@
    {
     "itemId": "leaf_cap",
     "chance": 0.004
+   },
+   {
+    "itemId": "card_leaf_slime",
+    "chance": 0.0001,
+    "card": true
    }
   ]
  },
@@ -46,6 +51,11 @@
    {
     "itemId": "clover_charm",
     "chance": 0.003
+   },
+   {
+    "itemId": "card_horn_rabbit",
+    "chance": 0.0001,
+    "card": true
    }
   ]
  },
@@ -71,6 +81,11 @@
    {
     "itemId": "sandals",
     "chance": 0.01
+   },
+   {
+    "itemId": "card_mushling",
+    "chance": 0.0001,
+    "card": true
    }
   ]
  },
@@ -96,6 +111,11 @@
    {
     "itemId": "swift_boots",
     "chance": 0.002
+   },
+   {
+    "itemId": "card_buzz_wasp",
+    "chance": 0.0001,
+    "card": true
    }
   ]
  },
@@ -125,6 +145,11 @@
    {
     "itemId": "astral_shard",
     "chance": 0.01
+   },
+   {
+    "itemId": "card_forest_goblin",
+    "chance": 0.0001,
+    "card": true
    }
   ]
  },
@@ -150,6 +175,11 @@
    {
     "itemId": "sapphire_pendant",
     "chance": 0.004
+   },
+   {
+    "itemId": "card_venom_spore",
+    "chance": 0.0001,
+    "card": true
    }
   ]
  },
@@ -175,6 +205,11 @@
    {
     "itemId": "astral_shard",
     "chance": 0.015
+   },
+   {
+    "itemId": "card_thorn_wolf",
+    "chance": 0.0001,
+    "card": true
    }
   ]
  },
@@ -204,6 +239,11 @@
    {
     "itemId": "astral_shard",
     "chance": 0.02
+   },
+   {
+    "itemId": "card_bone_soldier",
+    "chance": 0.0001,
+    "card": true
    }
   ]
  },
@@ -249,6 +289,11 @@
    {
     "itemId": "wolfhide_cloak",
     "chance": 0.2
+   },
+   {
+    "itemId": "card_grukk_thornking",
+    "chance": 0.0001,
+    "card": true
    }
   ]
  },
@@ -274,6 +319,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0072
+   },
+   {
+    "itemId": "card_dusk_bat",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -300,6 +350,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0064
+   },
+   {
+    "itemId": "card_clover_slime",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -326,6 +381,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0088
+   },
+   {
+    "itemId": "card_plains_wolf",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -352,6 +412,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.01
+   },
+   {
+    "itemId": "card_pebble_golem",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -378,6 +443,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0108
+   },
+   {
+    "itemId": "card_road_goblin",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -404,6 +474,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.012400000000000001
+   },
+   {
+    "itemId": "card_crypt_bat",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -430,6 +505,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.014
+   },
+   {
+    "itemId": "card_wailing_spirit",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -456,6 +536,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0148
+   },
+   {
+    "itemId": "card_grave_soldier",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -482,6 +567,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.011200000000000002
+   },
+   {
+    "itemId": "card_mist_spore",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -508,6 +598,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.012400000000000001
+   },
+   {
+    "itemId": "card_pine_goblin",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -534,6 +629,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.013600000000000001
+   },
+   {
+    "itemId": "card_elder_mushling",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -560,6 +660,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0152
+   },
+   {
+    "itemId": "card_shadow_wolf",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -586,6 +691,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.014400000000000001
+   },
+   {
+    "itemId": "card_bramble_hornet",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -612,6 +722,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0148
+   },
+   {
+    "itemId": "card_cave_bat",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -638,6 +753,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0164
+   },
+   {
+    "itemId": "card_moss_golem",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -664,6 +784,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0172
+   },
+   {
+    "itemId": "card_lantern_ghost",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -690,6 +815,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.012400000000000001
+   },
+   {
+    "itemId": "card_crystal_slime",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -716,6 +846,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0132
+   },
+   {
+    "itemId": "card_moon_hare",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -742,6 +877,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0148
+   },
+   {
+    "itemId": "card_arcane_wisp",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -768,6 +908,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0176
+   },
+   {
+    "itemId": "card_animated_armor",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -794,6 +939,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.019200000000000002
+   },
+   {
+    "itemId": "card_rune_golem",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -820,6 +970,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0184
+   },
+   {
+    "itemId": "card_mana_wisp",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -846,6 +1001,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.014
+   },
+   {
+    "itemId": "card_dune_slime",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -872,6 +1032,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0152
+   },
+   {
+    "itemId": "card_sand_scorpion",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -898,6 +1063,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0164
+   },
+   {
+    "itemId": "card_desert_wolf",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -924,6 +1094,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.016800000000000002
+   },
+   {
+    "itemId": "card_oasis_crab",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -950,6 +1125,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.018000000000000002
+   },
+   {
+    "itemId": "card_mirage_wisp",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -976,6 +1156,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.019200000000000002
+   },
+   {
+    "itemId": "card_giant_scorpion",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1002,6 +1187,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.02
+   },
+   {
+    "itemId": "card_tomb_mummy",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1028,6 +1218,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.020800000000000003
+   },
+   {
+    "itemId": "card_gilded_scarab",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1054,6 +1249,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0196
+   },
+   {
+    "itemId": "card_tomb_bat",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1080,6 +1280,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0116
+   },
+   {
+    "itemId": "card_shore_crab",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1106,6 +1311,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.012400000000000001
+   },
+   {
+    "itemId": "card_sea_slime",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1132,6 +1342,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.013600000000000001
+   },
+   {
+    "itemId": "card_reef_gull",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1158,6 +1373,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.016
+   },
+   {
+    "itemId": "card_grotto_crab",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1184,6 +1404,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0164
+   },
+   {
+    "itemId": "card_kelp_spore",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1210,6 +1435,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.018000000000000002
+   },
+   {
+    "itemId": "card_drowned_spirit",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1236,6 +1466,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0204
+   },
+   {
+    "itemId": "card_frost_slime",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1262,6 +1497,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0212
+   },
+   {
+    "itemId": "card_snow_wolf",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1288,6 +1528,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0228
+   },
+   {
+    "itemId": "card_ice_golem",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1314,6 +1559,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0236
+   },
+   {
+    "itemId": "card_ice_bat",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1340,6 +1590,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0256
+   },
+   {
+    "itemId": "card_frost_wraith",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1366,6 +1621,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0268
+   },
+   {
+    "itemId": "card_glacier_golem",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1392,6 +1652,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0264
+   },
+   {
+    "itemId": "card_ember_slime",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1418,6 +1683,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0276
+   },
+   {
+    "itemId": "card_ash_scorpion",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1444,6 +1714,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0292
+   },
+   {
+    "itemId": "card_fire_drake",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1470,6 +1745,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.030000000000000002
+   },
+   {
+    "itemId": "card_magma_golem",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1496,6 +1776,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.031200000000000002
+   },
+   {
+    "itemId": "card_flame_drake",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1522,6 +1807,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.028
+   },
+   {
+    "itemId": "card_bog_slime",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1548,6 +1838,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0292
+   },
+   {
+    "itemId": "card_marsh_spore",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1574,6 +1869,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0304
+   },
+   {
+    "itemId": "card_mire_crab",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1600,6 +1900,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0308
+   },
+   {
+    "itemId": "card_raven_bat",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1626,6 +1931,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0316
+   },
+   {
+    "itemId": "card_cursed_knight",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1652,6 +1962,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0328
+   },
+   {
+    "itemId": "card_banshee",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1678,6 +1993,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.0344
+   },
+   {
+    "itemId": "card_grave_knight",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1704,6 +2024,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.03560000000000001
+   },
+   {
+    "itemId": "card_lich_spirit",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1730,6 +2055,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.5
+   },
+   {
+    "itemId": "card_bone_warden_boss",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1756,6 +2086,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.5
+   },
+   {
+    "itemId": "card_valdris_boss",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1782,6 +2117,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.5
+   },
+   {
+    "itemId": "card_sun_king_boss",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1808,6 +2148,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.5
+   },
+   {
+    "itemId": "card_pyrewyrm_boss",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true
@@ -1834,6 +2179,11 @@
    {
     "itemId": "moonstone_ore",
     "chance": 0.5
+   },
+   {
+    "itemId": "card_dread_lord_boss",
+    "chance": 0.0001,
+    "card": true
    }
   ],
   "generated": true

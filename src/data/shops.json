@@ -8,6 +8,7 @@
    "blue_potion",
    "green_potion",
    "wing_of_return",
+   "wandering_feather",
    "swiftness_tonic"
   ]
  },
@@ -62,6 +63,7 @@
    "blue_potion",
    "green_potion",
    "wing_of_return",
+   "wandering_feather",
    "swiftness_tonic"
   ],
   "generated": true
@@ -91,7 +93,8 @@
    "orange_potion",
    "yellow_potion",
    "green_potion",
-   "wing_of_return"
+   "wing_of_return",
+   "wandering_feather"
   ],
   "generated": true
  },
@@ -117,7 +120,8 @@
    "orange_potion",
    "yellow_potion",
    "blue_potion",
-   "wing_of_return"
+   "wing_of_return",
+   "wandering_feather"
   ],
   "generated": true
  },
@@ -143,6 +147,7 @@
    "blue_potion",
    "green_potion",
    "wing_of_return",
+   "wandering_feather",
    "swiftness_tonic"
   ],
   "generated": true
@@ -171,7 +176,8 @@
    "yellow_potion",
    "blue_potion",
    "green_potion",
-   "wing_of_return"
+   "wing_of_return",
+   "wandering_feather"
   ],
   "generated": true
  },
@@ -197,7 +203,8 @@
    "yellow_potion",
    "blue_potion",
    "green_potion",
-   "wing_of_return"
+   "wing_of_return",
+   "wandering_feather"
   ],
   "generated": true
  },

@@ -8,7 +8,7 @@ import { lookForCharacter, SpritePreview } from './screens';
 import { getDragData, setDragData } from './hud';
 import { classLineage, skillCheck } from '../core/character';
 import { canEquip, countItem, filterInventory, inventoryWeight, sellPrice } from '../core/inventory';
-import { expToNextBase, expToNextJob } from '../core/formulas';
+import { canRaiseStat, expToNextBase, expToNextJob, statRaiseCost } from '../core/formulas';
 import {
   activeQuests, isComplete, objectiveTarget, questsOfferedBy, questsToTurnIn,
 } from '../core/quests';
@@ -18,6 +18,7 @@ import { DEFAULT_KEYBINDS } from '../core/save';
 import { audio } from '../game/audio/audio';
 import * as gm from '../core/gm';
 import { MAX_REFINE, refineInfo } from '../core/refine';
+import { compoundTargets, itemDisplayName } from '../core/cards';
 
 export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin';
 
@@ -37,6 +38,10 @@ export function modsText(m?: StatModifiers): string[] {
     if (v == null) continue;
     if (k === 'elementDamagePct' || k === 'elementResistPct') {
       for (const [el, n] of Object.entries(v as Record<string, number>)) out.push(`${el} ${k === 'elementDamagePct' ? 'damage' : 'resist'} ${n > 0 ? '+' : ''}${n}%`);
+    } else if (k === 'raceDamagePct' || k === 'sizeDamagePct') {
+      for (const [r, n] of Object.entries(v as Record<string, number>)) out.push(`+${n}% damage vs ${r}${k === 'sizeDamagePct' ? '-size' : ''} monsters`);
+    } else if (k === 'raceResistPct') {
+      for (const [r, n] of Object.entries(v as Record<string, number>)) out.push(`-${n}% damage from ${r} monsters`);
     } else out.push(`${MOD_LABEL[k] ?? k} ${(v as number) > 0 ? '+' : ''}${v}`);
   }
   return out;
@@ -148,12 +153,21 @@ export class WindowManager {
 
   itemTooltip(def: ItemDef, inst?: ItemInstance): HTMLElement[] {
     const w = this.app.world!;
-    const out: HTMLElement[] = [h('div', { class: 'tn', style: { color: RARITY_COLOR[def.rarity] } }, `${def.name}${inst?.refine ? ` +${inst.refine}` : ''}`)];
+    const out: HTMLElement[] = [h('div', { class: 'tn', style: { color: RARITY_COLOR[def.rarity] } }, itemDisplayName(def, inst))];
     const typeLine = def.type === 'equipment'
       ? `${def.rarity} ${def.weaponType ?? def.slot}${def.twoHanded ? ' (two-handed)' : ''}${def.element ? ` · ${def.element}` : ''}`
       : `${def.rarity} ${def.type}`;
     out.push(h('div', { class: 'tt' }, typeLine));
     for (const line of modsText(def.mods)) out.push(h('div', { class: 'good' }, line));
+    if (def.card) {
+      out.push(h('div', { class: 'tt' }, `Compounds into: ${def.card.equip}`));
+      for (const line of modsText(def.card.mods)) out.push(h('div', { class: 'good' }, line));
+    }
+    for (const cardId of inst?.cards ?? []) {
+      const cd = w.data.items.get(cardId);
+      if (cd?.card) out.push(h('div', { style: 'color:#c9a6ff' }, `◆ ${cd.name}: ${modsText(cd.card.mods).join(', ')}`));
+    }
+    if (def.cardSlots && !inst) out.push(h('div', { class: 'muted' }, `${def.cardSlots} card slot${def.cardSlots > 1 ? 's' : ''}`));
     if (def.attackRange && def.slot === 'weapon') out.push(h('div', {}, `Range ${def.attackRange} · ${def.attackKind}`));
     if (def.use) for (const u of def.use) {
       if (u.type === 'heal') out.push(h('div', { class: 'good' }, `Restores ${[u.hp ? `${u.hp} HP` : '', u.mp ? `${u.mp} MP` : ''].filter(Boolean).join(' & ')}`));
@@ -169,11 +183,28 @@ export class WindowManager {
     return out;
   }
 
+  /** Pick an unequipped item with a free slot of the right type, confirm, compound (permanent). */
+  private compoundDialog(card: ItemInstance) {
+    const w = this.app.world!, d = w.data, cardDef = d.items.get(card.itemId)!;
+    const targets = compoundTargets(d, w.char, card.itemId);
+    const rows = targets.map((t) => {
+      const def = d.items.get(t.itemId)!;
+      return h('button', { class: 'btn small', style: 'display:block;width:100%;margin:3px 0;text-align:left', onclick: () => {
+        this.closeModal();
+        this.confirmAction('Compound card', `Compound ${cardDef.name} into ${itemDisplayName(def, t)}? This is permanent: the card cannot be removed, and it is lost if the item is ever destroyed.`, 'Compound', () => w.compound(card.uid, t.uid));
+      } }, itemDisplayName(def, t));
+    });
+    this.modal(`Compound ${cardDef.name}`, [
+      h('p', {}, `${modsText(cardDef.card!.mods).join(', ')} — fits ${cardDef.card!.equip} equipment.`),
+      ...(rows.length ? rows : [h('p', { class: 'muted' }, `No unequipped ${cardDef.card!.equip} with a free card slot in your bag. Unequip the item first.`)]),
+    ], [['Close', () => this.closeModal()]], true);
+  }
+
   // ---------------------------------------------------------------- inventory
   private renderInventory() {
     const w = this.app.world!;
     const body = this.wins.get('inventory')!.body;
-    const filters: [typeof this.invFilter, string][] = [['all', 'All'], ['equipment', 'Equip'], ['consumable', 'Use'], ['material', 'Material'], ['quest', 'Quest']];
+    const filters: [typeof this.invFilter, string][] = [['all', 'All'], ['equipment', 'Equip'], ['consumable', 'Use'], ['material', 'Material'], ['card', 'Card'], ['quest', 'Quest']];
     const items = filterInventory(w.data, w.char, this.invFilter);
     const slots = w.data.balance.economy.inventorySlots;
     const grid = h('div', { class: 'inv-grid' });
@@ -195,6 +226,7 @@ export class WindowManager {
           if (def.type === 'consumable') actions.push(['Use', () => this.useOrEquip(inst)]);
           if (def.type === 'equipment') actions.push(['Equip', () => this.useOrEquip(inst)]);
           if (def.type === 'consumable') actions.push(['Add to hotbar', () => this.app.assignHotbar(-1, { type: 'item', id: def.id })]);
+          if (def.card) actions.push(['Compound into…', () => this.compoundDialog(inst)]);
           if (this.shopId) actions.push(['Sell', () => this.sellPrompt(inst)]);
           if (this.isOpen('storage')) actions.push(['Store', () => this.qtyPrompt(inst, 'Store how many?', (n) => w.deposit(inst.uid, n))]);
           actions.push([inst.locked ? 'Unlock' : 'Lock', () => w.lock(inst.uid)]);
@@ -325,7 +357,16 @@ export class WindowManager {
       return h('tr', {},
         h('td', {}, k.toUpperCase()),
         h('td', { class: 'v' }, String(c.stats[k]), bonus ? h('span', { class: bonus > 0 ? 'good' : 'bad' }, ` ${bonus > 0 ? '+' : ''}${bonus}`) : ''),
-        h('td', {}, h('button', { class: 'btn small', id: `alloc-${k}`, disabled: c.statPoints <= 0, onclick: (e: MouseEvent) => w.allocate(k, e.shiftKey ? Math.min(10, c.statPoints) : 1) }, '+')));
+        h('td', {}, h('button', {
+          class: 'btn small', id: `alloc-${k}`, title: `Costs ${statRaiseCost(w.data, c.stats[k])} point(s). Shift-click: up to 10.`, disabled: !canRaiseStat(w.data, c, k),
+          onclick: (e: MouseEvent) => {
+            // Raise as many times as affordable (Ragnarok cost grows every 10 points).
+            let n = 0, left = c.statPoints;
+            while (n < (e.shiftKey ? 10 : 1) && left >= statRaiseCost(w.data, c.stats[k] + n)) { left -= statRaiseCost(w.data, c.stats[k] + n); n++; }
+            if (n) w.allocate(k, n);
+          },
+        }, '+')),
+        h('td', { class: 'muted', style: 'font-size:10px' }, `${statRaiseCost(w.data, c.stats[k])}pt`));
     };
     const d = (label: string, v: string | number) => h('tr', {}, h('td', {}, label), h('td', { class: 'v' }, String(v)));
     setChildren(body,

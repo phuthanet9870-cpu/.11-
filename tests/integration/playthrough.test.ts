@@ -65,6 +65,22 @@ describe('playthrough (Knight)', () => {
     }
     bot.spendPoints();
 
+    // Ragnarok size rule: swords hit Large targets for 75%, spears for 100%, so take a spear
+    // to the Large boss and refine it within the safe range.
+    // Save up first: spear 1700 + a shield + ~25 potions.
+    bot.grind(['forest_goblin', 'thorn_wolf', 'venom_spore'], () => c.luma >= 5000 || c.baseLevel >= 24, 4 * 3_600_000);
+    if (c.luma >= 1700) {
+      bot.buy('aurelion_smith', 'aurelion_arms', 'knight_spear', 1);
+      const spear = c.inventory.find((i) => i.itemId === 'knight_spear');
+      if (spear && w.equip(spear.uid).ok) {
+        while ((c.equipment.weapon!.refine ?? 0) < 4 && w.refine(c.equipment.weapon!.uid).ok) { /* safe range, tutorial ores */ }
+      }
+    }
+    for (const [item, price] of [['iron_shield', 900], ['chain_mail', 1400]] as const) {
+      if (c.luma >= price + 1600) { bot.buy('aurelion_smith', 'aurelion_arms', item, 1); const it = c.inventory.find((i) => i.itemId === item); if (it) w.equip(it.uid); }
+    }
+    bot.buy('aurelion_merchant', 'aurelion_tools', 'orange_potion', Math.min(30, Math.floor((c.luma * 0.8) / 80)));
+
     // --- Field boss: Grukk the Thornking in the Whispering Forest
     bot.travelTo('whispering_forest');
     const findBoss = () => [...w.monsters.values()].find((m) => m.boss && !m.dead);

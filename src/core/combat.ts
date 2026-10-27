@@ -18,6 +18,14 @@ export interface CombatProfile {
   element: Element;
   elementDamagePct: Partial<Record<Element, number>>;
   elementResistPct: Partial<Record<Element, number>>;
+  /** Race / size of this combatant (players are demihuman, medium). */
+  race: string;
+  size: string;
+  raceDamagePct: Partial<Record<string, number>>;
+  sizeDamagePct: Partial<Record<string, number>>;
+  raceResistPct: Partial<Record<string, number>>;
+  perfectDodge: number;
+  weaponType: string;
 }
 
 export interface AttackOptions {
@@ -56,6 +64,8 @@ export function resolveAttack(
   const c = data.balance.combat;
   const isPhys = opts.kind === 'physical';
   if (isPhys && !opts.alwaysHit) {
+    // Perfect dodge is rolled before HIT/FLEE (Ragnarok rule) and ignores the attacker's HIT.
+    if (defender.perfectDodge > 0 && rng.chance(defender.perfectDodge / 100)) return { hit: false, crit: false, damage: 0, elementMul: 1 };
     if (!rng.chance(hitChance(data, attacker.hit, defender.flee))) {
       return { hit: false, crit: false, damage: 0, elementMul: 1 };
     }
@@ -73,6 +83,11 @@ export function resolveAttack(
   dmg *= elementMul;
   dmg *= 1 + (attacker.elementDamagePct[opts.element] ?? 0) / 100;
   dmg *= 1 - Math.min(80, defender.elementResistPct[opts.element] ?? 0) / 100;
+  // Weapon-vs-size table for physical hits, then race/size bonuses and race resistance (cards).
+  const sizeTable = c.sizeModifiers as unknown as Record<string, Record<string, number> | undefined>;
+  if (isPhys) dmg *= (sizeTable[attacker.weaponType]?.[defender.size] ?? 100) / 100;
+  dmg *= 1 + ((attacker.raceDamagePct[defender.race] ?? 0) + (attacker.sizeDamagePct[defender.size] ?? 0)) / 100;
+  dmg *= 1 - Math.min(80, defender.raceResistPct[attacker.race] ?? 0) / 100;
 
   const damage = elementMul <= 0 ? 0 : Math.max(1, Math.round(dmg));
   return { hit: true, crit, damage, elementMul };
@@ -83,6 +98,8 @@ export function profileFromDerived(level: number, s: DerivedStats, bodyElement: 
     level, patk: s.patk, matk: s.matk, pdef: s.pdef, mdef: s.mdef, hit: s.hit, flee: s.flee,
     crit: s.crit, critDmg: s.critDmg, element: bodyElement,
     elementDamagePct: s.elementDamagePct, elementResistPct: s.elementResistPct,
+    race: 'demihuman', size: 'medium', raceDamagePct: s.raceDamagePct, sizeDamagePct: s.sizeDamagePct, raceResistPct: s.raceResistPct,
+    perfectDodge: s.perfectDodge, weaponType: s.weaponType,
   };
 }
 
@@ -101,6 +118,7 @@ export function profileFromMonster(data: GameData, m: MonsterDef, atkMul = 1): C
     element: m.element,
     elementDamagePct: {},
     elementResistPct: {},
+    race: m.race, size: m.size, raceDamagePct: {}, sizeDamagePct: {}, raceResistPct: {}, perfectDodge: 0, weaponType: 'monster',
   };
 }
 

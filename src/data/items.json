@@ -412,7 +412,8 @@
   "icon": {
    "shape": "dagger",
    "color": "#c8ccd8"
-  }
+  },
+  "cardSlots": 3
  },
  {
   "id": "oak_club",
@@ -436,7 +437,8 @@
   "icon": {
    "shape": "club",
    "color": "#8b5a2b"
-  }
+  },
+  "cardSlots": 2
  },
  {
   "id": "iron_sword",
@@ -462,7 +464,8 @@
   "icon": {
    "shape": "sword",
    "color": "#c8ccd8"
-  }
+  },
+  "cardSlots": 2
  },
  {
   "id": "steel_sword",
@@ -490,7 +493,8 @@
    "shape": "sword",
    "color": "#e0e6f2",
    "accent": "#4a6fa5"
-  }
+  },
+  "cardSlots": 2
  },
  {
   "id": "knight_spear",
@@ -519,7 +523,8 @@
    "shape": "spear",
    "color": "#c8ccd8",
    "accent": "#b33a3a"
-  }
+  },
+  "cardSlots": 2
  },
  {
   "id": "thornbane_blade",
@@ -549,7 +554,8 @@
    "shape": "sword",
    "color": "#7fd65a",
    "accent": "#f2d23a"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "short_bow",
@@ -577,7 +583,8 @@
   "icon": {
    "shape": "bow",
    "color": "#9a6a3a"
-  }
+  },
+  "cardSlots": 2
  },
  {
   "id": "hunter_bow",
@@ -606,7 +613,8 @@
    "shape": "bow",
    "color": "#6a4a2a",
    "accent": "#d9c27a"
-  }
+  },
+  "cardSlots": 2
  },
  {
   "id": "thornwood_longbow",
@@ -637,7 +645,8 @@
    "shape": "bow",
    "color": "#4f8f3a",
    "accent": "#f2d23a"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "apprentice_wand",
@@ -667,7 +676,8 @@
    "shape": "wand",
    "color": "#b48a5a",
    "accent": "#7fd6ff"
-  }
+  },
+  "cardSlots": 2
  },
  {
   "id": "oak_staff",
@@ -699,7 +709,8 @@
    "shape": "staff",
    "color": "#8b5a2b",
    "accent": "#9a7aff"
-  }
+  },
+  "cardSlots": 2
  },
  {
   "id": "thornheart_staff",
@@ -731,7 +742,8 @@
    "shape": "staff",
    "color": "#4f8f3a",
    "accent": "#f2d23a"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "cotton_shirt",
@@ -751,7 +763,8 @@
   "icon": {
    "shape": "shirt",
    "color": "#e8dcc0"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "leather_jacket",
@@ -772,7 +785,8 @@
   "icon": {
    "shape": "shirt",
    "color": "#8b5a2b"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "chain_mail",
@@ -796,7 +810,8 @@
   "icon": {
    "shape": "armor",
    "color": "#aab4c4"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "hunter_vest",
@@ -820,7 +835,8 @@
   "icon": {
    "shape": "shirt",
    "color": "#3f7a45"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "apprentice_robe",
@@ -845,7 +861,8 @@
   "icon": {
    "shape": "robe",
    "color": "#5b3d8f"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "bandana",
@@ -865,7 +882,8 @@
   "icon": {
    "shape": "hat",
    "color": "#c83a3a"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "leaf_cap",
@@ -887,7 +905,8 @@
   "icon": {
    "shape": "hat",
    "color": "#6fbf4a"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "iron_helm",
@@ -910,7 +929,8 @@
   "icon": {
    "shape": "helm",
    "color": "#aab4c4"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "goblin_mask",
@@ -932,7 +952,8 @@
   "icon": {
    "shape": "mask",
    "color": "#6f9a3a"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "wooden_buckler",
@@ -952,7 +973,8 @@
   "icon": {
    "shape": "shield",
    "color": "#9a6a3a"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "iron_shield",
@@ -977,7 +999,8 @@
    "shape": "shield",
    "color": "#aab4c4",
    "accent": "#4a6fa5"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "travel_cape",
@@ -998,7 +1021,8 @@
   "icon": {
    "shape": "cape",
    "color": "#6a4a8a"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "wolfhide_cloak",
@@ -1022,7 +1046,8 @@
   "icon": {
    "shape": "cape",
    "color": "#7a6a52"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "sandals",
@@ -1042,7 +1067,8 @@
   "icon": {
    "shape": "boots",
    "color": "#b48a5a"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "leather_boots",
@@ -1063,7 +1089,8 @@
   "icon": {
    "shape": "boots",
    "color": "#6a4a2a"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "swift_boots",
@@ -1085,7 +1112,8 @@
   "icon": {
    "shape": "boots",
    "color": "#7ad0e0"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "copper_ring",
@@ -1105,7 +1133,8 @@
   "icon": {
    "shape": "ring",
    "color": "#d88a4a"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "clover_charm",
@@ -1126,7 +1155,8 @@
   "icon": {
    "shape": "amulet",
    "color": "#4fc44a"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "sapphire_pendant",
@@ -1147,7 +1177,8 @@
   "icon": {
    "shape": "amulet",
    "color": "#3a7be0"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "bone_earring",
@@ -1171,7 +1202,8 @@
   "icon": {
    "shape": "ring",
    "color": "#e9e4d4"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "falcon_pendant",
@@ -1193,7 +1225,8 @@
   "icon": {
    "shape": "amulet",
    "color": "#d8b46a"
-  }
+  },
+  "cardSlots": 1
  },
  {
   "id": "starsteel_ore",
@@ -1226,6 +1259,76 @@
    "color": "#b8a8c8",
    "accent": "#fff4d8"
   }
+ },
+ {
+  "id": "wandering_feather",
+  "name": "Wandering Feather",
+  "type": "consumable",
+  "rarity": "common",
+  "description": "A feather that carries you to a random spot on the current map.",
+  "weight": 5,
+  "price": 60,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "wing",
+   "color": "#e8f0ff",
+   "accent": "#9ad8ff"
+  },
+  "use": [
+   {
+    "type": "randomTeleport"
+   }
+  ],
+  "cooldownMs": 800
+ },
+ {
+  "id": "elder_sap",
+  "name": "Elder Sap",
+  "type": "consumable",
+  "rarity": "epic",
+  "description": "Sap from an ancient world-tree. Fully restores HP and MP.",
+  "weight": 30,
+  "price": 2500,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "potion",
+   "color": "#7ad06a",
+   "accent": "#fff4b0"
+  },
+  "use": [
+   {
+    "type": "heal",
+    "hpPct": 100,
+    "mpPct": 100
+   }
+  ],
+  "cooldownMs": 1000
+ },
+ {
+  "id": "elder_seed",
+  "name": "Elder Seed",
+  "type": "consumable",
+  "rarity": "rare",
+  "description": "A world-tree seed. Restores half of HP and MP.",
+  "weight": 30,
+  "price": 1500,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "apple",
+   "color": "#a8d06a",
+   "accent": "#fff4b0"
+  },
+  "use": [
+   {
+    "type": "heal",
+    "hpPct": 50,
+    "mpPct": 50
+   }
+  ],
+  "cooldownMs": 1000
  },
  {
   "id": "dusk_bat_wing",
@@ -2261,6 +2364,1778 @@
    "shape": "bone",
    "color": "#3a3a4a",
    "accent": "#c83a4a"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_leaf_slime",
+  "name": "Leaf Slime Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Leaf Slime. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#7ccf5a",
+   "accent": "#e8ffd0"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "plant": 25
+    }
+   },
+   "monsterId": "leaf_slime"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_horn_rabbit",
+  "name": "Horn Rabbit Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Horn Rabbit. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#f2ead8",
+   "accent": "#efe2c0"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "vit": 1,
+    "maxHpPct": 10
+   },
+   "monsterId": "horn_rabbit"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_mushling",
+  "name": "Mushling Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Mushling. Compound it into footgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#d84a3a",
+   "accent": "#f2d2b0"
+  },
+  "card": {
+   "equip": "boots",
+   "mods": {
+    "maxMpPct": 10,
+    "mpRegen": 2
+   },
+   "monsterId": "mushling"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_buzz_wasp",
+  "name": "Buzz Wasp Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Buzz Wasp. Compound it into headgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#f2c12e",
+   "accent": "#d8f0ff"
+  },
+  "card": {
+   "equip": "headgear",
+   "mods": {
+    "dex": 1,
+    "hit": 5
+   },
+   "monsterId": "buzz_wasp"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_forest_goblin",
+  "name": "Forest Goblin Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Forest Goblin. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#6f9a3a",
+   "accent": "#c83a3a"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "raceDamagePct": {
+     "formless": 20
+    }
+   },
+   "monsterId": "forest_goblin"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_venom_spore",
+  "name": "Venom Spore Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Venom Spore. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#8a4fbf",
+   "accent": "#f2e0ff"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "sizeDamagePct": {
+     "small": 15
+    }
+   },
+   "monsterId": "venom_spore"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_thorn_wolf",
+  "name": "Thorn Wolf Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Thorn Wolf. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#7a6a52",
+   "accent": "#7fd65a"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "vit": 1,
+    "maxHpPct": 10
+   },
+   "monsterId": "thorn_wolf"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_bone_soldier",
+  "name": "Bone Soldier Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Bone Soldier. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#e9e4d4",
+   "accent": "#7fb0ff"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "elementResistPct": {
+     "undead": 20
+    }
+   },
+   "monsterId": "bone_soldier"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_grukk_thornking",
+  "name": "Grukk the Thornking Card",
+  "type": "card",
+  "rarity": "epic",
+  "description": "A card holding the essence of the Grukk the Thornking. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#557a2e",
+   "accent": "#f2d23a"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "maxHpPct": 15,
+    "pdef": 6
+   },
+   "monsterId": "grukk_thornking"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_dusk_bat",
+  "name": "Dusk Bat Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Dusk Bat. Compound it into footgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#5a4a6a",
+   "accent": "#ff5a5a"
+  },
+  "card": {
+   "equip": "boots",
+   "mods": {
+    "maxMpPct": 10,
+    "mpRegen": 2
+   },
+   "monsterId": "dusk_bat"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_clover_slime",
+  "name": "Clover Slime Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Clover Slime. Compound it into headgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#9ad86a",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "headgear",
+   "mods": {
+    "dex": 1,
+    "hit": 5
+   },
+   "monsterId": "clover_slime"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_plains_wolf",
+  "name": "Plains Wolf Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Plains Wolf. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#9a8a7a",
+   "accent": "#c8b89a"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "luk": 2
+   },
+   "monsterId": "plains_wolf"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_pebble_golem",
+  "name": "Pebble Golem Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Pebble Golem. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#a49a8a",
+   "accent": "#7fd6ff"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "maxHp": 80
+   },
+   "monsterId": "pebble_golem"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_road_goblin",
+  "name": "Road Goblin Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Road Goblin. Compound it into headgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#7a9a3a",
+   "accent": "#3a6ab8"
+  },
+  "card": {
+   "equip": "headgear",
+   "mods": {
+    "luk": 1,
+    "crit": 3
+   },
+   "monsterId": "road_goblin"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_crypt_bat",
+  "name": "Crypt Bat Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Crypt Bat. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#4a4a52",
+   "accent": "#a9e04a"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "undead": 25
+    }
+   },
+   "monsterId": "crypt_bat"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_wailing_spirit",
+  "name": "Wailing Spirit Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Wailing Spirit. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#c8d4e0",
+   "accent": "#7fd6ff"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "sizeDamagePct": {
+     "medium": 15
+    }
+   },
+   "monsterId": "wailing_spirit"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_grave_soldier",
+  "name": "Grave Soldier Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Grave Soldier. Compound it into garment with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#d8d2bc",
+   "accent": "#ff5a3a"
+  },
+  "card": {
+   "equip": "garment",
+   "mods": {
+    "elementResistPct": {
+     "undead": 20
+    },
+    "flee": 4
+   },
+   "monsterId": "grave_soldier"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_mist_spore",
+  "name": "Mist Spore Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Mist Spore. Compound it into headgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#5a8aaa",
+   "accent": "#e0f0ff"
+  },
+  "card": {
+   "equip": "headgear",
+   "mods": {
+    "int": 1,
+    "mdef": 3
+   },
+   "monsterId": "mist_spore"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_pine_goblin",
+  "name": "Pinewood Goblin Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Pinewood Goblin. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#5a8a3a",
+   "accent": "#c8a26b"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "hit": 10
+   },
+   "monsterId": "pine_goblin"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elder_mushling",
+  "name": "Elder Mushling Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Elder Mushling. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#8a4ab8",
+   "accent": "#e8d0b0"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "plant": 25
+    }
+   },
+   "monsterId": "elder_mushling"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_shadow_wolf",
+  "name": "Shadow Wolf Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Shadow Wolf. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#3a3a4a",
+   "accent": "#c83a4a"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "agi": 2
+   },
+   "monsterId": "shadow_wolf"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_bramble_hornet",
+  "name": "Bramble Hornet Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Bramble Hornet. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#c88a2e",
+   "accent": "#d8f0ff"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "luk": 2
+   },
+   "monsterId": "bramble_hornet"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_cave_bat",
+  "name": "Cave Bat Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Cave Bat. Compound it into headgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#6a5a4a",
+   "accent": "#ffd34d"
+  },
+  "card": {
+   "equip": "headgear",
+   "mods": {
+    "luk": 1,
+    "crit": 3
+   },
+   "monsterId": "cave_bat"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_moss_golem",
+  "name": "Moss Golem Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Moss Golem. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#6a7a5a",
+   "accent": "#a9e04a"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "maxHp": 160
+   },
+   "monsterId": "moss_golem"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_lantern_ghost",
+  "name": "Lantern Ghost Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Lantern Ghost. Compound it into garment with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#f2e8b0",
+   "accent": "#ffb03a"
+  },
+  "card": {
+   "equip": "garment",
+   "mods": {
+    "elementResistPct": {
+     "shadow": 20
+    },
+    "flee": 4
+   },
+   "monsterId": "lantern_ghost"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_crystal_slime",
+  "name": "Crystal Slime Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Crystal Slime. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#7ab8f0",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "maxHp": 160
+   },
+   "monsterId": "crystal_slime"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_moon_hare",
+  "name": "Moon Hare Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Moon Hare. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#d8d8f0",
+   "accent": "#c8a6ff"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "maxHp": 160
+   },
+   "monsterId": "moon_hare"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_arcane_wisp",
+  "name": "Arcane Wisp Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Arcane Wisp. Compound it into garment with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#b89af0",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "garment",
+   "mods": {
+    "elementResistPct": {
+     "shadow": 20
+    },
+    "flee": 4
+   },
+   "monsterId": "arcane_wisp"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_animated_armor",
+  "name": "Animated Armor Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Animated Armor. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#a8b0c0",
+   "accent": "#7fd6ff"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patk": 10,
+    "hit": 10
+   },
+   "monsterId": "animated_armor"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_rune_golem",
+  "name": "Rune Golem Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Rune Golem. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#6a5a9a",
+   "accent": "#d8c8ff"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "crit": 4
+   },
+   "monsterId": "rune_golem"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_mana_wisp",
+  "name": "Mana Wisp Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Mana Wisp. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#7ab8ff",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "vit": 1,
+    "maxHpPct": 10
+   },
+   "monsterId": "mana_wisp"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_dune_slime",
+  "name": "Dune Slime Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Dune Slime. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#e2c07a",
+   "accent": "#fff4d0"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "elementResistPct": {
+     "earth": 20
+    }
+   },
+   "monsterId": "dune_slime"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_sand_scorpion",
+  "name": "Sand Scorpion Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Sand Scorpion. Compound it into headgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#c8945a",
+   "accent": "#e8e0c0"
+  },
+  "card": {
+   "equip": "headgear",
+   "mods": {
+    "int": 1,
+    "mdef": 3
+   },
+   "monsterId": "sand_scorpion"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_desert_wolf",
+  "name": "Desert Wolf Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Desert Wolf. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#c8a46a",
+   "accent": "#fff0c0"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patk": 10,
+    "hit": 10
+   },
+   "monsterId": "desert_wolf"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_oasis_crab",
+  "name": "Oasis Crab Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Oasis Crab. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#3aa8a8",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patk": 10,
+    "hit": 10
+   },
+   "monsterId": "oasis_crab"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_mirage_wisp",
+  "name": "Mirage Wisp Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Mirage Wisp. Compound it into footgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#ffe08a",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "boots",
+   "mods": {
+    "maxMpPct": 10,
+    "mpRegen": 2
+   },
+   "monsterId": "mirage_wisp"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_giant_scorpion",
+  "name": "Giant Scorpion Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Giant Scorpion. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#8a3a2a",
+   "accent": "#ffd34d"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "insect": 25
+    }
+   },
+   "monsterId": "giant_scorpion"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_tomb_mummy",
+  "name": "Tomb Mummy Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Tomb Mummy. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#e8dcc0",
+   "accent": "#ffd34d"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "elementResistPct": {
+     "undead": 20
+    }
+   },
+   "monsterId": "tomb_mummy"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_gilded_scarab",
+  "name": "Gilded Scarab Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Gilded Scarab. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#d8b43a",
+   "accent": "#3ad8a8"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "crit": 4
+   },
+   "monsterId": "gilded_scarab"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_tomb_bat",
+  "name": "Tomb Bat Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Tomb Bat. Compound it into garment with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#8a7a5a",
+   "accent": "#ffd34d"
+  },
+  "card": {
+   "equip": "garment",
+   "mods": {
+    "elementResistPct": {
+     "shadow": 20
+    },
+    "flee": 4
+   },
+   "monsterId": "tomb_bat"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_shore_crab",
+  "name": "Shore Crab Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Shore Crab. Compound it into footgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#e05a3a",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "boots",
+   "mods": {
+    "agi": 1,
+    "moveSpeedPct": 5
+   },
+   "monsterId": "shore_crab"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_sea_slime",
+  "name": "Sea Slime Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Sea Slime. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#4ad0c8",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "crit": 4
+   },
+   "monsterId": "sea_slime"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_reef_gull",
+  "name": "Reef Gull Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Reef Gull. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#f2f2f2",
+   "accent": "#ffb03a"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patk": 10,
+    "hit": 10
+   },
+   "monsterId": "reef_gull"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_grotto_crab",
+  "name": "Grotto Crab Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Grotto Crab. Compound it into footgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#5a7ab8",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "boots",
+   "mods": {
+    "agi": 1,
+    "moveSpeedPct": 5
+   },
+   "monsterId": "grotto_crab"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_kelp_spore",
+  "name": "Kelp Spore Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Kelp Spore. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#3a8a5a",
+   "accent": "#e0ffe0"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "crit": 4
+   },
+   "monsterId": "kelp_spore"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_drowned_spirit",
+  "name": "Drowned Spirit Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Drowned Spirit. Compound it into garment with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#5ab8c8",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "garment",
+   "mods": {
+    "elementResistPct": {
+     "water": 20
+    },
+    "flee": 4
+   },
+   "monsterId": "drowned_spirit"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_frost_slime",
+  "name": "Frost Slime Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Frost Slime. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#c8ecfa",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "formless": 25
+    }
+   },
+   "monsterId": "frost_slime"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_snow_wolf",
+  "name": "Snow Wolf Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Snow Wolf. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#eef4f8",
+   "accent": "#7fd6ff"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "sizeDamagePct": {
+     "medium": 15
+    }
+   },
+   "monsterId": "snow_wolf"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_ice_golem",
+  "name": "Ice Golem Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Ice Golem. Compound it into headgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#a8d8f0",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "headgear",
+   "mods": {
+    "dex": 1,
+    "hit": 5
+   },
+   "monsterId": "ice_golem"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_ice_bat",
+  "name": "Ice Bat Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Ice Bat. Compound it into garment with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#8ac8e8",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "garment",
+   "mods": {
+    "elementResistPct": {
+     "water": 20
+    },
+    "flee": 6
+   },
+   "monsterId": "ice_bat"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_frost_wraith",
+  "name": "Frost Wraith Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Frost Wraith. Compound it into headgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#dff4ff",
+   "accent": "#7fd6ff"
+  },
+  "card": {
+   "equip": "headgear",
+   "mods": {
+    "dex": 1,
+    "hit": 5
+   },
+   "monsterId": "frost_wraith"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_glacier_golem",
+  "name": "Glacier Golem Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Glacier Golem. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#7ab0d8",
+   "accent": "#e0ffff"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "maxHp": 240
+   },
+   "monsterId": "glacier_golem"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_ember_slime",
+  "name": "Ember Slime Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Ember Slime. Compound it into garment with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#ff7a3a",
+   "accent": "#ffe08a"
+  },
+  "card": {
+   "equip": "garment",
+   "mods": {
+    "elementResistPct": {
+     "fire": 20
+    },
+    "flee": 6
+   },
+   "monsterId": "ember_slime"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_ash_scorpion",
+  "name": "Ash Scorpion Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Ash Scorpion. Compound it into footgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#5a4a4a",
+   "accent": "#ff6a2e"
+  },
+  "card": {
+   "equip": "boots",
+   "mods": {
+    "agi": 1,
+    "moveSpeedPct": 5
+   },
+   "monsterId": "ash_scorpion"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_fire_drake",
+  "name": "Fire Drake Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Fire Drake. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#c83a2a",
+   "accent": "#ffd34d"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "dragon": 25
+    }
+   },
+   "monsterId": "fire_drake"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_magma_golem",
+  "name": "Magma Golem Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Magma Golem. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#6a3a2a",
+   "accent": "#ff8a2e"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patk": 16,
+    "hit": 20
+   },
+   "monsterId": "magma_golem"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_flame_drake",
+  "name": "Flame Drake Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Flame Drake. Compound it into headgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#e86a2a",
+   "accent": "#fff08a"
+  },
+  "card": {
+   "equip": "headgear",
+   "mods": {
+    "int": 1,
+    "mdef": 3
+   },
+   "monsterId": "flame_drake"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_bog_slime",
+  "name": "Bog Slime Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Bog Slime. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#6a7a3a",
+   "accent": "#c8e07a"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patk": 16,
+    "hit": 20
+   },
+   "monsterId": "bog_slime"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_marsh_spore",
+  "name": "Marsh Spore Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Marsh Spore. Compound it into headgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#5a4a6a",
+   "accent": "#e0d0ff"
+  },
+  "card": {
+   "equip": "headgear",
+   "mods": {
+    "luk": 1,
+    "crit": 3
+   },
+   "monsterId": "marsh_spore"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_mire_crab",
+  "name": "Mire Crab Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Mire Crab. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#4a5a3a",
+   "accent": "#c8e07a"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "elementResistPct": {
+     "poison": 20
+    }
+   },
+   "monsterId": "mire_crab"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_raven_bat",
+  "name": "Raven Bat Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Raven Bat. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#2a2a32",
+   "accent": "#c83a4a"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patk": 16,
+    "hit": 20
+   },
+   "monsterId": "raven_bat"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_cursed_knight",
+  "name": "Cursed Knight Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Cursed Knight. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#6a6a7a",
+   "accent": "#c83a4a"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "undead": 25
+    }
+   },
+   "monsterId": "cursed_knight"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_banshee",
+  "name": "Banshee Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Banshee. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#c8c8d8",
+   "accent": "#ff5a7a"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patk": 16,
+    "hit": 20
+   },
+   "monsterId": "banshee"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_grave_knight",
+  "name": "Grave Knight Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Grave Knight. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#4a4a5a",
+   "accent": "#7fd6ff"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "undead": 25
+    }
+   },
+   "monsterId": "grave_knight"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_lich_spirit",
+  "name": "Lich Spirit Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Lich Spirit. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#8a7aaa",
+   "accent": "#a9e04a"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "maxHp": 320
+   },
+   "monsterId": "lich_spirit"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_bone_warden_boss",
+  "name": "Bone Warden Card",
+  "type": "card",
+  "rarity": "epic",
+  "description": "A card holding the essence of the Bone Warden. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#e8e0c8",
+   "accent": "#ff3a2a"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patkPct": 10,
+    "raceDamagePct": {
+     "beast": 15
+    }
+   },
+   "monsterId": "bone_warden_boss"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_valdris_boss",
+  "name": "Archmage Valdris Card",
+  "type": "card",
+  "rarity": "epic",
+  "description": "A card holding the essence of the Archmage Valdris. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#9a7af0",
+   "accent": "#ffe14d"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "maxHpPct": 15,
+    "pdef": 9
+   },
+   "monsterId": "valdris_boss"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_sun_king_boss",
+  "name": "Sun-King Ankhar Card",
+  "type": "card",
+  "rarity": "epic",
+  "description": "A card holding the essence of the Sun-King Ankhar. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#f2e2b0",
+   "accent": "#3ad8a8"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patkPct": 10,
+    "raceDamagePct": {
+     "fish": 15
+    }
+   },
+   "monsterId": "sun_king_boss"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_pyrewyrm_boss",
+  "name": "Pyrewyrm Card",
+  "type": "card",
+  "rarity": "epic",
+  "description": "A card holding the essence of the Pyrewyrm. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#e83a1a",
+   "accent": "#ffd34d"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "maxHpPct": 15,
+    "pdef": 12
+   },
+   "monsterId": "pyrewyrm_boss"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_dread_lord_boss",
+  "name": "Dread Lord Morvane Card",
+  "type": "card",
+  "rarity": "epic",
+  "description": "A card holding the essence of the Dread Lord Morvane. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#3a3a4a",
+   "accent": "#c83a4a"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patkPct": 10,
+    "raceDamagePct": {
+     "beast": 15
+    }
+   },
+   "monsterId": "dread_lord_boss"
   },
   "generated": true
  }

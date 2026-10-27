@@ -60,5 +60,6 @@ export function refineItem(data: GameData, c: CharacterState, uid: string, roll:
   }
   if (at.slot) delete c.equipment[at.slot];
   else c.inventory = c.inventory.filter((i) => i.uid !== uid);
-  return { ok: true, message: `Refining failed… the +${info.current} ${def.name} shattered.`, outcome: 'broken', level: info.current, itemId: def.id, wasEquipped: !!at.slot };
+  const lost = at.inst.cards?.length ? ` along with ${at.inst.cards.length} compounded card${at.inst.cards.length > 1 ? 's' : ''}` : '';
+  return { ok: true, message: `Refining failed… the +${info.current} ${def.name} shattered${lost}.`, outcome: 'broken', level: info.current, itemId: def.id, wasEquipped: !!at.slot };
 }

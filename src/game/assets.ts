@@ -143,6 +143,16 @@ export function ensureFxTextures(scene: Phaser.Scene) {
   }
 }
 
+/** Gravestone texture for MVP tombstones. */
+export function ensureTombstoneTexture(scene: Phaser.Scene, data: GameData, tileset: string): string {
+  const key = 'obj_mvp_tombstone';
+  if (!scene.textures.exists(key)) {
+    const kind = data.objectKinds.get('gravestone')!;
+    scene.textures.addCanvas(key, paintObject(kind, data.tilesets.get(tileset)!.palette, 4242));
+  }
+  return key;
+}
+
 export function ensureItemTexture(scene: Phaser.Scene, def: ItemDef): string {
   const key = `icon_item_${def.id}`;
   if (!scene.textures.exists(key)) scene.textures.addCanvas(key, itemIconCanvas(def));

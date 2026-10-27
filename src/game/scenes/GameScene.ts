@@ -6,7 +6,7 @@ import { TILE } from '../../core/mapCompiler';
 import type { Direction } from '../../core/types';
 import { npcQuestMarker } from '../../core/quests';
 import {
-  ensureCharacterTexture, ensureFxTextures, ensureItemTexture, ensureMapTextures, ensureMonsterTexture,
+  ensureCharacterTexture, ensureFxTextures, ensureItemTexture, ensureMapTextures, ensureMonsterTexture, ensureTombstoneTexture,
 } from '../assets';
 import type { CharacterLook } from '../art/characterSprite';
 import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_PIVOT, CHAR_SHEET_COLS, MON_ANIMS, MON_SHEET_COLS, type CharAnim, type MonAnim } from '../art/spriteMeta';
@@ -41,6 +41,7 @@ export class GameScene extends Phaser.Scene {
   private stepTimer = 0;
   private builtMapId = '';
   private builtMap: World['map'] | null = null;
+  private tombViews = new Map<string, { img: Phaser.GameObjects.Image; label: Phaser.GameObjects.Text }>();
 
   constructor() { super('Game'); }
 
@@ -72,6 +73,7 @@ export class GameScene extends Phaser.Scene {
     for (const e of this.zoneEmitters.values()) e.destroy();
     this.zoneEmitters.clear();
     this.collisionGfx = null;
+    this.tombViews.clear();
   }
 
   private track<T extends Phaser.GameObjects.GameObject>(o: T): T { this.mapObjects.push(o); return o; }
@@ -292,6 +294,7 @@ export class GameScene extends Phaser.Scene {
     this.syncMonsters();
     this.syncNpcs(delta);
     this.syncGround();
+    this.syncTombstones();
     this.drawOverlays();
     this.host.onFrame();
   }
@@ -402,6 +405,26 @@ export class GameScene extends Phaser.Scene {
     for (const [id, v] of this.monViews) {
       if (!w.monsters.has(id)) { v.sprite.destroy(); v.name.destroy(); this.monViews.delete(id); }
     }
+  }
+
+  /** MVP tombstones: where a boss fell, who was MVP, and a countdown to its return. */
+  private syncTombstones() {
+    const w = this.world;
+    for (const [id, t] of Object.entries(w.tombstones)) {
+      const live = t.mapId === w.map.def.id && t.respawnAt > w.time;
+      let v = this.tombViews.get(id);
+      if (!live) { if (v) { v.img.destroy(); v.label.destroy(); this.tombViews.delete(id); } continue; }
+      if (!v) {
+        const img = this.track(this.add.image(t.x, t.y + 4, ensureTombstoneTexture(this, w.data, w.map.def.tileset)).setOrigin(0.5, 1).setDepth(t.y));
+        const label = this.track(this.add.text(t.x, t.y - 40, '', { fontFamily: 'Verdana', fontSize: '10px', color: '#ffe9a8', stroke: '#1c1622', strokeThickness: 3, align: 'center' }).setOrigin(0.5, 1).setDepth(1e5 + 2).setResolution(2));
+        v = { img, label };
+        this.tombViews.set(id, v);
+      }
+      const left = Math.max(0, Math.ceil((t.respawnAt - w.time) / 1000));
+      const when = new Date(t.killedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      v.label.setText(`☠ ${t.boss}\nMVP: ${t.killer} · ${when}\nReturns in ${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`);
+    }
+    for (const [id, v] of this.tombViews) if (!w.tombstones[id]) { v.img.destroy(); v.label.destroy(); this.tombViews.delete(id); }
   }
 
   private syncNpcs(delta: number) {

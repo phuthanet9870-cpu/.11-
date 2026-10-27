@@ -10,6 +10,13 @@ A 2D fantasy MMORPG with a top-down 3/4 view. It's built with TypeScript, Phaser
 - **โลกสไตล์ Ragnarok Online มี 30 แมพใน 9 ภูมิภาค** มีเมือง 7 เมือง ทุ่ง และดันเจี้ยน แต่ละภูมิภาคมีสี สภาพอากาศ เพลง และมอนสเตอร์ของตัวเอง (ดู [docs/WORLD.md](docs/WORLD.md))
 - **เควสมีแค่เควสฝึกสอน 5 เควส** ได้แก่ ลงทะเบียนกิลด์ → ล่า Leaf Slime → ซื้อและสวมอาวุธ → ตีบวก +1 → เก็บ Job Lv 10
 - **เปลี่ยนอาชีพที่ Guild Master** (Knight อยู่ Aurelion, Ranger อยู่ Fernhollow, Mage อยู่ Arcanthe)
+- **ระบบแบบ Ragnarok (กลไกเท่านั้น ไม่ได้ลอกชื่อหรือข้อมูลของ RO):**
+  - การ์ดมอนสเตอร์ 70 ใบ ดรอป 0.01% ใส่ลงช่องการ์ดของอุปกรณ์ได้
+  - ตารางอาวุธเทียบขนาดมอนสเตอร์
+  - โบนัสความเสียหายตามเผ่าและขนาด, Perfect Dodge
+  - น้ำหนักเกิน 90% จะตีและใช้สกิลไม่ได้
+  - ระบบ MVP พร้อมป้ายหลุมศพ
+  - ดูรายละเอียดที่ [docs/RO_SYSTEMS.md](docs/RO_SYSTEMS.md)
 - **ระบบตีบวก +1 ถึง +10:** อาวุธตีได้ปลอดภัยถึง +5 และชุดเกราะถึง +4 ถ้าเกินจากนั้นแล้วตีพลาด ของจะแตก
 - ระบบที่ทำเสร็จแล้ว ได้แก่ การเดิน (คลิกเมาส์/WASD), กล้องติดตาม, Collision ที่ตรงกับภาพ, NPC/บทสนทนา, Monster AI แบบ State Machine, การต่อสู้แบบ Real-time พร้อมธาตุและ Status, EXP/เลเวล (Base และ Job), Stat Points, Inventory/Equipment, สกิลและ Hotbar, เควสต์ 17 เควสต์, ร้านค้า, คลังเก็บของ, การเซฟ/โหลดแบบมีเวอร์ชัน, เสียง และ UI ครบชุดสำหรับ Phase 1
 - ภาพและเสียงตอนนี้เป็น **Placeholder ที่เกมสร้างขึ้นเอง** (ต้นฉบับทั้งหมด) และเปลี่ยนเป็น Artwork จริงได้ผ่าน `public/assets/asset-manifest.json` โดยไม่ต้องแก้ Logic
@@ -74,6 +81,7 @@ Ground-target skills (Arrow Rain, Wind Trap, Fire Wall, Thunderstorm, Meteor) la
 | Job change at Job Lv 10 at a class guild master (Aurelion / Fernhollow / Arcanthe) | ✅ | NPC service `jobChange`, `World.changeJobAt` |
 | Tutorial quests only (5): register, hunt, buy & equip a weapon, refine +1, reach Job Lv 10; objective types include buy/equip/refine; journal, tracker, markers | ✅ | `src/data/quests.json`, `src/core/quests.ts` |
 | Refinement +1…+10 (ores + Luma, safe limits, failure destroys the item) at blacksmith NPCs | ✅ | `src/core/refine.ts` |
+| Ragnarok-style mechanics: monster cards (70, 0.01%, slots, compounding), weapon-vs-size table, race/size bonuses, perfect dodge, 90% weight lock, MVP (top damage, MVP EXP and items, tombstone), Wandering Feather; RO stat-cost curve available but off (measured) | ✅ | `docs/RO_SYSTEMS.md`, `src/core/cards.ts` |
 | 30 maps in 9 RO-style regions (7 towns, fields, 8 dungeons, 6 bosses), Courier Guild save/storage/warp, regional palettes, weather and music | ✅ | `docs/WORLD.md`, `tools/world-gen/build-world.ts` |
 | Maps: **Willowbrook Village, Sunny Meadow, Whispering Forest** | ✅ | `src/data/maps/` |
 | Monsters: 8 normal + 1 boss | ✅ | `src/data/monsters.json` |
@@ -98,8 +106,8 @@ The tools edit the local save only, and any use sets `flags.gmUsed` on the chara
 
 | Suite | Result |
 |---|---|
-| Unit (`tests/unit`, 8 files) | **263 / 263 passed** (includes per-map data checks for all 30 maps): refine, tutorial quests, NPC job change and warps, GM commands, data validation and map reachability, formulas, combat and elements, inventory/shop/storage, quests, save/migrations, world simulation (collision, portals, AI, skills, boss, invalid commands, no double-spend) |
-| Integration: full playthrough | **passed**. A bot using only player commands finishes the 5 tutorial quests, becomes a Knight at the guild in Aurelion, refines, and defeats Grukk (≈72 simulated minutes, Base Lv 17). A second test walks through portals to all 30 maps |
+| Unit (`tests/unit`, 9 files) | **275 / 275 passed** (includes per-map data checks for all 30 maps): refine, tutorial quests, NPC job change and warps, GM commands, data validation and map reachability, formulas, combat and elements, inventory/shop/storage, quests, save/migrations, world simulation (collision, portals, AI, skills, boss, invalid commands, no double-spend) |
+| Integration: full playthrough | **passed**. A bot using only player commands finishes the 5 tutorial quests, becomes a Knight at the guild in Aurelion, switches to a spear for the Large boss (RO size rule), refines, and defeats Grukk (≈121 simulated minutes, Base Lv 28, 5 attempts). A second test walks through portals to all 30 maps |
 | Integration: class balance | **passed**. First-try boss wins at Lv 17: Knight 6/6, Ranger 6/6, Mage 4/6 (fixed seeds) |
 | E2E in Chromium (`npm run test:e2e`) | **24 / 24 checks passed** (incl. GM window, refine and guild job change): boot, create character via UI, WASD, click NPC → dialogue → accept quest, windows by hotkey, portal travel, mouse-click combat kill with EXP, save and reload persistence, shop purchase, drag & drop equip, stat allocation, job change via dialogue, learn skill, drag skill to hotbar, cast by hotkey, death → respawn, drop part of a stack via the quantity dialog, delete a character with typed-name confirmation, zero page errors |
 

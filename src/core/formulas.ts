@@ -2,7 +2,7 @@
 // src/config/balance.json so balance can be tuned without touching code.
 import type { GameData } from './data';
 import type {
-  BaseStats, CharacterState, DerivedStats, Element, EquipSlot, ItemDef, StatModifiers, StatKey,
+  BaseStats, CharacterState, DerivedStats, EquipSlot, ItemDef, StatModifiers, StatKey,
 } from './types';
 import { STAT_KEYS } from './types';
 
@@ -68,10 +68,10 @@ export function mergeMods(target: StatModifiers, src: StatModifiers | undefined,
   if (!src) return target;
   for (const [k, v] of Object.entries(src)) {
     if (v == null) continue;
-    if (k === 'elementDamagePct' || k === 'elementResistPct') {
-      const t = (target[k] ??= {}) as Partial<Record<Element, number>>;
+    if (k === 'elementDamagePct' || k === 'elementResistPct' || k === 'raceDamagePct' || k === 'sizeDamagePct' || k === 'raceResistPct') {
+      const t = (target[k] ??= {}) as Record<string, number>;
       for (const [el, n] of Object.entries(v as Record<string, number>)) {
-        t[el as Element] = (t[el as Element] ?? 0) + n * scale;
+        t[el] = (t[el] ?? 0) + n * scale;
       }
     } else {
       const key = k as keyof StatModifiers;
@@ -96,6 +96,7 @@ export function equipmentMods(data: GameData, c: CharacterState): StatModifiers 
     if (!def) continue;
     mergeMods(mods, def.mods);
     mergeMods(mods, refineMods(def, inst.refine ?? 0));
+    for (const cardId of inst.cards ?? []) mergeMods(mods, data.items.get(cardId)?.card?.mods);
   }
   return mods;
 }
@@ -173,6 +174,11 @@ export function computeDerivedStats(data: GameData, c: CharacterState, runtimeMo
     weightLimit: B.weightBase + str * B.weightStr + (mods.weightLimit ?? 0),
     elementDamagePct: mods.elementDamagePct ?? {},
     elementResistPct: mods.elementResistPct ?? {},
+    raceDamagePct: mods.raceDamagePct ?? {},
+    sizeDamagePct: mods.sizeDamagePct ?? {},
+    raceResistPct: mods.raceResistPct ?? {},
+    perfectDodge: B.perfectDodgeBase + luk / B.perfectDodgeLukDiv + (mods.perfectDodge ?? 0),
+    weaponType: weapon?.weaponType ?? 'unarmed',
     totalStats: total,
   };
 }
@@ -188,8 +194,15 @@ export function specialMods(runtimeMods: StatModifiers[]): { counterChance: numb
   return { counterChance, damageToMpPct: Math.min(90, damageToMpPct), stealth };
 }
 
+/** Status points needed to raise a stat that is currently `value` by one (Ragnarok rule by default). */
+export function statRaiseCost(data: GameData, value: number): number {
+  const sc = data.balance.levels.statCost;
+  if (!sc || sc.mode === 'flat') return 1;
+  return Math.floor((value - 1) / sc.every) + sc.base;
+}
+
 export function canRaiseStat(data: GameData, c: CharacterState, stat: StatKey): boolean {
-  return c.statPoints > 0 && c.stats[stat] < data.balance.levels.maxStat;
+  return c.statPoints >= statRaiseCost(data, c.stats[stat]) && c.stats[stat] < data.balance.levels.maxStat;
 }
 
 export function slotForItem(def: ItemDef, c: CharacterState): EquipSlot | null {

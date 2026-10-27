@@ -240,12 +240,12 @@ function npc(id: string, name: string, title: string, seed: number, style: strin
 }
 
 const TOWN_SHOPS: Record<string, { tools: string[]; arms: string[] }> = {
-  capital: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'swiftness_tonic'], arms: ['starsteel_ore', 'moonstone_ore', 'iron_sword', 'steel_sword', 'knight_spear', 'chain_mail', 'iron_helm', 'iron_shield', 'leather_boots', 'travel_cape'] },
-  forest: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'green_potion', 'wing_of_return'], arms: ['short_bow', 'hunter_bow', 'hunter_vest', 'leather_jacket', 'leaf_cap', 'leather_boots', 'travel_cape'] },
-  mage: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'blue_potion', 'wing_of_return'], arms: ['apprentice_wand', 'oak_staff', 'apprentice_robe', 'sapphire_pendant', 'copper_ring', 'sandals'] },
-  desert: { tools: ['orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'swiftness_tonic'], arms: ['starsteel_ore', 'moonstone_ore', 'steel_sword', 'hunter_bow', 'oak_staff', 'chain_mail', 'iron_shield', 'swift_boots'] },
-  port: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return'], arms: ['iron_sword', 'short_bow', 'leather_jacket', 'bandana', 'wooden_buckler', 'sandals', 'copper_ring'] },
-  snow: { tools: ['orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return'], arms: ['starsteel_ore', 'moonstone_ore', 'steel_sword', 'knight_spear', 'hunter_bow', 'oak_staff', 'chain_mail', 'iron_helm', 'wolfhide_cloak'] },
+  capital: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather', 'swiftness_tonic'], arms: ['starsteel_ore', 'moonstone_ore', 'iron_sword', 'steel_sword', 'knight_spear', 'chain_mail', 'iron_helm', 'iron_shield', 'leather_boots', 'travel_cape'] },
+  forest: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'green_potion', 'wing_of_return', 'wandering_feather'], arms: ['short_bow', 'hunter_bow', 'hunter_vest', 'leather_jacket', 'leaf_cap', 'leather_boots', 'travel_cape'] },
+  mage: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'blue_potion', 'wing_of_return', 'wandering_feather'], arms: ['apprentice_wand', 'oak_staff', 'apprentice_robe', 'sapphire_pendant', 'copper_ring', 'sandals'] },
+  desert: { tools: ['orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather', 'swiftness_tonic'], arms: ['starsteel_ore', 'moonstone_ore', 'steel_sword', 'hunter_bow', 'oak_staff', 'chain_mail', 'iron_shield', 'swift_boots'] },
+  port: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather'], arms: ['iron_sword', 'short_bow', 'leather_jacket', 'bandana', 'wooden_buckler', 'sandals', 'copper_ring'] },
+  snow: { tools: ['orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather'], arms: ['starsteel_ore', 'moonstone_ore', 'steel_sword', 'knight_spear', 'hunter_bow', 'oak_staff', 'chain_mail', 'iron_helm', 'wolfhide_cloak'] },
 };
 const GUILD_NPC: Record<string, [string, string, string]> = {
   knight: ['Commander Aldric', 'Knight Guild Master', 'plate'], ranger: ['Ranger Sylvi', 'Ranger Guild Master', 'hood'], mage: ['Magister Ophelia', 'Mage Guild Master', 'robe'],
@@ -411,6 +411,7 @@ function bossDef(b: typeof BOSSES[number], grukk: J): J {
       { id: `${b.id}_ring`, name: 'Cataclysm', kind: 'ring', telegraphMs: 1700, radius: 230, multiplier: 1.4, element: el, cooldownMs: 13000, minPhase: 2, fx: b.fx },
     ],
     contributionRewards: { minDamagePct: 10, items: [{ itemId: 'starsteel_ore', qty: 3 }, { itemId: 'moonstone_ore', qty: 3 }], luma: 500 + b.monster.lv * 40 },
+    mvp: { expPct: 50, items: [{ itemId: 'elder_sap', chance: 0.4 }, { itemId: 'elder_seed', chance: 0.6 }, { itemId: 'starsteel_ore', chance: 0.5 }, { itemId: 'moonstone_ore', chance: 0.5 }] },
     generated: true,
   };
 }
@@ -441,6 +442,43 @@ export async function main() {
       { itemId: 'starsteel_ore', chance: b ? 0.5 : Math.min(0.04, 0.004 + s.lv * 0.0004) }, { itemId: 'moonstone_ore', chance: b ? 0.5 : Math.min(0.04, 0.004 + s.lv * 0.0004) },
     ], generated: true });
   }
+  // ---------------------------------------------------------------- cards (one per monster)
+  const CARD_SLOTS = ['weapon', 'armor', 'shield', 'garment', 'boots', 'headgear', 'accessory'] as const;
+  const RACES = ['formless', 'undead', 'beast', 'plant', 'insect', 'fish', 'demon', 'demihuman', 'dragon'];
+  const STATS = ['str', 'agi', 'vit', 'int', 'dex', 'luk'];
+  const cardChance = read('../config/balance.json').drops?.cardChance ?? 0.0001;
+  for (const t of drops) t.entries = t.entries.filter((e: J) => !e.card);
+  monsters.forEach((m: J, i: number) => {
+    const boss = m.aiType === 'boss', tier = 1 + Math.floor(m.level / 20), h = hash(m.id);
+    const equip = boss ? (h % 2 ? 'weapon' : 'armor') : CARD_SLOTS[(i + h) % CARD_SLOTS.length];
+    const pick = <T>(a: readonly T[], salt = 0) => a[(h >>> salt) % a.length];
+    let mods: J;
+    switch (equip) {
+      case 'weapon': mods = boss ? { patkPct: 10, raceDamagePct: { [pick(RACES, 3)]: 15 } } : [
+        { raceDamagePct: { [pick(RACES, 5)]: 20 } }, { sizeDamagePct: { [pick(['small', 'medium', 'large'], 7)]: 15 } }, { patk: 4 + 3 * tier, hit: 5 * tier },
+      ][h % 3]; break;
+      case 'armor': mods = boss ? { maxHpPct: 15, pdef: 3 * tier } : [{ maxHp: 80 * tier }, { vit: 1, maxHpPct: 10 }, { elementResistPct: { [m.element === 'neutral' ? 'fire' : m.element]: 20 } }][h % 3]; break;
+      case 'shield': mods = { raceResistPct: { [m.race]: 25 } }; break;
+      case 'garment': mods = m.element === 'neutral' ? { flee: 5 + 3 * tier } : { elementResistPct: { [m.element]: 20 }, flee: 2 * tier }; break;
+      case 'boots': mods = [{ agi: 1, moveSpeedPct: 5 }, { maxHp: 60 * tier, maxMp: 20 * tier }, { maxMpPct: 10, mpRegen: 2 }][h % 3]; break;
+      case 'headgear': mods = [{ int: 1, mdef: 3 }, { dex: 1, hit: 5 }, { luk: 1, crit: 3 }][h % 3]; break;
+      default: mods = [{ [pick(STATS, 4)]: 2 }, { crit: 4 }, { hit: 10 }][h % 3];
+    }
+    items.push({
+      id: `card_${m.id}`, name: `${m.name.replace(/ Boss$/, '')} Card`, type: 'card', rarity: boss ? 'epic' : 'rare',
+      description: `A card holding the essence of the ${m.name}. Compound it into ${equip === 'armor' ? 'body armor' : equip === 'boots' ? 'footgear' : equip} with a free slot.`,
+      weight: 1, price: 20, stackable: true, maxStack: 999, icon: { shape: 'card', color: m.art.colors[0], accent: m.art.colors[2] },
+      card: { equip, mods, monsterId: m.id }, generated: true,
+    });
+    const t = drops.find((d: J) => d.id === m.dropTableId);
+    if (t) t.entries.push({ itemId: `card_${m.id}`, chance: cardChance, card: true });
+  });
+  // Card slots on equipment (Ragnarok-style: daggers 3, other weapons 2, rarer weapons 1; armor pieces 1).
+  for (const it of items) {
+    if (it.type !== 'equipment') continue;
+    it.cardSlots = it.slot === 'weapon' ? (it.rarity === 'rare' || it.rarity === 'epic' ? 1 : it.weaponType === 'dagger' ? 3 : 2) : 1;
+  }
+
   const grukk = bosses.find((b: J) => b.id === 'grukk');
   for (const b of BOSSES) bosses.push(bossDef(b, grukk));
   tilesets.push(...TILESETS.map((t) => ({ ...t, generated: true })));

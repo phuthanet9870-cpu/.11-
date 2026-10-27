@@ -33,6 +33,13 @@ export interface StatModifiers {
   elementDamagePct?: Partial<Record<Element, number>>;
   /** % damage reduction against attacks of an element. */
   elementResistPct?: Partial<Record<Element, number>>;
+  /** % bonus damage against monsters of a race / size (cards). */
+  raceDamagePct?: Partial<Record<string, number>>;
+  sizeDamagePct?: Partial<Record<string, number>>;
+  /** % damage reduction against attackers of a race (cards). */
+  raceResistPct?: Partial<Record<string, number>>;
+  /** % chance to completely avoid a physical hit (on top of FLEE). */
+  perfectDodge?: number;
   weightLimit?: number;
   attackRange?: number;
   /** % chance to counter a melee hit with a basic attack. */
@@ -120,6 +127,7 @@ export type UseEffect =
   | { type: 'cure'; statuses: StatusId[] }
   | { type: 'buff'; buffId: string; durationMs: number; mods: StatModifiers }
   | { type: 'returnToSave' }
+  | { type: 'randomTeleport' }
   | { type: 'resetStats' }
   | { type: 'resetSkills' };
 
@@ -147,6 +155,8 @@ export interface ItemDef {
   classes?: string[];
   mods?: StatModifiers;
   cardSlots?: number;
+  /** Card items: which equipment slot they compound into, and what they add. */
+  card?: { equip: 'weapon' | 'armor' | 'headgear' | 'shield' | 'garment' | 'boots' | 'accessory'; mods: StatModifiers; monsterId: string };
   // consumables
   use?: UseEffect[];
   cooldownMs?: number;
@@ -226,6 +236,8 @@ export interface BossDef {
   enrage: { afterMs: number; hpPct: number; atkMul: number; aspdMul: number };
   skills: BossSkillDef[];
   contributionRewards: { minDamagePct: number; items: { itemId: string; qty: number }[]; luma: number };
+  /** MVP: bonus EXP (% of the boss's base EXP) and independent item rolls for the top damage dealer. */
+  mvp?: { expPct: number; items: { itemId: string; chance: number }[] };
 }
 
 // ---------------------------------------------------------------- statuses / buffs
@@ -468,5 +480,11 @@ export interface DerivedStats {
   weightLimit: number;
   elementDamagePct: Partial<Record<Element, number>>;
   elementResistPct: Partial<Record<Element, number>>;
+  raceDamagePct: Partial<Record<string, number>>;
+  sizeDamagePct: Partial<Record<string, number>>;
+  raceResistPct: Partial<Record<string, number>>;
+  perfectDodge: number;
+  /** Weapon type for the size table ('unarmed' without a weapon). */
+  weaponType: string;
   totalStats: BaseStats;
 }

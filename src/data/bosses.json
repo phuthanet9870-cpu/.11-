@@ -120,6 +120,23 @@
     }
    ],
    "luma": 500
+  },
+  "mvp": {
+   "expPct": 50,
+   "items": [
+    {
+     "itemId": "elder_sap",
+     "chance": 0.3
+    },
+    {
+     "itemId": "elder_seed",
+     "chance": 0.5
+    },
+    {
+     "itemId": "starsteel_ore",
+     "chance": 0.5
+    }
+   ]
   }
  },
  {
@@ -237,6 +254,27 @@
     }
    ],
    "luma": 1780
+  },
+  "mvp": {
+   "expPct": 50,
+   "items": [
+    {
+     "itemId": "elder_sap",
+     "chance": 0.4
+    },
+    {
+     "itemId": "elder_seed",
+     "chance": 0.6
+    },
+    {
+     "itemId": "starsteel_ore",
+     "chance": 0.5
+    },
+    {
+     "itemId": "moonstone_ore",
+     "chance": 0.5
+    }
+   ]
   },
   "generated": true
  },
@@ -356,6 +394,27 @@
    ],
    "luma": 2260
   },
+  "mvp": {
+   "expPct": 50,
+   "items": [
+    {
+     "itemId": "elder_sap",
+     "chance": 0.4
+    },
+    {
+     "itemId": "elder_seed",
+     "chance": 0.6
+    },
+    {
+     "itemId": "starsteel_ore",
+     "chance": 0.5
+    },
+    {
+     "itemId": "moonstone_ore",
+     "chance": 0.5
+    }
+   ]
+  },
   "generated": true
  },
  {
@@ -473,6 +532,27 @@
     }
    ],
    "luma": 2500
+  },
+  "mvp": {
+   "expPct": 50,
+   "items": [
+    {
+     "itemId": "elder_sap",
+     "chance": 0.4
+    },
+    {
+     "itemId": "elder_seed",
+     "chance": 0.6
+    },
+    {
+     "itemId": "starsteel_ore",
+     "chance": 0.5
+    },
+    {
+     "itemId": "moonstone_ore",
+     "chance": 0.5
+    }
+   ]
   },
   "generated": true
  },
@@ -592,6 +672,27 @@
    ],
    "luma": 3460
   },
+  "mvp": {
+   "expPct": 50,
+   "items": [
+    {
+     "itemId": "elder_sap",
+     "chance": 0.4
+    },
+    {
+     "itemId": "elder_seed",
+     "chance": 0.6
+    },
+    {
+     "itemId": "starsteel_ore",
+     "chance": 0.5
+    },
+    {
+     "itemId": "moonstone_ore",
+     "chance": 0.5
+    }
+   ]
+  },
   "generated": true
  },
  {
@@ -709,6 +810,27 @@
     }
    ],
    "luma": 3900
+  },
+  "mvp": {
+   "expPct": 50,
+   "items": [
+    {
+     "itemId": "elder_sap",
+     "chance": 0.4
+    },
+    {
+     "itemId": "elder_seed",
+     "chance": 0.6
+    },
+    {
+     "itemId": "starsteel_ore",
+     "chance": 0.5
+    },
+    {
+     "itemId": "moonstone_ore",
+     "chance": 0.5
+    }
+   ]
   },
   "generated": true
  }

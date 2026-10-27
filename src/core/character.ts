@@ -1,7 +1,7 @@
 // Character creation, stat allocation, skill learning and job changes.
 import type { GameData } from './data';
 import { addItem, equipItem, type OpResult } from './inventory';
-import { totalStatPointsAtLevel } from './formulas';
+import { statRaiseCost, totalStatPointsAtLevel } from './formulas';
 import type { Appearance, CharacterState, SkillDef, StatKey } from './types';
 import { STAT_KEYS } from './types';
 
@@ -72,10 +72,12 @@ export function createCharacter(data: GameData, name: string, appearance: Appear
 export function allocateStat(data: GameData, c: CharacterState, stat: StatKey, amount = 1): OpResult {
   if (!STAT_KEYS.includes(stat)) return fail('Unknown stat.');
   if (!Number.isInteger(amount) || amount <= 0) return fail('Invalid amount.');
-  if (c.statPoints < amount) return fail('Not enough stat points.');
   if (c.stats[stat] + amount > data.balance.levels.maxStat) return fail('Stat is at maximum.');
+  let cost = 0;
+  for (let v = c.stats[stat]; v < c.stats[stat] + amount; v++) cost += statRaiseCost(data, v);
+  if (c.statPoints < cost) return fail(`Not enough stat points (needs ${cost}).`);
   c.stats[stat] += amount;
-  c.statPoints -= amount;
+  c.statPoints -= cost;
   return ok();
 }
 
