@@ -18,7 +18,7 @@ import { characterCreateScreen, characterSelectScreen, titleScreen } from './scr
 import { WindowManager, type WindowId } from './windows';
 
 const WINDOW_ACTIONS: Record<string, WindowId> = {
-  inventory: 'inventory', equipment: 'equipment', status: 'status', skills: 'skills', quests: 'quests', worldMap: 'worldMap', settings: 'settings', database: 'database', social: 'social', pet: 'pet', homun: 'homun', cart: 'cart', runes: 'runes',
+  inventory: 'inventory', equipment: 'equipment', status: 'status', skills: 'skills', quests: 'quests', worldMap: 'worldMap', settings: 'settings', database: 'database', social: 'social', auto: 'auto', pet: 'pet', homun: 'homun', cart: 'cart', runes: 'runes',
 };
 
 export class App implements GameHost {
@@ -222,7 +222,7 @@ export class App implements GameHost {
           hud.log(e.text, e.channel);
           if (e.channel === 'error') hud.toast(e.text, true);
           break;
-        case 'npcInteract': this.windows.openNpcDialog(e.npcId); break;
+        case 'npcInteract': if (this.world.auto.mode !== 'quest') this.windows.openNpcDialog(e.npcId); break;
         case 'objectInteract': this.windows.showObjectText(e.name, e.text); break;
         case 'levelUp': hud.banner(e.kind === 'base' ? `Level ${e.level}!` : `Job Level ${e.level}!`, e.kind === 'base' ? 'Stat points gained — open Status (C)' : 'Skill point gained — open Skills (K)'); this.windowsDirty = true; break;
         case 'bossIntro': hud.banner(e.name, e.title, 'boss'); hud.log(e.text, 'combat'); break;
@@ -365,6 +365,7 @@ export class App implements GameHost {
     if (!this.world) return;
     const dx = (this.held.has('right') ? 1 : 0) - (this.held.has('left') ? 1 : 0);
     const dy = (this.held.has('down') ? 1 : 0) - (this.held.has('up') ? 1 : 0);
+    if ((dx || dy) && this.world.auto.mode !== 'off') this.world.auto.stop('manual control');
     this.world.setMoveDir(dx, dy);
   }
 

@@ -348,6 +348,23 @@ try {
   check('database tools: refine simulator, forge calculator, element chart', /\+4 → \+5/.test(refineTxt) && /Success: \d/.test(forgeTxt) && elemCells === 100, `${forgeTxt} cells=${elemCells}`);
   await page.keyboard.press('b');
 
+  // Auto Farm: start it from the Auto window, watch it fight, click the map to take control back.
+  await page.evaluate(() => { const w = window.__veyloria.world; w.godMode = true; });
+  const kAuto0 = await page.evaluate(() => window.__veyloria.world.char.stats_meta.kills);
+  await page.keyboard.press('u');
+  await page.waitForSelector('#win-auto:not(.hidden)');
+  await page.click('#auto-farm');
+  await page.keyboard.press('u');
+  await page.waitForFunction((k0) => window.__veyloria.world.char.stats_meta.kills >= k0 + 2, kAuto0, { timeout: 120000 });
+  const autoBar = await page.textContent('#auto-status');
+  await page.screenshot({ path: join(shots, '18b-auto-farm.png') });
+  const cv = await page.locator('#game canvas').boundingBox();
+  await page.mouse.click(cv.x + cv.width * 0.3, cv.y + cv.height * 0.3);
+  await sleep(300);
+  const autoMode = await page.evaluate(() => window.__veyloria.world.auto.mode);
+  await page.evaluate(() => { window.__veyloria.world.godMode = false; });
+  check('Auto Farm fights by itself and stops on a manual click', /AUTO FARM/.test(autoBar) && autoMode === 'off', `${autoBar?.slice(0, 60)} → ${autoMode}`);
+
   // Memorial dungeon: talk to the Spire Warden in Aurelion and enter; the HUD shows floor + timer.
   await page.evaluate(() => { const w = window.__veyloria.world; w.char.baseLevel = Math.max(w.char.baseLevel, 20); w.enterMap('aurelion', 'default'); });
   await sleep(600);

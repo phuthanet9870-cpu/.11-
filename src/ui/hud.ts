@@ -27,7 +27,9 @@ export class Hud {
   root: HTMLElement;
   private portrait = h('canvas', { class: 'portrait', width: 96, height: 96 });
   private whoName = h('div', { class: 'who' });
-  /** Clock and active raid. */
+  /** Auto Farm / Auto Quest status. */
+  private autoEl = h('div', { id: 'auto-status', style: 'position:absolute;bottom:108px;left:50%;transform:translateX(-50%);padding:3px 10px;background:#1c1622dd;border:1px solid #6fe08a;border-radius:6px;color:#b8ffc8;font-size:12px;display:none;z-index:5;pointer-events:auto;cursor:pointer' });
+  /** Active raid (map and time left). */
   private clockEl = h('div', { id: 'world-clock', style: 'position:absolute;top:8px;right:222px;min-width:110px;text-align:center;padding:2px 6px;background:#1c1622cc;border:1px solid #5a4a3a;border-radius:5px;color:#e8dcc0;font-size:11px;z-index:5' });
   /** Memorial-dungeon timer (floor and time left). */
   private instTimer = h('div', { id: 'inst-timer', style: 'position:absolute;top:8px;left:50%;transform:translateX(-50%);padding:4px 12px;background:#1c1622dd;border:1px solid #c8a26b;border-radius:6px;color:#ffe9a8;font-size:13px;display:none;z-index:5' });
@@ -75,6 +77,7 @@ export class Hud {
     const menu = h('div', { class: 'menu-buttons' },
       ...([['status', 'Status'], ['inventory', 'Items'], ['equipment', 'Equip'], ['skills', 'Skills'], ['quests', 'Quests'], ['worldMap', 'Map'], ['database', 'DB'], ['pet', 'Pet'], ['social', 'Social'], ['runes', 'Runes'], ['homun', 'Homun'], ['cart', 'Cart'], ['settings', 'Menu']] as const)
         .map(([id, label]) => h('button', { class: 'btn', title: `${label} (${this.app.keyLabel(id)})`, onclick: () => this.app.windows.toggle(id) }, label)),
+      h('button', { class: 'btn', id: 'btn-auto', title: `Auto Farm / Auto Quest (${this.app.keyLabel('auto')})`, onclick: () => this.app.windows.toggle('auto') }, 'Auto'),
       h('button', { class: 'btn', id: 'btn-gm', title: 'GM / Admin tools (F8 or /gm)', onclick: () => this.app.windows.toggle('admin') }, 'GM'));
     this.root = h('div', { id: 'hud', class: 'passthrough', style: 'position:absolute;inset:0' },
       h('div', { class: 'panel hud-status' }, this.portrait, this.whoName, this.hpBar.el, this.mpBar.el),
@@ -285,10 +288,15 @@ export class Hud {
     this.lastSlow = now;
     if (!this.instTimer.parentElement) this.root.appendChild(this.instTimer);
     if (!this.clockEl.parentElement) this.root.appendChild(this.clockEl);
-    const hr = w.hourOfDay, hh = Math.floor(hr), mm = Math.floor((hr - hh) * 60);
+    if (!this.autoEl.parentElement) { this.root.appendChild(this.autoEl); this.autoEl.addEventListener('click', () => this.app.world?.auto.stop('manual control')); }
+    const au = w.auto;
+    this.autoEl.style.display = au.mode === 'off' ? 'none' : 'block';
+    if (au.mode !== 'off') this.autoEl.textContent = `● ${au.mode === 'farm' ? 'AUTO FARM' : 'AUTO QUEST'} — ${au.status || '…'}   (click to stop)`;
     const ev = w.event;
     const evLeft = ev ? Math.max(0, Math.ceil((ev.endsAt - w.time) / 1000)) : 0;
-    this.clockEl.textContent = `${w.isNight ? '☾' : '☀'} ${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}${ev && !ev.done ? `  ·  ⚔ Raid: ${ev.mapName} ${Math.floor(evLeft / 60)}:${String(evLeft % 60).padStart(2, '0')}` : ''}`;
+    const raid = ev && !ev.done ? `⚔ Raid: ${ev.mapName} ${Math.floor(evLeft / 60)}:${String(evLeft % 60).padStart(2, '0')}` : '';
+    this.clockEl.textContent = raid;
+    this.clockEl.style.display = raid ? 'block' : 'none';
     const ins = w.instance, idef = ins && w.data.instances.get(ins.id);
     if (ins && idef) {
       const left = Math.max(0, Math.ceil((ins.endsAt - w.time) / 1000));

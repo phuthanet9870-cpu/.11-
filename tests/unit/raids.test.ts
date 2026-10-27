@@ -1,23 +1,18 @@
 import { describe, expect, it } from 'vitest';
-import { DAY_SECONDS, EVENT_DURATION_MS } from '../../src/core/world';
+import { EVENT_DURATION_MS } from '../../src/core/world';
 import { buildCharacter } from '../helpers/scenarios';
 import { data, newChar, newWorld, run } from '../helpers/fixtures';
 
-describe('day and night', () => {
-  it('a day lasts 24 real minutes; night (20:00–05:00) makes undead / shadow / ghost monsters hit harder', () => {
+describe('no day/night cycle', () => {
+  it('monsters hit the same at any time', () => {
     const w = newWorld(newChar(), 1, () => 0);
-    expect(w.hourOfDay).toBe(0);
-    expect(w.isNight).toBe(true);
-    w.time = (DAY_SECONDS / 2) * 1000; // noon
-    expect(w.hourOfDay).toBeCloseTo(12, 6);
-    expect(w.isNight).toBe(false);
-    expect(w.darkness).toBe(0);
     const m = w.spawnMonsterAt('bone_soldier', w.player.x + 40, w.player.y)!;
-    const day = (w as unknown as { monsterProfile(x: typeof m): { patk: number } }).monsterProfile(m).patk;
-    w.time = (DAY_SECONDS * 22 / 24) * 1000;
-    expect(w.isNight).toBe(true);
-    expect((w as unknown as { monsterProfile(x: typeof m): { patk: number } }).monsterProfile(m).patk).toBe(Math.round(m.def.attack * 1.15));
-    expect(day).toBe(m.def.attack);
+    const atk = () => (w as unknown as { monsterProfile(x: typeof m): { patk: number } }).monsterProfile(m).patk;
+    const a = atk();
+    w.time = 20 * 60 * 1000;
+    expect(atk()).toBe(a);
+    expect(a).toBe(m.def.attack);
+    expect('isNight' in w).toBe(false);
   });
 });
 

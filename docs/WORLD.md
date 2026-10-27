@@ -90,7 +90,6 @@ Maps 4–30, the memorial-dungeon floors, the arena and castle, their monsters, 
   - Endless Spire: 100 floors, Lv 20+, 3 hours, once per day; milestone rewards at 25 / 50 / 75. Warden Isolde in Aurelion.
   - Sealed Crypt: 4 rooms, Lv 45+, 20 minutes. Brother Halvard in Frostholm.
   - Each floor's portal opens only when every monster on it is defeated. Cooldowns are real time.
-- **Day and night:** a 24-minute day; outdoors gets dark at night and undead / shadow / ghost monsters hit 15% harder.
 - **Raids:** every 15 minutes a field near your level is raided for 10 minutes; defeat the leader for a reward.
 - **Other services:** Oracle of Rebirth, war-drake stable and Arena Master in Aurelion; Astrologer (rune reset) in Arcanthe; pushcart rental and alchemy supplies at the Merchant guilds in Tidewatch.
 - **Courier Guild** NPCs in every town offer save, storage and warps to the other towns (300–600 Luma).

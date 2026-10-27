@@ -14,6 +14,7 @@ import {
 import { allocateStat, changeJob, learnSkill, rebirth, resetSkills, resetStats } from './character';
 import { refineItem, type RefineResult } from './refine';
 import { PVP_MAPS, type PresenceInfo } from '../net/protocol';
+import { AutoPilot } from './autopilot';
 import { learnRune, resetRunes } from './runes';
 import { classLineage } from './lineage';
 import { addHomunExp, createHomunculus, evolveHomun, feedHomun, homunStats, releaseHomun, reviveHomun, tickHomun } from './homunculus';
@@ -200,8 +201,6 @@ export interface WorldOptions {
   noEvents?: boolean;
 }
 
-/** One in-game day lasts this many real seconds (24 minutes). */
-export const DAY_SECONDS = 24 * 60;
 /** World events: one every 15 minutes of play, lasting 10 minutes. */
 export const EVENT_INTERVAL_MS = 15 * 60000;
 export const EVENT_DURATION_MS = 10 * 60000;
@@ -258,8 +257,6 @@ export class World {
     this.now = opts.now ?? (() => Date.now());
     this.autoLoot = opts.autoLoot ?? false;
     this.eventsOn = !opts.noEvents;
-    // The day starts wherever the real clock is, so sessions begin at different hours.
-    this.dayOffsetSec = Math.floor(this.now() / 1000) % DAY_SECONDS;
     this.nextEventAt = 5 * 60000;
     this.player = {
       id: 'player', kind: 'player', x: 0, y: 0, dir: 'down', hp: 1, maxHp: 1, statuses: [], buffs: [], dead: false,
@@ -465,6 +462,7 @@ export class World {
     this.char.stats_meta.playTimeMs += dt;
 
     if (this.statsDirty) this.recomputeStats();
+    this.auto.update();
     this.updatePlayer(dt);
     for (const m of this.monsters.values()) this.updateMonster(m, dt);
     this.updateZones();
@@ -598,20 +596,6 @@ export class World {
 
   /** EXP shared by a party member's kill. */
   receivePartyExp(base: number, job: number, from: string) { this.grantExp(base, job, `party: ${from}`); }
-
-  // ---------------------------------------------------------------- day / night
-  private dayOffsetSec = 0;
-  /** In-game time of day in hours (0–24). */
-  get hourOfDay(): number { return (((this.dayOffsetSec + this.time / 1000) % DAY_SECONDS) / DAY_SECONDS) * 24; }
-  get isNight(): boolean { const h = this.hourOfDay; return h >= 20 || h < 5; }
-  /** 0 by day, up to 1 in the middle of the night (for the screen tint). */
-  get darkness(): number {
-    const h = this.hourOfDay;
-    if (h >= 6 && h < 18) return 0;
-    if (h >= 18 && h < 21) return (h - 18) / 3;
-    if (h >= 4 && h < 6) return (6 - h) / 2;
-    return 1;
-  }
 
   // ---------------------------------------------------------------- world events (raids)
   private eventsOn = true;
@@ -1232,8 +1216,6 @@ export class World {
     if (m.boss) {
       atkMul = m.boss.def.phases[m.boss.phase].atkMul * (m.boss.enraged ? m.boss.def.enrage.atkMul : 1);
     }
-    // Night: undead, shadow and ghost monsters hit 15% harder.
-    if (this.isNight && (m.def.race === 'undead' || m.def.element === 'shadow' || m.def.element === 'ghost')) atkMul *= 1.15;
     const prof = profileFromMonster(this.data, m.def, atkMul);
     for (const s of m.statuses) {
       const d = this.data.statuses.get(s.id);
@@ -2276,7 +2258,13 @@ export class World {
     return null;
   }
 
+  /** Last NPC the player talked to (Auto Quest uses it to know a conversation happened). */
+  lastNpcTalk: { npcId: string; at: number } | null = null;
+  /** Auto Farm / Auto Quest. */
+  auto = new AutoPilot(this);
+
   private talkToNpc(npcId: string) {
+    this.lastNpcTalk = { npcId, at: this.time };
     const updated = questEvents.talk(this.data, this.char, npcId);
     if (updated.length) this.questUpdated(updated);
     this.emit({ type: 'npcInteract', npcId });

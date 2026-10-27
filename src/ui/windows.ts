@@ -30,7 +30,7 @@ import { canForge, CRUMB_ATK, ELEMENT_STONES, forgeChance, STAR_CRUMB } from '..
 import { ENCHANT_COST, MAX_OPTIONS, optionLabel, REROLL_COST } from '../core/options';
 
 type DbTab = 'monsters' | 'items' | 'cards' | 'refine' | 'forge' | 'options' | 'combos' | 'pets' | 'elements';
-export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet' | 'homun' | 'cart' | 'runes' | 'social';
+export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet' | 'homun' | 'cart' | 'runes' | 'social' | 'auto';
 
 interface WinState { el: HTMLElement; body: HTMLElement; render: () => void; open: boolean }
 
@@ -94,6 +94,7 @@ export class WindowManager {
     this.define('cart', 'Pushcart', 16, 90, () => this.renderCart());
     this.define('runes', 'Rune Constellation', 300, 70, () => this.renderRunes());
     this.define('social', 'Social — Online Play', 360, 60, () => this.renderSocial());
+    this.define('auto', 'Auto Farm / Auto Quest', 440, 120, () => this.renderAuto());
   }
 
   get anyOpen() { return [...this.wins.values()].some((w) => w.open) || !!this.dialogEl || !!this.modalEl; }
@@ -776,6 +777,39 @@ export class WindowManager {
         h('button', { class: 'btn small', id: 'homun-feed', onclick: () => { w.homunFeedCmd(); this.renderHomun(); } }, `Feed (${countItem(c, 'homun_ration')})`),
         !hm.alive ? h('button', { class: 'btn small', onclick: () => { w.homunReviveCmd(); this.renderHomun(); } }, `Revive (${countItem(c, 'homun_revive')})`) : '',
         !hm.evolved ? h('button', { class: 'btn small', title: 'Lv 50, Loyal, 1 Stone of Sages', onclick: () => { w.homunEvolveCmd(); this.renderHomun(); } }, 'Evolve') : '')));
+  }
+
+  // ---------------------------------------------------------------- auto farm / auto quest
+  private renderAuto() {
+    const w = this.app.world!, au = w.auto, st = au.settings, body = this.wins.get('auto')!.body;
+    const focused = document.activeElement;
+    if (focused && body.contains(focused) && focused.tagName === 'INPUT' && (focused as HTMLInputElement).type === 'number') return;
+    const num = (id: string, label: string, key: 'radius' | 'hpPotionPct' | 'mpPotionPct', min: number, max: number) => {
+      const el = h('input', { type: 'number', id, value: st[key], min, max, style: 'width:64px' }) as HTMLInputElement;
+      el.addEventListener('change', () => { st[key] = Math.max(min, Math.min(max, Number(el.value) || min)); this.renderAuto(); });
+      return h('div', { class: 'row', style: 'gap:6px;margin:3px 0' }, h('span', { style: 'width:170px' }, label), el);
+    };
+    const tick = (id: string, label: string, key: 'useSkills' | 'loot' | 'skipElites') => {
+      const el = h('input', { type: 'checkbox', id }) as HTMLInputElement;
+      el.checked = st[key]; el.addEventListener('change', () => { st[key] = el.checked; });
+      return h('label', { style: 'display:block;margin:3px 0' }, el, ` ${label}`);
+    };
+    const q = au.currentQuest();
+    setChildren(body, h('div', { style: 'width:330px' },
+      h('div', { class: au.mode === 'off' ? 'muted' : 'good' }, au.mode === 'off' ? 'Stopped.' : `${au.mode === 'farm' ? 'Auto Farm' : 'Auto Quest'}: ${au.status || '…'}`),
+      h('div', { class: 'row', style: 'gap:6px;margin-top:6px' },
+        h('button', { class: `btn${au.mode === 'farm' ? ' primary' : ''}`, id: 'auto-farm', onclick: () => { if (au.mode === 'farm') au.stop(); else au.start('farm'); this.renderAuto(); } }, au.mode === 'farm' ? 'Stop Auto Farm' : 'Start Auto Farm'),
+        h('button', { class: `btn${au.mode === 'quest' ? ' primary' : ''}`, id: 'auto-quest', onclick: () => { if (au.mode === 'quest') au.stop(); else au.start('quest'); this.renderAuto(); } }, au.mode === 'quest' ? 'Stop Auto Quest' : 'Start Auto Quest')),
+      h('div', { class: 'muted', style: 'font-size:11px;margin-top:4px' }, q ? `Next quest: ${q.name}` : 'No quests left — Auto Quest has nothing to do.'),
+      h('div', { class: 'gold', style: 'margin-top:8px;font-weight:bold' }, 'Settings'),
+      num('auto-radius', 'Farm radius (px)', 'radius', 150, 2000),
+      num('auto-hp', 'Drink HP potion below (%)', 'hpPotionPct', 0, 95),
+      num('auto-mp', 'Drink MP potion below (%)', 'mpPotionPct', 0, 95),
+      tick('auto-skills', 'Use skills on the hotbar', 'useSkills'),
+      tick('auto-loot', 'Pick up loot', 'loot'),
+      tick('auto-elites', 'Leave elites and bosses alone (unless they attack)', 'skipElites'),
+      h('div', { class: 'muted', style: 'font-size:11px;margin-top:6px' },
+        'Auto Farm fights around the spot where you start it. Auto Quest walks to quest givers, does each objective (hunting, buying and equipping, safe refining, levelling) and hands quests in. Both stop when you click, move by hand, die, or carry 90% weight. Put skills on the hotbar for them to be used.')));
   }
 
   // ---------------------------------------------------------------- social / online play
