@@ -19,16 +19,19 @@ export const FORGE_BONUS = 20;
 
 export interface ForgeChoice { recipeId: string; stone?: string; crumbs?: number }
 
+/** The forging formula on its own (used by the forge and by the database's forge calculator). */
+export function forgeChanceRaw(o: { jobLevel: number; dex: number; luk: number; weaponLevel: number; stone: boolean; crumbs: number }): number {
+  let p = 50 + o.jobLevel * 0.2 + o.dex * 0.1 + o.luk * 0.1 + FORGE_BONUS;
+  p -= o.weaponLevel === 2 ? 20 : o.weaponLevel >= 3 ? 30 : 0;
+  if (o.stone) p -= 20;
+  p -= 15 * o.crumbs;
+  return Math.max(5, Math.min(100, p)) / 100;
+}
+
 export function forgeChance(data: GameData, c: CharacterState, choice: ForgeChoice): number {
   const r = data.recipes.get(choice.recipeId);
   if (!r) return 0;
-  const wl = data.items.get(r.itemId)?.weaponLevel ?? 1;
-  const total = (k: 'dex' | 'luk') => c.stats[k];
-  let p = 50 + c.jobLevel * 0.2 + total('dex') * 0.1 + total('luk') * 0.1 + FORGE_BONUS;
-  p -= wl === 2 ? 20 : wl >= 3 ? 30 : 0;
-  if (choice.stone) p -= 20;
-  p -= 15 * (choice.crumbs ?? 0);
-  return Math.max(5, Math.min(100, p)) / 100;
+  return forgeChanceRaw({ jobLevel: c.jobLevel, dex: c.stats.dex, luk: c.stats.luk, weaponLevel: data.items.get(r.itemId)?.weaponLevel ?? 1, stone: !!choice.stone, crumbs: choice.crumbs ?? 0 });
 }
 
 export function canForge(data: GameData, c: CharacterState, choice: ForgeChoice): OpResult {

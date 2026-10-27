@@ -8,6 +8,9 @@ import { lookForCharacter, SpritePreview } from './screens';
 import { getDragData, setDragData } from './hud';
 import { classLineage, skillCheck } from '../core/character';
 import { buyPrice, canEquip, countItem, filterInventory, inventoryWeight, sellPrice } from '../core/inventory';
+import { refineFee, refineOre, simulateRefine, type RefineKind } from '../core/refine';
+import { forgeChanceRaw } from '../core/forge';
+import { DROP_OPTION_COUNT, optionOdds } from '../core/options';
 import { hungerLabel, intimacyLabel, LOYAL_AT } from '../core/pets';
 import { canRaiseStat, expToNextBase, expToNextJob, statRaiseCost } from '../core/formulas';
 import {
@@ -23,6 +26,7 @@ import { compoundTargets, itemDisplayName } from '../core/cards';
 import { canForge, CRUMB_ATK, ELEMENT_STONES, forgeChance, STAR_CRUMB } from '../core/forge';
 import { ENCHANT_COST, MAX_OPTIONS, optionLabel, REROLL_COST } from '../core/options';
 
+type DbTab = 'monsters' | 'items' | 'cards' | 'refine' | 'forge' | 'options' | 'combos' | 'pets' | 'elements';
 export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet';
 
 interface WinState { el: HTMLElement; body: HTMLElement; render: () => void; open: boolean }
@@ -618,7 +622,88 @@ export class WindowManager {
   }
 
   // ---------------------------------------------------------------- database (monsters / items / cards)
-  private db = { tab: 'monsters' as 'monsters' | 'items' | 'cards', q: '', filter: '', sel: '' };
+  private db = { tab: 'monsters' as DbTab, q: '', filter: '', sel: '' };
+  private dbt = { rk: 'w1' as RefineKind, enriched: false, from: 4, to: 10, jl: 50, dex: 60, luk: 30, wl: 1, stone: false, crumbs: 0, pool: 'weapon' as 'weapon' | 'armor' };
+
+  /** Calculator / reference tabs (refine simulator, forge calculator, option odds, combos, pets, element chart). */
+  private renderDbTool(): HTMLElement {
+    const w = this.app.world!, d = w.data, st = this.db, t = this.dbt;
+    const re = () => this.renderDatabase();
+    const num = (id: string, val: number, min: number, max: number, set: (n: number) => void) => {
+      const el = h('input', { type: 'number', id, value: val, min, max, style: 'width:64px' }) as HTMLInputElement;
+      el.addEventListener('change', () => { set(Math.max(min, Math.min(max, Math.floor(Number(el.value) || 0)))); re(); });
+      return el;
+    };
+    const select = <T extends string>(id: string, val: T, opts: [T, string][], set: (v: T) => void) => {
+      const el = h('select', { id }, opts.map(([v, l]) => h('option', { value: v }, l))) as HTMLSelectElement;
+      el.value = val; el.addEventListener('change', () => { set(el.value as T); re(); });
+      return el;
+    };
+    const check = (id: string, val: boolean, set: (v: boolean) => void) => {
+      const el = h('input', { type: 'checkbox', id }) as HTMLInputElement;
+      el.checked = val; el.addEventListener('change', () => { set(el.checked); re(); });
+      return el;
+    };
+    const pct = (x: number) => `${+(x * 100).toFixed(2)}%`;
+    const row = (...c: (HTMLElement | string)[]) => h('div', { class: 'row', style: 'gap:8px;margin:4px 0;align-items:center' }, ...c);
+    const th = (...c: string[]) => h('tr', {}, c.map((x) => h('th', { style: 'text-align:left;padding-right:10px;color:#c8a26b' }, x)));
+    const td = (...c: (string | number)[]) => h('tr', {}, c.map((x) => h('td', { style: 'padding-right:10px' }, String(x))));
+    if (st.tab === 'refine') {
+      const sim = simulateRefine(t.rk, t.from, t.to, t.enriched);
+      const ore = d.items.get(refineOre(t.rk, t.enriched))?.name ?? '';
+      return h('div', { id: 'db-refine' },
+        h('div', { class: 'muted' }, 'Refine simulator. A failure above the safe limit destroys the item, so the totals assume you start again from the "from" level with another copy.'),
+        row('Equipment', select('dbt-rk', t.rk, [['w1', 'Weapon Lv 1'], ['w2', 'Weapon Lv 2'], ['w3', 'Weapon Lv 3'], ['w4', 'Weapon Lv 4'], ['armor', 'Armor']], (v) => { t.rk = v; }),
+          'from +', num('dbt-from', t.from, 0, 9, (n) => { t.from = n; t.to = Math.max(t.to, n + 1); }), 'to +', num('dbt-to', t.to, 1, 10, (n) => { t.to = Math.max(n, t.from + 1); }),
+          h('label', {}, check('dbt-enriched', t.enriched, (v) => { t.enriched = v; }), ' enriched ore')),
+        h('table', { style: 'margin-top:6px' }, th('Step', 'Chance', 'Cumulative'),
+          ...sim.steps.map((s, i) => td(`+${s.level - 1} → +${s.level}`, pct(s.chance), pct(sim.steps.slice(0, i + 1).reduce((a, x) => a * x.chance, 1))))),
+        h('table', { style: 'margin-top:8px' },
+          td('One item survives', pct(sim.survive)),
+          td('Expected items used', Number.isFinite(sim.expectedItems) ? sim.expectedItems.toFixed(2) : '∞'),
+          td(`Expected ${ore}`, Number.isFinite(sim.expectedOre) ? sim.expectedOre.toFixed(1) : '∞'),
+          td('Expected Luma', Number.isFinite(sim.expectedLuma) ? Math.round(sim.expectedLuma).toLocaleString() : '∞'),
+          td('Fee per attempt', `${refineFee(t.rk).toLocaleString()} Luma`)));
+    }
+    if (st.tab === 'forge') {
+      const p = forgeChanceRaw({ jobLevel: t.jl, dex: t.dex, luk: t.luk, weaponLevel: t.wl, stone: t.stone, crumbs: t.crumbs });
+      const mine = h('button', { class: 'btn small', onclick: () => { Object.assign(t, { jl: w.char.jobLevel, dex: w.char.stats.dex, luk: w.char.stats.luk }); re(); } }, 'Use my stats');
+      return h('div', { id: 'db-forge' },
+        h('div', { class: 'muted' }, 'Forge calculator: 50 + Job Lv × 0.2 + DEX × 0.1 + LUK × 0.1 + 20 (forge master) − 20 / 30 for weapon Lv 2 / 3 − 20 with an element stone − 15 per star crumb (5%–100%).'),
+        row('Job Lv', num('dbt-jl', t.jl, 1, 50, (n) => { t.jl = n; }), 'DEX', num('dbt-dex', t.dex, 1, 130, (n) => { t.dex = n; }), 'LUK', num('dbt-luk', t.luk, 0, 130, (n) => { t.luk = n; }), mine),
+        row('Weapon Lv', select('dbt-wl', String(t.wl) as '1' | '2' | '3', [['1', '1'], ['2', '2'], ['3', '3']], (v) => { t.wl = Number(v); }),
+          h('label', {}, check('dbt-stone', t.stone, (v) => { t.stone = v; }), ' element stone'), 'Star crumbs', num('dbt-crumbs', t.crumbs, 0, 3, (n) => { t.crumbs = n; })),
+        h('div', { id: 'dbt-forge-result', style: 'font-size:22px;margin-top:10px;color:#ffd34d' }, `Success: ${pct(p)}`),
+        h('div', { class: 'muted' }, `Recipes: ${[...d.recipes.values()].filter((r) => (d.items.get(r.itemId)?.weaponLevel ?? 1) === t.wl).map((r) => d.items.get(r.itemId)!.name).join(', ') || '—'}`));
+    }
+    if (st.tab === 'options') {
+      return h('div', { id: 'db-options' },
+        h('div', { class: 'muted' }, `Random options on dropped gear: 0 / 1 / 2 / 3 options at ${DROP_OPTION_COUNT.map((x) => `${Math.round(x * 100)}%`).join(' / ')}. Each roll picks from this pool (no duplicates on one item). The enchanter adds one (${ENCHANT_COST.toLocaleString()} Luma) or rerolls all (${REROLL_COST.toLocaleString()}).`),
+        row('Pool', select('dbt-pool', t.pool, [['weapon', 'Weapons'], ['armor', 'Armor & accessories']], (v) => { t.pool = v; })),
+        h('div', { style: 'max-height:300px;overflow:auto' }, h('table', {}, th('Option', 'Range', 'Chance per roll'),
+          ...optionOdds(t.pool).map((o) => td(o.def.label.replace('{v}', 'X'), `${o.def.min}–${o.def.max}`, `${o.pct.toFixed(2)}%`)))));
+    }
+    if (st.tab === 'combos') {
+      return h('div', { id: 'db-combos', style: 'max-height:370px;overflow:auto' }, h('table', {}, th('Combo', 'Parts', 'Bonus'),
+        ...[...d.combos.values()].map((cb) => td(cb.name, cb.parts.map((p) => d.items.get(p)?.name ?? p).join(' + '), modsText(cb.mods).join(', ')))));
+    }
+    if (st.tab === 'pets') {
+      return h('div', { id: 'db-pets', style: 'max-height:370px;overflow:auto' },
+        h('div', { class: 'muted' }, 'Capture chance = (rate + (your Base Lv − monster Lv) × 30 + LUK × 20) × (200 − monster HP%) / 100, in hundredths of a percent.'),
+        h('table', {}, th('Pet', 'Lv', 'Base rate', 'Food', 'Loyal bonus'),
+          ...[...d.pets.values()].map((p) => td(p.name, d.monsters.get(p.monsterId)!.level, `${p.captureRate / 100}%`, d.items.get(p.foodItem)!.name, p.loyalText))));
+    }
+    // elements
+    const lv = String(Math.max(1, Math.min(4, Number(st.filter) || 1)));
+    const tbl = d.elementTables[lv];
+    const order = Object.keys(tbl) as (keyof typeof tbl)[];
+    const color = (v: number) => (v >= 150 ? '#6fe08a' : v > 100 ? '#b8f0a0' : v === 100 ? '#e8e0d0' : v > 0 ? '#ffb070' : '#ff6a5a');
+    return h('div', { id: 'db-elements' },
+      row('Defender element level', select('dbt-ellv', lv as '1' | '2' | '3' | '4', [['1', '1'], ['2', '2'], ['3', '3'], ['4', '4']], (v) => { st.filter = v; })),
+      h('div', { class: 'muted', style: 'font-size:11px' }, 'Rows: attack element. Columns: defender element. Damage in %; negative heals the target.'),
+      h('table', { style: 'font-size:11px;margin-top:4px' }, h('tr', {}, h('th', {}, ''), order.map((e) => h('th', { style: 'padding:2px 4px;color:#c8a26b' }, e.slice(0, 4)))),
+        ...order.map((a) => h('tr', {}, h('th', { style: 'text-align:left;padding-right:6px;color:#c8a26b' }, a), order.map((dd) => h('td', { style: `padding:2px 4px;text-align:right;color:${color(tbl[a][dd])}` }, String(tbl[a][dd])))))));
+  }
   // ---------------------------------------------------------------- pet
   private renderPet() {
     const w = this.app.world!, d = w.data, c = w.char, body = this.wins.get('pet')!.body;
@@ -663,6 +748,14 @@ export class WindowManager {
     }).sort((a, b) => b.chance - a.chance);
     const link = (label: string, tab: typeof st.tab, id: string) => h('a', { href: '#', style: 'color:#7fd6ff', onclick: (e: MouseEvent) => { e.preventDefault(); Object.assign(st, { tab, sel: id }); this.renderDatabase(); } }, label);
 
+    const TABS: [DbTab, string][] = [['monsters', `Monsters (${d.monsters.size})`], ['items', 'Items'], ['cards', 'Cards'], ['refine', 'Refine sim'], ['forge', 'Forge calc'], ['options', 'Options'], ['combos', 'Combos'], ['pets', 'Pets'], ['elements', 'Elements']];
+    const tabs = h('div', { class: 'filters', style: 'flex-wrap:wrap' }, TABS.map(([t, label]) => h('button', {
+      class: `btn small${st.tab === t ? ' active' : ''}`, id: `db-tab-${t}`, onclick: () => { Object.assign(st, { tab: t, filter: '', sel: '' }); this.renderDatabase(); },
+    }, label)));
+    if (!['monsters', 'items', 'cards'].includes(st.tab)) {
+      setChildren(body, h('div', { style: 'width:720px' }, tabs, h('div', { style: 'margin-top:8px;min-height:400px' }, this.renderDbTool())));
+      return;
+    }
     // List
     const q = st.q.toLowerCase();
     let rows: { id: string; label: string; sub: string }[] = [];
@@ -718,9 +811,6 @@ export class WindowManager {
       const usedIn = [...d.recipes.values()].filter((r) => r.materials.some((m) => m.itemId === it.id)).map((r) => itemName(r.itemId));
       if (usedIn.length) detail.push(h('div', { class: 'gold', style: 'margin-top:6px' }, 'Used to forge'), h('div', {}, usedIn.join(', ')));
     }
-    const tabs = h('div', { class: 'filters' }, (['monsters', 'items', 'cards'] as const).map((t) => h('button', {
-      class: `btn small${st.tab === t ? ' active' : ''}`, id: `db-tab-${t}`, onclick: () => { Object.assign(st, { tab: t, filter: '', sel: '' }); this.renderDatabase(); },
-    }, t === 'monsters' ? `Monsters (${d.monsters.size})` : t === 'items' ? 'Items' : 'Cards')));
     setChildren(body, h('div', { style: 'width:720px' }, tabs,
       h('div', { style: 'display:grid;grid-template-columns:240px 1fr;gap:12px;margin-top:6px' },
         h('div', {}, search, filt, list),

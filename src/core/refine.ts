@@ -36,6 +36,30 @@ const FEE: Record<string, number> = { w1: 50, w2: 200, w3: 5000, w4: 20000, armo
 /** ATK added per refine level, by weapon level. */
 export const ATK_PER_REFINE = [2, 3, 5, 7];
 
+export type RefineKind = 'w1' | 'w2' | 'w3' | 'w4' | 'armor';
+/** Success chance for each attempt (index = level reached) for a weapon level / armor, normal or enriched ore. */
+export function refineTable(k: RefineKind, enriched = false): number[] { return (enriched ? ENRICHED : CHANCE)[k]; }
+export function refineFee(k: RefineKind): number { return FEE[k]; }
+export function refineOre(k: RefineKind, enriched = false): string {
+  if (enriched) return k === 'armor' ? ENRICHED_ARMOR_ORE : ENRICHED_WEAPON_ORE;
+  return k === 'armor' ? ARMOR_ORE : WEAPON_ORES[Number(k.slice(1)) - 1];
+}
+
+export interface RefineSim { steps: { level: number; chance: number }[]; survive: number; expectedAttempts: number; expectedItems: number; expectedOre: number; expectedLuma: number }
+/**
+ * Refine simulator (like the database sites' calculators): going from +from to +to,
+ * the chance one item survives, and the expected ore / Luma / items when every
+ * failure destroys the item and you start again from +from with a new one.
+ */
+export function simulateRefine(k: RefineKind, from: number, to: number, enriched = false): RefineSim {
+  const t = refineTable(k, enriched);
+  const steps: { level: number; chance: number }[] = [];
+  let survive = 1, attempts = 0;
+  for (let lv = from + 1; lv <= Math.min(MAX_REFINE, to); lv++) { attempts += survive; survive *= t[lv]; steps.push({ level: lv, chance: t[lv] }); }
+  const items = survive > 0 ? 1 / survive : Infinity;
+  return { steps, survive, expectedAttempts: attempts, expectedItems: items, expectedOre: attempts * items, expectedLuma: attempts * items * FEE[k] };
+}
+
 export function weaponLevel(def: ItemDef): number { return Math.min(4, Math.max(1, def.weaponLevel ?? 1)); }
 const kind = (def: ItemDef) => (def.slot === 'weapon' ? `w${weaponLevel(def)}` : 'armor');
 /** Highest refine level that can never fail. */

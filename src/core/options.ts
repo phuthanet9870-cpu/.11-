@@ -41,6 +41,13 @@ export function optionLabel(o: { key: string; value: number }): string {
   return (def?.label ?? `${o.key} +{v}`).replace('{v}', String(o.value));
 }
 
+/** Each option's chance to be picked for one roll on a weapon or on armor (for the database's option list). */
+export function optionOdds(pool: 'weapon' | 'armor'): { def: OptionDef; pct: number }[] {
+  const list = OPTIONS.filter((o) => o.pool === 'any' || o.pool === pool);
+  const total = list.reduce((a, o) => a + o.weight, 0);
+  return list.map((def) => ({ def, pct: (def.weight / total) * 100 })).sort((a, b) => b.pct - a.pct);
+}
+
 function poolFor(def: ItemDef) { return OPTIONS.filter((o) => o.pool === 'any' || o.pool === (def.slot === 'weapon' ? 'weapon' : 'armor')); }
 
 /** One random option for this item (never a key it already has). `rand` is uniform [0,1). */
