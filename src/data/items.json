@@ -1600,6 +1600,3872 @@
   "cardSlots": 1
  },
  {
+  "id": "tempered_dagger",
+  "name": "Tempered Dirk",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A Lv 30 dagger.",
+  "weight": 50,
+  "price": 10000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "dagger",
+   "color": "#c8d0dc"
+  },
+  "slot": "weapon",
+  "weaponType": "dagger",
+  "attackKind": "melee",
+  "attackIntervalPct": 90,
+  "equipLevel": 30,
+  "attackRange": 52,
+  "mods": {
+   "patk": 110
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 3
+ },
+ {
+  "id": "tempered_sword",
+  "name": "Tempered Blade",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A Lv 30 sword.",
+  "weight": 100,
+  "price": 10000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#c8d0dc"
+  },
+  "slot": "weapon",
+  "weaponType": "sword",
+  "attackKind": "melee",
+  "attackIntervalPct": 100,
+  "equipLevel": 30,
+  "attackRange": 58,
+  "mods": {
+   "patk": 130
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "tempered_twohand_sword",
+  "name": "Tempered Greatsword",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A Lv 30 twohand-sword.",
+  "weight": 160,
+  "price": 10000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#c8d0dc"
+  },
+  "slot": "weapon",
+  "weaponType": "twohand_sword",
+  "attackKind": "melee",
+  "attackIntervalPct": 118,
+  "equipLevel": 30,
+  "attackRange": 64,
+  "twoHanded": true,
+  "mods": {
+   "patk": 170
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "tempered_spear",
+  "name": "Tempered Lance",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A Lv 30 spear.",
+  "weight": 100,
+  "price": 10000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "spear",
+   "color": "#c8d0dc"
+  },
+  "slot": "weapon",
+  "weaponType": "spear",
+  "attackKind": "melee",
+  "attackIntervalPct": 110,
+  "equipLevel": 30,
+  "attackRange": 84,
+  "twoHanded": true,
+  "mods": {
+   "patk": 150
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "tempered_club",
+  "name": "Tempered Mace",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A Lv 30 club.",
+  "weight": 100,
+  "price": 10000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "club",
+   "color": "#c8d0dc"
+  },
+  "slot": "weapon",
+  "weaponType": "club",
+  "attackKind": "melee",
+  "attackIntervalPct": 105,
+  "equipLevel": 30,
+  "attackRange": 54,
+  "mods": {
+   "patk": 135
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "tempered_axe",
+  "name": "Tempered Axe",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A Lv 30 axe.",
+  "weight": 160,
+  "price": 10000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "axe",
+   "color": "#c8d0dc"
+  },
+  "slot": "weapon",
+  "weaponType": "axe",
+  "attackKind": "melee",
+  "attackIntervalPct": 115,
+  "equipLevel": 30,
+  "attackRange": 56,
+  "twoHanded": true,
+  "mods": {
+   "patk": 160
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "tempered_katar",
+  "name": "Tempered Katar",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A Lv 30 katar.",
+  "weight": 100,
+  "price": 10000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#c8d0dc"
+  },
+  "slot": "weapon",
+  "weaponType": "katar",
+  "attackKind": "melee",
+  "attackIntervalPct": 92,
+  "equipLevel": 30,
+  "attackRange": 52,
+  "twoHanded": true,
+  "mods": {
+   "patk": 140
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "tempered_knuckle",
+  "name": "Tempered Knuckles",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A Lv 30 knuckle.",
+  "weight": 100,
+  "price": 10000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#c8d0dc"
+  },
+  "slot": "weapon",
+  "weaponType": "knuckle",
+  "attackKind": "melee",
+  "attackIntervalPct": 85,
+  "equipLevel": 30,
+  "attackRange": 48,
+  "mods": {
+   "patk": 115
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "tempered_bow",
+  "name": "Tempered Longbow",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A Lv 30 bow.",
+  "weight": 100,
+  "price": 10000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "bow",
+   "color": "#c8d0dc"
+  },
+  "slot": "weapon",
+  "weaponType": "bow",
+  "attackKind": "ranged",
+  "attackIntervalPct": 100,
+  "equipLevel": 30,
+  "attackRange": 320,
+  "twoHanded": true,
+  "mods": {
+   "patk": 120
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "tempered_instrument",
+  "name": "Tempered Lute",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A Lv 30 instrument.",
+  "weight": 100,
+  "price": 10000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "wand",
+   "color": "#c8d0dc"
+  },
+  "slot": "weapon",
+  "weaponType": "instrument",
+  "attackKind": "ranged",
+  "attackIntervalPct": 100,
+  "equipLevel": 30,
+  "attackRange": 260,
+  "mods": {
+   "patk": 100
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "tempered_wand",
+  "name": "Tempered Wand",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A Lv 30 wand for casters.",
+  "weight": 50,
+  "price": 10000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "wand",
+   "color": "#c8d0dc"
+  },
+  "slot": "weapon",
+  "weaponType": "wand",
+  "attackKind": "magic",
+  "attackIntervalPct": 105,
+  "equipLevel": 30,
+  "attackRange": 230,
+  "mods": {
+   "patk": 40,
+   "matk": 120
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "tempered_staff",
+  "name": "Tempered Staff",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A Lv 30 staff for casters.",
+  "weight": 100,
+  "price": 10000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "staff",
+   "color": "#c8d0dc"
+  },
+  "slot": "weapon",
+  "weaponType": "staff",
+  "attackKind": "magic",
+  "attackIntervalPct": 110,
+  "equipLevel": 30,
+  "attackRange": 240,
+  "twoHanded": true,
+  "mods": {
+   "patk": 50,
+   "matk": 150
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "tempered_book",
+  "name": "Tempered Tome",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A Lv 30 book.",
+  "weight": 100,
+  "price": 10000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "wand",
+   "color": "#c8d0dc"
+  },
+  "slot": "weapon",
+  "weaponType": "book",
+  "attackKind": "melee",
+  "attackIntervalPct": 100,
+  "equipLevel": 30,
+  "attackRange": 54,
+  "mods": {
+   "patk": 105,
+   "matk": 60
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "tempered_heavy_armor",
+  "name": "Tempered Plate Armor",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Lv 30 heavy armor.",
+  "weight": 60,
+  "price": 5400,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "armor",
+   "color": "#c8d0dc"
+  },
+  "slot": "armor",
+  "equipLevel": 30,
+  "classes": [
+   "knight",
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 34,
+   "maxHp": 120
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "tempered_heavy_headgear",
+  "name": "Tempered Plate Helm",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Lv 30 heavy headgear.",
+  "weight": 60,
+  "price": 1620,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "helm",
+   "color": "#c8d0dc"
+  },
+  "slot": "headgear",
+  "equipLevel": 30,
+  "classes": [
+   "knight",
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 10,
+   "maxHp": 36
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "tempered_heavy_garment",
+  "name": "Tempered Plate Cloak",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Lv 30 heavy garment.",
+  "weight": 60,
+  "price": 1350,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "cape",
+   "color": "#c8d0dc"
+  },
+  "slot": "garment",
+  "equipLevel": 30,
+  "classes": [
+   "knight",
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 9,
+   "maxHp": 30
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "tempered_heavy_boots",
+  "name": "Tempered Plate Boots",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Lv 30 heavy boots.",
+  "weight": 60,
+  "price": 1350,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "boots",
+   "color": "#c8d0dc"
+  },
+  "slot": "boots",
+  "equipLevel": 30,
+  "classes": [
+   "knight",
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 9,
+   "maxHp": 30
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "tempered_light_armor",
+  "name": "Tempered Ranger Armor",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Lv 30 light armor.",
+  "weight": 25,
+  "price": 5400,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "armor",
+   "color": "#c8d0dc"
+  },
+  "slot": "armor",
+  "equipLevel": 30,
+  "classes": [
+   "ranger",
+   "rogue",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 24,
+   "flee": 8
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "tempered_light_headgear",
+  "name": "Tempered Ranger Helm",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Lv 30 light headgear.",
+  "weight": 25,
+  "price": 1620,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "helm",
+   "color": "#c8d0dc"
+  },
+  "slot": "headgear",
+  "equipLevel": 30,
+  "classes": [
+   "ranger",
+   "rogue",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 7,
+   "flee": 2
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "tempered_light_garment",
+  "name": "Tempered Ranger Cloak",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Lv 30 light garment.",
+  "weight": 25,
+  "price": 1350,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "cape",
+   "color": "#c8d0dc"
+  },
+  "slot": "garment",
+  "equipLevel": 30,
+  "classes": [
+   "ranger",
+   "rogue",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 6,
+   "flee": 2
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "tempered_light_boots",
+  "name": "Tempered Ranger Boots",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Lv 30 light boots.",
+  "weight": 25,
+  "price": 1350,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "boots",
+   "color": "#c8d0dc"
+  },
+  "slot": "boots",
+  "equipLevel": 30,
+  "classes": [
+   "ranger",
+   "rogue",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 6,
+   "flee": 2
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "tempered_robe_armor",
+  "name": "Tempered Mystic Robe",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Lv 30 robe armor.",
+  "weight": 25,
+  "price": 5400,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "robe",
+   "color": "#c8d0dc"
+  },
+  "slot": "armor",
+  "equipLevel": 30,
+  "classes": [
+   "mage",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 14,
+   "mdef": 18,
+   "maxMp": 80
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "tempered_robe_headgear",
+  "name": "Tempered Mystic Helm",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Lv 30 robe headgear.",
+  "weight": 25,
+  "price": 1620,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "helm",
+   "color": "#c8d0dc"
+  },
+  "slot": "headgear",
+  "equipLevel": 30,
+  "classes": [
+   "mage",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 4,
+   "mdef": 5,
+   "maxMp": 24
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "tempered_robe_garment",
+  "name": "Tempered Mystic Cloak",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Lv 30 robe garment.",
+  "weight": 25,
+  "price": 1350,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "cape",
+   "color": "#c8d0dc"
+  },
+  "slot": "garment",
+  "equipLevel": 30,
+  "classes": [
+   "mage",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 4,
+   "mdef": 5,
+   "maxMp": 20
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "tempered_robe_boots",
+  "name": "Tempered Mystic Boots",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Lv 30 robe boots.",
+  "weight": 25,
+  "price": 1350,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "boots",
+   "color": "#c8d0dc"
+  },
+  "slot": "boots",
+  "equipLevel": 30,
+  "classes": [
+   "mage",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 4,
+   "mdef": 5,
+   "maxMp": 20
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "tempered_shield",
+  "name": "Tempered Shield",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Lv 30 shield.",
+  "weight": 80,
+  "price": 4500,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "shield",
+   "color": "#c8d0dc"
+  },
+  "slot": "shield",
+  "equipLevel": 30,
+  "mods": {
+   "pdef": 12,
+   "maxHp": 60
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm"
+  ],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "tempered_ring",
+  "name": "Tempered Ring",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Lv 30 ring.",
+  "weight": 5,
+  "price": 4500,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "ring",
+   "color": "#ffd34d"
+  },
+  "slot": "accessory",
+  "equipLevel": 30,
+  "mods": {
+   "str": 2,
+   "dex": 2,
+   "maxHp": 40
+  },
+  "soldIn": [],
+  "dropBand": [
+   25,
+   45
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_dagger",
+  "name": "Runed Dirk",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 45 dagger.",
+  "weight": 50,
+  "price": 21025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "dagger",
+   "color": "#7fd6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "dagger",
+  "attackKind": "melee",
+  "attackIntervalPct": 90,
+  "equipLevel": 45,
+  "attackRange": 52,
+  "mods": {
+   "patk": 160
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_sword",
+  "name": "Runed Blade",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 45 sword.",
+  "weight": 100,
+  "price": 21025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#7fd6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "sword",
+  "attackKind": "melee",
+  "attackIntervalPct": 100,
+  "equipLevel": 45,
+  "attackRange": 58,
+  "mods": {
+   "patk": 189
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_twohand_sword",
+  "name": "Runed Greatsword",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 45 twohand-sword.",
+  "weight": 160,
+  "price": 21025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#7fd6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "twohand_sword",
+  "attackKind": "melee",
+  "attackIntervalPct": 118,
+  "equipLevel": 45,
+  "attackRange": 64,
+  "twoHanded": true,
+  "mods": {
+   "patk": 247
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_spear",
+  "name": "Runed Lance",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 45 spear.",
+  "weight": 100,
+  "price": 21025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "spear",
+   "color": "#7fd6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "spear",
+  "attackKind": "melee",
+  "attackIntervalPct": 110,
+  "equipLevel": 45,
+  "attackRange": 84,
+  "twoHanded": true,
+  "mods": {
+   "patk": 218
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_club",
+  "name": "Runed Mace",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 45 club.",
+  "weight": 100,
+  "price": 21025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "club",
+   "color": "#7fd6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "club",
+  "attackKind": "melee",
+  "attackIntervalPct": 105,
+  "equipLevel": 45,
+  "attackRange": 54,
+  "mods": {
+   "patk": 196
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_axe",
+  "name": "Runed Axe",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 45 axe.",
+  "weight": 160,
+  "price": 21025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "axe",
+   "color": "#7fd6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "axe",
+  "attackKind": "melee",
+  "attackIntervalPct": 115,
+  "equipLevel": 45,
+  "attackRange": 56,
+  "twoHanded": true,
+  "mods": {
+   "patk": 232
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_katar",
+  "name": "Runed Katar",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 45 katar.",
+  "weight": 100,
+  "price": 21025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#7fd6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "katar",
+  "attackKind": "melee",
+  "attackIntervalPct": 92,
+  "equipLevel": 45,
+  "attackRange": 52,
+  "twoHanded": true,
+  "mods": {
+   "patk": 203
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_knuckle",
+  "name": "Runed Knuckles",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 45 knuckle.",
+  "weight": 100,
+  "price": 21025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#7fd6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "knuckle",
+  "attackKind": "melee",
+  "attackIntervalPct": 85,
+  "equipLevel": 45,
+  "attackRange": 48,
+  "mods": {
+   "patk": 167
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_bow",
+  "name": "Runed Longbow",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 45 bow.",
+  "weight": 100,
+  "price": 21025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "bow",
+   "color": "#7fd6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "bow",
+  "attackKind": "ranged",
+  "attackIntervalPct": 100,
+  "equipLevel": 45,
+  "attackRange": 320,
+  "twoHanded": true,
+  "mods": {
+   "patk": 174
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_instrument",
+  "name": "Runed Lute",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 45 instrument.",
+  "weight": 100,
+  "price": 21025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "wand",
+   "color": "#7fd6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "instrument",
+  "attackKind": "ranged",
+  "attackIntervalPct": 100,
+  "equipLevel": 45,
+  "attackRange": 260,
+  "mods": {
+   "patk": 145
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_wand",
+  "name": "Runed Wand",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 45 wand for casters.",
+  "weight": 50,
+  "price": 21025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "wand",
+   "color": "#7fd6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "wand",
+  "attackKind": "magic",
+  "attackIntervalPct": 105,
+  "equipLevel": 45,
+  "attackRange": 230,
+  "mods": {
+   "patk": 58,
+   "matk": 174
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_staff",
+  "name": "Runed Staff",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 45 staff for casters.",
+  "weight": 100,
+  "price": 21025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "staff",
+   "color": "#7fd6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "staff",
+  "attackKind": "magic",
+  "attackIntervalPct": 110,
+  "equipLevel": 45,
+  "attackRange": 240,
+  "twoHanded": true,
+  "mods": {
+   "patk": 73,
+   "matk": 218
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_book",
+  "name": "Runed Tome",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 45 book.",
+  "weight": 100,
+  "price": 21025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "wand",
+   "color": "#7fd6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "book",
+  "attackKind": "melee",
+  "attackIntervalPct": 100,
+  "equipLevel": 45,
+  "attackRange": 54,
+  "mods": {
+   "patk": 152,
+   "matk": 87
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_heavy_armor",
+  "name": "Runed Plate Armor",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 45 heavy armor.",
+  "weight": 60,
+  "price": 11354,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "armor",
+   "color": "#7fd6ff"
+  },
+  "slot": "armor",
+  "equipLevel": 45,
+  "classes": [
+   "knight",
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 49,
+   "maxHp": 174
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_heavy_headgear",
+  "name": "Runed Plate Helm",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 45 heavy headgear.",
+  "weight": 60,
+  "price": 3406,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "helm",
+   "color": "#7fd6ff"
+  },
+  "slot": "headgear",
+  "equipLevel": 45,
+  "classes": [
+   "knight",
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 15,
+   "maxHp": 52
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_heavy_garment",
+  "name": "Runed Plate Cloak",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 45 heavy garment.",
+  "weight": 60,
+  "price": 2838,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "cape",
+   "color": "#7fd6ff"
+  },
+  "slot": "garment",
+  "equipLevel": 45,
+  "classes": [
+   "knight",
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 12,
+   "maxHp": 44
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_heavy_boots",
+  "name": "Runed Plate Boots",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 45 heavy boots.",
+  "weight": 60,
+  "price": 2838,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "boots",
+   "color": "#7fd6ff"
+  },
+  "slot": "boots",
+  "equipLevel": 45,
+  "classes": [
+   "knight",
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 12,
+   "maxHp": 44
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_light_armor",
+  "name": "Runed Ranger Armor",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 45 light armor.",
+  "weight": 25,
+  "price": 11354,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "armor",
+   "color": "#7fd6ff"
+  },
+  "slot": "armor",
+  "equipLevel": 45,
+  "classes": [
+   "ranger",
+   "rogue",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 35,
+   "flee": 12
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_light_headgear",
+  "name": "Runed Ranger Helm",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 45 light headgear.",
+  "weight": 25,
+  "price": 3406,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "helm",
+   "color": "#7fd6ff"
+  },
+  "slot": "headgear",
+  "equipLevel": 45,
+  "classes": [
+   "ranger",
+   "rogue",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 11,
+   "flee": 4
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_light_garment",
+  "name": "Runed Ranger Cloak",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 45 light garment.",
+  "weight": 25,
+  "price": 2838,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "cape",
+   "color": "#7fd6ff"
+  },
+  "slot": "garment",
+  "equipLevel": 45,
+  "classes": [
+   "ranger",
+   "rogue",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 9,
+   "flee": 3
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_light_boots",
+  "name": "Runed Ranger Boots",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 45 light boots.",
+  "weight": 25,
+  "price": 2838,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "boots",
+   "color": "#7fd6ff"
+  },
+  "slot": "boots",
+  "equipLevel": 45,
+  "classes": [
+   "ranger",
+   "rogue",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 9,
+   "flee": 3
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_robe_armor",
+  "name": "Runed Mystic Robe",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 45 robe armor.",
+  "weight": 25,
+  "price": 11354,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "robe",
+   "color": "#7fd6ff"
+  },
+  "slot": "armor",
+  "equipLevel": 45,
+  "classes": [
+   "mage",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 20,
+   "mdef": 26,
+   "maxMp": 116
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_robe_headgear",
+  "name": "Runed Mystic Helm",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 45 robe headgear.",
+  "weight": 25,
+  "price": 3406,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "helm",
+   "color": "#7fd6ff"
+  },
+  "slot": "headgear",
+  "equipLevel": 45,
+  "classes": [
+   "mage",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 6,
+   "mdef": 8,
+   "maxMp": 35
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_robe_garment",
+  "name": "Runed Mystic Cloak",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 45 robe garment.",
+  "weight": 25,
+  "price": 2838,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "cape",
+   "color": "#7fd6ff"
+  },
+  "slot": "garment",
+  "equipLevel": 45,
+  "classes": [
+   "mage",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 5,
+   "mdef": 7,
+   "maxMp": 29
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_robe_boots",
+  "name": "Runed Mystic Boots",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 45 robe boots.",
+  "weight": 25,
+  "price": 2838,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "boots",
+   "color": "#7fd6ff"
+  },
+  "slot": "boots",
+  "equipLevel": 45,
+  "classes": [
+   "mage",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 5,
+   "mdef": 7,
+   "maxMp": 29
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm",
+   "tidewatch"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_shield",
+  "name": "Runed Shield",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 45 shield.",
+  "weight": 80,
+  "price": 9461,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "shield",
+   "color": "#c8d0dc"
+  },
+  "slot": "shield",
+  "equipLevel": 45,
+  "mods": {
+   "pdef": 17,
+   "maxHp": 87
+  },
+  "soldIn": [
+   "sandara",
+   "frostholm"
+  ],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "runed_ring",
+  "name": "Runed Ring",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 45 ring.",
+  "weight": 5,
+  "price": 9461,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "ring",
+   "color": "#ffd34d"
+  },
+  "slot": "accessory",
+  "equipLevel": 45,
+  "mods": {
+   "str": 3,
+   "dex": 3,
+   "maxHp": 58
+  },
+  "soldIn": [],
+  "dropBand": [
+   40,
+   60
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_dagger",
+  "name": "Starforged Dirk",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 60 dagger.",
+  "weight": 50,
+  "price": 38025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "dagger",
+   "color": "#ffd34d"
+  },
+  "slot": "weapon",
+  "weaponType": "dagger",
+  "attackKind": "melee",
+  "attackIntervalPct": 90,
+  "equipLevel": 60,
+  "attackRange": 52,
+  "mods": {
+   "patk": 215,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_sword",
+  "name": "Starforged Blade",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 60 sword.",
+  "weight": 100,
+  "price": 38025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#ffd34d"
+  },
+  "slot": "weapon",
+  "weaponType": "sword",
+  "attackKind": "melee",
+  "attackIntervalPct": 100,
+  "equipLevel": 60,
+  "attackRange": 58,
+  "mods": {
+   "patk": 254,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_twohand_sword",
+  "name": "Starforged Greatsword",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 60 twohand-sword.",
+  "weight": 160,
+  "price": 38025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#ffd34d"
+  },
+  "slot": "weapon",
+  "weaponType": "twohand_sword",
+  "attackKind": "melee",
+  "attackIntervalPct": 118,
+  "equipLevel": 60,
+  "attackRange": 64,
+  "twoHanded": true,
+  "mods": {
+   "patk": 332,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_spear",
+  "name": "Starforged Lance",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 60 spear.",
+  "weight": 100,
+  "price": 38025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "spear",
+   "color": "#ffd34d"
+  },
+  "slot": "weapon",
+  "weaponType": "spear",
+  "attackKind": "melee",
+  "attackIntervalPct": 110,
+  "equipLevel": 60,
+  "attackRange": 84,
+  "twoHanded": true,
+  "mods": {
+   "patk": 293,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_club",
+  "name": "Starforged Mace",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 60 club.",
+  "weight": 100,
+  "price": 38025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "club",
+   "color": "#ffd34d"
+  },
+  "slot": "weapon",
+  "weaponType": "club",
+  "attackKind": "melee",
+  "attackIntervalPct": 105,
+  "equipLevel": 60,
+  "attackRange": 54,
+  "mods": {
+   "patk": 263,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_axe",
+  "name": "Starforged Axe",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 60 axe.",
+  "weight": 160,
+  "price": 38025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "axe",
+   "color": "#ffd34d"
+  },
+  "slot": "weapon",
+  "weaponType": "axe",
+  "attackKind": "melee",
+  "attackIntervalPct": 115,
+  "equipLevel": 60,
+  "attackRange": 56,
+  "twoHanded": true,
+  "mods": {
+   "patk": 312,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_katar",
+  "name": "Starforged Katar",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 60 katar.",
+  "weight": 100,
+  "price": 38025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#ffd34d"
+  },
+  "slot": "weapon",
+  "weaponType": "katar",
+  "attackKind": "melee",
+  "attackIntervalPct": 92,
+  "equipLevel": 60,
+  "attackRange": 52,
+  "twoHanded": true,
+  "mods": {
+   "patk": 273,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_knuckle",
+  "name": "Starforged Knuckles",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 60 knuckle.",
+  "weight": 100,
+  "price": 38025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#ffd34d"
+  },
+  "slot": "weapon",
+  "weaponType": "knuckle",
+  "attackKind": "melee",
+  "attackIntervalPct": 85,
+  "equipLevel": 60,
+  "attackRange": 48,
+  "mods": {
+   "patk": 224,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_bow",
+  "name": "Starforged Longbow",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 60 bow.",
+  "weight": 100,
+  "price": 38025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "bow",
+   "color": "#ffd34d"
+  },
+  "slot": "weapon",
+  "weaponType": "bow",
+  "attackKind": "ranged",
+  "attackIntervalPct": 100,
+  "equipLevel": 60,
+  "attackRange": 320,
+  "twoHanded": true,
+  "mods": {
+   "patk": 234,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_instrument",
+  "name": "Starforged Lute",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 60 instrument.",
+  "weight": 100,
+  "price": 38025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "wand",
+   "color": "#ffd34d"
+  },
+  "slot": "weapon",
+  "weaponType": "instrument",
+  "attackKind": "ranged",
+  "attackIntervalPct": 100,
+  "equipLevel": 60,
+  "attackRange": 260,
+  "mods": {
+   "patk": 195,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_wand",
+  "name": "Starforged Wand",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 60 wand for casters.",
+  "weight": 50,
+  "price": 38025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "wand",
+   "color": "#ffd34d"
+  },
+  "slot": "weapon",
+  "weaponType": "wand",
+  "attackKind": "magic",
+  "attackIntervalPct": 105,
+  "equipLevel": 60,
+  "attackRange": 230,
+  "mods": {
+   "patk": 78,
+   "matk": 234,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_staff",
+  "name": "Starforged Staff",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 60 staff for casters.",
+  "weight": 100,
+  "price": 38025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "staff",
+   "color": "#ffd34d"
+  },
+  "slot": "weapon",
+  "weaponType": "staff",
+  "attackKind": "magic",
+  "attackIntervalPct": 110,
+  "equipLevel": 60,
+  "attackRange": 240,
+  "twoHanded": true,
+  "mods": {
+   "patk": 98,
+   "matk": 293,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_book",
+  "name": "Starforged Tome",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "A Lv 60 book.",
+  "weight": 100,
+  "price": 38025,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "wand",
+   "color": "#ffd34d"
+  },
+  "slot": "weapon",
+  "weaponType": "book",
+  "attackKind": "melee",
+  "attackIntervalPct": 100,
+  "equipLevel": 60,
+  "attackRange": 54,
+  "mods": {
+   "patk": 205,
+   "matk": 117,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_heavy_armor",
+  "name": "Starforged Plate Armor",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 60 heavy armor.",
+  "weight": 60,
+  "price": 20534,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "armor",
+   "color": "#ffd34d"
+  },
+  "slot": "armor",
+  "equipLevel": 60,
+  "classes": [
+   "knight",
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 66,
+   "maxHp": 234
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_heavy_headgear",
+  "name": "Starforged Plate Helm",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 60 heavy headgear.",
+  "weight": 60,
+  "price": 6160,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "helm",
+   "color": "#ffd34d"
+  },
+  "slot": "headgear",
+  "equipLevel": 60,
+  "classes": [
+   "knight",
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 20,
+   "maxHp": 70
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_heavy_garment",
+  "name": "Starforged Plate Cloak",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 60 heavy garment.",
+  "weight": 60,
+  "price": 5133,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "cape",
+   "color": "#ffd34d"
+  },
+  "slot": "garment",
+  "equipLevel": 60,
+  "classes": [
+   "knight",
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 17,
+   "maxHp": 59
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_heavy_boots",
+  "name": "Starforged Plate Boots",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 60 heavy boots.",
+  "weight": 60,
+  "price": 5133,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "boots",
+   "color": "#ffd34d"
+  },
+  "slot": "boots",
+  "equipLevel": 60,
+  "classes": [
+   "knight",
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 17,
+   "maxHp": 59
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_light_armor",
+  "name": "Starforged Ranger Armor",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 60 light armor.",
+  "weight": 25,
+  "price": 20534,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "armor",
+   "color": "#ffd34d"
+  },
+  "slot": "armor",
+  "equipLevel": 60,
+  "classes": [
+   "ranger",
+   "rogue",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 47,
+   "flee": 16
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_light_headgear",
+  "name": "Starforged Ranger Helm",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 60 light headgear.",
+  "weight": 25,
+  "price": 6160,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "helm",
+   "color": "#ffd34d"
+  },
+  "slot": "headgear",
+  "equipLevel": 60,
+  "classes": [
+   "ranger",
+   "rogue",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 14,
+   "flee": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_light_garment",
+  "name": "Starforged Ranger Cloak",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 60 light garment.",
+  "weight": 25,
+  "price": 5133,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "cape",
+   "color": "#ffd34d"
+  },
+  "slot": "garment",
+  "equipLevel": 60,
+  "classes": [
+   "ranger",
+   "rogue",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 12,
+   "flee": 4
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_light_boots",
+  "name": "Starforged Ranger Boots",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 60 light boots.",
+  "weight": 25,
+  "price": 5133,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "boots",
+   "color": "#ffd34d"
+  },
+  "slot": "boots",
+  "equipLevel": 60,
+  "classes": [
+   "ranger",
+   "rogue",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 12,
+   "flee": 4
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_robe_armor",
+  "name": "Starforged Mystic Robe",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 60 robe armor.",
+  "weight": 25,
+  "price": 20534,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "robe",
+   "color": "#ffd34d"
+  },
+  "slot": "armor",
+  "equipLevel": 60,
+  "classes": [
+   "mage",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 27,
+   "mdef": 35,
+   "maxMp": 156
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_robe_headgear",
+  "name": "Starforged Mystic Helm",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 60 robe headgear.",
+  "weight": 25,
+  "price": 6160,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "helm",
+   "color": "#ffd34d"
+  },
+  "slot": "headgear",
+  "equipLevel": 60,
+  "classes": [
+   "mage",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 8,
+   "mdef": 11,
+   "maxMp": 47
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_robe_garment",
+  "name": "Starforged Mystic Cloak",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 60 robe garment.",
+  "weight": 25,
+  "price": 5133,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "cape",
+   "color": "#ffd34d"
+  },
+  "slot": "garment",
+  "equipLevel": 60,
+  "classes": [
+   "mage",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 7,
+   "mdef": 9,
+   "maxMp": 39
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_robe_boots",
+  "name": "Starforged Mystic Boots",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 60 robe boots.",
+  "weight": 25,
+  "price": 5133,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "boots",
+   "color": "#ffd34d"
+  },
+  "slot": "boots",
+  "equipLevel": 60,
+  "classes": [
+   "mage",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 7,
+   "mdef": 9,
+   "maxMp": 39
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_shield",
+  "name": "Starforged Shield",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 60 shield.",
+  "weight": 80,
+  "price": 17111,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "shield",
+   "color": "#c8d0dc"
+  },
+  "slot": "shield",
+  "equipLevel": 60,
+  "mods": {
+   "pdef": 23,
+   "maxHp": 117
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "starforged_ring",
+  "name": "Starforged Ring",
+  "type": "equipment",
+  "rarity": "rare",
+  "description": "Lv 60 ring.",
+  "weight": 5,
+  "price": 17111,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "ring",
+   "color": "#ffd34d"
+  },
+  "slot": "accessory",
+  "equipLevel": 60,
+  "mods": {
+   "str": 4,
+   "dex": 4,
+   "maxHp": 78
+  },
+  "soldIn": [],
+  "dropBand": [
+   55,
+   75
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_dagger",
+  "name": "Mythril Dirk",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "A Lv 75 dagger.",
+  "weight": 50,
+  "price": 62500,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "dagger",
+   "color": "#c9a6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "dagger",
+  "attackKind": "melee",
+  "attackIntervalPct": 90,
+  "equipLevel": 75,
+  "attackRange": 52,
+  "mods": {
+   "patk": 275,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_sword",
+  "name": "Mythril Blade",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "A Lv 75 sword.",
+  "weight": 100,
+  "price": 62500,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#c9a6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "sword",
+  "attackKind": "melee",
+  "attackIntervalPct": 100,
+  "equipLevel": 75,
+  "attackRange": 58,
+  "mods": {
+   "patk": 325,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_twohand_sword",
+  "name": "Mythril Greatsword",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "A Lv 75 twohand-sword.",
+  "weight": 160,
+  "price": 62500,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#c9a6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "twohand_sword",
+  "attackKind": "melee",
+  "attackIntervalPct": 118,
+  "equipLevel": 75,
+  "attackRange": 64,
+  "twoHanded": true,
+  "mods": {
+   "patk": 425,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_spear",
+  "name": "Mythril Lance",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "A Lv 75 spear.",
+  "weight": 100,
+  "price": 62500,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "spear",
+   "color": "#c9a6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "spear",
+  "attackKind": "melee",
+  "attackIntervalPct": 110,
+  "equipLevel": 75,
+  "attackRange": 84,
+  "twoHanded": true,
+  "mods": {
+   "patk": 375,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_club",
+  "name": "Mythril Mace",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "A Lv 75 club.",
+  "weight": 100,
+  "price": 62500,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "club",
+   "color": "#c9a6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "club",
+  "attackKind": "melee",
+  "attackIntervalPct": 105,
+  "equipLevel": 75,
+  "attackRange": 54,
+  "mods": {
+   "patk": 338,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_axe",
+  "name": "Mythril Axe",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "A Lv 75 axe.",
+  "weight": 160,
+  "price": 62500,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "axe",
+   "color": "#c9a6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "axe",
+  "attackKind": "melee",
+  "attackIntervalPct": 115,
+  "equipLevel": 75,
+  "attackRange": 56,
+  "twoHanded": true,
+  "mods": {
+   "patk": 400,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_katar",
+  "name": "Mythril Katar",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "A Lv 75 katar.",
+  "weight": 100,
+  "price": 62500,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#c9a6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "katar",
+  "attackKind": "melee",
+  "attackIntervalPct": 92,
+  "equipLevel": 75,
+  "attackRange": 52,
+  "twoHanded": true,
+  "mods": {
+   "patk": 350,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_knuckle",
+  "name": "Mythril Knuckles",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "A Lv 75 knuckle.",
+  "weight": 100,
+  "price": 62500,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#c9a6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "knuckle",
+  "attackKind": "melee",
+  "attackIntervalPct": 85,
+  "equipLevel": 75,
+  "attackRange": 48,
+  "mods": {
+   "patk": 288,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_bow",
+  "name": "Mythril Longbow",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "A Lv 75 bow.",
+  "weight": 100,
+  "price": 62500,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "bow",
+   "color": "#c9a6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "bow",
+  "attackKind": "ranged",
+  "attackIntervalPct": 100,
+  "equipLevel": 75,
+  "attackRange": 320,
+  "twoHanded": true,
+  "mods": {
+   "patk": 300,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_instrument",
+  "name": "Mythril Lute",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "A Lv 75 instrument.",
+  "weight": 100,
+  "price": 62500,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "wand",
+   "color": "#c9a6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "instrument",
+  "attackKind": "ranged",
+  "attackIntervalPct": 100,
+  "equipLevel": 75,
+  "attackRange": 260,
+  "mods": {
+   "patk": 250,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_wand",
+  "name": "Mythril Wand",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "A Lv 75 wand for casters.",
+  "weight": 50,
+  "price": 62500,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "wand",
+   "color": "#c9a6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "wand",
+  "attackKind": "magic",
+  "attackIntervalPct": 105,
+  "equipLevel": 75,
+  "attackRange": 230,
+  "mods": {
+   "patk": 100,
+   "matk": 300,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_staff",
+  "name": "Mythril Staff",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "A Lv 75 staff for casters.",
+  "weight": 100,
+  "price": 62500,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "staff",
+   "color": "#c9a6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "staff",
+  "attackKind": "magic",
+  "attackIntervalPct": 110,
+  "equipLevel": 75,
+  "attackRange": 240,
+  "twoHanded": true,
+  "mods": {
+   "patk": 125,
+   "matk": 375,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_book",
+  "name": "Mythril Tome",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "A Lv 75 book.",
+  "weight": 100,
+  "price": 62500,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "wand",
+   "color": "#c9a6ff"
+  },
+  "slot": "weapon",
+  "weaponType": "book",
+  "attackKind": "melee",
+  "attackIntervalPct": 100,
+  "equipLevel": 75,
+  "attackRange": 54,
+  "mods": {
+   "patk": 263,
+   "matk": 150,
+   "hit": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "weaponLevel": 4,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_heavy_armor",
+  "name": "Mythril Plate Armor",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "Lv 75 heavy armor.",
+  "weight": 60,
+  "price": 33750,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "armor",
+   "color": "#c9a6ff"
+  },
+  "slot": "armor",
+  "equipLevel": 75,
+  "classes": [
+   "knight",
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 85,
+   "maxHp": 300
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_heavy_headgear",
+  "name": "Mythril Plate Helm",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "Lv 75 heavy headgear.",
+  "weight": 60,
+  "price": 10125,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "helm",
+   "color": "#c9a6ff"
+  },
+  "slot": "headgear",
+  "equipLevel": 75,
+  "classes": [
+   "knight",
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 26,
+   "maxHp": 90
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_heavy_garment",
+  "name": "Mythril Plate Cloak",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "Lv 75 heavy garment.",
+  "weight": 60,
+  "price": 8438,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "cape",
+   "color": "#c9a6ff"
+  },
+  "slot": "garment",
+  "equipLevel": 75,
+  "classes": [
+   "knight",
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 21,
+   "maxHp": 75
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_heavy_boots",
+  "name": "Mythril Plate Boots",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "Lv 75 heavy boots.",
+  "weight": 60,
+  "price": 8438,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "boots",
+   "color": "#c9a6ff"
+  },
+  "slot": "boots",
+  "equipLevel": 75,
+  "classes": [
+   "knight",
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 21,
+   "maxHp": 75
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_light_armor",
+  "name": "Mythril Ranger Armor",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "Lv 75 light armor.",
+  "weight": 25,
+  "price": 33750,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "armor",
+   "color": "#c9a6ff"
+  },
+  "slot": "armor",
+  "equipLevel": 75,
+  "classes": [
+   "ranger",
+   "rogue",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 60,
+   "flee": 20
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_light_headgear",
+  "name": "Mythril Ranger Helm",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "Lv 75 light headgear.",
+  "weight": 25,
+  "price": 10125,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "helm",
+   "color": "#c9a6ff"
+  },
+  "slot": "headgear",
+  "equipLevel": 75,
+  "classes": [
+   "ranger",
+   "rogue",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 18,
+   "flee": 6
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_light_garment",
+  "name": "Mythril Ranger Cloak",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "Lv 75 light garment.",
+  "weight": 25,
+  "price": 8438,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "cape",
+   "color": "#c9a6ff"
+  },
+  "slot": "garment",
+  "equipLevel": 75,
+  "classes": [
+   "ranger",
+   "rogue",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 15,
+   "flee": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_light_boots",
+  "name": "Mythril Ranger Boots",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "Lv 75 light boots.",
+  "weight": 25,
+  "price": 8438,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "boots",
+   "color": "#c9a6ff"
+  },
+  "slot": "boots",
+  "equipLevel": 75,
+  "classes": [
+   "ranger",
+   "rogue",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 15,
+   "flee": 5
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_robe_armor",
+  "name": "Mythril Mystic Robe",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "Lv 75 robe armor.",
+  "weight": 25,
+  "price": 33750,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "robe",
+   "color": "#c9a6ff"
+  },
+  "slot": "armor",
+  "equipLevel": 75,
+  "classes": [
+   "mage",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 35,
+   "mdef": 45,
+   "maxMp": 200
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_robe_headgear",
+  "name": "Mythril Mystic Helm",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "Lv 75 robe headgear.",
+  "weight": 25,
+  "price": 10125,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "helm",
+   "color": "#c9a6ff"
+  },
+  "slot": "headgear",
+  "equipLevel": 75,
+  "classes": [
+   "mage",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 11,
+   "mdef": 14,
+   "maxMp": 60
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_robe_garment",
+  "name": "Mythril Mystic Cloak",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "Lv 75 robe garment.",
+  "weight": 25,
+  "price": 8438,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "cape",
+   "color": "#c9a6ff"
+  },
+  "slot": "garment",
+  "equipLevel": 75,
+  "classes": [
+   "mage",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 9,
+   "mdef": 11,
+   "maxMp": 50
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_robe_boots",
+  "name": "Mythril Mystic Boots",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "Lv 75 robe boots.",
+  "weight": 25,
+  "price": 8438,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "boots",
+   "color": "#c9a6ff"
+  },
+  "slot": "boots",
+  "equipLevel": 75,
+  "classes": [
+   "mage",
+   "cleric"
+  ],
+  "mods": {
+   "pdef": 9,
+   "mdef": 11,
+   "maxMp": 50
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_shield",
+  "name": "Mythril Shield",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "Lv 75 shield.",
+  "weight": 80,
+  "price": 28125,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "shield",
+   "color": "#c8d0dc"
+  },
+  "slot": "shield",
+  "equipLevel": 75,
+  "mods": {
+   "pdef": 30,
+   "maxHp": 150
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "mythril_ring",
+  "name": "Mythril Ring",
+  "type": "equipment",
+  "rarity": "epic",
+  "description": "Lv 75 ring.",
+  "weight": 5,
+  "price": 28125,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "ring",
+   "color": "#ffd34d"
+  },
+  "slot": "accessory",
+  "equipLevel": 75,
+  "mods": {
+   "str": 5,
+   "dex": 5,
+   "maxHp": 100
+  },
+  "soldIn": [],
+  "dropBand": [
+   70,
+   90
+  ],
+  "jobgen": true,
+  "cardSlots": 1
+ },
+ {
+  "id": "bronze_katar",
+  "name": "Bronze Katar",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A starter katar for second jobs.",
+  "weight": 60,
+  "price": 3000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#c8a26b"
+  },
+  "slot": "weapon",
+  "weaponType": "katar",
+  "attackKind": "melee",
+  "attackIntervalPct": 92,
+  "equipLevel": 20,
+  "attackRange": 52,
+  "twoHanded": true,
+  "mods": {
+   "patk": 80
+  },
+  "soldIn": [
+   "aurelion",
+   "sandara",
+   "tidewatch",
+   "fernhollow",
+   "arcanthe"
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "wrapped_knuckles",
+  "name": "Wrapped Knuckles",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A starter knuckle for second jobs.",
+  "weight": 60,
+  "price": 3000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "sword",
+   "color": "#c8a26b"
+  },
+  "slot": "weapon",
+  "weaponType": "knuckle",
+  "attackKind": "melee",
+  "attackIntervalPct": 85,
+  "equipLevel": 20,
+  "attackRange": 48,
+  "mods": {
+   "patk": 65
+  },
+  "soldIn": [
+   "aurelion",
+   "sandara",
+   "tidewatch",
+   "fernhollow",
+   "arcanthe"
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "traveler_lute",
+  "name": "Traveler's Lute",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A starter instrument for second jobs.",
+  "weight": 60,
+  "price": 3000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "wand",
+   "color": "#c8a26b"
+  },
+  "slot": "weapon",
+  "weaponType": "instrument",
+  "attackKind": "ranged",
+  "attackIntervalPct": 100,
+  "equipLevel": 20,
+  "attackRange": 250,
+  "mods": {
+   "patk": 60
+  },
+  "soldIn": [
+   "aurelion",
+   "sandara",
+   "tidewatch",
+   "fernhollow",
+   "arcanthe"
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "scholar_tome",
+  "name": "Scholar's Tome",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A starter book for second jobs.",
+  "weight": 60,
+  "price": 3000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "wand",
+   "color": "#c8a26b"
+  },
+  "slot": "weapon",
+  "weaponType": "book",
+  "attackKind": "melee",
+  "attackIntervalPct": 100,
+  "equipLevel": 20,
+  "attackRange": 54,
+  "mods": {
+   "patk": 60,
+   "matk": 30
+  },
+  "soldIn": [
+   "aurelion",
+   "sandara",
+   "tidewatch",
+   "fernhollow",
+   "arcanthe"
+  ],
+  "jobgen": true,
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
   "id": "dusk_bat_wing",
   "name": "Dusk Bat Wing",
   "type": "material",

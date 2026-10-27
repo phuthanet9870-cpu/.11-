@@ -1,6 +1,7 @@
 // Inventory, equipment, storage and shop operations on CharacterState.
 // Every operation validates first and only mutates when it can fully succeed,
 // so a failed call never leaves items half-moved (no duplication / loss).
+import { classLineage } from './lineage';
 import type { GameData } from './data';
 import { slotForItem } from './formulas';
 import type { CharacterState, EquipSlot, ItemDef, ItemInstance, ItemType } from './types';
@@ -139,7 +140,7 @@ export function canDiscard(data: GameData, inst: ItemInstance): OpResult {
 export function canEquip(data: GameData, c: CharacterState, def: ItemDef): OpResult {
   if (def.type !== 'equipment' || !def.slot) return fail('That item cannot be equipped.');
   if ((def.equipLevel ?? 1) > c.baseLevel) return fail(`Requires base level ${def.equipLevel}.`);
-  if (def.classes && !def.classes.includes(c.classId)) {
+  if (def.classes && !classLineage(data, c.classId).some((id) => def.classes!.includes(id))) {
     const names = def.classes.map((id) => data.classes.get(id)?.name ?? id).join(', ');
     return fail(`Only ${names} can equip this.`);
   }

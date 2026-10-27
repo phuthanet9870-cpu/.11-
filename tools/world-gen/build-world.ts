@@ -162,7 +162,7 @@ function monsterDef(s: MonSpec, scale = 1): J {
     defense: Math.round(lv * 1.1), magicDefense: Math.round(lv * 0.6), hit: Math.round(lv * 1.6 + 10), flee: Math.round(lv * 1.4 + 5),
     exp, jobExp: Math.round(exp * 0.75), attackRange: ranged ? 220 : boss ? 70 : 38, attackIntervalMs: boss ? 1300 : ranged ? 2000 : 1500,
     moveSpeed: s.shape === 'bat' || s.shape === 'wolf' ? 120 : s.shape === 'golem' || s.shape === 'slime' ? 55 : 80,
-    aiType: s.ai, ...(s.ai !== 'passive' && s.ai !== 'assist' ? { aggroRange: boss ? 360 : 200 } : {}), ...(boss ? { leashRange: 900, bossId: '' } : {}),
+    aiType: s.ai, ...(s.ai !== 'passive' && s.ai !== 'assist' ? { aggroRange: boss ? 360 : 200 } : {}), ...(boss ? { leashRange: 2200, bossId: '' } : {}),
     respawnSeconds: boss ? 600 : 14, dropTableId: `${s.id}_drops`, collisionRadius: boss ? 30 : big ? 16 : 12,
     ...(s.projectile ? { projectile: { element: s.element === 'undead' ? 'shadow' : s.element, color: s.projectile } } : {}),
     ...(s.status ? { onHitStatus: { status: s.status[0], chance: s.status[1], durationMs: s.status[2] } } : {}),
@@ -691,6 +691,30 @@ export async function main() {
   wb.npcs.push({ npcId: 'willowbrook_courier', x: 27, y: 24, facing: 'down' });
   wb.region = REG.wb; hand.sunny_meadow.region = REG.wb; hand.whispering_forest.region = REG.wb;
   wb.worldMapPos = { x: 0.19, y: 0.6 }; hand.sunny_meadow.worldMapPos = { x: 0.29, y: 0.59 }; hand.whispering_forest.worldMapPos = { x: 0.31, y: 0.43 };
+
+  // ---------------------------------------------------------------- second-job masters, Oracle of Rebirth, gear placement
+  const classes = read('classes.json');
+  const perTown: Record<string, number> = {};
+  for (const cls of classes.filter((c: J) => c.guildMaster)) {
+    const g = cls.guildMaster, idx = (perTown[g.town] = (perTown[g.town] ?? 0) + 1) - 1;
+    const parentName = classes.find((c: J) => c.id === cls.parent)?.name ?? cls.parent;
+    npcs.push(npc(`guild_${cls.id}`, g.name, g.title, hash(cls.id), cls.outfit.style, [{ type: 'jobChange', classIds: [cls.id] }],
+      [`${cls.description} Come back as a ${parentName} of Job Level ${cls.requirements.jobLevel} and I will promote you.`]));
+    built.find((b) => b.map.id === g.town)!.map.npcs.push({ npcId: `guild_${cls.id}`, x: [14, 18, 26, 30][idx], y: 28, facing: 'down' });
+  }
+  const highs = classes.filter((c: J) => c.tier === 3 || (c.inherits && c.id !== 'high_novice')).map((c: J) => c.id);
+  npcs.push(npc('oracle_rebirth', 'Oracle Seraphel', 'Oracle of Rebirth', 4242, 'robe', [{ type: 'rebirth' }, { type: 'jobChange', classIds: highs }],
+    ['At Base Level 99 and Job Level 50 a second job may be reborn: you start again as a High Novice with 100 stat points, and your body grows stronger (+25% HP and MP).',
+      'Reborn ones return to me to take their High job, and later the transcendent job of the path they walked before.']));
+  built.find((b) => b.map.id === 'aurelion')!.map.npcs.push({ npcId: 'oracle_rebirth', x: 22, y: 28, facing: 'down' });
+  for (const it of items) {
+    for (const town of it.soldIn ?? []) { const sh = shops.find((x: J) => x.id === `${town}_arms`); if (sh && !sh.items.includes(it.id)) sh.items.push(it.id); }
+    if (it.dropBand) for (const m of monsters) {
+      if (m.aiType === 'boss' || m.level < it.dropBand[0] || m.level > it.dropBand[1] || hash(m.id + it.id) % 3) continue;
+      const t = drops.find((d: J) => d.id === m.dropTableId);
+      if (t && !t.entries.some((e: J) => e.itemId === it.id)) t.entries.push({ itemId: it.id, chance: m.elite ? 0.02 : 0.002, oreHint: true });
+    }
+  }
 
   // ---------------------------------------------------------------- memorial dungeons (timed instances)
   const INSTANCES = [

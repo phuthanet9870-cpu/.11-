@@ -245,6 +245,18 @@
    "x": 38,
    "y": 32,
    "facing": "down"
+  },
+  {
+   "npcId": "guild_sorcerer",
+   "x": 14,
+   "y": 28,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_sage",
+   "x": 18,
+   "y": 28,
+   "facing": "down"
   }
  ],
  "monsterSpawns": [],

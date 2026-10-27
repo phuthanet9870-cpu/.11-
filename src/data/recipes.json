@@ -299,5 +299,392 @@
    }
   ],
   "fee": 1800
+ },
+ {
+  "id": "forge_tempered_dagger",
+  "itemId": "tempered_dagger",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "crypt_bat_wing",
+    "qty": 8
+   },
+   {
+    "itemId": "arcane_wisp_ectoplasm",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_tempered_sword",
+  "itemId": "tempered_sword",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "mirage_wisp_ectoplasm",
+    "qty": 8
+   },
+   {
+    "itemId": "animated_armor_bone_shard",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_tempered_twohand_sword",
+  "itemId": "tempered_twohand_sword",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "moon_hare_tuft_of_fur",
+    "qty": 8
+   },
+   {
+    "itemId": "mana_wisp_ectoplasm",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_tempered_spear",
+  "itemId": "tempered_spear",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "grotto_crab_shell",
+    "qty": 8
+   },
+   {
+    "itemId": "drowned_spirit_ectoplasm",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_tempered_club",
+  "itemId": "tempered_club",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "oasis_crab_shell",
+    "qty": 8
+   },
+   {
+    "itemId": "mirage_wisp_ectoplasm",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_tempered_axe",
+  "itemId": "tempered_axe",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "gilded_scarab_venom_tail",
+    "qty": 8
+   },
+   {
+    "itemId": "tomb_bat_wing",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_tempered_katar",
+  "itemId": "tempered_katar",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "wailing_spirit_ectoplasm",
+    "qty": 8
+   },
+   {
+    "itemId": "reef_gull_wing",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_tempered_knuckle",
+  "itemId": "tempered_knuckle",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "mist_spore_spore_dust",
+    "qty": 8
+   },
+   {
+    "itemId": "oasis_crab_shell",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_tempered_bow",
+  "itemId": "tempered_bow",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "reef_gull_wing",
+    "qty": 8
+   },
+   {
+    "itemId": "wailing_spirit_ectoplasm",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_tempered_instrument",
+  "itemId": "tempered_instrument",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "bramble_hornet_stinger",
+    "qty": 8
+   },
+   {
+    "itemId": "arcane_wisp_ectoplasm",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_tempered_wand",
+  "itemId": "tempered_wand",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "pine_goblin_tusk",
+    "qty": 8
+   },
+   {
+    "itemId": "oasis_crab_shell",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_tempered_staff",
+  "itemId": "tempered_staff",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "arcane_wisp_ectoplasm",
+    "qty": 8
+   },
+   {
+    "itemId": "gilded_scarab_venom_tail",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_tempered_book",
+  "itemId": "tempered_book",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "grotto_crab_shell",
+    "qty": 8
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_bronze_katar",
+  "itemId": "bronze_katar",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "tomb_mummy_bone_shard",
+    "qty": 8
+   },
+   {
+    "itemId": "elder_mushling_spore_cap",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_wrapped_knuckles",
+  "itemId": "wrapped_knuckles",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "lantern_ghost_ectoplasm",
+    "qty": 8
+   },
+   {
+    "itemId": "shadow_wolf_fang",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_traveler_lute",
+  "itemId": "traveler_lute",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "bramble_hornet_stinger",
+    "qty": 8
+   },
+   {
+    "itemId": "reef_gull_wing",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_scholar_tome",
+  "itemId": "scholar_tome",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "lantern_ghost_ectoplasm",
+    "qty": 8
+   },
+   {
+    "itemId": "pine_goblin_tusk",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
  }
 ]

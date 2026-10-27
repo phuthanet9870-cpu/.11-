@@ -11,7 +11,7 @@ import {
   addItem, buyItem, canAddItem, canDiscard, depositToStorage, equipItem, findInstance, inventoryWeight,
   removeByUid, sellItem, sortInventory, toggleLock, unequipItem, withdrawFromStorage, type OpResult,
 } from './inventory';
-import { allocateStat, changeJob, learnSkill, resetSkills, resetStats } from './character';
+import { allocateStat, changeJob, learnSkill, rebirth, resetSkills, resetStats } from './character';
 import { refineItem, type RefineResult } from './refine';
 import { captureChance, feedPet, hatchEgg, petForMonster, petMods, petOwnerDied, renamePet, returnToEgg, tickPet, newPetState } from './pets';
 import { compoundCard } from './cards';
@@ -120,6 +120,7 @@ export interface MonsterActor extends ActorBase {
   tauntUntil: number;
   /** A thief already stole from this monster. */
   stolen?: boolean;
+  mugged?: boolean;
   /** Items a looter monster picked up; dropped when it dies. */
   loot?: { itemId: string; qty: number; options?: { key: string; value: number }[] }[];
 }
@@ -1396,7 +1397,7 @@ export class World {
     const pt = this.randomSpawnPoint(m.spawnGroup);
     Object.assign(m, {
       x: pt.x, y: pt.y, hp: m.def.maxHp, dead: false, state: 'idle', stateUntil: this.time + 1500, targetId: null,
-      threat: {}, damageBy: {}, statuses: [], buffs: [], move: null, kb: null, respawnAt: 0, loot: [], stolen: false,
+      threat: {}, damageBy: {}, statuses: [], buffs: [], move: null, kb: null, respawnAt: 0, loot: [], stolen: false, mugged: false,
     });
     m.home = { x: pt.x, y: pt.y };
     this.setAnim(m, 'idle');
@@ -1821,10 +1822,26 @@ export class World {
         }
         case 'dash':
           break;
+        case 'endow': {
+          p.buffs = p.buffs.filter((b) => !b.endow);
+          this.addBuff(p, { id: `endow_${e.element}`, name: skill.name, mods: {}, durationMs: e.durationMs + (e.perLevelMs ?? 0) * (level - 1), color: skill.icon.color, endow: e.element });
+          this.message(`Your weapon is now ${e.element}.`);
+          break;
+        }
         case 'cure': {
           const n = this.cureStatuses(p, e.statuses);
           if (n) this.message('You feel cleansed.');
           this.emit({ type: 'fx', fx: 'cure', x: p.x, y: p.y, targetId: 'player' });
+          break;
+        }
+        case 'mug': {
+          for (const m of lastTargets) {
+            if (m.mugged || m.boss) continue;
+            m.mugged = true;
+            const gain = Math.round(m.def.level * (level * e.perLevel + this.stats.totalStats.luk / 10));
+            this.char.luma += gain;
+            this.message(`You pocket ${gain} Luma.`, 'loot');
+          }
           break;
         }
         case 'steal': {
@@ -2124,6 +2141,21 @@ export class World {
     this.recomputeStats();
     this.message(r.message!, 'quest');
     this.emit({ type: 'jobChanged', classId });
+    this.emit({ type: 'fx', fx: 'job_change', x: this.player.x, y: this.player.y });
+    this.emit({ type: 'sound', key: 'level_up' });
+    return r;
+  }
+
+  rebirthAt(): OpResult {
+    if (!this.nearService((s) => s.type === 'rebirth')) return this.err('Only the Oracle of Rebirth can do this.');
+    const r = rebirth(this.data, this.char);
+    if (!r.ok) return this.err(r.error);
+    // Gear the High Novice can no longer wear goes back to the bag.
+    for (const slot of EQUIP_SLOTS) { const inst = this.char.equipment[slot]; if (inst) { delete this.char.equipment[slot]; this.char.inventory.push(inst); } }
+    this.recomputeStats();
+    this.char.hp = this.stats.maxHp; this.char.mp = this.stats.maxMp; this.player.hp = this.char.hp;
+    this.message(r.message!, 'quest');
+    this.emit({ type: 'jobChanged', classId: 'high_novice' });
     this.emit({ type: 'fx', fx: 'job_change', x: this.player.x, y: this.player.y });
     this.emit({ type: 'sound', key: 'level_up' });
     return r;

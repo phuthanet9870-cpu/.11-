@@ -276,6 +276,36 @@
    "facing": "down"
   },
   {
+   "npcId": "guild_dragoon",
+   "x": 14,
+   "y": 28,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_templar",
+   "x": 18,
+   "y": 28,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_bishop",
+   "x": 26,
+   "y": 28,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_ascetic",
+   "x": 30,
+   "y": 28,
+   "facing": "down"
+  },
+  {
+   "npcId": "oracle_rebirth",
+   "x": 22,
+   "y": 28,
+   "facing": "down"
+  },
+  {
    "npcId": "spire_warden",
    "x": 30,
    "y": 32,

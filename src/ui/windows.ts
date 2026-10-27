@@ -6,7 +6,7 @@ import { itemIconUrl, skillIconUrl } from '../game/art/icons';
 import { generateCharacterSheet, portraitFromSheet } from '../game/art/characterSprite';
 import { lookForCharacter, SpritePreview } from './screens';
 import { getDragData, setDragData } from './hud';
-import { classLineage, skillCheck } from '../core/character';
+import { canRebirth, classLineage, skillCheck } from '../core/character';
 import { buyPrice, canEquip, countItem, filterInventory, inventoryWeight, sellPrice } from '../core/inventory';
 import { refineFee, refineOre, simulateRefine, type RefineKind } from '../core/refine';
 import { forgeChanceRaw } from '../core/forge';
@@ -902,6 +902,17 @@ export class WindowManager {
       if (s.type === 'enchant') opts.push(['Enchant equipment', () => { this.closeDialog(); this.enchantDialog(); }]);
       if (s.type === 'forge') opts.push(['Forge a weapon', () => { this.closeDialog(); this.forgeDialog(); }]);
       if (s.type === 'warp') opts.push(['Warp service', () => this.warpDialog(npc, s.destinations)]);
+      if (s.type === 'rebirth') {
+        const chk = canRebirth(w.data, w.char);
+        opts.push([`Be reborn${chk.ok ? '' : ` (${chk.error})`}`, () => {
+          this.closeDialog();
+          if (!chk.ok) { this.app.hud?.banner('Not yet', chk.error); return; }
+          this.confirmTyped('Rebirth', 'You become a High Novice at Base Level 1 with 100 stat points. Skills are reset and your gear goes back to the bag. Type REBORN to continue.', 'REBORN', 'Be reborn', () => {
+            const r = w.rebirthAt();
+            if (r.ok) this.app.hud?.banner('Reborn!', 'You are a High Novice. +25% HP and MP for the rest of this life.');
+          });
+        }]);
+      }
       if (s.type === 'instance') {
         const ins = w.data.instances.get(s.instanceId)!;
         const cd = w.instanceCooldownLeft(ins.id);
@@ -914,6 +925,8 @@ export class WindowManager {
       if (s.type === 'jobChange') for (const id of s.classIds) {
         const cls = w.data.classes.get(id)!;
         const req = cls.requirements ?? {};
+        // NPCs offering many jobs (the Oracle) only list the ones open to your current class and path.
+        if (s.classIds.length > 1 && (req.fromClass !== w.char.classId || (req.rebornFrom && req.rebornFrom !== w.char.flags.rebornFrom))) continue;
         opts.push([`Become a ${cls.name}${req.jobLevel ? ` (needs Job Lv ${req.jobLevel})` : ''}`, () => {
           this.closeDialog();
           this.confirmAction(`Become a ${cls.name}`, `${cls.description} Your job level resets to 1; base level, stats and learned skills are kept.`, 'Change job', () => {

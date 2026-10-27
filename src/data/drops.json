@@ -665,6 +665,61 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_shield",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -701,6 +756,11 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -860,6 +920,51 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -901,6 +1006,61 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -937,6 +1097,41 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -978,6 +1173,76 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1014,6 +1279,41 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1127,6 +1427,46 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1163,6 +1503,26 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1199,6 +1559,71 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1240,6 +1665,66 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_shield",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1281,6 +1766,56 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1322,6 +1857,56 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_shield",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1363,6 +1948,46 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1404,6 +2029,66 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1445,6 +2130,56 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1486,6 +2221,36 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1527,6 +2292,76 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_shield",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_shield",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1573,6 +2408,76 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1609,6 +2514,51 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1773,6 +2723,21 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1814,6 +2779,61 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1855,6 +2875,51 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_shield",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1901,6 +2966,116 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_shield",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1947,6 +3122,96 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -1993,6 +3258,41 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "runed_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -2039,6 +3339,61 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "runed_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -2085,6 +3440,41 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "runed_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -2131,6 +3521,91 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "runed_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_shield",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -2177,6 +3652,106 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "runed_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_shield",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -2223,6 +3798,106 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "runed_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -2269,6 +3944,46 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -2315,6 +4030,71 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_shield",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -2361,6 +4141,81 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_shield",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_ring",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -2402,6 +4257,106 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "runed_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_shield",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -2443,6 +4398,66 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -2484,6 +4499,41 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "starforged_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -2525,6 +4575,21 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_garment",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -2566,6 +4631,51 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_shield",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_ring",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -2607,6 +4717,106 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "starforged_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_shield",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -2648,6 +4858,46 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "mythril_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_ring",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -2689,6 +4939,56 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "mythril_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -3006,6 +5306,51 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_shield",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.02,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -3050,6 +5395,46 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.02,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -3094,6 +5479,36 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.02,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -3143,6 +5558,51 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.02,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -3197,6 +5657,106 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_club",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_knuckle",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_dagger",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_sword",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_spear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_knuckle",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_bow",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_garment",
+    "chance": 0.02,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -3246,6 +5806,41 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_book",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.02,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -3300,6 +5895,26 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "runed_dagger",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_instrument",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_headgear",
+    "chance": 0.02,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -3354,6 +5969,61 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "starforged_dagger",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_twohand_sword",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_club",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_katar",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_wand",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_boots",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_ring",
+    "chance": 0.02,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -3403,6 +6073,91 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "starforged_axe",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_knuckle",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_instrument",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_boots",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_dagger",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_twohand_sword",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_instrument",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_book",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_heavy_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_heavy_boots",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_boots",
+    "chance": 0.02,
+    "oreHint": true
    }
   ],
   "generated": true
@@ -3452,6 +6207,56 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "mythril_dagger",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_sword",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_spear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_katar",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_staff",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_book",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_light_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_boots",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_ring",
+    "chance": 0.02,
+    "oreHint": true
    }
   ],
   "generated": true

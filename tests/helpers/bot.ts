@@ -267,6 +267,8 @@ export function fightBoss(bot: Bot, maxMs = 600_000, kite = 0): boolean {
   const boss = [...w.monsters.values()].find((m) => m.boss && !m.dead);
   if (!boss) return false;
   w.attack(boss.id);
+  // Kiting gives up for a while when the player is cornered (no real distance gained).
+  let kiteFrom: { x: number; y: number; at: number } | null = null, noKiteUntil = 0;
   bot.runUntil(() => {
     if (w.player.dead || boss.dead || !w.monsters.has(boss.id)) return true;
     bot.potionCheck();
@@ -278,8 +280,13 @@ export function fightBoss(bot: Bot, maxMs = 600_000, kite = 0): boolean {
     const minion = [...w.monsters.values()].find((m) => m.summoned && !m.dead);
     const target = minion ?? boss;
     // Ranged classes step back when the boss is in melee range.
-    if (kite && !w.player.cast && Math.hypot(boss.x - w.player.x, boss.y - w.player.y) < kite && w.player.intent.type !== 'move') {
+    if (kiteFrom && w.time - kiteFrom.at > 1500) {
+      if (Math.hypot(w.player.x - kiteFrom.x, w.player.y - kiteFrom.y) < 60) { noKiteUntil = w.time + 4000; w.attack(target.id); }
+      kiteFrom = null;
+    }
+    if (kite && w.time > noKiteUntil && !w.player.cast && Math.hypot(boss.x - w.player.x, boss.y - w.player.y) < kite && w.player.intent.type !== 'move') {
       const ang = Math.atan2(w.player.y - boss.y, w.player.x - boss.x);
+      kiteFrom ??= { x: w.player.x, y: w.player.y, at: w.time };
       w.moveTo(w.player.x + Math.cos(ang) * 130, w.player.y + Math.sin(ang) * 130);
       return false;
     }

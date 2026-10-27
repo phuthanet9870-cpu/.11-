@@ -183,10 +183,11 @@ export function computeDerivedStats(data: GameData, c: CharacterState, runtimeMo
   const attackKind = weapon?.attackKind ?? 'melee';
   const pct = (n: number | undefined) => 1 + (n ?? 0) / 100;
 
+  const trans = cls.hpMpMul ?? 1;
   const maxHp = Math.max(1, Math.floor(
-    (Math.floor((B.hpBase + L * cls.hpPerLevel) * (1 + (vit * B.hpVitPct) / 100)) + (mods.maxHp ?? 0)) * pct(mods.maxHpPct)));
+    (Math.floor((B.hpBase + L * cls.hpPerLevel) * trans * (1 + (vit * B.hpVitPct) / 100)) + (mods.maxHp ?? 0)) * pct(mods.maxHpPct)));
   const maxMp = Math.max(1, Math.floor(
-    (Math.floor((B.mpBase + L * cls.mpPerLevel) * (1 + (int * B.mpIntPct) / 100)) + (mods.maxMp ?? 0)) * pct(mods.maxMpPct)));
+    (Math.floor((B.mpBase + L * cls.mpPerLevel) * trans * (1 + (int * B.mpIntPct) / 100)) + (mods.maxMp ?? 0)) * pct(mods.maxMpPct)));
 
   const unarmed = weapon ? 0 : data.balance.combat.unarmedAtk;
   const patk = Math.max(1, Math.floor(

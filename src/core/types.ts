@@ -63,10 +63,15 @@ export interface StatModifiers {
 export interface JobClassDef {
   id: string;
   name: string;
-  tier: 0 | 1 | 2;
+  /** 0 Novice, 1 first job, 2 second job, 3 transcendent. */
+  tier: 0 | 1 | 2 | 3;
   role: string;
   description: string;
   parent?: string;
+  /** Reborn classes keep the skills and gear rights of this class (and its lineage). */
+  inherits?: string;
+  /** Transcendent bonus: max HP/MP multiplier. */
+  hpMpMul?: number;
   maxJobLevel: number;
   hpPerLevel: number;
   mpPerLevel: number;
@@ -74,11 +79,13 @@ export interface JobClassDef {
   weaponTypes: string[];
   skills: string[];
   /** Requirements to change into this job. */
-  requirements?: { jobLevel?: number; baseLevel?: number; fromClass?: string; questId?: string };
+  requirements?: { jobLevel?: number; baseLevel?: number; fromClass?: string; questId?: string; rebornFrom?: string };
   /** Job bonus stats: character N (s/a/v/i/d/l or '.') is the stat gained at job level N+1. */
   jobBonus?: string;
   /** Extra carrying capacity for this job. */
   weightBonus?: number;
+  /** Where this job's guild master stands (generated second jobs). */
+  guildMaster?: { town: string; name: string; title: string };
   outfit: { primary: string; secondary: string; accent: string; style: string };
 }
 
@@ -99,8 +106,12 @@ export type SkillEffect =
       status?: StatusId; statusChance?: number; statusDurationMs?: number }
   | { type: 'dash'; distance: number }
   | { type: 'cure'; statuses: StatusId[] }
+  /** Give the caster's weapon an element for a while (Sage-style endow). */
+  | { type: 'endow'; element: Element; durationMs: number; perLevelMs?: number }
   /** Try to take one item from the target's drop table (once per monster). */
   | { type: 'steal'; chance: number; perLevel: number }
+  /** Pocket Luma from the target: level × (skill level × perLevel + LUK / 10), once per monster. */
+  | { type: 'mug'; perLevel: number }
   | { type: 'line'; length: number; width: number };
 
 export interface SkillDef {
@@ -451,6 +462,7 @@ export type NpcService =
   | { type: 'storage' }
   | { type: 'heal'; cost: number }
   | { type: 'jobChange'; classIds: string[] }
+  | { type: 'rebirth' }
   | { type: 'instance'; instanceId: string }
   | { type: 'refine' }
   | { type: 'forge' }

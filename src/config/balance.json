@@ -154,6 +154,26 @@
         "small": 50,
         "medium": 75,
         "large": 100
+      },
+      "katar": {
+        "small": 75,
+        "medium": 100,
+        "large": 75
+      },
+      "knuckle": {
+        "small": 100,
+        "medium": 100,
+        "large": 75
+      },
+      "instrument": {
+        "small": 75,
+        "medium": 100,
+        "large": 75
+      },
+      "book": {
+        "small": 100,
+        "medium": 100,
+        "large": 50
       }
     }
   },

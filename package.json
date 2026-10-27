@@ -19,7 +19,8 @@
     "demo:batch001": "npm run build && node tests/e2e/batch001-demo.mjs",
     "assets:ai:generate": "node tools/asset-studio/scripts/run.mjs ./tools/asset-studio/src/ai/generate.ts",
     "assets:ai:import": "node tools/asset-studio/scripts/run.mjs ./tools/asset-studio/src/ai/import.ts",
-    "world:build": "node tools/asset-studio/scripts/run.mjs ./tools/world-gen/build-world.ts"
+    "world:build": "node tools/asset-studio/scripts/run.mjs ./tools/world-gen/build-world.ts",
+    "jobs:build": "node tools/asset-studio/scripts/run.mjs ./tools/world-gen/build-jobs.ts"
   },
   "license": "UNLICENSED",
   "dependencies": {

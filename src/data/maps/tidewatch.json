@@ -239,6 +239,18 @@
    "x": 38,
    "y": 32,
    "facing": "down"
+  },
+  {
+   "npcId": "guild_artisan",
+   "x": 14,
+   "y": 28,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_alchemist",
+   "x": 18,
+   "y": 28,
+   "facing": "down"
   }
  ],
  "monsterSpawns": [],

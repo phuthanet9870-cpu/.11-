@@ -1515,6 +1515,417 @@
   "generated": true
  },
  {
+  "id": "guild_dragoon",
+  "name": "Sir Caldus",
+  "title": "Dragoon Captain",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "spiky",
+   "hairColor": "#a35d30",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#e8dcc0",
+   "accent": "#e8dcc0",
+   "style": "plate"
+  },
+  "greeting": [
+   "Knights who ride war-drakes and break lines with the spear. Come back as a Knight of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "dragoon"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_templar",
+  "name": "Dame Ysolde",
+  "title": "Templar Commander",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "plate"
+  },
+  "greeting": [
+   "Shield-bearing knights sworn to the dawn; holy strikes and unbreakable defence. Come back as a Knight of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "templar"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_beastmaster",
+  "name": "Old Brannoc",
+  "title": "Beastmaster Elder",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "hood"
+  },
+  "greeting": [
+   "Rangers who hunt with traps and a trained falcon. Come back as a Ranger of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "beastmaster"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_minstrel",
+  "name": "Lysander",
+  "title": "Master of Songs",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "ponytail",
+   "hairColor": "#a35d30",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "coat"
+  },
+  "greeting": [
+   "Travelling musicians whose songs strengthen and whose arrows sing. Come back as a Ranger of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "minstrel"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_sorcerer",
+  "name": "Archmagus Theron",
+  "title": "Sorcerer Council",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "robe"
+  },
+  "greeting": [
+   "Mages who master storms, quakes and walls of ice. Come back as a Mage of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "sorcerer"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_sage",
+  "name": "Scholar Imre",
+  "title": "Sage Academy Dean",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#a35d30",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "robe"
+  },
+  "greeting": [
+   "Scholars of every element who endow weapons and hit with the book. Come back as a Mage of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "sage"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_bishop",
+  "name": "Bishop Aurenne",
+  "title": "Bishop of the Dawn",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "ponytail",
+   "hairColor": "#2a2a3a",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "robe"
+  },
+  "greeting": [
+   "High clerics: great heals, blessings and holy judgement. Come back as a Cleric of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "bishop"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_ascetic",
+  "name": "Master Kaito",
+  "title": "Ascetic of the Peak",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "long",
+   "hairColor": "#e8d090",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Clerics who left the chapel for the mountain, fighting with fists and spirit. Come back as a Cleric of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "ascetic"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_shadowblade",
+  "name": "The Veiled One",
+  "title": "Shadowblade Guild",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#a35d30",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "coat"
+  },
+  "greeting": [
+   "Rogues who kill from the shadows with katars and poison. Come back as a Rogue of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "shadowblade"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_outlaw",
+  "name": "Jax Silverhand",
+  "title": "Outlaw Boss",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "ponytail",
+   "hairColor": "#a35d30",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "coat"
+  },
+  "greeting": [
+   "Rogues who rob, strip and outsmart, with blade or bow. Come back as a Rogue of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "outlaw"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_artisan",
+  "name": "Forge-master Brenna",
+  "title": "Artisan Guild",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "apron"
+  },
+  "greeting": [
+   "Merchants turned smiths: they forge better and fight with heavy weapons. Come back as a Merchant of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "artisan"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_alchemist",
+  "name": "Professor Quill",
+  "title": "Alchemy Guild",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "long",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#e8dcc0",
+   "accent": "#e8dcc0",
+   "style": "apron"
+  },
+  "greeting": [
+   "Merchants of the laboratory: acid, fire flasks and an artificial life-form. Come back as a Merchant of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "alchemist"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "oracle_rebirth",
+  "name": "Oracle Seraphel",
+  "title": "Oracle of Rebirth",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "bob",
+   "hairColor": "#a35d30",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "robe"
+  },
+  "greeting": [
+   "At Base Level 99 and Job Level 50 a second job may be reborn: you start again as a High Novice with 100 stat points, and your body grows stronger (+25% HP and MP).",
+   "Reborn ones return to me to take their High job, and later the transcendent job of the path they walked before."
+  ],
+  "services": [
+   {
+    "type": "rebirth"
+   },
+   {
+    "type": "jobChange",
+    "classIds": [
+     "high_knight",
+     "high_ranger",
+     "high_mage",
+     "high_cleric",
+     "high_rogue",
+     "high_merchant",
+     "dragon_lord",
+     "high_templar",
+     "wildlord",
+     "maestro",
+     "archsorcerer",
+     "archsage",
+     "archbishop",
+     "grandmaster",
+     "shadow_reaper",
+     "phantom_outlaw",
+     "mastersmith",
+     "grand_alchemist"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
   "id": "spire_warden",
   "name": "Warden Isolde",
   "title": "Keeper of the Endless Spire",

@@ -245,6 +245,18 @@
    "x": 31,
    "y": 21,
    "facing": "down"
+  },
+  {
+   "npcId": "guild_beastmaster",
+   "x": 14,
+   "y": 28,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_minstrel",
+   "x": 18,
+   "y": 28,
+   "facing": "down"
   }
  ],
  "monsterSpawns": [],

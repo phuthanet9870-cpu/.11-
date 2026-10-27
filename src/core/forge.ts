@@ -31,7 +31,9 @@ export function forgeChanceRaw(o: { jobLevel: number; dex: number; luk: number; 
 export function forgeChance(data: GameData, c: CharacterState, choice: ForgeChoice): number {
   const r = data.recipes.get(choice.recipeId);
   if (!r) return 0;
-  return forgeChanceRaw({ jobLevel: c.jobLevel, dex: c.stats.dex, luk: c.stats.luk, weaponLevel: data.items.get(r.itemId)?.weaponLevel ?? 1, stone: !!choice.stone, crumbs: choice.crumbs ?? 0 });
+  const p = forgeChanceRaw({ jobLevel: c.jobLevel, dex: c.stats.dex, luk: c.stats.luk, weaponLevel: data.items.get(r.itemId)?.weaponLevel ?? 1, stone: !!choice.stone, crumbs: choice.crumbs ?? 0 });
+  // Artisans' Smithing skill: +1% per level.
+  return Math.min(1, p + (c.skills.smithing ?? 0) / 100);
 }
 
 export function canForge(data: GameData, c: CharacterState, choice: ForgeChoice): OpResult {
