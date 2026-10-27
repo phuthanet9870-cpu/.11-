@@ -159,7 +159,7 @@ try {
 
   // ---------------------------------------------------------------- Novice idle
   let p = await playerSprite();
-  check('player uses the composed Batch 001 Novice texture', p.key.startsWith('bc_novice_') && p.key.endsWith('_idle'), p.key);
+  check('player uses the Batch 001 Novice texture (layered or composite)', /^(bc_novice_.*_idle|file:characters\/novice\/novice_idle_sheet\.png)$/.test(p.key), p.key);
   check('player sprite pivot is the feet baseline (61/64) at the world position', Math.abs(p.oy - 61 / 64) < 1e-6 && p.x === Math.round(p.px) && p.y === Math.round(p.py), `origin ${p.ox},${p.oy.toFixed(4)} sprite ${p.x},${p.y} world ${p.px.toFixed(1)},${p.py.toFixed(1)}`);
   const idle = await samplePlayer(900);
   check('idle animation cycles through its 5 frames', new Set(idle.map((s) => s.frame)).size === 5, `frames ${[...new Set(idle.map((s) => s.frame))].join(',')}`);
@@ -234,7 +234,7 @@ try {
     const sl = fight.slash, ht = fight.hit, at = fight.attack;
     check(`${id}: sword slash VFX centred on the target`, !!sl && Math.abs(sl.x - sl.tx) <= 2 && Math.abs(sl.y - (sl.ty - 12)) <= 2 && sl.blend === 0, JSON.stringify(sl));
     check(`${id}: hit VFX on the target`, !!ht, JSON.stringify(ht));
-    check(`${id}: player plays the Novice attack animation facing the monster`, !!at && at.key.endsWith('_attack') && at.dir === at.toward && at.row === ['down', 'left', 'right', 'up'].indexOf(at.dir), at ? `${at.key.split('_').pop()} dir=${at.dir} toward=${at.toward} row=${at.row} frame=${at.frame}` : 'none');
+    check(`${id}: player plays the Novice attack animation facing the monster`, !!at && /_attack(_sheet\.png)?$/.test(at.key) && at.dir === at.toward && at.row === ['down', 'left', 'right', 'up'].indexOf(at.dir), at ? `${at.key.split('/').pop()} dir=${at.dir} toward=${at.toward} row=${at.row} frame=${at.frame}` : 'none');
     check(`${id}: monster hit/attack and death animations play`, fight.dead && fight.monAnims.includes('death') && (fight.monAnims.includes('hit') || fight.monAnims.includes('attack')), fight.monAnims.join(','));
     await shotMonster(`08-${id}-death`, info.mid);
     await waitGame(1500);

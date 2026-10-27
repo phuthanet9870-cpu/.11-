@@ -71,7 +71,7 @@ export function queueBatchImages(scene: Phaser.Scene) {
     if (!c) continue;
     state.chars.set(id, c);
     for (const a of Object.values(c.animations)) {
-      if (!a.layers) { img(a.image); continue; }
+      if (!a.layers) { if (!scene.textures.exists(tex(a.image))) scene.load.spritesheet(tex(a.image), url(a.image), { frameWidth: a.frameWidth, frameHeight: a.frameHeight }); continue; }
       for (const group of [a.layers.body, a.layers.hairBack, a.layers.hairFront]) for (const p of Object.values(group)) img(p);
       img(a.layers.weaponUnder); img(a.layers.weaponOver);
     }
@@ -176,6 +176,15 @@ function applySwap(ctx: CanvasRenderingContext2D, w: number, h: number, map: Map
 export function characterRig(scene: Phaser.Scene, classId: string, ap: Appearance, weaponType: string | null): Rig | null {
   const c = state.chars.get(classId), m = state.manifest;
   if (!c || !m) return null;
+  // Composite-only sheets (e.g. AI-generated art) are used as drawn: no layer recolouring.
+  if (Object.values(c.animations).every((a) => !a.layers)) {
+    const clips: Record<string, Clip> = {};
+    for (const [name, a] of Object.entries(c.animations)) {
+      if (!scene.textures.exists(tex(a.image))) return null;
+      clips[name] = clipOf(tex(a.image), a);
+    }
+    return { clips, originX: c.origin.x, originY: c.origin.y };
+  }
   // Only the dagger has layered weapon art so far; other weapons are not drawn.
   const weapon = weaponType === 'dagger';
   const id = `bc_${classId}_${hashString(JSON.stringify([ap, weapon])).toString(36)}`;

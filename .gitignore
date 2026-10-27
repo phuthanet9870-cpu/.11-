@@ -4,3 +4,4 @@ coverage/
 *.log
 tests/e2e/screenshots/
 tests/scratch/
+tools/asset-studio/ai-raw/.auth-header
