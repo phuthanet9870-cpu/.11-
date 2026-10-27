@@ -80,6 +80,8 @@
   "items": [
    "glimmer_ore",
    "bright_ore",
+   "prayer_mace",
+   "pilgrim_vestment",
    "iron_sword",
    "steel_sword",
    "knight_spear",
@@ -145,6 +147,7 @@
   "items": [
    "glimmer_ore",
    "bright_ore",
+   "dawn_scepter",
    "apprentice_wand",
    "oak_staff",
    "apprentice_robe",
@@ -174,6 +177,9 @@
   "items": [
    "glimmer_ore",
    "bright_ore",
+   "stiletto",
+   "gutting_knife",
+   "shadow_garb",
    "steel_sword",
    "hunter_bow",
    "oak_staff",
@@ -203,6 +209,10 @@
   "items": [
    "glimmer_ore",
    "bright_ore",
+   "stiletto",
+   "hand_axe",
+   "war_axe",
+   "merchant_apron",
    "iron_sword",
    "short_bow",
    "leather_jacket",

@@ -143,6 +143,8 @@ export class Bot {
         }
       }
     }
+    // Healers also heal themselves with the skill, like a player would.
+    if (hpPct < 0.6 && !this.w.player.cast && this.w.canUseSkill('heal').ok) this.w.castSkill('heal');
     if (this.c.mp < this.w.stats.maxMp * 0.25 && this.c.inventory.some((i) => i.itemId === 'blue_potion') && (this.w.player.itemCooldowns.blue_potion ?? 0) <= this.w.time) {
       this.w.useItemById('blue_potion');
     }

@@ -462,6 +462,36 @@
   "generated": true
  },
  {
+  "id": "guild_cleric",
+  "name": "Mother Seraphine",
+  "title": "Cleric of the Dawn Chapel",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "robe"
+  },
+  "greeting": [
+   "So you wish to walk the path of the Cleric? Prove you've reached Job Level 10 as a Novice and I will accept you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "cleric"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
   "id": "fernhollow_courier",
   "name": "Courier Rosa",
   "title": "Courier Guild Service",
@@ -1017,6 +1047,36 @@
   "generated": true
  },
  {
+  "id": "guild_rogue",
+  "name": "Vex the Quiet",
+  "title": "Rogue Guild Master",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "coat"
+  },
+  "greeting": [
+   "So you wish to walk the path of the Rogue? Prove you've reached Job Level 10 as a Novice and I will accept you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "rogue"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
   "id": "tidewatch_courier",
   "name": "Courier Tessa",
   "title": "Courier Guild Service",
@@ -1166,6 +1226,36 @@
    },
    {
     "type": "save"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_merchant",
+  "name": "Guildmaster Hollis",
+  "title": "Merchant Guild Master",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "apron"
+  },
+  "greeting": [
+   "So you wish to walk the path of the Merchant? Prove you've reached Job Level 10 as a Novice and I will accept you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "merchant"
+    ]
    }
   ],
   "generated": true

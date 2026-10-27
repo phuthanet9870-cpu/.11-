@@ -12,7 +12,7 @@ export function levelTo(c: CharacterState, base: number, job: number) {
 }
 
 export function buildCharacter(opts: {
-  classId: 'knight' | 'ranger' | 'mage'; base: number; job: number; stats: StatKey[]; skills: [string, number][]; gear: string[]; potions?: [string, number][];
+  classId: string; base: number; job: number; stats: StatKey[]; skills: [string, number][]; gear: string[]; potions?: [string, number][];
 }): CharacterState {
   const c = newChar(`Test${opts.classId}`);
   levelTo(c, c.baseLevel, 10);

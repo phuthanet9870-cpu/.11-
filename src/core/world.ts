@@ -117,6 +117,8 @@ export interface MonsterActor extends ActorBase {
   /** Spawned by a GM command: gives normal rewards but never respawns. */
   temporary?: boolean;
   tauntUntil: number;
+  /** A thief already stole from this monster. */
+  stolen?: boolean;
 }
 
 export interface NpcActor { id: string; npcId: string; def: NpcDef; x: number; y: number; dir: Direction }
@@ -780,6 +782,12 @@ export class World {
       this.emit({ type: 'sound', key: res.crit ? 'crit' : 'hit' });
       if (res.crit) this.emit({ type: 'fx', fx: 'crit', x: m.x, y: m.y - 16 });
       this.damageMonster(m, res.damage, opts.kind, opts.element, res.crit, false);
+      // Double Attack (daggers): a second strike in the same swing.
+      if (!m.dead && this.stats.doubleAttackPct > 0 && this.rng.chance(this.stats.doubleAttackPct / 100)) {
+        const res2 = resolveAttack(this.data, this.rng, this.playerProfile(), this.monsterProfile(m), { ...opts, alwaysHit: true });
+        this.damageMonster(m, res2.damage, opts.kind, opts.element, res2.crit, false);
+        this.emit({ type: 'fx', fx: 'slash_small', x: m.x, y: m.y - 18, targetId: m.id, offsetY: -18 });
+      }
       // Card / option procs on basic attacks: status on hit and HP drain.
       for (const [st, pct] of Object.entries(this.stats.onHitStatusPct)) if (pct && !m.dead) this.applyStatus(m, st as StatusId, pct / 100);
       if (this.stats.hpDrainPct > 0 && !this.player.dead) {
@@ -1403,6 +1411,10 @@ export class World {
     return skill.mpCost + skill.mpCostPerLevel * (level - 1);
   }
 
+  skillLumaCost(skill: SkillDef, level: number): number {
+    return skill.lumaCost ? skill.lumaCost + (skill.lumaCostPerLevel ?? 0) * (level - 1) : 0;
+  }
+
   canUseSkill(skillId: string): OpResult {
     const skill = this.data.skills.get(skillId);
     const lvl = this.skillLevel(skillId);
@@ -1416,6 +1428,7 @@ export class World {
     if (this.hasStatusFlag(p, 'preventsAction')) return { ok: false, error: 'You cannot act right now.' };
     if ((p.cooldowns[skillId] ?? 0) > this.time) return { ok: false, error: `${skill.name} is on cooldown.` };
     if (this.char.mp < this.skillMpCost(skill, lvl)) return { ok: false, error: 'Not enough MP.' };
+    if (this.char.luma < this.skillLumaCost(skill, lvl)) return { ok: false, error: `${skill.name} needs ${this.skillLumaCost(skill, lvl)} Luma.` };
     if (skill.requiresWeapon) {
       const w = this.char.equipment.weapon && this.data.items.get(this.char.equipment.weapon.itemId);
       if (!w?.weaponType || !skill.requiresWeapon.includes(w.weaponType)) return { ok: false, error: `${skill.name} requires a ${skill.requiresWeapon.join(' or ')}.` };
@@ -1488,7 +1501,10 @@ export class World {
     if (this.char.mp < cost) { this.message('Not enough MP.', 'error'); return; }
     let target = targetId ? this.monsters.get(targetId) : undefined;
     if (skill.targeting === 'enemy' && (!target || target.dead)) { this.message('Target lost.', 'error'); return; }
+    const luma = this.skillLumaCost(skill, level);
+    if (this.char.luma < luma) { this.message(`${skill.name} needs ${luma} Luma.`, 'error'); return; }
     this.char.mp -= cost;
+    this.char.luma -= luma;
     p.cooldowns[skillId] = this.time + skill.cooldownMs * (1 - this.stats.cdrPct / 100);
     p.lastCombatAt = this.time;
     this.setAnim(p, skill.targeting === 'self' && skill.kind === 'buff' ? 'cast' : 'attack');
@@ -1594,6 +1610,30 @@ export class World {
         }
         case 'dash':
           break;
+        case 'cure': {
+          const n = this.cureStatuses(p, e.statuses);
+          if (n) this.message('You feel cleansed.');
+          this.emit({ type: 'fx', fx: 'cure', x: p.x, y: p.y, targetId: 'player' });
+          break;
+        }
+        case 'steal': {
+          for (const m of lastTargets) {
+            if (m.dead) continue;
+            this.aggroMonster(m, 1);
+            if (m.stolen || m.boss) { this.message(m.boss ? 'You cannot steal from a boss.' : 'Nothing left to steal.', 'error'); continue; }
+            // Chance rises with DEX and skill level, falls with the monster's level.
+            const chance = (e.chance + e.perLevel * level + (this.stats.totalStats.dex - m.def.level) / 2) / 100;
+            const pool = (this.data.drops.get(m.def.dropTableId)?.entries ?? []).filter((d) => this.data.items.get(d.itemId)?.type !== 'card');
+            const pick = pool.find((d) => this.rng.chance(Math.min(1, chance * Math.max(d.chance, 0.05) * 5)));
+            if (!pick) { this.message('Steal failed.'); continue; }
+            m.stolen = true;
+            const r = addItem(this.data, this.char, pick.itemId, 1);
+            if (r.ok) this.message(`You stole ${this.data.items.get(pick.itemId)!.name}!`, 'loot');
+            else this.dropToGround(pick.itemId, 1, p.x, p.y);
+            this.afterInventoryChange();
+          }
+          break;
+        }
       }
     }
     this.emit({ type: 'statsChanged' });

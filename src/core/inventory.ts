@@ -232,7 +232,7 @@ export function buyItem(data: GameData, c: CharacterState, shopId: string, itemI
   if (!shop || !shop.items.includes(itemId)) return fail('That item is not sold here.');
   if (!Number.isInteger(qty) || qty <= 0 || qty > 999) return fail('Invalid quantity.');
   const def = itemDef(data, itemId);
-  const cost = def.price * qty;
+  const cost = buyPrice(data, c, itemId) * qty;
   if (cost > c.luma) return fail('Not enough Luma.');
   const check = canAddItem(data, c, itemId, qty, { weightLimit });
   if (!check.ok) return check;
@@ -241,8 +241,24 @@ export function buyItem(data: GameData, c: CharacterState, shopId: string, itemI
   return ok(`Bought ${qty}× ${def.name} for ${cost} Luma.`);
 }
 
-export function sellPrice(data: GameData, itemId: string): number {
-  return Math.floor(itemDef(data, itemId).price * data.balance.economy.sellPriceRatio);
+/** Passive trade skills (Discount / Overcharge): total % from learned skills. */
+function tradePct(data: GameData, c: CharacterState | undefined, key: 'discountPct' | 'overchargePct'): number {
+  if (!c) return 0;
+  let pct = 0;
+  for (const [id, lv] of Object.entries(c.skills)) pct += (data.skills.get(id)?.passive?.[key] ?? 0) * lv;
+  return Math.min(24, pct);
+}
+
+/** NPC shop price for this character (Discount applies). */
+export function buyPrice(data: GameData, c: CharacterState | undefined, itemId: string): number {
+  const p = itemDef(data, itemId).price;
+  return Math.max(1, Math.floor((p * (100 - tradePct(data, c, 'discountPct'))) / 100));
+}
+
+/** What an NPC pays for one (Overcharge applies). */
+export function sellPrice(data: GameData, itemId: string, c?: CharacterState): number {
+  const base = itemDef(data, itemId).price * data.balance.economy.sellPriceRatio;
+  return Math.floor((base * (100 + tradePct(data, c, 'overchargePct'))) / 100);
 }
 
 export function sellItem(data: GameData, c: CharacterState, uid: string, qty: number): OpResult {
@@ -252,7 +268,7 @@ export function sellItem(data: GameData, c: CharacterState, uid: string, qty: nu
   if (!can.ok) return can;
   if (!Number.isInteger(qty) || qty <= 0 || qty > inst.qty) return fail('Invalid quantity.');
   const def = itemDef(data, inst.itemId);
-  const gain = sellPrice(data, inst.itemId) * qty;
+  const gain = sellPrice(data, inst.itemId, c) * qty;
   const r = removeByUid(c, uid, qty);
   if (!r.ok) return r;
   c.luma += gain;

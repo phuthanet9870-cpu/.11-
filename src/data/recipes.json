@@ -173,5 +173,131 @@
    }
   ],
   "fee": 1800
+ },
+ {
+  "id": "forge_hand_axe",
+  "itemId": "hand_axe",
+  "materials": [
+   {
+    "itemId": "bright_ore",
+    "qty": 3
+   },
+   {
+    "itemId": "moon_hare_tuft_of_fur",
+    "qty": 6
+   },
+   {
+    "itemId": "dusk_bat_wing",
+    "qty": 3
+   }
+  ],
+  "fee": 800
+ },
+ {
+  "id": "forge_war_axe",
+  "itemId": "war_axe",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "mana_wisp_ectoplasm",
+    "qty": 8
+   },
+   {
+    "itemId": "reef_gull_wing",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_stiletto",
+  "itemId": "stiletto",
+  "materials": [
+   {
+    "itemId": "bright_ore",
+    "qty": 3
+   },
+   {
+    "itemId": "moon_hare_tuft_of_fur",
+    "qty": 6
+   },
+   {
+    "itemId": "wailing_spirit_ectoplasm",
+    "qty": 3
+   }
+  ],
+  "fee": 800
+ },
+ {
+  "id": "forge_gutting_knife",
+  "itemId": "gutting_knife",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "sea_slime_gel",
+    "qty": 8
+   },
+   {
+    "itemId": "snow_wolf_fang",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_prayer_mace",
+  "itemId": "prayer_mace",
+  "materials": [
+   {
+    "itemId": "bright_ore",
+    "qty": 3
+   },
+   {
+    "itemId": "mist_spore_spore_dust",
+    "qty": 6
+   },
+   {
+    "itemId": "crypt_bat_wing",
+    "qty": 3
+   }
+  ],
+  "fee": 800
+ },
+ {
+  "id": "forge_dawn_scepter",
+  "itemId": "dawn_scepter",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "frost_slime_gel",
+    "qty": 8
+   },
+   {
+    "itemId": "wailing_spirit_ectoplasm",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
  }
 ]

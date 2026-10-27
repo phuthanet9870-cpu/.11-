@@ -74,6 +74,9 @@ function drawItemShape(ctx: CanvasRenderingContext2D, shape: string, c: string, 
     case 'sword':
       px(ctx, 15, 2, 4, 20, c); px(ctx, 16, 2, 1, 19, '#fff'); px(ctx, 9, 21, 16, 3, a ?? '#b8a060'); px(ctx, 15, 24, 4, 6, '#5a3a1e');
       break;
+    case 'axe':
+      px(ctx, 15, 4, 3, 26, '#8b5a2b'); ctx.fillStyle = c; ctx.beginPath(); ctx.moveTo(17, 4); ctx.lineTo(27, 2); ctx.lineTo(27, 16); ctx.lineTo(17, 13); ctx.closePath(); ctx.fill(); px(ctx, 25, 3, 2, 12, '#fff');
+      break;
     case 'spear':
       px(ctx, 15, 8, 2, 22, '#8b5a2b'); ctx.fillStyle = c; ctx.beginPath(); ctx.moveTo(16, 1); ctx.lineTo(20, 9); ctx.lineTo(12, 9); ctx.closePath(); ctx.fill(); px(ctx, 13, 9, 6, 2, a ?? '#b33a3a');
       break;

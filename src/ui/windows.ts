@@ -7,7 +7,7 @@ import { generateCharacterSheet, portraitFromSheet } from '../game/art/character
 import { lookForCharacter, SpritePreview } from './screens';
 import { getDragData, setDragData } from './hud';
 import { classLineage, skillCheck } from '../core/character';
-import { canEquip, countItem, filterInventory, inventoryWeight, sellPrice } from '../core/inventory';
+import { buyPrice, canEquip, countItem, filterInventory, inventoryWeight, sellPrice } from '../core/inventory';
 import { canRaiseStat, expToNextBase, expToNextJob, statRaiseCost } from '../core/formulas';
 import {
   activeQuests, isComplete, objectiveTarget, questsOfferedBy, questsToTurnIn,
@@ -189,7 +189,7 @@ export class WindowManager {
       if (def.classes) out.push(h('div', { class: def.classes.includes(w.char.classId) ? 'muted' : 'bad' }, `Class: ${def.classes.map((c) => w.data.classes.get(c)?.name).join(', ')}`));
       if (!chk.ok && !def.classes && !(def.equipLevel && def.equipLevel > w.char.baseLevel)) out.push(h('div', { class: 'bad' }, chk.error));
     }
-    out.push(h('div', { class: 'tt', style: 'margin-top:4px' }, `Weight ${def.weight} · Sell ${sellPrice(w.data, def.id)} Luma${inst?.bound || def.bound ? ' · Bound' : ''}${inst?.locked ? ' · Locked' : ''}`));
+    out.push(h('div', { class: 'tt', style: 'margin-top:4px' }, `Weight ${def.weight} · Sell ${sellPrice(w.data, def.id, w.char)} Luma${inst?.bound || def.bound ? ' · Bound' : ''}${inst?.locked ? ' · Locked' : ''}`));
     return out;
   }
 
@@ -454,7 +454,7 @@ export class WindowManager {
         h('table', { class: 'stat-table', style: 'width:200px' },
           d('HP', `${c.hp} / ${s.maxHp}`), d('MP', `${c.mp} / ${s.maxMp}`), d('ATK', s.patk), d('MATK', s.matk), d('DEF', s.pdef), d('MDEF', s.mdef),
           d('HIT', s.hit), d('FLEE', s.flee), d('CRIT', `${s.crit.toFixed(1)}%`), d('Crit DMG', `${s.critDmg}%`),
-          d('Attack Speed', `${(1000 / s.attackIntervalMs).toFixed(2)}/s`), d('Move Speed', Math.round(s.moveSpeed)),
+          d('ASPD', `${s.aspd} (${(1000 / s.attackIntervalMs).toFixed(2)}/s)`), d('Move Speed', Math.round(s.moveSpeed)),
           d('Cast Time', `${Math.round(s.castTimeMul * 100)}%`), d('Cooldown -', `${s.cdrPct}%`), d('Range', s.attackRange))),
       h('div', { class: 'muted', style: 'font-size:11px;margin-top:8px' },
         `Base Lv ${c.baseLevel} (${c.baseExp}/${expToNextBase(w.data, c.baseLevel)}) · Job Lv ${c.jobLevel}/${cls.maxJobLevel} (${c.jobExp}/${expToNextJob(w.data, c.jobLevel)})`),
@@ -914,14 +914,14 @@ export class WindowManager {
       const usable = def.type !== 'equipment' || canEquip(w.data, w.char, def).ok;
       return h('div', { class: 'shop-row' }, icon,
         h('div', {}, h('div', { style: { color: RARITY_COLOR[def.rarity] } }, def.name), h('div', { class: usable ? 'muted' : 'bad', style: 'font-size:10px' }, def.type === 'equipment' ? (usable ? 'Can equip' : 'Cannot equip yet') : def.description)),
-        h('div', { class: 'gold' }, `${def.price} L`), qty,
+        h('div', { class: 'gold' }, buyPrice(w.data, w.char, id) < def.price ? h('span', { title: `Discount (list price ${def.price})` }, `${buyPrice(w.data, w.char, id)} L`) : `${def.price} L`), qty,
         h('button', { class: 'btn small', onclick: () => w.buy(shop.id, id, Math.floor(Number(qty.value) || 1)) }, 'Buy'));
     });
     setChildren(body,
       h('div', { style: 'width:420px' },
         h('div', { class: 'row' }, h('span', { class: 'gold', style: 'font-weight:bold' }, shop.name), h('span', { class: 'spacer' }), h('span', {}, `You have ${w.char.luma.toLocaleString()} Luma`)),
         h('div', { style: 'max-height:380px;overflow:auto;margin-top:6px' }, rows),
-        h('div', { class: 'muted', style: 'font-size:11px;margin-top:6px' }, 'To sell: right-click an item in your inventory and choose Sell (50% of its value).')));
+        h('div', { class: 'muted', style: 'font-size:11px;margin-top:6px' }, `To sell: right-click an item in your inventory and choose Sell (${sellPrice(w.data, 'red_potion', w.char) > sellPrice(w.data, 'red_potion') ? '50% of its value + Overcharge' : '50% of its value'}).`)));
   }
 
   // ---------------------------------------------------------------- storage

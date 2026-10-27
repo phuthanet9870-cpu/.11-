@@ -62,6 +62,9 @@ function drawWeapon(ctx: CanvasRenderingContext2D, type: string | null, x: numbe
     case 'spear':
       px(ctx, 0, -12, 2, 30, wood); px(ctx, -1, 18, 4, 3, dark); px(ctx, -1, 21, 4, 5, steel); px(ctx, 0, 26, 2, 2, steel);
       break;
+    case 'axe':
+      px(ctx, 0, -4, 2, 22, wood); px(ctx, 2, 10, 6, 9, steel); px(ctx, 7, 10, 1, 9, '#ffffff');
+      break;
     case 'club':
       px(ctx, 0, -2, 3, 10, wood); px(ctx, -1, 8, 5, 6, shade(wood, -0.2)); px(ctx, 0, 9, 1, 2, '#c8a26b');
       break;

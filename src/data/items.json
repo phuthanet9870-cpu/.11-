@@ -1343,6 +1343,263 @@
   "cooldownMs": 1000
  },
  {
+  "id": "hand_axe",
+  "name": "Hand Axe",
+  "type": "equipment",
+  "rarity": "common",
+  "description": "A trader's chopping axe. Heavy, strong against large foes.",
+  "weight": 120,
+  "price": 900,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "axe",
+   "color": "#9a9aa8"
+  },
+  "slot": "weapon",
+  "weaponType": "axe",
+  "attackKind": "melee",
+  "attackIntervalPct": 115,
+  "equipLevel": 10,
+  "mods": {
+   "patk": 22
+  },
+  "classes": [
+   "merchant"
+  ],
+  "weaponLevel": 2,
+  "cardSlots": 2
+ },
+ {
+  "id": "war_axe",
+  "name": "Bearded War Axe",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A wide-bladed axe that bites deep.",
+  "weight": 120,
+  "price": 4200,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "axe",
+   "color": "#b8b8c8"
+  },
+  "slot": "weapon",
+  "weaponType": "axe",
+  "attackKind": "melee",
+  "attackIntervalPct": 118,
+  "equipLevel": 24,
+  "mods": {
+   "patk": 48
+  },
+  "classes": [
+   "merchant"
+  ],
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "stiletto",
+  "name": "Stiletto",
+  "type": "equipment",
+  "rarity": "common",
+  "description": "A slim blade made for quick, repeated strikes.",
+  "weight": 40,
+  "price": 1100,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "dagger",
+   "color": "#d8dde8"
+  },
+  "slot": "weapon",
+  "weaponType": "dagger",
+  "attackKind": "melee",
+  "attackIntervalPct": 90,
+  "equipLevel": 10,
+  "mods": {
+   "patk": 20
+  },
+  "classes": [
+   "rogue",
+   "novice",
+   "knight",
+   "ranger",
+   "mage",
+   "merchant"
+  ],
+  "weaponLevel": 2,
+  "cardSlots": 3
+ },
+ {
+  "id": "gutting_knife",
+  "name": "Gutting Knife",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A wicked curved knife favoured by alley thieves.",
+  "weight": 40,
+  "price": 4500,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "dagger",
+   "color": "#e0c0c0"
+  },
+  "slot": "weapon",
+  "weaponType": "dagger",
+  "attackKind": "melee",
+  "attackIntervalPct": 88,
+  "equipLevel": 24,
+  "mods": {
+   "patk": 40
+  },
+  "classes": [
+   "rogue",
+   "merchant"
+  ],
+  "weaponLevel": 3,
+  "cardSlots": 3
+ },
+ {
+  "id": "prayer_mace",
+  "name": "Prayer Mace",
+  "type": "equipment",
+  "rarity": "common",
+  "description": "A blessed flanged mace.",
+  "weight": 70,
+  "price": 1000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "club",
+   "color": "#e8e0c0"
+  },
+  "slot": "weapon",
+  "weaponType": "club",
+  "attackKind": "melee",
+  "attackIntervalPct": 105,
+  "equipLevel": 10,
+  "mods": {
+   "patk": 24,
+   "matk": 6
+  },
+  "classes": [
+   "cleric",
+   "merchant",
+   "knight"
+  ],
+  "weaponLevel": 2,
+  "cardSlots": 2
+ },
+ {
+  "id": "dawn_scepter",
+  "name": "Dawn Scepter",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A scepter crowned with a sunstone. Channels holy power.",
+  "weight": 70,
+  "price": 4800,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "club",
+   "color": "#ffe080"
+  },
+  "slot": "weapon",
+  "weaponType": "club",
+  "attackKind": "melee",
+  "attackIntervalPct": 105,
+  "equipLevel": 24,
+  "mods": {
+   "patk": 40,
+   "matk": 20,
+   "int": 2
+  },
+  "classes": [
+   "cleric"
+  ],
+  "weaponLevel": 3,
+  "cardSlots": 2
+ },
+ {
+  "id": "pilgrim_vestment",
+  "name": "Pilgrim Vestment",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "White robes of a travelling cleric.",
+  "weight": 40,
+  "price": 2600,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "robe",
+   "color": "#f0ead8"
+  },
+  "slot": "armor",
+  "equipLevel": 15,
+  "classes": [
+   "cleric",
+   "mage"
+  ],
+  "mods": {
+   "pdef": 6,
+   "mdef": 8,
+   "maxMp": 40
+  },
+  "cardSlots": 1
+ },
+ {
+  "id": "shadow_garb",
+  "name": "Shadow Garb",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "Close-fitting dark leathers that make no sound.",
+  "weight": 35,
+  "price": 2600,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "armor",
+   "color": "#3a3442"
+  },
+  "slot": "armor",
+  "equipLevel": 15,
+  "classes": [
+   "rogue",
+   "ranger"
+  ],
+  "mods": {
+   "pdef": 7,
+   "flee": 6
+  },
+  "cardSlots": 1
+ },
+ {
+  "id": "merchant_apron",
+  "name": "Merchant Apron",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "description": "A thick leather apron with many pockets.",
+  "weight": 50,
+  "price": 2600,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "armor",
+   "color": "#8a5a2a"
+  },
+  "slot": "armor",
+  "equipLevel": 15,
+  "classes": [
+   "merchant"
+  ],
+  "mods": {
+   "pdef": 9,
+   "weightLimit": 300
+  },
+  "cardSlots": 1
+ },
+ {
   "id": "dusk_bat_wing",
   "name": "Dusk Bat Wing",
   "type": "material",

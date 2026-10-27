@@ -186,7 +186,7 @@ const REG = {
 const NEW_MAPS: MapSpec[] = [
   { id: 'clover_hills', name: 'Clover Hills', region: REG.wb, type: 'field', tileset: 'clover', lv: [5, 12], bgm: 'field_meadow', ambient: 'meadow', weather: ['sunny'], pos: [0.3, 0.73], exits: { N: 'sunny_meadow', E: 'aurelion_fields_south' }, monsters: [['clover_slime', 10], ['horn_rabbit', 8], ['dusk_bat', 6]], trees: ['tree_oak', 'bush'] },
   { id: 'aurelion_fields_south', name: 'Aurelion Fields South', region: REG.cap, type: 'field', tileset: 'capital', lv: [10, 18], bgm: 'field_plains', ambient: 'meadow', weather: ['sunny', 'rain'], pos: [0.43, 0.67], exits: { W: 'clover_hills', N: 'aurelion', E: 'coral_beach' }, monsters: [['plains_wolf', 8], ['pebble_golem', 6], ['road_goblin', 6]], trees: ['tree_oak', 'rock'] },
-  { id: 'aurelion', name: 'Royal Capital Aurelion', region: REG.cap, type: 'town', tileset: 'capital', bgm: 'town_capital', ambient: 'village', weather: ['sunny'], pos: [0.46, 0.52], exits: { S: 'aurelion_fields_south', N: 'aurelion_fields_north', E: 'arcanthe_heath', W: 'aurelion_catacombs' }, guild: ['knight'], refine: true, town: { style: 'guild', shop: 'capital' } },
+  { id: 'aurelion', name: 'Royal Capital Aurelion', region: REG.cap, type: 'town', tileset: 'capital', bgm: 'town_capital', ambient: 'village', weather: ['sunny'], pos: [0.46, 0.52], exits: { S: 'aurelion_fields_south', N: 'aurelion_fields_north', E: 'arcanthe_heath', W: 'aurelion_catacombs' }, guild: ['knight', 'cleric'], refine: true, town: { style: 'guild', shop: 'capital' } },
   { id: 'aurelion_fields_north', name: 'Aurelion Fields North', region: REG.cap, type: 'field', tileset: 'capital', lv: [12, 20], bgm: 'field_plains', ambient: 'meadow', weather: ['sunny', 'rain'], pos: [0.46, 0.38], exits: { S: 'aurelion', N: 'mistpine_woods' }, monsters: [['thorn_wolf', 7], ['road_goblin', 7], ['pebble_golem', 6]], trees: ['tree_oak', 'tree_pine', 'rock'] },
   { id: 'aurelion_catacombs', name: 'Aurelion Catacombs', region: REG.cap, type: 'dungeon', tileset: 'dg_catacomb', lv: [20, 32], bgm: 'dungeon_dark', ambient: 'cave', weather: [], pos: [0.38, 0.55], exits: { E: 'aurelion' }, monsters: [['crypt_bat', 8], ['grave_soldier', 8], ['wailing_spirit', 6]], boss: 'bone_warden' },
   { id: 'mistpine_woods', name: 'Mistpine Woods', region: REG.fern, type: 'field', tileset: 'fernwood', lv: [15, 25], bgm: 'field_forest', ambient: 'forest', weather: ['fog', 'rain'], pos: [0.46, 0.25], exits: { S: 'aurelion_fields_north', N: 'fernhollow' }, monsters: [['mist_spore', 8], ['pine_goblin', 8], ['venom_spore', 4]], trees: ['tree_pine', 'tree_dark', 'bush'] },
@@ -197,11 +197,11 @@ const NEW_MAPS: MapSpec[] = [
   { id: 'arcanthe', name: 'Tower City Arcanthe', region: REG.arc, type: 'town', tileset: 'arcane', bgm: 'town_mage', ambient: 'village', weather: ['sunny'], pos: [0.67, 0.48], exits: { W: 'arcanthe_heath', N: 'arcanthe_tower', S: 'sunscar_dunes' }, guild: ['mage'], enchanter: true, town: { style: 'guild', shop: 'mage' } },
   { id: 'arcanthe_tower', name: 'Arcanthe Tower Depths', region: REG.arc, type: 'dungeon', tileset: 'dg_tower', lv: [30, 44], bgm: 'dungeon_dark', ambient: 'cave', weather: [], pos: [0.67, 0.34], exits: { S: 'arcanthe' }, monsters: [['animated_armor', 8], ['rune_golem', 6], ['mana_wisp', 8]], boss: 'archmage_valdris' },
   { id: 'sunscar_dunes', name: 'Sunscar Dunes', region: REG.des, type: 'field', tileset: 'desert', lv: [25, 35], bgm: 'field_desert', ambient: 'desert', weather: ['sunny'], pos: [0.67, 0.64], exits: { N: 'arcanthe', S: 'sandara' }, monsters: [['dune_slime', 9], ['sand_scorpion', 8], ['desert_wolf', 6]], trees: ['rock', 'rock_big'], lake: 'none' },
-  { id: 'sandara', name: 'Desert City Sandara', region: REG.des, type: 'town', tileset: 'desert', bgm: 'town_desert', ambient: 'desert', weather: ['sunny'], pos: [0.67, 0.8], exits: { N: 'sunscar_dunes', E: 'mirage_oasis', S: 'kings_tomb' }, refine: true, town: { style: 'shop', shop: 'desert' } },
+  { id: 'sandara', name: 'Desert City Sandara', region: REG.des, type: 'town', tileset: 'desert', bgm: 'town_desert', ambient: 'desert', weather: ['sunny'], pos: [0.67, 0.8], exits: { N: 'sunscar_dunes', E: 'mirage_oasis', S: 'kings_tomb' }, guild: ['rogue'], refine: true, town: { style: 'shop', shop: 'desert' } },
   { id: 'mirage_oasis', name: 'Mirage Oasis', region: REG.des, type: 'field', tileset: 'desert', lv: [30, 40], bgm: 'field_desert', ambient: 'desert', weather: ['sunny'], pos: [0.79, 0.8], exits: { W: 'sandara', E: 'shadowmere_marsh' }, monsters: [['oasis_crab', 8], ['mirage_wisp', 7], ['giant_scorpion', 6]], trees: ['tree_oak', 'rock'] },
   { id: 'kings_tomb', name: 'Royal Tomb of Ankhar', region: REG.des, type: 'dungeon', tileset: 'dg_tomb', lv: [38, 50], bgm: 'dungeon_dark', ambient: 'cave', weather: [], pos: [0.67, 0.93], exits: { N: 'sandara' }, monsters: [['tomb_mummy', 9], ['gilded_scarab', 7], ['tomb_bat', 7]], boss: 'sun_king' },
   { id: 'coral_beach', name: 'Coral Beach', region: REG.coast, type: 'field', tileset: 'coast', lv: [18, 28], bgm: 'field_coast', ambient: 'coast', weather: ['sunny', 'rain'], pos: [0.27, 0.86], exits: { W: 'aurelion_fields_south', E: 'tidewatch' }, monsters: [['shore_crab', 9], ['sea_slime', 8], ['reef_gull', 6]], trees: ['tree_oak', 'rock'] },
-  { id: 'tidewatch', name: 'Port Town Tidewatch', region: REG.coast, type: 'town', tileset: 'coast', bgm: 'town_port', ambient: 'coast', weather: ['sunny'], pos: [0.16, 0.86], exits: { E: 'coral_beach', S: 'sunken_grotto', N: 'frostpeak_slopes' }, town: { style: 'inn', shop: 'port' } },
+  { id: 'tidewatch', name: 'Port Town Tidewatch', region: REG.coast, type: 'town', tileset: 'coast', bgm: 'town_port', ambient: 'coast', weather: ['sunny'], pos: [0.16, 0.86], exits: { E: 'coral_beach', S: 'sunken_grotto', N: 'frostpeak_slopes' }, guild: ['merchant'], town: { style: 'inn', shop: 'port' } },
   { id: 'sunken_grotto', name: 'Sunken Grotto', region: REG.coast, type: 'dungeon', tileset: 'dg_grotto', lv: [28, 38], bgm: 'dungeon_cave', ambient: 'cave', weather: [], pos: [0.08, 0.95], exits: { N: 'tidewatch' }, monsters: [['grotto_crab', 8], ['kelp_spore', 8], ['drowned_spirit', 7]] },
   { id: 'frostpeak_slopes', name: 'Frostpeak Slopes', region: REG.snow, type: 'field', tileset: 'snow', lv: [40, 50], bgm: 'field_snow', ambient: 'snow', weather: ['snow'], pos: [0.09, 0.63], exits: { S: 'tidewatch', N: 'frostholm' }, monsters: [['frost_slime', 9], ['snow_wolf', 8], ['ice_golem', 5]], trees: ['tree_pine', 'rock'] },
   { id: 'frostholm', name: 'Snow Town Frostholm', region: REG.snow, type: 'town', tileset: 'snow', bgm: 'town_snow', ambient: 'snow', weather: ['snow'], pos: [0.1, 0.42], exits: { S: 'frostpeak_slopes', N: 'ice_caverns', E: 'cinder_wastes' }, refine: true, town: { style: 'inn', shop: 'snow' } },
@@ -240,15 +240,16 @@ function npc(id: string, name: string, title: string, seed: number, style: strin
 }
 
 const TOWN_SHOPS: Record<string, { tools: string[]; arms: string[] }> = {
-  capital: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather', 'swiftness_tonic'], arms: ['iron_sword', 'steel_sword', 'knight_spear', 'chain_mail', 'iron_helm', 'iron_shield', 'leather_boots', 'travel_cape'] },
+  capital: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather', 'swiftness_tonic'], arms: ['prayer_mace', 'pilgrim_vestment', 'iron_sword', 'steel_sword', 'knight_spear', 'chain_mail', 'iron_helm', 'iron_shield', 'leather_boots', 'travel_cape'] },
   forest: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'green_potion', 'wing_of_return', 'wandering_feather'], arms: ['short_bow', 'hunter_bow', 'hunter_vest', 'leather_jacket', 'leaf_cap', 'leather_boots', 'travel_cape'] },
-  mage: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'blue_potion', 'wing_of_return', 'wandering_feather'], arms: ['apprentice_wand', 'oak_staff', 'apprentice_robe', 'sapphire_pendant', 'copper_ring', 'sandals'] },
-  desert: { tools: ['orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather', 'swiftness_tonic'], arms: ['steel_sword', 'hunter_bow', 'oak_staff', 'chain_mail', 'iron_shield', 'swift_boots'] },
-  port: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather'], arms: ['iron_sword', 'short_bow', 'leather_jacket', 'bandana', 'wooden_buckler', 'sandals', 'copper_ring'] },
+  mage: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'blue_potion', 'wing_of_return', 'wandering_feather'], arms: ['dawn_scepter', 'apprentice_wand', 'oak_staff', 'apprentice_robe', 'sapphire_pendant', 'copper_ring', 'sandals'] },
+  desert: { tools: ['orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather', 'swiftness_tonic'], arms: ['stiletto', 'gutting_knife', 'shadow_garb', 'steel_sword', 'hunter_bow', 'oak_staff', 'chain_mail', 'iron_shield', 'swift_boots'] },
+  port: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather'], arms: ['stiletto', 'hand_axe', 'war_axe', 'merchant_apron', 'iron_sword', 'short_bow', 'leather_jacket', 'bandana', 'wooden_buckler', 'sandals', 'copper_ring'] },
   snow: { tools: ['orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather'], arms: ['steel_sword', 'knight_spear', 'hunter_bow', 'oak_staff', 'chain_mail', 'iron_helm', 'wolfhide_cloak'] },
 };
 const GUILD_NPC: Record<string, [string, string, string]> = {
   knight: ['Commander Aldric', 'Knight Guild Master', 'plate'], ranger: ['Ranger Sylvi', 'Ranger Guild Master', 'hood'], mage: ['Magister Ophelia', 'Mage Guild Master', 'robe'],
+  cleric: ['Mother Seraphine', 'Cleric of the Dawn Chapel', 'robe'], rogue: ['Vex the Quiet', 'Rogue Guild Master', 'coat'], merchant: ['Guildmaster Hollis', 'Merchant Guild Master', 'apron'],
 };
 const TOWN_IDS = () => ['willowbrook', ...NEW_MAPS.filter((m) => m.type === 'town').map((m) => m.id)];
 
@@ -294,11 +295,11 @@ function buildTown(s: MapSpec): Built {
       ['I weave hidden power into equipment. One more option, or a fresh roll of them all, for a price.']));
     places.push([`${s.id}_enchanter`, cx - 4, cy + 2]);
   }
-  for (const g of s.guild ?? []) {
+  for (const [gi, g] of (s.guild ?? []).entries()) {
     const [nm, tt, style] = GUILD_NPC[g];
     npcs.push(npc(`guild_${g}`, nm, tt, hash(g), style, [{ type: 'jobChange', classIds: [g] }],
       [`So you wish to walk the path of the ${title(g)}? Prove you've reached Job Level 10 as a Novice and I will accept you.`]));
-    places.push([`guild_${g}`, 38, 32]);
+    places.push([`guild_${g}`, 38 - gi * 4, 32]);
   }
   const map = {
     id: s.id, name: s.name, region: s.region, type: 'town', width: W, height: H, tileset: s.tileset, base, border: { kind: 'thicket', thickness: 2 },

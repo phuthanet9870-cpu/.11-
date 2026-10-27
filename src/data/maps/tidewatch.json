@@ -138,12 +138,13 @@
   },
   {
    "op": "building",
-   "style": "house",
+   "style": "guild",
    "x": 34,
    "y": 26,
    "w": 8,
    "h": 5,
-   "door": 4
+   "door": 4,
+   "sign": "guild"
   },
   {
    "op": "scatter",
@@ -231,6 +232,12 @@
    "npcId": "tidewatch_courier",
    "x": 27,
    "y": 21,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_merchant",
+   "x": 38,
+   "y": 32,
    "facing": "down"
   }
  ],

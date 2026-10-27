@@ -64,7 +64,7 @@
     "critDmgBase": 140,
     "aspdAgiPct": 0.6,
     "aspdDexPct": 0.1,
-    "minAttackIntervalMs": 280,
+    "minAttackIntervalMs": 200,
     "moveSpeed": 130,
     "castDexDivisor": 150,
     "hpRegenVitDiv": 5,
@@ -148,6 +148,11 @@
       "wand": {
         "small": 100,
         "medium": 100,
+        "large": 100
+      },
+      "axe": {
+        "small": 50,
+        "medium": 75,
         "large": 100
       }
     }

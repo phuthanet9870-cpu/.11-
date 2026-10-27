@@ -44,6 +44,11 @@ export interface StatModifiers {
   onHitStatusPct?: Partial<Record<string, number>>;
   /** % of basic-attack damage returned as HP. */
   hpDrainPct?: number;
+  /** % chance for a dagger basic attack to strike twice. */
+  doubleAttackPct?: number;
+  /** % off NPC shop prices / % more when selling to NPCs. */
+  discountPct?: number;
+  overchargePct?: number;
   weightLimit?: number;
   attackRange?: number;
   /** % chance to counter a melee hit with a basic attack. */
@@ -70,6 +75,10 @@ export interface JobClassDef {
   skills: string[];
   /** Requirements to change into this job. */
   requirements?: { jobLevel?: number; baseLevel?: number; fromClass?: string; questId?: string };
+  /** Job bonus stats: character N (s/a/v/i/d/l or '.') is the stat gained at job level N+1. */
+  jobBonus?: string;
+  /** Extra carrying capacity for this job. */
+  weightBonus?: number;
   outfit: { primary: string; secondary: string; accent: string; style: string };
 }
 
@@ -89,6 +98,9 @@ export type SkillEffect =
       kind: 'physical' | 'magic'; multiplier: number; perLevel: number; element: Element;
       status?: StatusId; statusChance?: number; statusDurationMs?: number }
   | { type: 'dash'; distance: number }
+  | { type: 'cure'; statuses: StatusId[] }
+  /** Try to take one item from the target's drop table (once per monster). */
+  | { type: 'steal'; chance: number; perLevel: number }
   | { type: 'line'; length: number; width: number };
 
 export interface SkillDef {
@@ -109,6 +121,9 @@ export interface SkillDef {
   requiresJobLevel?: number;
   /** Weapon types required to use the skill (e.g. bows for archery skills). */
   requiresWeapon?: string[];
+  /** Luma spent per use (e.g. a coin-powered strike). */
+  lumaCost?: number;
+  lumaCostPerLevel?: number;
   /** Passive bonuses applied permanently per skill level. */
   passive?: StatModifiers;
   effects: SkillEffect[];
@@ -494,6 +509,11 @@ export interface DerivedStats {
   patk: number; matk: number; pdef: number; mdef: number;
   hit: number; flee: number; crit: number; critDmg: number;
   attackIntervalMs: number; moveSpeed: number;
+  /** Ragnarok-style ASPD (0–190): 200 − attack delay / 20 ms. */
+  aspd: number;
+  doubleAttackPct: number;
+  /** Stats granted by job level (shown as +N in the status window). */
+  jobBonusStats: BaseStats;
   castTimeMul: number; cdrPct: number;
   hpRegen: number; mpRegen: number;
   attackRange: number; attackKind: 'melee' | 'ranged' | 'magic';

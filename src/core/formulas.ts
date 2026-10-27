@@ -131,6 +131,14 @@ export function weaponOf(data: GameData, c: CharacterState): ItemDef | undefined
  * Derived stats = base stats + equipment + passives + runtime modifiers
  * (buffs, status effects; later cards and runes).
  */
+const BONUS_KEY: Record<string, StatKey> = { s: 'str', a: 'agi', v: 'vit', i: 'int', d: 'dex', l: 'luk' };
+/** Stats a job grants at a job level (Ragnarok job bonus): one point per pattern letter reached. */
+export function jobBonus(cls: { jobBonus?: string }, jobLevel: number): BaseStats {
+  const out = { str: 0, agi: 0, vit: 0, int: 0, dex: 0, luk: 0 } as BaseStats;
+  for (const ch of (cls.jobBonus ?? '').slice(0, Math.max(0, jobLevel - 1))) if (BONUS_KEY[ch]) out[BONUS_KEY[ch]]++;
+  return out;
+}
+
 export function computeDerivedStats(data: GameData, c: CharacterState, runtimeMods: StatModifiers[] = []): DerivedStats {
   const B = data.balance.stats;
   const cls = data.classes.get(c.classId)!;
@@ -139,8 +147,9 @@ export function computeDerivedStats(data: GameData, c: CharacterState, runtimeMo
   mergeMods(mods, passiveSkillMods(data, c));
   for (const m of runtimeMods) mergeMods(mods, m);
 
+  const jobBonusStats = jobBonus(cls, c.jobLevel);
   const total = {} as BaseStats;
-  for (const k of STAT_KEYS) total[k] = Math.max(k === 'luk' ? 0 : 1, c.stats[k] + (mods[k] ?? 0));
+  for (const k of STAT_KEYS) total[k] = Math.max(k === 'luk' ? 0 : 1, c.stats[k] + jobBonusStats[k] + (mods[k] ?? 0));
   const { str, agi, vit, int, dex, luk } = total;
   const L = c.baseLevel;
 
@@ -180,10 +189,12 @@ export function computeDerivedStats(data: GameData, c: CharacterState, runtimeMo
 
   return {
     maxHp, maxMp, patk, matk, pdef, mdef, hit, flee, crit, critDmg,
-    attackIntervalMs, moveSpeed, castTimeMul, cdrPct, hpRegen, mpRegen,
+    attackIntervalMs, aspd: Math.max(0, Math.round((200 - attackIntervalMs / 20) * 10) / 10), moveSpeed, castTimeMul, cdrPct, hpRegen, mpRegen,
     attackRange, attackKind,
     weaponElement: c.equipment.weapon?.element ?? weapon?.element ?? 'neutral',
-    weightLimit: B.weightBase + str * B.weightStr + (mods.weightLimit ?? 0),
+    weightLimit: B.weightBase + str * B.weightStr + (cls.weightBonus ?? 0) + (mods.weightLimit ?? 0),
+    doubleAttackPct: weapon?.weaponType === 'dagger' ? Math.min(50, mods.doubleAttackPct ?? 0) : 0,
+    jobBonusStats,
     elementDamagePct: mods.elementDamagePct ?? {},
     elementResistPct: mods.elementResistPct ?? {},
     raceDamagePct: mods.raceDamagePct ?? {},
