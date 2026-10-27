@@ -151,9 +151,13 @@ export class GameScene extends Phaser.Scene {
     this.bars = this.track(this.add.graphics().setDepth(1e5 + 5));
 
     // Map atmosphere tint (forest is darker).
-    const tintColor = map.def.tileset === 'whispering_forest' ? 0x0a2a1a : map.def.tileset === 'sunny_meadow' ? 0xfff2c0 : 0xffe0b0;
-    const tintAlpha = map.def.tileset === 'whispering_forest' ? 0.18 : 0.05;
+    const TINT: Record<string, [number, number]> = {
+      whispering_forest: [0x0a2a1a, 0.18], sunny_meadow: [0xfff2c0, 0.05], fernwood: [0x0a2a1a, 0.15], desert: [0xffc070, 0.08], volcano: [0x601000, 0.16],
+      swamp: [0x102010, 0.22], ruins: [0x100818, 0.22], snow: [0xc8e0ff, 0.06], arcane: [0x2a1050, 0.08],
+    };
+    const [tintColor, tintAlpha] = TINT[map.def.tileset] ?? (map.def.type === 'dungeon' ? [0x000008, 0.3] : [0xffe0b0, 0.05]);
     this.track(this.add.rectangle(0, 0, W, H, tintColor, tintAlpha).setOrigin(0).setDepth(1e5 - 1));
+    this.addWeather(map.def.weather[0]);
 
     const cam = this.cameras.main;
     cam.setBounds(0, 0, W, H);
@@ -162,6 +166,25 @@ export class GameScene extends Phaser.Scene {
     if (this.host.settings.showCollision) this.drawCollision();
     audio.playMusic(map.def.bgm);
     audio.playAmbient(map.def.ambient);
+  }
+
+  /** Screen-space weather particles: snow, rain, ash or drifting fog. */
+  private addWeather(kind: string | undefined) {
+    const cam = this.cameras.main, vw = cam.width / ZOOM, vh = cam.height / ZOOM;
+    const zone = { type: 'random', source: new Phaser.Geom.Rectangle(-40, -30, vw + 80, 10) } as never;
+    const base = { emitZone: zone, scrollFactor: 0 } as Record<string, unknown>;
+    let cfg: Record<string, unknown> | null = null;
+    if (kind === 'snow') cfg = { ...base, speedY: { min: 20, max: 45 }, speedX: { min: -12, max: 12 }, lifespan: 9000, scale: { min: 0.15, max: 0.35 }, alpha: 0.85, frequency: 70, tint: 0xffffff };
+    if (kind === 'rain') cfg = { ...base, speedY: { min: 380, max: 460 }, speedX: -40, lifespan: 1400, scaleX: 0.06, scaleY: 0.6, alpha: 0.45, frequency: 18, tint: 0x9ac8ff };
+    if (kind === 'ash') cfg = { ...base, speedY: { min: 14, max: 30 }, speedX: { min: -20, max: 20 }, lifespan: 10000, scale: { min: 0.1, max: 0.25 }, alpha: { start: 0.9, end: 0.2 }, frequency: 90, tint: [0x8a7a72, 0xff8a3a, 0x5a4a44] };
+    if (kind === 'fog') {
+      const em = this.track(this.add.particles(0, 0, 'fx_glow', { emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(-60, 0, vw + 120, vh) } as never, speedX: { min: 4, max: 10 }, lifespan: 12000, scale: { min: 2.5, max: 4 }, alpha: { start: 0, end: 0.12, ease: 'Sine.easeInOut' }, frequency: 500, tint: 0xd8e0e8 }));
+      em.setScrollFactor(0).setDepth(1e5 - 0.5);
+      return;
+    }
+    if (!cfg) return;
+    const em = this.track(this.add.particles(0, 0, 'fx_dot', cfg as never));
+    em.setScrollFactor(0).setDepth(1e5 - 0.5);
   }
 
   setCollisionVisible(on: boolean) {

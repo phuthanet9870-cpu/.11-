@@ -49,6 +49,10 @@ function drawItemShape(ctx: CanvasRenderingContext2D, shape: string, c: string, 
     case 'crown':
       px(ctx, 6, 16, 20, 8, c); for (let i = 6; i <= 22; i += 5) { px(ctx, i, 8, 3, 8, c); px(ctx, i + 1, 6, 1, 2, a); } px(ctx, 14, 18, 4, 4, a);
       break;
+    case 'ore':
+      ellipse(ctx, 16, 19, 11, 8, c); ellipse(ctx, 11, 14, 6, 5, c); ellipse(ctx, 21, 15, 6, 6, shade(c, -0.15));
+      px(ctx, 10, 12, 3, 2, a); px(ctx, 19, 17, 2, 2, a); px(ctx, 14, 21, 2, 2, a); px(ctx, 22, 12, 1, 1, '#ffffff');
+      break;
     case 'gem':
       ctx.fillStyle = c; ctx.beginPath(); ctx.moveTo(16, 4); ctx.lineTo(26, 14); ctx.lineTo(16, 28); ctx.lineTo(6, 14); ctx.closePath(); ctx.fill(); px(ctx, 12, 10, 3, 6, '#ffffff');
       break;

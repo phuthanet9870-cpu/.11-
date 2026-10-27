@@ -7,7 +7,7 @@ import { generateCharacterSheet, portraitFromSheet } from '../game/art/character
 import { lookForCharacter, SpritePreview } from './screens';
 import { getDragData, setDragData } from './hud';
 import { classLineage, skillCheck } from '../core/character';
-import { canEquip, filterInventory, inventoryWeight, sellPrice } from '../core/inventory';
+import { canEquip, countItem, filterInventory, inventoryWeight, sellPrice } from '../core/inventory';
 import { expToNextBase, expToNextJob } from '../core/formulas';
 import {
   activeQuests, isComplete, objectiveTarget, questsOfferedBy, questsToTurnIn,
@@ -17,6 +17,7 @@ import { EQUIP_SLOTS, STAT_KEYS } from '../core/types';
 import { DEFAULT_KEYBINDS } from '../core/save';
 import { audio } from '../game/audio/audio';
 import * as gm from '../core/gm';
+import { MAX_REFINE, refineInfo } from '../core/refine';
 
 export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin';
 
@@ -63,7 +64,7 @@ export class WindowManager {
     this.define('status', 'Character Status', 330, 90, () => this.renderStatus());
     this.define('skills', 'Skill Tree', 380, 60, () => this.renderSkills());
     this.define('quests', 'Quest Journal', 300, 80, () => this.renderQuests());
-    this.define('worldMap', 'World Map', 300, 90, () => this.renderWorldMap());
+    this.define('worldMap', 'World Map', 240, 60, () => this.renderWorldMap());
     this.define('settings', 'Settings', 420, 70, () => this.renderSettings());
     this.define('shop', 'Shop', 16, 90, () => this.renderShop());
     this.define('storage', 'Storage', 16, 90, () => this.renderStorage());
@@ -425,33 +426,30 @@ export class WindowManager {
     const body = this.wins.get('worldMap')!.body;
     const box = h('div', { class: 'worldmap' });
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('width', '640'); svg.setAttribute('height', '400');
+    const MW = 760, MH = 460;
+    svg.setAttribute('width', String(MW)); svg.setAttribute('height', String(MH));
     svg.style.position = 'absolute'; svg.style.inset = '0';
     for (const m of w.data.maps.values()) for (const p of m.portals) {
       const t = w.data.maps.get(p.targetMap)!;
       const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      line.setAttribute('x1', String(m.worldMapPos.x * 640)); line.setAttribute('y1', String(m.worldMapPos.y * 400));
-      line.setAttribute('x2', String(t.worldMapPos.x * 640)); line.setAttribute('y2', String(t.worldMapPos.y * 400));
-      line.setAttribute('stroke', '#c8a26b'); line.setAttribute('stroke-width', '3'); line.setAttribute('stroke-dasharray', '6 4');
+      line.setAttribute('x1', String(m.worldMapPos.x * MW)); line.setAttribute('y1', String(m.worldMapPos.y * MH));
+      line.setAttribute('x2', String(t.worldMapPos.x * MW)); line.setAttribute('y2', String(t.worldMapPos.y * MH));
+      line.setAttribute('stroke', '#c8a26b'); line.setAttribute('stroke-width', '2'); line.setAttribute('stroke-dasharray', '5 4'); line.setAttribute('opacity', '0.7');
       svg.appendChild(line);
     }
     box.appendChild(svg);
     for (const m of w.data.maps.values()) {
       const here = m.id === w.map.def.id;
       const col = m.type === 'town' ? '#ffd34d' : m.type === 'field' ? '#6fe08a' : '#ff6a5a';
-      box.appendChild(h('div', { class: `wm-node${here ? ' here' : ''}`, style: { left: `${m.worldMapPos.x * 640}px`, top: `${m.worldMapPos.y * 400}px` } },
+      const node = h('div', { class: `wm-node ${m.type}${here ? ' here' : ''}`, title: `${m.name} — ${m.region}${m.levelRange ? ` (Lv.${m.levelRange[0]}–${m.levelRange[1]})` : ''}`, style: { left: `${m.worldMapPos.x * MW}px`, top: `${m.worldMapPos.y * MH}px` } },
         h('div', { class: 'dot', style: { background: col } }),
-        h('div', { style: 'font-weight:bold' }, m.name),
-        h('div', { class: 'muted' }, m.levelRange ? `Lv.${m.levelRange[0]}–${m.levelRange[1]}` : m.type === 'town' ? 'Town' : ''),
-        here ? h('div', { class: 'gold' }, '★ You are here') : null));
+        h('div', { class: 'wm-name' }, m.type === 'town' ? m.name.replace(/^(Royal Capital|Tower City|Desert City|Port Town|Snow Town) /, '').replace(/ Village$/, '') : m.name),
+        m.levelRange ? h('div', { class: 'muted' }, `Lv.${m.levelRange[0]}–${m.levelRange[1]}`) : null);
+      box.appendChild(node);
     }
-    // Regions not yet built in this phase are shown as unexplored.
-    const future: [string, number, number][] = [['Silvercrest Kingdom', 0.62, 0.3], ['Emerald Wilds', 0.7, 0.68], ['Sundune Desert', 0.88, 0.8], ['Frostpeak Mountains', 0.82, 0.14], ['Ashen Volcano', 0.94, 0.45], ['Astral Isles', 0.5, 0.1], ['Void Realm', 0.3, 0.12]];
-    for (const [name, x, y] of future) {
-      box.appendChild(h('div', { class: 'wm-node locked', style: { left: `${x * 640}px`, top: `${y * 400}px` } },
-        h('div', { class: 'dot', style: { background: '#555' } }), h('div', {}, name), h('div', { class: 'muted' }, 'Unexplored')));
-    }
-    setChildren(body, box, h('div', { class: 'muted', style: 'font-size:11px;margin-top:6px' }, 'Aetheria — the Kingdom of Veyloria. Dashed roads connect regions you can travel between.'));
+    setChildren(body, box, h('div', { class: 'muted', style: 'font-size:11px;margin-top:6px;display:flex;gap:14px' },
+      h('span', {}, h('b', { style: 'color:#ffd34d' }, '●'), ' Town'), h('span', {}, h('b', { style: 'color:#6fe08a' }, '●'), ' Field'), h('span', {}, h('b', { style: 'color:#ff6a5a' }, '●'), ' Dungeon'),
+      h('span', {}, `You are in ${w.map.def.name} — ${w.map.def.region}. Hover a place for details; Courier Guild NPCs warp between towns.`)));
   }
 
   // ---------------------------------------------------------------- settings
@@ -571,11 +569,69 @@ export class WindowManager {
       if (s.type === 'heal') opts.push([`Rest at the inn (${s.cost} Luma)`, () => { const r = w.healAtInn(s.cost); this.app.hud?.toast(r.ok ? r.message! : r.error, !r.ok); this.closeDialog(); }]);
       if (s.type === 'save') opts.push(['Set save point here', () => { w.setSavePoint(); this.app.saveNow(false); this.app.hud?.toast('Save point set.'); this.closeDialog(); }]);
       if (s.type === 'resetStats') opts.push([`Reset stat points${s.cost ? ` (${s.cost} Luma)` : ' (free)'}`, () => { this.closeDialog(); this.confirmAction('Reset stats', 'Refund every allocated stat point so you can spend them again?', 'Reset stats', () => w.doResetStats(s.cost)); }]);
+      if (s.type === 'refine') opts.push(['Refine equipment', () => this.refineDialog(npc)]);
+      if (s.type === 'warp') opts.push(['Warp service', () => this.warpDialog(npc, s.destinations)]);
+      if (s.type === 'jobChange') for (const id of s.classIds) {
+        const cls = w.data.classes.get(id)!;
+        const req = cls.requirements ?? {};
+        opts.push([`Become a ${cls.name}${req.jobLevel ? ` (needs Job Lv ${req.jobLevel})` : ''}`, () => {
+          this.closeDialog();
+          this.confirmAction(`Become a ${cls.name}`, `${cls.description} Your job level resets to 1; base level, stats and learned skills are kept.`, 'Change job', () => {
+            const r = w.changeJobAt(id);
+            if (r.ok) this.app.hud?.banner(`You are now a ${cls.name}!`, 'New skills are available in the Skill Tree (K).');
+          });
+        }]);
+      }
       if (s.type === 'resetSkills') opts.push([`Reset skill points${s.cost ? ` (${s.cost} Luma)` : ' (free)'}`, () => { this.closeDialog(); this.confirmAction('Reset skills', 'Forget every learned skill and refund the skill points? Hotbar skill slots are cleared.', 'Reset skills', () => w.doResetSkills(s.cost)); }]);
     }
     opts.push(['Goodbye', () => this.closeDialog()]);
     const text = npc.greeting[Math.floor(Math.random() * npc.greeting.length)];
     this.showDialog(npc, [text], opts);
+  }
+
+  /** Refine flow: pick an item, see the chance and cost, then try. */
+  private refineDialog(npc: NpcDef, picked?: string) {
+    const w = this.app.world!, d = w.data, c = w.char;
+    const label = (inst: ItemInstance) => `${inst.refine ? `+${inst.refine} ` : ''}${d.items.get(inst.itemId)!.name}`;
+    if (!picked) {
+      const items = [...EQUIP_SLOTS.map((sl) => c.equipment[sl]).filter((i): i is ItemInstance => !!i), ...c.inventory]
+        .filter((i) => { const def = d.items.get(i.itemId)!; return def.type === 'equipment' && def.slot && def.slot !== 'accessory'; });
+      const opts: [string, () => void][] = items.slice(0, 8).map((i) => [`${label(i)}${Object.values(c.equipment).includes(i) ? ' (equipped)' : ''}`, () => this.refineDialog(npc, i.uid)]);
+      opts.push(['Never mind', () => this.openNpcDialog(npc.id)]);
+      this.showDialog(npc, [items.length ? 'Which piece shall I work on? Weapons take Starsteel Ore, armor takes Moonstone Ore.' : 'You have nothing I can refine. Bring me a weapon or some armor.'], opts, null, 'Refine');
+      return;
+    }
+    const info = refineInfo(d, c, picked);
+    const inst = c.inventory.find((i) => i.uid === picked) ?? Object.values(c.equipment).find((i) => i?.uid === picked);
+    if (!inst) { this.refineDialog(npc); return; }
+    const pct = Math.round(info.chance * 100);
+    const lines = [
+      `${label(inst)} → +${info.next}`,
+      `Success chance ${pct}%. Cost: 1 ${d.items.get(info.ore)?.name ?? info.ore} (you have ${countItem(c, info.ore)}) and ${info.fee} Luma.`,
+      info.chance < 1 ? `Safe up to +${info.safe}. Past that, a failed attempt DESTROYS the item.` : `Safe refine (up to +${info.safe} never fails).`,
+    ];
+    const opts: [string, () => void][] = [];
+    const go = () => {
+      const r = w.refine(picked);
+      if (r.ok) this.app.hud?.banner(r.outcome === 'success' ? `Refine success: +${r.level}` : 'Refine failed', r.message!);
+      if (r.ok && r.outcome === 'success' && (inst.refine ?? 0) < MAX_REFINE) this.refineDialog(npc, picked); else this.refineDialog(npc);
+    };
+    if (info.ok) opts.push([`Refine (${pct}%)`, () => (info.chance < 1 ? this.confirmTyped(
+      'Risky refine', `${label(inst)} has a ${100 - pct}% chance to be destroyed. Type REFINE to continue.`, 'REFINE', 'Refine', go) : go())]);
+    else lines.push(info.error ?? '');
+    opts.push(['Choose another item', () => this.refineDialog(npc)]);
+    opts.push(['Done', () => this.openNpcDialog(npc.id)]);
+    this.showDialog(npc, lines, opts, null, 'Refine');
+  }
+
+  private warpDialog(npc: NpcDef, dests: { mapId: string; spawn: string; cost: number }[]) {
+    const w = this.app.world!;
+    const opts: [string, () => void][] = dests.map((dst) => [`${w.data.maps.get(dst.mapId)!.name} — ${dst.cost} Luma`, () => {
+      const r = w.warpTo(dst.mapId);
+      if (r.ok) this.closeDialog();
+    }]);
+    opts.push(['Never mind', () => this.openNpcDialog(npc.id)]);
+    this.showDialog(npc, ['Where would you like to go? Warps are paid in advance.'], opts, null, 'Warp Service');
   }
 
   private questDialog(npc: NpcDef, q: QuestDef, mode: 'offer' | 'progress' | 'complete') {

@@ -91,12 +91,12 @@ try {
   await page.mouse.click(pt.x, pt.y);
   await page.waitForSelector('#npc-dialog', { timeout: 15000 });
   check('clicking an NPC walks over and opens dialogue', true);
-  await page.click('#npc-dialog .dopt >> text=A Star-Touched Morning');
+  await page.click('#npc-dialog .dopt >> text=Welcome, Novice');
   await page.screenshot({ path: join(shots, '04-dialogue.png') });
   await page.click('#npc-dialog .dopt >> text=Accept');
   await sleep(200);
   s = await state();
-  check('quest accepted through dialogue', s.quests.main_awakening === 'active', JSON.stringify(s.quests));
+  check('tutorial quest accepted through dialogue', s.quests.tut_welcome === 'active', JSON.stringify(s.quests));
   await page.keyboard.press('Escape');
 
   // Windows
@@ -158,7 +158,7 @@ try {
   await page.waitForSelector('#hud', { timeout: 15000 });
   await sleep(800);
   s = await state();
-  check('loaded character resumes on the saved map with quest progress', s.map === 'sunny_meadow' && s.quests.main_awakening === 'active', `${s.map} ${JSON.stringify(s.quests)}`);
+  check('loaded character resumes on the saved map with quest progress', s.map === 'sunny_meadow' && s.quests.tut_welcome === 'active', `${s.map} ${JSON.stringify(s.quests)}`);
   await page.screenshot({ path: join(shots, '08-reloaded.png') });
 
   // Whispering Forest render check (boss map)
@@ -207,21 +207,40 @@ try {
   check('stat allocation from the status window', str1 === str0 + 1, `${str0}→${str1}`);
   await page.keyboard.press('Escape');
 
-  // Job change through Seraphine's dialogue (objectives pre-completed via the debug hook).
+  // Refine at Garrick through the dialogue: +0 → +1 (safe refine).
+  await page.evaluate(() => {
+    const w = window.__veyloria.world;
+    w.enterMap('willowbrook', 'default');
+    const g = w.npcs.find((n) => n.npcId === 'garrick');
+    w.player.x = g.x; w.player.y = g.y + 40;
+    w.giveItem('training_knife', 1, 'test'); w.giveItem('starsteel_ore', 1, 'test'); w.char.luma += 500;
+    w.interactNpc('garrick');
+  });
+  await page.waitForSelector('#npc-dialog', { timeout: 20000 });
+  await page.click('#npc-dialog .dopt >> text=Refine equipment');
+  await page.click('#npc-dialog .dopt >> text=Training Knife');
+  await page.screenshot({ path: join(shots, '12a-refine.png') });
+  await page.click('#npc-dialog .dopt >> text=Refine (100%)');
+  await sleep(300);
+  const refined = await page.evaluate(() => { const c = window.__veyloria.world.char; return Math.max(0, ...[...c.inventory, ...Object.values(c.equipment)].filter((i) => i?.itemId === 'training_knife').map((i) => i.refine ?? 0)); });
+  check('refine +1 at the blacksmith through the dialogue', refined === 1, `+${refined}`);
+  await page.keyboard.press('Escape');
+
+  // Job change at the Knight guild master in the capital Aurelion.
   await page.evaluate(() => {
     const w = window.__veyloria.world;
     w.char.jobLevel = 10;
-    w.accept('job_knight');
-    w.char.quests.job_knight.counts = [4];
-    w.char.quests.job_knight.status = 'ready';
-    w.interactNpc('seraphine');
+    w.enterMap('aurelion', 'default');
+    const g = w.npcs.find((n) => n.npcId === 'guild_knight');
+    w.player.x = g.x; w.player.y = g.y + 40;
+    w.interactNpc('guild_knight');
   });
   await page.waitForSelector('#npc-dialog', { timeout: 20000 });
-  await page.click('#npc-dialog .dopt >> text=Trial of the Shield');
-  await page.click('#npc-dialog .dopt >> text=Complete quest');
+  await page.click('#npc-dialog .dopt >> text=Become a Knight');
+  await page.click('button:has-text("Change job")');
   await sleep(400);
   const cls = await page.evaluate(() => window.__veyloria.world.char.classId);
-  check('job change to Knight via quest dialogue', cls === 'knight', cls);
+  check('job change to Knight at the guild master in Aurelion', cls === 'knight', cls);
   await page.screenshot({ path: join(shots, '12-job-change.png') });
   await page.keyboard.press('Escape');
 

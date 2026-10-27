@@ -1,0 +1,243 @@
+{
+ "id": "aurelion_fields_south",
+ "name": "Aurelion Fields South",
+ "region": "Aurelion — Royal Capital",
+ "type": "field",
+ "levelRange": [
+  10,
+  18
+ ],
+ "width": 58,
+ "height": 44,
+ "tileset": "capital",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "field_plains",
+ "ambient": "meadow",
+ "weather": [
+  "sunny",
+  "rain"
+ ],
+ "worldMapPos": {
+  "x": 0.43,
+  "y": 0.67
+ },
+ "paint": [
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 13,
+   "cy": 11,
+   "rx": 4,
+   "ry": 4,
+   "seed": 525238657
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 45,
+   "cy": 33,
+   "rx": 6,
+   "ry": 3,
+   "seed": 525238659
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     3,
+     21
+    ],
+    [
+     19,
+     21
+    ],
+    [
+     28,
+     21
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     28,
+     3
+    ],
+    [
+     27,
+     13
+    ],
+    [
+     28,
+     21
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     54,
+     21
+    ],
+    [
+     41,
+     20
+    ],
+    [
+     28,
+     21
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_oak",
+   "density": 0.035,
+   "seed": 525238668
+  },
+  {
+   "op": "scatter",
+   "kind": "rock",
+   "density": 0.012,
+   "seed": 525238669
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.05,
+   "seed": 2764168590
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.05,
+   "seed": 1366958151
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 5,
+   "y": 20,
+   "id": "sign_aurelion_fields_south"
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_clover_hills",
+   "x": 0,
+   "y": 20,
+   "w": 2,
+   "h": 4,
+   "targetMap": "clover_hills",
+   "targetSpawn": "from_aurelion_fields_south",
+   "label": "Clover Hills"
+  },
+  {
+   "id": "to_aurelion",
+   "x": 27,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "targetMap": "aurelion",
+   "targetSpawn": "from_aurelion_fields_south",
+   "label": "Royal Capital Aurelion"
+  },
+  {
+   "id": "to_coral_beach",
+   "x": 56,
+   "y": 20,
+   "w": 2,
+   "h": 4,
+   "targetMap": "coral_beach",
+   "targetSpawn": "from_aurelion_fields_south",
+   "label": "Coral Beach"
+  }
+ ],
+ "spawnPoints": {
+  "from_clover_hills": {
+   "x": 4,
+   "y": 22
+  },
+  "from_aurelion": {
+   "x": 29,
+   "y": 4
+  },
+  "from_coral_beach": {
+   "x": 53,
+   "y": 22
+  },
+  "default": {
+   "x": 4,
+   "y": 22
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "plains_wolf",
+   "count": 4,
+   "area": {
+    "x": 3,
+    "y": 3,
+    "w": 23,
+    "h": 16
+   }
+  },
+  {
+   "monsterId": "plains_wolf",
+   "count": 4,
+   "area": {
+    "x": 3,
+    "y": 24,
+    "w": 23,
+    "h": 16
+   }
+  },
+  {
+   "monsterId": "pebble_golem",
+   "count": 6,
+   "area": {
+    "x": 31,
+    "y": 3,
+    "w": 23,
+    "h": 16
+   }
+  },
+  {
+   "monsterId": "road_goblin",
+   "count": 6,
+   "area": {
+    "x": 3,
+    "y": 24,
+    "w": 23,
+    "h": 16
+   }
+  }
+ ],
+ "objects": [
+  {
+   "id": "sign_aurelion_fields_south",
+   "kind": "signpost",
+   "x": 5,
+   "y": 20,
+   "name": "Signpost",
+   "interact": {
+    "text": "Aurelion Fields South (Lv.10–18).  WEST → Clover Hills.  NORTH → Royal Capital Aurelion.  EAST → Coral Beach."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

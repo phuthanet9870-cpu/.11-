@@ -135,6 +135,14 @@ export const questEvents = {
     progress(data, c, (o) => o.type === 'interact' && o.objectId === objectId),
   craft: (data: GameData, c: CharacterState, itemId: string) =>
     progress(data, c, (o) => o.type === 'craft' && o.itemId === itemId),
+  buy: (data: GameData, c: CharacterState, itemId: string) => {
+    const def = data.items.get(itemId);
+    return progress(data, c, (o) => o.type === 'buy' && (o.itemId ? o.itemId === itemId : !o.slot || def?.slot === o.slot));
+  },
+  equip: (data: GameData, c: CharacterState, slot: string) =>
+    progress(data, c, (o) => o.type === 'equip' && o.slot === slot),
+  refine: (data: GameData, c: CharacterState, level: number) =>
+    progress(data, c, (o) => o.type === 'refine' && level >= o.level),
 };
 
 /** Talk objectives are satisfied by speaking to the NPC, but only in order: earlier objectives must be done. */

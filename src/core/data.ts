@@ -15,9 +15,7 @@ import questsJson from '../data/quests.json';
 import tilesJson from '../data/tiles.json';
 import tilesetsJson from '../data/tilesets.json';
 import objectsJson from '../data/objects.json';
-import willowbrookMap from '../data/maps/willowbrook.json';
-import meadowMap from '../data/maps/sunny_meadow.json';
-import forestMap from '../data/maps/whispering_forest.json';
+import { MAP_FILES } from '../data/maps';
 import type {
   BossDef, DropTable, Element, ItemDef, JobClassDef, MapDef, MonsterDef, NpcDef,
   ObjectKindDef, QuestDef, ShopDef, SkillDef, StatusDef, StatusId, TileDef, TilesetDef,
@@ -73,7 +71,7 @@ export function loadGameData(): GameData {
     tiles: byId(tilesJson.tiles as TileDef[]),
     tilesets: byId(tilesetsJson as unknown as TilesetDef[]),
     objectKinds: byId(objectsJson as ObjectKindDef[]),
-    maps: byId([willowbrookMap, meadowMap, forestMap] as unknown as MapDef[]),
+    maps: byId(MAP_FILES as unknown as MapDef[]),
   };
   return cached;
 }
@@ -107,7 +105,11 @@ export function validateGameData(d: GameData): string[] {
   }
   for (const t of d.drops.values()) for (const e of t.entries) need(d.items.has(e.itemId), `drops ${t.id}: item ${e.itemId}`);
   for (const sh of d.shops.values()) for (const i of sh.items) need(d.items.has(i), `shop ${sh.id}: item ${i}`);
-  for (const n of d.npcs.values()) for (const s of n.services) if (s.type === 'shop') need(d.shops.has(s.shopId), `npc ${n.id}: shop ${s.shopId}`);
+  for (const n of d.npcs.values()) for (const s of n.services) {
+    if (s.type === 'shop') need(d.shops.has(s.shopId), `npc ${n.id}: shop ${s.shopId}`);
+    if (s.type === 'jobChange') for (const c of s.classIds) need(d.classes.has(c), `npc ${n.id}: class ${c}`);
+    if (s.type === 'warp') for (const t of s.destinations) need(!!d.maps.get(t.mapId)?.spawnPoints[t.spawn], `npc ${n.id}: warp ${t.mapId}/${t.spawn}`);
+  }
   for (const it of d.items.values()) {
     if (it.type === 'equipment') need(!!it.slot, `item ${it.id}: equipment without slot`);
     if (it.classes) for (const c of it.classes) need(d.classes.has(c), `item ${it.id}: class ${c}`);
@@ -145,6 +147,7 @@ export function validateGameData(d: GameData): string[] {
       if (o.type === 'talk' || o.type === 'deliver') need(npcOnMap.has(o.npcId), `quest ${q.id}: npc ${o.npcId}`);
       if (o.type === 'defeatBoss') need(d.bosses.has(o.bossId), `quest ${q.id}: boss ${o.bossId}`);
       if (o.type === 'explore') need(d.maps.has(o.mapId), `quest ${q.id}: map ${o.mapId}`);
+      if (o.type === 'buy' && o.itemId) need(d.items.has(o.itemId), `quest ${q.id}: item ${o.itemId}`);
       if (o.type === 'interact') {
         need([...d.maps.values()].some((m) => m.objects.some((ob) => ob.id === o.objectId)), `quest ${q.id}: object ${o.objectId}`);
       }

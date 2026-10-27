@@ -1,74 +1,55 @@
-// End-to-end Phase 1 playthrough on the real simulation: create a character,
-// follow the main quest line, change job, level up, and defeat the first boss.
+// End-to-end playthrough on the real simulation: create a character, finish
+// the tutorial chain, change job at the Knight guild, refine, and defeat Grukk.
 import { describe, expect, it } from 'vitest';
 import { Bot, fightBoss } from '../helpers/bot';
 import { data, newChar, newWorld } from '../helpers/fixtures';
 import { countItem } from '../../src/core/inventory';
 
-describe('Phase 1 playthrough (Knight)', () => {
-  it('goes from character creation to defeating Grukk and completing Chapter 1', () => {
+describe('playthrough (Knight)', () => {
+  it('tutorial → job change in Aurelion → defeats Grukk', () => {
     const c = newChar('Aria');
     const w = newWorld(c, 42);
     const bot = new Bot(w, ['str', 'str', 'vit', 'agi', 'dex'], ['basic_training', 'first_aid']);
 
-    // --- Chapter 1 opening in Willowbrook
+    // --- Tutorial chain in Willowbrook
     expect(w.map.def.id).toBe('willowbrook');
-    bot.accept('main_awakening');
+    bot.accept('tut_welcome');
     bot.talkTo('seraphine');
-    expect(c.quests.main_awakening.status).toBe('ready');
-    bot.turnIn('main_awakening');
-    bot.accept('main_slimes');
-    bot.accept('side_old_well');
-    bot.interactObject('willowbrook', 'old_well');
-    expect(countItem(c, 'well_water')).toBe(1);
-    bot.turnIn('side_old_well');
-
-    // --- Sunny Meadow: first fights
+    expect(c.quests.tut_welcome.status).toBe('ready');
+    bot.turnIn('tut_welcome');
+    bot.accept('tut_hunt');
     bot.travelTo('sunny_meadow');
-    expect(w.map.def.id).toBe('sunny_meadow');
-    bot.grind(['leaf_slime'], () => c.quests.main_slimes.status === 'ready');
-    bot.grind(['leaf_slime'], () => countItem(c, 'jelly') >= 5);
-    bot.turnIn('main_slimes');
-    bot.accept('main_garrick');
-    bot.turnIn('main_garrick');
-    // Equip the reward buckler & bandana.
-    for (const id of ['wooden_buckler', 'bandana', 'sandals']) {
-      const inst = c.inventory.find((i) => i.itemId === id);
-      if (inst) expect(w.equip(inst.uid).ok).toBe(true);
-    }
-    expect(c.equipment.shield?.itemId).toBe('wooden_buckler');
-
-    bot.accept('side_rabbit_horns');
-    bot.grind(['horn_rabbit', 'leaf_slime'], () => countItem(c, 'rabbit_horn') >= 6);
-    bot.turnIn('side_rabbit_horns');
+    bot.grind(['leaf_slime'], () => c.quests.tut_hunt.status === 'ready');
+    bot.turnIn('tut_hunt');
+    bot.accept('tut_weapon');
+    expect(bot.buy('garrick', 'garrick_smithy', 'oak_club', 1).ok).toBe(true);
+    expect(w.equip(c.inventory.find((i) => i.itemId === 'oak_club')!.uid).ok).toBe(true);
+    bot.turnIn('tut_weapon');
+    bot.accept('tut_refine');
+    expect(w.refine(c.equipment.weapon!.uid).ok).toBe(true);
+    expect(c.equipment.weapon!.refine).toBe(1);
+    bot.turnIn('tut_refine');
+    bot.accept('tut_path');
     bot.grind(['horn_rabbit', 'mushling', 'leaf_slime'], () => c.jobLevel >= 10);
-    expect(c.jobLevel).toBe(10);
-    bot.grind(['mushling', 'buzz_wasp'], () => c.baseLevel >= 11);
+    bot.turnIn('tut_path');
+    expect(Object.values(c.quests).every((q) => q.status === 'completed')).toBe(true);
 
-    // --- Job change: Knight trial in the Whispering Forest
-    bot.accept('job_knight');
-    bot.travelTo('whispering_forest');
-    bot.grind(['forest_goblin'], () => c.quests.job_knight.status === 'ready');
-    bot.turnIn('job_knight');
+    // --- Job change at the Knight guild in the capital Aurelion
+    bot.grind(['mushling', 'buzz_wasp'], () => c.baseLevel >= 11);
+    bot.talkTo('guild_knight');
+    expect(w.map.def.id).toBe('aurelion');
+    expect(w.changeJobAt('knight').ok).toBe(true);
     expect(c.classId).toBe('knight');
     bot.skillPlan = ['bash', 'sword_mastery', 'shield_guard', 'spiral_pierce', 'provoke', 'war_cry'];
     bot.combatSkills = [{ id: 'spiral_pierce' }, { id: 'bash' }];
     bot.selfBuffs = [];
     bot.spendPoints();
+    // Refine the club safely to +4 with the tutorial ores plus some bought ones.
+    bot.buy('aurelion_smith', 'aurelion_arms', 'starsteel_ore', 3);
+    for (let i = 0; i < 3 && (c.equipment.weapon!.refine ?? 0) < 4; i++) w.refine(c.equipment.weapon!.uid);
+    bot.buy('aurelion_smith', 'aurelion_arms', 'iron_sword', 1);
     const sword = c.inventory.find((i) => i.itemId === 'iron_sword');
-    if (sword) {
-      // Level requirement 8 should be met by now.
-      expect(w.equip(sword.uid).ok).toBe(true);
-    }
-
-    // --- Main quest: into the forest
-    bot.accept('main_forest');
-    bot.talkTo('elwin');
-    bot.turnIn('main_forest');
-    bot.accept('main_goblins');
-    bot.travelTo('whispering_forest');
-    bot.grind(['forest_goblin'], () => c.quests.main_goblins.status === 'ready');
-    bot.turnIn('main_goblins');
+    if (sword) expect(w.equip(sword.uid).ok).toBe(true);
 
     // Level up for the boss.
     bot.grind(['forest_goblin', 'thorn_wolf', 'venom_spore'], () => c.baseLevel >= 16, 6 * 3_600_000);
@@ -84,30 +65,23 @@ describe('Phase 1 playthrough (Knight)', () => {
     }
     bot.spendPoints();
 
-    // --- Boss: Grukk the Thornking
-    bot.accept('main_thornking');
+    // --- Field boss: Grukk the Thornking in the Whispering Forest
     bot.travelTo('whispering_forest');
     const findBoss = () => [...w.monsters.values()].find((m) => m.boss && !m.dead);
     let attempts = 0;
     bot.events = [];
-    while (c.quests.main_thornking.status !== 'ready') {
+    while (!(c.stats_meta.bossKills.grukk >= 1)) {
       if (++attempts > 6) throw new Error(`Boss not defeated after 6 attempts. Log:\n${bot.log.slice(-30).join('\n')}`);
       bot.travelTo('whispering_forest');
       bot.runUntil(() => !!findBoss(), 400_000);
       const won = fightBoss(bot);
       if (won) { bot.lootAll(); continue; }
-      // Retreat, level a bit more, restock, and try again.
       const goal = c.baseLevel + 1;
       bot.grind(['forest_goblin', 'thorn_wolf'], () => c.baseLevel >= goal, 3_600_000);
       bot.buy('elwin', 'elwin_camp', 'orange_potion', Math.min(20, Math.floor((c.luma * 0.6) / 80)));
     }
     expect(bot.events.some((e) => e.type === 'bossIntro')).toBe(true);
-    expect(c.stats_meta.bossKills.grukk).toBeGreaterThanOrEqual(1);
     expect(countItem(c, 'thorn_crown')).toBeGreaterThanOrEqual(1);
-    bot.turnIn('main_thornking');
-    bot.accept('main_report');
-    bot.turnIn('main_report');
-    expect(c.flags.chapter1_complete).toBe(true);
 
     const deathsByMap: Record<string, number> = {};
     for (const l of bot.log) { const m = l.match(/DIED on (\S+) \(lv (\d+)\)/); if (m) deathsByMap[`${m[1]}@${m[2]}`] = (deathsByMap[`${m[1]}@${m[2]}`] ?? 0) + 1; }
@@ -115,5 +89,17 @@ describe('Phase 1 playthrough (Knight)', () => {
     // Summary for the test report.
     console.log(`Playthrough complete in ${(bot.simMs / 60000).toFixed(1)} simulated minutes: ` +
       `Base Lv ${c.baseLevel}, Job Lv ${c.jobLevel} ${data.classes.get(c.classId)!.name}, kills ${c.stats_meta.kills}, deaths ${c.stats_meta.deaths}, boss attempts ${attempts}.`);
+  }, 300_000);
+});
+
+describe('world travel', () => {
+  it('walks through portals to every one of the 30 maps', () => {
+    const c = newChar('Wanderer');
+    const w = newWorld(c, 7);
+    w.godMode = true;
+    const bot = new Bot(w);
+    const seen = new Set<string>([w.map.def.id]);
+    for (const id of data.maps.keys()) { bot.travelTo(id); seen.add(w.map.def.id); }
+    expect(seen.size).toBe(30);
   }, 300_000);
 });

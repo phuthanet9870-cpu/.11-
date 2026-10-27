@@ -1,22 +1,1841 @@
 [
-  { "id": "leaf_slime_drops", "luma": [2, 6], "entries": [
-    { "itemId": "jelly", "chance": 0.7 }, { "itemId": "meadow_apple", "chance": 0.15 }, { "itemId": "red_potion", "chance": 0.05 }, { "itemId": "leaf_cap", "chance": 0.004 } ] },
-  { "id": "horn_rabbit_drops", "luma": [4, 10], "entries": [
-    { "itemId": "rabbit_horn", "chance": 0.6 }, { "itemId": "meadow_apple", "chance": 0.2 }, { "itemId": "red_potion", "chance": 0.06 }, { "itemId": "clover_charm", "chance": 0.003 } ] },
-  { "id": "mushling_drops", "luma": [6, 14], "entries": [
-    { "itemId": "mushling_cap", "chance": 0.6 }, { "itemId": "red_potion", "chance": 0.08 }, { "itemId": "green_potion", "chance": 0.05 }, { "itemId": "sandals", "chance": 0.01 } ] },
-  { "id": "buzz_wasp_drops", "luma": [8, 18], "entries": [
-    { "itemId": "wasp_stinger", "chance": 0.55 }, { "itemId": "green_potion", "chance": 0.08 }, { "itemId": "red_potion", "chance": 0.08 }, { "itemId": "swift_boots", "chance": 0.002 } ] },
-  { "id": "forest_goblin_drops", "luma": [12, 26], "entries": [
-    { "itemId": "goblin_fang", "chance": 0.55 }, { "itemId": "orange_potion", "chance": 0.06 }, { "itemId": "oak_club", "chance": 0.02 }, { "itemId": "goblin_mask", "chance": 0.006 }, { "itemId": "astral_shard", "chance": 0.01 } ] },
-  { "id": "venom_spore_drops", "luma": [12, 28], "entries": [
-    { "itemId": "spore_dust", "chance": 0.6 }, { "itemId": "green_potion", "chance": 0.12 }, { "itemId": "blue_potion", "chance": 0.03 }, { "itemId": "sapphire_pendant", "chance": 0.004 } ] },
-  { "id": "thorn_wolf_drops", "luma": [16, 34], "entries": [
-    { "itemId": "wolf_pelt", "chance": 0.5 }, { "itemId": "orange_potion", "chance": 0.08 }, { "itemId": "wolfhide_cloak", "chance": 0.006 }, { "itemId": "astral_shard", "chance": 0.015 } ] },
-  { "id": "bone_soldier_drops", "luma": [20, 40], "entries": [
-    { "itemId": "old_bone", "chance": 0.55 }, { "itemId": "orange_potion", "chance": 0.1 }, { "itemId": "iron_helm", "chance": 0.008 }, { "itemId": "bone_earring", "chance": 0.005 }, { "itemId": "astral_shard", "chance": 0.02 } ] },
-  { "id": "grukk_drops", "luma": [600, 900], "entries": [
-    { "itemId": "thorn_crown", "chance": 1.0 }, { "itemId": "yellow_potion", "chance": 1.0, "min": 2, "max": 4 }, { "itemId": "astral_shard", "chance": 0.8, "min": 1, "max": 3 },
-    { "itemId": "thornbane_blade", "chance": 0.25 }, { "itemId": "thornwood_longbow", "chance": 0.25 }, { "itemId": "thornheart_staff", "chance": 0.25 },
-    { "itemId": "goblin_mask", "chance": 0.3 }, { "itemId": "wolfhide_cloak", "chance": 0.2 } ] }
+ {
+  "id": "leaf_slime_drops",
+  "luma": [
+   2,
+   6
+  ],
+  "entries": [
+   {
+    "itemId": "jelly",
+    "chance": 0.7
+   },
+   {
+    "itemId": "meadow_apple",
+    "chance": 0.15
+   },
+   {
+    "itemId": "red_potion",
+    "chance": 0.05
+   },
+   {
+    "itemId": "leaf_cap",
+    "chance": 0.004
+   }
+  ]
+ },
+ {
+  "id": "horn_rabbit_drops",
+  "luma": [
+   4,
+   10
+  ],
+  "entries": [
+   {
+    "itemId": "rabbit_horn",
+    "chance": 0.6
+   },
+   {
+    "itemId": "meadow_apple",
+    "chance": 0.2
+   },
+   {
+    "itemId": "red_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "clover_charm",
+    "chance": 0.003
+   }
+  ]
+ },
+ {
+  "id": "mushling_drops",
+  "luma": [
+   6,
+   14
+  ],
+  "entries": [
+   {
+    "itemId": "mushling_cap",
+    "chance": 0.6
+   },
+   {
+    "itemId": "red_potion",
+    "chance": 0.08
+   },
+   {
+    "itemId": "green_potion",
+    "chance": 0.05
+   },
+   {
+    "itemId": "sandals",
+    "chance": 0.01
+   }
+  ]
+ },
+ {
+  "id": "buzz_wasp_drops",
+  "luma": [
+   8,
+   18
+  ],
+  "entries": [
+   {
+    "itemId": "wasp_stinger",
+    "chance": 0.55
+   },
+   {
+    "itemId": "green_potion",
+    "chance": 0.08
+   },
+   {
+    "itemId": "red_potion",
+    "chance": 0.08
+   },
+   {
+    "itemId": "swift_boots",
+    "chance": 0.002
+   }
+  ]
+ },
+ {
+  "id": "forest_goblin_drops",
+  "luma": [
+   12,
+   26
+  ],
+  "entries": [
+   {
+    "itemId": "goblin_fang",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "oak_club",
+    "chance": 0.02
+   },
+   {
+    "itemId": "goblin_mask",
+    "chance": 0.006
+   },
+   {
+    "itemId": "astral_shard",
+    "chance": 0.01
+   }
+  ]
+ },
+ {
+  "id": "venom_spore_drops",
+  "luma": [
+   12,
+   28
+  ],
+  "entries": [
+   {
+    "itemId": "spore_dust",
+    "chance": 0.6
+   },
+   {
+    "itemId": "green_potion",
+    "chance": 0.12
+   },
+   {
+    "itemId": "blue_potion",
+    "chance": 0.03
+   },
+   {
+    "itemId": "sapphire_pendant",
+    "chance": 0.004
+   }
+  ]
+ },
+ {
+  "id": "thorn_wolf_drops",
+  "luma": [
+   16,
+   34
+  ],
+  "entries": [
+   {
+    "itemId": "wolf_pelt",
+    "chance": 0.5
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.08
+   },
+   {
+    "itemId": "wolfhide_cloak",
+    "chance": 0.006
+   },
+   {
+    "itemId": "astral_shard",
+    "chance": 0.015
+   }
+  ]
+ },
+ {
+  "id": "bone_soldier_drops",
+  "luma": [
+   20,
+   40
+  ],
+  "entries": [
+   {
+    "itemId": "old_bone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.1
+   },
+   {
+    "itemId": "iron_helm",
+    "chance": 0.008
+   },
+   {
+    "itemId": "bone_earring",
+    "chance": 0.005
+   },
+   {
+    "itemId": "astral_shard",
+    "chance": 0.02
+   }
+  ]
+ },
+ {
+  "id": "grukk_drops",
+  "luma": [
+   600,
+   900
+  ],
+  "entries": [
+   {
+    "itemId": "thorn_crown",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1,
+    "min": 2,
+    "max": 4
+   },
+   {
+    "itemId": "astral_shard",
+    "chance": 0.8,
+    "min": 1,
+    "max": 3
+   },
+   {
+    "itemId": "thornbane_blade",
+    "chance": 0.25
+   },
+   {
+    "itemId": "thornwood_longbow",
+    "chance": 0.25
+   },
+   {
+    "itemId": "thornheart_staff",
+    "chance": 0.25
+   },
+   {
+    "itemId": "goblin_mask",
+    "chance": 0.3
+   },
+   {
+    "itemId": "wolfhide_cloak",
+    "chance": 0.2
+   }
+  ]
+ },
+ {
+  "id": "dusk_bat_drops",
+  "luma": [
+   7,
+   17
+  ],
+  "entries": [
+   {
+    "itemId": "dusk_bat_wing",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0072
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0072
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "clover_slime_drops",
+  "luma": [
+   6,
+   14
+  ],
+  "entries": [
+   {
+    "itemId": "clover_slime_gel",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0064
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0064
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "plains_wolf_drops",
+  "luma": [
+   9,
+   23
+  ],
+  "entries": [
+   {
+    "itemId": "plains_wolf_fang",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0088
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0088
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "pebble_golem_drops",
+  "luma": [
+   11,
+   27
+  ],
+  "entries": [
+   {
+    "itemId": "pebble_golem_core_stone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.01
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.01
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "road_goblin_drops",
+  "luma": [
+   12,
+   30
+  ],
+  "entries": [
+   {
+    "itemId": "road_goblin_tusk",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0108
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0108
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "crypt_bat_drops",
+  "luma": [
+   15,
+   35
+  ],
+  "entries": [
+   {
+    "itemId": "crypt_bat_wing",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.012400000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.012400000000000001
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "wailing_spirit_drops",
+  "luma": [
+   17,
+   41
+  ],
+  "entries": [
+   {
+    "itemId": "wailing_spirit_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.014
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.014
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "grave_soldier_drops",
+  "luma": [
+   18,
+   44
+  ],
+  "entries": [
+   {
+    "itemId": "grave_soldier_bone_shard",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0148
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0148
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "mist_spore_drops",
+  "luma": [
+   13,
+   31
+  ],
+  "entries": [
+   {
+    "itemId": "mist_spore_spore_dust",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.011200000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.011200000000000002
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "pine_goblin_drops",
+  "luma": [
+   15,
+   35
+  ],
+  "entries": [
+   {
+    "itemId": "pine_goblin_tusk",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.012400000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.012400000000000001
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elder_mushling_drops",
+  "luma": [
+   16,
+   40
+  ],
+  "entries": [
+   {
+    "itemId": "elder_mushling_spore_cap",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.013600000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.013600000000000001
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "shadow_wolf_drops",
+  "luma": [
+   19,
+   45
+  ],
+  "entries": [
+   {
+    "itemId": "shadow_wolf_fang",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0152
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0152
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "bramble_hornet_drops",
+  "luma": [
+   18,
+   42
+  ],
+  "entries": [
+   {
+    "itemId": "bramble_hornet_stinger",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.014400000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.014400000000000001
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "cave_bat_drops",
+  "luma": [
+   18,
+   44
+  ],
+  "entries": [
+   {
+    "itemId": "cave_bat_wing",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0148
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0148
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "moss_golem_drops",
+  "luma": [
+   21,
+   49
+  ],
+  "entries": [
+   {
+    "itemId": "moss_golem_core_stone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0164
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0164
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "lantern_ghost_drops",
+  "luma": [
+   22,
+   52
+  ],
+  "entries": [
+   {
+    "itemId": "lantern_ghost_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0172
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0172
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "crystal_slime_drops",
+  "luma": [
+   15,
+   35
+  ],
+  "entries": [
+   {
+    "itemId": "crystal_slime_gel",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.012400000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.012400000000000001
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "moon_hare_drops",
+  "luma": [
+   16,
+   38
+  ],
+  "entries": [
+   {
+    "itemId": "moon_hare_tuft_of_fur",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0132
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0132
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcane_wisp_drops",
+  "luma": [
+   18,
+   44
+  ],
+  "entries": [
+   {
+    "itemId": "arcane_wisp_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0148
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0148
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "animated_armor_drops",
+  "luma": [
+   22,
+   54
+  ],
+  "entries": [
+   {
+    "itemId": "animated_armor_bone_shard",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0176
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0176
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "rune_golem_drops",
+  "luma": [
+   25,
+   59
+  ],
+  "entries": [
+   {
+    "itemId": "rune_golem_core_stone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.019200000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.019200000000000002
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "mana_wisp_drops",
+  "luma": [
+   24,
+   56
+  ],
+  "entries": [
+   {
+    "itemId": "mana_wisp_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0184
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0184
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "dune_slime_drops",
+  "luma": [
+   17,
+   41
+  ],
+  "entries": [
+   {
+    "itemId": "dune_slime_gel",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.014
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.014
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sand_scorpion_drops",
+  "luma": [
+   19,
+   45
+  ],
+  "entries": [
+   {
+    "itemId": "sand_scorpion_venom_tail",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0152
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0152
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "desert_wolf_drops",
+  "luma": [
+   21,
+   49
+  ],
+  "entries": [
+   {
+    "itemId": "desert_wolf_fang",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0164
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0164
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "oasis_crab_drops",
+  "luma": [
+   21,
+   51
+  ],
+  "entries": [
+   {
+    "itemId": "oasis_crab_shell",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.016800000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.016800000000000002
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "mirage_wisp_drops",
+  "luma": [
+   23,
+   55
+  ],
+  "entries": [
+   {
+    "itemId": "mirage_wisp_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.018000000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.018000000000000002
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "giant_scorpion_drops",
+  "luma": [
+   25,
+   59
+  ],
+  "entries": [
+   {
+    "itemId": "giant_scorpion_venom_tail",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.019200000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.019200000000000002
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tomb_mummy_drops",
+  "luma": [
+   26,
+   62
+  ],
+  "entries": [
+   {
+    "itemId": "tomb_mummy_bone_shard",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.02
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.02
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "gilded_scarab_drops",
+  "luma": [
+   27,
+   65
+  ],
+  "entries": [
+   {
+    "itemId": "gilded_scarab_venom_tail",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.020800000000000003
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.020800000000000003
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tomb_bat_drops",
+  "luma": [
+   25,
+   61
+  ],
+  "entries": [
+   {
+    "itemId": "tomb_bat_wing",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0196
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0196
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "shore_crab_drops",
+  "luma": [
+   13,
+   33
+  ],
+  "entries": [
+   {
+    "itemId": "shore_crab_shell",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0116
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0116
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sea_slime_drops",
+  "luma": [
+   15,
+   35
+  ],
+  "entries": [
+   {
+    "itemId": "sea_slime_gel",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.012400000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.012400000000000001
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "reef_gull_drops",
+  "luma": [
+   16,
+   40
+  ],
+  "entries": [
+   {
+    "itemId": "reef_gull_wing",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.013600000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.013600000000000001
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "grotto_crab_drops",
+  "luma": [
+   20,
+   48
+  ],
+  "entries": [
+   {
+    "itemId": "grotto_crab_shell",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.016
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.016
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "kelp_spore_drops",
+  "luma": [
+   21,
+   49
+  ],
+  "entries": [
+   {
+    "itemId": "kelp_spore_spore_dust",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0164
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0164
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "drowned_spirit_drops",
+  "luma": [
+   23,
+   55
+  ],
+  "entries": [
+   {
+    "itemId": "drowned_spirit_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.018000000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.018000000000000002
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frost_slime_drops",
+  "luma": [
+   27,
+   63
+  ],
+  "entries": [
+   {
+    "itemId": "frost_slime_gel",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0204
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0204
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "snow_wolf_drops",
+  "luma": [
+   28,
+   66
+  ],
+  "entries": [
+   {
+    "itemId": "snow_wolf_fang",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0212
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0212
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "ice_golem_drops",
+  "luma": [
+   30,
+   72
+  ],
+  "entries": [
+   {
+    "itemId": "ice_golem_core_stone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0228
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0228
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "ice_bat_drops",
+  "luma": [
+   31,
+   75
+  ],
+  "entries": [
+   {
+    "itemId": "ice_bat_wing",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0236
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0236
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frost_wraith_drops",
+  "luma": [
+   34,
+   82
+  ],
+  "entries": [
+   {
+    "itemId": "frost_wraith_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0256
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0256
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "glacier_golem_drops",
+  "luma": [
+   36,
+   86
+  ],
+  "entries": [
+   {
+    "itemId": "glacier_golem_core_stone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0268
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0268
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "ember_slime_drops",
+  "luma": [
+   36,
+   84
+  ],
+  "entries": [
+   {
+    "itemId": "ember_slime_gel",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0264
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0264
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "ash_scorpion_drops",
+  "luma": [
+   37,
+   89
+  ],
+  "entries": [
+   {
+    "itemId": "ash_scorpion_venom_tail",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0276
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0276
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fire_drake_drops",
+  "luma": [
+   40,
+   94
+  ],
+  "entries": [
+   {
+    "itemId": "fire_drake_scale",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0292
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0292
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "magma_golem_drops",
+  "luma": [
+   41,
+   97
+  ],
+  "entries": [
+   {
+    "itemId": "magma_golem_core_stone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.030000000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.030000000000000002
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "flame_drake_drops",
+  "luma": [
+   43,
+   101
+  ],
+  "entries": [
+   {
+    "itemId": "flame_drake_scale",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.031200000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.031200000000000002
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "bog_slime_drops",
+  "luma": [
+   38,
+   90
+  ],
+  "entries": [
+   {
+    "itemId": "bog_slime_gel",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.028
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.028
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "marsh_spore_drops",
+  "luma": [
+   40,
+   94
+  ],
+  "entries": [
+   {
+    "itemId": "marsh_spore_spore_dust",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0292
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0292
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "mire_crab_drops",
+  "luma": [
+   42,
+   98
+  ],
+  "entries": [
+   {
+    "itemId": "mire_crab_shell",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0304
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0304
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "raven_bat_drops",
+  "luma": [
+   42,
+   100
+  ],
+  "entries": [
+   {
+    "itemId": "raven_bat_wing",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0308
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0308
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "cursed_knight_drops",
+  "luma": [
+   43,
+   103
+  ],
+  "entries": [
+   {
+    "itemId": "cursed_knight_bone_shard",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0316
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0316
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "banshee_drops",
+  "luma": [
+   45,
+   107
+  ],
+  "entries": [
+   {
+    "itemId": "banshee_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0328
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0328
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "grave_knight_drops",
+  "luma": [
+   48,
+   112
+  ],
+  "entries": [
+   {
+    "itemId": "grave_knight_bone_shard",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0344
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0344
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "lich_spirit_drops",
+  "luma": [
+   49,
+   117
+  ],
+  "entries": [
+   {
+    "itemId": "lich_spirit_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.03560000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.03560000000000001
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "bone_warden_boss_drops",
+  "luma": [
+   21,
+   51
+  ],
+  "entries": [
+   {
+    "itemId": "bone_warden_bone_shard",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "valdris_boss_drops",
+  "luma": [
+   28,
+   68
+  ],
+  "entries": [
+   {
+    "itemId": "valdris_ectoplasm",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sun_king_boss_drops",
+  "luma": [
+   32,
+   76
+  ],
+  "entries": [
+   {
+    "itemId": "sun_king_bone_shard",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "pyrewyrm_boss_drops",
+  "luma": [
+   46,
+   110
+  ],
+  "entries": [
+   {
+    "itemId": "pyrewyrm_scale",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "dread_lord_boss_drops",
+  "luma": [
+   53,
+   125
+  ],
+  "entries": [
+   {
+    "itemId": "dread_lord_bone_shard",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   }
+  ],
+  "generated": true
+ }
 ]

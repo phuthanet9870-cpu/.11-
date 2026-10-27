@@ -8,13 +8,16 @@ describe('game data', () => {
     expect(validateGameData(data)).toEqual([]);
   });
 
-  it('meets Phase 1 content targets', () => {
-    expect([...data.maps.keys()]).toEqual(expect.arrayContaining(['willowbrook', 'sunny_meadow', 'whispering_forest']));
+  it('meets content targets (30 maps, RO-style regions)', () => {
+    expect([...data.maps.keys()]).toEqual(expect.arrayContaining(['willowbrook', 'sunny_meadow', 'whispering_forest', 'aurelion', 'sandara', 'ravenhold_crypt']));
+    expect(data.maps.size).toBe(30);
+    expect(new Set([...data.maps.values()].map((m) => m.region)).size).toBeGreaterThanOrEqual(9);
+    expect([...data.maps.values()].filter((m) => m.type === 'town').length).toBe(7);
     expect(['knight', 'ranger', 'mage'].every((c) => data.classes.has(c))).toBe(true);
     const normal = [...data.monsters.values()].filter((m) => m.aiType !== 'boss');
     expect(normal.length).toBeGreaterThanOrEqual(8);
     expect(data.bosses.size).toBeGreaterThanOrEqual(1);
-    expect(data.quests.size).toBeGreaterThanOrEqual(15);
+    expect(data.quests.size).toBe(5);
     for (const cls of ['knight', 'ranger', 'mage']) {
       const skills = data.classes.get(cls)!.skills.map((s) => data.skills.get(s)!);
       expect(skills.length).toBeGreaterThanOrEqual(8);

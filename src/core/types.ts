@@ -195,7 +195,7 @@ export interface MonsterDef {
   onHitStatus?: { status: StatusId; chance: number; durationMs: number };
   statusImmune?: StatusId[];
   bossId?: string;
-  art: { shape: string; w: number; h: number; colors: string[] };
+  art: { shape: string; w: number; h: number; colors: string[]; scale?: number };
   collisionRadius: number;
 }
 
@@ -350,7 +350,9 @@ export type NpcService =
   | { type: 'shop'; shopId: string; label?: string }
   | { type: 'storage' }
   | { type: 'heal'; cost: number }
-  | { type: 'jobChange' }
+  | { type: 'jobChange'; classIds: string[] }
+  | { type: 'refine' }
+  | { type: 'warp'; destinations: { mapId: string; spawn: string; cost: number }[] }
   | { type: 'resetStats'; cost: number }
   | { type: 'resetSkills'; cost: number }
   | { type: 'save' };
@@ -366,12 +368,15 @@ export type QuestObjective =
   | { type: 'defeatBoss'; bossId: string; label: string }
   | { type: 'interact'; objectId: string; label: string }
   | { type: 'craft'; itemId: string; count: number; label: string }
+  | { type: 'buy'; slot?: EquipSlot; itemId?: string; label: string }
+  | { type: 'equip'; slot: EquipSlot; label: string }
+  | { type: 'refine'; level: number; label: string }
   | { type: 'reachLevel'; jobLevel?: number; baseLevel?: number; label: string };
 
 export interface QuestDef {
   id: string;
   name: string;
-  category: 'main' | 'side' | 'job' | 'daily' | 'event';
+  category: 'tutorial' | 'main' | 'side' | 'job' | 'daily' | 'event';
   chapter?: number;
   giverNpc: string;
   turnInNpc: string;

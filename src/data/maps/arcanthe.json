@@ -1,0 +1,259 @@
+{
+ "id": "arcanthe",
+ "name": "Tower City Arcanthe",
+ "region": "Arcanthe — City of Magic",
+ "type": "town",
+ "width": 48,
+ "height": 38,
+ "tileset": "arcane",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "town_mage",
+ "ambient": "village",
+ "weather": [
+  "sunny"
+ ],
+ "isSavePoint": true,
+ "worldMapPos": {
+  "x": 0.67,
+  "y": 0.48
+ },
+ "paint": [
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 17,
+   "y": 14,
+   "w": 14,
+   "h": 10
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     3,
+     18
+    ],
+    [
+     23,
+     18
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     23,
+     3
+    ],
+    [
+     23,
+     18
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     23,
+     34
+    ],
+    [
+     23,
+     18
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "object",
+   "kind": "fountain",
+   "x": 23,
+   "y": 17,
+   "id": "arcanthe_fountain"
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 17,
+   "y": 14
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 30,
+   "y": 14
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 17,
+   "y": 23
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 30,
+   "y": 23
+  },
+  {
+   "op": "building",
+   "style": "inn",
+   "x": 5,
+   "y": 4,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "inn"
+  },
+  {
+   "op": "building",
+   "style": "smithy",
+   "x": 34,
+   "y": 4,
+   "w": 8,
+   "h": 5,
+   "door": 3,
+   "sign": "smithy"
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 5,
+   "y": 26,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "shop"
+  },
+  {
+   "op": "building",
+   "style": "guild",
+   "x": 34,
+   "y": 26,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "guild"
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.04,
+   "seed": 711605211
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_oak",
+   "density": 0.012,
+   "seed": 711605212
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_arcanthe_heath",
+   "x": 0,
+   "y": 17,
+   "w": 2,
+   "h": 4,
+   "targetMap": "arcanthe_heath",
+   "targetSpawn": "from_arcanthe",
+   "label": "Arcanthe Heath"
+  },
+  {
+   "id": "to_arcanthe_tower",
+   "x": 22,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "targetMap": "arcanthe_tower",
+   "targetSpawn": "from_arcanthe",
+   "label": "Arcanthe Tower Depths"
+  },
+  {
+   "id": "to_sunscar_dunes",
+   "x": 22,
+   "y": 36,
+   "w": 4,
+   "h": 2,
+   "targetMap": "sunscar_dunes",
+   "targetSpawn": "from_arcanthe",
+   "label": "Sunscar Dunes"
+  }
+ ],
+ "spawnPoints": {
+  "from_arcanthe_heath": {
+   "x": 4,
+   "y": 19
+  },
+  "from_arcanthe_tower": {
+   "x": 24,
+   "y": 4
+  },
+  "from_sunscar_dunes": {
+   "x": 24,
+   "y": 33
+  },
+  "default": {
+   "x": 24,
+   "y": 22
+  }
+ },
+ "npcs": [
+  {
+   "npcId": "arcanthe_innkeeper",
+   "x": 9,
+   "y": 10,
+   "facing": "down"
+  },
+  {
+   "npcId": "arcanthe_smith",
+   "x": 37,
+   "y": 10,
+   "facing": "down"
+  },
+  {
+   "npcId": "arcanthe_merchant",
+   "x": 9,
+   "y": 32,
+   "facing": "down"
+  },
+  {
+   "npcId": "arcanthe_courier",
+   "x": 27,
+   "y": 21,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_mage",
+   "x": 38,
+   "y": 32,
+   "facing": "down"
+  }
+ ],
+ "monsterSpawns": [],
+ "objects": [
+  {
+   "id": "arcanthe_fountain",
+   "kind": "fountain",
+   "x": 23,
+   "y": 17,
+   "name": "Arcanthe Fountain",
+   "interact": {
+    "text": "Tower City Arcanthe. Arcanthe — City of Magic."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

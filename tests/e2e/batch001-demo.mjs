@@ -152,9 +152,9 @@ try {
   const mapInfo = await page.evaluate(() => {
     const sc = window.__veyloria.game.scene.getScene('Game');
     const keys = sc.sys.displayList.list.map((o) => o.texture?.key).filter(Boolean);
-    return { props: keys.filter((k) => k.startsWith('prop_willowbrook_')).length, buildings: keys.filter((k) => k.startsWith('bld_willowbrook_')).length, ground: sc.textures.exists('map_willowbrook_ground') };
+    return { props: keys.filter((k) => k.startsWith('prop_willowbrook_')).length, objects: window.__veyloria.world.map.objects.length, buildings: keys.filter((k) => k.startsWith('bld_willowbrook_')).length, ground: sc.textures.exists('map_willowbrook_ground') };
   });
-  check('Willowbrook uses Batch 001 props and buildings', mapInfo.props >= 60 && mapInfo.buildings === 7, JSON.stringify(mapInfo));
+  check('Willowbrook uses Batch 001 props and buildings', mapInfo.props === mapInfo.objects && mapInfo.props > 0 && mapInfo.buildings === 7, JSON.stringify(mapInfo));
   await page.screenshot({ path: join(shots, '01-willowbrook-overview.png') });
 
   // ---------------------------------------------------------------- Novice idle

@@ -1,0 +1,252 @@
+{
+ "id": "frostholm",
+ "name": "Snow Town Frostholm",
+ "region": "Frostpeak Mountains",
+ "type": "town",
+ "width": 48,
+ "height": 38,
+ "tileset": "snow",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "town_snow",
+ "ambient": "snow",
+ "weather": [
+  "snow"
+ ],
+ "isSavePoint": true,
+ "worldMapPos": {
+  "x": 0.1,
+  "y": 0.42
+ },
+ "paint": [
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 17,
+   "y": 14,
+   "w": 14,
+   "h": 10
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     23,
+     34
+    ],
+    [
+     23,
+     18
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     23,
+     3
+    ],
+    [
+     23,
+     18
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     44,
+     18
+    ],
+    [
+     23,
+     18
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "object",
+   "kind": "fountain",
+   "x": 23,
+   "y": 17,
+   "id": "frostholm_fountain"
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 17,
+   "y": 14
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 30,
+   "y": 14
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 17,
+   "y": 23
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 30,
+   "y": 23
+  },
+  {
+   "op": "building",
+   "style": "inn",
+   "x": 5,
+   "y": 4,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "inn"
+  },
+  {
+   "op": "building",
+   "style": "smithy",
+   "x": 34,
+   "y": 4,
+   "w": 8,
+   "h": 5,
+   "door": 3,
+   "sign": "smithy"
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 5,
+   "y": 26,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "shop"
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 34,
+   "y": 26,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.04,
+   "seed": 2964844667
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_pine",
+   "density": 0.012,
+   "seed": 2964844668
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_frostpeak_slopes",
+   "x": 22,
+   "y": 36,
+   "w": 4,
+   "h": 2,
+   "targetMap": "frostpeak_slopes",
+   "targetSpawn": "from_frostholm",
+   "label": "Frostpeak Slopes"
+  },
+  {
+   "id": "to_ice_caverns",
+   "x": 22,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "targetMap": "ice_caverns",
+   "targetSpawn": "from_frostholm",
+   "label": "Ice Caverns"
+  },
+  {
+   "id": "to_cinder_wastes",
+   "x": 46,
+   "y": 17,
+   "w": 2,
+   "h": 4,
+   "targetMap": "cinder_wastes",
+   "targetSpawn": "from_frostholm",
+   "label": "Cinder Wastes"
+  }
+ ],
+ "spawnPoints": {
+  "from_frostpeak_slopes": {
+   "x": 24,
+   "y": 33
+  },
+  "from_ice_caverns": {
+   "x": 24,
+   "y": 4
+  },
+  "from_cinder_wastes": {
+   "x": 43,
+   "y": 19
+  },
+  "default": {
+   "x": 24,
+   "y": 22
+  }
+ },
+ "npcs": [
+  {
+   "npcId": "frostholm_innkeeper",
+   "x": 9,
+   "y": 10,
+   "facing": "down"
+  },
+  {
+   "npcId": "frostholm_smith",
+   "x": 37,
+   "y": 10,
+   "facing": "down"
+  },
+  {
+   "npcId": "frostholm_merchant",
+   "x": 9,
+   "y": 32,
+   "facing": "down"
+  },
+  {
+   "npcId": "frostholm_courier",
+   "x": 27,
+   "y": 21,
+   "facing": "down"
+  }
+ ],
+ "monsterSpawns": [],
+ "objects": [
+  {
+   "id": "frostholm_fountain",
+   "kind": "fountain",
+   "x": 23,
+   "y": 17,
+   "name": "Frostholm Fountain",
+   "interact": {
+    "text": "Snow Town Frostholm. Frostpeak Mountains."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

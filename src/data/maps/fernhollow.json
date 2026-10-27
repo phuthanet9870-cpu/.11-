@@ -1,0 +1,259 @@
+{
+ "id": "fernhollow",
+ "name": "Fernhollow Village",
+ "region": "Fernhollow Woods",
+ "type": "town",
+ "width": 48,
+ "height": 38,
+ "tileset": "fernwood",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "town_forest",
+ "ambient": "forest",
+ "weather": [
+  "fog"
+ ],
+ "isSavePoint": true,
+ "worldMapPos": {
+  "x": 0.46,
+  "y": 0.12
+ },
+ "paint": [
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 17,
+   "y": 14,
+   "w": 14,
+   "h": 10
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     23,
+     34
+    ],
+    [
+     23,
+     18
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     44,
+     18
+    ],
+    [
+     23,
+     18
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     3,
+     18
+    ],
+    [
+     23,
+     18
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "object",
+   "kind": "fountain",
+   "x": 23,
+   "y": 17,
+   "id": "fernhollow_fountain"
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 17,
+   "y": 14
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 30,
+   "y": 14
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 17,
+   "y": 23
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 30,
+   "y": 23
+  },
+  {
+   "op": "building",
+   "style": "inn",
+   "x": 5,
+   "y": 4,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "inn"
+  },
+  {
+   "op": "building",
+   "style": "smithy",
+   "x": 34,
+   "y": 4,
+   "w": 8,
+   "h": 5,
+   "door": 3,
+   "sign": "smithy"
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 5,
+   "y": 26,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "shop"
+  },
+  {
+   "op": "building",
+   "style": "guild",
+   "x": 34,
+   "y": 26,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "guild"
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.04,
+   "seed": 1380042759
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_pine",
+   "density": 0.012,
+   "seed": 1380042760
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_mistpine_woods",
+   "x": 22,
+   "y": 36,
+   "w": 4,
+   "h": 2,
+   "targetMap": "mistpine_woods",
+   "targetSpawn": "from_fernhollow",
+   "label": "Mistpine Woods"
+  },
+  {
+   "id": "to_deepwood_hollow",
+   "x": 46,
+   "y": 17,
+   "w": 2,
+   "h": 4,
+   "targetMap": "deepwood_hollow",
+   "targetSpawn": "from_fernhollow",
+   "label": "Deepwood Hollow"
+  },
+  {
+   "id": "to_fernhollow_cave",
+   "x": 0,
+   "y": 17,
+   "w": 2,
+   "h": 4,
+   "targetMap": "fernhollow_cave",
+   "targetSpawn": "from_fernhollow",
+   "label": "Fernhollow Cave"
+  }
+ ],
+ "spawnPoints": {
+  "from_mistpine_woods": {
+   "x": 24,
+   "y": 33
+  },
+  "from_deepwood_hollow": {
+   "x": 43,
+   "y": 19
+  },
+  "from_fernhollow_cave": {
+   "x": 4,
+   "y": 19
+  },
+  "default": {
+   "x": 24,
+   "y": 22
+  }
+ },
+ "npcs": [
+  {
+   "npcId": "fernhollow_innkeeper",
+   "x": 9,
+   "y": 10,
+   "facing": "down"
+  },
+  {
+   "npcId": "fernhollow_smith",
+   "x": 37,
+   "y": 10,
+   "facing": "down"
+  },
+  {
+   "npcId": "fernhollow_merchant",
+   "x": 9,
+   "y": 32,
+   "facing": "down"
+  },
+  {
+   "npcId": "fernhollow_courier",
+   "x": 27,
+   "y": 21,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_ranger",
+   "x": 38,
+   "y": 32,
+   "facing": "down"
+  }
+ ],
+ "monsterSpawns": [],
+ "objects": [
+  {
+   "id": "fernhollow_fountain",
+   "kind": "fountain",
+   "x": 23,
+   "y": 17,
+   "name": "Village Fountain",
+   "interact": {
+    "text": "Fernhollow Village. Fernhollow Woods."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

@@ -50,7 +50,7 @@ export class Bot {
   travelTo(mapId: string) {
     let guard = 0;
     while (this.w.map.def.id !== mapId) {
-      if (++guard > 10) throw new Error(`cannot reach ${mapId}`);
+      if (++guard > 40) throw new Error(`cannot reach ${mapId}`);
       const hop = this.nextHop(this.w.map.def.id, mapId);
       const portal = this.w.map.def.portals.find((p) => p.targetMap === hop)!;
       const from = this.w.map.def.id;

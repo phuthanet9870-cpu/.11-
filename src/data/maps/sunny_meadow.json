@@ -1,380 +1,414 @@
 {
-  "id": "sunny_meadow",
-  "name": "Sunny Meadow",
-  "region": "Willowbrook Region",
-  "type": "field",
-  "levelRange": [
-    1,
-    12
-  ],
-  "width": 60,
-  "height": 44,
-  "tileset": "sunny_meadow",
-  "base": "grass",
-  "border": {
-    "kind": "thicket",
-    "thickness": 2
+ "id": "sunny_meadow",
+ "name": "Sunny Meadow",
+ "region": "Willowbrook Region",
+ "type": "field",
+ "levelRange": [
+  1,
+  12
+ ],
+ "width": 60,
+ "height": 44,
+ "tileset": "sunny_meadow",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "field_meadow",
+ "ambient": "meadow",
+ "weather": [
+  "sunny",
+  "rain"
+ ],
+ "worldMapPos": {
+  "x": 0.29,
+  "y": 0.59
+ },
+ "paint": [
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     0,
+     20
+    ],
+    [
+     14,
+     20
+    ],
+    [
+     22,
+     16
+    ],
+    [
+     34,
+     16
+    ],
+    [
+     42,
+     11
+    ],
+    [
+     59,
+     11
+    ]
+   ],
+   "width": 2
   },
-  "bgm": "field_meadow",
-  "ambient": "meadow",
-  "weather": [
-    "sunny",
-    "rain"
-  ],
-  "worldMapPos": {
-    "x": 0.3,
-    "y": 0.55
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     22,
+     16
+    ],
+    [
+     26,
+     8
+    ],
+    [
+     30,
+     8
+    ]
+   ],
+   "width": 1
   },
-  "paint": [
-    {
-      "op": "path",
-      "tile": "dirt",
-      "points": [
-        [
-          0,
-          20
-        ],
-        [
-          14,
-          20
-        ],
-        [
-          22,
-          16
-        ],
-        [
-          34,
-          16
-        ],
-        [
-          42,
-          11
-        ],
-        [
-          59,
-          11
-        ]
-      ],
-      "width": 2
-    },
-    {
-      "op": "path",
-      "tile": "dirt",
-      "points": [
-        [
-          22,
-          16
-        ],
-        [
-          26,
-          8
-        ],
-        [
-          30,
-          8
-        ]
-      ],
-      "width": 1
-    },
-    {
-      "op": "path",
-      "tile": "dirt",
-      "points": [
-        [
-          34,
-          17
-        ],
-        [
-          40,
-          24
-        ],
-        [
-          46,
-          33
-        ]
-      ],
-      "width": 1
-    },
-    {
-      "op": "blob",
-      "tile": "sand",
-      "cx": 30,
-      "cy": 31,
-      "rx": 8,
-      "ry": 6,
-      "seed": 5
-    },
-    {
-      "op": "blob",
-      "tile": "water",
-      "cx": 30,
-      "cy": 31,
-      "rx": 6,
-      "ry": 4,
-      "seed": 6
-    },
-    {
-      "op": "rect",
-      "tile": "soil",
-      "x": 5,
-      "y": 9,
-      "w": 7,
-      "h": 5
-    },
-    {
-      "op": "rect",
-      "tile": "crops",
-      "x": 5,
-      "y": 9,
-      "w": 7,
-      "h": 5,
-      "layer": "deco"
-    },
-    {
-      "op": "fence",
-      "x": 4,
-      "y": 8,
-      "length": 9,
-      "dir": "h"
-    },
-    {
-      "op": "fence",
-      "x": 4,
-      "y": 14,
-      "length": 5,
-      "dir": "h"
-    },
-    {
-      "op": "fence",
-      "x": 10,
-      "y": 14,
-      "length": 3,
-      "dir": "h"
-    },
-    {
-      "op": "fence",
-      "x": 4,
-      "y": 9,
-      "length": 5,
-      "dir": "v"
-    },
-    {
-      "op": "fence",
-      "x": 12,
-      "y": 9,
-      "length": 5,
-      "dir": "v"
-    },
-    {
-      "op": "object",
-      "kind": "haystack",
-      "x": 14,
-      "y": 12
-    },
-    {
-      "op": "object",
-      "kind": "haystack",
-      "x": 15,
-      "y": 13
-    },
-    {
-      "op": "object",
-      "kind": "signpost",
-      "x": 4,
-      "y": 18,
-      "id": "sign_meadow"
-    },
-    {
-      "op": "object",
-      "kind": "obelisk",
-      "x": 30,
-      "y": 6,
-      "id": "astral_obelisk"
-    },
-    {
-      "op": "clear",
-      "x": 26,
-      "y": 4,
-      "w": 9,
-      "h": 6
-    },
-    {
-      "op": "clear",
-      "x": 2,
-      "y": 16,
-      "w": 16,
-      "h": 8
-    },
-    {
-      "op": "scatter",
-      "kind": "tree_oak",
-      "density": 0.035,
-      "seed": 21
-    },
-    {
-      "op": "scatter",
-      "kind": "rock",
-      "density": 0.01,
-      "seed": 22
-    },
-    {
-      "op": "scatter",
-      "kind": "bush",
-      "density": 0.015,
-      "seed": 23
-    },
-    {
-      "op": "scatter",
-      "kind": "deco:flowers",
-      "density": 0.12,
-      "seed": 24
-    },
-    {
-      "op": "scatter",
-      "kind": "deco:tuft",
-      "density": 0.1,
-      "seed": 25
-    }
-  ],
-  "portals": [
-    {
-      "id": "to_village",
-      "x": 0,
-      "y": 19,
-      "w": 2,
-      "h": 4,
-      "targetMap": "willowbrook",
-      "targetSpawn": "from_meadow",
-      "label": "Willowbrook Village"
-    },
-    {
-      "id": "to_forest",
-      "x": 58,
-      "y": 9,
-      "w": 2,
-      "h": 4,
-      "targetMap": "whispering_forest",
-      "targetSpawn": "from_meadow",
-      "label": "Whispering Forest"
-    }
-  ],
-  "spawnPoints": {
-    "default": {
-      "x": 4,
-      "y": 20
-    },
-    "from_village": {
-      "x": 4,
-      "y": 20
-    },
-    "from_forest": {
-      "x": 55,
-      "y": 11
-    }
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     34,
+     17
+    ],
+    [
+     40,
+     24
+    ],
+    [
+     46,
+     33
+    ]
+   ],
+   "width": 1
   },
-  "npcs": [
-    {
-      "npcId": "hollis",
-      "x": 14,
-      "y": 17,
-      "facing": "down"
-    }
-  ],
-  "monsterSpawns": [
-    {
-      "monsterId": "leaf_slime",
-      "count": 10,
-      "area": {
-        "x": 5,
-        "y": 23,
-        "w": 16,
-        "h": 14
-      }
-    },
-    {
-      "monsterId": "leaf_slime",
-      "count": 4,
-      "area": {
-        "x": 18,
-        "y": 17,
-        "w": 10,
-        "h": 6
-      }
-    },
-    {
-      "monsterId": "horn_rabbit",
-      "count": 8,
-      "area": {
-        "x": 16,
-        "y": 4,
-        "w": 22,
-        "h": 9
-      }
-    },
-    {
-      "monsterId": "mushling",
-      "count": 8,
-      "area": {
-        "x": 40,
-        "y": 15,
-        "w": 15,
-        "h": 10
-      }
-    },
-    {
-      "monsterId": "buzz_wasp",
-      "count": 6,
-      "area": {
-        "x": 40,
-        "y": 29,
-        "w": 15,
-        "h": 11
-      }
-    }
-  ],
-  "objects": [
-    {
-      "id": "sign_meadow",
-      "kind": "signpost",
-      "x": 4,
-      "y": 18,
-      "name": "Signpost",
-      "interact": {
-        "text": "WEST → Willowbrook.  NORTH-EAST → Whispering Forest (Lv.8+)."
-      }
-    },
-    {
-      "id": "astral_obelisk",
-      "kind": "obelisk",
-      "x": 30,
-      "y": 6,
-      "name": "Astral Obelisk",
-      "interact": {
-        "text": "Faint runes flare under your palm. You feel the stars answer.",
-        "questFlag": "astral_obelisk"
-      }
-    }
-  ],
-  "areas": [
-    {
-      "id": "pond",
-      "name": "Mirror Pond",
-      "rect": {
-        "x": 22,
-        "y": 25,
-        "w": 16,
-        "h": 12
-      }
-    },
-    {
-      "id": "obelisk_hill",
-      "name": "Obelisk Hill",
-      "rect": {
-        "x": 26,
-        "y": 4,
-        "w": 9,
-        "h": 6
-      }
-    }
-  ]
+  {
+   "op": "blob",
+   "tile": "sand",
+   "cx": 30,
+   "cy": 31,
+   "rx": 8,
+   "ry": 6,
+   "seed": 5
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 30,
+   "cy": 31,
+   "rx": 6,
+   "ry": 4,
+   "seed": 6
+  },
+  {
+   "op": "rect",
+   "tile": "soil",
+   "x": 5,
+   "y": 9,
+   "w": 7,
+   "h": 5
+  },
+  {
+   "op": "rect",
+   "tile": "crops",
+   "x": 5,
+   "y": 9,
+   "w": 7,
+   "h": 5,
+   "layer": "deco"
+  },
+  {
+   "op": "fence",
+   "x": 4,
+   "y": 8,
+   "length": 9,
+   "dir": "h"
+  },
+  {
+   "op": "fence",
+   "x": 4,
+   "y": 14,
+   "length": 5,
+   "dir": "h"
+  },
+  {
+   "op": "fence",
+   "x": 10,
+   "y": 14,
+   "length": 3,
+   "dir": "h"
+  },
+  {
+   "op": "fence",
+   "x": 4,
+   "y": 9,
+   "length": 5,
+   "dir": "v"
+  },
+  {
+   "op": "fence",
+   "x": 12,
+   "y": 9,
+   "length": 5,
+   "dir": "v"
+  },
+  {
+   "op": "object",
+   "kind": "haystack",
+   "x": 14,
+   "y": 12
+  },
+  {
+   "op": "object",
+   "kind": "haystack",
+   "x": 15,
+   "y": 13
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 4,
+   "y": 18,
+   "id": "sign_meadow"
+  },
+  {
+   "op": "object",
+   "kind": "obelisk",
+   "x": 30,
+   "y": 6,
+   "id": "astral_obelisk"
+  },
+  {
+   "op": "clear",
+   "x": 26,
+   "y": 4,
+   "w": 9,
+   "h": 6
+  },
+  {
+   "op": "clear",
+   "x": 2,
+   "y": 16,
+   "w": 16,
+   "h": 8
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_oak",
+   "density": 0.035,
+   "seed": 21
+  },
+  {
+   "op": "scatter",
+   "kind": "rock",
+   "density": 0.01,
+   "seed": 22
+  },
+  {
+   "op": "scatter",
+   "kind": "bush",
+   "density": 0.015,
+   "seed": 23
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.12,
+   "seed": 24
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.1,
+   "seed": 25
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     29,
+     40
+    ],
+    [
+     29,
+     30
+    ],
+    [
+     16,
+     17
+    ]
+   ],
+   "width": 2,
+   "generated": true
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_village",
+   "x": 0,
+   "y": 19,
+   "w": 2,
+   "h": 4,
+   "targetMap": "willowbrook",
+   "targetSpawn": "from_meadow",
+   "label": "Willowbrook Village"
+  },
+  {
+   "id": "to_forest",
+   "x": 58,
+   "y": 9,
+   "w": 2,
+   "h": 4,
+   "targetMap": "whispering_forest",
+   "targetSpawn": "from_meadow",
+   "label": "Whispering Forest"
+  },
+  {
+   "id": "to_clover_hills",
+   "x": 28,
+   "y": 42,
+   "w": 4,
+   "h": 2,
+   "targetMap": "clover_hills",
+   "targetSpawn": "from_sunny_meadow",
+   "label": "Clover Hills"
+  }
+ ],
+ "spawnPoints": {
+  "default": {
+   "x": 4,
+   "y": 20
+  },
+  "from_village": {
+   "x": 4,
+   "y": 20
+  },
+  "from_forest": {
+   "x": 55,
+   "y": 11
+  },
+  "from_clover_hills": {
+   "x": 30,
+   "y": 39
+  }
+ },
+ "npcs": [
+  {
+   "npcId": "hollis",
+   "x": 14,
+   "y": 17,
+   "facing": "down"
+  }
+ ],
+ "monsterSpawns": [
+  {
+   "monsterId": "leaf_slime",
+   "count": 10,
+   "area": {
+    "x": 5,
+    "y": 23,
+    "w": 16,
+    "h": 14
+   }
+  },
+  {
+   "monsterId": "leaf_slime",
+   "count": 4,
+   "area": {
+    "x": 18,
+    "y": 17,
+    "w": 10,
+    "h": 6
+   }
+  },
+  {
+   "monsterId": "horn_rabbit",
+   "count": 8,
+   "area": {
+    "x": 16,
+    "y": 4,
+    "w": 22,
+    "h": 9
+   }
+  },
+  {
+   "monsterId": "mushling",
+   "count": 8,
+   "area": {
+    "x": 40,
+    "y": 15,
+    "w": 15,
+    "h": 10
+   }
+  },
+  {
+   "monsterId": "buzz_wasp",
+   "count": 6,
+   "area": {
+    "x": 40,
+    "y": 29,
+    "w": 15,
+    "h": 11
+   }
+  }
+ ],
+ "objects": [
+  {
+   "id": "sign_meadow",
+   "kind": "signpost",
+   "x": 4,
+   "y": 18,
+   "name": "Signpost",
+   "interact": {
+    "text": "WEST → Willowbrook.  NORTH-EAST → Whispering Forest (Lv.8+)."
+   }
+  },
+  {
+   "id": "astral_obelisk",
+   "kind": "obelisk",
+   "x": 30,
+   "y": 6,
+   "name": "Astral Obelisk",
+   "interact": {
+    "text": "Faint runes flare under your palm. You feel the stars answer.",
+    "questFlag": "astral_obelisk"
+   }
+  }
+ ],
+ "areas": [
+  {
+   "id": "pond",
+   "name": "Mirror Pond",
+   "rect": {
+    "x": 22,
+    "y": 25,
+    "w": 16,
+    "h": 12
+   }
+  },
+  {
+   "id": "obelisk_hill",
+   "name": "Obelisk Hill",
+   "rect": {
+    "x": 26,
+    "y": 4,
+    "w": 9,
+    "h": 6
+   }
+  }
+ ]
 }

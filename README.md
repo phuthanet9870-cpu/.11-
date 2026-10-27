@@ -7,7 +7,10 @@ A 2D fantasy MMORPG with a top-down 3/4 view. It's built with TypeScript, Phaser
 > Online play (accounts, server, party, guild, trading) is planned for Phase 3 and isn't built yet.
 
 ## ภาพรวม (Thai summary)
-- **เล่นได้จริงตั้งแต่สร้างตัวละครจนปราบบอสตัวแรก** ได้แก่ หน้าเมนู → สร้าง/เลือกตัวละคร (3 สล็อต) → Willowbrook → Sunny Meadow → Whispering Forest → เปลี่ยนอาชีพ → ปราบ *Grukk the Thornking* → จบ Chapter 1
+- **โลกสไตล์ Ragnarok Online มี 30 แมพใน 9 ภูมิภาค** มีเมือง 7 เมือง ทุ่ง และดันเจี้ยน แต่ละภูมิภาคมีสี สภาพอากาศ เพลง และมอนสเตอร์ของตัวเอง (ดู [docs/WORLD.md](docs/WORLD.md))
+- **เควสมีแค่เควสฝึกสอน 5 เควส** ได้แก่ ลงทะเบียนกิลด์ → ล่า Leaf Slime → ซื้อและสวมอาวุธ → ตีบวก +1 → เก็บ Job Lv 10
+- **เปลี่ยนอาชีพที่ Guild Master** (Knight อยู่ Aurelion, Ranger อยู่ Fernhollow, Mage อยู่ Arcanthe)
+- **ระบบตีบวก +1 ถึง +10:** อาวุธตีได้ปลอดภัยถึง +5 และชุดเกราะถึง +4 ถ้าเกินจากนั้นแล้วตีพลาด ของจะแตก
 - ระบบที่ทำเสร็จแล้ว ได้แก่ การเดิน (คลิกเมาส์/WASD), กล้องติดตาม, Collision ที่ตรงกับภาพ, NPC/บทสนทนา, Monster AI แบบ State Machine, การต่อสู้แบบ Real-time พร้อมธาตุและ Status, EXP/เลเวล (Base และ Job), Stat Points, Inventory/Equipment, สกิลและ Hotbar, เควสต์ 17 เควสต์, ร้านค้า, คลังเก็บของ, การเซฟ/โหลดแบบมีเวอร์ชัน, เสียง และ UI ครบชุดสำหรับ Phase 1
 - ภาพและเสียงตอนนี้เป็น **Placeholder ที่เกมสร้างขึ้นเอง** (ต้นฉบับทั้งหมด) และเปลี่ยนเป็น Artwork จริงได้ผ่าน `public/assets/asset-manifest.json` โดยไม่ต้องแก้ Logic
 - ระบบออนไลน์ยังไม่ได้ทำ (อยู่ใน Phase 3)
@@ -44,7 +47,7 @@ npm run assets:manifest  # regenerate public/assets/asset-manifest.json from dat
 | Pick up loot | Left-click the item | Z = nearest item |
 | Skills / items | Click a hotbar slot | 1–0 |
 | Stop / cancel | Right-click | Esc closes windows |
-| Windows | Bottom-right buttons | I inventory · E equipment · C status · K skills · Q quests · M world map · O settings |
+| Windows | Bottom-right buttons | I inventory · E equipment · C status · K skills · Q quests · M world map · O settings · F8 GM tools |
 | Chat | | Enter (`/help` lists commands) |
 
 Ground-target skills (Arrow Rain, Wind Trap, Fire Wall, Thunderstorm, Meteor) land on your current target. If you have no target, they land under the mouse cursor.
@@ -68,8 +71,10 @@ Ground-target skills (Arrow Rain, Wind Trap, Fire Wall, Thunderstorm, Meteor) la
 | Inventory: 60-slot grid, stacking, weight limit, drag & drop, tooltips, sort, filter, lock, use, drop, sell, storage, binding | ✅ | `src/core/inventory.ts`, `src/ui/windows.ts` |
 | Equipment: 8 slots, class/level requirements, two-handed rules | ✅ | |
 | Skills: Novice (2), **Knight / Ranger / Mage** (8–9 each: active, passive, buff, ultimate), skill tree, cooldowns, cast times, MP, requirements | ✅ | `src/data/skills.json` |
-| Job change at Job Lv 10 through a job quest per class | ✅ | `job_knight`, `job_ranger`, `job_mage` |
-| Quests: 17 (7 main, 3 job, 6 side, 1 daily); objective types talk/kill/collect/deliver/explore/defeat boss/interact; journal, tracker, markers, chains, rewards | ✅ | `src/data/quests.json`, `src/core/quests.ts` |
+| Job change at Job Lv 10 at a class guild master (Aurelion / Fernhollow / Arcanthe) | ✅ | NPC service `jobChange`, `World.changeJobAt` |
+| Tutorial quests only (5): register, hunt, buy & equip a weapon, refine +1, reach Job Lv 10; objective types include buy/equip/refine; journal, tracker, markers | ✅ | `src/data/quests.json`, `src/core/quests.ts` |
+| Refinement +1…+10 (ores + Luma, safe limits, failure destroys the item) at blacksmith NPCs | ✅ | `src/core/refine.ts` |
+| 30 maps in 9 RO-style regions (7 towns, fields, 8 dungeons, 6 bosses), Courier Guild save/storage/warp, regional palettes, weather and music | ✅ | `docs/WORLD.md`, `tools/world-gen/build-world.ts` |
 | Maps: **Willowbrook Village, Sunny Meadow, Whispering Forest** | ✅ | `src/data/maps/` |
 | Monsters: 8 normal + 1 boss | ✅ | `src/data/monsters.json` |
 | Boss: Grukk the Thornking. Intro, HP bar, 3 phases, enrage, telegraphed AoE (circle, ring, charge line), summons, threat, rare drops, contribution reward, respawn timer | ✅ | `src/data/bosses.json` |
@@ -93,10 +98,10 @@ The tools edit the local save only, and any use sets `flags.gmUsed` on the chara
 
 | Suite | Result |
 |---|---|
-| Unit (`tests/unit`, 7 files) | **94 / 94 passed**: GM commands, data validation and map reachability, formulas, combat and elements, inventory/shop/storage, quests, save/migrations, world simulation (collision, portals, AI, skills, boss, invalid commands, no double-spend) |
-| Integration: full playthrough | **passed**. A bot using only player commands creates a Novice, runs the main quest line, becomes a Knight, defeats Grukk, and completes Chapter 1 (≈71 simulated minutes, Base Lv 18) |
+| Unit (`tests/unit`, 8 files) | **263 / 263 passed** (includes per-map data checks for all 30 maps): refine, tutorial quests, NPC job change and warps, GM commands, data validation and map reachability, formulas, combat and elements, inventory/shop/storage, quests, save/migrations, world simulation (collision, portals, AI, skills, boss, invalid commands, no double-spend) |
+| Integration: full playthrough | **passed**. A bot using only player commands finishes the 5 tutorial quests, becomes a Knight at the guild in Aurelion, refines, and defeats Grukk (≈72 simulated minutes, Base Lv 17). A second test walks through portals to all 30 maps |
 | Integration: class balance | **passed**. First-try boss wins at Lv 17: Knight 6/6, Ranger 6/6, Mage 4/6 (fixed seeds) |
-| E2E in Chromium (`npm run test:e2e`) | **23 / 23 checks passed** (incl. GM window): boot, create character via UI, WASD, click NPC → dialogue → accept quest, windows by hotkey, portal travel, mouse-click combat kill with EXP, save and reload persistence, shop purchase, drag & drop equip, stat allocation, job change via dialogue, learn skill, drag skill to hotbar, cast by hotkey, death → respawn, drop part of a stack via the quantity dialog, delete a character with typed-name confirmation, zero page errors |
+| E2E in Chromium (`npm run test:e2e`) | **24 / 24 checks passed** (incl. GM window, refine and guild job change): boot, create character via UI, WASD, click NPC → dialogue → accept quest, windows by hotkey, portal travel, mouse-click combat kill with EXP, save and reload persistence, shop purchase, drag & drop equip, stat allocation, job change via dialogue, learn skill, drag skill to hotbar, cast by hotkey, death → respawn, drop part of a stack via the quantity dialog, delete a character with typed-name confirmation, zero page errors |
 
 Screenshots from the e2e run are written to `tests/e2e/screenshots/` (git-ignored).
 
@@ -122,7 +127,7 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/ASSET_PIPELINE.md](do
 - **Most art and all audio are still placeholders.** Batch 001 production art covers the Novice, Leaf Slime, Mushling, Horn Rabbit, Willowbrook (tiles, props, buildings) and 4 VFX ([docs/art/BATCH001.md](docs/art/BATCH001.md)). Everything else (the other classes, NPCs, monsters and maps, plus all music and SFX) is still generated at runtime.
 - **No multiplayer.** There's no login/register, server, database, party, guild, trading or marketplace (Phase 3). Chat only echoes locally and says so. Saves live in browser `localStorage`.
 - **Not built in Phase 1:** Priest, Assassin and Merchant; advanced jobs; refinement (a stat-scaling hook exists in `refineMods`, but there's no UI or NPC); monster cards; Rune Constellation; pets and mounts; crafting; dungeons; world events; day/night; weather; PvP; Guild War.
-- Only 3 of the 30 maps, 8 of the 60 monsters, and 1 test boss (Grukk) exist. The 6 major bosses are planned for Phase 4.
+- All 30 maps exist. Their 64 regular monsters and 6 bosses reuse 14 procedural body types in regional colours, and the stats of the newer monsters come from a level formula. Equipment still tops out around level 20, so the Lv 40–85 regions need new gear tiers and haven't been balance-tested.
 - The world map shows the other regions as "Unexplored". They're labels, not playable areas.
 
 ## Known issues

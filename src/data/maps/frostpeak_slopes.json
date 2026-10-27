@@ -1,0 +1,219 @@
+{
+ "id": "frostpeak_slopes",
+ "name": "Frostpeak Slopes",
+ "region": "Frostpeak Mountains",
+ "type": "field",
+ "levelRange": [
+  40,
+  50
+ ],
+ "width": 58,
+ "height": 44,
+ "tileset": "snow",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "field_snow",
+ "ambient": "snow",
+ "weather": [
+  "snow"
+ ],
+ "worldMapPos": {
+  "x": 0.09,
+  "y": 0.63
+ },
+ "paint": [
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 13,
+   "cy": 11,
+   "rx": 6,
+   "ry": 4,
+   "seed": 1184229334
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 45,
+   "cy": 33,
+   "rx": 6,
+   "ry": 3,
+   "seed": 1184229336
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     28,
+     40
+    ],
+    [
+     28,
+     30
+    ],
+    [
+     28,
+     21
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     28,
+     3
+    ],
+    [
+     28,
+     11
+    ],
+    [
+     28,
+     21
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_pine",
+   "density": 0.035,
+   "seed": 1184229345
+  },
+  {
+   "op": "scatter",
+   "kind": "rock",
+   "density": 0.012,
+   "seed": 1184229346
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:pebbles",
+   "density": 0.05,
+   "seed": 3081671972
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.05,
+   "seed": 2578346806
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 30,
+   "y": 37,
+   "id": "sign_frostpeak_slopes"
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_tidewatch",
+   "x": 27,
+   "y": 42,
+   "w": 4,
+   "h": 2,
+   "targetMap": "tidewatch",
+   "targetSpawn": "from_frostpeak_slopes",
+   "label": "Port Town Tidewatch"
+  },
+  {
+   "id": "to_frostholm",
+   "x": 27,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "targetMap": "frostholm",
+   "targetSpawn": "from_frostpeak_slopes",
+   "label": "Snow Town Frostholm"
+  }
+ ],
+ "spawnPoints": {
+  "from_tidewatch": {
+   "x": 29,
+   "y": 39
+  },
+  "from_frostholm": {
+   "x": 29,
+   "y": 4
+  },
+  "default": {
+   "x": 29,
+   "y": 39
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "frost_slime",
+   "count": 5,
+   "area": {
+    "x": 3,
+    "y": 3,
+    "w": 23,
+    "h": 16
+   }
+  },
+  {
+   "monsterId": "frost_slime",
+   "count": 5,
+   "area": {
+    "x": 3,
+    "y": 24,
+    "w": 23,
+    "h": 16
+   }
+  },
+  {
+   "monsterId": "snow_wolf",
+   "count": 4,
+   "area": {
+    "x": 31,
+    "y": 3,
+    "w": 23,
+    "h": 16
+   }
+  },
+  {
+   "monsterId": "snow_wolf",
+   "count": 4,
+   "area": {
+    "x": 31,
+    "y": 24,
+    "w": 23,
+    "h": 16
+   }
+  },
+  {
+   "monsterId": "ice_golem",
+   "count": 5,
+   "area": {
+    "x": 3,
+    "y": 24,
+    "w": 23,
+    "h": 16
+   }
+  }
+ ],
+ "objects": [
+  {
+   "id": "sign_frostpeak_slopes",
+   "kind": "signpost",
+   "x": 30,
+   "y": 37,
+   "name": "Signpost",
+   "interact": {
+    "text": "Frostpeak Slopes (Lv.40–50).  SOUTH → Port Town Tidewatch.  NORTH → Snow Town Frostholm."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

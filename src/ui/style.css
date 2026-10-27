@@ -193,6 +193,7 @@ img.icon, canvas.icon { image-rendering: pixelated; }
 .quest-list .qi:hover, .quest-list .qi.on { background: rgba(255,211,77,0.12); }
 .tag { font-size: 9px; padding: 1px 5px; border-radius: 3px; background: #3a2a4a; color: #e8d8ff; text-transform: uppercase; margin-right: 4px; }
 .tag.main { background: #6a4a18; color: #ffe9a8; }
+.tag.tutorial { background: #5a2a6a; color: #f2d8ff; }
 .tag.job { background: #1a4a6a; color: #bfe9ff; }
 .tag.daily { background: #1a5a3a; color: #c8ffd8; }
 .tooltip { position: absolute; z-index: 9999; max-width: 280px; padding: 8px 10px; pointer-events: none; font-size: 12px; line-height: 1.45; }
@@ -221,9 +222,11 @@ img.icon, canvas.icon { image-rendering: pixelated; }
 .keybind button { padding: 2px 6px; }
 .keybind button.listening { border-color: var(--gold); color: var(--gold); }
 .range-row { display: grid; grid-template-columns: 80px 1fr 40px; gap: 8px; align-items: center; margin-bottom: 6px; }
-.worldmap { position: relative; width: 640px; height: 400px; background: radial-gradient(ellipse at 30% 60%, #2a4a2a, #121a12 70%); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
-.wm-node { position: absolute; transform: translate(-50%, -50%); text-align: center; font-size: 11px; }
-.wm-node .dot { width: 16px; height: 16px; border-radius: 50%; margin: 0 auto 3px; border: 2px solid #000; }
+.worldmap { position: relative; width: 760px; height: 460px; background: radial-gradient(ellipse at 20% 30%, #e8eef6 0, transparent 22%), radial-gradient(ellipse at 22% 28%, #5a3a30 0, transparent 14%), radial-gradient(ellipse at 70% 82%, #c8a46a 0, transparent 26%), radial-gradient(ellipse at 90% 55%, #3a3a46 0, transparent 22%), radial-gradient(ellipse at 15% 92%, #2a6aa8 0, transparent 20%), radial-gradient(ellipse at 62% 45%, #4a4a7a 0, transparent 16%), radial-gradient(ellipse at 40% 50%, #2a5a2a, #121a12 75%); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.wm-node { position: absolute; transform: translate(-50%, -6px); text-align: center; font-size: 9px; line-height: 1.15; white-space: nowrap; text-shadow: 0 1px 2px #000, 0 0 3px #000; }
+.wm-node .dot { width: 10px; height: 10px; border-radius: 50%; margin: 0 auto 2px; border: 2px solid #000; }
+.wm-node.town .dot { width: 14px; height: 14px; }
+.wm-node.town .wm-name { font-weight: bold; font-size: 11px; color: #ffe9a8; }
 .wm-node.here .dot { box-shadow: 0 0 0 4px rgba(255,211,77,0.6); }
 .wm-node.locked { opacity: 0.45; }
 .loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: var(--bg); }

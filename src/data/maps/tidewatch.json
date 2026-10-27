@@ -1,0 +1,252 @@
+{
+ "id": "tidewatch",
+ "name": "Port Town Tidewatch",
+ "region": "Tidewatch Coast",
+ "type": "town",
+ "width": 48,
+ "height": 38,
+ "tileset": "coast",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "town_port",
+ "ambient": "coast",
+ "weather": [
+  "sunny"
+ ],
+ "isSavePoint": true,
+ "worldMapPos": {
+  "x": 0.16,
+  "y": 0.86
+ },
+ "paint": [
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 17,
+   "y": 14,
+   "w": 14,
+   "h": 10
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     44,
+     18
+    ],
+    [
+     23,
+     18
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     23,
+     34
+    ],
+    [
+     23,
+     18
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     23,
+     3
+    ],
+    [
+     23,
+     18
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "object",
+   "kind": "fountain",
+   "x": 23,
+   "y": 17,
+   "id": "tidewatch_fountain"
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 17,
+   "y": 14
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 30,
+   "y": 14
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 17,
+   "y": 23
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 30,
+   "y": 23
+  },
+  {
+   "op": "building",
+   "style": "inn",
+   "x": 5,
+   "y": 4,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "inn"
+  },
+  {
+   "op": "building",
+   "style": "smithy",
+   "x": 34,
+   "y": 4,
+   "w": 8,
+   "h": 5,
+   "door": 3,
+   "sign": "smithy"
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 5,
+   "y": 26,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "shop"
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 34,
+   "y": 26,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.04,
+   "seed": 1125478860
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_oak",
+   "density": 0.012,
+   "seed": 1125478861
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_coral_beach",
+   "x": 46,
+   "y": 17,
+   "w": 2,
+   "h": 4,
+   "targetMap": "coral_beach",
+   "targetSpawn": "from_tidewatch",
+   "label": "Coral Beach"
+  },
+  {
+   "id": "to_sunken_grotto",
+   "x": 22,
+   "y": 36,
+   "w": 4,
+   "h": 2,
+   "targetMap": "sunken_grotto",
+   "targetSpawn": "from_tidewatch",
+   "label": "Sunken Grotto"
+  },
+  {
+   "id": "to_frostpeak_slopes",
+   "x": 22,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "targetMap": "frostpeak_slopes",
+   "targetSpawn": "from_tidewatch",
+   "label": "Frostpeak Slopes"
+  }
+ ],
+ "spawnPoints": {
+  "from_coral_beach": {
+   "x": 43,
+   "y": 19
+  },
+  "from_sunken_grotto": {
+   "x": 24,
+   "y": 33
+  },
+  "from_frostpeak_slopes": {
+   "x": 24,
+   "y": 4
+  },
+  "default": {
+   "x": 24,
+   "y": 22
+  }
+ },
+ "npcs": [
+  {
+   "npcId": "tidewatch_innkeeper",
+   "x": 9,
+   "y": 10,
+   "facing": "down"
+  },
+  {
+   "npcId": "tidewatch_smith",
+   "x": 37,
+   "y": 10,
+   "facing": "down"
+  },
+  {
+   "npcId": "tidewatch_merchant",
+   "x": 9,
+   "y": 32,
+   "facing": "down"
+  },
+  {
+   "npcId": "tidewatch_courier",
+   "x": 27,
+   "y": 21,
+   "facing": "down"
+  }
+ ],
+ "monsterSpawns": [],
+ "objects": [
+  {
+   "id": "tidewatch_fountain",
+   "kind": "fountain",
+   "x": 23,
+   "y": 17,
+   "name": "Tidewatch Fountain",
+   "interact": {
+    "text": "Port Town Tidewatch. Tidewatch Coast."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

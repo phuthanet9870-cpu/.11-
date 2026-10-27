@@ -233,11 +233,13 @@ export class Hud {
     const c = document.createElement('canvas');
     c.width = map.width * 3; c.height = map.height * 3;
     const ctx = c.getContext('2d')!;
+    const pal = w.data.tilesets.get(map.def.tileset)!.palette;
     for (let y = 0; y < map.height; y++) for (let x = 0; x < map.width; x++) {
       const i = y * map.width + x;
       const g = map.ground[i];
-      let col = g === 'water' ? '#2a6ab0' : g === 'dirt' || g === 'soil' ? '#8a6a44' : g === 'path_stone' || g === 'ruin_floor' ? '#9a948a' : g === 'sand' ? '#cdb880' : '#3f7a3a';
-      if (map.collision[i]) col = map.wall[i] === 'thicket' ? '#1a3a1e' : '#4a3a2a';
+      // Colours come from the map's tileset palette so every region reads differently.
+      let col = g === 'water' ? pal.water1 : g === 'dirt' || g === 'soil' ? pal.dirt2 : g === 'path_stone' ? pal.stone2 : g === 'ruin_floor' ? (pal.ruin2 ?? pal.stone2) : g === 'sand' ? pal.sand1 : pal.grass3;
+      if (map.collision[i]) col = map.wall[i] === 'thicket' ? pal.thicket2 : map.wall[i] === 'ruin_wall' ? (pal.thicket1 ?? '#4a3a2a') : '#4a3a2a';
       ctx.fillStyle = col;
       ctx.fillRect(x * 3, y * 3, 3, 3);
     }

@@ -11,7 +11,8 @@ import {
   addItem, buyItem, canAddItem, canDiscard, depositToStorage, equipItem, findInstance, inventoryWeight,
   removeByUid, sellItem, sortInventory, toggleLock, unequipItem, withdrawFromStorage, type OpResult,
 } from './inventory';
-import { allocateStat, learnSkill, resetSkills, resetStats } from './character';
+import { allocateStat, changeJob, learnSkill, resetSkills, resetStats } from './character';
+import { refineItem, type RefineResult } from './refine';
 import {
   acceptQuest, abandonQuest, questEvents, refreshAllQuests, turnInQuest, type TurnInResult,
 } from './quests';
@@ -22,6 +23,7 @@ import type {
   BossDef, BossSkillDef, CharacterState, DerivedStats, Direction, Element, EquipSlot, MonsterDef,
   NpcDef, SkillDef, SkillEffect, StatKey, StatModifiers, StatusId,
 } from './types';
+import { EQUIP_SLOTS } from './types';
 
 // ------------------------------------------------------------------ runtime types
 export type AnimState = 'idle' | 'walk' | 'attack' | 'cast' | 'hit' | 'dead';
@@ -1737,8 +1739,53 @@ export class World {
 
   equip(uid: string, slot?: EquipSlot): OpResult {
     if (this.player.cast) return this.err('Cannot change equipment while casting.');
-    return this.wrap(equipItem(this.data, this.char, uid, slot), () => this.emit({ type: 'sound', key: 'equip' }));
+    const def = this.data.items.get(findInstance(this.char, uid)?.itemId ?? '');
+    return this.wrap(equipItem(this.data, this.char, uid, slot), () => {
+      this.emit({ type: 'sound', key: 'equip' });
+      const s = EQUIP_SLOTS.find((k) => this.char.equipment[k]?.uid === uid) ?? def?.slot;
+      if (s) this.questTick(questEvents.equip(this.data, this.char, s));
+    });
   }
+
+  /** Refine an equipped or carried item at a refine NPC. */
+  refine(uid: string): RefineResult {
+    if (!this.nearService((s) => s.type === 'refine')) return this.err('You are too far from the refiner.');
+    const r = refineItem(this.data, this.char, uid, this.rng.next());
+    if (!r.ok) return this.err(r.error);
+    this.message(r.message!, r.outcome === 'broken' ? 'error' : 'system');
+    this.emit({ type: 'sound', key: r.outcome === 'success' ? 'level_up' : 'error' });
+    this.emit({ type: 'fx', fx: r.outcome === 'success' ? 'sparkle' : 'spawn', x: this.player.x, y: this.player.y - 20 });
+    if (r.outcome === 'success') this.questTick(questEvents.refine(this.data, this.char, r.level!));
+    if (r.wasEquipped) this.recomputeStats();
+    this.afterInventoryChange();
+    return r;
+  }
+
+  /** Job change at a class guild NPC (requirements from classes.json). */
+  changeJobAt(classId: string): OpResult {
+    if (!this.nearService((s) => s.type === 'jobChange' && s.classIds.includes(classId))) return this.err('Talk to the guild master to change job.');
+    const r = changeJob(this.data, this.char, classId);
+    if (!r.ok) return this.err(r.error);
+    this.recomputeStats();
+    this.message(r.message!, 'quest');
+    this.emit({ type: 'jobChanged', classId });
+    this.emit({ type: 'fx', fx: 'job_change', x: this.player.x, y: this.player.y });
+    this.emit({ type: 'sound', key: 'level_up' });
+    return r;
+  }
+
+  /** Paid teleport at a warp-service NPC. */
+  warpTo(mapId: string): OpResult {
+    let dest: { mapId: string; spawn: string; cost: number } | undefined;
+    if (!this.nearService((s) => s.type === 'warp' && !!(dest = s.destinations.find((d) => d.mapId === mapId)))) return this.err('No warp service here for that destination.');
+    if (this.char.luma < dest!.cost) return this.err(`Needs ${dest!.cost} Luma.`);
+    this.char.luma -= dest!.cost;
+    this.emit({ type: 'sound', key: 'teleport' });
+    this.enterMap(dest!.mapId, dest!.spawn);
+    return { ok: true, message: `Warped to ${this.data.maps.get(mapId)!.name}.` };
+  }
+
+  private questTick(updated: string[]) { if (updated.length) this.questUpdated([...new Set(updated)]); }
   unequip(slot: EquipSlot): OpResult { return this.wrap(unequipItem(this.data, this.char, slot), () => this.emit({ type: 'sound', key: 'equip' })); }
   allocate(stat: StatKey, amount = 1): OpResult { return this.wrap(allocateStat(this.data, this.char, stat, amount)); }
   learn(skillId: string): OpResult { return this.wrap(learnSkill(this.data, this.char, skillId), () => this.emit({ type: 'sound', key: 'learn' })); }
@@ -1750,7 +1797,10 @@ export class World {
 
   buy(shopId: string, itemId: string, qty: number): OpResult {
     if (!this.nearService((s) => s.type === 'shop' && s.shopId === shopId)) return this.err('You are too far from the merchant.');
-    return this.wrap(buyItem(this.data, this.char, shopId, itemId, qty, this.weightLimit), () => this.emit({ type: 'sound', key: 'coin' }));
+    return this.wrap(buyItem(this.data, this.char, shopId, itemId, qty, this.weightLimit), () => {
+      this.emit({ type: 'sound', key: 'coin' });
+      this.questTick(questEvents.buy(this.data, this.char, itemId));
+    });
   }
   sell(uid: string, qty: number): OpResult {
     if (!this.nearService((s) => s.type === 'shop')) return this.err('You are too far from a merchant.');

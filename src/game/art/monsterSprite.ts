@@ -127,6 +127,79 @@ const painters: Record<string, Painter> = {
     px(ctx, sx, base - 34 - p.open * 6, 3, 18, '#9aa0aa'); px(ctx, sx - 2, base - 18 - p.open * 6, 7, 2, '#6a4a2a');
     ellipse(ctx, cx + 9, base - 24, 5, 7, c[1]); px(ctx, cx + 8, base - 26, 2, 4, c[2]);
   },
+  bat(ctx, w, h, c, p) {
+    const cx = w / 2 + p.dx, cy = h / 2 - 4 + p.dy - p.wing * 2;
+    const flap = p.wing ? -5 : 3;
+    ctx.fillStyle = c[1];
+    for (const dir of [-1, 1]) {
+      ctx.beginPath(); ctx.moveTo(cx + dir * 4, cy); ctx.lineTo(cx + dir * 19, cy + flap - 6); ctx.lineTo(cx + dir * 16, cy + flap + 2);
+      ctx.lineTo(cx + dir * 11, cy + flap); ctx.lineTo(cx + dir * 8, cy + 5); ctx.closePath(); ctx.fill();
+    }
+    ellipse(ctx, cx, cy + 1, 6 * p.sx, 7 * p.sy, c[0]);
+    px(ctx, cx - 5, cy - 9, 3, 4, c[0]); px(ctx, cx + 2, cy - 9, 3, 4, c[0]);
+    px(ctx, cx - 4, cy - 2, 2, 2, c[2]); px(ctx, cx + 2, cy - 2, 2, 2, c[2]);
+    px(ctx, cx - 2, cy + 3, 1, 2, '#ffffff'); px(ctx, cx + 1, cy + 3, 1, 2, '#ffffff');
+  },
+  crab(ctx, w, h, c, p) {
+    const cx = w / 2 + p.dx, base = h - 4;
+    for (let i = -1; i <= 1; i++) { px(ctx, cx - 16 + i * 3 + p.legs, base - 6, 2, 6, shade(c[0], -0.2)); px(ctx, cx + 14 - i * 3 - p.legs, base - 6, 2, 6, shade(c[0], -0.2)); }
+    ellipse(ctx, cx, base - 9, 14 * p.sx, 8 * p.sy, c[0]);
+    ellipse(ctx, cx - 3, base - 12, 8, 4, shade(c[0], 0.15));
+    const pinch = p.open * 4;
+    ellipse(ctx, cx - 18 - pinch, base - 16 - pinch, 5, 4, c[1]); ellipse(ctx, cx + 18 + pinch, base - 16 - pinch, 5, 4, c[1]);
+    px(ctx, cx - 21 - pinch, base - 20 - pinch, 3, 3, c[1]); px(ctx, cx + 18 + pinch, base - 20 - pinch, 3, 3, c[1]);
+    px(ctx, cx - 5, base - 21, 2, 5, c[0]); px(ctx, cx + 3, base - 21, 2, 5, c[0]);
+    px(ctx, cx - 6, base - 23, 3, 3, '#1c1622'); px(ctx, cx + 3, base - 23, 3, 3, '#1c1622'); px(ctx, cx - 5, base - 23, 1, 1, '#fff'); px(ctx, cx + 4, base - 23, 1, 1, '#fff');
+  },
+  golem(ctx, w, h, c, p) {
+    const cx = w / 2 + p.dx, base = h - 4;
+    px(ctx, cx - 11 + p.legs, base - 12, 8, 12, shade(c[0], -0.2)); px(ctx, cx + 3 - p.legs, base - 12, 8, 12, shade(c[0], -0.2));
+    px(ctx, cx - 14, base - 34, 28, 23, c[0]);
+    px(ctx, cx - 14, base - 34, 28, 4, shade(c[0], 0.15));
+    for (const [x, y] of [[-9, -28], [4, -22], [-4, -17]]) px(ctx, cx + x, base + y, 5, 2, shade(c[0], -0.3));
+    px(ctx, cx - 3, base - 26, 6, 6, c[2]);
+    px(ctx, cx - 8, base - 44, 16, 11, c[0]);
+    px(ctx, cx - 6, base - 40, 4, 2, c[2]); px(ctx, cx + 2, base - 40, 4, 2, c[2]);
+    const arm = p.open * 6;
+    px(ctx, cx - 22, base - 32 - arm, 8, 18, c[1]); px(ctx, cx + 14, base - 32 - arm, 8, 18, c[1]);
+  },
+  ghost(ctx, w, h, c, p) {
+    const cx = w / 2 + p.dx, base = h - 8 + p.dy - p.wing * 2;
+    ctx.globalAlpha = 0.85;
+    ellipse(ctx, cx, base - 20, 12 * p.sx, 14 * p.sy, c[0]);
+    px(ctx, cx - 12, base - 20, 24, 12, c[0]);
+    for (let i = 0; i < 4; i++) ellipse(ctx, cx - 9 + i * 6, base - 8 + (i + p.wing) % 2 * 2, 3, 3, c[0]);
+    ellipse(ctx, cx - 4, base - 26, 6, 5, shade(c[0], 0.2));
+    ctx.globalAlpha = 1;
+    px(ctx, cx - 6, base - 24, 3, 4, c[1]); px(ctx, cx + 2, base - 24, 3, 4, c[1]);
+    px(ctx, cx - 5, base - 23, 1, 1, c[2]); px(ctx, cx + 3, base - 23, 1, 1, c[2]);
+    if (p.open) ellipse(ctx, cx - 1, base - 16, 3, 2 + p.open * 2, c[1]);
+    px(ctx, cx - 16 - p.open * 3, base - 20, 5, 3, c[0]); px(ctx, cx + 11 + p.open * 3, base - 20, 5, 3, c[0]);
+  },
+  scorpion(ctx, w, h, c, p) {
+    const cx = w / 2 + p.dx, base = h - 4;
+    for (let i = 0; i < 3; i++) { px(ctx, cx - 8 + i * 5 + p.legs, base - 4, 2, 4, shade(c[0], -0.25)); }
+    ellipse(ctx, cx, base - 8, 13 * p.sx, 6 * p.sy, c[0]);
+    for (let i = 0; i < 4; i++) ellipse(ctx, cx + 12 + i * 3, base - 12 - i * 5, 4, 3, i % 2 ? c[0] : shade(c[0], -0.1));
+    const sting = p.open * 5;
+    ellipse(ctx, cx + 20 - sting, base - 33 + sting, 4, 4, c[1]); px(ctx, cx + 15 - sting, base - 31 + sting, 4, 2, c[2]);
+    ellipse(ctx, cx - 17, base - 10, 5, 3, c[0]); ellipse(ctx, cx - 22, base - 12, 4, 3, c[1]);
+    px(ctx, cx - 10, base - 12, 2, 2, '#1c1622'); px(ctx, cx - 6, base - 12, 2, 2, '#1c1622');
+  },
+  drake(ctx, w, h, c, p) {
+    const cx = w / 2 + p.dx, base = h - 4;
+    ctx.fillStyle = c[1];
+    ctx.beginPath(); ctx.moveTo(cx, base - 22); ctx.lineTo(cx + 10, base - 38 - p.wing * 4); ctx.lineTo(cx + 18, base - 24); ctx.closePath(); ctx.fill();
+    px(ctx, cx - 9 + p.legs, base - 8, 4, 8, shade(c[0], -0.2)); px(ctx, cx + 5 - p.legs, base - 8, 4, 8, shade(c[0], -0.2));
+    ellipse(ctx, cx, base - 15, 12 * p.sx, 9 * p.sy, c[0]);
+    ellipse(ctx, cx - 1, base - 11, 8, 4, c[2]);
+    px(ctx, cx + 10, base - 14, 10, 4, c[0]); px(ctx, cx + 19, base - 17, 4, 4, c[0]);
+    ellipse(ctx, cx - 14, base - 24, 8, 6, c[0]);
+    px(ctx, cx - 24, base - 24, 8, 4, c[0]);
+    px(ctx, cx - 16, base - 33, 2, 5, c[2]); px(ctx, cx - 12, base - 33, 2, 5, c[2]);
+    px(ctx, cx - 17, base - 26, 2, 2, '#ffe14d');
+    if (p.open) { px(ctx, cx - 30, base - 23, 6, 2, '#ff8a2e'); px(ctx, cx - 34, base - 24, 4, 3, '#ffd34d'); }
+  },
   goblin_king(ctx, w, h, c, p) {
     const cx = w / 2 + p.dx, base = h - 6;
     // legs
@@ -172,7 +245,10 @@ export function generateMonsterSheet(def: MonsterDef): HTMLCanvasElement {
         tmp.ctx.translate(-w / 2, -(h - 3));
       }
       ellipse(tmp.ctx, w / 2, h - 4, Math.max(6, w * 0.3), 3, 'rgba(0,0,0,0.22)');
-      paint(tmp.ctx, w, h, colors, p);
+      // Scaled art (bosses that reuse a regular body type): paint at 1/scale size, magnified about the feet.
+      const k = def.art.scale ?? 1;
+      if (k !== 1) { tmp.ctx.translate(w / 2, h - 2); tmp.ctx.scale(k, k); tmp.ctx.translate(-w / (2 * k), -(h / k - 2 / k)); }
+      paint(tmp.ctx, k !== 1 ? Math.round(w / k) : w, k !== 1 ? Math.round(h / k) : h, colors, p);
       tmp.ctx.restore();
       addOutline(tmp.ctx, 0, 0, w, h);
       if (p.tint) {

@@ -1,0 +1,382 @@
+{
+ "id": "magma_core",
+ "name": "Magma Core",
+ "region": "Emberfall Volcano",
+ "type": "dungeon",
+ "levelRange": [
+  62,
+  74
+ ],
+ "width": 50,
+ "height": 40,
+ "tileset": "dg_magma",
+ "base": "ruin_floor",
+ "border": {
+  "kind": "ruin_wall",
+  "thickness": 2
+ },
+ "bgm": "dungeon_dark",
+ "ambient": "volcano",
+ "weather": [],
+ "worldMapPos": {
+  "x": 0.27,
+  "y": 0.2
+ },
+ "paint": [
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 17,
+   "y": 2,
+   "w": 1,
+   "h": 7
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 17,
+   "y": 12,
+   "w": 1,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 17,
+   "y": 14,
+   "w": 1,
+   "h": 4
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 17,
+   "y": 21,
+   "w": 1,
+   "h": 5
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 17,
+   "y": 26,
+   "w": 1,
+   "h": 5
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 17,
+   "y": 34,
+   "w": 1,
+   "h": 4
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 33,
+   "y": 2,
+   "w": 1,
+   "h": 5
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 33,
+   "y": 10,
+   "w": 1,
+   "h": 4
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 33,
+   "y": 14,
+   "w": 1,
+   "h": 5
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 33,
+   "y": 22,
+   "w": 1,
+   "h": 4
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 33,
+   "y": 26,
+   "w": 1,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 33,
+   "y": 31,
+   "w": 1,
+   "h": 7
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 3,
+   "y": 14,
+   "w": 9,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 15,
+   "y": 14,
+   "w": 2,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 18,
+   "y": 14,
+   "w": 7,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 28,
+   "y": 14,
+   "w": 5,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 34,
+   "y": 14,
+   "w": 7,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 44,
+   "y": 14,
+   "w": 4,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 3,
+   "y": 26,
+   "w": 7,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 13,
+   "y": 26,
+   "w": 4,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 18,
+   "y": 26,
+   "w": 7,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 28,
+   "y": 26,
+   "w": 5,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 34,
+   "y": 26,
+   "w": 5,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 42,
+   "y": 26,
+   "w": 6,
+   "h": 1
+  },
+  {
+   "op": "path",
+   "tile": "ruin_floor",
+   "points": [
+    [
+     3,
+     19
+    ],
+    [
+     25,
+     20
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "scatter",
+   "kind": "rock",
+   "density": 0.012,
+   "seed": 60282888,
+   "area": {
+    "x": 3,
+    "y": 3,
+    "w": 44,
+    "h": 34
+   }
+  },
+  {
+   "op": "scatter",
+   "kind": "rock_big",
+   "density": 0.012,
+   "seed": 60282889,
+   "area": {
+    "x": 3,
+    "y": 3,
+    "w": 44,
+    "h": 34
+   }
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:pebbles",
+   "density": 0.05,
+   "seed": 60282897
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_cinder_wastes",
+   "x": 0,
+   "y": 18,
+   "w": 2,
+   "h": 4,
+   "targetMap": "cinder_wastes",
+   "targetSpawn": "from_magma_core",
+   "label": "Cinder Wastes"
+  }
+ ],
+ "spawnPoints": {
+  "from_cinder_wastes": {
+   "x": 4,
+   "y": 20
+  },
+  "default": {
+   "x": 4,
+   "y": 20
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "magma_golem",
+   "count": 3,
+   "area": {
+    "x": 18,
+    "y": 3,
+    "w": 13,
+    "h": 10
+   }
+  },
+  {
+   "monsterId": "magma_golem",
+   "count": 3,
+   "area": {
+    "x": 3,
+    "y": 15,
+    "w": 13,
+    "h": 10
+   }
+  },
+  {
+   "monsterId": "magma_golem",
+   "count": 3,
+   "area": {
+    "x": 34,
+    "y": 15,
+    "w": 13,
+    "h": 10
+   }
+  },
+  {
+   "monsterId": "flame_drake",
+   "count": 3,
+   "area": {
+    "x": 18,
+    "y": 15,
+    "w": 13,
+    "h": 10
+   }
+  },
+  {
+   "monsterId": "flame_drake",
+   "count": 3,
+   "area": {
+    "x": 3,
+    "y": 27,
+    "w": 13,
+    "h": 10
+   }
+  },
+  {
+   "monsterId": "flame_drake",
+   "count": 3,
+   "area": {
+    "x": 34,
+    "y": 27,
+    "w": 13,
+    "h": 10
+   }
+  }
+ ],
+ "bossSpawn": {
+  "bossId": "pyrewyrm",
+  "x": 41,
+  "y": 20,
+  "respawnSeconds": 900
+ },
+ "objects": [],
+ "areas": [],
+ "generated": true
+}

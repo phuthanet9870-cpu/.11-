@@ -1,52 +1,1359 @@
 [
-  { "id": "lyra", "name": "Lyra Starborn", "title": "Astral Mage",
-    "appearance": { "body": "b", "hairStyle": "long", "hairColor": "#dfe6ff", "eyeColor": "#7fd6ff", "skinTone": "#f6dcc8" },
-    "outfit": { "primary": "#5b3d8f", "secondary": "#2b2347", "accent": "#f2d23a", "style": "robe" },
-    "greeting": ["The stars have been restless since the Fracture...", "Every great adventurer starts somewhere. Yours starts here."],
-    "services": [] },
-  { "id": "garrick", "name": "Garrick Ironhand", "title": "Blacksmith",
-    "appearance": { "body": "a", "hairStyle": "spiky", "hairColor": "#8a3a1e", "eyeColor": "#5a3a1e", "skinTone": "#d9a77e" },
-    "outfit": { "primary": "#6a4a2a", "secondary": "#3a2a1a", "accent": "#c8ccd8", "style": "apron" },
-    "greeting": ["Steel doesn't lie. Neither do I.", "Need something sharper? You've come to the right anvil."],
-    "services": [ { "type": "shop", "shopId": "garrick_smithy", "label": "Browse weapons & armor" } ] },
-  { "id": "seraphine", "name": "Seraphine Vale", "title": "Adventurer's Guild Master",
-    "appearance": { "body": "b", "hairStyle": "ponytail", "hairColor": "#e0a13a", "eyeColor": "#3a8a5a", "skinTone": "#f2d0b4" },
-    "outfit": { "primary": "#8a2a2a", "secondary": "#e8dcc0", "accent": "#f2d23a", "style": "coat" },
-    "greeting": ["Welcome to the Adventurer's Guild of Willowbrook.", "Novices who reach Job Level 10 may take a Job Trial here."],
-    "services": [ { "type": "resetStats", "cost": 0 }, { "type": "resetSkills", "cost": 0 } ] },
-  { "id": "marla", "name": "Marla", "title": "Innkeeper",
-    "appearance": { "body": "b", "hairStyle": "bob", "hairColor": "#6a3a2a", "eyeColor": "#5a3a1e", "skinTone": "#e8bfa0" },
-    "outfit": { "primary": "#c86a5a", "secondary": "#f2ead8", "accent": "#e8dcc0", "style": "apron" },
-    "greeting": ["Rest your feet, dear. The Sleeping Willow always has a bed."],
-    "services": [ { "type": "heal", "cost": 10 }, { "type": "save" } ] },
-  { "id": "pip", "name": "Pip Tumbleweed", "title": "Tool Merchant",
-    "appearance": { "body": "a", "hairStyle": "short", "hairColor": "#d8b46a", "eyeColor": "#3a6aa5", "skinTone": "#f2d0b4" },
-    "outfit": { "primary": "#3a7a8a", "secondary": "#e8dcc0", "accent": "#f2d23a", "style": "tunic" },
-    "greeting": ["Potions! Wings! Everything a hero needs, at prices a hero can afford!"],
-    "services": [ { "type": "shop", "shopId": "pip_tools", "label": "Buy potions & supplies" } ] },
-  { "id": "bram", "name": "Bram", "title": "Storage Keeper",
-    "appearance": { "body": "a", "hairStyle": "short", "hairColor": "#9a9a9a", "eyeColor": "#3a3a3a", "skinTone": "#d9a77e" },
-    "outfit": { "primary": "#4a4a6a", "secondary": "#2a2a3a", "accent": "#f2d23a", "style": "coat" },
-    "greeting": ["Your belongings are safe with me. Small fee, big peace of mind."],
-    "services": [ { "type": "storage" } ] },
-  { "id": "theo", "name": "Old Man Theo", "title": "Village Elder",
-    "appearance": { "body": "a", "hairStyle": "bob", "hairColor": "#f2f2f2", "eyeColor": "#5a5a5a", "skinTone": "#e8bfa0" },
-    "outfit": { "primary": "#6a7a4a", "secondary": "#4a3a2a", "accent": "#e8dcc0", "style": "robe" },
-    "greeting": ["In my day, the stars stayed in the sky where they belonged."],
-    "services": [] },
-  { "id": "rowan", "name": "Guard Rowan", "title": "Village Guard",
-    "appearance": { "body": "a", "hairStyle": "short", "hairColor": "#3a2a1a", "eyeColor": "#3a5a8a", "skinTone": "#d9a77e" },
-    "outfit": { "primary": "#4a6fa5", "secondary": "#b8c4d6", "accent": "#c83a3a", "style": "plate" },
-    "greeting": ["East gate leads to Sunny Meadow. Watch for slimes. And wasps. Mostly wasps."],
-    "services": [] },
-  { "id": "hollis", "name": "Farmer Hollis", "title": "Meadow Farmer",
-    "appearance": { "body": "a", "hairStyle": "spiky", "hairColor": "#c8a26b", "eyeColor": "#3a5a2a", "skinTone": "#d9a77e" },
-    "outfit": { "primary": "#3a6aa5", "secondary": "#c8a26b", "accent": "#f2d23a", "style": "tunic" },
-    "greeting": ["Those rabbits are eating my carrots again!"],
-    "services": [] },
-  { "id": "elwin", "name": "Ranger Elwin", "title": "Forest Warden",
-    "appearance": { "body": "a", "hairStyle": "long", "hairColor": "#2a4a2a", "eyeColor": "#d8b46a", "skinTone": "#e8bfa0" },
-    "outfit": { "primary": "#3f7a45", "secondary": "#8b6b3e", "accent": "#d9c27a", "style": "hood" },
-    "greeting": ["Quiet... the forest is listening.", "Goblins have grown bold since the Thornking claimed the clearing."],
-    "services": [ { "type": "shop", "shopId": "elwin_camp", "label": "Trade supplies" }, { "type": "save" } ] }
+ {
+  "id": "lyra",
+  "name": "Lyra Starborn",
+  "title": "Astral Mage",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#dfe6ff",
+   "eyeColor": "#7fd6ff",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#2b2347",
+   "accent": "#f2d23a",
+   "style": "robe"
+  },
+  "greeting": [
+   "The stars have been restless since the Fracture...",
+   "Every great adventurer starts somewhere. Yours starts here."
+  ],
+  "services": []
+ },
+ {
+  "id": "garrick",
+  "name": "Garrick Ironhand",
+  "title": "Blacksmith & Refiner",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#d9a77e"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "apron"
+  },
+  "greeting": [
+   "Steel doesn't lie. Neither do I.",
+   "Need something sharper? You've come to the right anvil."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "garrick_smithy",
+    "label": "Browse weapons & armor"
+   },
+   {
+    "type": "refine"
+   }
+  ]
+ },
+ {
+  "id": "seraphine",
+  "name": "Seraphine Vale",
+  "title": "Adventurer's Guild Master",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#e0a13a",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f2d0b4"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "coat"
+  },
+  "greeting": [
+   "Welcome to the Adventurer's Guild of Willowbrook.",
+   "Novices who reach Job Level 10 may take a Job Trial here."
+  ],
+  "services": [
+   {
+    "type": "resetStats",
+    "cost": 0
+   },
+   {
+    "type": "resetSkills",
+    "cost": 0
+   }
+  ]
+ },
+ {
+  "id": "marla",
+  "name": "Marla",
+  "title": "Innkeeper",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#6a3a2a",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#e8bfa0"
+  },
+  "outfit": {
+   "primary": "#c86a5a",
+   "secondary": "#f2ead8",
+   "accent": "#e8dcc0",
+   "style": "apron"
+  },
+  "greeting": [
+   "Rest your feet, dear. The Sleeping Willow always has a bed."
+  ],
+  "services": [
+   {
+    "type": "heal",
+    "cost": 10
+   },
+   {
+    "type": "save"
+   }
+  ]
+ },
+ {
+  "id": "pip",
+  "name": "Pip Tumbleweed",
+  "title": "Tool Merchant",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#d8b46a",
+   "eyeColor": "#3a6aa5",
+   "skinTone": "#f2d0b4"
+  },
+  "outfit": {
+   "primary": "#3a7a8a",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Potions! Wings! Everything a hero needs, at prices a hero can afford!"
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "pip_tools",
+    "label": "Buy potions & supplies"
+   }
+  ]
+ },
+ {
+  "id": "bram",
+  "name": "Bram",
+  "title": "Storage Keeper",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#9a9a9a",
+   "eyeColor": "#3a3a3a",
+   "skinTone": "#d9a77e"
+  },
+  "outfit": {
+   "primary": "#4a4a6a",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "coat"
+  },
+  "greeting": [
+   "Your belongings are safe with me. Small fee, big peace of mind."
+  ],
+  "services": [
+   {
+    "type": "storage"
+   }
+  ]
+ },
+ {
+  "id": "theo",
+  "name": "Old Man Theo",
+  "title": "Village Elder",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "bob",
+   "hairColor": "#f2f2f2",
+   "eyeColor": "#5a5a5a",
+   "skinTone": "#e8bfa0"
+  },
+  "outfit": {
+   "primary": "#6a7a4a",
+   "secondary": "#4a3a2a",
+   "accent": "#e8dcc0",
+   "style": "robe"
+  },
+  "greeting": [
+   "In my day, the stars stayed in the sky where they belonged."
+  ],
+  "services": []
+ },
+ {
+  "id": "rowan",
+  "name": "Guard Rowan",
+  "title": "Village Guard",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#3a2a1a",
+   "eyeColor": "#3a5a8a",
+   "skinTone": "#d9a77e"
+  },
+  "outfit": {
+   "primary": "#4a6fa5",
+   "secondary": "#b8c4d6",
+   "accent": "#c83a3a",
+   "style": "plate"
+  },
+  "greeting": [
+   "East gate leads to Sunny Meadow. Watch for slimes. And wasps. Mostly wasps."
+  ],
+  "services": []
+ },
+ {
+  "id": "hollis",
+  "name": "Farmer Hollis",
+  "title": "Meadow Farmer",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#c8a26b",
+   "eyeColor": "#3a5a2a",
+   "skinTone": "#d9a77e"
+  },
+  "outfit": {
+   "primary": "#3a6aa5",
+   "secondary": "#c8a26b",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Those rabbits are eating my carrots again!"
+  ],
+  "services": []
+ },
+ {
+  "id": "elwin",
+  "name": "Ranger Elwin",
+  "title": "Forest Warden",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "long",
+   "hairColor": "#2a4a2a",
+   "eyeColor": "#d8b46a",
+   "skinTone": "#e8bfa0"
+  },
+  "outfit": {
+   "primary": "#3f7a45",
+   "secondary": "#8b6b3e",
+   "accent": "#d9c27a",
+   "style": "hood"
+  },
+  "greeting": [
+   "Quiet... the forest is listening.",
+   "Goblins have grown bold since the Thornking claimed the clearing."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "elwin_camp",
+    "label": "Trade supplies"
+   },
+   {
+    "type": "save"
+   }
+  ]
+ },
+ {
+  "id": "aurelion_courier",
+  "name": "Courier Nadia",
+  "title": "Courier Guild Service",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "bob",
+   "hairColor": "#e8d090",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "coat"
+  },
+  "greeting": [
+   "Welcome to Aurelion! The Courier Guild can save your position, keep your belongings, or send you to another town."
+  ],
+  "services": [
+   {
+    "type": "save"
+   },
+   {
+    "type": "storage"
+   },
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "willowbrook",
+      "spawn": "default",
+      "cost": 300
+     },
+     {
+      "mapId": "fernhollow",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "arcanthe",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "sandara",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "tidewatch",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "frostholm",
+      "spawn": "default",
+      "cost": 600
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "aurelion_merchant",
+  "name": "Zahra",
+  "title": "Tool Merchant",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#e8d090",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Potions, wings, tonics — everything a traveller needs."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "aurelion_tools",
+    "label": "Buy potions & supplies"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "aurelion_smith",
+  "name": "Yara",
+  "title": "Blacksmith & Refiner",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#e8d090",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "apron"
+  },
+  "greeting": [
+   "Fine steel, fair prices."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "aurelion_arms",
+    "label": "Browse weapons & armor"
+   },
+   {
+    "type": "refine"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "aurelion_innkeeper",
+  "name": "Sabine",
+  "title": "Innkeeper",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "A warm bed and a hot meal, traveller?"
+  ],
+  "services": [
+   {
+    "type": "heal",
+    "cost": 20
+   },
+   {
+    "type": "save"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_knight",
+  "name": "Commander Aldric",
+  "title": "Knight Guild Master",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "spiky",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "plate"
+  },
+  "greeting": [
+   "So you wish to walk the path of the Knight? Prove you've reached Job Level 10 as a Novice and I will accept you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "knight"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_courier",
+  "name": "Courier Rosa",
+  "title": "Courier Guild Service",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "ponytail",
+   "hairColor": "#e8d090",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "coat"
+  },
+  "greeting": [
+   "Welcome to Village! The Courier Guild can save your position, keep your belongings, or send you to another town."
+  ],
+  "services": [
+   {
+    "type": "save"
+   },
+   {
+    "type": "storage"
+   },
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "willowbrook",
+      "spawn": "default",
+      "cost": 300
+     },
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "arcanthe",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "sandara",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "tidewatch",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "frostholm",
+      "spawn": "default",
+      "cost": 600
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_merchant",
+  "name": "Fenwick",
+  "title": "Tool Merchant",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "ponytail",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Potions, wings, tonics — everything a traveller needs."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "fernhollow_tools",
+    "label": "Buy potions & supplies"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_smith",
+  "name": "Darius",
+  "title": "Armorer",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "ponytail",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "apron"
+  },
+  "greeting": [
+   "Fine steel, fair prices."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "fernhollow_arms",
+    "label": "Browse weapons & armor"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_innkeeper",
+  "name": "Amos",
+  "title": "Innkeeper",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "ponytail",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#e8dcc0",
+   "accent": "#c8ccd8",
+   "style": "tunic"
+  },
+  "greeting": [
+   "A warm bed and a hot meal, traveller?"
+  ],
+  "services": [
+   {
+    "type": "heal",
+    "cost": 20
+   },
+   {
+    "type": "save"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_ranger",
+  "name": "Ranger Sylvi",
+  "title": "Ranger Guild Master",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#2a2a3a",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "hood"
+  },
+  "greeting": [
+   "So you wish to walk the path of the Ranger? Prove you've reached Job Level 10 as a Novice and I will accept you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "ranger"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_courier",
+  "name": "Courier Tessa",
+  "title": "Courier Guild Service",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#a35d30",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "coat"
+  },
+  "greeting": [
+   "Welcome to Arcanthe! The Courier Guild can save your position, keep your belongings, or send you to another town."
+  ],
+  "services": [
+   {
+    "type": "save"
+   },
+   {
+    "type": "storage"
+   },
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "willowbrook",
+      "spawn": "default",
+      "cost": 300
+     },
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "fernhollow",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "sandara",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "tidewatch",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "frostholm",
+      "spawn": "default",
+      "cost": 600
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_merchant",
+  "name": "Hilde",
+  "title": "Tool Merchant",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#e8d090",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#e8dcc0",
+   "accent": "#e8dcc0",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Potions, wings, tonics — everything a traveller needs."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "arcanthe_tools",
+    "label": "Buy potions & supplies"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_smith",
+  "name": "Ulf",
+  "title": "Armorer",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#e8d090",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "apron"
+  },
+  "greeting": [
+   "Fine steel, fair prices."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "arcanthe_arms",
+    "label": "Browse weapons & armor"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_innkeeper",
+  "name": "Fae",
+  "title": "Innkeeper",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "tunic"
+  },
+  "greeting": [
+   "A warm bed and a hot meal, traveller?"
+  ],
+  "services": [
+   {
+    "type": "heal",
+    "cost": 20
+   },
+   {
+    "type": "save"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_mage",
+  "name": "Magister Ophelia",
+  "title": "Mage Guild Master",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#2a2a3a",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "robe"
+  },
+  "greeting": [
+   "So you wish to walk the path of the Mage? Prove you've reached Job Level 10 as a Novice and I will accept you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "mage"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sandara_courier",
+  "name": "Courier Rosa",
+  "title": "Courier Guild Service",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#2a2a3a",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "coat"
+  },
+  "greeting": [
+   "Welcome to Sandara! The Courier Guild can save your position, keep your belongings, or send you to another town."
+  ],
+  "services": [
+   {
+    "type": "save"
+   },
+   {
+    "type": "storage"
+   },
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "willowbrook",
+      "spawn": "default",
+      "cost": 300
+     },
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "fernhollow",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "arcanthe",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "tidewatch",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "frostholm",
+      "spawn": "default",
+      "cost": 600
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sandara_merchant",
+  "name": "Pell",
+  "title": "Tool Merchant",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Potions, wings, tonics — everything a traveller needs."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "sandara_tools",
+    "label": "Buy potions & supplies"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sandara_smith",
+  "name": "Torvald",
+  "title": "Blacksmith & Refiner",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#e8dcc0",
+   "accent": "#c8ccd8",
+   "style": "apron"
+  },
+  "greeting": [
+   "Fine steel, fair prices."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "sandara_arms",
+    "label": "Browse weapons & armor"
+   },
+   {
+    "type": "refine"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sandara_innkeeper",
+  "name": "Gunnar",
+  "title": "Innkeeper",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "A warm bed and a hot meal, traveller?"
+  ],
+  "services": [
+   {
+    "type": "heal",
+    "cost": 20
+   },
+   {
+    "type": "save"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_courier",
+  "name": "Courier Tessa",
+  "title": "Courier Guild Service",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#e8dcc0",
+   "accent": "#e8dcc0",
+   "style": "coat"
+  },
+  "greeting": [
+   "Welcome to Tidewatch! The Courier Guild can save your position, keep your belongings, or send you to another town."
+  ],
+  "services": [
+   {
+    "type": "save"
+   },
+   {
+    "type": "storage"
+   },
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "willowbrook",
+      "spawn": "default",
+      "cost": 300
+     },
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "fernhollow",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "arcanthe",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "sandara",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "frostholm",
+      "spawn": "default",
+      "cost": 600
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_merchant",
+  "name": "Bertram",
+  "title": "Tool Merchant",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#e8dcc0",
+   "accent": "#e8dcc0",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Potions, wings, tonics — everything a traveller needs."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "tidewatch_tools",
+    "label": "Buy potions & supplies"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_smith",
+  "name": "Darius",
+  "title": "Armorer",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "apron"
+  },
+  "greeting": [
+   "Fine steel, fair prices."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "tidewatch_arms",
+    "label": "Browse weapons & armor"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_innkeeper",
+  "name": "Fae",
+  "title": "Innkeeper",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#e8d090",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#2a2a3a",
+   "accent": "#c8ccd8",
+   "style": "tunic"
+  },
+  "greeting": [
+   "A warm bed and a hot meal, traveller?"
+  ],
+  "services": [
+   {
+    "type": "heal",
+    "cost": 20
+   },
+   {
+    "type": "save"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frostholm_courier",
+  "name": "Courier Mira",
+  "title": "Courier Guild Service",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "coat"
+  },
+  "greeting": [
+   "Welcome to Frostholm! The Courier Guild can save your position, keep your belongings, or send you to another town."
+  ],
+  "services": [
+   {
+    "type": "save"
+   },
+   {
+    "type": "storage"
+   },
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "willowbrook",
+      "spawn": "default",
+      "cost": 300
+     },
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "fernhollow",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "arcanthe",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "sandara",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "tidewatch",
+      "spawn": "default",
+      "cost": 600
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frostholm_merchant",
+  "name": "Odile",
+  "title": "Tool Merchant",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Potions, wings, tonics — everything a traveller needs."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "frostholm_tools",
+    "label": "Buy potions & supplies"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frostholm_smith",
+  "name": "Bruna",
+  "title": "Blacksmith & Refiner",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "apron"
+  },
+  "greeting": [
+   "Fine steel, fair prices."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "frostholm_arms",
+    "label": "Browse weapons & armor"
+   },
+   {
+    "type": "refine"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frostholm_innkeeper",
+  "name": "Sabine",
+  "title": "Innkeeper",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#2a2a3a",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "A warm bed and a hot meal, traveller?"
+  ],
+  "services": [
+   {
+    "type": "heal",
+    "cost": 20
+   },
+   {
+    "type": "save"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "willowbrook_courier",
+  "name": "Courier Fiona",
+  "title": "Courier Guild Service",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "long",
+   "hairColor": "#e8d090",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "coat"
+  },
+  "greeting": [
+   "The Courier Guild connects every town in Veyloria. Where to?"
+  ],
+  "services": [
+   {
+    "type": "save"
+   },
+   {
+    "type": "storage"
+   },
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "fernhollow",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "arcanthe",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "sandara",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "tidewatch",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "frostholm",
+      "spawn": "default",
+      "cost": 600
+     }
+    ]
+   }
+  ],
+  "generated": true
+ }
 ]

@@ -1,8 +1,220 @@
 [
-  { "id": "pip_tools", "name": "Pip's Tool Shop", "items": ["red_potion", "orange_potion", "blue_potion", "green_potion", "wing_of_return", "swiftness_tonic"] },
-  { "id": "garrick_smithy", "name": "Ironhand Smithy", "items": [
-    "training_knife", "oak_club", "iron_sword", "steel_sword", "knight_spear", "short_bow", "hunter_bow", "apprentice_wand", "oak_staff",
-    "cotton_shirt", "leather_jacket", "chain_mail", "hunter_vest", "apprentice_robe",
-    "bandana", "iron_helm", "wooden_buckler", "iron_shield", "travel_cape", "sandals", "leather_boots", "copper_ring", "sapphire_pendant"] },
-  { "id": "elwin_camp", "name": "Warden's Camp", "items": ["red_potion", "orange_potion", "green_potion", "wing_of_return"] }
+ {
+  "id": "pip_tools",
+  "name": "Pip's Tool Shop",
+  "items": [
+   "red_potion",
+   "orange_potion",
+   "blue_potion",
+   "green_potion",
+   "wing_of_return",
+   "swiftness_tonic"
+  ]
+ },
+ {
+  "id": "garrick_smithy",
+  "name": "Ironhand Smithy",
+  "items": [
+   "starsteel_ore",
+   "moonstone_ore",
+   "training_knife",
+   "oak_club",
+   "iron_sword",
+   "steel_sword",
+   "knight_spear",
+   "short_bow",
+   "hunter_bow",
+   "apprentice_wand",
+   "oak_staff",
+   "cotton_shirt",
+   "leather_jacket",
+   "chain_mail",
+   "hunter_vest",
+   "apprentice_robe",
+   "bandana",
+   "iron_helm",
+   "wooden_buckler",
+   "iron_shield",
+   "travel_cape",
+   "sandals",
+   "leather_boots",
+   "copper_ring",
+   "sapphire_pendant"
+  ]
+ },
+ {
+  "id": "elwin_camp",
+  "name": "Warden's Camp",
+  "items": [
+   "red_potion",
+   "orange_potion",
+   "green_potion",
+   "wing_of_return"
+  ]
+ },
+ {
+  "id": "aurelion_tools",
+  "name": "Royal Capital Aurelion Tool Shop",
+  "items": [
+   "red_potion",
+   "orange_potion",
+   "yellow_potion",
+   "blue_potion",
+   "green_potion",
+   "wing_of_return",
+   "swiftness_tonic"
+  ],
+  "generated": true
+ },
+ {
+  "id": "aurelion_arms",
+  "name": "Royal Capital Aurelion Armory",
+  "items": [
+   "starsteel_ore",
+   "moonstone_ore",
+   "iron_sword",
+   "steel_sword",
+   "knight_spear",
+   "chain_mail",
+   "iron_helm",
+   "iron_shield",
+   "leather_boots",
+   "travel_cape"
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_tools",
+  "name": "Fernhollow Village Tool Shop",
+  "items": [
+   "red_potion",
+   "orange_potion",
+   "yellow_potion",
+   "green_potion",
+   "wing_of_return"
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_arms",
+  "name": "Fernhollow Village Armory",
+  "items": [
+   "short_bow",
+   "hunter_bow",
+   "hunter_vest",
+   "leather_jacket",
+   "leaf_cap",
+   "leather_boots",
+   "travel_cape"
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_tools",
+  "name": "Tower City Arcanthe Tool Shop",
+  "items": [
+   "red_potion",
+   "orange_potion",
+   "yellow_potion",
+   "blue_potion",
+   "wing_of_return"
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_arms",
+  "name": "Tower City Arcanthe Armory",
+  "items": [
+   "apprentice_wand",
+   "oak_staff",
+   "apprentice_robe",
+   "sapphire_pendant",
+   "copper_ring",
+   "sandals"
+  ],
+  "generated": true
+ },
+ {
+  "id": "sandara_tools",
+  "name": "Desert City Sandara Tool Shop",
+  "items": [
+   "orange_potion",
+   "yellow_potion",
+   "blue_potion",
+   "green_potion",
+   "wing_of_return",
+   "swiftness_tonic"
+  ],
+  "generated": true
+ },
+ {
+  "id": "sandara_arms",
+  "name": "Desert City Sandara Armory",
+  "items": [
+   "starsteel_ore",
+   "moonstone_ore",
+   "steel_sword",
+   "hunter_bow",
+   "oak_staff",
+   "chain_mail",
+   "iron_shield",
+   "swift_boots"
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_tools",
+  "name": "Port Town Tidewatch Tool Shop",
+  "items": [
+   "red_potion",
+   "orange_potion",
+   "yellow_potion",
+   "blue_potion",
+   "green_potion",
+   "wing_of_return"
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_arms",
+  "name": "Port Town Tidewatch Armory",
+  "items": [
+   "iron_sword",
+   "short_bow",
+   "leather_jacket",
+   "bandana",
+   "wooden_buckler",
+   "sandals",
+   "copper_ring"
+  ],
+  "generated": true
+ },
+ {
+  "id": "frostholm_tools",
+  "name": "Snow Town Frostholm Tool Shop",
+  "items": [
+   "orange_potion",
+   "yellow_potion",
+   "blue_potion",
+   "green_potion",
+   "wing_of_return"
+  ],
+  "generated": true
+ },
+ {
+  "id": "frostholm_arms",
+  "name": "Snow Town Frostholm Armory",
+  "items": [
+   "starsteel_ore",
+   "moonstone_ore",
+   "steel_sword",
+   "knight_spear",
+   "hunter_bow",
+   "oak_staff",
+   "chain_mail",
+   "iron_helm",
+   "wolfhide_cloak"
+  ],
+  "generated": true
+ }
 ]

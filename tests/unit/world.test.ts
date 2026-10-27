@@ -314,18 +314,39 @@ describe('npc services & invalid commands', () => {
     expect(countItem(c, 'red_potion')).toBe(before - 1);
   });
 
-  it('interacting with a quest object only gives the quest item while the quest needs it', () => {
-    const c = at(newChar(), 'willowbrook', 7, 34);
+  it('tutorial steps run through real NPC services: buy, equip, refine, job change', () => {
+    const c = at(newChar(), 'willowbrook', 39, 14); // next to Garrick
+    for (const q of ['tut_welcome', 'tut_hunt']) c.quests[q] = { questId: q, status: 'completed', counts: [1], acceptedAt: 0, completedAt: 0 };
+    c.luma = 5000;
     const w = newWorld(c);
-    w.interactObjectCmd('old_well');
-    run(w, 3000);
-    expect(countItem(c, 'well_water')).toBe(0);
-    w.accept('side_old_well');
-    w.interactObjectCmd('old_well');
-    run(w, 3000);
-    expect(countItem(c, 'well_water')).toBe(1);
-    w.interactObjectCmd('old_well');
-    run(w, 3000);
-    expect(countItem(c, 'well_water')).toBe(1);
+    expect(w.accept('tut_weapon').ok).toBe(true);
+    expect(w.buy('garrick_smithy', 'oak_club', 1).ok).toBe(true);
+    const club = c.inventory.find((i) => i.itemId === 'oak_club')!;
+    expect(w.equip(club.uid).ok).toBe(true);
+    expect(c.quests.tut_weapon.status).toBe('ready');
+    expect(w.turnIn('tut_weapon').ok).toBe(true);
+    expect(w.accept('tut_refine').ok).toBe(true);
+    const r = w.refine(club.uid);
+    expect(r.ok && r.outcome).toBe('success');
+    expect(c.equipment.weapon?.refine).toBe(1);
+    expect(c.quests.tut_refine.status).toBe('ready');
+    // Job change is refused away from the guild, accepted at the Knight guild master in Aurelion.
+    c.jobLevel = 10;
+    expect(w.changeJobAt('knight').ok).toBe(false);
+    const guild = data.maps.get('aurelion')!.npcs.find((n) => n.npcId === 'guild_knight')!;
+    w.enterMap('aurelion', 'default');
+    w.player.x = guild.x * TILE + 16; w.player.y = (guild.y + 1) * TILE + 16;
+    expect(w.changeJobAt('knight').ok).toBe(true);
+    expect(c.classId).toBe('knight');
+  });
+
+  it('courier warp service moves between towns for Luma', () => {
+    const c = newChar(); c.luma = 1000;
+    const w = newWorld(c);
+    const courier = data.maps.get('willowbrook')!.npcs.find((n) => n.npcId === 'willowbrook_courier')!;
+    w.player.x = courier.x * TILE + 16; w.player.y = (courier.y + 1) * TILE + 16;
+    expect(w.warpTo('sandara').ok).toBe(true);
+    expect(w.map.def.id).toBe('sandara');
+    expect(c.luma).toBe(400);
   });
 });

@@ -8,8 +8,8 @@
    {
     "hpPct": 100,
     "name": "Phase I — Bramble Lord",
-    "atkMul": 1.0,
-    "speedMul": 1.0,
+    "atkMul": 1,
+    "speedMul": 1,
     "message": "Grukk smashes the ground with his thorn club!"
    },
    {
@@ -121,5 +121,595 @@
    ],
    "luma": 500
   }
+ },
+ {
+  "id": "bone_warden",
+  "monsterId": "bone_warden_boss",
+  "title": "Keeper of the Aurelion Catacombs",
+  "intro": "Bone Warden awakens!",
+  "phases": [
+   {
+    "hpPct": 100,
+    "name": "Phase I",
+    "atkMul": 1,
+    "speedMul": 1,
+    "message": "Bone Warden attacks!"
+   },
+   {
+    "hpPct": 66,
+    "name": "Phase II",
+    "atkMul": 1.15,
+    "speedMul": 1.1,
+    "message": "Bone Warden calls its servants!"
+   },
+   {
+    "hpPct": 33,
+    "name": "Phase III",
+    "atkMul": 1.3,
+    "speedMul": 1.2,
+    "message": "Bone Warden unleashes its full power!"
+   }
+  ],
+  "enrage": {
+   "afterMs": 240000,
+   "hpPct": 12,
+   "atkMul": 1.5,
+   "aspdMul": 1.4
+  },
+  "skills": [
+   {
+    "id": "bone_warden_slam",
+    "name": "Crushing Blow",
+    "kind": "circle",
+    "telegraphMs": 1300,
+    "radius": 100,
+    "multiplier": 1.7,
+    "element": "undead",
+    "cooldownMs": 6500,
+    "minPhase": 0,
+    "fx": "slam"
+   },
+   {
+    "id": "bone_warden_nova",
+    "name": "Dark Nova",
+    "kind": "self_circle",
+    "telegraphMs": 1500,
+    "radius": 160,
+    "multiplier": 1.3,
+    "element": "undead",
+    "status": {
+     "status": "curse",
+     "chance": 0.5,
+     "durationMs": 4000
+    },
+    "cooldownMs": 11000,
+    "minPhase": 0,
+    "fx": "slam"
+   },
+   {
+    "id": "bone_warden_summon",
+    "name": "Summon Servants",
+    "kind": "summon",
+    "telegraphMs": 1000,
+    "summon": {
+     "monsterId": "grave_soldier",
+     "count": 2
+    },
+    "cooldownMs": 26000,
+    "minPhase": 1,
+    "fx": "shout"
+   },
+   {
+    "id": "bone_warden_charge",
+    "name": "Rush",
+    "kind": "charge",
+    "telegraphMs": 1100,
+    "radius": 55,
+    "multiplier": 1.5,
+    "element": "undead",
+    "cooldownMs": 9000,
+    "minPhase": 1,
+    "fx": "dash"
+   },
+   {
+    "id": "bone_warden_ring",
+    "name": "Cataclysm",
+    "kind": "ring",
+    "telegraphMs": 1700,
+    "radius": 230,
+    "multiplier": 1.4,
+    "element": "undead",
+    "cooldownMs": 13000,
+    "minPhase": 2,
+    "fx": "slam"
+   }
+  ],
+  "contributionRewards": {
+   "minDamagePct": 10,
+   "items": [
+    {
+     "itemId": "starsteel_ore",
+     "qty": 3
+    },
+    {
+     "itemId": "moonstone_ore",
+     "qty": 3
+    }
+   ],
+   "luma": 1780
+  },
+  "generated": true
+ },
+ {
+  "id": "archmage_valdris",
+  "monsterId": "valdris_boss",
+  "title": "Lost Master of the Tower",
+  "intro": "Archmage Valdris awakens!",
+  "phases": [
+   {
+    "hpPct": 100,
+    "name": "Phase I",
+    "atkMul": 1,
+    "speedMul": 1,
+    "message": "Archmage Valdris attacks!"
+   },
+   {
+    "hpPct": 66,
+    "name": "Phase II",
+    "atkMul": 1.15,
+    "speedMul": 1.1,
+    "message": "Archmage Valdris calls its servants!"
+   },
+   {
+    "hpPct": 33,
+    "name": "Phase III",
+    "atkMul": 1.3,
+    "speedMul": 1.2,
+    "message": "Archmage Valdris unleashes its full power!"
+   }
+  ],
+  "enrage": {
+   "afterMs": 240000,
+   "hpPct": 12,
+   "atkMul": 1.5,
+   "aspdMul": 1.4
+  },
+  "skills": [
+   {
+    "id": "archmage_valdris_slam",
+    "name": "Crushing Blow",
+    "kind": "circle",
+    "telegraphMs": 1300,
+    "radius": 100,
+    "multiplier": 1.7,
+    "element": "shadow",
+    "cooldownMs": 6500,
+    "minPhase": 0,
+    "fx": "arcane"
+   },
+   {
+    "id": "archmage_valdris_nova",
+    "name": "Dark Nova",
+    "kind": "self_circle",
+    "telegraphMs": 1500,
+    "radius": 160,
+    "multiplier": 1.3,
+    "element": "shadow",
+    "status": {
+     "status": "silence",
+     "chance": 0.5,
+     "durationMs": 4000
+    },
+    "cooldownMs": 11000,
+    "minPhase": 0,
+    "fx": "arcane"
+   },
+   {
+    "id": "archmage_valdris_summon",
+    "name": "Summon Servants",
+    "kind": "summon",
+    "telegraphMs": 1000,
+    "summon": {
+     "monsterId": "mana_wisp",
+     "count": 2
+    },
+    "cooldownMs": 26000,
+    "minPhase": 1,
+    "fx": "shout"
+   },
+   {
+    "id": "archmage_valdris_charge",
+    "name": "Rush",
+    "kind": "charge",
+    "telegraphMs": 1100,
+    "radius": 55,
+    "multiplier": 1.5,
+    "element": "shadow",
+    "cooldownMs": 9000,
+    "minPhase": 1,
+    "fx": "dash"
+   },
+   {
+    "id": "archmage_valdris_ring",
+    "name": "Cataclysm",
+    "kind": "ring",
+    "telegraphMs": 1700,
+    "radius": 230,
+    "multiplier": 1.4,
+    "element": "shadow",
+    "cooldownMs": 13000,
+    "minPhase": 2,
+    "fx": "arcane"
+   }
+  ],
+  "contributionRewards": {
+   "minDamagePct": 10,
+   "items": [
+    {
+     "itemId": "starsteel_ore",
+     "qty": 3
+    },
+    {
+     "itemId": "moonstone_ore",
+     "qty": 3
+    }
+   ],
+   "luma": 2260
+  },
+  "generated": true
+ },
+ {
+  "id": "sun_king",
+  "monsterId": "sun_king_boss",
+  "title": "Eternal Ruler of the Royal Tomb",
+  "intro": "Sun-King Ankhar awakens!",
+  "phases": [
+   {
+    "hpPct": 100,
+    "name": "Phase I",
+    "atkMul": 1,
+    "speedMul": 1,
+    "message": "Sun-King Ankhar attacks!"
+   },
+   {
+    "hpPct": 66,
+    "name": "Phase II",
+    "atkMul": 1.15,
+    "speedMul": 1.1,
+    "message": "Sun-King Ankhar calls its servants!"
+   },
+   {
+    "hpPct": 33,
+    "name": "Phase III",
+    "atkMul": 1.3,
+    "speedMul": 1.2,
+    "message": "Sun-King Ankhar unleashes its full power!"
+   }
+  ],
+  "enrage": {
+   "afterMs": 240000,
+   "hpPct": 12,
+   "atkMul": 1.5,
+   "aspdMul": 1.4
+  },
+  "skills": [
+   {
+    "id": "sun_king_slam",
+    "name": "Crushing Blow",
+    "kind": "circle",
+    "telegraphMs": 1300,
+    "radius": 100,
+    "multiplier": 1.7,
+    "element": "undead",
+    "cooldownMs": 6500,
+    "minPhase": 0,
+    "fx": "holy"
+   },
+   {
+    "id": "sun_king_nova",
+    "name": "Dark Nova",
+    "kind": "self_circle",
+    "telegraphMs": 1500,
+    "radius": 160,
+    "multiplier": 1.3,
+    "element": "undead",
+    "status": {
+     "status": "curse",
+     "chance": 0.5,
+     "durationMs": 4000
+    },
+    "cooldownMs": 11000,
+    "minPhase": 0,
+    "fx": "holy"
+   },
+   {
+    "id": "sun_king_summon",
+    "name": "Summon Servants",
+    "kind": "summon",
+    "telegraphMs": 1000,
+    "summon": {
+     "monsterId": "tomb_mummy",
+     "count": 2
+    },
+    "cooldownMs": 26000,
+    "minPhase": 1,
+    "fx": "shout"
+   },
+   {
+    "id": "sun_king_charge",
+    "name": "Rush",
+    "kind": "charge",
+    "telegraphMs": 1100,
+    "radius": 55,
+    "multiplier": 1.5,
+    "element": "undead",
+    "cooldownMs": 9000,
+    "minPhase": 1,
+    "fx": "dash"
+   },
+   {
+    "id": "sun_king_ring",
+    "name": "Cataclysm",
+    "kind": "ring",
+    "telegraphMs": 1700,
+    "radius": 230,
+    "multiplier": 1.4,
+    "element": "undead",
+    "cooldownMs": 13000,
+    "minPhase": 2,
+    "fx": "holy"
+   }
+  ],
+  "contributionRewards": {
+   "minDamagePct": 10,
+   "items": [
+    {
+     "itemId": "starsteel_ore",
+     "qty": 3
+    },
+    {
+     "itemId": "moonstone_ore",
+     "qty": 3
+    }
+   ],
+   "luma": 2500
+  },
+  "generated": true
+ },
+ {
+  "id": "pyrewyrm",
+  "monsterId": "pyrewyrm_boss",
+  "title": "Heart of the Volcano",
+  "intro": "Pyrewyrm awakens!",
+  "phases": [
+   {
+    "hpPct": 100,
+    "name": "Phase I",
+    "atkMul": 1,
+    "speedMul": 1,
+    "message": "Pyrewyrm attacks!"
+   },
+   {
+    "hpPct": 66,
+    "name": "Phase II",
+    "atkMul": 1.15,
+    "speedMul": 1.1,
+    "message": "Pyrewyrm calls its servants!"
+   },
+   {
+    "hpPct": 33,
+    "name": "Phase III",
+    "atkMul": 1.3,
+    "speedMul": 1.2,
+    "message": "Pyrewyrm unleashes its full power!"
+   }
+  ],
+  "enrage": {
+   "afterMs": 240000,
+   "hpPct": 12,
+   "atkMul": 1.5,
+   "aspdMul": 1.4
+  },
+  "skills": [
+   {
+    "id": "pyrewyrm_slam",
+    "name": "Crushing Blow",
+    "kind": "circle",
+    "telegraphMs": 1300,
+    "radius": 100,
+    "multiplier": 1.7,
+    "element": "fire",
+    "cooldownMs": 6500,
+    "minPhase": 0,
+    "fx": "fire"
+   },
+   {
+    "id": "pyrewyrm_nova",
+    "name": "Dark Nova",
+    "kind": "self_circle",
+    "telegraphMs": 1500,
+    "radius": 160,
+    "multiplier": 1.3,
+    "element": "fire",
+    "status": {
+     "status": "burn",
+     "chance": 0.5,
+     "durationMs": 4000
+    },
+    "cooldownMs": 11000,
+    "minPhase": 0,
+    "fx": "fire"
+   },
+   {
+    "id": "pyrewyrm_summon",
+    "name": "Summon Servants",
+    "kind": "summon",
+    "telegraphMs": 1000,
+    "summon": {
+     "monsterId": "fire_drake",
+     "count": 2
+    },
+    "cooldownMs": 26000,
+    "minPhase": 1,
+    "fx": "shout"
+   },
+   {
+    "id": "pyrewyrm_charge",
+    "name": "Rush",
+    "kind": "charge",
+    "telegraphMs": 1100,
+    "radius": 55,
+    "multiplier": 1.5,
+    "element": "fire",
+    "cooldownMs": 9000,
+    "minPhase": 1,
+    "fx": "dash"
+   },
+   {
+    "id": "pyrewyrm_ring",
+    "name": "Cataclysm",
+    "kind": "ring",
+    "telegraphMs": 1700,
+    "radius": 230,
+    "multiplier": 1.4,
+    "element": "fire",
+    "cooldownMs": 13000,
+    "minPhase": 2,
+    "fx": "fire"
+   }
+  ],
+  "contributionRewards": {
+   "minDamagePct": 10,
+   "items": [
+    {
+     "itemId": "starsteel_ore",
+     "qty": 3
+    },
+    {
+     "itemId": "moonstone_ore",
+     "qty": 3
+    }
+   ],
+   "luma": 3460
+  },
+  "generated": true
+ },
+ {
+  "id": "dread_lord",
+  "monsterId": "dread_lord_boss",
+  "title": "Fallen King of Ravenhold",
+  "intro": "Dread Lord Morvane awakens!",
+  "phases": [
+   {
+    "hpPct": 100,
+    "name": "Phase I",
+    "atkMul": 1,
+    "speedMul": 1,
+    "message": "Dread Lord Morvane attacks!"
+   },
+   {
+    "hpPct": 66,
+    "name": "Phase II",
+    "atkMul": 1.15,
+    "speedMul": 1.1,
+    "message": "Dread Lord Morvane calls its servants!"
+   },
+   {
+    "hpPct": 33,
+    "name": "Phase III",
+    "atkMul": 1.3,
+    "speedMul": 1.2,
+    "message": "Dread Lord Morvane unleashes its full power!"
+   }
+  ],
+  "enrage": {
+   "afterMs": 240000,
+   "hpPct": 12,
+   "atkMul": 1.5,
+   "aspdMul": 1.4
+  },
+  "skills": [
+   {
+    "id": "dread_lord_slam",
+    "name": "Crushing Blow",
+    "kind": "circle",
+    "telegraphMs": 1300,
+    "radius": 100,
+    "multiplier": 1.7,
+    "element": "shadow",
+    "cooldownMs": 6500,
+    "minPhase": 0,
+    "fx": "shadow"
+   },
+   {
+    "id": "dread_lord_nova",
+    "name": "Dark Nova",
+    "kind": "self_circle",
+    "telegraphMs": 1500,
+    "radius": 160,
+    "multiplier": 1.3,
+    "element": "shadow",
+    "status": {
+     "status": "curse",
+     "chance": 0.5,
+     "durationMs": 4000
+    },
+    "cooldownMs": 11000,
+    "minPhase": 0,
+    "fx": "shadow"
+   },
+   {
+    "id": "dread_lord_summon",
+    "name": "Summon Servants",
+    "kind": "summon",
+    "telegraphMs": 1000,
+    "summon": {
+     "monsterId": "cursed_knight",
+     "count": 2
+    },
+    "cooldownMs": 26000,
+    "minPhase": 1,
+    "fx": "shout"
+   },
+   {
+    "id": "dread_lord_charge",
+    "name": "Rush",
+    "kind": "charge",
+    "telegraphMs": 1100,
+    "radius": 55,
+    "multiplier": 1.5,
+    "element": "shadow",
+    "cooldownMs": 9000,
+    "minPhase": 1,
+    "fx": "dash"
+   },
+   {
+    "id": "dread_lord_ring",
+    "name": "Cataclysm",
+    "kind": "ring",
+    "telegraphMs": 1700,
+    "radius": 230,
+    "multiplier": 1.4,
+    "element": "shadow",
+    "cooldownMs": 13000,
+    "minPhase": 2,
+    "fx": "shadow"
+   }
+  ],
+  "contributionRewards": {
+   "minDamagePct": 10,
+   "items": [
+    {
+     "itemId": "starsteel_ore",
+     "qty": 3
+    },
+    {
+     "itemId": "moonstone_ore",
+     "qty": 3
+    }
+   ],
+   "luma": 3900
+  },
+  "generated": true
  }
 ]

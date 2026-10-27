@@ -54,8 +54,7 @@
   ],
   "requirements": {
    "jobLevel": 10,
-   "fromClass": "novice",
-   "questId": "job_knight"
+   "fromClass": "novice"
   },
   "outfit": {
    "primary": "#4a6fa5",
@@ -92,8 +91,7 @@
   ],
   "requirements": {
    "jobLevel": 10,
-   "fromClass": "novice",
-   "questId": "job_ranger"
+   "fromClass": "novice"
   },
   "outfit": {
    "primary": "#3f7a45",
@@ -131,8 +129,7 @@
   ],
   "requirements": {
    "jobLevel": 10,
-   "fromClass": "novice",
-   "questId": "job_mage"
+   "fromClass": "novice"
   },
   "outfit": {
    "primary": "#5b3d8f",

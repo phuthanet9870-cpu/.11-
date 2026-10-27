@@ -4,70 +4,73 @@ import { addItem, countItem } from '../../src/core/inventory';
 import { loadSave, migrateSave, newSaveFile, SAVE_KEY, SAVE_VERSION, writeSave, sanitizeCharacter } from '../../src/core/save';
 import { data, newChar } from '../helpers/fixtures';
 
-describe('quests', () => {
-  it('first quest is offered by Lyra and completes by talking to Seraphine', () => {
+describe('tutorial quests', () => {
+  const done = (c: ReturnType<typeof newChar>, ...ids: string[]) => { for (const q of ids) c.quests[q] = { questId: q, status: 'completed', counts: [1, 1], acceptedAt: 0, completedAt: 0 }; };
+
+  it('only tutorial quests exist, as one chain', () => {
+    expect([...data.quests.values()].every((q) => q.category === 'tutorial')).toBe(true);
+    expect([...data.quests.keys()]).toEqual(['tut_welcome', 'tut_hunt', 'tut_weapon', 'tut_refine', 'tut_path']);
+  });
+
+  it('welcome: offered by Lyra, completed by talking to Seraphine', () => {
     const c = newChar();
-    expect(questsOfferedBy(data, c, 'lyra').map((q) => q.id)).toContain('main_awakening');
+    expect(questsOfferedBy(data, c, 'lyra').map((q) => q.id)).toEqual(['tut_welcome']);
     expect(npcQuestMarker(data, c, 'lyra')).toBe('!');
-    expect(acceptQuest(data, c, 'main_awakening').ok).toBe(true);
-    expect(acceptQuest(data, c, 'main_awakening').ok).toBe(false);
+    expect(acceptQuest(data, c, 'tut_welcome').ok).toBe(true);
+    expect(acceptQuest(data, c, 'tut_welcome').ok).toBe(false);
     questEvents.talk(data, c, 'seraphine');
-    expect(c.quests.main_awakening.status).toBe('ready');
+    expect(c.quests.tut_welcome.status).toBe('ready');
     const potions = countItem(c, 'red_potion');
-    const r = turnInQuest(data, c, 'main_awakening', 99999);
-    expect(r.ok).toBe(true);
-    expect(countItem(c, 'red_potion')).toBe(potions + 5);
-    expect(c.quests.main_awakening.status).toBe('completed');
-    expect(questsOfferedBy(data, c, 'seraphine').map((q) => q.id)).toContain('main_slimes');
+    expect(turnInQuest(data, c, 'tut_welcome', 99999).ok).toBe(true);
+    expect(countItem(c, 'red_potion')).toBe(potions + 10);
+    expect(questsOfferedBy(data, c, 'seraphine').map((q) => q.id)).toContain('tut_hunt');
   });
 
-  it('kill objectives count only matching monsters', () => {
+  it('hunt: counts only Leaf Slimes', () => {
     const c = newChar();
-    c.quests.main_awakening = { questId: 'main_awakening', status: 'completed', counts: [1], acceptedAt: 0, completedAt: 0 };
-    acceptQuest(data, c, 'main_slimes');
+    done(c, 'tut_welcome');
+    acceptQuest(data, c, 'tut_hunt');
     questEvents.kill(data, c, 'horn_rabbit');
-    expect(c.quests.main_slimes.counts[0]).toBe(0);
+    expect(c.quests.tut_hunt.counts[0]).toBe(0);
     for (let i = 0; i < 7; i++) questEvents.kill(data, c, 'leaf_slime');
-    expect(c.quests.main_slimes.counts[0]).toBe(5);
-    expect(c.quests.main_slimes.status).toBe('ready');
+    expect(c.quests.tut_hunt.counts[0]).toBe(5);
+    expect(c.quests.tut_hunt.status).toBe('ready');
   });
 
-  it('deliver objectives consume items atomically on turn-in', () => {
+  it('weapon: buying armor does not count, buying and equipping a weapon does', () => {
     const c = newChar();
-    for (const q of ['main_awakening', 'main_slimes']) c.quests[q] = { questId: q, status: 'completed', counts: [1], acceptedAt: 0, completedAt: 0 };
-    acceptQuest(data, c, 'main_garrick');
-    addItem(data, c, 'jelly', 3);
-    expect(turnInQuest(data, c, 'main_garrick', 99999).ok).toBe(false);
-    expect(countItem(c, 'jelly')).toBe(3);
-    addItem(data, c, 'jelly', 4);
-    expect(turnInQuest(data, c, 'main_garrick', 99999).ok).toBe(true);
-    expect(countItem(c, 'jelly')).toBe(2);
-    expect(countItem(c, 'wooden_buckler')).toBe(1);
+    done(c, 'tut_welcome', 'tut_hunt');
+    acceptQuest(data, c, 'tut_weapon');
+    questEvents.buy(data, c, 'cotton_shirt');
+    expect(c.quests.tut_weapon.counts[0]).toBe(0);
+    questEvents.buy(data, c, 'oak_club');
+    questEvents.equip(data, c, 'weapon');
+    expect(c.quests.tut_weapon.status).toBe('ready');
+    const ore = countItem(c, 'starsteel_ore');
+    expect(turnInQuest(data, c, 'tut_weapon', 99999).ok).toBe(true);
+    expect(countItem(c, 'starsteel_ore')).toBe(ore + 3);
   });
 
-  it('job quests require job level 10 and change class', () => {
+  it('refine: a +1 refine completes it; path needs Job Lv 10', () => {
     const c = newChar();
-    expect(isQuestAvailable(data, c, data.quests.get('job_mage')!)).toBe(false);
+    done(c, 'tut_welcome', 'tut_hunt', 'tut_weapon');
+    acceptQuest(data, c, 'tut_refine');
+    questEvents.refine(data, c, 1);
+    expect(c.quests.tut_refine.status).toBe('ready');
+    turnInQuest(data, c, 'tut_refine', 99999);
+    expect(acceptQuest(data, c, 'tut_path').ok).toBe(true);
+    expect(isQuestAvailable(data, c, data.quests.get('tut_path')!)).toBe(false);
+    expect(turnInQuest(data, c, 'tut_path', 99999).ok).toBe(false);
     c.jobLevel = 10;
-    expect(acceptQuest(data, c, 'job_mage').ok).toBe(true);
-    questEvents.interact(data, c, 'astral_obelisk');
-    addItem(data, c, 'mushling_cap', 5);
-    const r = turnInQuest(data, c, 'job_mage', 99999);
-    expect(r.ok).toBe(true);
-    expect(r.jobChanged).toBe('mage');
-    expect(c.classId).toBe('mage');
-    expect(countItem(c, 'apprentice_wand')).toBe(1);
+    expect(turnInQuest(data, c, 'tut_path', 99999).ok).toBe(true);
   });
 
-  it('daily quests reset the next day', () => {
-    const c = newChar();
-    const day0 = 100 * DAY_MS + 1000;
-    for (const q of ['main_awakening', 'main_slimes']) c.quests[q] = { questId: q, status: 'completed', counts: [1], acceptedAt: 0, completedAt: 0 };
-    expect(acceptQuest(data, c, 'daily_pest_control', day0).ok).toBe(true);
-    for (let i = 0; i < 10; i++) questEvents.kill(data, c, 'leaf_slime');
-    expect(turnInQuest(data, c, 'daily_pest_control', 99999, day0).ok).toBe(true);
-    expect(acceptQuest(data, c, 'daily_pest_control', day0 + 1000).ok).toBe(false);
-    expect(acceptQuest(data, c, 'daily_pest_control', day0 + DAY_MS).ok).toBe(true);
+  it('job change is an NPC service, not a quest reward', () => {
+    expect([...data.quests.values()].some((q) => q.rewards.jobChange)).toBe(false);
+    for (const cls of ['knight', 'ranger', 'mage']) {
+      expect([...data.npcs.values()].some((n) => n.services.some((s) => s.type === 'jobChange' && s.classIds.includes(cls)))).toBe(true);
+    }
+    void DAY_MS; void addItem;
   });
 });
 
@@ -83,14 +86,14 @@ describe('save / load', () => {
     const save = newSaveFile();
     const c = newChar('Saver');
     addItem(data, c, 'jelly', 7);
-    c.quests.main_awakening = { questId: 'main_awakening', status: 'active', counts: [0], acceptedAt: 1 };
+    c.quests.tut_welcome = { questId: 'tut_welcome', status: 'active', counts: [0], acceptedAt: 1 };
     save.characters[1] = c;
     writeSave(st, save);
     const loaded = loadSave(st, data);
     expect(loaded.version).toBe(SAVE_VERSION);
     expect(loaded.characters[1]?.name).toBe('Saver');
     expect(countItem(loaded.characters[1]!, 'jelly')).toBe(7);
-    expect(loaded.characters[1]?.quests.main_awakening.status).toBe('active');
+    expect(loaded.characters[1]?.quests.tut_welcome.status).toBe('active');
     expect(loaded.characters[0]).toBeNull();
   });
 

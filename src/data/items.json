@@ -1194,5 +1194,1074 @@
    "shape": "amulet",
    "color": "#d8b46a"
   }
+ },
+ {
+  "id": "starsteel_ore",
+  "name": "Starsteel Ore",
+  "type": "material",
+  "rarity": "uncommon",
+  "description": "Ore with a faint starry glint. A refiner uses one per weapon refine attempt.",
+  "weight": 3,
+  "price": 200,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "ore",
+   "color": "#8a96b8",
+   "accent": "#cfe6ff"
+  }
+ },
+ {
+  "id": "moonstone_ore",
+  "name": "Moonstone Ore",
+  "type": "material",
+  "rarity": "uncommon",
+  "description": "Pale, cool-to-the-touch ore. A refiner uses one per armor refine attempt.",
+  "weight": 3,
+  "price": 250,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "ore",
+   "color": "#b8a8c8",
+   "accent": "#fff4d8"
+  }
+ },
+ {
+  "id": "dusk_bat_wing",
+  "name": "Dusk Bat Wing",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Dusk Bat. Merchants pay well for it.",
+  "weight": 1,
+  "price": 22,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "wing",
+   "color": "#5a4a6a",
+   "accent": "#ff5a5a"
+  },
+  "generated": true
+ },
+ {
+  "id": "clover_slime_gel",
+  "name": "Clover Slime Gel",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Clover Slime. Merchants pay well for it.",
+  "weight": 1,
+  "price": 17,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "blob",
+   "color": "#9ad86a",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "plains_wolf_fang",
+  "name": "Plains Wolf Fang",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Plains Wolf. Merchants pay well for it.",
+  "weight": 1,
+  "price": 30,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#9a8a7a",
+   "accent": "#c8b89a"
+  },
+  "generated": true
+ },
+ {
+  "id": "pebble_golem_core_stone",
+  "name": "Pebble Golem Core Stone",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Pebble Golem. Merchants pay well for it.",
+  "weight": 1,
+  "price": 37,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#a49a8a",
+   "accent": "#7fd6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "road_goblin_tusk",
+  "name": "Road Goblin Tusk",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Road Goblin. Merchants pay well for it.",
+  "weight": 1,
+  "price": 41,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#7a9a3a",
+   "accent": "#3a6ab8"
+  },
+  "generated": true
+ },
+ {
+  "id": "crypt_bat_wing",
+  "name": "Crypt Bat Wing",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Crypt Bat. Merchants pay well for it.",
+  "weight": 1,
+  "price": 50,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "wing",
+   "color": "#4a4a52",
+   "accent": "#a9e04a"
+  },
+  "generated": true
+ },
+ {
+  "id": "wailing_spirit_ectoplasm",
+  "name": "Wailing Spirit Ectoplasm",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Wailing Spirit. Merchants pay well for it.",
+  "weight": 1,
+  "price": 59,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#c8d4e0",
+   "accent": "#7fd6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "grave_soldier_bone_shard",
+  "name": "Grave Soldier Bone Shard",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Grave Soldier. Merchants pay well for it.",
+  "weight": 1,
+  "price": 63,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "bone",
+   "color": "#d8d2bc",
+   "accent": "#ff5a3a"
+  },
+  "generated": true
+ },
+ {
+  "id": "mist_spore_spore_dust",
+  "name": "Mist Spore Spore Dust",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Mist Spore. Merchants pay well for it.",
+  "weight": 1,
+  "price": 44,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#5a8aaa",
+   "accent": "#e0f0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "pine_goblin_tusk",
+  "name": "Pinewood Goblin Tusk",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Pinewood Goblin. Merchants pay well for it.",
+  "weight": 1,
+  "price": 50,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#5a8a3a",
+   "accent": "#c8a26b"
+  },
+  "generated": true
+ },
+ {
+  "id": "elder_mushling_spore_cap",
+  "name": "Elder Mushling Spore Cap",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Elder Mushling. Merchants pay well for it.",
+  "weight": 1,
+  "price": 57,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "mushroom",
+   "color": "#8a4ab8",
+   "accent": "#e8d0b0"
+  },
+  "generated": true
+ },
+ {
+  "id": "shadow_wolf_fang",
+  "name": "Shadow Wolf Fang",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Shadow Wolf. Merchants pay well for it.",
+  "weight": 1,
+  "price": 66,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#3a3a4a",
+   "accent": "#c83a4a"
+  },
+  "generated": true
+ },
+ {
+  "id": "bramble_hornet_stinger",
+  "name": "Bramble Hornet Stinger",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Bramble Hornet. Merchants pay well for it.",
+  "weight": 1,
+  "price": 61,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#c88a2e",
+   "accent": "#d8f0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "cave_bat_wing",
+  "name": "Cave Bat Wing",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Cave Bat. Merchants pay well for it.",
+  "weight": 1,
+  "price": 63,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "wing",
+   "color": "#6a5a4a",
+   "accent": "#ffd34d"
+  },
+  "generated": true
+ },
+ {
+  "id": "moss_golem_core_stone",
+  "name": "Moss Golem Core Stone",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Moss Golem. Merchants pay well for it.",
+  "weight": 1,
+  "price": 72,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#6a7a5a",
+   "accent": "#a9e04a"
+  },
+  "generated": true
+ },
+ {
+  "id": "lantern_ghost_ectoplasm",
+  "name": "Lantern Ghost Ectoplasm",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Lantern Ghost. Merchants pay well for it.",
+  "weight": 1,
+  "price": 77,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#f2e8b0",
+   "accent": "#ffb03a"
+  },
+  "generated": true
+ },
+ {
+  "id": "crystal_slime_gel",
+  "name": "Crystal Slime Gel",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Crystal Slime. Merchants pay well for it.",
+  "weight": 1,
+  "price": 50,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "blob",
+   "color": "#7ab8f0",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "moon_hare_tuft_of_fur",
+  "name": "Moon Hare Tuft of Fur",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Moon Hare. Merchants pay well for it.",
+  "weight": 1,
+  "price": 55,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#d8d8f0",
+   "accent": "#c8a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "arcane_wisp_ectoplasm",
+  "name": "Arcane Wisp Ectoplasm",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Arcane Wisp. Merchants pay well for it.",
+  "weight": 1,
+  "price": 63,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#b89af0",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "animated_armor_bone_shard",
+  "name": "Animated Armor Bone Shard",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Animated Armor. Merchants pay well for it.",
+  "weight": 1,
+  "price": 79,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "bone",
+   "color": "#a8b0c0",
+   "accent": "#7fd6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_golem_core_stone",
+  "name": "Rune Golem Core Stone",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Rune Golem. Merchants pay well for it.",
+  "weight": 1,
+  "price": 88,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#6a5a9a",
+   "accent": "#d8c8ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "mana_wisp_ectoplasm",
+  "name": "Mana Wisp Ectoplasm",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Mana Wisp. Merchants pay well for it.",
+  "weight": 1,
+  "price": 83,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#7ab8ff",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "dune_slime_gel",
+  "name": "Dune Slime Gel",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Dune Slime. Merchants pay well for it.",
+  "weight": 1,
+  "price": 59,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "blob",
+   "color": "#e2c07a",
+   "accent": "#fff4d0"
+  },
+  "generated": true
+ },
+ {
+  "id": "sand_scorpion_venom_tail",
+  "name": "Sand Scorpion Venom Tail",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Sand Scorpion. Merchants pay well for it.",
+  "weight": 1,
+  "price": 66,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#c8945a",
+   "accent": "#e8e0c0"
+  },
+  "generated": true
+ },
+ {
+  "id": "desert_wolf_fang",
+  "name": "Desert Wolf Fang",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Desert Wolf. Merchants pay well for it.",
+  "weight": 1,
+  "price": 72,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#c8a46a",
+   "accent": "#fff0c0"
+  },
+  "generated": true
+ },
+ {
+  "id": "oasis_crab_shell",
+  "name": "Oasis Crab Shell",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Oasis Crab. Merchants pay well for it.",
+  "weight": 1,
+  "price": 74,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#3aa8a8",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "mirage_wisp_ectoplasm",
+  "name": "Mirage Wisp Ectoplasm",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Mirage Wisp. Merchants pay well for it.",
+  "weight": 1,
+  "price": 81,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#ffe08a",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "giant_scorpion_venom_tail",
+  "name": "Giant Scorpion Venom Tail",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Giant Scorpion. Merchants pay well for it.",
+  "weight": 1,
+  "price": 88,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#8a3a2a",
+   "accent": "#ffd34d"
+  },
+  "generated": true
+ },
+ {
+  "id": "tomb_mummy_bone_shard",
+  "name": "Tomb Mummy Bone Shard",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Tomb Mummy. Merchants pay well for it.",
+  "weight": 1,
+  "price": 92,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "bone",
+   "color": "#e8dcc0",
+   "accent": "#ffd34d"
+  },
+  "generated": true
+ },
+ {
+  "id": "gilded_scarab_venom_tail",
+  "name": "Gilded Scarab Venom Tail",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Gilded Scarab. Merchants pay well for it.",
+  "weight": 1,
+  "price": 96,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#d8b43a",
+   "accent": "#3ad8a8"
+  },
+  "generated": true
+ },
+ {
+  "id": "tomb_bat_wing",
+  "name": "Tomb Bat Wing",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Tomb Bat. Merchants pay well for it.",
+  "weight": 1,
+  "price": 90,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "wing",
+   "color": "#8a7a5a",
+   "accent": "#ffd34d"
+  },
+  "generated": true
+ },
+ {
+  "id": "shore_crab_shell",
+  "name": "Shore Crab Shell",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Shore Crab. Merchants pay well for it.",
+  "weight": 1,
+  "price": 46,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#e05a3a",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "sea_slime_gel",
+  "name": "Sea Slime Gel",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Sea Slime. Merchants pay well for it.",
+  "weight": 1,
+  "price": 50,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "blob",
+   "color": "#4ad0c8",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "reef_gull_wing",
+  "name": "Reef Gull Wing",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Reef Gull. Merchants pay well for it.",
+  "weight": 1,
+  "price": 57,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "wing",
+   "color": "#f2f2f2",
+   "accent": "#ffb03a"
+  },
+  "generated": true
+ },
+ {
+  "id": "grotto_crab_shell",
+  "name": "Grotto Crab Shell",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Grotto Crab. Merchants pay well for it.",
+  "weight": 1,
+  "price": 70,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#5a7ab8",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "kelp_spore_spore_dust",
+  "name": "Kelp Spore Spore Dust",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Kelp Spore. Merchants pay well for it.",
+  "weight": 1,
+  "price": 72,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#3a8a5a",
+   "accent": "#e0ffe0"
+  },
+  "generated": true
+ },
+ {
+  "id": "drowned_spirit_ectoplasm",
+  "name": "Drowned Spirit Ectoplasm",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Drowned Spirit. Merchants pay well for it.",
+  "weight": 1,
+  "price": 81,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#5ab8c8",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "frost_slime_gel",
+  "name": "Frost Slime Gel",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Frost Slime. Merchants pay well for it.",
+  "weight": 1,
+  "price": 94,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "blob",
+   "color": "#c8ecfa",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "snow_wolf_fang",
+  "name": "Snow Wolf Fang",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Snow Wolf. Merchants pay well for it.",
+  "weight": 1,
+  "price": 99,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#eef4f8",
+   "accent": "#7fd6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "ice_golem_core_stone",
+  "name": "Ice Golem Core Stone",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Ice Golem. Merchants pay well for it.",
+  "weight": 1,
+  "price": 107,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#a8d8f0",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "ice_bat_wing",
+  "name": "Ice Bat Wing",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Ice Bat. Merchants pay well for it.",
+  "weight": 1,
+  "price": 112,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "wing",
+   "color": "#8ac8e8",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "frost_wraith_ectoplasm",
+  "name": "Frost Wraith Ectoplasm",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Frost Wraith. Merchants pay well for it.",
+  "weight": 1,
+  "price": 123,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#dff4ff",
+   "accent": "#7fd6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "glacier_golem_core_stone",
+  "name": "Glacier Golem Core Stone",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Glacier Golem. Merchants pay well for it.",
+  "weight": 1,
+  "price": 129,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#7ab0d8",
+   "accent": "#e0ffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "ember_slime_gel",
+  "name": "Ember Slime Gel",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Ember Slime. Merchants pay well for it.",
+  "weight": 1,
+  "price": 127,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "blob",
+   "color": "#ff7a3a",
+   "accent": "#ffe08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "ash_scorpion_venom_tail",
+  "name": "Ash Scorpion Venom Tail",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Ash Scorpion. Merchants pay well for it.",
+  "weight": 1,
+  "price": 134,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#5a4a4a",
+   "accent": "#ff6a2e"
+  },
+  "generated": true
+ },
+ {
+  "id": "fire_drake_scale",
+  "name": "Fire Drake Scale",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Fire Drake. Merchants pay well for it.",
+  "weight": 1,
+  "price": 143,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#c83a2a",
+   "accent": "#ffd34d"
+  },
+  "generated": true
+ },
+ {
+  "id": "magma_golem_core_stone",
+  "name": "Magma Golem Core Stone",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Magma Golem. Merchants pay well for it.",
+  "weight": 1,
+  "price": 147,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#6a3a2a",
+   "accent": "#ff8a2e"
+  },
+  "generated": true
+ },
+ {
+  "id": "flame_drake_scale",
+  "name": "Flame Drake Scale",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Flame Drake. Merchants pay well for it.",
+  "weight": 1,
+  "price": 154,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#e86a2a",
+   "accent": "#fff08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "bog_slime_gel",
+  "name": "Bog Slime Gel",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Bog Slime. Merchants pay well for it.",
+  "weight": 1,
+  "price": 136,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "blob",
+   "color": "#6a7a3a",
+   "accent": "#c8e07a"
+  },
+  "generated": true
+ },
+ {
+  "id": "marsh_spore_spore_dust",
+  "name": "Marsh Spore Spore Dust",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Marsh Spore. Merchants pay well for it.",
+  "weight": 1,
+  "price": 143,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#5a4a6a",
+   "accent": "#e0d0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "mire_crab_shell",
+  "name": "Mire Crab Shell",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Mire Crab. Merchants pay well for it.",
+  "weight": 1,
+  "price": 149,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#4a5a3a",
+   "accent": "#c8e07a"
+  },
+  "generated": true
+ },
+ {
+  "id": "raven_bat_wing",
+  "name": "Raven Bat Wing",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Raven Bat. Merchants pay well for it.",
+  "weight": 1,
+  "price": 151,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "wing",
+   "color": "#2a2a32",
+   "accent": "#c83a4a"
+  },
+  "generated": true
+ },
+ {
+  "id": "cursed_knight_bone_shard",
+  "name": "Cursed Knight Bone Shard",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Cursed Knight. Merchants pay well for it.",
+  "weight": 1,
+  "price": 156,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "bone",
+   "color": "#6a6a7a",
+   "accent": "#c83a4a"
+  },
+  "generated": true
+ },
+ {
+  "id": "banshee_ectoplasm",
+  "name": "Banshee Ectoplasm",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Banshee. Merchants pay well for it.",
+  "weight": 1,
+  "price": 162,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#c8c8d8",
+   "accent": "#ff5a7a"
+  },
+  "generated": true
+ },
+ {
+  "id": "grave_knight_bone_shard",
+  "name": "Grave Knight Bone Shard",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Grave Knight. Merchants pay well for it.",
+  "weight": 1,
+  "price": 171,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "bone",
+   "color": "#4a4a5a",
+   "accent": "#7fd6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "lich_spirit_ectoplasm",
+  "name": "Lich Spirit Ectoplasm",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Lich Spirit. Merchants pay well for it.",
+  "weight": 1,
+  "price": 178,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#8a7aaa",
+   "accent": "#a9e04a"
+  },
+  "generated": true
+ },
+ {
+  "id": "bone_warden_bone_shard",
+  "name": "Bone Warden Bone Shard",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Dropped by Bone Warden. Merchants pay well for it.",
+  "weight": 1,
+  "price": 964,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "bone",
+   "color": "#e8e0c8",
+   "accent": "#ff3a2a"
+  },
+  "generated": true
+ },
+ {
+  "id": "valdris_ectoplasm",
+  "name": "Valdris Ectoplasm",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Dropped by Archmage Valdris. Merchants pay well for it.",
+  "weight": 1,
+  "price": 1324,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#9a7af0",
+   "accent": "#ffe14d"
+  },
+  "generated": true
+ },
+ {
+  "id": "sun_king_bone_shard",
+  "name": "Ankhar Bone Shard",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Dropped by Sun-King Ankhar. Merchants pay well for it.",
+  "weight": 1,
+  "price": 1504,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "bone",
+   "color": "#f2e2b0",
+   "accent": "#3ad8a8"
+  },
+  "generated": true
+ },
+ {
+  "id": "pyrewyrm_scale",
+  "name": "Pyrewyrm Scale",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Dropped by Pyrewyrm. Merchants pay well for it.",
+  "weight": 1,
+  "price": 2224,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#e83a1a",
+   "accent": "#ffd34d"
+  },
+  "generated": true
+ },
+ {
+  "id": "dread_lord_bone_shard",
+  "name": "Morvane Bone Shard",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Dropped by Dread Lord Morvane. Merchants pay well for it.",
+  "weight": 1,
+  "price": 2554,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "bone",
+   "color": "#3a3a4a",
+   "accent": "#c83a4a"
+  },
+  "generated": true
  }
 ]

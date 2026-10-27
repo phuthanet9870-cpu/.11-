@@ -1,188 +1,231 @@
 [
-  { "id": "main_awakening", "name": "A Star-Touched Morning", "category": "main", "chapter": 1,
-    "giverNpc": "lyra", "turnInNpc": "seraphine",
-    "summary": "Lyra sensed something special in you. Introduce yourself to Seraphine at the Adventurer's Guild.",
-    "prerequisites": {},
-    "objectives": [ { "type": "talk", "npcId": "seraphine", "label": "Speak with Seraphine Vale" } ],
-    "rewards": { "exp": 20, "jobExp": 15, "luma": 50, "items": [ { "itemId": "red_potion", "qty": 5 } ] },
-    "dialogue": {
-      "offer": ["You're the new adventurer? The stars whispered of your arrival last night.", "Go see Seraphine at the Guild hall south-east of the plaza. She'll get you started."],
-      "progress": ["Seraphine's Guild hall is south-east of the fountain."],
-      "complete": ["Lyra sent you? Then you must be worth watching. Welcome, adventurer!"] } },
-
-  { "id": "main_slimes", "name": "Slime Trouble", "category": "main", "chapter": 1,
-    "giverNpc": "seraphine", "turnInNpc": "seraphine",
-    "summary": "Leaf Slimes are swarming Sunny Meadow, east of the village. Defeat 5 of them.",
-    "prerequisites": { "quests": ["main_awakening"] },
-    "objectives": [ { "type": "kill", "monsterId": "leaf_slime", "count": 5, "label": "Defeat Leaf Slimes" } ],
-    "rewards": { "exp": 80, "jobExp": 60, "luma": 80, "items": [ { "itemId": "red_potion", "qty": 5 }, { "itemId": "sandals", "qty": 1 } ] },
-    "dialogue": {
-      "offer": ["Every adventurer earns their first stripes on slimes.", "Head through the east gate to Sunny Meadow and defeat 5 Leaf Slimes. Click a monster to attack it!"],
-      "progress": ["The slimes are just past the east gate. Use your potions if you get hurt."],
-      "complete": ["Not bad at all! You've got the instincts of a real adventurer."] } },
-
-  { "id": "main_garrick", "name": "Iron and Jelly", "category": "main", "chapter": 1,
-    "giverNpc": "seraphine", "turnInNpc": "garrick",
-    "summary": "Garrick the blacksmith needs Leafy Jelly to temper his blades. Bring him 5.",
-    "prerequisites": { "quests": ["main_slimes"] },
-    "objectives": [ { "type": "deliver", "itemId": "jelly", "count": 5, "npcId": "garrick", "label": "Deliver Leafy Jelly to Garrick" } ],
-    "rewards": { "exp": 120, "jobExp": 80, "luma": 120, "items": [ { "itemId": "wooden_buckler", "qty": 1 }, { "itemId": "bandana", "qty": 1 } ] },
-    "dialogue": {
-      "offer": ["Garrick uses slime jelly as quench oil — don't ask me why.", "Bring him 5 Leafy Jelly from the slimes. He'll make it worth your while."],
-      "progress": ["Five jellies. Sticky ones. I'll wait."],
-      "complete": ["Ha! Perfect consistency. Here — a buckler and a bandana. Wear them with pride."] } },
-
-  { "id": "main_forest", "name": "Whispers Beyond the Meadow", "category": "main", "chapter": 1,
-    "giverNpc": "lyra", "turnInNpc": "elwin",
-    "summary": "Lyra senses astral disturbance in the Whispering Forest beyond Sunny Meadow. Find Ranger Elwin there.",
-    "prerequisites": { "quests": ["main_garrick"], "baseLevel": 6 },
-    "objectives": [ { "type": "explore", "mapId": "whispering_forest", "label": "Enter the Whispering Forest" },
-                    { "type": "talk", "npcId": "elwin", "label": "Find Ranger Elwin" } ],
-    "rewards": { "exp": 200, "jobExp": 140, "luma": 150, "items": [ { "itemId": "orange_potion", "qty": 5 } ] },
-    "dialogue": {
-      "offer": ["The runes I scried tonight were... wrong. Twisted, like thorns.", "Travel east through Sunny Meadow into the Whispering Forest. Ranger Elwin keeps watch there."],
-      "progress": ["The forest lies at the far north-east of Sunny Meadow."],
-      "complete": ["Lyra sent you? Good. I need every blade I can get."] } },
-
-  { "id": "main_goblins", "name": "The Goblin Threat", "category": "main", "chapter": 1,
-    "giverNpc": "elwin", "turnInNpc": "elwin",
-    "summary": "Forest Goblins have overrun the north-west camp. Thin their numbers.",
-    "prerequisites": { "quests": ["main_forest"] },
-    "objectives": [ { "type": "kill", "monsterId": "forest_goblin", "count": 6, "label": "Defeat Forest Goblins" } ],
-    "rewards": { "exp": 450, "jobExp": 300, "luma": 250, "items": [ { "itemId": "orange_potion", "qty": 5 } ] },
-    "dialogue": {
-      "offer": ["The goblins used to be cowards. Then the Thornking crowned himself.", "Their camp lies north-west of here. Defeat 6 of them."],
-      "progress": ["Goblins fight in packs. Pull them one at a time if you can."],
-      "complete": ["Fine work. But the root of the problem still stands..."] } },
-
-  { "id": "main_thornking", "name": "Crown of Thorns", "category": "main", "chapter": 1,
-    "giverNpc": "elwin", "turnInNpc": "elwin",
-    "summary": "Grukk the Thornking holds the clearing to the south-east. Defeat him and end his reign.",
-    "prerequisites": { "quests": ["main_goblins"], "baseLevel": 12 },
-    "objectives": [ { "type": "defeatBoss", "bossId": "grukk", "label": "Defeat Grukk the Thornking" } ],
-    "rewards": { "exp": 1500, "jobExp": 900, "luma": 800, "items": [ { "itemId": "yellow_potion", "qty": 5 }, { "itemId": "astral_shard", "qty": 2 } ] },
-    "dialogue": {
-      "offer": ["Grukk drank from an Astral Fracture. It twisted him into something... more.", "He waits in the Thorn Clearing to the south-east. Watch the ground — when it glows red, MOVE.", "Be at least level 14 before you face him, and bring potions."],
-      "progress": ["Red markings on the ground mean an attack is coming. Step out of them!"],
-      "complete": ["You... actually did it. The forest breathes easier already."] } },
-
-  { "id": "main_report", "name": "News for Willowbrook", "category": "main", "chapter": 1,
-    "giverNpc": "elwin", "turnInNpc": "lyra",
-    "summary": "Return to Willowbrook and tell Lyra about the Thornking's defeat.",
-    "prerequisites": { "quests": ["main_thornking"] },
-    "objectives": [ { "type": "talk", "npcId": "lyra", "label": "Report to Lyra Starborn" } ],
-    "rewards": { "exp": 400, "jobExp": 250, "luma": 300, "items": [ { "itemId": "astral_shard", "qty": 1 } ], "flags": ["chapter1_complete"] },
-    "dialogue": {
-      "offer": ["Lyra will want to know what we found. Take her this news."],
-      "progress": ["Lyra waits by the fountain in Willowbrook."],
-      "complete": ["An Astral Rune fragment, growing inside a goblin's crown...", "This is only the beginning. Chapter I complete — the road to Silvercrest awaits."] } },
-
-  { "id": "job_knight", "name": "Trial of the Shield", "category": "job",
-    "giverNpc": "seraphine", "turnInNpc": "seraphine",
-    "summary": "To become a Knight, prove your courage by defeating 4 Forest Goblins in the Whispering Forest.",
-    "prerequisites": { "jobLevel": 10, "classes": ["novice"] },
-    "objectives": [ { "type": "kill", "monsterId": "forest_goblin", "count": 4, "label": "Defeat Forest Goblins" } ],
-    "rewards": { "jobChange": "knight", "items": [ { "itemId": "iron_sword", "qty": 1 } ], "luma": 100 },
-    "dialogue": {
-      "offer": ["A Knight stands between the weak and the wild.", "Defeat 4 Forest Goblins in the Whispering Forest and return to me."],
-      "progress": ["The goblins lurk in the Whispering Forest beyond the meadow."],
-      "complete": ["Kneel... and rise, Knight of Willowbrook! Take this sword."] } },
-
-  { "id": "job_ranger", "name": "Trial of the Hunt", "category": "job",
-    "giverNpc": "seraphine", "turnInNpc": "seraphine",
-    "summary": "To become a Ranger, hunt 4 Buzz Wasps and bring back 5 Rabbit Horns.",
-    "prerequisites": { "jobLevel": 10, "classes": ["novice"] },
-    "objectives": [ { "type": "kill", "monsterId": "buzz_wasp", "count": 4, "label": "Hunt Buzz Wasps" },
-                    { "type": "collect", "itemId": "rabbit_horn", "count": 5, "label": "Collect Rabbit Horns" } ],
-    "rewards": { "jobChange": "ranger", "items": [ { "itemId": "short_bow", "qty": 1 } ], "luma": 100 },
-    "dialogue": {
-      "offer": ["A Ranger reads the wind and never misses twice.", "Hunt 4 Buzz Wasps in Sunny Meadow and bring me 5 Rabbit Horns."],
-      "progress": ["Wasps nest in the south-east of the meadow."],
-      "complete": ["Clean kills, sharp eyes. You are a Ranger now. This bow is yours."] } },
-
-  { "id": "job_mage", "name": "Trial of the Arcane", "category": "job",
-    "giverNpc": "seraphine", "turnInNpc": "lyra",
-    "summary": "To become a Mage, attune to the Astral Obelisk in Sunny Meadow and bring Lyra 5 Mushling Caps.",
-    "prerequisites": { "jobLevel": 10, "classes": ["novice"] },
-    "objectives": [ { "type": "interact", "objectId": "astral_obelisk", "label": "Attune to the Astral Obelisk" },
-                    { "type": "collect", "itemId": "mushling_cap", "count": 5, "label": "Collect Mushling Caps" } ],
-    "rewards": { "jobChange": "mage", "items": [ { "itemId": "apprentice_wand", "qty": 1 } ], "luma": 100 },
-    "dialogue": {
-      "offer": ["Magic is not learned — it is listened to.", "Lyra will test you. Attune to the Astral Obelisk in the meadow and gather 5 Mushling Caps for her."],
-      "progress": ["The Obelisk stands in the north of Sunny Meadow."],
-      "complete": ["I can hear the runes answering you. Welcome, Mage. Take my old wand."] } },
-
-  { "id": "side_mushroom_soup", "name": "Marla's Mushroom Soup", "category": "side",
-    "giverNpc": "marla", "turnInNpc": "marla",
-    "summary": "Marla needs 5 Mushling Caps for her famous soup.",
-    "prerequisites": { "baseLevel": 3 },
-    "objectives": [ { "type": "collect", "itemId": "mushling_cap", "count": 5, "label": "Collect Mushling Caps" } ],
-    "rewards": { "exp": 150, "jobExp": 100, "luma": 120, "items": [ { "itemId": "red_potion", "qty": 10 } ] },
-    "dialogue": { "offer": ["My soup's famous across three villages! But I'm out of mushling caps.", "Bring me 5 from Sunny Meadow?"],
-      "progress": ["Mushlings hide in the north-east of the meadow."], "complete": ["Wonderful! Here, have some potions — and come back for a bowl."] } },
-
-  { "id": "side_rabbit_horns", "name": "Carrot Defense", "category": "side",
-    "giverNpc": "hollis", "turnInNpc": "hollis",
-    "summary": "Farmer Hollis wants proof you've dealt with the carrot thieves: 6 Rabbit Horns.",
-    "prerequisites": {},
-    "objectives": [ { "type": "collect", "itemId": "rabbit_horn", "count": 6, "label": "Collect Rabbit Horns" } ],
-    "rewards": { "exp": 130, "jobExp": 90, "luma": 100, "items": [ { "itemId": "travel_cape", "qty": 1 } ] },
-    "dialogue": { "offer": ["Those horned menaces! Bring me 6 horns and I'll give you my old cape."],
-      "progress": ["Six horns, adventurer. Six!"], "complete": ["My carrots thank you. Here, take the cape."] } },
-
-  { "id": "side_wasp_nest", "name": "Buzzkill", "category": "side",
-    "giverNpc": "hollis", "turnInNpc": "hollis",
-    "summary": "Buzz Wasps are terrorizing the south-east fields. Defeat 6.",
-    "prerequisites": { "baseLevel": 6, "quests": ["side_rabbit_horns"] },
-    "objectives": [ { "type": "kill", "monsterId": "buzz_wasp", "count": 6, "label": "Defeat Buzz Wasps" } ],
-    "rewards": { "exp": 280, "jobExp": 190, "luma": 200, "items": [ { "itemId": "green_potion", "qty": 5 }, { "itemId": "leather_boots", "qty": 1 } ] },
-    "dialogue": { "offer": ["Wasps in the south-east field. Aggressive little things — they'll come at you.", "Take care of 6 and I'll make it worth it."],
-      "progress": ["Mind the stingers. Green potions cure their poison."], "complete": ["Peace and quiet at last!"] } },
-
-  { "id": "side_old_well", "name": "The Old Well", "category": "side",
-    "giverNpc": "theo", "turnInNpc": "theo",
-    "summary": "Theo wants a flask of water from the old well in the south-west of the village.",
-    "prerequisites": {},
-    "objectives": [ { "type": "interact", "objectId": "old_well", "label": "Draw water from the old well" },
-                    { "type": "collect", "itemId": "well_water", "count": 1, "label": "Wellspring Water" } ],
-    "rewards": { "exp": 40, "jobExp": 30, "luma": 60, "items": [ { "itemId": "green_potion", "qty": 3 } ] },
-    "dialogue": { "offer": ["The old well's water tastes of starlight, they say. My knees are too old for the bucket.", "Would you draw some for me?"],
-      "progress": ["The well is just west of my house."], "complete": ["Ahh... just like when I was a boy. Thank you."] } },
-
-  { "id": "side_spore_sample", "name": "Spore Sample", "category": "side",
-    "giverNpc": "lyra", "turnInNpc": "lyra",
-    "summary": "Lyra wants 4 Spore Dust from the Venom Spores in the Whispering Forest to study astral corruption.",
-    "prerequisites": { "baseLevel": 10, "quests": ["main_forest"] },
-    "objectives": [ { "type": "collect", "itemId": "spore_dust", "count": 4, "label": "Collect Spore Dust" } ],
-    "rewards": { "exp": 380, "jobExp": 260, "luma": 220, "items": [ { "itemId": "blue_potion", "qty": 3 } ] },
-    "dialogue": { "offer": ["The Venom Spores in the forest glow with astral light. That isn't natural.", "Bring me 4 samples of their dust."],
-      "progress": ["They spit poison from a distance. Close in quickly."], "complete": ["Fascinating... the corruption is spreading through living things."] } },
-
-  { "id": "side_lost_pendant", "name": "The Falcon Pendant", "category": "side",
-    "giverNpc": "elwin", "turnInNpc": "elwin",
-    "summary": "Elwin lost a precious pendant near the spore grove in the center of the forest.",
-    "prerequisites": { "quests": ["main_forest"] },
-    "objectives": [ { "type": "interact", "objectId": "pendant_glint", "label": "Search the glinting spot" },
-                    { "type": "deliver", "itemId": "lost_pendant", "count": 1, "npcId": "elwin", "label": "Return the pendant to Elwin" } ],
-    "rewards": { "exp": 300, "jobExp": 200, "luma": 150, "items": [ { "itemId": "falcon_pendant", "qty": 1 } ] },
-    "dialogue": { "offer": ["My mother's pendant... I dropped it fleeing the spores.", "Look for something glinting near the spore grove."],
-      "progress": ["It should be near the middle of the forest."], "complete": ["You found it! Please, take my falcon charm in return."] } },
-
-  { "id": "side_bone_collector", "name": "Restless Bones", "category": "side",
-    "giverNpc": "rowan", "turnInNpc": "rowan",
-    "summary": "Bone Soldiers stir in the north-east ruins of the Whispering Forest. Put 5 to rest.",
-    "prerequisites": { "baseLevel": 12 },
-    "objectives": [ { "type": "kill", "monsterId": "bone_soldier", "count": 5, "label": "Defeat Bone Soldiers" } ],
-    "rewards": { "exp": 900, "jobExp": 600, "luma": 400, "items": [ { "itemId": "orange_potion", "qty": 10 } ] },
-    "dialogue": { "offer": ["Travelers report skeletons walking in the forest ruins. Skeletons!", "Holy and fire hurt them most. Destroy 5."],
-      "progress": ["The ruins are in the far north-east of the forest."], "complete": ["You have my thanks — and the village's."] } },
-
-  { "id": "daily_pest_control", "name": "Daily: Pest Control", "category": "daily",
-    "giverNpc": "rowan", "turnInNpc": "rowan", "repeatable": "daily",
-    "summary": "Keep the meadow safe: defeat 10 Leaf Slimes. Resets daily.",
-    "prerequisites": { "quests": ["main_slimes"] },
-    "objectives": [ { "type": "kill", "monsterId": "leaf_slime", "count": 10, "label": "Defeat Leaf Slimes" } ],
-    "rewards": { "exp": 100, "jobExp": 80, "luma": 100, "items": [ { "itemId": "red_potion", "qty": 5 } ] },
-    "dialogue": { "offer": ["The slimes never stop coming. Thin them out for me today?"],
-      "progress": ["Ten slimes. Easy money."], "complete": ["Same time tomorrow?"] } }
+ {
+  "id": "tut_welcome",
+  "name": "Welcome, Novice",
+  "category": "tutorial",
+  "chapter": 1,
+  "giverNpc": "lyra",
+  "turnInNpc": "seraphine",
+  "summary": "Every adventurer registers at the Adventurer's Guild. Find Seraphine at the guild hall south-east of the fountain.",
+  "prerequisites": {},
+  "objectives": [
+   {
+    "type": "talk",
+    "npcId": "seraphine",
+    "label": "Register with Seraphine at the Guild"
+   }
+  ],
+  "rewards": {
+   "exp": 20,
+   "jobExp": 15,
+   "luma": 100,
+   "items": [
+    {
+     "itemId": "red_potion",
+     "qty": 10
+    }
+   ]
+  },
+  "dialogue": {
+   "offer": [
+    "A new face! You must have just arrived in Willowbrook.",
+    "Before anything else, register at the Adventurer's Guild. Seraphine runs it, south-east of the plaza."
+   ],
+   "progress": [
+    "The guild hall is south-east of the fountain. Look for the crest sign."
+   ],
+   "complete": [
+    "Registered and ready. Welcome to the Guild, Novice!",
+    "I'll teach you the basics: hunting, gearing up and refining. Let's start with hunting."
+   ]
+  }
+ },
+ {
+  "id": "tut_hunt",
+  "name": "Training: First Hunt",
+  "category": "tutorial",
+  "chapter": 1,
+  "giverNpc": "seraphine",
+  "turnInNpc": "seraphine",
+  "summary": "Head east into Sunny Meadow and defeat Leaf Slimes. Click a monster to attack it; potions are on hotbar key 1.",
+  "prerequisites": {
+   "quests": [
+    "tut_welcome"
+   ]
+  },
+  "objectives": [
+   {
+    "type": "kill",
+    "monsterId": "leaf_slime",
+    "count": 5,
+    "label": "Defeat Leaf Slimes"
+   }
+  ],
+  "rewards": {
+   "exp": 60,
+   "jobExp": 40,
+   "luma": 300
+  },
+  "dialogue": {
+   "offer": [
+    "Monsters give experience and drop materials you can sell.",
+    "Sunny Meadow is through the east gate. Defeat five Leaf Slimes and come back."
+   ],
+   "progress": [
+    "Click a slime to attack. If your HP gets low, drink a potion (key 1) or step back."
+   ],
+   "complete": [
+    "Five slimes! You're a natural.",
+    "Your fists won't carry you far, though. Time to get a proper weapon."
+   ]
+  }
+ },
+ {
+  "id": "tut_weapon",
+  "name": "Training: Arm Yourself",
+  "category": "tutorial",
+  "chapter": 1,
+  "giverNpc": "seraphine",
+  "turnInNpc": "garrick",
+  "summary": "Buy a weapon from Garrick's smithy and equip it (double-click it in your inventory or drag it to the Equip window).",
+  "prerequisites": {
+   "quests": [
+    "tut_hunt"
+   ]
+  },
+  "objectives": [
+   {
+    "type": "buy",
+    "slot": "weapon",
+    "label": "Buy a weapon at Garrick's smithy"
+   },
+   {
+    "type": "equip",
+    "slot": "weapon",
+    "label": "Equip a weapon"
+   }
+  ],
+  "rewards": {
+   "exp": 40,
+   "jobExp": 30,
+   "luma": 200,
+   "items": [
+    {
+     "itemId": "starsteel_ore",
+     "qty": 3
+    }
+   ]
+  },
+  "dialogue": {
+   "offer": [
+    "Garrick the blacksmith sells starter weapons north of the plaza.",
+    "Novices can use daggers and clubs. Buy one and equip it, then show Garrick."
+   ],
+   "progress": [
+    "Buy a weapon from Garrick, then equip it from your inventory (I)."
+   ],
+   "complete": [
+    "Good steel suits you. Here, three Starsteel Ores, on the house.",
+    "Ores are what I use to refine weapons. Want to learn how?"
+   ]
+  }
+ },
+ {
+  "id": "tut_refine",
+  "name": "Training: The Refiner's Art",
+  "category": "tutorial",
+  "chapter": 1,
+  "giverNpc": "garrick",
+  "turnInNpc": "garrick",
+  "summary": "Ask Garrick to refine a piece of equipment to +1. Weapons use Starsteel Ore, armor uses Moonstone Ore. Refines up to +5 (weapons) and +4 (armor) never fail.",
+  "prerequisites": {
+   "quests": [
+    "tut_weapon"
+   ]
+  },
+  "objectives": [
+   {
+    "type": "refine",
+    "level": 1,
+    "label": "Refine any equipment to +1"
+   }
+  ],
+  "rewards": {
+   "exp": 40,
+   "jobExp": 30,
+   "luma": 200,
+   "items": [
+    {
+     "itemId": "moonstone_ore",
+     "qty": 2
+    },
+    {
+     "itemId": "starsteel_ore",
+     "qty": 2
+    }
+   ]
+  },
+  "dialogue": {
+   "offer": [
+    "Refining hardens a weapon or armor and raises its power.",
+    "Up to +5 on weapons and +4 on armor it's safe. Beyond that, a failed attempt destroys the item, so be careful!",
+    "Pick 'Refine equipment' and bring me to +1."
+   ],
+   "progress": [
+    "Choose 'Refine equipment' when you talk to me. You need one ore and a small fee."
+   ],
+   "complete": [
+    "Feel that edge? That's +1.",
+    "Keep refining safely to +5. Past that, it's a gamble."
+   ]
+  }
+ },
+ {
+  "id": "tut_path",
+  "name": "Training: Choosing a Path",
+  "category": "tutorial",
+  "chapter": 1,
+  "giverNpc": "seraphine",
+  "turnInNpc": "seraphine",
+  "summary": "Reach Job Level 10 as a Novice. Then visit a class guild master: Knight in Aurelion, Ranger in Fernhollow, Mage in Arcanthe.",
+  "prerequisites": {
+   "quests": [
+    "tut_refine"
+   ]
+  },
+  "objectives": [
+   {
+    "type": "reachLevel",
+    "jobLevel": 10,
+    "label": "Reach Job Level 10"
+   }
+  ],
+  "rewards": {
+   "exp": 150,
+   "luma": 500,
+   "items": [
+    {
+     "itemId": "wing_of_return",
+     "qty": 2
+    },
+    {
+     "itemId": "orange_potion",
+     "qty": 5
+    }
+   ]
+  },
+  "dialogue": {
+   "offer": [
+    "You've learned the basics. Now grow strong: reach Job Level 10.",
+    "Then choose a class. Knights train in the capital Aurelion, Rangers in Fernhollow, Mages in the tower city Arcanthe."
+   ],
+   "progress": [
+    "Job experience comes from monsters. Sunny Meadow and the forest are good hunting grounds."
+   ],
+   "complete": [
+    "Job Level 10! Your training is complete.",
+    "Take these, and go find your guild. The world is yours to explore."
+   ]
+  }
+ }
 ]
