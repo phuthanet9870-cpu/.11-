@@ -3513,6 +3513,11 @@
     "oreHint": true
    },
    {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
     "itemId": "frost_stone",
     "chance": 0.01,
     "forge": true
@@ -3641,6 +3646,11 @@
    {
     "itemId": "enriched_starsteel",
     "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
     "oreHint": true
    },
    {
@@ -3790,6 +3800,11 @@
     "oreHint": true
    },
    {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
     "itemId": "flame_stone",
     "chance": 0.01,
     "forge": true
@@ -3936,6 +3951,11 @@
     "oreHint": true
    },
    {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
     "itemId": "flame_stone",
     "chance": 0.01,
     "forge": true
@@ -4019,6 +4039,11 @@
    {
     "itemId": "enriched_moonstone",
     "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
     "oreHint": true
    },
    {
@@ -4130,6 +4155,11 @@
    {
     "itemId": "enriched_starsteel",
     "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
     "oreHint": true
    },
    {
@@ -4251,6 +4281,11 @@
    {
     "itemId": "enriched_starsteel",
     "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
     "oreHint": true
    },
    {
@@ -4395,6 +4430,11 @@
     "oreHint": true
    },
    {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
@@ -4496,6 +4536,11 @@
     "oreHint": true
    },
    {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
@@ -4572,6 +4617,11 @@
     "oreHint": true
    },
    {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
@@ -4625,6 +4675,11 @@
    {
     "itemId": "enriched_moonstone",
     "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
     "oreHint": true
    },
    {
@@ -4711,6 +4766,11 @@
    {
     "itemId": "enriched_starsteel",
     "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
     "oreHint": true
    },
    {
@@ -4855,6 +4915,11 @@
     "oreHint": true
    },
    {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
@@ -4933,6 +4998,11 @@
    {
     "itemId": "enriched_moonstone",
     "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
     "oreHint": true
    },
    {
@@ -5961,6 +6031,11 @@
     "oreHint": true
    },
    {
+    "itemId": "stellar_shard",
+    "chance": 0.03,
+    "oreHint": true
+   },
+   {
     "itemId": "flame_stone",
     "chance": 0.01,
     "forge": true
@@ -6067,6 +6142,11 @@
    {
     "itemId": "enriched_moonstone",
     "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.03,
     "oreHint": true
    },
    {
@@ -6201,6 +6281,11 @@
    {
     "itemId": "enriched_moonstone",
     "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.03,
     "oreHint": true
    },
    {

@@ -1,14 +1,24 @@
-// Equipment refinement (+1 … +10), Ragnarok-style. Weapons have a weapon level
+// Equipment refinement (+1 … +20), Ragnarok-style. Weapons have a weapon level
 // (1–4): higher levels are stronger but less safe to refine. Each attempt costs
 // one ore of the right grade and a Luma fee. Up to the safe limit an attempt
-// always succeeds; above it the chance drops, and a failure destroys the item
-// (and any compounded cards). Results come from the World's seeded Rng.
+// always succeeds; above it the chance drops, and up to +10 a failure destroys
+// the item (and any compounded cards). Over-upgrading +11…+20 (renewal rules)
+// uses Stellar / Lunar Shards and 100,000 Luma: a failure breaks the item 20% of
+// the time and otherwise drops it 3 levels. Results come from the World's Rng.
 import type { GameData } from './data';
 import type { CharacterState, EquipSlot, ItemDef, ItemInstance } from './types';
 import { EQUIP_SLOTS } from './types';
 import { removeItem, type OpResult } from './inventory';
 
-export const MAX_REFINE = 10;
+export const MAX_REFINE = 20;
+/** Highest level reachable with the classic ores (and enriched ores). */
+export const NORMAL_MAX = 10;
+export const HIGH_WEAPON_ORE = 'stellar_shard';
+export const HIGH_ARMOR_ORE = 'lunar_shard';
+export const HIGH_FEE = 100000;
+/** Over-upgrade failure: chance the item breaks; otherwise it loses HIGH_DOWNGRADE levels. */
+export const HIGH_BREAK_CHANCE = 0.2;
+export const HIGH_DOWNGRADE = 3;
 /** Ore per weapon level (1–4) and for armor. Levels 1–2 are sold by NPCs; Starsteel / Moonstone only drop. */
 export const WEAPON_ORES = ['glimmer_ore', 'bright_ore', 'starsteel_ore', 'starsteel_ore'];
 export const ARMOR_ORE = 'moonstone_ore';
@@ -31,6 +41,16 @@ const ENRICHED: Record<string, number[]> = {
   w4: [1, 1, 1, 1, 1, 0.9, 0.7, 0.7, 0.4, 0.4, 0.2],
   armor: [1, 1, 1, 1, 1, 0.9, 0.7, 0.7, 0.4, 0.4, 0.2],
 };
+// +11…+20 success chances (rAthena renewal refine.yml): weapon Lv 1–3 18/17/15%, weapon Lv 4 and armor 8/7/5%.
+const HIGH_LOW = [0.18, 0.18, 0.18, 0.18, 0.18, 0.17, 0.17, 0.17, 0.15, 0.15];
+const HIGH_HARD = [0.08, 0.08, 0.08, 0.08, 0.07, 0.07, 0.07, 0.07, 0.05, 0.05];
+for (const t of [CHANCE, ENRICHED]) for (const k of Object.keys(t)) t[k] = [...t[k], ...(k === 'w4' || k === 'armor' ? HIGH_HARD : HIGH_LOW)];
+/** Total refine ATK at +11…+20 by weapon level (renewal Bonus / 100); armor DEF at +11…+20. */
+export const HIGH_WEAPON_ATK = [
+  [22, 24, 26, 28, 30, 48, 51, 54, 57, 60], [33, 36, 39, 42, 45, 80, 85, 90, 95, 100],
+  [55, 60, 65, 70, 75, 112, 119, 126, 133, 140], [77, 84, 91, 98, 105, 160, 170, 180, 190, 200],
+];
+export const HIGH_ARMOR_DEF = [8, 9, 10, 11, 13, 14, 16, 18, 19, 21];
 /** Luma per attempt (classic refiner prices). */
 const FEE: Record<string, number> = { w1: 50, w2: 200, w3: 5000, w4: 20000, armor: 2000 };
 /** ATK added per refine level, by weapon level. */
@@ -39,25 +59,43 @@ export const ATK_PER_REFINE = [2, 3, 5, 7];
 export type RefineKind = 'w1' | 'w2' | 'w3' | 'w4' | 'armor';
 /** Success chance for each attempt (index = level reached) for a weapon level / armor, normal or enriched ore. */
 export function refineTable(k: RefineKind, enriched = false): number[] { return (enriched ? ENRICHED : CHANCE)[k]; }
-export function refineFee(k: RefineKind): number { return FEE[k]; }
-export function refineOre(k: RefineKind, enriched = false): string {
+export function refineFee(k: RefineKind, nextLevel = 1): number { return nextLevel > NORMAL_MAX ? HIGH_FEE : FEE[k]; }
+export function refineOre(k: RefineKind, enriched = false, nextLevel = 1): string {
+  if (nextLevel > NORMAL_MAX) return k === 'armor' ? HIGH_ARMOR_ORE : HIGH_WEAPON_ORE;
   if (enriched) return k === 'armor' ? ENRICHED_ARMOR_ORE : ENRICHED_WEAPON_ORE;
   return k === 'armor' ? ARMOR_ORE : WEAPON_ORES[Number(k.slice(1)) - 1];
 }
 
 export interface RefineSim { steps: { level: number; chance: number }[]; survive: number; expectedAttempts: number; expectedItems: number; expectedOre: number; expectedLuma: number }
 /**
- * Refine simulator (like the database sites' calculators): going from +from to +to,
- * the chance one item survives, and the expected ore / Luma / items when every
- * failure destroys the item and you start again from +from with a new one.
+ * Refine simulator (like the database sites' calculators): going from +from to +to.
+ * `survive` is the chance one item reaches the target without being destroyed;
+ * expected ore / Luma / items assume you start again from +from with another copy
+ * after every break. Above +10 a failure usually only drops 3 levels, so the
+ * simulator solves that as a Markov chain.
  */
 export function simulateRefine(k: RefineKind, from: number, to: number, enriched = false): RefineSim {
   const t = refineTable(k, enriched);
+  to = Math.min(MAX_REFINE, to);
   const steps: { level: number; chance: number }[] = [];
-  let survive = 1, attempts = 0;
-  for (let lv = from + 1; lv <= Math.min(MAX_REFINE, to); lv++) { attempts += survive; survive *= t[lv]; steps.push({ level: lv, chance: t[lv] }); }
+  for (let lv = from + 1; lv <= to; lv++) steps.push({ level: lv, chance: t[lv] });
+  // P[l] = chance to reach `to` from l before breaking; A[l] = expected attempts until success or break; L[l] = expected Luma.
+  const P = new Array(to + 1).fill(0), A = new Array(to + 1).fill(0), L = new Array(to + 1).fill(0);
+  P[to] = 1;
+  for (let iter = 0; iter < 4000; iter++) {
+    for (let l = to - 1; l >= Math.min(from, NORMAL_MAX); l--) {
+      const c = t[l + 1], fee = refineFee(k, l + 1);
+      if (l + 1 <= NORMAL_MAX) { P[l] = c * P[l + 1]; A[l] = 1 + c * A[l + 1]; L[l] = fee + c * L[l + 1]; continue; }
+      const down = Math.max(NORMAL_MAX, l + 1 - 1 - HIGH_DOWNGRADE), keep = (1 - c) * (1 - HIGH_BREAK_CHANCE);
+      const dl = down;
+      P[l] = c * P[l + 1] + keep * P[dl];
+      A[l] = 1 + c * A[l + 1] + keep * A[dl];
+      L[l] = fee + c * L[l + 1] + keep * L[dl];
+    }
+  }
+  const survive = P[from];
   const items = survive > 0 ? 1 / survive : Infinity;
-  return { steps, survive, expectedAttempts: attempts, expectedItems: items, expectedOre: attempts * items, expectedLuma: attempts * items * FEE[k] };
+  return { steps, survive, expectedAttempts: A[from], expectedItems: items, expectedOre: A[from] * items, expectedLuma: L[from] * items };
 }
 
 export function weaponLevel(def: ItemDef): number { return Math.min(4, Math.max(1, def.weaponLevel ?? 1)); }
@@ -80,21 +118,22 @@ export function refineInfo(data: GameData, c: CharacterState, uid: string, enric
   if (!at) return { ok: false, error: 'Item not found.', ...blank };
   const def = data.items.get(at.inst.itemId)!;
   if (def.type !== 'equipment' || !def.slot || def.slot === 'accessory') return { ok: false, error: 'Only weapons and armor can be refined.', ...blank };
-  const k = kind(def), cur = at.inst.refine ?? 0;
+  const k = kind(def) as RefineKind, cur = at.inst.refine ?? 0, next = cur + 1;
   const info = {
-    current: cur, next: cur + 1, chance: (enriched ? ENRICHED : CHANCE)[k][Math.min(MAX_REFINE, cur + 1)], safe: safeLimit(def),
-    ore: enriched ? (def.slot === 'weapon' ? ENRICHED_WEAPON_ORE : ENRICHED_ARMOR_ORE) : def.slot === 'weapon' ? WEAPON_ORES[weaponLevel(def) - 1] : ARMOR_ORE, fee: FEE[k], enriched,
+    current: cur, next, chance: (enriched ? ENRICHED : CHANCE)[k][Math.min(MAX_REFINE, next)], safe: safeLimit(def),
+    ore: refineOre(k, enriched, next), fee: refineFee(k, next), enriched,
   };
   if (cur >= MAX_REFINE) return { ok: false, error: `Already at +${MAX_REFINE}.`, ...info };
+  if (enriched && next > NORMAL_MAX) return { ok: false, error: 'Enriched ore only works up to +10. Past +10 use Stellar / Lunar Shards.', ...info };
   if (c.luma < info.fee) return { ok: false, error: `Needs ${info.fee} Luma.`, ...info };
   if (!c.inventory.some((i) => i.itemId === info.ore && i.qty > 0)) return { ok: false, error: `Needs 1 ${data.items.get(info.ore)?.name ?? info.ore}.`, ...info };
   return { ok: true, ...info };
 }
 
-export type RefineResult = OpResult & { outcome?: 'success' | 'broken'; level?: number; itemId?: string; wasEquipped?: boolean };
+export type RefineResult = OpResult & { outcome?: 'success' | 'broken' | 'downgraded'; level?: number; itemId?: string; wasEquipped?: boolean };
 
-/** One refine attempt. `roll` is a uniform [0,1) number from the world Rng. */
-export function refineItem(data: GameData, c: CharacterState, uid: string, roll: number, enriched = false): RefineResult {
+/** One refine attempt. `roll` (success) and `breakRoll` (over-upgrade failures) are uniform [0,1) numbers from the world Rng. */
+export function refineItem(data: GameData, c: CharacterState, uid: string, roll: number, enriched = false, breakRoll = 0): RefineResult {
   const info = refineInfo(data, c, uid, enriched);
   if (!info.ok) return { ok: false, error: info.error! };
   const at = locateItem(c, uid)!;
@@ -104,6 +143,10 @@ export function refineItem(data: GameData, c: CharacterState, uid: string, roll:
   if (roll < info.chance) {
     at.inst.refine = info.next;
     return { ok: true, message: `${def.name} is now +${info.next}!`, outcome: 'success', level: info.next, itemId: def.id, wasEquipped: !!at.slot };
+  }
+  if (info.next > NORMAL_MAX && breakRoll >= HIGH_BREAK_CHANCE) {
+    at.inst.refine = Math.max(NORMAL_MAX, info.current - HIGH_DOWNGRADE);
+    return { ok: true, message: `Refining failed. The ${def.name} dropped to +${at.inst.refine}.`, outcome: 'downgraded', level: at.inst.refine, itemId: def.id, wasEquipped: !!at.slot };
   }
   if (at.slot) delete c.equipment[at.slot];
   else c.inventory = c.inventory.filter((i) => i.uid !== uid);

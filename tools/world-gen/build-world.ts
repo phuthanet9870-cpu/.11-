@@ -417,7 +417,7 @@ function bossDef(b: typeof BOSSES[number], grukk: J): J {
       { id: `${b.id}_ring`, name: 'Cataclysm', kind: 'ring', telegraphMs: 1700, radius: 230, multiplier: 1.4, element: el, cooldownMs: 13000, minPhase: 2, fx: b.fx },
     ],
     contributionRewards: { minDamagePct: 10, items: [{ itemId: 'starsteel_ore', qty: 3 }, { itemId: 'moonstone_ore', qty: 3 }], luma: 500 + b.monster.lv * 40 },
-    mvp: { expPct: 50, items: [{ itemId: 'elder_sap', chance: 0.4 }, { itemId: 'elder_seed', chance: 0.6 }, { itemId: 'starsteel_ore', chance: 0.5 }, { itemId: 'moonstone_ore', chance: 0.5 }, { itemId: 'enriched_starsteel', chance: 0.2 }, { itemId: 'enriched_moonstone', chance: 0.2 }, { itemId: 'card_album', chance: 0.1 }] },
+    mvp: { expPct: 50, items: [{ itemId: 'elder_sap', chance: 0.4 }, { itemId: 'elder_seed', chance: 0.6 }, { itemId: 'starsteel_ore', chance: 0.5 }, { itemId: 'moonstone_ore', chance: 0.5 }, { itemId: 'enriched_starsteel', chance: 0.2 }, { itemId: 'enriched_moonstone', chance: 0.2 }, { itemId: 'card_album', chance: 0.1 }, { itemId: 'stellar_shard', chance: 0.3 }, { itemId: 'lunar_shard', chance: 0.3 }] },
     generated: true,
   };
 }
@@ -552,6 +552,15 @@ export async function main() {
   for (const m of monsters) {
     const t = drops.find((d: J) => d.id === m.dropTableId);
     if (t && m.level >= 40 && m.aiType !== 'boss') t.entries.push({ itemId: m.level % 2 ? 'enriched_moonstone' : 'enriched_starsteel', chance: 0.002, oreHint: true });
+  }
+  // Over-upgrade shards (+11…+20): Lv 55+ monsters, elites and MVPs drop them; Frostholm's armory sells them dearly.
+  for (const [id, name, desc, col] of [
+    ['stellar_shard', 'Stellar Shard', 'A shard of a fallen star. Refines weapons from +10 up to +20. Each attempt also costs 100,000 Luma.', '#ffe9ff'],
+    ['lunar_shard', 'Lunar Shard', 'A shard of moonlight made solid. Refines armor from +10 up to +20. Each attempt also costs 100,000 Luma.', '#d8f0ff'],
+  ] as const) items.push({ id, name, type: 'material', rarity: 'epic', description: desc, weight: 3, price: 30000, stackable: true, maxStack: 999, icon: { shape: 'gem', color: col, accent: '#ffffff' }, generated: true });
+  for (const m of monsters) {
+    const t = drops.find((d: J) => d.id === m.dropTableId);
+    if (t && m.level >= 55 && m.aiType !== 'boss') t.entries.push({ itemId: m.level % 2 ? 'lunar_shard' : 'stellar_shard', chance: m.elite ? 0.03 : 0.001, oreHint: true });
   }
 
   // Card slots on equipment (Ragnarok-style: daggers 3, other weapons 2, rarer weapons 1; armor pieces 1).
@@ -707,6 +716,7 @@ export async function main() {
     ['At Base Level 99 and Job Level 50 a second job may be reborn: you start again as a High Novice with 100 stat points, and your body grows stronger (+25% HP and MP).',
       'Reborn ones return to me to take their High job, and later the transcendent job of the path they walked before.']));
   built.find((b) => b.map.id === 'aurelion')!.map.npcs.push({ npcId: 'oracle_rebirth', x: 22, y: 28, facing: 'down' });
+  for (const sh of shops) if (sh.id === 'frostholm_arms') for (const x of ['stellar_shard', 'lunar_shard']) if (!sh.items.includes(x)) sh.items.push(x);
   for (const it of items) {
     for (const town of it.soldIn ?? []) { const sh = shops.find((x: J) => x.id === `${town}_arms`); if (sh && !sh.items.includes(it.id)) sh.items.push(it.id); }
     if (it.dropBand) for (const m of monsters) {
@@ -728,7 +738,7 @@ export async function main() {
       timeLimitMs: 20 * 60000, cooldownMs: 60 * 60000, bgm: 'dungeon_dark',
       description: 'Four sealed rooms of restless dead and a Revenant guardian at the bottom. 20 minutes; once per hour.',
       floors: [['tomb_mummy', 'lantern_ghost'], ['frost_wraith', 'cursed_knight'], ['banshee', 'grave_knight'], ['lich_spirit', 'elite_banshee']],
-      reward: { exp: 90000, jobExp: 60000, luma: 40000, items: [['card_album', 2], ['enriched_starsteel', 4], ['enriched_moonstone', 4], ['elder_sap', 2]] } },
+      reward: { exp: 90000, jobExp: 60000, luma: 40000, items: [['stellar_shard', 1], ['lunar_shard', 1], ['card_album', 2], ['enriched_starsteel', 4], ['enriched_moonstone', 4], ['elder_sap', 2]] } },
   ];
   const instances: J[] = [];
   for (const inst of INSTANCES) {

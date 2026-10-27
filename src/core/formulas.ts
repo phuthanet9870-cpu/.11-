@@ -4,6 +4,7 @@ import type { GameData } from './data';
 import type {
   Autocast, BaseStats, CharacterState, DerivedStats, EquipSlot, ItemDef, StatModifiers, StatKey,
 } from './types';
+import { HIGH_ARMOR_DEF, HIGH_WEAPON_ATK } from './refine';
 import { STAT_KEYS } from './types';
 
 export function expToNextBase(data: GameData, level: number): number {
@@ -91,11 +92,13 @@ export function optionMods(o: { key: string; value: number }): StatModifiers {
 export function refineMods(item: ItemDef, refine: number): StatModifiers {
   if (!refine) return {};
   if (item.slot === 'weapon') {
-    const per = [2, 3, 5, 7][Math.min(4, Math.max(1, item.weaponLevel ?? 1)) - 1];
-    return { patk: refine * per, matk: item.attackKind === 'magic' ? refine * per : 0 };
+    const wl = Math.min(4, Math.max(1, item.weaponLevel ?? 1));
+    // +1…+10: classic ATK per level; +11…+20: renewal totals.
+    const atk = refine <= 10 ? refine * [2, 3, 5, 7][wl - 1] : HIGH_WEAPON_ATK[wl - 1][Math.min(20, refine) - 11];
+    return { patk: atk, matk: item.attackKind === 'magic' ? atk : 0 };
   }
-  // Armor: 0.7 DEF per refine level, rounded (classic rule).
-  return { pdef: Math.floor((refine * 70 + 50) / 100) };
+  // Armor: 0.7 DEF per refine level, rounded (classic rule); +11…+20 from the renewal table.
+  return { pdef: refine <= 10 ? Math.floor((refine * 70 + 50) / 100) : HIGH_ARMOR_DEF[Math.min(20, refine) - 11] };
 }
 
 export function equipmentMods(data: GameData, c: CharacterState): StatModifiers {

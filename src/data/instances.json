@@ -64,6 +64,14 @@
    "luma": 40000,
    "items": [
     {
+     "itemId": "stellar_shard",
+     "qty": 1
+    },
+    {
+     "itemId": "lunar_shard",
+     "qty": 1
+    },
+    {
      "itemId": "card_album",
      "qty": 2
     },

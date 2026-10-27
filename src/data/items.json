@@ -8736,6 +8736,40 @@
   "generated": true
  },
  {
+  "id": "stellar_shard",
+  "name": "Stellar Shard",
+  "type": "material",
+  "rarity": "epic",
+  "description": "A shard of a fallen star. Refines weapons from +10 up to +20. Each attempt also costs 100,000 Luma.",
+  "weight": 3,
+  "price": 30000,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#ffe9ff",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "lunar_shard",
+  "name": "Lunar Shard",
+  "type": "material",
+  "rarity": "epic",
+  "description": "A shard of moonlight made solid. Refines armor from +10 up to +20. Each attempt also costs 100,000 Luma.",
+  "weight": 3,
+  "price": 30000,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#d8f0ff",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
   "id": "flame_stone",
   "name": "Flame Stone",
   "type": "material",

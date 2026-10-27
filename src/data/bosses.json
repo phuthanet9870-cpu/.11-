@@ -285,6 +285,14 @@
     {
      "itemId": "card_album",
      "chance": 0.1
+    },
+    {
+     "itemId": "stellar_shard",
+     "chance": 0.3
+    },
+    {
+     "itemId": "lunar_shard",
+     "chance": 0.3
     }
    ]
   },
@@ -436,6 +444,14 @@
     {
      "itemId": "card_album",
      "chance": 0.1
+    },
+    {
+     "itemId": "stellar_shard",
+     "chance": 0.3
+    },
+    {
+     "itemId": "lunar_shard",
+     "chance": 0.3
     }
    ]
   },
@@ -587,6 +603,14 @@
     {
      "itemId": "card_album",
      "chance": 0.1
+    },
+    {
+     "itemId": "stellar_shard",
+     "chance": 0.3
+    },
+    {
+     "itemId": "lunar_shard",
+     "chance": 0.3
     }
    ]
   },
@@ -738,6 +762,14 @@
     {
      "itemId": "card_album",
      "chance": 0.1
+    },
+    {
+     "itemId": "stellar_shard",
+     "chance": 0.3
+    },
+    {
+     "itemId": "lunar_shard",
+     "chance": 0.3
     }
    ]
   },
@@ -889,6 +921,14 @@
     {
      "itemId": "card_album",
      "chance": 0.1
+    },
+    {
+     "itemId": "stellar_shard",
+     "chance": 0.3
+    },
+    {
+     "itemId": "lunar_shard",
+     "chance": 0.3
     }
    ]
   },
