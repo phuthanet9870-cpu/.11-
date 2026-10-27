@@ -239,6 +239,12 @@
    "x": 38,
    "y": 32,
    "facing": "down"
+  },
+  {
+   "npcId": "fernhollow_petkeeper",
+   "x": 31,
+   "y": 21,
+   "facing": "down"
   }
  ],
  "monsterSpawns": [],

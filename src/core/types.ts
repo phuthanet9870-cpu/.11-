@@ -180,6 +180,10 @@ export interface ItemDef {
   cardSlots?: number;
   /** Card items: which equipment slot they compound into, and what they add. */
   card?: { equip: 'weapon' | 'armor' | 'headgear' | 'shield' | 'garment' | 'boots' | 'accessory'; mods: StatModifiers; monsterId: string };
+  /** Pets: this item tames that monster / is that pet's egg / is pet food. */
+  lure?: string;
+  petEgg?: string;
+  petFood?: boolean;
   // consumables
   use?: UseEffect[];
   cooldownMs?: number;
@@ -199,7 +203,35 @@ export interface ItemInstance {
   options?: { key: string; value: number }[];
   locked?: boolean;
   bound?: boolean;
+  /** A pet egg remembers its pet. */
+  pet?: PetState;
 }
+
+// ---------------------------------------------------------------- pets
+/** Ragnarok-style pet: tamed from a monster with its lure item. */
+export interface PetDef {
+  id: string;
+  monsterId: string;
+  name: string;
+  lureItem: string;
+  eggItem: string;
+  foodItem: string;
+  /** Base capture rate in 1/100 of a percent (2000 = 20%). */
+  captureRate: number;
+  /** Hunger lost every hungerTickMs. */
+  fullness: number;
+  hungerTickMs: number;
+  intimacyStart: number;
+  intimacyFed: number;
+  intimacyOverfed: number;
+  intimacyHungry: number;
+  intimacyOwnerDie: number;
+  /** Bonus while the pet is Loyal. */
+  loyalBonus: StatModifiers;
+  loyalText: string;
+}
+
+export interface PetState { petId: string; name: string; hunger: number; intimacy: number; nextHungerAt?: number }
 
 // ---------------------------------------------------------------- monsters
 export type AiType = 'passive' | 'aggressive' | 'assist' | 'ranged' | 'magic' | 'elite' | 'boss';
@@ -484,6 +516,8 @@ export interface CharacterState {
   position: { mapId: string; x: number; y: number };
   savePoint: { mapId: string; spawn: string };
   hotbar: (HotbarSlot | null)[];
+  /** The pet that is out (hatched); null/undefined when it is in its egg. */
+  pet?: PetState | null;
   stats_meta: { kills: number; deaths: number; playTimeMs: number; bossKills: Record<string, number> };
 }
 

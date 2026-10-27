@@ -4713,5 +4713,628 @@
    "accent": "#ffffff"
   },
   "generated": true
+ },
+ {
+  "id": "pet_dewdrop",
+  "name": "Dewdrop Jelly",
+  "type": "misc",
+  "rarity": "common",
+  "description": "Pet food. Feed it to a pet that likes it (see the pet window).",
+  "weight": 1,
+  "price": 60,
+  "stackable": true,
+  "maxStack": 999,
+  "petFood": true,
+  "icon": {
+   "shape": "apple",
+   "color": "#8fe07a"
+  },
+  "generated": true
+ },
+ {
+  "id": "lure_leaf_slime",
+  "name": "Leaf Slime Lure",
+  "type": "misc",
+  "rarity": "uncommon",
+  "description": "Use it on a Leaf Slime to try to tame it. Weaker monsters and higher LUK make it easier. Consumed either way.",
+  "weight": 2,
+  "price": 660,
+  "stackable": true,
+  "maxStack": 99,
+  "lure": "leaf_slime",
+  "icon": {
+   "shape": "horn",
+   "color": "#e8c070",
+   "accent": "#8fe07a"
+  },
+  "generated": true
+ },
+ {
+  "id": "egg_leaf_slime",
+  "name": "Leaf Slime Egg",
+  "type": "misc",
+  "rarity": "rare",
+  "description": "A pet egg. Use it to hatch your Leaf Slime. Loyal bonus: Max HP +120, HP regen +2.",
+  "weight": 5,
+  "price": 0,
+  "stackable": false,
+  "maxStack": 1,
+  "petEgg": "leaf_slime",
+  "icon": {
+   "shape": "gem",
+   "color": "#fff6e0",
+   "accent": "#8fe07a"
+  },
+  "generated": true
+ },
+ {
+  "id": "lure_clover_slime",
+  "name": "Clover Slime Lure",
+  "type": "misc",
+  "rarity": "uncommon",
+  "description": "Use it on a Clover Slime to try to tame it. Weaker monsters and higher LUK make it easier. Consumed either way.",
+  "weight": 2,
+  "price": 960,
+  "stackable": true,
+  "maxStack": 99,
+  "lure": "clover_slime",
+  "icon": {
+   "shape": "horn",
+   "color": "#e8c070",
+   "accent": "#8fe07a"
+  },
+  "generated": true
+ },
+ {
+  "id": "egg_clover_slime",
+  "name": "Clover Slime Egg",
+  "type": "misc",
+  "rarity": "rare",
+  "description": "A pet egg. Use it to hatch your Clover Slime. Loyal bonus: Max HP +120, HP regen +2.",
+  "weight": 5,
+  "price": 0,
+  "stackable": false,
+  "maxStack": 1,
+  "petEgg": "clover_slime",
+  "icon": {
+   "shape": "gem",
+   "color": "#fff6e0",
+   "accent": "#8fe07a"
+  },
+  "generated": true
+ },
+ {
+  "id": "pet_honey_bun",
+  "name": "Honey Bun",
+  "type": "misc",
+  "rarity": "common",
+  "description": "Pet food. Feed it to a pet that likes it (see the pet window).",
+  "weight": 1,
+  "price": 90,
+  "stackable": true,
+  "maxStack": 999,
+  "petFood": true,
+  "icon": {
+   "shape": "apple",
+   "color": "#ffcc66"
+  },
+  "generated": true
+ },
+ {
+  "id": "lure_forest_goblin",
+  "name": "Forest Goblin Lure",
+  "type": "misc",
+  "rarity": "uncommon",
+  "description": "Use it on a Forest Goblin to try to tame it. Weaker monsters and higher LUK make it easier. Consumed either way.",
+  "weight": 2,
+  "price": 1140,
+  "stackable": true,
+  "maxStack": 99,
+  "lure": "forest_goblin",
+  "icon": {
+   "shape": "horn",
+   "color": "#e8c070",
+   "accent": "#ffcc66"
+  },
+  "generated": true
+ },
+ {
+  "id": "egg_forest_goblin",
+  "name": "Forest Goblin Egg",
+  "type": "misc",
+  "rarity": "rare",
+  "description": "A pet egg. Use it to hatch your Forest Goblin. Loyal bonus: HIT +6.",
+  "weight": 5,
+  "price": 0,
+  "stackable": false,
+  "maxStack": 1,
+  "petEgg": "forest_goblin",
+  "icon": {
+   "shape": "gem",
+   "color": "#fff6e0",
+   "accent": "#ffcc66"
+  },
+  "generated": true
+ },
+ {
+  "id": "pet_jerky",
+  "name": "Savory Jerky",
+  "type": "misc",
+  "rarity": "common",
+  "description": "Pet food. Feed it to a pet that likes it (see the pet window).",
+  "weight": 1,
+  "price": 80,
+  "stackable": true,
+  "maxStack": 999,
+  "petFood": true,
+  "icon": {
+   "shape": "apple",
+   "color": "#b0703a"
+  },
+  "generated": true
+ },
+ {
+  "id": "lure_thorn_wolf",
+  "name": "Thorn Wolf Lure",
+  "type": "misc",
+  "rarity": "uncommon",
+  "description": "Use it on a Thorn Wolf to try to tame it. Weaker monsters and higher LUK make it easier. Consumed either way.",
+  "weight": 2,
+  "price": 1380,
+  "stackable": true,
+  "maxStack": 99,
+  "lure": "thorn_wolf",
+  "icon": {
+   "shape": "horn",
+   "color": "#e8c070",
+   "accent": "#b0703a"
+  },
+  "generated": true
+ },
+ {
+  "id": "egg_thorn_wolf",
+  "name": "Thorn Wolf Egg",
+  "type": "misc",
+  "rarity": "rare",
+  "description": "A pet egg. Use it to hatch your Thorn Wolf. Loyal bonus: ATK +6.",
+  "weight": 5,
+  "price": 0,
+  "stackable": false,
+  "maxStack": 1,
+  "petEgg": "thorn_wolf",
+  "icon": {
+   "shape": "gem",
+   "color": "#fff6e0",
+   "accent": "#b0703a"
+  },
+  "generated": true
+ },
+ {
+  "id": "lure_road_goblin",
+  "name": "Road Goblin Lure",
+  "type": "misc",
+  "rarity": "uncommon",
+  "description": "Use it on a Road Goblin to try to tame it. Weaker monsters and higher LUK make it easier. Consumed either way.",
+  "weight": 2,
+  "price": 1620,
+  "stackable": true,
+  "maxStack": 99,
+  "lure": "road_goblin",
+  "icon": {
+   "shape": "horn",
+   "color": "#e8c070",
+   "accent": "#ffcc66"
+  },
+  "generated": true
+ },
+ {
+  "id": "egg_road_goblin",
+  "name": "Road Goblin Egg",
+  "type": "misc",
+  "rarity": "rare",
+  "description": "A pet egg. Use it to hatch your Road Goblin. Loyal bonus: HIT +6.",
+  "weight": 5,
+  "price": 0,
+  "stackable": false,
+  "maxStack": 1,
+  "petEgg": "road_goblin",
+  "icon": {
+   "shape": "gem",
+   "color": "#fff6e0",
+   "accent": "#ffcc66"
+  },
+  "generated": true
+ },
+ {
+  "id": "pet_soul_candy",
+  "name": "Soul Candy",
+  "type": "misc",
+  "rarity": "common",
+  "description": "Pet food. Feed it to a pet that likes it (see the pet window).",
+  "weight": 1,
+  "price": 120,
+  "stackable": true,
+  "maxStack": 999,
+  "petFood": true,
+  "icon": {
+   "shape": "apple",
+   "color": "#c8d4ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "lure_crypt_bat",
+  "name": "Crypt Bat Lure",
+  "type": "misc",
+  "rarity": "uncommon",
+  "description": "Use it on a Crypt Bat to try to tame it. Weaker monsters and higher LUK make it easier. Consumed either way.",
+  "weight": 2,
+  "price": 1860,
+  "stackable": true,
+  "maxStack": 99,
+  "lure": "crypt_bat",
+  "icon": {
+   "shape": "horn",
+   "color": "#e8c070",
+   "accent": "#c8d4ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "egg_crypt_bat",
+  "name": "Crypt Bat Egg",
+  "type": "misc",
+  "rarity": "rare",
+  "description": "A pet egg. Use it to hatch your Crypt Bat. Loyal bonus: MDEF +4, shadow resist +5%.",
+  "weight": 5,
+  "price": 0,
+  "stackable": false,
+  "maxStack": 1,
+  "petEgg": "crypt_bat",
+  "icon": {
+   "shape": "gem",
+   "color": "#fff6e0",
+   "accent": "#c8d4ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "pet_star_sugar",
+  "name": "Star Sugar",
+  "type": "misc",
+  "rarity": "common",
+  "description": "Pet food. Feed it to a pet that likes it (see the pet window).",
+  "weight": 1,
+  "price": 100,
+  "stackable": true,
+  "maxStack": 999,
+  "petFood": true,
+  "icon": {
+   "shape": "apple",
+   "color": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "lure_sea_slime",
+  "name": "Sea Slime Lure",
+  "type": "misc",
+  "rarity": "uncommon",
+  "description": "Use it on a Sea Slime to try to tame it. Weaker monsters and higher LUK make it easier. Consumed either way.",
+  "weight": 2,
+  "price": 1860,
+  "stackable": true,
+  "maxStack": 99,
+  "lure": "sea_slime",
+  "icon": {
+   "shape": "horn",
+   "color": "#e8c070",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "egg_sea_slime",
+  "name": "Sea Slime Egg",
+  "type": "misc",
+  "rarity": "rare",
+  "description": "A pet egg. Use it to hatch your Sea Slime. Loyal bonus: MATK +6.",
+  "weight": 5,
+  "price": 0,
+  "stackable": false,
+  "maxStack": 1,
+  "petEgg": "sea_slime",
+  "icon": {
+   "shape": "gem",
+   "color": "#fff6e0",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "lure_reef_gull",
+  "name": "Reef Gull Lure",
+  "type": "misc",
+  "rarity": "uncommon",
+  "description": "Use it on a Reef Gull to try to tame it. Weaker monsters and higher LUK make it easier. Consumed either way.",
+  "weight": 2,
+  "price": 2040,
+  "stackable": true,
+  "maxStack": 99,
+  "lure": "reef_gull",
+  "icon": {
+   "shape": "horn",
+   "color": "#e8c070",
+   "accent": "#b0703a"
+  },
+  "generated": true
+ },
+ {
+  "id": "egg_reef_gull",
+  "name": "Reef Gull Egg",
+  "type": "misc",
+  "rarity": "rare",
+  "description": "A pet egg. Use it to hatch your Reef Gull. Loyal bonus: ATK +6.",
+  "weight": 5,
+  "price": 0,
+  "stackable": false,
+  "maxStack": 1,
+  "petEgg": "reef_gull",
+  "icon": {
+   "shape": "gem",
+   "color": "#fff6e0",
+   "accent": "#b0703a"
+  },
+  "generated": true
+ },
+ {
+  "id": "pet_nectar",
+  "name": "Flower Nectar",
+  "type": "misc",
+  "rarity": "common",
+  "description": "Pet food. Feed it to a pet that likes it (see the pet window).",
+  "weight": 1,
+  "price": 70,
+  "stackable": true,
+  "maxStack": 999,
+  "petFood": true,
+  "icon": {
+   "shape": "apple",
+   "color": "#ffd75a"
+  },
+  "generated": true
+ },
+ {
+  "id": "lure_bramble_hornet",
+  "name": "Bramble Hornet Lure",
+  "type": "misc",
+  "rarity": "uncommon",
+  "description": "Use it on a Bramble Hornet to try to tame it. Weaker monsters and higher LUK make it easier. Consumed either way.",
+  "weight": 2,
+  "price": 2160,
+  "stackable": true,
+  "maxStack": 99,
+  "lure": "bramble_hornet",
+  "icon": {
+   "shape": "horn",
+   "color": "#e8c070",
+   "accent": "#ffd75a"
+  },
+  "generated": true
+ },
+ {
+  "id": "egg_bramble_hornet",
+  "name": "Bramble Hornet Egg",
+  "type": "misc",
+  "rarity": "rare",
+  "description": "A pet egg. Use it to hatch your Bramble Hornet. Loyal bonus: FLEE +6.",
+  "weight": 5,
+  "price": 0,
+  "stackable": false,
+  "maxStack": 1,
+  "petEgg": "bramble_hornet",
+  "icon": {
+   "shape": "gem",
+   "color": "#fff6e0",
+   "accent": "#ffd75a"
+  },
+  "generated": true
+ },
+ {
+  "id": "lure_arcane_wisp",
+  "name": "Arcane Wisp Lure",
+  "type": "misc",
+  "rarity": "uncommon",
+  "description": "Use it on a Arcane Wisp to try to tame it. Weaker monsters and higher LUK make it easier. Consumed either way.",
+  "weight": 2,
+  "price": 2220,
+  "stackable": true,
+  "maxStack": 99,
+  "lure": "arcane_wisp",
+  "icon": {
+   "shape": "horn",
+   "color": "#e8c070",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "egg_arcane_wisp",
+  "name": "Arcane Wisp Egg",
+  "type": "misc",
+  "rarity": "rare",
+  "description": "A pet egg. Use it to hatch your Arcane Wisp. Loyal bonus: MATK +6.",
+  "weight": 5,
+  "price": 0,
+  "stackable": false,
+  "maxStack": 1,
+  "petEgg": "arcane_wisp",
+  "icon": {
+   "shape": "gem",
+   "color": "#fff6e0",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "pet_fishcake",
+  "name": "Fishcake",
+  "type": "misc",
+  "rarity": "common",
+  "description": "Pet food. Feed it to a pet that likes it (see the pet window).",
+  "weight": 1,
+  "price": 70,
+  "stackable": true,
+  "maxStack": 999,
+  "petFood": true,
+  "icon": {
+   "shape": "apple",
+   "color": "#ff9a7a"
+  },
+  "generated": true
+ },
+ {
+  "id": "lure_grotto_crab",
+  "name": "Grotto Crab Lure",
+  "type": "misc",
+  "rarity": "uncommon",
+  "description": "Use it on a Grotto Crab to try to tame it. Weaker monsters and higher LUK make it easier. Consumed either way.",
+  "weight": 2,
+  "price": 2400,
+  "stackable": true,
+  "maxStack": 99,
+  "lure": "grotto_crab",
+  "icon": {
+   "shape": "horn",
+   "color": "#e8c070",
+   "accent": "#ff9a7a"
+  },
+  "generated": true
+ },
+ {
+  "id": "egg_grotto_crab",
+  "name": "Grotto Crab Egg",
+  "type": "misc",
+  "rarity": "rare",
+  "description": "A pet egg. Use it to hatch your Grotto Crab. Loyal bonus: Max MP +60.",
+  "weight": 5,
+  "price": 0,
+  "stackable": false,
+  "maxStack": 1,
+  "petEgg": "grotto_crab",
+  "icon": {
+   "shape": "gem",
+   "color": "#fff6e0",
+   "accent": "#ff9a7a"
+  },
+  "generated": true
+ },
+ {
+  "id": "lure_oasis_crab",
+  "name": "Oasis Crab Lure",
+  "type": "misc",
+  "rarity": "uncommon",
+  "description": "Use it on a Oasis Crab to try to tame it. Weaker monsters and higher LUK make it easier. Consumed either way.",
+  "weight": 2,
+  "price": 2520,
+  "stackable": true,
+  "maxStack": 99,
+  "lure": "oasis_crab",
+  "icon": {
+   "shape": "horn",
+   "color": "#e8c070",
+   "accent": "#ff9a7a"
+  },
+  "generated": true
+ },
+ {
+  "id": "egg_oasis_crab",
+  "name": "Oasis Crab Egg",
+  "type": "misc",
+  "rarity": "rare",
+  "description": "A pet egg. Use it to hatch your Oasis Crab. Loyal bonus: Max MP +60.",
+  "weight": 5,
+  "price": 0,
+  "stackable": false,
+  "maxStack": 1,
+  "petEgg": "oasis_crab",
+  "icon": {
+   "shape": "gem",
+   "color": "#fff6e0",
+   "accent": "#ff9a7a"
+  },
+  "generated": true
+ },
+ {
+  "id": "lure_mirage_wisp",
+  "name": "Mirage Wisp Lure",
+  "type": "misc",
+  "rarity": "uncommon",
+  "description": "Use it on a Mirage Wisp to try to tame it. Weaker monsters and higher LUK make it easier. Consumed either way.",
+  "weight": 2,
+  "price": 2700,
+  "stackable": true,
+  "maxStack": 99,
+  "lure": "mirage_wisp",
+  "icon": {
+   "shape": "horn",
+   "color": "#e8c070",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "egg_mirage_wisp",
+  "name": "Mirage Wisp Egg",
+  "type": "misc",
+  "rarity": "rare",
+  "description": "A pet egg. Use it to hatch your Mirage Wisp. Loyal bonus: MATK +6.",
+  "weight": 5,
+  "price": 0,
+  "stackable": false,
+  "maxStack": 1,
+  "petEgg": "mirage_wisp",
+  "icon": {
+   "shape": "gem",
+   "color": "#fff6e0",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "lure_tomb_bat",
+  "name": "Tomb Bat Lure",
+  "type": "misc",
+  "rarity": "uncommon",
+  "description": "Use it on a Tomb Bat to try to tame it. Weaker monsters and higher LUK make it easier. Consumed either way.",
+  "weight": 2,
+  "price": 2940,
+  "stackable": true,
+  "maxStack": 99,
+  "lure": "tomb_bat",
+  "icon": {
+   "shape": "horn",
+   "color": "#e8c070",
+   "accent": "#b0703a"
+  },
+  "generated": true
+ },
+ {
+  "id": "egg_tomb_bat",
+  "name": "Tomb Bat Egg",
+  "type": "misc",
+  "rarity": "rare",
+  "description": "A pet egg. Use it to hatch your Tomb Bat. Loyal bonus: ATK +6.",
+  "weight": 5,
+  "price": 0,
+  "stackable": false,
+  "maxStack": 1,
+  "petEgg": "tomb_bat",
+  "icon": {
+   "shape": "gem",
+   "color": "#fff6e0",
+   "accent": "#b0703a"
+  },
+  "generated": true
  }
 ]

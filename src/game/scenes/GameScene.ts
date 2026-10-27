@@ -41,6 +41,7 @@ export class GameScene extends Phaser.Scene {
   private stepTimer = 0;
   private builtMapId = '';
   private builtMap: World['map'] | null = null;
+  private petView: { petId: string; sprite: Phaser.GameObjects.Sprite; name: Phaser.GameObjects.Text; rig: Rig; heart: Phaser.GameObjects.Text } | null = null;
   private tombViews = new Map<string, { img: Phaser.GameObjects.Image; label: Phaser.GameObjects.Text }>();
 
   constructor() { super('Game'); }
@@ -295,6 +296,7 @@ export class GameScene extends Phaser.Scene {
     this.syncNpcs(delta);
     this.syncGround();
     this.syncTombstones();
+    this.syncPet();
     this.drawOverlays();
     this.host.onFrame();
   }
@@ -405,6 +407,33 @@ export class GameScene extends Phaser.Scene {
     for (const [id, v] of this.monViews) {
       if (!w.monsters.has(id)) { v.sprite.destroy(); v.name.destroy(); this.monViews.delete(id); }
     }
+  }
+
+  /** The player's pet: the monster's own sprite at 70% scale, trailing the player. */
+  private syncPet() {
+    const w = this.world, pet = w.char.pet, a = w.petActor;
+    if (this.petView && (!pet || !a || this.petView.petId !== pet.petId || !this.petView.sprite.active)) {
+      this.petView.sprite.destroy(); this.petView.name.destroy(); this.petView.heart.destroy(); this.petView = null;
+    }
+    if (!pet || !a) return;
+    const def = w.data.monsters.get(w.data.pets.get(pet.petId)?.monsterId ?? '');
+    if (!def) return;
+    if (!this.petView) {
+      const rig = monsterRig(this, def.id) ?? proceduralMonRig(ensureMonsterTexture(this, def));
+      const sprite = this.track(this.add.sprite(a.x, a.y, rig.clips.idle.key, 0).setOrigin(rig.originX, rig.originY).setScale(0.7));
+      const name = this.track(this.add.text(a.x, a.y + 4, '', labelStyle('#ffd8f0')).setOrigin(0.5, 0).setDepth(1e5 + 2).setResolution(2));
+      const heart = this.track(this.add.text(a.x, a.y - 30, '♥', { fontFamily: 'Verdana', fontSize: '12px', color: '#ff7aa8', stroke: '#1c1622', strokeThickness: 3 }).setOrigin(0.5, 1).setDepth(1e5 + 2).setResolution(2));
+      this.petView = { petId: pet.petId, sprite, name, rig, heart };
+    }
+    const v = this.petView;
+    v.sprite.setPosition(Math.round(a.x), Math.round(a.y) + 2).setDepth(a.y);
+    const clip = (a.moving ? v.rig.clips.walk : undefined) ?? v.rig.clips.idle;
+    const fr = clipFrame(clip, a.dir, this.clipStep(clip, 0));
+    v.sprite.setTexture(clip.key, fr.frame).setFlipX(fr.flipX);
+    v.name.setText(pet.name).setPosition(Math.round(a.x), Math.round(a.y) + 4);
+    // A heart floats over a Loyal pet; a sweat drop over a hungry one.
+    const loyal = pet.intimacy >= 910, hungry = pet.hunger <= 25;
+    v.heart.setText(hungry ? '…' : '♥').setColor(hungry ? '#9ad8ff' : '#ff7aa8').setVisible(loyal || hungry).setPosition(Math.round(a.x), Math.round(a.y) - 26);
   }
 
   /** MVP tombstones: where a boss fell, who was MVP, and a countdown to its return. */

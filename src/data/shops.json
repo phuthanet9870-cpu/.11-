@@ -257,5 +257,33 @@
    "wolfhide_cloak"
   ],
   "generated": true
+ },
+ {
+  "id": "fernhollow_pets",
+  "name": "Pet Keeper Supplies",
+  "items": [
+   "pet_dewdrop",
+   "pet_honey_bun",
+   "pet_jerky",
+   "pet_soul_candy",
+   "pet_star_sugar",
+   "pet_nectar",
+   "pet_fishcake",
+   "lure_leaf_slime",
+   "lure_clover_slime",
+   "lure_forest_goblin",
+   "lure_thorn_wolf",
+   "lure_road_goblin",
+   "lure_crypt_bat",
+   "lure_sea_slime",
+   "lure_reef_gull",
+   "lure_bramble_hornet",
+   "lure_arcane_wisp",
+   "lure_grotto_crab",
+   "lure_oasis_crab",
+   "lure_mirage_wisp",
+   "lure_tomb_bat"
+  ],
+  "generated": true
  }
 ]

@@ -13,6 +13,7 @@ import {
 } from './inventory';
 import { allocateStat, changeJob, learnSkill, resetSkills, resetStats } from './character';
 import { refineItem, type RefineResult } from './refine';
+import { captureChance, feedPet, hatchEgg, petForMonster, petMods, petOwnerDied, renamePet, returnToEgg, tickPet, newPetState } from './pets';
 import { compoundCard } from './cards';
 import { enchantAdd, enchantReroll, rollDropOptions } from './options';
 import { forgeWeapon, type ForgeChoice, type ForgeResult } from './forge';
@@ -235,6 +236,7 @@ export class World {
     character.hp = Math.min(Math.max(1, character.hp), this.stats.maxHp);
     character.mp = Math.min(Math.max(0, character.mp), this.stats.maxMp);
     refreshAllQuests(data, character);
+    if (character.pet) character.pet.nextHungerAt = undefined;
     const pos = character.position;
     this.enterMap(pos.mapId, { x: pos.x, y: pos.y });
   }
@@ -263,6 +265,8 @@ export class World {
 
   private runtimeMods(): StatModifiers[] {
     const mods: StatModifiers[] = this.player.buffs.map((b) => b.mods);
+    const pet = petMods(this.data, this.char);
+    if (pet) mods.push(pet);
     for (const s of this.player.statuses) {
       const def = this.data.statuses.get(s.id);
       if (def?.mods) mods.push(def.mods);
@@ -291,6 +295,7 @@ export class World {
     const map = this.getCompiledMap(mapId);
     this.map = map;
     this.monsters.clear();
+    this.petActor = null;
     this.groundItems.clear();
     this.zones = [];
     this.telegraphs = [];
@@ -410,6 +415,7 @@ export class World {
     this.updateZones();
     this.updatePending();
     this.updateGroundItems();
+    this.updatePet(dt);
     this.telegraphs = this.telegraphs.filter((t) => t.endsAt > this.time - 200);
     if (this.statsDirty) this.recomputeStats();
     this.char.position = { mapId: this.map.def.id, x: this.player.x, y: this.player.y };
@@ -421,6 +427,101 @@ export class World {
     if (!due.length) return;
     this.pending = this.pending.filter((p) => p.at > this.time);
     for (const p of due) p.fn();
+  }
+
+  /** Where the pet is drawn: it trails a little behind the player. */
+  petActor: { x: number; y: number; dir: Direction; moving: boolean } | null = null;
+
+  private updatePet(dt: number) {
+    const c = this.char;
+    if (!c.pet) { this.petActor = null; return; }
+    const wasLoyal = !!petMods(this.data, c);
+    const ev = tickPet(this.data, c, this.time);
+    if (ev === 'ranAway') { this.message('Your pet was so neglected that it ran away...', 'error'); this.petActor = null; this.invalidateStats(); return; }
+    if (ev === 'hungry') this.message(`${c.pet.name} is hungry.`, 'system');
+    if (wasLoyal !== !!petMods(this.data, c)) this.invalidateStats();
+    const p = this.player;
+    const a = (this.petActor ??= { x: p.x - 24, y: p.y + 8, dir: p.dir, moving: false });
+    const dx = p.x - a.x, dy = p.y - a.y, d = Math.hypot(dx, dy);
+    if (d > 400) { a.x = p.x - 24; a.y = p.y + 8; a.moving = false; return; }
+    a.moving = d > 40;
+    if (a.moving) {
+      const step = Math.min(d - 36, (this.stats.moveSpeed * 1.1 * dt) / 1000);
+      a.x += (dx / d) * step; a.y += (dy / d) * step;
+      a.dir = dirFromVector(dx, dy, a.dir);
+    }
+  }
+
+  // ---------------------------------------------------------------- pets
+  /** Use a lure on a monster: consumes the lure and rolls the capture chance. */
+  tamePet(lureUid: string, targetId?: string): OpResult {
+    const inst = findInstance(this.char, lureUid);
+    const def = inst && this.data.items.get(inst.itemId);
+    if (!inst || !def?.lure) return this.err('That is not a lure.');
+    const m = targetId ? this.monsters.get(targetId) : this.currentTarget;
+    if (!m || m.dead) return this.err(`Target a ${this.data.monsters.get(def.lure)?.name ?? 'monster'} first.`);
+    if (m.def.id !== def.lure) return this.err(`${def.name} only works on a ${this.data.monsters.get(def.lure)?.name}.`);
+    if (m.boss) return this.err('Bosses cannot be tamed.');
+    if (dist(this.player.x, this.player.y, m.x, m.y) > 160) return this.err('Get closer to it first.');
+    const pd = petForMonster(this.data, m.def.id)!;
+    removeByUid(this.char, lureUid, 1);
+    const chance = captureChance(pd, this.char.baseLevel, m.def.level, this.stats.totalStats.luk, m.hp / m.maxHp);
+    this.afterInventoryChange();
+    if (!this.rng.chance(chance)) {
+      this.aggroMonster(m, 1);
+      this.emit({ type: 'fx', fx: 'spawn', x: m.x, y: m.y - 10 });
+      return this.err(`Taming failed (${Math.round(chance * 100)}% chance). The ${m.def.name} is angry!`);
+    }
+    // Success: the monster becomes an egg (no EXP or drops) and respawns later as usual.
+    m.dead = true; m.state = 'dead'; m.hp = 0; m.move = null; m.statuses = []; this.setAnim(m, 'dead');
+    this.emit({ type: 'death', id: m.id });
+    if (m.temporary || m.summoned) this.schedule(800, () => this.monsters.delete(m.id)); else m.respawnAt = this.time + m.def.respawnSeconds * 1000;
+    if (this.player.intent.type === 'attack' && this.player.intent.targetId === m.id) this.player.intent = { type: 'none' };
+    addItem(this.data, this.char, pd.eggItem, 1, { ignoreWeight: true });
+    const egg = [...this.char.inventory].reverse().find((i) => i.itemId === pd.eggItem && !i.pet)!;
+    egg.pet = newPetState(pd);
+    this.emit({ type: 'fx', fx: 'sparkle', x: m.x, y: m.y - 10 });
+    this.emit({ type: 'sound', key: 'level_up' });
+    this.message(`You tamed a ${m.def.name}! Its egg is in your inventory.`, 'loot');
+    this.afterInventoryChange();
+    return { ok: true };
+  }
+
+  hatchPet(eggUid: string): OpResult {
+    const r = hatchEgg(this.data, this.char, eggUid);
+    if (!r.ok) return this.err(r.error);
+    this.petActor = null;
+    this.message(r.message!);
+    this.emit({ type: 'fx', fx: 'sparkle', x: this.player.x - 24, y: this.player.y });
+    this.invalidateStats(); this.afterInventoryChange();
+    return r;
+  }
+
+  petToEgg(): OpResult {
+    const r = returnToEgg(this.data, this.char);
+    if (!r.ok) return this.err(r.error);
+    this.petActor = null;
+    this.message(r.message!);
+    this.invalidateStats(); this.afterInventoryChange();
+    return r;
+  }
+
+  feedPetCmd(): OpResult {
+    const wasLoyal = !!petMods(this.data, this.char);
+    const r = feedPet(this.data, this.char);
+    if (!r.ok) return this.err(r.error);
+    this.message(r.message!, r.delta! < 0 ? 'error' : 'system');
+    if (this.petActor) this.emit({ type: 'fx', fx: r.delta! < 0 ? 'spawn' : 'heal', x: this.petActor.x, y: this.petActor.y - 10 });
+    if (wasLoyal !== !!petMods(this.data, this.char)) { this.invalidateStats(); if (!wasLoyal) this.message(`${this.char.pet!.name} is now Loyal! Its bonus is active.`, 'loot'); }
+    this.afterInventoryChange();
+    return r;
+  }
+
+  renamePetCmd(name: string): OpResult {
+    const r = renamePet(this.char, name);
+    if (!r.ok) return this.err(r.error);
+    this.message(r.message!);
+    return r;
   }
 
   private updateGroundItems() {
@@ -890,6 +991,7 @@ export class World {
     const lost = Math.min(this.char.baseExp, penalty);
     this.char.baseExp -= lost;
     this.emit({ type: 'playerDied' });
+    if (petOwnerDied(this.data, this.char) === 'ranAway') this.message('Your pet ran away...', 'error');
     this.emit({ type: 'sound', key: 'death' });
     this.message(`You have been defeated...${lost ? ` Lost ${lost} Base EXP.` : ''}`, 'error');
     for (const m of this.monsters.values()) if (m.targetId === 'player') this.monsterReturn(m);
@@ -1752,6 +1854,9 @@ export class World {
     if (!inst) return this.err('Item not found.');
     const def = this.data.items.get(inst.itemId)!;
     if (def.type === 'equipment') return this.equip(uid);
+    if (def.lure) return this.tamePet(uid);
+    if (def.petEgg) return this.hatchPet(uid);
+    if (def.petFood) return this.feedPetCmd();
     if (def.type !== 'consumable' || !def.use) return this.err(`${def.name} cannot be used.`);
     if (p.dead) return this.err('You are dead.');
     if ((p.itemCooldowns[def.id] ?? 0) > this.time) return this.err('Wait a moment before using that again.');

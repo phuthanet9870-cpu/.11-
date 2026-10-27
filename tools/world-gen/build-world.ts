@@ -583,6 +583,44 @@ export async function main() {
   const built = NEW_MAPS.map((s) => (s.type === 'town' ? buildTown(s) : s.type === 'field' ? buildField(s) : buildDungeon(s)));
   for (const b of built) { npcs.push(...b.npcs); shops.push(...b.shops); }
   for (const sh of shops) if (['aurelion_tools', 'arcanthe_tools', 'frostholm_tools'].includes(sh.id)) sh.items = [...sh.items.filter((i: string) => !CONVERTERS.some((c) => c[0] === i)), ...CONVERTERS.map((c) => c[0])];
+  // ---------------------------------------------------------------- pets (Ragnarok-style taming)
+  const PET_FOOD: Record<string, [string, string, string, number]> = {
+    plant: ['pet_dewdrop', 'Dewdrop Jelly', '#8fe07a', 60], beast: ['pet_jerky', 'Savory Jerky', '#b0703a', 80], insect: ['pet_nectar', 'Flower Nectar', '#ffd75a', 70],
+    undead: ['pet_soul_candy', 'Soul Candy', '#c8d4ff', 120], formless: ['pet_star_sugar', 'Star Sugar', '#c9a6ff', 100], fish: ['pet_fishcake', 'Fishcake', '#ff9a7a', 70],
+    dragon: ['pet_ember_snack', 'Ember Snack', '#ff6a2e', 150], demihuman: ['pet_honey_bun', 'Honey Bun', '#ffcc66', 90], humanoid: ['pet_honey_bun', 'Honey Bun', '#ffcc66', 90],
+  };
+  const PET_BONUS: Record<string, [J, string]> = {
+    plant: [{ maxHp: 120, hpRegen: 2 }, 'Max HP +120, HP regen +2'], beast: [{ patk: 6 }, 'ATK +6'], insect: [{ flee: 6 }, 'FLEE +6'],
+    undead: [{ mdef: 4, elementResistPct: { shadow: 5 } }, 'MDEF +4, shadow resist +5%'], formless: [{ matk: 6 }, 'MATK +6'], fish: [{ maxMp: 60 }, 'Max MP +60'],
+    dragon: [{ crit: 3 }, 'CRIT +3'], demihuman: [{ hit: 6 }, 'HIT +6'], humanoid: [{ hit: 6 }, 'HIT +6'],
+  };
+  const petCandidates = monsters.filter((m) => m.aiType !== 'boss' && !m.bossId && m.level <= 50 && m.size !== 'large')
+    .sort((a, b) => a.level - b.level).filter((m, i, arr) => i % Math.max(1, Math.floor(arr.length / 14)) === 0).slice(0, 14);
+  const pets: J[] = [];
+  const foodsUsed = new Set<string>();
+  for (const m of petCandidates) {
+    const [foodId, foodName, foodCol, foodPrice] = PET_FOOD[m.race] ?? PET_FOOD.beast;
+    const [bonus, bonusText] = PET_BONUS[m.race] ?? PET_BONUS.beast;
+    if (!foodsUsed.has(foodId)) {
+      foodsUsed.add(foodId);
+      items.push({ id: foodId, name: foodName, type: 'misc', rarity: 'common', description: 'Pet food. Feed it to a pet that likes it (see the pet window).', weight: 1, price: foodPrice, stackable: true, maxStack: 999, petFood: true, icon: { shape: 'apple', color: foodCol }, generated: true });
+    }
+    const lureId = `lure_${m.id}`, eggId = `egg_${m.id}`;
+    items.push({ id: lureId, name: `${m.name} Lure`, type: 'misc', rarity: 'uncommon', description: `Use it on a ${m.name} to try to tame it. Weaker monsters and higher LUK make it easier. Consumed either way.`, weight: 2, price: 600 + m.level * 60, stackable: true, maxStack: 99, lure: m.id, icon: { shape: 'horn', color: '#e8c070', accent: foodCol }, generated: true });
+    items.push({ id: eggId, name: `${m.name} Egg`, type: 'misc', rarity: 'rare', description: `A pet egg. Use it to hatch your ${m.name}. Loyal bonus: ${bonusText}.`, weight: 5, price: 0, stackable: false, maxStack: 1, petEgg: m.id, icon: { shape: 'gem', color: '#fff6e0', accent: foodCol }, generated: true });
+    pets.push({
+      id: `pet_${m.id}`, monsterId: m.id, name: m.name, lureItem: lureId, eggItem: eggId, foodItem: foodId,
+      captureRate: Math.max(500, 2500 - m.level * 40), fullness: m.level < 20 ? 3 : m.level < 40 ? 4 : 5, hungerTickMs: 60000,
+      intimacyStart: 250, intimacyFed: m.level < 20 ? 50 : 30, intimacyOverfed: 100, intimacyHungry: 5, intimacyOwnerDie: 20,
+      loyalBonus: bonus, loyalText: bonusText, generated: true,
+    });
+  }
+  write('pets.json', pets);
+  shops.push({ id: 'fernhollow_pets', name: 'Pet Keeper Supplies', items: [...foodsUsed, ...pets.map((p) => p.lureItem)], generated: true });
+  npcs.push(npc('fernhollow_petkeeper', 'Pet Keeper Lumi', 'Pet Keeper', 91, 'hood', [{ type: 'shop', shopId: 'fernhollow_pets', label: 'Lures & pet food' }],
+    ['Tame a monster with its lure: weaken it first, the lower its HP the better your chance. Feed your pet when it is hungry — never when it is full — and it will grow Loyal.']));
+  built.find((b) => b.map.id === 'fernhollow')!.map.npcs.push({ npcId: 'fernhollow_petkeeper', x: 31, y: 21, facing: 'down' });
+
   // Courier in Willowbrook too, so the warp network starts at home.
   npcs.push(npc('willowbrook_courier', 'Courier Fiona', 'Courier Guild Service', 77, 'coat',
     [{ type: 'save' }, { type: 'storage' }, { type: 'warp', destinations: TOWN_IDS().filter((t) => t !== 'willowbrook').map((t) => ({ mapId: t, spawn: 'default', cost: 600 })) }],

@@ -8,6 +8,7 @@ import { lookForCharacter, SpritePreview } from './screens';
 import { getDragData, setDragData } from './hud';
 import { classLineage, skillCheck } from '../core/character';
 import { buyPrice, canEquip, countItem, filterInventory, inventoryWeight, sellPrice } from '../core/inventory';
+import { hungerLabel, intimacyLabel, LOYAL_AT } from '../core/pets';
 import { canRaiseStat, expToNextBase, expToNextJob, statRaiseCost } from '../core/formulas';
 import {
   activeQuests, isComplete, objectiveTarget, questsOfferedBy, questsToTurnIn,
@@ -22,7 +23,7 @@ import { compoundTargets, itemDisplayName } from '../core/cards';
 import { canForge, CRUMB_ATK, ELEMENT_STONES, forgeChance, STAR_CRUMB } from '../core/forge';
 import { ENCHANT_COST, MAX_OPTIONS, optionLabel, REROLL_COST } from '../core/options';
 
-export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database';
+export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet';
 
 interface WinState { el: HTMLElement; body: HTMLElement; render: () => void; open: boolean }
 
@@ -81,6 +82,7 @@ export class WindowManager {
     this.define('storage', 'Storage', 16, 90, () => this.renderStorage());
     this.define('admin', 'GM / Admin Tools', 820, 70, () => this.renderAdmin());
     this.define('database', 'Database', 200, 50, () => this.renderDatabase());
+    this.define('pet', 'Pet', 520, 90, () => this.renderPet());
   }
 
   get anyOpen() { return [...this.wins.values()].some((w) => w.open) || !!this.dialogEl || !!this.modalEl; }
@@ -182,6 +184,8 @@ export class WindowManager {
     if (def.use) for (const u of def.use) {
       if (u.type === 'heal') out.push(h('div', { class: 'good' }, `Restores ${[u.hp ? `${u.hp} HP` : '', u.mp ? `${u.mp} MP` : ''].filter(Boolean).join(' & ')}`));
     }
+    if (inst?.pet) out.push(h('div', { style: 'color:#ffb0d8' }, `♥ ${inst.pet.name} · ${intimacyLabel(inst.pet.intimacy)} (${inst.pet.intimacy}/1000) · ${hungerLabel(inst.pet.hunger)}`));
+    if (def.lure) out.push(h('div', { class: 'muted' }, 'Target the monster, then use this item.'));
     out.push(h('div', { style: 'margin-top:4px' }, def.description));
     if (def.type === 'equipment') {
       const chk = canEquip(w.data, w.char, def);
@@ -607,6 +611,39 @@ export class WindowManager {
 
   // ---------------------------------------------------------------- database (monsters / items / cards)
   private db = { tab: 'monsters' as 'monsters' | 'items' | 'cards', q: '', filter: '', sel: '' };
+  // ---------------------------------------------------------------- pet
+  private renderPet() {
+    const w = this.app.world!, d = w.data, c = w.char, body = this.wins.get('pet')!.body;
+    const bar = (v: number, max: number, col: string) => h('div', { style: 'height:8px;background:#2a2433;border-radius:4px;overflow:hidden;width:180px' },
+      h('div', { style: `height:100%;width:${Math.round((v / max) * 100)}%;background:${col}` }));
+    const pet = c.pet;
+    if (!pet) {
+      const eggs = c.inventory.filter((i) => d.items.get(i.itemId)?.petEgg);
+      setChildren(body, h('div', { style: 'width:300px' },
+        h('div', { class: 'muted' }, 'You have no pet out.'),
+        eggs.length ? h('div', { style: 'margin-top:6px' }, eggs.map((e) => h('div', { class: 'row', style: 'margin:3px 0' },
+          h('span', {}, `${d.items.get(e.itemId)!.name}${e.pet ? ` — ${e.pet.name} (${intimacyLabel(e.pet.intimacy)})` : ''}`), h('span', { class: 'spacer' }),
+          h('button', { class: 'btn small', id: `pet-hatch-${e.uid}`, onclick: () => { w.hatchPet(e.uid); this.renderPet(); } }, 'Hatch'))))
+          : h('div', { class: 'muted', style: 'margin-top:6px;font-size:11px' },
+            `How to tame: buy a monster's lure from the Pet Keeper in Fernhollow, weaken that monster, target it and use the lure. Tameable: ${[...d.pets.values()].map((p) => p.name).join(', ')}.`)));
+      return;
+    }
+    const pd = d.pets.get(pet.petId)!;
+    const food = d.items.get(pd.foodItem)!;
+    const loyal = pet.intimacy >= LOYAL_AT;
+    const name = h('input', { type: 'text', value: pet.name, maxlength: 16, style: 'width:120px', id: 'pet-name' }) as HTMLInputElement;
+    setChildren(body, h('div', { style: 'width:300px' },
+      h('div', { style: 'font-size:15px;font-weight:bold;color:#ffd8f0' }, `${pet.name}`, h('span', { class: 'muted', style: 'font-weight:normal;font-size:11px' }, `  ${pd.name}`)),
+      h('div', { style: 'margin-top:6px' }, `Hunger: ${hungerLabel(pet.hunger)} (${pet.hunger}/100)`), bar(pet.hunger, 100, pet.hunger <= 25 ? '#e0a040' : '#6fe08a'),
+      h('div', { style: 'margin-top:6px' }, `Intimacy: ${intimacyLabel(pet.intimacy)} (${pet.intimacy}/1000)`), bar(pet.intimacy, 1000, '#ff7aa8'),
+      h('div', { style: 'margin-top:6px', class: loyal ? 'good' : 'muted' }, `Loyal bonus: ${pd.loyalText}${loyal ? ' (active)' : ' (inactive until Loyal)'}`),
+      h('div', { class: 'muted', style: 'font-size:11px;margin-top:6px' }, `Food: ${food.name} (you have ${countItem(c, food.id)}). Feed it when Hungry or Neutral; feeding when Stuffed lowers intimacy, and so does starving or dying.`),
+      h('div', { class: 'row', style: 'margin-top:8px;gap:6px' },
+        h('button', { class: 'btn small', id: 'pet-feed', onclick: () => { w.feedPetCmd(); this.renderPet(); } }, `Feed ${food.name}`),
+        h('button', { class: 'btn small', id: 'pet-egg', onclick: () => { w.petToEgg(); this.renderPet(); } }, 'Return to egg')),
+      h('div', { class: 'row', style: 'margin-top:6px;gap:6px' }, name, h('button', { class: 'btn small', onclick: () => { w.renamePetCmd(name.value); this.renderPet(); } }, 'Rename'))));
+  }
+
   private renderDatabase() {
     const w = this.app.world!, d = w.data, body = this.wins.get('database')!.body, st = this.db;
     const pct = (c: number) => (c >= 0.01 ? `${+(c * 100).toFixed(2)}%` : `${+(c * 100).toFixed(3)}%`);

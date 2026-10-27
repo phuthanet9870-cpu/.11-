@@ -17,7 +17,7 @@ import { characterCreateScreen, characterSelectScreen, titleScreen } from './scr
 import { WindowManager, type WindowId } from './windows';
 
 const WINDOW_ACTIONS: Record<string, WindowId> = {
-  inventory: 'inventory', equipment: 'equipment', status: 'status', skills: 'skills', quests: 'quests', worldMap: 'worldMap', settings: 'settings', database: 'database',
+  inventory: 'inventory', equipment: 'equipment', status: 'status', skills: 'skills', quests: 'quests', worldMap: 'worldMap', settings: 'settings', database: 'database', pet: 'pet',
 };
 
 export class App implements GameHost {

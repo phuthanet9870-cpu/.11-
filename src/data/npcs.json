@@ -1421,6 +1421,35 @@
   "generated": true
  },
  {
+  "id": "fernhollow_petkeeper",
+  "name": "Pet Keeper Lumi",
+  "title": "Pet Keeper",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#2a2a3a",
+   "accent": "#c8ccd8",
+   "style": "hood"
+  },
+  "greeting": [
+   "Tame a monster with its lure: weaken it first, the lower its HP the better your chance. Feed your pet when it is hungry — never when it is full — and it will grow Loyal."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "fernhollow_pets",
+    "label": "Lures & pet food"
+   }
+  ],
+  "generated": true
+ },
+ {
   "id": "willowbrook_courier",
   "name": "Courier Fiona",
   "title": "Courier Guild Service",

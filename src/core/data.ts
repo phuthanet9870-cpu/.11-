@@ -12,6 +12,7 @@ import dropsJson from '../data/drops.json';
 import npcsJson from '../data/npcs.json';
 import shopsJson from '../data/shops.json';
 import recipesJson from '../data/recipes.json';
+import petsJson from '../data/pets.json';
 import questsJson from '../data/quests.json';
 import tilesJson from '../data/tiles.json';
 import tilesetsJson from '../data/tilesets.json';
@@ -19,7 +20,7 @@ import objectsJson from '../data/objects.json';
 import { MAP_FILES } from '../data/maps';
 import type {
   BossDef, DropTable, Element, ItemDef, JobClassDef, MapDef, MonsterDef, NpcDef,
-  ObjectKindDef, QuestDef, RecipeDef, ShopDef, SkillDef, StatusDef, StatusId, TileDef, TilesetDef,
+  ObjectKindDef, PetDef, QuestDef, RecipeDef, ShopDef, SkillDef, StatusDef, StatusId, TileDef, TilesetDef,
 } from './types';
 
 export type Balance = typeof balanceJson;
@@ -40,6 +41,7 @@ export interface GameData {
   npcs: Map<string, NpcDef>;
   shops: Map<string, ShopDef>;
   recipes: Map<string, RecipeDef>;
+  pets: Map<string, PetDef>;
   quests: Map<string, QuestDef>;
   tiles: Map<string, TileDef>;
   tilesets: Map<string, TilesetDef>;
@@ -74,6 +76,7 @@ export function loadGameData(): GameData {
     npcs: byId(npcsJson as NpcDef[]),
     shops: byId(shopsJson as ShopDef[]),
     recipes: byId(recipesJson as unknown as RecipeDef[]),
+    pets: byId(petsJson as unknown as PetDef[]),
     quests: byId(questsJson as QuestDef[]),
     tiles: byId(tilesJson.tiles as TileDef[]),
     tilesets: byId(tilesetsJson as unknown as TilesetDef[]),
@@ -117,6 +120,11 @@ export function validateGameData(d: GameData): string[] {
   for (const it of d.items.values()) if (it.type === 'card') {
     need(!!it.card && d.monsters.has(it.card.monsterId), `card ${it.id}: monster`);
     need(!!it.card && ['weapon', 'armor', 'headgear', 'shield', 'garment', 'boots', 'accessory'].includes(it.card.equip), `card ${it.id}: slot`);
+  }
+  for (const p of d.pets.values()) {
+    need(d.monsters.has(p.monsterId), `pet ${p.id}: monster`);
+    for (const i of [p.lureItem, p.eggItem, p.foodItem]) need(d.items.has(i), `pet ${p.id}: item ${i}`);
+    need(d.items.get(p.lureItem)?.lure === p.monsterId && d.items.get(p.eggItem)?.petEgg === p.monsterId, `pet ${p.id}: lure/egg link`);
   }
   for (const n of d.npcs.values()) for (const s of n.services) {
     if (s.type === 'shop') need(d.shops.has(s.shopId), `npc ${n.id}: shop ${s.shopId}`);
