@@ -1,0 +1,26 @@
+[
+  { "id": "lion", "name": "The Lion", "theme": "Strength and endurance", "color": "#ffb05a", "nodes": [
+    { "id": "lion_mane", "name": "Mane", "max": 3, "mods": { "patk": 4 }, "requires": [] },
+    { "id": "lion_roar", "name": "Roar", "max": 3, "mods": { "maxHpPct": 3 }, "requires": ["lion_mane"] },
+    { "id": "lion_claws", "name": "Claws", "max": 3, "mods": { "crit": 2 }, "requires": ["lion_mane"] },
+    { "id": "lion_hide", "name": "Hide", "max": 3, "mods": { "pdef": 4 }, "requires": ["lion_roar"] },
+    { "id": "lion_pride", "name": "Pride", "max": 3, "mods": { "aspdPct": 3 }, "requires": ["lion_claws"] },
+    { "id": "lion_king", "name": "King of Beasts", "max": 1, "mods": { "patkPct": 8, "sizeDamagePct": { "large": 10 } }, "requires": ["lion_hide", "lion_pride"] }
+  ] },
+  { "id": "owl", "name": "The Owl", "theme": "Magic and wisdom", "color": "#9ad8ff", "nodes": [
+    { "id": "owl_insight", "name": "Insight", "max": 3, "mods": { "matk": 5 }, "requires": [] },
+    { "id": "owl_calm", "name": "Calm", "max": 3, "mods": { "maxMpPct": 4 }, "requires": ["owl_insight"] },
+    { "id": "owl_quill", "name": "Swift Quill", "max": 3, "mods": { "castTimePct": -4 }, "requires": ["owl_insight"] },
+    { "id": "owl_wisdom", "name": "Wisdom", "max": 3, "mods": { "mpRegen": 2 }, "requires": ["owl_calm"] },
+    { "id": "owl_focus", "name": "Focus", "max": 3, "mods": { "cdrPct": 3 }, "requires": ["owl_quill"] },
+    { "id": "owl_starlit", "name": "Starlit Mind", "max": 1, "mods": { "matkPct": 8, "mdef": 10 }, "requires": ["owl_wisdom", "owl_focus"] }
+  ] },
+  { "id": "fox", "name": "The Fox", "theme": "Speed and luck", "color": "#ff8a8a", "nodes": [
+    { "id": "fox_step", "name": "Quickstep", "max": 3, "mods": { "flee": 4 }, "requires": [] },
+    { "id": "fox_tail", "name": "Lucky Tail", "max": 3, "mods": { "luk": 2 }, "requires": ["fox_step"] },
+    { "id": "fox_eye", "name": "Keen Eye", "max": 3, "mods": { "hit": 5 }, "requires": ["fox_step"] },
+    { "id": "fox_vanish", "name": "Vanish", "max": 3, "mods": { "perfectDodge": 2 }, "requires": ["fox_tail"] },
+    { "id": "fox_fang", "name": "Fang", "max": 3, "mods": { "critDmg": 5 }, "requires": ["fox_eye"] },
+    { "id": "fox_trickster", "name": "Trickster", "max": 1, "mods": { "moveSpeedPct": 8, "crit": 5, "hpDrainPct": 2 }, "requires": ["fox_vanish", "fox_fang"] }
+  ] }
+]

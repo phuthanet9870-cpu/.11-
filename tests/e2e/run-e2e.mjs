@@ -358,7 +358,7 @@ try {
   await sleep(1200);
   const inst = await page.evaluate(() => ({ map: window.__veyloria.world.map.def.id, timer: document.getElementById('inst-timer')?.textContent ?? '' }));
   await page.screenshot({ path: join(shots, '19-endless-spire.png') });
-  check('memorial dungeon entered through the keeper; HUD shows floor and time', inst.map === 'endless_spire_f1' && /Floor 1\/10/.test(inst.timer), `${inst.map} "${inst.timer}"`);
+  check('memorial dungeon entered through the keeper; HUD shows floor and time', inst.map === 'endless_spire_f1' && /Floor 1\/100/.test(inst.timer), `${inst.map} "${inst.timer}"`);
 
   // Delete the character from the select screen (typed-name confirmation).
   await page.evaluate(() => window.__veyloria.exitToSelect());

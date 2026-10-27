@@ -247,6 +247,12 @@
    "facing": "down"
   },
   {
+   "npcId": "arcanthe_astrologer",
+   "x": 22,
+   "y": 28,
+   "facing": "down"
+  },
+  {
    "npcId": "guild_sorcerer",
    "x": 14,
    "y": 28,

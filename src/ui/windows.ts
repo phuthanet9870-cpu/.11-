@@ -13,6 +13,7 @@ import { forgeChanceRaw } from '../core/forge';
 import { DROP_OPTION_COUNT, optionOdds } from '../core/options';
 import { homunExpToNext, homunStats } from '../core/homunculus';
 import { CART_SLOTS, CART_WEIGHT, cartWeight } from '../core/inventory';
+import { canLearnRune, runePointsLeft, runePointsTotal } from '../core/runes';
 import { hungerLabel, intimacyLabel, LOYAL_AT } from '../core/pets';
 import { canRaiseStat, expToNextBase, expToNextJob, statRaiseCost } from '../core/formulas';
 import {
@@ -29,7 +30,7 @@ import { canForge, CRUMB_ATK, ELEMENT_STONES, forgeChance, STAR_CRUMB } from '..
 import { ENCHANT_COST, MAX_OPTIONS, optionLabel, REROLL_COST } from '../core/options';
 
 type DbTab = 'monsters' | 'items' | 'cards' | 'refine' | 'forge' | 'options' | 'combos' | 'pets' | 'elements';
-export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet' | 'homun' | 'cart';
+export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet' | 'homun' | 'cart' | 'runes';
 
 interface WinState { el: HTMLElement; body: HTMLElement; render: () => void; open: boolean }
 
@@ -91,6 +92,7 @@ export class WindowManager {
     this.define('pet', 'Pet', 520, 90, () => this.renderPet());
     this.define('homun', 'Homunculus', 520, 120, () => this.renderHomun());
     this.define('cart', 'Pushcart', 16, 90, () => this.renderCart());
+    this.define('runes', 'Rune Constellation', 300, 70, () => this.renderRunes());
   }
 
   get anyOpen() { return [...this.wins.values()].some((w) => w.open) || !!this.dialogEl || !!this.modalEl; }
@@ -581,6 +583,7 @@ export class WindowManager {
       const col = m.type === 'town' ? '#ffd34d' : m.type === 'field' ? '#6fe08a' : '#ff6a5a';
       const node = h('div', { class: `wm-node ${m.type}${here ? ' here' : ''}`, title: `${m.name} — ${m.region}${m.levelRange ? ` (Lv.${m.levelRange[0]}–${m.levelRange[1]})` : ''}`, style: { left: `${m.worldMapPos.x * MW}px`, top: `${m.worldMapPos.y * MH}px` } },
         h('div', { class: 'dot', style: { background: col } }),
+        w.event && !w.event.done && w.event.mapId === m.id ? h('div', { style: 'position:absolute;left:10px;top:-14px;font-size:13px', title: 'Raid in progress' }, '⚔') : '',
         h('div', { class: 'wm-name' }, m.type === 'town' ? m.name.replace(/^(Royal Capital|Tower City|Desert City|Port Town|Snow Town) /, '').replace(/ Village$/, '') : m.name),
         m.levelRange ? h('div', { class: 'muted' }, `Lv.${m.levelRange[0]}–${m.levelRange[1]}`) : null);
       box.appendChild(node);
@@ -772,6 +775,25 @@ export class WindowManager {
         h('button', { class: 'btn small', id: 'homun-feed', onclick: () => { w.homunFeedCmd(); this.renderHomun(); } }, `Feed (${countItem(c, 'homun_ration')})`),
         !hm.alive ? h('button', { class: 'btn small', onclick: () => { w.homunReviveCmd(); this.renderHomun(); } }, `Revive (${countItem(c, 'homun_revive')})`) : '',
         !hm.evolved ? h('button', { class: 'btn small', title: 'Lv 50, Loyal, 1 Stone of Sages', onclick: () => { w.homunEvolveCmd(); this.renderHomun(); } }, 'Evolve') : '')));
+  }
+
+  // ---------------------------------------------------------------- rune constellation
+  private renderRunes() {
+    const w = this.app.world!, d = w.data, c = w.char, body = this.wins.get('runes')!.body;
+    const cols = [...d.runes.values()].map((k) => h('div', { style: `border:1px solid ${k.color}55;border-radius:6px;padding:6px;width:190px` },
+      h('div', { style: `color:${k.color};font-weight:bold` }, k.name), h('div', { class: 'muted', style: 'font-size:10px;margin-bottom:4px' }, k.theme),
+      k.nodes.map((n) => {
+        const rank = c.runes?.[n.id] ?? 0, chk = canLearnRune(d, c, n.id);
+        return h('div', { class: 'row', style: 'margin:3px 0;gap:4px;align-items:center' },
+          h('div', { style: `width:14px;height:14px;border-radius:50%;background:${rank ? k.color : '#2a2433'};border:1px solid ${k.color}` }),
+          h('div', { style: 'flex:1' }, h('div', { style: n.max === 1 ? 'font-weight:bold' : '' }, `${n.name} ${rank}/${n.max}`),
+            h('div', { class: 'muted', style: 'font-size:10px' }, `${modsText(n.mods).join(', ')}${n.max > 1 ? ' per rank' : ''}${n.requires.length ? ` · after ${n.requires.map((r) => k.nodes.find((x) => x.id === r)?.name).join(' + ')}` : ''}`)),
+          h('button', { class: 'btn small', id: `rune-${n.id}`, disabled: !chk.ok, title: chk.ok ? 'Spend a rune point' : chk.error, onclick: () => { w.learnRuneCmd(n.id); this.renderRunes(); } }, '+'));
+      })));
+    setChildren(body, h('div', {},
+      h('div', { class: 'row', style: 'margin-bottom:6px' }, h('span', { class: 'gold' }, `Rune points: ${runePointsLeft(c)} / ${runePointsTotal(c)}`), h('span', { class: 'spacer' }),
+        h('span', { class: 'muted', style: 'font-size:11px' }, c.baseLevel < 30 ? 'Opens at Base Lv 30' : 'One point every two base levels · reset at the Astrologer in Arcanthe')),
+      h('div', { class: 'row', style: 'gap:8px;align-items:flex-start' }, cols)));
   }
 
   // ---------------------------------------------------------------- pushcart
@@ -968,6 +990,7 @@ export class WindowManager {
       if (s.type === 'enchant') opts.push(['Enchant equipment', () => { this.closeDialog(); this.enchantDialog(); }]);
       if (s.type === 'forge') opts.push(['Forge a weapon', () => { this.closeDialog(); this.forgeDialog(); }]);
       if (s.type === 'warp') opts.push(['Warp service', () => this.warpDialog(npc, s.destinations)]);
+      if (s.type === 'runeReset') opts.push([`Reset the constellations (${s.cost.toLocaleString()} Luma)`, () => { this.closeDialog(); this.confirmAction('Reset runes', 'Clear every star and get all rune points back?', 'Reset', () => w.resetRunesCmd()); }]);
       if (s.type === 'stable') opts.push([w.char.flags.mountOwned ? 'You already own a war-drake' : `Buy a war-drake (${s.cost} Luma)`, () => { this.closeDialog(); w.rentMount(); }]);
       if (s.type === 'cart') opts.push([w.char.cart ? 'You already have a pushcart' : `Rent a pushcart (${s.cost} Luma)`, () => { this.closeDialog(); w.rentCart(); }]);
       if (s.type === 'rebirth') {

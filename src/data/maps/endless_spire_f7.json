@@ -85,7 +85,7 @@
  "npcs": [],
  "monsterSpawns": [
   {
-   "monsterId": "grave_soldier",
+   "monsterId": "forest_goblin",
    "count": 4,
    "area": {
     "x": 4,
@@ -95,7 +95,7 @@
    }
   },
   {
-   "monsterId": "shadow_wolf",
+   "monsterId": "venom_spore",
    "count": 4,
    "area": {
     "x": 15,

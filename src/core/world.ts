@@ -13,6 +13,7 @@ import {
 } from './inventory';
 import { allocateStat, changeJob, learnSkill, rebirth, resetSkills, resetStats } from './character';
 import { refineItem, type RefineResult } from './refine';
+import { learnRune, resetRunes } from './runes';
 import { classLineage } from './lineage';
 import { addHomunExp, createHomunculus, evolveHomun, feedHomun, homunStats, releaseHomun, reviveHomun, tickHomun } from './homunculus';
 import { equipPetAccessory, evolvePet, removePetAccessory } from './pets';
@@ -123,6 +124,8 @@ export interface MonsterActor extends ActorBase {
   tauntUntil: number;
   /** A thief already stole from this monster. */
   stolen?: boolean;
+  /** Part of a world-event raid. */
+  eventRaid?: 'leader' | 'raider';
   mugged?: boolean;
   /** Items a looter monster picked up; dropped when it dies. */
   loot?: { itemId: string; qty: number; options?: { key: string; value: number }[] }[];
@@ -179,7 +182,15 @@ export interface WorldOptions {
   rng?: Rng;
   now?: () => number;
   autoLoot?: boolean;
+  /** Turn off timed world events (tests that need a quiet world). */
+  noEvents?: boolean;
 }
+
+/** One in-game day lasts this many real seconds (24 minutes). */
+export const DAY_SECONDS = 24 * 60;
+/** World events: one every 15 minutes of play, lasting 10 minutes. */
+export const EVENT_INTERVAL_MS = 15 * 60000;
+export const EVENT_DURATION_MS = 10 * 60000;
 
 const INTERACT_RANGE = 64;
 const SERVICE_RANGE = 140;
@@ -232,6 +243,10 @@ export class World {
     this.rng = opts.rng ?? new Rng();
     this.now = opts.now ?? (() => Date.now());
     this.autoLoot = opts.autoLoot ?? false;
+    this.eventsOn = !opts.noEvents;
+    // The day starts wherever the real clock is, so sessions begin at different hours.
+    this.dayOffsetSec = Math.floor(this.now() / 1000) % DAY_SECONDS;
+    this.nextEventAt = 5 * 60000;
     this.player = {
       id: 'player', kind: 'player', x: 0, y: 0, dir: 'down', hp: 1, maxHp: 1, statuses: [], buffs: [], dead: false,
       kb: null, anim: 'idle', animAt: 0, moving: false, move: null, halfW: PLAYER_HALF_W, halfH: PLAYER_HALF_H,
@@ -440,6 +455,7 @@ export class World {
     this.updatePet(dt);
     this.updateHomun(dt);
     this.updateInstance();
+    this.updateEvents();
     this.telegraphs = this.telegraphs.filter((t) => t.endsAt > this.time - 200);
     if (this.statsDirty) this.recomputeStats();
     this.char.position = { mapId: this.map.def.id, x: this.player.x, y: this.player.y };
@@ -518,6 +534,15 @@ export class World {
     if (ins.floor < def.floors.length) {
       this.message(`Floor ${ins.floor} cleared! The seal on the portal breaks.`, 'quest');
       this.emit({ type: 'sound', key: 'level_up' });
+      const ms = def.milestones?.find((x) => x.floor === ins.floor);
+      if (ms) {
+        this.char.luma += ms.reward.luma;
+        for (const it of ms.reward.items) addItem(this.data, this.char, it.itemId, it.qty, { ignoreWeight: true });
+        this.grantExp(ms.reward.exp, ms.reward.jobExp, `${def.name} floor ${ins.floor}`);
+        this.char.flags[`instbest_${def.id}`] = Math.max(Number(this.char.flags[`instbest_${def.id}`] ?? 0), ins.floor);
+        this.message(`Milestone reward for floor ${ins.floor}: ${ms.reward.luma.toLocaleString()} Luma and ${ms.reward.items.map((x) => `${x.qty}× ${this.data.items.get(x.itemId)?.name}`).join(', ')}.`, 'quest');
+        this.afterInventoryChange();
+      }
       return;
     }
     ins.done = true;
@@ -528,6 +553,89 @@ export class World {
     this.grantExp(r.exp, r.jobExp, def.name);
     this.char.flags[`instclear_${def.id}`] = Number(this.char.flags[`instclear_${def.id}`] ?? 0) + 1;
     this.emit({ type: 'sound', key: 'level_up' });
+    this.afterInventoryChange();
+  }
+
+  // ---------------------------------------------------------------- day / night
+  private dayOffsetSec = 0;
+  /** In-game time of day in hours (0–24). */
+  get hourOfDay(): number { return (((this.dayOffsetSec + this.time / 1000) % DAY_SECONDS) / DAY_SECONDS) * 24; }
+  get isNight(): boolean { const h = this.hourOfDay; return h >= 20 || h < 5; }
+  /** 0 by day, up to 1 in the middle of the night (for the screen tint). */
+  get darkness(): number {
+    const h = this.hourOfDay;
+    if (h >= 6 && h < 18) return 0;
+    if (h >= 18 && h < 21) return (h - 18) / 3;
+    if (h >= 4 && h < 6) return (6 - h) / 2;
+    return 1;
+  }
+
+  // ---------------------------------------------------------------- world events (raids)
+  private eventsOn = true;
+  private nextEventAt = 0;
+  event: { mapId: string; mapName: string; leaderDefId: string; raiderDefId: string; endsAt: number; done: boolean } | null = null;
+
+  private updateEvents() {
+    if (!this.eventsOn) return;
+    const ev = this.event;
+    if (ev && !ev.done && this.time >= ev.endsAt) {
+      this.message(`The raid on ${ev.mapName} is over. The raiders withdrew.`, 'system');
+      for (const m of [...this.monsters.values()]) if (m.eventRaid) this.monsters.delete(m.id);
+      this.event = null;
+    }
+    if (ev?.done && this.time >= ev.endsAt) this.event = null;
+    if (!this.event && this.time >= this.nextEventAt) this.startEvent();
+    const cur = this.event;
+    if (cur && !cur.done && cur.mapId === this.map.def.id && ![...this.monsters.values()].some((m) => m.eventRaid)) this.spawnRaid();
+  }
+
+  /** Start a raid on a field map near the player's level. */
+  startEvent(mapId?: string): boolean {
+    const lv = this.char.baseLevel;
+    const fields = [...this.data.maps.values()].filter((m) => m.type === 'field' && m.levelRange && m.monsterSpawns.length);
+    const fit = fields.filter((m) => m.levelRange![0] <= lv + 8 && m.levelRange![1] >= lv - 8);
+    const pool = fit.length ? fit : fields;
+    const map = mapId ? this.data.maps.get(mapId) : pool[Math.floor(this.rng.next() * pool.length)];
+    if (!map) return false;
+    const mons = map.monsterSpawns.map((s) => this.data.monsters.get(s.monsterId)!).filter((m) => m.aiType !== 'boss');
+    const raider = mons.filter((m) => !m.elite).sort((a, b) => b.level - a.level)[0];
+    const leader = mons.find((m) => m.elite) ?? raider;
+    if (!raider) return false;
+    this.event = { mapId: map.id, mapName: map.name, leaderDefId: leader.id, raiderDefId: raider.id, endsAt: this.time + EVENT_DURATION_MS, done: false };
+    this.nextEventAt = this.time + EVENT_INTERVAL_MS;
+    this.message(`⚔ RAID! ${leader.name} leads a band of ${raider.name}s against ${map.name} (Lv ${map.levelRange!.join('–')}). Defeat the leader within 10 minutes!`, 'quest');
+    this.emit({ type: 'sound', key: 'boss_roar' });
+    return true;
+  }
+
+  private spawnRaid() {
+    const ev = this.event!;
+    const p = this.player;
+    const spots = this.spawnCells.flat();
+    const pick = () => { const c = spots[Math.floor(this.rng.next() * spots.length)] ?? { x: p.x / TILE, y: p.y / TILE }; return { x: c.x * TILE + TILE / 2, y: c.y * TILE + TILE / 2 }; };
+    const at = pick();
+    const leader = this.spawnMonsterAt(ev.leaderDefId, at.x, at.y);
+    if (leader) { leader.eventRaid = 'leader'; leader.maxHp = leader.hp = Math.round(leader.maxHp * (leader.def.elite ? 1.5 : 6)); }
+    for (let i = 0; i < 8; i++) {
+      const m = this.spawnMonsterAt(ev.raiderDefId, at.x + this.rng.range(-120, 120), at.y + this.rng.range(-90, 90));
+      if (m) m.eventRaid = 'raider';
+    }
+    this.message(`The raiders of ${ev.mapName} are here!`, 'quest');
+  }
+
+  private onRaidKill(m: MonsterActor) {
+    const ev = this.event;
+    if (!ev || m.eventRaid !== 'leader' || ev.done) return;
+    ev.done = true; ev.endsAt = this.time + 30000;
+    const lv = m.def.level;
+    const luma = lv * 300;
+    this.char.luma += luma;
+    this.grantExp(m.def.exp * 3, m.def.jobExp * 3, 'Raid leader');
+    const album = this.rng.chance(0.3);
+    if (album) addItem(this.data, this.char, 'card_album', 1, { ignoreWeight: true });
+    this.char.flags.raidsWon = Number(this.char.flags.raidsWon ?? 0) + 1;
+    this.message(`Raid repelled! +${luma.toLocaleString()} Luma${album ? ' and a Faded Card Album' : ''}.`, 'quest');
+    for (const x of [...this.monsters.values()]) if (x.eventRaid === 'raider') this.schedule(2000, () => this.monsters.delete(x.id));
     this.afterInventoryChange();
   }
 
@@ -1065,6 +1173,8 @@ export class World {
     if (m.boss) {
       atkMul = m.boss.def.phases[m.boss.phase].atkMul * (m.boss.enraged ? m.boss.def.enrage.atkMul : 1);
     }
+    // Night: undead, shadow and ghost monsters hit 15% harder.
+    if (this.isNight && (m.def.race === 'undead' || m.def.element === 'shadow' || m.def.element === 'ghost')) atkMul *= 1.15;
     const prof = profileFromMonster(this.data, m.def, atkMul);
     for (const s of m.statuses) {
       const d = this.data.statuses.get(s.id);
@@ -1256,6 +1366,7 @@ export class World {
     if (contributed) {
       this.char.stats_meta.kills++;
       this.grantExp(m.def.exp, m.def.jobExp, m.def.name);
+      if (m.eventRaid) this.onRaidKill(m);
       const hm = this.char.homunculus;
       if (hm?.alive && (m.damageBy.homun ?? 0) > 0) {
         const lv = addHomunExp(this.data, hm, Math.ceil(m.def.exp * 0.5));
@@ -2318,6 +2429,22 @@ export class World {
     this.emit({ type: 'jobChanged', classId: 'high_novice' });
     this.emit({ type: 'fx', fx: 'job_change', x: this.player.x, y: this.player.y });
     this.emit({ type: 'sound', key: 'level_up' });
+    return r;
+  }
+
+  // ---------------------------------------------------------------- rune constellation
+  learnRuneCmd(id: string): OpResult {
+    const r = learnRune(this.data, this.char, id);
+    if (!r.ok) return this.err(r.error);
+    this.invalidateStats(); this.message(r.message!);
+    return r;
+  }
+  resetRunesCmd(): OpResult {
+    let cost = 0;
+    if (!this.nearService((s) => s.type === 'runeReset' && ((cost = s.cost), true))) return this.err('Only an Astrologer can reset the constellations.');
+    const r = resetRunes(this.char, cost);
+    if (!r.ok) return this.err(r.error);
+    this.invalidateStats(); this.message(r.message!);
     return r;
   }
 

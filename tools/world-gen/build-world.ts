@@ -715,6 +715,9 @@ export async function main() {
   items.push({ id: 'sage_stone', name: 'Stone of Sages', type: 'material', rarity: 'epic', description: 'A philosopher\'s stone. Evolves a Lv 50 Loyal homunculus.', weight: 5, price: 50000, stackable: true, maxStack: 99, icon: { shape: 'gem', color: '#ff5a8a' }, generated: true });
   for (const m of monsters) { const t = drops.find((d: J) => d.id === m.dropTableId); if (t && m.elite && m.level >= 40) t.entries.push({ itemId: 'sage_stone', chance: 0.01, oreHint: true }); }
   shops.push({ id: 'tidewatch_alchemy', name: 'Alchemy Supplies', items: ['homun_embryo', 'homun_ration', 'homun_revive'], generated: true });
+  npcs.push(npc('arcanthe_astrologer', 'Astrologer Nim', 'Reader of the Rune Constellation', 6262, 'robe', [{ type: 'runeReset', cost: 10000 }],
+    ['From Base Level 30 the stars answer you: one rune point every two levels. Spend them in the Rune window (N). For 10,000 Luma I can clear the sky and give the points back.']));
+  built.find((b) => b.map.id === 'arcanthe')!.map.npcs.push({ npcId: 'arcanthe_astrologer', x: 22, y: 28, facing: 'down' });
   npcs.push(npc('aurelion_stable', 'Stablemaster Rook', 'War-drake Stable', 5151, 'apron', [{ type: 'stable', cost: 2500 }],
     ['Knights ride war-drakes: faster, and they carry 1,000 more weight, but you swing slower until you train Drake Riding.']));
   built.find((b) => b.map.id === 'aurelion')!.map.npcs.push({ npcId: 'aurelion_stable', x: 18, y: 32, facing: 'down' });
@@ -748,21 +751,34 @@ export async function main() {
   // ---------------------------------------------------------------- memorial dungeons (timed instances)
   const INSTANCES = [
     { id: 'endless_spire', name: 'Endless Spire', town: 'aurelion', npc: ['spire_warden', 'Warden Isolde', 'Keeper of the Endless Spire', [30, 32]], tileset: 'dg_tower', minLevel: 20,
-      timeLimitMs: 30 * 60000, cooldownMs: 60 * 60000, bgm: 'dungeon_dark',
-      description: 'Ten floors, each sealed until every monster on it is defeated. Floors 5 and 10 hold an elite guardian. 30 minutes; once per hour.',
-      floors: [['leaf_slime', 'horn_rabbit'], ['forest_goblin', 'plains_wolf'], ['bone_soldier', 'pebble_golem'], ['road_goblin', 'crypt_bat'], ['crystal_slime', 'elite_road_goblin'],
-        ['wailing_spirit', 'bramble_hornet'], ['grave_soldier', 'shadow_wolf'], ['grotto_crab', 'moss_golem'], ['lantern_ghost', 'animated_armor'], ['mana_wisp', 'elite_arcane_wisp']],
-      reward: { exp: 20000, jobExp: 14000, luma: 15000, items: [['card_album', 1], ['enriched_starsteel', 2], ['enriched_moonstone', 2], ['elder_sap', 1]] } },
+      timeLimitMs: 3 * 3600000, cooldownMs: 24 * 3600000, bgm: 'dungeon_dark',
+      description: 'A hundred floors, each sealed until every monster on it is defeated. Monsters grow stronger every floor and an elite guards every tenth. Rewards at floors 25, 50 and 75, and at the top. 3 hours; once per day.',
+      floors: spireFloors(),
+      milestones: [[25, { exp: 15000, jobExp: 10000, luma: 10000, items: [['card_album', 1]] }], [50, { exp: 80000, jobExp: 50000, luma: 30000, items: [['card_album', 1], ['enriched_starsteel', 2]] }],
+        [75, { exp: 300000, jobExp: 200000, luma: 60000, items: [['stellar_shard', 1], ['lunar_shard', 1], ['card_album', 2]] }]],
+      reward: { exp: 1000000, jobExp: 600000, luma: 150000, items: [['card_album', 3], ['stellar_shard', 3], ['lunar_shard', 3], ['sage_stone', 1], ['elder_sap', 3]] } },
     { id: 'sealed_crypt', name: 'Sealed Crypt', town: 'frostholm', npc: ['crypt_keeper', 'Brother Halvard', 'Keeper of the Sealed Crypt', [30, 32]], tileset: 'dg_crypt', minLevel: 45,
       timeLimitMs: 20 * 60000, cooldownMs: 60 * 60000, bgm: 'dungeon_dark',
       description: 'Four sealed rooms of restless dead and a Revenant guardian at the bottom. 20 minutes; once per hour.',
       floors: [['tomb_mummy', 'lantern_ghost'], ['frost_wraith', 'cursed_knight'], ['banshee', 'grave_knight'], ['lich_spirit', 'elite_banshee']],
       reward: { exp: 90000, jobExp: 60000, luma: 40000, items: [['stellar_shard', 1], ['lunar_shard', 1], ['card_album', 2], ['enriched_starsteel', 4], ['enriched_moonstone', 4], ['elder_sap', 2]] } },
   ];
+  // 100 Spire floors: two monsters near the floor's target level (Lv 4 → 88); an elite on every tenth floor.
+  function spireFloors(): string[][] {
+    const pool = monsters.filter((m: J) => m.aiType !== 'boss' && !m.elite).sort((a: J, b: J) => a.level - b.level);
+    const elites = monsters.filter((m: J) => m.elite).sort((a: J, b: J) => a.level - b.level);
+    const near = (list: J[], lv: number) => list.reduce((a, b) => (Math.abs(b.level - lv) < Math.abs(a.level - lv) ? b : a));
+    return Array.from({ length: 100 }, (_, i) => {
+      const lv = 3 + (i + 1) * 0.85;
+      const a = near(pool, lv), b = near(pool.filter((m) => m.id !== a.id), lv + 2);
+      return (i + 1) % 10 === 0 ? [a.id, near(elites, lv).id] : [a.id, b.id];
+    });
+  }
   const instances: J[] = [];
-  for (const inst of INSTANCES) {
-    const floorIds = inst.floors.map((_, i) => `${inst.id}_f${i + 1}`);
-    inst.floors.forEach((mobs, i) => {
+  const rew = (r: J) => ({ exp: r.exp, jobExp: r.jobExp, luma: r.luma, items: r.items.map(([itemId, qty]: [string, number]) => ({ itemId, qty })) });
+  for (const inst of INSTANCES as J[]) {
+    const floorIds = inst.floors.map((_: unknown, i: number) => `${inst.id}_f${i + 1}`);
+    inst.floors.forEach((mobs: string[], i: number) => {
       const W = 30, H = 24, id = floorIds[i], last = i === floorIds.length - 1, r = rng(hash(id));
       const paint: J[] = [];
       for (let k = 0; k < 6; k++) paint.push({ op: 'object', kind: 'ruin_pillar', x: 5 + Math.floor(r() * (W - 10)), y: 5 + Math.floor(r() * (H - 12)) });
@@ -778,7 +794,8 @@ export async function main() {
       built.push({ map, npcs: [], shops: [] });
     });
     instances.push({ id: inst.id, name: inst.name, description: inst.description, minLevel: inst.minLevel, timeLimitMs: inst.timeLimitMs, cooldownMs: inst.cooldownMs,
-      floors: floorIds, exitMap: inst.town, reward: { exp: inst.reward.exp, jobExp: inst.reward.jobExp, luma: inst.reward.luma, items: inst.reward.items.map(([itemId, qty]) => ({ itemId, qty })) }, generated: true });
+      floors: floorIds, exitMap: inst.town, reward: rew(inst.reward),
+      ...(inst.milestones ? { milestones: inst.milestones.map(([floor, r]: [number, J]) => ({ floor, reward: rew(r) })) } : {}), generated: true });
     const [nid, nname, ntitle, [nx, ny]] = inst.npc as [string, string, string, [number, number]];
     npcs.push(npc(nid, nname, ntitle, hash(nid), 'robe', [{ type: 'instance', instanceId: inst.id }], [`${inst.description}`]));
     built.find((b) => b.map.id === inst.town)!.map.npcs.push({ npcId: nid, x: nx, y: ny, facing: 'down' });

@@ -27,6 +27,8 @@ export class Hud {
   root: HTMLElement;
   private portrait = h('canvas', { class: 'portrait', width: 96, height: 96 });
   private whoName = h('div', { class: 'who' });
+  /** Clock and active raid. */
+  private clockEl = h('div', { id: 'world-clock', style: 'position:absolute;top:8px;right:222px;min-width:110px;text-align:center;padding:2px 6px;background:#1c1622cc;border:1px solid #5a4a3a;border-radius:5px;color:#e8dcc0;font-size:11px;z-index:5' });
   /** Memorial-dungeon timer (floor and time left). */
   private instTimer = h('div', { id: 'inst-timer', style: 'position:absolute;top:8px;left:50%;transform:translateX(-50%);padding:4px 12px;background:#1c1622dd;border:1px solid #c8a26b;border-radius:6px;color:#ffe9a8;font-size:13px;display:none;z-index:5' });
   private hpBar = bar('hp');
@@ -71,7 +73,7 @@ export class Hud {
       w.moveTo(sx * w.map.width * TILE, sy * w.map.height * TILE);
     });
     const menu = h('div', { class: 'menu-buttons' },
-      ...([['status', 'Status'], ['inventory', 'Items'], ['equipment', 'Equip'], ['skills', 'Skills'], ['quests', 'Quests'], ['worldMap', 'Map'], ['database', 'DB'], ['pet', 'Pet'], ['homun', 'Homun'], ['cart', 'Cart'], ['settings', 'Menu']] as const)
+      ...([['status', 'Status'], ['inventory', 'Items'], ['equipment', 'Equip'], ['skills', 'Skills'], ['quests', 'Quests'], ['worldMap', 'Map'], ['database', 'DB'], ['pet', 'Pet'], ['runes', 'Runes'], ['homun', 'Homun'], ['cart', 'Cart'], ['settings', 'Menu']] as const)
         .map(([id, label]) => h('button', { class: 'btn', title: `${label} (${this.app.keyLabel(id)})`, onclick: () => this.app.windows.toggle(id) }, label)),
       h('button', { class: 'btn', id: 'btn-gm', title: 'GM / Admin tools (F8 or /gm)', onclick: () => this.app.windows.toggle('admin') }, 'GM'));
     this.root = h('div', { id: 'hud', class: 'passthrough', style: 'position:absolute;inset:0' },
@@ -281,6 +283,11 @@ export class Hud {
     if (now - this.lastSlow < 120) return;
     this.lastSlow = now;
     if (!this.instTimer.parentElement) this.root.appendChild(this.instTimer);
+    if (!this.clockEl.parentElement) this.root.appendChild(this.clockEl);
+    const hr = w.hourOfDay, hh = Math.floor(hr), mm = Math.floor((hr - hh) * 60);
+    const ev = w.event;
+    const evLeft = ev ? Math.max(0, Math.ceil((ev.endsAt - w.time) / 1000)) : 0;
+    this.clockEl.textContent = `${w.isNight ? '☾' : '☀'} ${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}${ev && !ev.done ? `  ·  ⚔ Raid: ${ev.mapName} ${Math.floor(evLeft / 60)}:${String(evLeft % 60).padStart(2, '0')}` : ''}`;
     const ins = w.instance, idef = ins && w.data.instances.get(ins.id);
     if (ins && idef) {
       const left = Math.max(0, Math.ceil((ins.endsAt - w.time) / 1000));

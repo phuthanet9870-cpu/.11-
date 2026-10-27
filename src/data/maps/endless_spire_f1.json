@@ -85,7 +85,7 @@
  "npcs": [],
  "monsterSpawns": [
   {
-   "monsterId": "leaf_slime",
+   "monsterId": "horn_rabbit",
    "count": 4,
    "area": {
     "x": 4,
@@ -95,7 +95,7 @@
    }
   },
   {
-   "monsterId": "horn_rabbit",
+   "monsterId": "clover_slime",
    "count": 4,
    "area": {
     "x": 15,

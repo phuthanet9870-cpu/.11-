@@ -85,7 +85,7 @@
  "npcs": [],
  "monsterSpawns": [
   {
-   "monsterId": "forest_goblin",
+   "monsterId": "mushling",
    "count": 5,
    "area": {
     "x": 4,
@@ -95,7 +95,7 @@
    }
   },
   {
-   "monsterId": "plains_wolf",
+   "monsterId": "buzz_wasp",
    "count": 5,
    "area": {
     "x": 15,

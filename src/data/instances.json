@@ -2,10 +2,10 @@
  {
   "id": "endless_spire",
   "name": "Endless Spire",
-  "description": "Ten floors, each sealed until every monster on it is defeated. Floors 5 and 10 hold an elite guardian. 30 minutes; once per hour.",
+  "description": "A hundred floors, each sealed until every monster on it is defeated. Monsters grow stronger every floor and an elite guards every tenth. Rewards at floors 25, 50 and 75, and at the top. 3 hours; once per day.",
   "minLevel": 20,
-  "timeLimitMs": 1800000,
-  "cooldownMs": 3600000,
+  "timeLimitMs": 10800000,
+  "cooldownMs": 86400000,
   "floors": [
    "endless_spire_f1",
    "endless_spire_f2",
@@ -16,32 +16,182 @@
    "endless_spire_f7",
    "endless_spire_f8",
    "endless_spire_f9",
-   "endless_spire_f10"
+   "endless_spire_f10",
+   "endless_spire_f11",
+   "endless_spire_f12",
+   "endless_spire_f13",
+   "endless_spire_f14",
+   "endless_spire_f15",
+   "endless_spire_f16",
+   "endless_spire_f17",
+   "endless_spire_f18",
+   "endless_spire_f19",
+   "endless_spire_f20",
+   "endless_spire_f21",
+   "endless_spire_f22",
+   "endless_spire_f23",
+   "endless_spire_f24",
+   "endless_spire_f25",
+   "endless_spire_f26",
+   "endless_spire_f27",
+   "endless_spire_f28",
+   "endless_spire_f29",
+   "endless_spire_f30",
+   "endless_spire_f31",
+   "endless_spire_f32",
+   "endless_spire_f33",
+   "endless_spire_f34",
+   "endless_spire_f35",
+   "endless_spire_f36",
+   "endless_spire_f37",
+   "endless_spire_f38",
+   "endless_spire_f39",
+   "endless_spire_f40",
+   "endless_spire_f41",
+   "endless_spire_f42",
+   "endless_spire_f43",
+   "endless_spire_f44",
+   "endless_spire_f45",
+   "endless_spire_f46",
+   "endless_spire_f47",
+   "endless_spire_f48",
+   "endless_spire_f49",
+   "endless_spire_f50",
+   "endless_spire_f51",
+   "endless_spire_f52",
+   "endless_spire_f53",
+   "endless_spire_f54",
+   "endless_spire_f55",
+   "endless_spire_f56",
+   "endless_spire_f57",
+   "endless_spire_f58",
+   "endless_spire_f59",
+   "endless_spire_f60",
+   "endless_spire_f61",
+   "endless_spire_f62",
+   "endless_spire_f63",
+   "endless_spire_f64",
+   "endless_spire_f65",
+   "endless_spire_f66",
+   "endless_spire_f67",
+   "endless_spire_f68",
+   "endless_spire_f69",
+   "endless_spire_f70",
+   "endless_spire_f71",
+   "endless_spire_f72",
+   "endless_spire_f73",
+   "endless_spire_f74",
+   "endless_spire_f75",
+   "endless_spire_f76",
+   "endless_spire_f77",
+   "endless_spire_f78",
+   "endless_spire_f79",
+   "endless_spire_f80",
+   "endless_spire_f81",
+   "endless_spire_f82",
+   "endless_spire_f83",
+   "endless_spire_f84",
+   "endless_spire_f85",
+   "endless_spire_f86",
+   "endless_spire_f87",
+   "endless_spire_f88",
+   "endless_spire_f89",
+   "endless_spire_f90",
+   "endless_spire_f91",
+   "endless_spire_f92",
+   "endless_spire_f93",
+   "endless_spire_f94",
+   "endless_spire_f95",
+   "endless_spire_f96",
+   "endless_spire_f97",
+   "endless_spire_f98",
+   "endless_spire_f99",
+   "endless_spire_f100"
   ],
   "exitMap": "aurelion",
   "reward": {
-   "exp": 20000,
-   "jobExp": 14000,
-   "luma": 15000,
+   "exp": 1000000,
+   "jobExp": 600000,
+   "luma": 150000,
    "items": [
     {
      "itemId": "card_album",
+     "qty": 3
+    },
+    {
+     "itemId": "stellar_shard",
+     "qty": 3
+    },
+    {
+     "itemId": "lunar_shard",
+     "qty": 3
+    },
+    {
+     "itemId": "sage_stone",
      "qty": 1
-    },
-    {
-     "itemId": "enriched_starsteel",
-     "qty": 2
-    },
-    {
-     "itemId": "enriched_moonstone",
-     "qty": 2
     },
     {
      "itemId": "elder_sap",
-     "qty": 1
+     "qty": 3
     }
    ]
   },
+  "milestones": [
+   {
+    "floor": 25,
+    "reward": {
+     "exp": 15000,
+     "jobExp": 10000,
+     "luma": 10000,
+     "items": [
+      {
+       "itemId": "card_album",
+       "qty": 1
+      }
+     ]
+    }
+   },
+   {
+    "floor": 50,
+    "reward": {
+     "exp": 80000,
+     "jobExp": 50000,
+     "luma": 30000,
+     "items": [
+      {
+       "itemId": "card_album",
+       "qty": 1
+      },
+      {
+       "itemId": "enriched_starsteel",
+       "qty": 2
+      }
+     ]
+    }
+   },
+   {
+    "floor": 75,
+    "reward": {
+     "exp": 300000,
+     "jobExp": 200000,
+     "luma": 60000,
+     "items": [
+      {
+       "itemId": "stellar_shard",
+       "qty": 1
+      },
+      {
+       "itemId": "lunar_shard",
+       "qty": 1
+      },
+      {
+       "itemId": "card_album",
+       "qty": 2
+      }
+     ]
+    }
+   }
+  ],
   "generated": true
  },
  {

@@ -1519,6 +1519,34 @@
   "generated": true
  },
  {
+  "id": "arcanthe_astrologer",
+  "name": "Astrologer Nim",
+  "title": "Reader of the Rune Constellation",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#2a2a3a",
+   "accent": "#c8ccd8",
+   "style": "robe"
+  },
+  "greeting": [
+   "From Base Level 30 the stars answer you: one rune point every two levels. Spend them in the Rune window (N). For 10,000 Luma I can clear the sky and give the points back."
+  ],
+  "services": [
+   {
+    "type": "runeReset",
+    "cost": 10000
+   }
+  ],
+  "generated": true
+ },
+ {
   "id": "aurelion_stable",
   "name": "Stablemaster Rook",
   "title": "War-drake Stable",
@@ -1988,7 +2016,7 @@
    "style": "robe"
   },
   "greeting": [
-   "Ten floors, each sealed until every monster on it is defeated. Floors 5 and 10 hold an elite guardian. 30 minutes; once per hour."
+   "A hundred floors, each sealed until every monster on it is defeated. Monsters grow stronger every floor and an elite guards every tenth. Rewards at floors 25, 50 and 75, and at the top. 3 hours; once per day."
   ],
   "services": [
    {

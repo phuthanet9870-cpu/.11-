@@ -4,6 +4,7 @@ import type { GameData } from './data';
 import type {
   Autocast, BaseStats, CharacterState, DerivedStats, EquipSlot, ItemDef, StatModifiers, StatKey,
 } from './types';
+import { runeModList } from './runes';
 import { HIGH_ARMOR_DEF, HIGH_WEAPON_ATK } from './refine';
 import { STAT_KEYS } from './types';
 
@@ -174,6 +175,7 @@ export function computeDerivedStats(data: GameData, c: CharacterState, runtimeMo
   const mods: StatModifiers = {};
   mergeMods(mods, equipmentMods(data, c));
   mergeMods(mods, passiveSkillMods(data, c));
+  for (const r of runeModList(data, c)) mergeMods(mods, r.mods, r.rank);
   for (const m of runtimeMods) mergeMods(mods, m);
 
   const jobBonusStats = jobBonus(cls, c.jobLevel);

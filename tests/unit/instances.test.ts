@@ -29,7 +29,11 @@ function stepIntoPortal(w: World) {
 describe('memorial dungeons', () => {
   it('two instances with floors, time limits, cooldowns and keepers', () => {
     expect([...data.instances.keys()].sort()).toEqual(['endless_spire', 'sealed_crypt']);
-    expect(data.instances.get('endless_spire')!.floors.length).toBe(10);
+    expect(data.instances.get('endless_spire')!.floors.length).toBe(100);
+    expect(data.instances.get('endless_spire')!.milestones!.map((m) => m.floor)).toEqual([25, 50, 75]);
+    const lv = (f: number) => Math.max(...data.maps.get(`endless_spire_f${f}`)!.monsterSpawns.map((s) => data.monsters.get(s.monsterId)!.level));
+    expect(lv(90)).toBeGreaterThan(lv(10));
+    expect(data.maps.get('endless_spire_f50')!.monsterSpawns.some((s) => data.monsters.get(s.monsterId)!.elite)).toBe(true);
     for (const ins of data.instances.values()) {
       expect([...data.npcs.values()].some((n) => n.services.some((s) => s.type === 'instance' && s.instanceId === ins.id))).toBe(true);
       for (const f of ins.floors) expect(data.maps.get(f)!.monsterSpawns.length).toBeGreaterThan(0);
@@ -42,9 +46,9 @@ describe('memorial dungeons', () => {
     const { w, nowRef } = atKeeper(50);
     expect(w.enterInstance('endless_spire').ok).toBe(true);
     expect(w.map.def.id).toBe('endless_spire_f1');
-    expect(w.instanceCooldownLeft('endless_spire')).toBe(60 * 60000);
-    nowRef.t += 30 * 60000;
-    expect(w.instanceCooldownLeft('endless_spire')).toBe(30 * 60000);
+    expect(w.instanceCooldownLeft('endless_spire')).toBe(24 * 3600000);
+    nowRef.t += 3600000;
+    expect(w.instanceCooldownLeft('endless_spire')).toBe(23 * 3600000);
   });
 
   it('portals stay sealed until the floor is cleared; monsters do not respawn', () => {
@@ -72,7 +76,9 @@ describe('memorial dungeons', () => {
     const def = data.instances.get('endless_spire')!;
     const luma = c.luma;
     for (let f = 1; f <= def.floors.length; f++) { clearFloor(w); stepIntoPortal(w); }
-    expect(c.luma - luma).toBeGreaterThanOrEqual(def.reward.luma);
+    const milestones = def.milestones!.reduce((a, m) => a + m.reward.luma, 0);
+    expect(c.luma - luma).toBeGreaterThanOrEqual(def.reward.luma + milestones);
+    expect(c.flags.instbest_endless_spire).toBe(75);
     expect(c.inventory.some((i) => i.itemId === 'card_album')).toBe(true);
     expect(w.map.def.id).toBe(def.exitMap);
     expect(w.instance).toBeNull();
@@ -84,7 +90,8 @@ describe('memorial dungeons', () => {
     w.enterInstance('endless_spire');
     w.godMode = true;
     for (const m of w.monsters.values()) m.def = { ...m.def, aiType: 'passive' };
-    run(w, 30 * 60000 + 500, 100);
+    w.instance!.endsAt = w.time + 1000;
+    run(w, 1500, 100);
     expect(w.instance).toBeNull();
     expect(w.map.def.id).toBe('aurelion');
   });

@@ -234,8 +234,11 @@ export interface InstanceDef {
   id: string; name: string; description: string; minLevel: number;
   timeLimitMs: number; cooldownMs: number;
   floors: string[]; exitMap: string;
-  reward: { exp: number; jobExp: number; luma: number; items: { itemId: string; qty: number }[] };
+  reward: InstanceReward;
+  /** Partial rewards for clearing certain floors (e.g. 25 / 50 / 75 of the Spire). */
+  milestones?: { floor: number; reward: InstanceReward }[];
 }
+export interface InstanceReward { exp: number; jobExp: number; luma: number; items: { itemId: string; qty: number }[] }
 
 // ---------------------------------------------------------------- pets
 /** Ragnarok-style pet: tamed from a monster with its lure item. */
@@ -473,6 +476,8 @@ export type NpcService =
   | { type: 'stable'; cost: number }
   /** Rent a pushcart (Merchant line). */
   | { type: 'cart'; cost: number }
+  /** Reset the Rune Constellation. */
+  | { type: 'runeReset'; cost: number }
   | { type: 'instance'; instanceId: string }
   | { type: 'refine' }
   | { type: 'forge' }
@@ -568,6 +573,8 @@ export interface CharacterState {
   pet?: PetState | null;
   /** Alchemist's homunculus. */
   homunculus?: HomunculusState | null;
+  /** Rune Constellation ranks by star id. */
+  runes?: Record<string, number>;
   /** Merchant pushcart contents (undefined/null = no cart). */
   cart?: ItemInstance[] | null;
   stats_meta: { kills: number; deaths: number; playTimeMs: number; bossKills: Record<string, number> };

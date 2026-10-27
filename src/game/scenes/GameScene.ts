@@ -300,6 +300,7 @@ export class GameScene extends Phaser.Scene {
     this.syncTombstones();
     this.syncPet();
     this.syncHomun();
+    this.syncNight();
     this.drawOverlays();
     this.host.onFrame();
   }
@@ -351,6 +352,17 @@ export class GameScene extends Phaser.Scene {
       case 'statsChanged': this.ensurePlayerTexture(); break;
       default: break;
     }
+  }
+
+  /** Night: a dark-blue screen overlay (dungeons and memorial floors are already dark, so they skip it). */
+  private nightRect: Phaser.GameObjects.Rectangle | null = null;
+  private syncNight() {
+    const w = this.world, cam = this.cameras.main;
+    const outdoor = w.map.def.type === 'field' || w.map.def.type === 'town';
+    if (!this.nightRect || !this.nightRect.active) {
+      this.nightRect = this.track(this.add.rectangle(0, 0, cam.width / ZOOM + 40, cam.height / ZOOM + 40, 0x0a1030, 0).setOrigin(0, 0).setScrollFactor(0).setDepth(1e5 - 1));
+    }
+    this.nightRect.setFillStyle(0x0a1030, outdoor ? 0.42 * w.darkness : 0);
   }
 
   private mountView: { sprite: Phaser.GameObjects.Sprite; rig: Rig } | null = null;

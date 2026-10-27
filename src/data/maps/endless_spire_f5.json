@@ -85,7 +85,7 @@
  "npcs": [],
  "monsterSpawns": [
   {
-   "monsterId": "crystal_slime",
+   "monsterId": "buzz_wasp",
    "count": 5,
    "area": {
     "x": 4,
@@ -95,8 +95,8 @@
    }
   },
   {
-   "monsterId": "elite_road_goblin",
-   "count": 1,
+   "monsterId": "forest_goblin",
+   "count": 5,
    "area": {
     "x": 15,
     "y": 4,
