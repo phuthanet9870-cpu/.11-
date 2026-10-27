@@ -115,7 +115,7 @@ describe('world travel', () => {
     w.godMode = true;
     const bot = new Bot(w);
     const seen = new Set<string>([w.map.def.id]);
-    for (const m of data.maps.values()) if (m.type !== 'instance') { bot.travelTo(m.id); seen.add(w.map.def.id); }
+    for (const m of data.maps.values()) if (m.type !== 'instance' && m.type !== 'arena') { bot.travelTo(m.id); seen.add(w.map.def.id); }
     expect(seen.size).toBe(30);
   }, 300_000);
 });

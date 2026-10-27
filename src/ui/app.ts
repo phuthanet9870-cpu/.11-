@@ -1,5 +1,6 @@
 // Application shell: screen flow, save management, input mapping, and the
 // bridge between the Phaser scenes (GameHost) and the HTML UI.
+import { Online } from './online';
 import Phaser from 'phaser';
 import { loadGameData, type GameData } from '../core/data';
 import { createCharacter } from '../core/character';
@@ -17,7 +18,7 @@ import { characterCreateScreen, characterSelectScreen, titleScreen } from './scr
 import { WindowManager, type WindowId } from './windows';
 
 const WINDOW_ACTIONS: Record<string, WindowId> = {
-  inventory: 'inventory', equipment: 'equipment', status: 'status', skills: 'skills', quests: 'quests', worldMap: 'worldMap', settings: 'settings', database: 'database', pet: 'pet', homun: 'homun', cart: 'cart', runes: 'runes',
+  inventory: 'inventory', equipment: 'equipment', status: 'status', skills: 'skills', quests: 'quests', worldMap: 'worldMap', settings: 'settings', database: 'database', social: 'social', pet: 'pet', homun: 'homun', cart: 'cart', runes: 'runes',
 };
 
 export class App implements GameHost {
@@ -38,12 +39,15 @@ export class App implements GameHost {
   private lastWindowRefresh = 0;
   private lastAutosave = 0;
   private storageOk = true;
+  /** Online play (optional; the game is single-player until you log in to a server). */
+  online!: Online;
 
   constructor() {
     this.data = loadGameData();
     this.uiRoot = document.getElementById('ui')!;
     this.save = this.loadOrRecover();
     this.windows = new WindowManager(this, this.uiRoot);
+    this.online = new Online(this);
     audio.setVolumes(this.settings.volume);
     this.fitToWindow();
     window.addEventListener('resize', () => this.fitToWindow());
@@ -162,7 +166,11 @@ export class App implements GameHost {
     this.hud.log(`Welcome to Veyloria, ${c.name}! Click to move, click monsters to attack. Talk to NPCs marked with ! for quests.`, 'system');
     this.hud.log('Keys: I inventory · E equipment · C status · K skills · Q quests · M map · O settings · 1-0 hotbar · Tab target · Z loot · F talk', 'system');
     this.lastAutosave = performance.now();
+    this.online.join();
   }
+
+  markWindowsDirty() { this.windowsDirty = true; }
+  openSocial() { this.windows.open('social'); }
 
   exitToSelect() {
     this.saveNow(false);

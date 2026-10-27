@@ -312,6 +312,12 @@
    "facing": "down"
   },
   {
+   "npcId": "aurelion_arena",
+   "x": 26,
+   "y": 32,
+   "facing": "down"
+  },
+  {
    "npcId": "spire_warden",
    "x": 30,
    "y": 32,

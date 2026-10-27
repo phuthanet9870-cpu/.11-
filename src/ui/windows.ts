@@ -12,7 +12,7 @@ import { refineFee, refineOre, simulateRefine, type RefineKind } from '../core/r
 import { forgeChanceRaw } from '../core/forge';
 import { DROP_OPTION_COUNT, optionOdds } from '../core/options';
 import { homunExpToNext, homunStats } from '../core/homunculus';
-import { CART_SLOTS, CART_WEIGHT, cartWeight } from '../core/inventory';
+import { CART_SLOTS, CART_WEIGHT, cartWeight, findInstance } from '../core/inventory';
 import { canLearnRune, runePointsLeft, runePointsTotal } from '../core/runes';
 import { hungerLabel, intimacyLabel, LOYAL_AT } from '../core/pets';
 import { canRaiseStat, expToNextBase, expToNextJob, statRaiseCost } from '../core/formulas';
@@ -30,7 +30,7 @@ import { canForge, CRUMB_ATK, ELEMENT_STONES, forgeChance, STAR_CRUMB } from '..
 import { ENCHANT_COST, MAX_OPTIONS, optionLabel, REROLL_COST } from '../core/options';
 
 type DbTab = 'monsters' | 'items' | 'cards' | 'refine' | 'forge' | 'options' | 'combos' | 'pets' | 'elements';
-export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet' | 'homun' | 'cart' | 'runes';
+export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet' | 'homun' | 'cart' | 'runes' | 'social';
 
 interface WinState { el: HTMLElement; body: HTMLElement; render: () => void; open: boolean }
 
@@ -93,6 +93,7 @@ export class WindowManager {
     this.define('homun', 'Homunculus', 520, 120, () => this.renderHomun());
     this.define('cart', 'Pushcart', 16, 90, () => this.renderCart());
     this.define('runes', 'Rune Constellation', 300, 70, () => this.renderRunes());
+    this.define('social', 'Social — Online Play', 360, 60, () => this.renderSocial());
   }
 
   get anyOpen() { return [...this.wins.values()].some((w) => w.open) || !!this.dialogEl || !!this.modalEl; }
@@ -569,7 +570,7 @@ export class WindowManager {
     svg.style.position = 'absolute'; svg.style.inset = '0';
     for (const m of w.data.maps.values()) for (const p of m.portals) {
       const t = w.data.maps.get(p.targetMap)!;
-      if (m.type === 'instance' || t.type === 'instance') continue;
+      if (m.type === 'instance' || t.type === 'instance' || m.type === 'arena' || t.type === 'arena') continue;
       const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
       line.setAttribute('x1', String(m.worldMapPos.x * MW)); line.setAttribute('y1', String(m.worldMapPos.y * MH));
       line.setAttribute('x2', String(t.worldMapPos.x * MW)); line.setAttribute('y2', String(t.worldMapPos.y * MH));
@@ -578,7 +579,7 @@ export class WindowManager {
     }
     box.appendChild(svg);
     for (const m of w.data.maps.values()) {
-      if (m.type === 'instance') continue;
+      if (m.type === 'instance' || m.type === 'arena') continue;
       const here = m.id === w.map.def.id;
       const col = m.type === 'town' ? '#ffd34d' : m.type === 'field' ? '#6fe08a' : '#ff6a5a';
       const node = h('div', { class: `wm-node ${m.type}${here ? ' here' : ''}`, title: `${m.name} — ${m.region}${m.levelRange ? ` (Lv.${m.levelRange[0]}–${m.levelRange[1]})` : ''}`, style: { left: `${m.worldMapPos.x * MW}px`, top: `${m.worldMapPos.y * MH}px` } },
@@ -775,6 +776,89 @@ export class WindowManager {
         h('button', { class: 'btn small', id: 'homun-feed', onclick: () => { w.homunFeedCmd(); this.renderHomun(); } }, `Feed (${countItem(c, 'homun_ration')})`),
         !hm.alive ? h('button', { class: 'btn small', onclick: () => { w.homunReviveCmd(); this.renderHomun(); } }, `Revive (${countItem(c, 'homun_revive')})`) : '',
         !hm.evolved ? h('button', { class: 'btn small', title: 'Lv 50, Loyal, 1 Stone of Sages', onclick: () => { w.homunEvolveCmd(); this.renderHomun(); } }, 'Evolve') : '')));
+  }
+
+  // ---------------------------------------------------------------- social / online play
+  private socialDraft = { trade: [] as { uid: string; qty: number }[], tradeLuma: 0, shop: [] as { uid: string; qty: number; price: number }[], shopTitle: 'My shop' };
+  private renderSocial() {
+    const app = this.app, on = app.online, w = app.world, body = this.wins.get('social')!.body;
+    // Don't wipe a field the player is typing in.
+    const focused = document.activeElement;
+    if (focused && body.contains(focused) && (focused.tagName === 'INPUT' || focused.tagName === 'SELECT')) return;
+    const sec = (title: string, ...kids: (HTMLElement | string)[]) => h('div', { style: 'margin-top:8px;border-top:1px solid #4a3a2a;padding-top:6px' }, h('div', { class: 'gold', style: 'font-weight:bold' }, title), ...kids);
+    const btn = (label: string, fn: () => void, id?: string) => h('button', { class: 'btn small', ...(id ? { id } : {}), onclick: () => { fn(); setTimeout(() => this.renderSocial(), 150); } }, label);
+    const input = (id: string, value: string, ph: string, type = 'text', width = 140) => h('input', { id, type, value, placeholder: ph, class: 'text-input', style: `width:${width}px` }) as HTMLInputElement;
+    if (!on.net.online || !on.joined) {
+      const url = input('net-url', app.settings.serverUrl ?? 'ws://localhost:7171', 'ws://host:7171', 'text', 200);
+      const user = input('net-user', app.settings.serverUser ?? '', 'account');
+      const pass = input('net-pass', '', 'password', 'password');
+      const go = (register: boolean) => {
+        app.settings.serverUrl = url.value.trim(); app.settings.serverUser = user.value.trim(); app.applySettings();
+        on.connect(url.value.trim(), user.value.trim(), pass.value, register).catch((e) => app.hud?.toast(String((e as Error).message ?? e), true));
+      };
+      setChildren(body, h('div', { style: 'width:380px' },
+        h('div', { class: 'muted', style: 'font-size:11px' }, 'Online play needs a Veyloria server (run `npm run server` on your computer, then use ws://localhost:7171). Without one the game stays single-player. Characters and items stay on your own computer; the server only connects players, so it is not protected against cheating.'),
+        h('div', { class: 'row', style: 'gap:6px;margin-top:6px' }, 'Server', url),
+        h('div', { class: 'row', style: 'gap:6px;margin-top:4px' }, user, pass),
+        h('div', { class: 'row', style: 'gap:6px;margin-top:6px' }, btn('Log in', () => go(false), 'net-login'), btn('Create account', () => go(true), 'net-register')),
+        h('div', { class: on.net.lastError ? 'bad' : 'muted', style: 'margin-top:6px;font-size:11px' }, `Status: ${on.net.status}${on.net.lastError ? ` — ${on.net.lastError}` : ''}`)));
+      return;
+    }
+    const c = w.char;
+    const here = [...on.players.values()].filter((p) => p.mapId === w.map.def.id);
+    const pvpHere = ['proving_grounds', 'castle_veyl'].includes(w.map.def.id);
+    const playerRows = here.length ? here.map((p) => h('div', { class: 'row', style: 'gap:4px;margin:2px 0;flex-wrap:wrap' },
+      h('span', { style: 'min-width:120px' }, `${p.name} · Lv ${p.level} ${w.data.classes.get(p.classId)?.name ?? p.classId}${p.guild ? ` <${p.guild}>` : ''}${p.vending ? ` 🛒 ${p.vending}` : ''}`),
+      btn('Party', () => on.partyInvite(p.name)), btn('Trade', () => on.tradeRequest(p.name), `net-trade-${p.name}`),
+      on.guild?.master === c.name ? btn('Guild', () => on.guildInvite(p.name)) : '',
+      p.vending ? btn('Shop', () => on.viewShop(p.name), `net-shop-${p.name}`) : '',
+      pvpHere ? btn('Attack', () => w.attackRemote(p.name)) : ''))
+      : [h('div', { class: 'muted' }, 'Nobody else on this map.')];
+    const invites = on.invites.map((inv) => h('div', { class: 'row', style: 'gap:6px' }, h('span', {}, inv.label), btn('Accept', () => on.accept(inv), `net-accept-${inv.kind}`), btn('Decline', () => { on.invites = on.invites.filter((x) => x !== inv); })));
+    const party = on.party ? [h('div', {}, on.party.members.map((m) => h('div', {}, `${m.name === on.party!.leader ? '★ ' : ''}${m.name} · Lv ${m.level} · ${m.online ? w.data.maps.get(m.mapId)?.name ?? m.mapId : 'offline'} · ${Math.round(m.hpPct * 100)}% HP`))),
+      h('div', { class: 'muted', style: 'font-size:11px' }, `EXP is shared evenly with ${w.partyShareWith} member(s) on this map within ${15} levels. Chat: /p text`), btn('Leave party', () => on.partyLeave())]
+      : [h('div', { class: 'muted' }, 'Not in a party. Invite someone from the list above.')];
+    const gname = input('net-guild-name', '', 'guild name');
+    const guild = on.guild ? [h('div', {}, `${on.guild.name} · master ${on.guild.master} · ${on.guild.members.length} members (${on.guild.online.length} online)`), h('div', { class: 'muted', style: 'font-size:11px' }, 'Chat: /g text'), btn('Leave guild', () => on.guildLeave())]
+      : [h('div', { class: 'row', style: 'gap:6px' }, gname, btn('Found guild (50,000 Luma)', () => on.guildCreate(gname.value.trim()), 'net-guild-create'))];
+    const invItems = c.inventory.filter((i) => !i.locked);
+    const itemPick = (id: string) => h('select', { id, style: 'max-width:180px' }, invItems.map((i) => h('option', { value: i.uid }, `${w.data.items.get(i.itemId)!.name}${i.refine ? ` +${i.refine}` : ''} ×${i.qty}`))) as HTMLSelectElement;
+    const name = (i: { itemId: string; refine?: number; qty: number }) => `${w.data.items.get(i.itemId)?.name ?? i.itemId}${i.refine ? ` +${i.refine}` : ''} ×${i.qty}`;
+    const parts: HTMLElement[] = [];
+    if (on.trade) {
+      const t = on.trade, pick = itemPick('net-trade-item'), qty = input('net-trade-qty', '1', 'qty', 'number', 50), luma = input('net-trade-luma', String(this.socialDraft.tradeLuma), 'Luma', 'number', 80);
+      parts.push(sec(`Trade with ${t.with}`,
+        h('div', { class: 'row', style: 'gap:10px;align-items:flex-start' },
+          h('div', { style: 'flex:1' }, h('div', {}, `You offer${t.mine.locked ? ' 🔒' : ''}${t.mine.confirmed ? ' ✓' : ''}`), ...t.mine.items.map((i) => h('div', { class: 'muted' }, name(i))), h('div', { class: 'muted' }, `${t.mine.luma} Luma`)),
+          h('div', { style: 'flex:1' }, h('div', {}, `${t.with} offers${t.theirs.locked ? ' 🔒' : ''}${t.theirs.confirmed ? ' ✓' : ''}`), ...t.theirs.items.map((i) => h('div', { class: 'muted' }, name(i))), h('div', { class: 'muted' }, `${t.theirs.luma} Luma`))),
+        t.mine.locked ? '' : h('div', { class: 'row', style: 'gap:4px;margin-top:4px;flex-wrap:wrap' }, pick, qty, btn('Add', () => { this.socialDraft.trade.push({ uid: pick.value, qty: Math.max(1, Number(qty.value) || 1) }); on.tradeOffer(this.socialDraft.trade, this.socialDraft.tradeLuma); }, 'net-trade-add'),
+          luma, btn('Set Luma', () => { this.socialDraft.tradeLuma = Math.max(0, Number(luma.value) || 0); on.tradeOffer(this.socialDraft.trade, this.socialDraft.tradeLuma); }), btn('Clear', () => { this.socialDraft.trade = []; this.socialDraft.tradeLuma = 0; on.tradeOffer([], 0); })),
+        h('div', { class: 'row', style: 'gap:6px;margin-top:4px' }, btn('Lock', () => on.tradeLock(), 'net-trade-lock'), btn('Confirm', () => on.tradeConfirm(), 'net-trade-confirm'), btn('Cancel', () => { this.socialDraft.trade = []; on.tradeCancel(); }))));
+    } else this.socialDraft.trade = [];
+    if (on.shopView) {
+      const v = on.shopView;
+      parts.push(sec(`${v.seller}'s shop: ${v.title}`, ...v.listings.map((l) => h('div', { class: 'row', style: 'gap:6px' }, h('span', { style: 'flex:1' }, `${name(l.inst)} · ${l.price} Luma each`), btn('Buy 1', () => on.buy(v.seller, l.uid, 1, l.price), `net-buy-${l.uid}`))),
+        btn('Close', () => { on.shopView = null; })));
+    }
+    if (w.canCart || on.myShop) {
+      if (on.myShop) parts.push(sec(`Your shop: ${on.myShop.title}`, ...on.myShop.listings.map((l) => h('div', { class: 'muted' }, `${name(l.inst)} · ${l.price} Luma`)), btn('Close shop', () => on.closeShop())));
+      else {
+        const pick = itemPick('net-shop-item'), qty = input('net-shop-qty', '1', 'qty', 'number', 50), price = input('net-shop-price', '100', 'price', 'number', 70), title = input('net-shop-title', this.socialDraft.shopTitle, 'shop title');
+        parts.push(sec('Vending (Merchant line)', ...this.socialDraft.shop.map((l) => h('div', { class: 'muted' }, `${name({ ...findInstance(c, l.uid)!, qty: l.qty })} · ${l.price} Luma`)),
+          h('div', { class: 'row', style: 'gap:4px;flex-wrap:wrap' }, pick, qty, price, btn('Add', () => { this.socialDraft.shop.push({ uid: pick.value, qty: Math.max(1, Number(qty.value) || 1), price: Math.max(1, Number(price.value) || 1) }); }, 'net-shop-add')),
+          h('div', { class: 'row', style: 'gap:4px' }, title, btn('Open shop', () => { this.socialDraft.shopTitle = title.value || 'Shop'; on.openShop(this.socialDraft.shopTitle, this.socialDraft.shop); this.socialDraft.shop = []; }, 'net-shop-open'))));
+      }
+    }
+    const woe = on.woe;
+    setChildren(body, h('div', { style: 'width:420px;max-height:560px;overflow:auto' },
+      h('div', { class: 'row' }, h('span', { class: 'good' }, `● Online as ${on.net.user} (${c.name})`), h('span', { class: 'spacer' }), btn('Disconnect', () => on.disconnect())),
+      invites.length ? sec('Invitations', ...invites) : '',
+      ...parts,
+      sec(`Players on ${w.map.def.name}`, ...playerRows, pvpHere ? h('div', { class: 'bad', style: 'font-size:11px' }, 'PvP area: other players can attack you here (basic attacks).') : ''),
+      sec('Party', ...party),
+      sec('Guild', ...guild),
+      sec('Guild war — Castle Veyl', h('div', {}, woe ? `${woe.active ? 'OPEN NOW' : 'Closed (opens 20:00–21:00 server time)'} · Holder: ${woe.owner ?? 'nobody'} · Emperium ${woe.emperiumHp}/${woe.emperiumMax}` : '—'),
+        h('div', { class: 'muted', style: 'font-size:11px' }, 'Reach the castle through the Arena Master in Aurelion. Guild members break the Emperium to take the castle; the holding guild gets +10% EXP.'))));
   }
 
   // ---------------------------------------------------------------- rune constellation

@@ -226,7 +226,7 @@ export class Bot {
   mapOfMonsters(ids: string[]): string {
     const here = this.w.map.def;
     if (here.monsterSpawns.some((s) => ids.includes(s.monsterId))) return here.id;
-    for (const m of data.maps.values()) if (m.type !== 'instance' && m.monsterSpawns.some((s) => ids.includes(s.monsterId))) return m.id;
+    for (const m of data.maps.values()) if (m.type !== 'instance' && m.type !== 'arena' && m.monsterSpawns.some((s) => ids.includes(s.monsterId))) return m.id;
     throw new Error(`no map spawns ${ids}`);
   }
 

@@ -748,6 +748,29 @@ export async function main() {
     }
   }
 
+  // ---------------------------------------------------------------- online play: PvP arena and the guild-war castle
+  for (const [id, name, tileset, W, H, desc] of [
+    ['proving_grounds', 'Proving Grounds', 'dg_catacomb', 36, 28, 'An open arena. Players can fight each other here (online play).'],
+    ['castle_veyl', 'Castle Veyl', 'dg_tomb', 40, 30, 'The guild-war castle. During the war, guilds fight each other and strike the Emperium; the guild that breaks it holds the castle.'],
+  ] as const) {
+    const paint: J[] = [];
+    if (id === 'castle_veyl') {
+      paint.push({ op: 'rect', tile: 'ruin_wall', layer: 'wall', x: 6, y: 14, w: 12, h: 1 }, { op: 'rect', tile: 'ruin_wall', layer: 'wall', x: 22, y: 14, w: 12, h: 1 });
+      for (const x of [10, 16, 24, 30]) paint.push({ op: 'object', kind: 'ruin_pillar', x, y: 6 });
+    } else for (const [x, y] of [[8, 7], [27, 7], [8, 20], [27, 20]]) paint.push({ op: 'object', kind: 'ruin_pillar', x, y });
+    const map = {
+      id, name, region: REG.cap, type: 'arena', width: W, height: H, tileset, base: 'ruin_floor', border: { kind: 'ruin_wall', thickness: 2 }, bgm: 'boss_battle', ambient: 'cave', weather: [],
+      worldMapPos: { x: 0.5, y: id === 'castle_veyl' ? 0.4 : 0.44 }, paint, spawnPoints: { default: { x: Math.floor(W / 2), y: H - 4 } },
+      portals: [{ id: 'exit', x: Math.floor(W / 2) - 1, y: H - 2, w: 3, h: 1, targetMap: 'aurelion', targetSpawn: 'default', label: 'Aurelion' }],
+      npcs: [], monsterSpawns: [], objects: [], areas: [], description: desc, generated: true,
+    };
+    built.push({ map, npcs: [], shops: [] });
+  }
+  npcs.push(npc('aurelion_arena', 'Arena Master Kord', 'Proving Grounds & Castle Veyl', 7373, 'plate',
+    [{ type: 'warp', destinations: [{ mapId: 'proving_grounds', spawn: 'default', cost: 0 }, { mapId: 'castle_veyl', spawn: 'default', cost: 0 }] }],
+    ['The Proving Grounds and Castle Veyl are for online play: other players can fight you there. Castle Veyl opens for the guild war every evening, 20:00–21:00 server time.']));
+  built.find((b) => b.map.id === 'aurelion')!.map.npcs.push({ npcId: 'aurelion_arena', x: 26, y: 32, facing: 'down' });
+
   // ---------------------------------------------------------------- memorial dungeons (timed instances)
   const INSTANCES = [
     { id: 'endless_spire', name: 'Endless Spire', town: 'aurelion', npc: ['spire_warden', 'Warden Isolde', 'Keeper of the Endless Spire', [30, 32]], tileset: 'dg_tower', minLevel: 20,

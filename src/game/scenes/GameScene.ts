@@ -42,6 +42,42 @@ export class GameScene extends Phaser.Scene {
   private stepTimer = 0;
   private builtMapId = '';
   private builtMap: World['map'] | null = null;
+  private remoteViews = new Map<string, { sprite: Phaser.GameObjects.Sprite | Phaser.GameObjects.Image; name: Phaser.GameObjects.Text; bar: Phaser.GameObjects.Graphics; rig: Rig | null; lookKey: string }>();
+  /** Other players (drawn with their own look) and the castle Emperium. */
+  private syncRemotes() {
+    const w = this.world;
+    for (const [id, v] of this.remoteViews) if (!w.remotes.has(id) || !v.sprite.active) { v.sprite.destroy(); v.name.destroy(); v.bar.destroy(); this.remoteViews.delete(id); }
+    for (const r of w.remotes.values()) {
+      const lookKey = r.emperium ? 'emp' : JSON.stringify(r.info?.look ?? {});
+      let v = this.remoteViews.get(r.id);
+      if (v && v.lookKey !== lookKey) { v.sprite.destroy(); v.name.destroy(); v.bar.destroy(); this.remoteViews.delete(r.id); v = undefined; }
+      if (!v) {
+        let sprite: Phaser.GameObjects.Sprite | Phaser.GameObjects.Image, rig: Rig | null = null;
+        if (r.emperium) {
+          const def = w.data.monsters.get('crystal_slime')!;
+          rig = proceduralMonRig(ensureMonsterTexture(this, def));
+          sprite = this.track(this.add.sprite(r.x, r.y, rig.clips.idle.key, 0).setOrigin(0.5, 1).setScale(1.6).setTint(0xffe27a));
+        } else {
+          rig = proceduralCharRig(ensureCharacterTexture(this, r.info!.look as never, `remote_${r.id}_${lookKey.length}`));
+          sprite = this.track(this.add.sprite(r.x, r.y, rig.clips.idle.key, 0).setOrigin(rig.originX, rig.originY));
+        }
+        const name = this.track(this.add.text(r.x, r.y + 6, '', labelStyle(r.emperium ? '#ffe27a' : '#9ad8ff')).setOrigin(0.5, 0).setDepth(1e5 + 2).setResolution(2));
+        const bar = this.track(this.add.graphics().setDepth(1e5 + 1));
+        v = { sprite, name, bar, rig, lookKey };
+        this.remoteViews.set(r.id, v);
+      }
+      v.sprite.setPosition(Math.round(r.x), Math.round(r.y)).setDepth(r.y);
+      if (v.rig && v.sprite instanceof Phaser.GameObjects.Sprite) {
+        const clip = v.rig.clips[r.emperium ? 'idle' : toCharAnim(r.anim as AnimState)] ?? v.rig.clips.idle;
+        const fr = clipFrame(clip, r.dir, this.clipStep(clip, 0));
+        v.sprite.setTexture(clip.key, fr.frame).setFlipX(fr.flipX);
+      }
+      const p = r.info;
+      v.name.setText(r.emperium ? r.name : `${r.name}${p?.guild ? `\n<${p.guild}>` : ''}${p?.vending ? `\n🛒 ${p.vending}` : ''}`).setPosition(Math.round(r.x), Math.round(r.y) + 6);
+      v.bar.clear().fillStyle(0x1c1622, 1).fillRect(r.x - 16, r.y + 2, 32, 4).fillStyle(r.emperium ? 0xffd34d : 0x6fe08a, 1).fillRect(r.x - 16, r.y + 2, Math.round(32 * Math.max(0, Math.min(1, r.hpPct))), 4);
+    }
+  }
+
   private homView: { key: string; sprite: Phaser.GameObjects.Sprite; name: Phaser.GameObjects.Text; rig: Rig; bar: Phaser.GameObjects.Graphics } | null = null;
   private petView: { petId: string; sprite: Phaser.GameObjects.Sprite; name: Phaser.GameObjects.Text; rig: Rig; heart: Phaser.GameObjects.Text } | null = null;
   private tombViews = new Map<string, { img: Phaser.GameObjects.Image; label: Phaser.GameObjects.Text }>();
@@ -267,6 +303,14 @@ export class GameScene extends Phaser.Scene {
     if (this.world.player.dead) return;
     const wp = this.worldPoint(p);
     if (p.rightButtonDown()) { this.world.stop(); return; }
+    // Other players / the Emperium: attack in PvP areas, otherwise open the Social window.
+    for (const r of this.world.remotes.values()) {
+      if (Math.abs(wp.x - r.x) < 16 && wp.y < r.y + 6 && wp.y > r.y - (r.emperium ? 70 : 52)) {
+        if (['proving_grounds', 'castle_veyl'].includes(this.world.map.def.id)) this.world.attackRemote(r.id);
+        else this.host.openSocial?.();
+        return;
+      }
+    }
     const target = this.pick(wp.x, wp.y);
     switch (target.kind) {
       case 'monster': this.world.attack(target.id!); break;
@@ -301,6 +345,7 @@ export class GameScene extends Phaser.Scene {
     this.syncPet();
     this.syncHomun();
     this.syncNight();
+    this.syncRemotes();
     this.drawOverlays();
     this.host.onFrame();
   }
@@ -311,9 +356,9 @@ export class GameScene extends Phaser.Scene {
     switch (e.type) {
       case 'damage': {
         if (!show) break;
-        const tgt = e.targetId === 'player' ? w.player : e.targetId === 'homun' ? w.homunActor : w.monsters.get(e.targetId);
+        const tgt = e.targetId === 'player' ? w.player : e.targetId === 'homun' ? w.homunActor : e.targetId.startsWith('remote:') ? w.remotes.get(e.targetId.slice(7)) : w.monsters.get(e.targetId);
         if (!tgt) break;
-        const y = tgt.y - (e.targetId === 'player' ? 64 : e.targetId === 'homun' ? 44 : ((tgt as MonsterActor).def?.art.h ?? 48)) - 4;
+        const y = tgt.y - (e.targetId === 'player' || e.targetId.startsWith('remote:') ? 64 : e.targetId === 'homun' ? 44 : ((tgt as MonsterActor).def?.art.h ?? 48)) - 4;
         if (e.miss) floatText(this, tgt.x, y, 'MISS', '#c8c8d8', 14);
         else if (e.kind === 'heal') floatText(this, tgt.x, y, `+${e.amount}`, '#6fe08a', 16);
         else if (e.kind === 'mp') floatText(this, tgt.x, y, `+${e.amount}`, '#7fb0ff', 14);

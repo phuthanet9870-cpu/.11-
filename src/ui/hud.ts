@@ -73,7 +73,7 @@ export class Hud {
       w.moveTo(sx * w.map.width * TILE, sy * w.map.height * TILE);
     });
     const menu = h('div', { class: 'menu-buttons' },
-      ...([['status', 'Status'], ['inventory', 'Items'], ['equipment', 'Equip'], ['skills', 'Skills'], ['quests', 'Quests'], ['worldMap', 'Map'], ['database', 'DB'], ['pet', 'Pet'], ['runes', 'Runes'], ['homun', 'Homun'], ['cart', 'Cart'], ['settings', 'Menu']] as const)
+      ...([['status', 'Status'], ['inventory', 'Items'], ['equipment', 'Equip'], ['skills', 'Skills'], ['quests', 'Quests'], ['worldMap', 'Map'], ['database', 'DB'], ['pet', 'Pet'], ['social', 'Social'], ['runes', 'Runes'], ['homun', 'Homun'], ['cart', 'Cart'], ['settings', 'Menu']] as const)
         .map(([id, label]) => h('button', { class: 'btn', title: `${label} (${this.app.keyLabel(id)})`, onclick: () => this.app.windows.toggle(id) }, label)),
       h('button', { class: 'btn', id: 'btn-gm', title: 'GM / Admin tools (F8 or /gm)', onclick: () => this.app.windows.toggle('admin') }, 'GM'));
     this.root = h('div', { id: 'hud', class: 'passthrough', style: 'position:absolute;inset:0' },
@@ -105,8 +105,9 @@ export class Hud {
     const text = this.chatInput.value.trim();
     this.chatInput.value = '';
     if (!text) return;
+    if (this.app.online.chat(text)) return;
     if (text.startsWith('/')) { this.app.chatCommand(text); return; }
-    this.log(`[${this.app.world?.char.name ?? 'You'}] ${text}  (offline — multiplayer chat arrives in Phase 3)`, 'chat');
+    this.log(`[${this.app.world?.char.name ?? 'You'}] ${text}  (offline — log in to a server in the Social window, G, to chat with other players)`, 'chat');
   }
 
   log(text: string, channel: Channel = 'system') {

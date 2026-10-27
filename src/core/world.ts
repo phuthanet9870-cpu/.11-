@@ -13,6 +13,7 @@ import {
 } from './inventory';
 import { allocateStat, changeJob, learnSkill, rebirth, resetSkills, resetStats } from './character';
 import { refineItem, type RefineResult } from './refine';
+import { PVP_MAPS, type PresenceInfo } from '../net/protocol';
 import { learnRune, resetRunes } from './runes';
 import { classLineage } from './lineage';
 import { addHomunExp, createHomunculus, evolveHomun, feedHomun, homunStats, releaseHomun, reviveHomun, tickHomun } from './homunculus';
@@ -72,6 +73,8 @@ export type PlayerIntent =
   | { type: 'none' }
   | { type: 'move' }
   | { type: 'attack'; targetId: string }
+  /** Attack another player (PvP maps) or the castle Emperium. */
+  | { type: 'attackRemote'; id: string }
   | { type: 'cast'; skillId: string; targetId?: string; x?: number; y?: number }
   | { type: 'npc'; npcId: string }
   | { type: 'object'; objectId: string }
@@ -166,6 +169,10 @@ export type WorldEvent =
   | { type: 'bossEnrage'; name: string }
   | { type: 'bossDefeated'; name: string }
   | { type: 'mvp'; name: string; killer: string; exp: number; items: string[] }
+  /** Online play: hits on other players / the Emperium, deaths in PvP, party EXP to share. */
+  | { type: 'remoteHit'; target: string; damage: number; crit: boolean }
+  | { type: 'pvpDeath'; killer: string }
+  | { type: 'partyExp'; base: number; job: number; mapId: string; monsterLevel: number }
   | { type: 'telegraph'; telegraph: Telegraph }
   | { type: 'mapChanged'; mapId: string }
   | { type: 'sound'; key: string }
@@ -177,6 +184,13 @@ export type WorldEvent =
   | { type: 'castStart'; skillId: string; durationMs: number }
   | { type: 'castEnd'; skillId: string; interrupted: boolean }
   | { type: 'statsChanged' };
+
+export interface RemoteActor { id: string; name: string; x: number; y: number; dir: Direction; anim: string; hpPct: number; info: PresenceInfo | null; emperium?: boolean }
+export function remoteProfile(r: RemoteActor): CombatProfile {
+  const v = r.emperium ? { level: 90, pdef: 40, mdef: 40, flee: 0, perfectDodge: 0, element: 'holy' } : r.info!.pvp;
+  return { level: v.level, patk: 0, matk: 0, pdef: v.pdef, mdef: v.mdef, hit: 0, flee: v.flee, crit: 0, critDmg: 100, element: v.element as Element, elementLevel: 1,
+    elementDamagePct: {}, elementResistPct: {}, race: r.emperium ? 'formless' : 'demihuman', size: r.emperium ? 'large' : 'medium', raceDamagePct: {}, sizeDamagePct: {}, raceResistPct: {}, perfectDodge: v.perfectDodge, weaponType: 'none' };
+}
 
 export interface WorldOptions {
   rng?: Rng;
@@ -265,7 +279,10 @@ export class World {
 
   // ---------------------------------------------------------------- utils
   private uid(prefix: string) { return `${prefix}${this.nextId++}`; }
-  emit(e: WorldEvent) { this.events.push(e); }
+  emit(e: WorldEvent) { this.events.push(e); for (const fn of this.listeners) fn(e); }
+  private listeners = new Set<(e: WorldEvent) => void>();
+  /** Immediate event hook (online play sends hits / shared EXP without waiting for a rendered frame). */
+  onEvent(fn: (e: WorldEvent) => void) { this.listeners.add(fn); return () => this.listeners.delete(fn); }
   drainEvents(): WorldEvent[] { const e = this.events; this.events = []; return e; }
   message(text: string, channel: Extract<WorldEvent, { type: 'message' }>['channel'] = 'system') {
     this.emit({ type: 'message', text, channel });
@@ -333,6 +350,7 @@ export class World {
     this.monsters.clear();
     this.petActor = null;
     this.homunActor = null;
+    this.remotes.clear();
     this.groundItems.clear();
     this.zones = [];
     this.telegraphs = [];
@@ -555,6 +573,31 @@ export class World {
     this.emit({ type: 'sound', key: 'level_up' });
     this.afterInventoryChange();
   }
+
+  // ---------------------------------------------------------------- online play (set by the app's network client)
+  /** Other players on this map (and the Emperium in the castle), for drawing and PvP. */
+  remotes = new Map<string, RemoteActor>();
+  /** Party members on this map within the level gap: the killer keeps 1/(n+1) of the EXP. */
+  partyShareWith = 0;
+  /** Bonus EXP % (the guild holding Castle Veyl gets 10%). */
+  expBonusPct = 0;
+
+  attackRemote(id: string): OpResult {
+    if (!PVP_MAPS.includes(this.map.def.id)) return this.err('You can only fight other players in the Proving Grounds or the castle during the guild war.');
+    if (!this.remotes.has(id)) return this.err('Target not found.');
+    this.player.intent = { type: 'attackRemote', id };
+    return { ok: true };
+  }
+
+  /** A hit from another player arrived from the server. */
+  receivePvpHit(from: string, damage: number, crit: boolean) {
+    if (!PVP_MAPS.includes(this.map.def.id) || this.player.dead) return;
+    this.damagePlayer(damage, 'physical', 'neutral', null, crit);
+    if (this.player.dead) this.emit({ type: 'pvpDeath', killer: from });
+  }
+
+  /** EXP shared by a party member's kill. */
+  receivePartyExp(base: number, job: number, from: string) { this.grantExp(base, job, `party: ${from}`); }
 
   // ---------------------------------------------------------------- day / night
   private dayOffsetSec = 0;
@@ -1056,6 +1099,22 @@ export class World {
         }
         break;
       }
+      case 'attackRemote': {
+        const r = this.remotes.get(it.id);
+        if (!r || !PVP_MAPS.includes(this.map.def.id)) { p.intent = { type: 'none' }; p.move = null; break; }
+        const range = this.stats.attackRange + 12;
+        if (dist(p.x, p.y, r.x, r.y) > range) { if (!cannotMove) this.moveToward(p, r.x, r.y, this.stats.moveSpeed, dt, range - 6); break; }
+        p.move = null;
+        p.dir = dirFromVector(r.x - p.x, r.y - p.y, p.dir);
+        if (cannotAct || this.time < p.attackReadyAt) break;
+        p.attackReadyAt = this.time + this.stats.attackIntervalMs;
+        this.setAnim(p, 'attack'); p.animAt = this.time; p.lastCombatAt = this.time;
+        const kind = this.stats.attackKind === 'magic' ? 'magic' : 'physical';
+        const res = resolveAttack(this.data, this.rng, this.playerProfile(), remoteProfile(r), { kind, multiplier: kind === 'magic' ? 0.75 : 1, element: this.stats.weaponElement });
+        this.emit({ type: 'damage', targetId: `remote:${r.id}`, amount: res.hit ? res.damage : 0, crit: res.crit, miss: !res.hit, kind });
+        if (res.hit) this.emit({ type: 'remoteHit', target: r.id, damage: res.damage, crit: res.crit });
+        break;
+      }
       case 'cast': {
         const skill = this.data.skills.get(it.skillId)!;
         let tx = it.x, ty = it.y;
@@ -1365,7 +1424,10 @@ export class World {
     const contributed = (m.damageBy.player ?? 0) > 0;
     if (contributed) {
       this.char.stats_meta.kills++;
-      this.grantExp(m.def.exp, m.def.jobExp, m.def.name);
+      const mul = 1 + this.expBonusPct / 100, n = this.partyShareWith + 1;
+      const base = Math.round(m.def.exp * mul), job = Math.round(m.def.jobExp * mul);
+      this.grantExp(Math.floor(base / n), Math.floor(job / n), m.def.name);
+      if (n > 1) this.emit({ type: 'partyExp', base, job, mapId: this.map.def.id, monsterLevel: m.def.level });
       if (m.eventRaid) this.onRaidKill(m);
       const hm = this.char.homunculus;
       if (hm?.alive && (m.damageBy.homun ?? 0) > 0) {

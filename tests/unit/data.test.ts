@@ -10,7 +10,7 @@ describe('game data', () => {
 
   it('meets content targets (30 maps, RO-style regions)', () => {
     expect([...data.maps.keys()]).toEqual(expect.arrayContaining(['willowbrook', 'sunny_meadow', 'whispering_forest', 'aurelion', 'sandara', 'ravenhold_crypt']));
-    const world = [...data.maps.values()].filter((m) => m.type !== 'instance');
+    const world = [...data.maps.values()].filter((m) => m.type !== 'instance' && m.type !== 'arena');
     expect(world.length).toBe(30);
     expect(new Set(world.map((m) => m.region)).size).toBeGreaterThanOrEqual(9);
     expect([...data.maps.values()].filter((m) => m.type === 'town').length).toBe(7);

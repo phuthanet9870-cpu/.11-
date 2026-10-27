@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && tsc --noEmit -p server && vite build",
     "preview": "vite preview --port 4173 --strictPort",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
@@ -20,13 +20,18 @@
     "assets:ai:generate": "node tools/asset-studio/scripts/run.mjs ./tools/asset-studio/src/ai/generate.ts",
     "assets:ai:import": "node tools/asset-studio/scripts/run.mjs ./tools/asset-studio/src/ai/import.ts",
     "world:build": "node tools/asset-studio/scripts/run.mjs ./tools/world-gen/build-world.ts",
-    "jobs:build": "node tools/asset-studio/scripts/run.mjs ./tools/world-gen/build-jobs.ts"
+    "jobs:build": "node tools/asset-studio/scripts/run.mjs ./tools/world-gen/build-jobs.ts",
+    "server": "node tools/asset-studio/scripts/run.mjs ./server/main.ts",
+    "typecheck:server": "tsc --noEmit -p server",
+    "test:online": "npm run build && node tests/e2e/online-e2e.mjs"
   },
   "license": "UNLICENSED",
   "dependencies": {
-    "phaser": "^3.90.0"
+    "phaser": "^3.90.0",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
+    "@types/ws": "^8.5.12",
     "typescript": "^5.8.3",
     "vite": "^8.3.5",
     "vitest": "^5.0.5"

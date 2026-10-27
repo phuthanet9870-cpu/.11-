@@ -407,7 +407,7 @@ export interface MapDef {
   id: string;
   name: string;
   region: string;
-  type: 'town' | 'field' | 'dungeon' | 'boss' | 'instance';
+  type: 'town' | 'field' | 'dungeon' | 'boss' | 'instance' | 'arena';
   /** Memorial-dungeon floors: which instance and which floor (1-based). */
   instanceId?: string;
   floor?: number;
@@ -587,6 +587,9 @@ export interface Settings {
   autoLoot: boolean;
   showCollision: boolean;
   wasdMovement: boolean;
+  /** Online play: last server address and account name used. */
+  serverUrl?: string;
+  serverUser?: string;
 }
 
 export interface SaveFile {

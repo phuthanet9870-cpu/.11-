@@ -9,4 +9,6 @@ export interface GameHost {
   pointerWorld: { x: number; y: number } | null;
   onWorldEvents(events: WorldEvent[]): void;
   onFrame(): void;
+  /** Opens the Social window (clicking another player outside PvP). */
+  openSocial?(): void;
 }

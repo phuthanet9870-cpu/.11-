@@ -1999,6 +1999,45 @@
   "generated": true
  },
  {
+  "id": "aurelion_arena",
+  "name": "Arena Master Kord",
+  "title": "Proving Grounds & Castle Veyl",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "bob",
+   "hairColor": "#2a2a3a",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#e8dcc0",
+   "accent": "#e8dcc0",
+   "style": "plate"
+  },
+  "greeting": [
+   "The Proving Grounds and Castle Veyl are for online play: other players can fight you there. Castle Veyl opens for the guild war every evening, 20:00–21:00 server time."
+  ],
+  "services": [
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "proving_grounds",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "castle_veyl",
+      "spawn": "default",
+      "cost": 0
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
   "id": "spire_warden",
   "name": "Warden Isolde",
   "title": "Keeper of the Endless Spire",
