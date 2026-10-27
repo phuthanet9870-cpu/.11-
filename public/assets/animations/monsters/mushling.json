@@ -1,0 +1,144 @@
+{
+  "id": "mushling",
+  "name": "Mushling",
+  "frameWidth": 48,
+  "frameHeight": 48,
+  "directions": [
+    "down",
+    "left",
+    "right",
+    "up"
+  ],
+  "origin": {
+    "x": 0.5,
+    "y": 0.9375
+  },
+  "originPx": {
+    "x": 24,
+    "y": 45
+  },
+  "animations": {
+    "idle": {
+      "key": "mushling_idle",
+      "image": "monsters/mushling/mushling_idle_sheet.png",
+      "frameWidth": 48,
+      "frameHeight": 48,
+      "columns": 5,
+      "rows": 4,
+      "directions": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "frameDurationMs": 160,
+      "repeat": -1,
+      "origin": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "events": []
+    },
+    "walk": {
+      "key": "mushling_walk",
+      "image": "monsters/mushling/mushling_walk_sheet.png",
+      "frameWidth": 48,
+      "frameHeight": 48,
+      "columns": 8,
+      "rows": 4,
+      "directions": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "frameDurationMs": 90,
+      "repeat": -1,
+      "origin": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "events": [
+        {
+          "frame": 5,
+          "event": "land"
+        }
+      ]
+    },
+    "attack": {
+      "key": "mushling_attack",
+      "image": "monsters/mushling/mushling_attack_sheet.png",
+      "frameWidth": 48,
+      "frameHeight": 48,
+      "columns": 6,
+      "rows": 4,
+      "directions": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "frameDurationMs": 75,
+      "repeat": 0,
+      "origin": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "events": [
+        {
+          "frame": 2,
+          "event": "impact"
+        }
+      ]
+    },
+    "hit": {
+      "key": "mushling_hit",
+      "image": "monsters/mushling/mushling_hit_sheet.png",
+      "frameWidth": 48,
+      "frameHeight": 48,
+      "columns": 3,
+      "rows": 4,
+      "directions": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "frameDurationMs": 90,
+      "repeat": 0,
+      "origin": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "events": []
+    },
+    "death": {
+      "key": "mushling_death",
+      "image": "monsters/mushling/mushling_death_sheet.png",
+      "frameWidth": 48,
+      "frameHeight": 48,
+      "columns": 8,
+      "rows": 4,
+      "directions": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "frameDurationMs": 110,
+      "repeat": 0,
+      "origin": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "events": [
+        {
+          "frame": 7,
+          "event": "despawn"
+        }
+      ]
+    }
+  },
+  "portrait": "portraits/monsters/mushling_portrait.png",
+  "dropIcon": "items/mushling_cap.png"
+}

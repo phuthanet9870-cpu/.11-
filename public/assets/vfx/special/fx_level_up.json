@@ -1,0 +1,18 @@
+{
+  "key": "fx_level_up",
+  "image": "vfx/special/fx_level_up_sheet.png",
+  "frameWidth": 96,
+  "frameHeight": 128,
+  "columns": 12,
+  "rows": 1,
+  "frameDurationMs": 80,
+  "repeat": 0,
+  "origin": {
+    "x": 0.5,
+    "y": 0.84375
+  },
+  "blendMode": "normal",
+  "attach": "caster",
+  "impactFrame": 3,
+  "soundEvent": "level_up"
+}

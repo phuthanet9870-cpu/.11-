@@ -1,6 +1,7 @@
 // Visual effects driven by world events: elemental particles, skill bursts,
 // level-up columns, teleport, item drops, boss entrance, damage numbers.
 import Phaser from 'phaser';
+import { vfxMeta } from '../batchArt';
 
 interface FxSpec {
   tint: number[];
@@ -82,7 +83,33 @@ export const ELEMENT_FX: Record<string, string> = {
   fire: 'fire', water: 'ice', wind: 'wind', earth: 'slam', holy: 'holy', shadow: 'shadow', poison: 'poison', undead: 'shadow', neutral: 'slash_small',
 };
 
-export function playFx(scene: Phaser.Scene, fx: string, x: number, y: number, radius?: number) {
+/** World fx ids that have hand-made sprite VFX (Batch 001), replacing the particle version. */
+const SPRITE_FX: Record<string, string> = {
+  slash_small: 'fx_sword_slash', slash: 'fx_sword_slash', heal: 'fx_heal', level_up: 'fx_level_up',
+};
+
+/**
+ * Plays a sprite-sheet VFX anchored at (x, y) using the sheet's own origin
+ * (feet for heal/level-up, centre for hits). Returns false when the art is
+ * not loaded so callers can fall back to particles.
+ */
+export function playSpriteFx(scene: Phaser.Scene, key: string, x: number, y: number, opts: { flipX?: boolean; depth?: number } = {}): boolean {
+  const v = vfxMeta(scene, key);
+  if (!v) return false;
+  const animKey = `anim_${key}`;
+  if (!scene.anims.exists(animKey)) {
+    scene.anims.create({ key: animKey, frames: scene.anims.generateFrameNumbers(v.texture, { start: 0, end: v.columns - 1 }), frameRate: 1000 / v.frameDurationMs, repeat: 0 });
+  }
+  const s = scene.add.sprite(Math.round(x), Math.round(y), v.texture, 0).setOrigin(v.origin.x, v.origin.y).setFlipX(!!opts.flipX);
+  s.setDepth(opts.depth ?? y + 2000);
+  if (v.blendMode === 'add') s.setBlendMode(Phaser.BlendModes.ADD);
+  s.play(animKey);
+  s.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => s.destroy());
+  return true;
+}
+
+export function playFx(scene: Phaser.Scene, fx: string, x: number, y: number, radius?: number, opts: { flipX?: boolean } = {}) {
+  if (SPRITE_FX[fx] && playSpriteFx(scene, SPRITE_FX[fx], x, y, opts)) return;
   const spec = SPECS[fx];
   if (!spec || spec.count <= 1) return;
   const spread = radius ? Math.min(radius, 160) : 0;

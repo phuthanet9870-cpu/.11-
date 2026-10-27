@@ -1,0 +1,521 @@
+{
+  "image": "tilesets/willowbrook/willowbrook_ground.png",
+  "tileSize": 32,
+  "columns": 8,
+  "autotile": "dual-grid corner masks (NW=1, NE=2, SW=4, SE=8); grass is the base, other terrains are overlays",
+  "tiles": [
+    {
+      "id": 0,
+      "name": "grass_0",
+      "terrain": "grass",
+      "mask": 15,
+      "variant": 0,
+      "layer": "ground"
+    },
+    {
+      "id": 1,
+      "name": "grass_1",
+      "terrain": "grass",
+      "mask": 15,
+      "variant": 1,
+      "layer": "ground"
+    },
+    {
+      "id": 2,
+      "name": "grass_2",
+      "terrain": "grass",
+      "mask": 15,
+      "variant": 2,
+      "layer": "ground"
+    },
+    {
+      "id": 3,
+      "name": "grass_3",
+      "terrain": "grass",
+      "mask": 15,
+      "variant": 3,
+      "layer": "ground"
+    },
+    {
+      "id": 4,
+      "name": "dirt_1",
+      "terrain": "dirt",
+      "mask": 1,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 5,
+      "name": "dirt_2",
+      "terrain": "dirt",
+      "mask": 2,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 6,
+      "name": "dirt_3",
+      "terrain": "dirt",
+      "mask": 3,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 7,
+      "name": "dirt_4",
+      "terrain": "dirt",
+      "mask": 4,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 8,
+      "name": "dirt_5",
+      "terrain": "dirt",
+      "mask": 5,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 9,
+      "name": "dirt_6",
+      "terrain": "dirt",
+      "mask": 6,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 10,
+      "name": "dirt_7",
+      "terrain": "dirt",
+      "mask": 7,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 11,
+      "name": "dirt_8",
+      "terrain": "dirt",
+      "mask": 8,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 12,
+      "name": "dirt_9",
+      "terrain": "dirt",
+      "mask": 9,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 13,
+      "name": "dirt_10",
+      "terrain": "dirt",
+      "mask": 10,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 14,
+      "name": "dirt_11",
+      "terrain": "dirt",
+      "mask": 11,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 15,
+      "name": "dirt_12",
+      "terrain": "dirt",
+      "mask": 12,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 16,
+      "name": "dirt_13",
+      "terrain": "dirt",
+      "mask": 13,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 17,
+      "name": "dirt_14",
+      "terrain": "dirt",
+      "mask": 14,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 18,
+      "name": "dirt_15",
+      "terrain": "dirt",
+      "mask": 15,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 19,
+      "name": "dirt_15_v1",
+      "terrain": "dirt",
+      "mask": 15,
+      "variant": 1,
+      "layer": "overlay"
+    },
+    {
+      "id": 20,
+      "name": "dirt_15_v2",
+      "terrain": "dirt",
+      "mask": 15,
+      "variant": 2,
+      "layer": "overlay"
+    },
+    {
+      "id": 21,
+      "name": "path_stone_1",
+      "terrain": "path_stone",
+      "mask": 1,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 22,
+      "name": "path_stone_2",
+      "terrain": "path_stone",
+      "mask": 2,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 23,
+      "name": "path_stone_3",
+      "terrain": "path_stone",
+      "mask": 3,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 24,
+      "name": "path_stone_4",
+      "terrain": "path_stone",
+      "mask": 4,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 25,
+      "name": "path_stone_5",
+      "terrain": "path_stone",
+      "mask": 5,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 26,
+      "name": "path_stone_6",
+      "terrain": "path_stone",
+      "mask": 6,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 27,
+      "name": "path_stone_7",
+      "terrain": "path_stone",
+      "mask": 7,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 28,
+      "name": "path_stone_8",
+      "terrain": "path_stone",
+      "mask": 8,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 29,
+      "name": "path_stone_9",
+      "terrain": "path_stone",
+      "mask": 9,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 30,
+      "name": "path_stone_10",
+      "terrain": "path_stone",
+      "mask": 10,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 31,
+      "name": "path_stone_11",
+      "terrain": "path_stone",
+      "mask": 11,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 32,
+      "name": "path_stone_12",
+      "terrain": "path_stone",
+      "mask": 12,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 33,
+      "name": "path_stone_13",
+      "terrain": "path_stone",
+      "mask": 13,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 34,
+      "name": "path_stone_14",
+      "terrain": "path_stone",
+      "mask": 14,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 35,
+      "name": "path_stone_15",
+      "terrain": "path_stone",
+      "mask": 15,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 36,
+      "name": "path_stone_15_v1",
+      "terrain": "path_stone",
+      "mask": 15,
+      "variant": 1,
+      "layer": "overlay"
+    },
+    {
+      "id": 37,
+      "name": "path_stone_15_v2",
+      "terrain": "path_stone",
+      "mask": 15,
+      "variant": 2,
+      "layer": "overlay"
+    },
+    {
+      "id": 38,
+      "name": "soil_1",
+      "terrain": "soil",
+      "mask": 1,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 39,
+      "name": "soil_2",
+      "terrain": "soil",
+      "mask": 2,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 40,
+      "name": "soil_3",
+      "terrain": "soil",
+      "mask": 3,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 41,
+      "name": "soil_4",
+      "terrain": "soil",
+      "mask": 4,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 42,
+      "name": "soil_5",
+      "terrain": "soil",
+      "mask": 5,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 43,
+      "name": "soil_6",
+      "terrain": "soil",
+      "mask": 6,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 44,
+      "name": "soil_7",
+      "terrain": "soil",
+      "mask": 7,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 45,
+      "name": "soil_8",
+      "terrain": "soil",
+      "mask": 8,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 46,
+      "name": "soil_9",
+      "terrain": "soil",
+      "mask": 9,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 47,
+      "name": "soil_10",
+      "terrain": "soil",
+      "mask": 10,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 48,
+      "name": "soil_11",
+      "terrain": "soil",
+      "mask": 11,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 49,
+      "name": "soil_12",
+      "terrain": "soil",
+      "mask": 12,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 50,
+      "name": "soil_13",
+      "terrain": "soil",
+      "mask": 13,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 51,
+      "name": "soil_14",
+      "terrain": "soil",
+      "mask": 14,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 52,
+      "name": "soil_15",
+      "terrain": "soil",
+      "mask": 15,
+      "variant": 0,
+      "layer": "overlay"
+    },
+    {
+      "id": 53,
+      "name": "soil_15_v1",
+      "terrain": "soil",
+      "mask": 15,
+      "variant": 1,
+      "layer": "overlay"
+    },
+    {
+      "id": 54,
+      "name": "soil_15_v2",
+      "terrain": "soil",
+      "mask": 15,
+      "variant": 2,
+      "layer": "overlay"
+    },
+    {
+      "id": 55,
+      "name": "flowers_0",
+      "terrain": "flowers",
+      "variant": 0,
+      "layer": "deco"
+    },
+    {
+      "id": 56,
+      "name": "flowers_1",
+      "terrain": "flowers",
+      "variant": 1,
+      "layer": "deco"
+    },
+    {
+      "id": 57,
+      "name": "flowers_2",
+      "terrain": "flowers",
+      "variant": 2,
+      "layer": "deco"
+    },
+    {
+      "id": 58,
+      "name": "tuft_0",
+      "terrain": "tuft",
+      "variant": 0,
+      "layer": "deco"
+    },
+    {
+      "id": 59,
+      "name": "tuft_1",
+      "terrain": "tuft",
+      "variant": 1,
+      "layer": "deco"
+    },
+    {
+      "id": 60,
+      "name": "pebbles_0",
+      "terrain": "pebbles",
+      "variant": 0,
+      "layer": "deco"
+    },
+    {
+      "id": 61,
+      "name": "crops_0",
+      "terrain": "crops",
+      "variant": 0,
+      "layer": "deco"
+    },
+    {
+      "id": 62,
+      "name": "thicket",
+      "terrain": "thicket",
+      "layer": "wall"
+    },
+    {
+      "id": 63,
+      "name": "fence_h",
+      "terrain": "fence_h",
+      "layer": "wall"
+    },
+    {
+      "id": 64,
+      "name": "fence_v",
+      "terrain": "fence_v",
+      "layer": "wall"
+    },
+    {
+      "id": 65,
+      "name": "canopy_overhang",
+      "terrain": "canopy_overhang",
+      "layer": "above"
+    }
+  ]
+}

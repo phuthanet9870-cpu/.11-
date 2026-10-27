@@ -15,6 +15,7 @@ import { hashString } from '../core/rng';
 import { makeCanvas, ellipse } from './art/canvas';
 import { itemIconCanvas } from './art/icons';
 import { setFileOverrides } from './assetOverrides';
+import { buildingTexture, paintTiledLayers, propTexture } from './batchArt';
 import type { ItemDef } from '../core/types';
 
 export interface ManifestEntry {
@@ -92,18 +93,21 @@ export function ensureMapTextures(scene: Phaser.Scene, data: GameData, map: Comp
     if (!scene.textures.exists(key)) scene.textures.addCanvas(key, make());
     return key;
   };
-  const ground = add(k('ground'), () => paintGroundLayer(map, pal));
-  const walls = add(k('walls'), () => paintWallLayer(map, pal));
-  const above = add(k('above'), () => paintAboveLayer(map, pal));
+  // Production tileset when the map's tileset has one, else the procedural painter.
+  const tiled = scene.textures.exists(k('ground')) ? null : paintTiledLayers(scene, map);
+  const ground = add(k('ground'), () => tiled?.ground ?? paintGroundLayer(map, pal));
+  const walls = add(k('walls'), () => tiled?.walls ?? paintWallLayer(map, pal));
+  const above = add(k('above'), () => tiled?.above ?? paintAboveLayer(map, pal));
   const objects = new Map<string, string>();
   for (const o of map.objects) {
     const kind = data.objectKinds.get(o.kind)!;
     const variant = kind.id.startsWith('tree') ? (o.x * 7 + o.y * 13) % 3 : 0;
-    const key = `obj_${map.def.tileset}_${o.kind}_${variant}`;
-    add(key, () => paintObject(kind, pal, 1000 + variant * 77 + hashString(o.kind)));
+    const art = propTexture(scene, map.def.tileset, o.kind, variant);
+    const key = art ?? `obj_${map.def.tileset}_${o.kind}_${variant}`;
+    if (!art) add(key, () => paintObject(kind, pal, 1000 + variant * 77 + hashString(o.kind)));
     objects.set(o.uid, key);
   }
-  const buildings = map.buildings.map((b, i) => add(k(`bld${i}`), () => paintBuilding(b)));
+  const buildings = map.buildings.map((b, i) => buildingTexture(scene, map.def.tileset, b.style, b.w, b.h) ?? add(k(`bld${i}`), () => paintBuilding(b)));
   return { ground, walls, above, objects, buildings };
 }
 

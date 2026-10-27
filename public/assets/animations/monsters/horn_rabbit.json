@@ -1,0 +1,144 @@
+{
+  "id": "horn_rabbit",
+  "name": "Horn Rabbit",
+  "frameWidth": 48,
+  "frameHeight": 48,
+  "directions": [
+    "down",
+    "left",
+    "right",
+    "up"
+  ],
+  "origin": {
+    "x": 0.5,
+    "y": 0.9375
+  },
+  "originPx": {
+    "x": 24,
+    "y": 45
+  },
+  "animations": {
+    "idle": {
+      "key": "horn_rabbit_idle",
+      "image": "monsters/horn_rabbit/horn_rabbit_idle_sheet.png",
+      "frameWidth": 48,
+      "frameHeight": 48,
+      "columns": 5,
+      "rows": 4,
+      "directions": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "frameDurationMs": 160,
+      "repeat": -1,
+      "origin": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "events": []
+    },
+    "walk": {
+      "key": "horn_rabbit_walk",
+      "image": "monsters/horn_rabbit/horn_rabbit_walk_sheet.png",
+      "frameWidth": 48,
+      "frameHeight": 48,
+      "columns": 8,
+      "rows": 4,
+      "directions": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "frameDurationMs": 90,
+      "repeat": -1,
+      "origin": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "events": [
+        {
+          "frame": 5,
+          "event": "land"
+        }
+      ]
+    },
+    "attack": {
+      "key": "horn_rabbit_attack",
+      "image": "monsters/horn_rabbit/horn_rabbit_attack_sheet.png",
+      "frameWidth": 48,
+      "frameHeight": 48,
+      "columns": 6,
+      "rows": 4,
+      "directions": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "frameDurationMs": 75,
+      "repeat": 0,
+      "origin": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "events": [
+        {
+          "frame": 2,
+          "event": "impact"
+        }
+      ]
+    },
+    "hit": {
+      "key": "horn_rabbit_hit",
+      "image": "monsters/horn_rabbit/horn_rabbit_hit_sheet.png",
+      "frameWidth": 48,
+      "frameHeight": 48,
+      "columns": 3,
+      "rows": 4,
+      "directions": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "frameDurationMs": 90,
+      "repeat": 0,
+      "origin": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "events": []
+    },
+    "death": {
+      "key": "horn_rabbit_death",
+      "image": "monsters/horn_rabbit/horn_rabbit_death_sheet.png",
+      "frameWidth": 48,
+      "frameHeight": 48,
+      "columns": 8,
+      "rows": 4,
+      "directions": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "frameDurationMs": 110,
+      "repeat": 0,
+      "origin": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "events": [
+        {
+          "frame": 7,
+          "event": "despawn"
+        }
+      ]
+    }
+  },
+  "portrait": "portraits/monsters/horn_rabbit_portrait.png",
+  "dropIcon": "items/rabbit_horn.png"
+}

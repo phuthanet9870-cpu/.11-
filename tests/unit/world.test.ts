@@ -38,6 +38,17 @@ describe('movement & collision', () => {
     expect(w.player.x).toBeGreaterThanOrEqual(2 * TILE);
   });
 
+  it('keyboard movement plays the walk animation and returns to idle', () => {
+    const w = newWorld();
+    w.setMoveDir(1, 0);
+    run(w, 300);
+    expect(w.player.anim).toBe('walk');
+    expect(w.player.dir).toBe('right');
+    w.setMoveDir(0, 0);
+    run(w, 100);
+    expect(w.player.anim).toBe('idle');
+  });
+
   it('click-to-move pathfinds around obstacles', () => {
     const w = newWorld();
     const goal = { x: 11 * TILE + 16, y: 14 * TILE + 16 }; // in front of the inn

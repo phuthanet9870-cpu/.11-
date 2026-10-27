@@ -1,0 +1,144 @@
+{
+  "id": "leaf_slime",
+  "name": "Leaf Slime",
+  "frameWidth": 48,
+  "frameHeight": 48,
+  "directions": [
+    "down",
+    "left",
+    "right",
+    "up"
+  ],
+  "origin": {
+    "x": 0.5,
+    "y": 0.9375
+  },
+  "originPx": {
+    "x": 24,
+    "y": 45
+  },
+  "animations": {
+    "idle": {
+      "key": "leaf_slime_idle",
+      "image": "monsters/leaf_slime/leaf_slime_idle_sheet.png",
+      "frameWidth": 48,
+      "frameHeight": 48,
+      "columns": 5,
+      "rows": 4,
+      "directions": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "frameDurationMs": 160,
+      "repeat": -1,
+      "origin": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "events": []
+    },
+    "walk": {
+      "key": "leaf_slime_walk",
+      "image": "monsters/leaf_slime/leaf_slime_walk_sheet.png",
+      "frameWidth": 48,
+      "frameHeight": 48,
+      "columns": 8,
+      "rows": 4,
+      "directions": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "frameDurationMs": 90,
+      "repeat": -1,
+      "origin": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "events": [
+        {
+          "frame": 5,
+          "event": "land"
+        }
+      ]
+    },
+    "attack": {
+      "key": "leaf_slime_attack",
+      "image": "monsters/leaf_slime/leaf_slime_attack_sheet.png",
+      "frameWidth": 48,
+      "frameHeight": 48,
+      "columns": 6,
+      "rows": 4,
+      "directions": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "frameDurationMs": 75,
+      "repeat": 0,
+      "origin": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "events": [
+        {
+          "frame": 2,
+          "event": "impact"
+        }
+      ]
+    },
+    "hit": {
+      "key": "leaf_slime_hit",
+      "image": "monsters/leaf_slime/leaf_slime_hit_sheet.png",
+      "frameWidth": 48,
+      "frameHeight": 48,
+      "columns": 3,
+      "rows": 4,
+      "directions": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "frameDurationMs": 90,
+      "repeat": 0,
+      "origin": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "events": []
+    },
+    "death": {
+      "key": "leaf_slime_death",
+      "image": "monsters/leaf_slime/leaf_slime_death_sheet.png",
+      "frameWidth": 48,
+      "frameHeight": 48,
+      "columns": 8,
+      "rows": 4,
+      "directions": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "frameDurationMs": 110,
+      "repeat": 0,
+      "origin": {
+        "x": 0.5,
+        "y": 0.9375
+      },
+      "events": [
+        {
+          "frame": 7,
+          "event": "despawn"
+        }
+      ]
+    }
+  },
+  "portrait": "portraits/monsters/leaf_slime_portrait.png",
+  "dropIcon": "items/jelly.png"
+}

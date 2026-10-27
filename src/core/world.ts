@@ -575,6 +575,7 @@ export class World {
       p.dir = dirFromVector(dx, dy, p.dir);
       p.moving = true;
       this.afterPlayerMoved();
+      if (p.anim !== 'hit' || this.time - p.animAt > 400) this.setAnim(p, 'walk');
       return;
     }
 

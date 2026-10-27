@@ -1534,25 +1534,28 @@
       "notes": "Token of Renewal icon (32x32)"
     },
     {
-      "source": "procedural",
-      "placeholder": true,
+      "source": "file",
+      "placeholder": false,
       "key": "icon_item_jelly",
       "type": "image",
-      "notes": "Leafy Jelly icon (32x32)"
+      "notes": "Batch 001 (tools/asset-studio)",
+      "file": "items/jelly.png"
     },
     {
-      "source": "procedural",
-      "placeholder": true,
+      "source": "file",
+      "placeholder": false,
       "key": "icon_item_rabbit_horn",
       "type": "image",
-      "notes": "Rabbit Horn icon (32x32)"
+      "notes": "Batch 001 (tools/asset-studio)",
+      "file": "items/rabbit_horn.png"
     },
     {
-      "source": "procedural",
-      "placeholder": true,
+      "source": "file",
+      "placeholder": false,
       "key": "icon_item_mushling_cap",
       "type": "image",
-      "notes": "Mushling Cap icon (32x32)"
+      "notes": "Batch 001 (tools/asset-studio)",
+      "file": "items/mushling_cap.png"
     },
     {
       "source": "procedural",

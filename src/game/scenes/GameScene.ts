@@ -9,12 +9,13 @@ import {
   ensureCharacterTexture, ensureFxTextures, ensureItemTexture, ensureMapTextures, ensureMonsterTexture,
 } from '../assets';
 import type { CharacterLook } from '../art/characterSprite';
-import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_PIVOT, CHAR_SHEET_COLS, MON_ANIMS, type CharAnim, type MonAnim } from '../art/spriteMeta';
-import { ELEMENT_FX, floatText, playFx, playProjectile } from '../render/effects';
+import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_PIVOT, CHAR_SHEET_COLS, MON_ANIMS, MON_SHEET_COLS, type CharAnim, type MonAnim } from '../art/spriteMeta';
+import { characterRig, clipFrame, monsterRig, type Clip, type Rig } from '../batchArt';
+import { ELEMENT_FX, floatText, playFx, playProjectile, playSpriteFx } from '../render/effects';
 import { audio } from '../audio/audio';
 import type { GameHost } from '../host';
 
-interface MonView { sprite: Phaser.GameObjects.Sprite; name: Phaser.GameObjects.Text; deadAt: number }
+interface MonView { sprite: Phaser.GameObjects.Sprite; name: Phaser.GameObjects.Text; deadAt: number; rig: Rig }
 interface NpcView { sprite: Phaser.GameObjects.Sprite; name: Phaser.GameObjects.Text; marker: Phaser.GameObjects.Text }
 
 const ZOOM = 1.5;
@@ -26,6 +27,7 @@ export class GameScene extends Phaser.Scene {
   private player!: Phaser.GameObjects.Sprite;
   private playerName!: Phaser.GameObjects.Text;
   private playerLookKey = '';
+  private playerRig!: Rig;
   private monViews = new Map<string, MonView>();
   private npcViews = new Map<string, NpcView>();
   private groundViews = new Map<string, Phaser.GameObjects.Image>();
@@ -141,7 +143,8 @@ export class GameScene extends Phaser.Scene {
 
     // Player
     this.playerLookKey = '';
-    this.player = this.track(this.add.sprite(w.player.x, w.player.y, this.ensurePlayerTexture(), 0).setOrigin(CHAR_PIVOT.x, CHAR_PIVOT.y));
+    this.player = this.track(this.add.sprite(w.player.x, w.player.y, '__DEFAULT'));
+    this.ensurePlayerTexture();
     this.playerName = this.track(this.add.text(0, 0, w.char.name, labelStyle('#ffffff')).setOrigin(0.5, 0).setDepth(1e5 + 2).setResolution(2));
 
     this.gfx = this.track(this.add.graphics().setDepth(-3));
@@ -178,15 +181,17 @@ export class GameScene extends Phaser.Scene {
     this.collisionGfx = g;
   }
 
-  private ensurePlayerTexture(): string {
+  /** Player rig: production art for classes that have it, else the procedural sheet. */
+  private ensurePlayerTexture() {
     const c = this.world.char;
     const cls = this.world.data.classes.get(c.classId)!;
     const weapon = c.equipment.weapon ? this.world.data.items.get(c.equipment.weapon.itemId)?.weaponType ?? null : null;
+    const lookId = JSON.stringify([c.classId, c.appearance, weapon, !!c.equipment.shield]);
+    if (lookId === this.playerLookKey && this.playerRig) return;
+    this.playerLookKey = lookId;
     const look: CharacterLook = { appearance: c.appearance, outfit: cls.outfit, weapon, shield: !!c.equipment.shield };
-    const key = ensureCharacterTexture(this, look, `chr_${c.classId}`);
-    if (key !== this.playerLookKey && this.player?.active) this.player.setTexture(key);
-    this.playerLookKey = key;
-    return key;
+    this.playerRig = characterRig(this, c.classId, c.appearance, weapon) ?? proceduralCharRig(ensureCharacterTexture(this, look, `chr_${c.classId}`));
+    if (this.player?.active) this.player.setOrigin(this.playerRig.originX, this.playerRig.originY);
   }
 
   // ---------------------------------------------------------------- input
@@ -284,11 +289,12 @@ export class GameScene extends Phaser.Scene {
           const isPlayer = e.targetId === 'player';
           const col = isPlayer ? '#ff5a5a' : e.crit ? '#ffd34d' : e.kind === 'magic' ? '#c9a6ff' : e.kind === 'dot' ? '#a9e04a' : '#ffffff';
           floatText(this, tgt.x, y, e.crit ? `${e.amount}!` : `${e.amount}`, col, e.crit ? 24 : isPlayer ? 15 : 17);
+          if (e.kind === 'physical') playSpriteFx(this, 'fx_hit_basic', tgt.x, tgt.y - (isPlayer ? 30 : 16));
           if (!isPlayer && e.element && e.element !== 'neutral' && e.kind !== 'dot') playFx(this, ELEMENT_FX[e.element] ?? 'slash_small', tgt.x, tgt.y - 10);
         }
         break;
       }
-      case 'fx': playFx(this, e.fx, e.x, e.y, e.radius); break;
+      case 'fx': playFx(this, e.fx, e.x, e.y, e.radius, { flipX: e.fx.startsWith('slash') && w.player.x > e.x }); break;
       case 'projectile': playProjectile(this, e.fx, e.fromX, e.fromY, e.toX, e.toY, e.durationMs, e.color); break;
       case 'sound': audio.play(e.key); break;
       case 'levelUp': floatText(this, w.player.x, w.player.y - 90, e.kind === 'base' ? 'LEVEL UP!' : 'JOB LEVEL UP!', e.kind === 'base' ? '#ffd34d' : '#7fd6ff', 22); break;
@@ -309,7 +315,9 @@ export class GameScene extends Phaser.Scene {
   private syncPlayer(delta: number) {
     const p = this.world.player;
     this.player.setPosition(Math.round(p.x), Math.round(p.y)).setDepth(p.y);
-    this.player.setFrame(frameIndex(p.dir, toCharAnim(p.anim), this.animFrame(p.anim, p.animAt, true)));
+    const clip = this.playerRig.clips[toCharAnim(p.anim)] ?? this.playerRig.clips.idle;
+    const fr = clipFrame(clip, p.dir, this.clipStep(clip, p.animAt));
+    this.player.setTexture(clip.key, fr.frame).setFlipX(fr.flipX);
     this.player.setAlpha(this.world.playerStealthed ? 0.45 : 1);
     this.playerName.setPosition(Math.round(p.x), Math.round(p.y) + 6);
     if (p.moving) {
@@ -318,11 +326,9 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
-  private animFrame(anim: AnimState, animAt: number, isChar: boolean): number {
-    const meta = isChar ? CHAR_ANIMS[toCharAnim(anim)] : MON_ANIMS[toMonAnim(anim)];
-    const elapsed = Math.max(0, this.world.time - animAt);
-    const f = Math.floor(elapsed / meta.frameMs);
-    return meta.loop ? f % meta.count : Math.min(meta.count - 1, f);
+  private clipStep(clip: Clip, animAt: number, now = this.world.time): number {
+    const f = Math.floor(Math.max(0, now - animAt) / clip.frameMs);
+    return clip.loop ? f % clip.count : Math.min(clip.count - 1, f);
   }
 
   private syncMonsters() {
@@ -330,28 +336,28 @@ export class GameScene extends Phaser.Scene {
     for (const [id, m] of w.monsters) {
       let v = this.monViews.get(id);
       if (!v) {
-        const key = ensureMonsterTexture(this, m.def);
-        const sprite = this.track(this.add.sprite(m.x, m.y, key, 0).setOrigin(0.5, 1));
+        const rig = monsterRig(this, m.def.id) ?? proceduralMonRig(ensureMonsterTexture(this, m.def));
+        const sprite = this.track(this.add.sprite(m.x, m.y, rig.clips.idle.key, 0).setOrigin(rig.originX, rig.originY));
         if (m.boss) sprite.setScale(1.15);
         const name = this.track(this.add.text(m.x, m.y + 4, `${m.def.name}  Lv.${m.def.level}`, labelStyle(m.boss ? '#ff8a7a' : '#ffffff')).setOrigin(0.5, 0).setDepth(1e5 + 2).setResolution(2));
-        v = { sprite, name, deadAt: 0 };
+        v = { sprite, name, deadAt: 0, rig };
         this.monViews.set(id, v);
       }
       const s = v.sprite;
       if (m.dead) {
-        const meta = MON_ANIMS.death;
         const since = this.time.now - (v.deadAt || this.time.now);
-        s.setFrame(meta.start + Math.min(meta.count - 1, Math.floor(since / meta.frameMs)));
+        const fr = clipFrame(v.rig.clips.death, m.dir, this.clipStep(v.rig.clips.death, 0, since));
+        s.setTexture(v.rig.clips.death.key, fr.frame).setFlipX(fr.flipX);
         s.setAlpha(Math.max(0, 1 - since / 1400));
         v.name.setVisible(false);
         s.setVisible(since < 1400);
         continue;
       }
       if (!s.visible || s.alpha < 1) { s.setVisible(true).setAlpha(1); }
-      s.setPosition(Math.round(m.x), Math.round(m.y) + 3).setDepth(m.y);
-      s.setFlipX(m.dir === 'right');
-      const anim = toMonAnim(m.anim);
-      s.setFrame(MON_ANIMS[anim].start + this.animFrame(m.anim, m.animAt, false));
+      s.setPosition(Math.round(m.x), Math.round(m.y) + (v.rig.originY < 1 ? 1 : 3)).setDepth(m.y);
+      const clip = v.rig.clips[toMonAnim(m.anim)] ?? v.rig.clips.idle;
+      const fr = clipFrame(clip, m.dir, this.clipStep(clip, m.animAt));
+      s.setTexture(clip.key, fr.frame).setFlipX(fr.flipX);
       const frozen = m.statuses.some((st) => st.id === 'freeze');
       const tint = frozen ? 0x9ad8ff : m.statuses.some((st) => st.id === 'poison') ? 0xb8ff9a : m.statuses.some((st) => st.id === 'burn') ? 0xffb08a : m.boss?.enraged ? 0xff8a8a : 0xffffff;
       s.setTint(tint);
@@ -488,4 +494,16 @@ function toMonAnim(a: AnimState): MonAnim {
 }
 export function frameIndex(dir: Direction, anim: CharAnim, f: number): number {
   return CHAR_DIRECTIONS.indexOf(dir) * CHAR_SHEET_COLS + CHAR_ANIMS[anim].start + f;
+}
+
+const procClips = <A extends string>(key: string, anims: Record<A, { start: number; count: number; frameMs: number; loop: boolean }>, cols: number, rows: number) =>
+  Object.fromEntries(Object.entries(anims).map(([name, a]) => {
+    const m = a as { start: number; count: number; frameMs: number; loop: boolean };
+    return [name, { key, cols, rows, directions: CHAR_DIRECTIONS, ...m }];
+  })) as Record<string, Clip>;
+function proceduralCharRig(key: string): Rig {
+  return { clips: procClips(key, CHAR_ANIMS, CHAR_SHEET_COLS, CHAR_DIRECTIONS.length), originX: CHAR_PIVOT.x, originY: CHAR_PIVOT.y };
+}
+function proceduralMonRig(key: string): Rig {
+  return { clips: procClips(key, MON_ANIMS, MON_SHEET_COLS, 1), originX: 0.5, originY: 1 };
 }

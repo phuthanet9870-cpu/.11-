@@ -1,0 +1,18 @@
+{
+  "key": "fx_hit_basic",
+  "image": "vfx/physical/fx_hit_basic_sheet.png",
+  "frameWidth": 48,
+  "frameHeight": 48,
+  "columns": 5,
+  "rows": 1,
+  "frameDurationMs": 45,
+  "repeat": 0,
+  "origin": {
+    "x": 0.5,
+    "y": 0.5
+  },
+  "blendMode": "normal",
+  "attach": "target",
+  "impactFrame": 1,
+  "soundEvent": "hit"
+}
