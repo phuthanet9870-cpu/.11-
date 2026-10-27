@@ -1,5 +1,6 @@
 // Visual effects driven by world events: elemental particles, skill bursts,
 // level-up columns, teleport, item drops, boss entrance, damage numbers.
+import { t as tr } from '../../ui/i18n';
 import Phaser from 'phaser';
 import { vfxMeta } from '../batchArt';
 
@@ -178,7 +179,7 @@ export function playProjectile(scene: Phaser.Scene, fx: string, fromX: number, f
 }
 
 export function floatText(scene: Phaser.Scene, x: number, y: number, text: string, color: string, size = 16, stroke = '#1c1622') {
-  const t = scene.add.text(x + Phaser.Math.Between(-8, 8), y, text, {
+  const t = scene.add.text(x + Phaser.Math.Between(-8, 8), y, tr(text), {
     fontFamily: '"Trebuchet MS", Verdana, sans-serif', fontSize: `${size}px`, fontStyle: 'bold', color, stroke, strokeThickness: 4,
   }).setOrigin(0.5).setDepth(1e6);
   scene.tweens.add({ targets: t, y: y - 42, alpha: { from: 1, to: 0 }, scale: { from: size > 18 ? 1.3 : 1, to: 1 }, duration: 950, ease: 'Cubic.easeOut', onComplete: () => t.destroy() });

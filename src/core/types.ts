@@ -587,6 +587,8 @@ export interface Settings {
   autoLoot: boolean;
   showCollision: boolean;
   wasdMovement: boolean;
+  /** Interface language (default English). */
+  language?: 'en' | 'th';
   /** Online play: last server address and account name used. */
   serverUrl?: string;
   serverUser?: string;

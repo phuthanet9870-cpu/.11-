@@ -8,6 +8,7 @@ import { DEFAULT_KEYBINDS, loadSave, newSaveFile, SAVE_KEY, writeSave } from '..
 import type { Appearance, HotbarSlot, SaveFile, Settings } from '../core/types';
 import { World, type WorldEvent } from '../core/world';
 import { runGmCommand } from '../core/gm';
+import { setLang, type Lang } from './i18n';
 import { audio } from '../game/audio/audio';
 import type { GameHost } from '../game/host';
 import { BootScene } from '../game/scenes/BootScene';
@@ -50,6 +51,7 @@ export class App implements GameHost {
     this.windows = new WindowManager(this, this.uiRoot);
     this.online = new Online(this);
     audio.setVolumes(this.settings.volume);
+    setLang(this.settings.language ?? 'en');
     this.fitToWindow();
     window.addEventListener('resize', () => this.fitToWindow());
     window.addEventListener('keydown', (e) => this.onKeyDown(e));
@@ -121,9 +123,17 @@ export class App implements GameHost {
     if (el) this.uiRoot.appendChild(el);
   }
 
+  /** Switch the interface language (English / Thai) and remember it. */
+  setLanguage(lang: Lang) {
+    this.settings.language = lang;
+    setLang(lang);
+    this.persist();
+    this.windows.refresh();
+  }
+
   showTitle() {
     audio.playMusic('title');
-    this.setScreen(titleScreen(() => this.showSelect(), () => this.windows.open('settings')));
+    this.setScreen(titleScreen(() => this.showSelect(), () => this.windows.open('settings'), (l) => this.setLanguage(l)));
   }
 
   showSelect() {

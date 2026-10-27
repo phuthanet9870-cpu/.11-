@@ -5,6 +5,7 @@ import type { Appearance, CharacterState, Direction, SaveFile } from '../core/ty
 import { generateCharacterSheet, type CharacterLook } from '../game/art/characterSprite';
 import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_FRAME_H, CHAR_FRAME_W, CHAR_SHEET_COLS, type CharAnim } from '../game/art/spriteMeta';
 import { audio } from '../game/audio/audio';
+import { getLang, LANGS, type Lang } from './i18n';
 import { h, setChildren } from './dom';
 
 /** Animated sprite preview on a canvas, scaled up with crisp pixels. */
@@ -42,8 +43,13 @@ export function lookForCharacter(data: GameData, c: CharacterState): CharacterLo
   return { appearance: c.appearance, outfit: cls.outfit, weapon: w, shield: !!c.equipment.shield };
 }
 
-export function titleScreen(onPlay: () => void, onSettings: () => void): HTMLElement {
-  return h('div', { class: 'screen', id: 'title-screen' },
+export function titleScreen(onPlay: () => void, onSettings: () => void, onLang: (l: Lang) => void): HTMLElement {
+  const langRow = h('div', { id: 'lang-pick', style: 'position:absolute;top:14px;right:16px;display:flex;gap:6px', 'data-noi18n': true },
+    ...LANGS.map((l) => h('button', { class: `btn small${getLang() === l.id ? ' primary' : ''}`, dataset: { lang: l.id }, onclick: () => {
+      onLang(l.id);
+      langRow.querySelectorAll('button').forEach((b) => b.classList.toggle('primary', (b as HTMLElement).dataset.lang === l.id));
+    } }, l.label)));
+  return h('div', { class: 'screen', id: 'title-screen' }, langRow,
     h('div', { class: 'title-box' },
       h('div', { class: 'logo' }, 'VEYLORIA ONLINE', h('small', {}, 'LEGENDS BEGIN WITH YOU')),
       h('div', { class: 'title-menu' },

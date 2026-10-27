@@ -61,6 +61,13 @@ try {
   await page.goto(URL);
   await page.waitForSelector('#btn-play', { timeout: 30000 });
   check('game boots to title screen', true);
+  await page.click('#lang-pick button[data-lang=th]');
+  await sleep(100);
+  const thTitle = await page.textContent('#btn-play');
+  await page.click('#lang-pick button[data-lang=en]');
+  await sleep(100);
+  const enTitle = await page.textContent('#btn-play');
+  check('language switch on the title screen (Thai ↔ English)', thTitle === 'เริ่มการผจญภัย' && enTitle === 'Start Adventure', `${thTitle} / ${enTitle}`);
   await page.screenshot({ path: join(shots, '01-title.png') });
 
   await page.click('#btn-play');
@@ -376,6 +383,24 @@ try {
   const inst = await page.evaluate(() => ({ map: window.__veyloria.world.map.def.id, timer: document.getElementById('inst-timer')?.textContent ?? '' }));
   await page.screenshot({ path: join(shots, '19-endless-spire.png') });
   check('memorial dungeon entered through the keeper; HUD shows floor and time', inst.map === 'endless_spire_f1' && /Floor 1\/100/.test(inst.timer), `${inst.map} "${inst.timer}"`);
+
+  // Thai in game: settings dropdown, HUD, windows, game messages and GM commands; then back to English.
+  await page.evaluate(() => window.__veyloria.windows.open('settings'));
+  await page.selectOption('#set-language', 'th');
+  await sleep(200);
+  await page.evaluate(() => { window.__veyloria.windows.open('inventory'); window.__veyloria.gmCommand('@heal'); });
+  await sleep(200);
+  const th = await page.evaluate(() => ({
+    title: document.querySelector('#win-inventory .wtitle')?.textContent ?? '',
+    log: [...document.querySelectorAll('#hud .log div')].slice(-3).map((d) => d.textContent).join(' | '),
+    chat: document.querySelector('#hud input')?.getAttribute('placeholder') ?? '',
+    saved: window.__veyloria.settings.language,
+  }));
+  await page.selectOption('#set-language', 'en');
+  await sleep(200);
+  const en = await page.evaluate(() => document.querySelector('#win-inventory .wtitle')?.textContent ?? '');
+  check('Thai in game: windows, messages and chat box translate, and switch back', th.title.includes('กระเป๋า') && th.log.includes('ฟื้นฟู') && th.chat.includes('แชท') && th.saved === 'th' && en.includes('Inventory'), `${th.title} · ${th.log.slice(-60)} · ${th.chat} → ${en}`);
+  await page.evaluate(() => { window.__veyloria.windows.close?.('settings'); window.__veyloria.windows.close?.('inventory'); });
 
   // Delete the character from the select screen (typed-name confirmation).
   await page.evaluate(() => window.__veyloria.exitToSelect());

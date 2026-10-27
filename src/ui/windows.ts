@@ -2,6 +2,7 @@
 // map, settings — plus NPC dialogue, shop, storage, tooltips and menus.
 import type { App } from './app';
 import { h, setChildren, RARITY_COLOR } from './dom';
+import { getLang, LANGS, type Lang } from './i18n';
 import { itemIconUrl, skillIconUrl } from '../game/art/icons';
 import { generateCharacterSheet, portraitFromSheet } from '../game/art/characterSprite';
 import { lookForCharacter, SpritePreview } from './screens';
@@ -616,8 +617,12 @@ export class WindowManager {
       btn.addEventListener('click', () => { this.listening = action; this.renderSettings(); });
       return h('div', { class: 'keybind' }, h('span', {}, action), btn);
     });
+    const langSel = h('select', { id: 'set-language', 'data-noi18n': true }, LANGS.map((l) => h('option', { value: l.id }, l.label)));
+    langSel.value = getLang();
+    langSel.addEventListener('change', () => app.setLanguage(langSel.value as Lang));
     setChildren(body,
       h('div', { style: 'width:380px' },
+        h('div', { class: 'row', style: 'margin-bottom:8px;gap:8px' }, h('span', { class: 'gold', style: 'font-weight:bold' }, 'Language'), langSel),
         h('div', { class: 'gold', style: 'font-weight:bold' }, 'Audio'),
         slider('master', 'Master'), slider('music', 'Music'), slider('sfx', 'SFX'), slider('ambient', 'Ambient'),
         h('div', { class: 'gold', style: 'font-weight:bold;margin-top:8px' }, 'Gameplay'),
@@ -1084,7 +1089,7 @@ export class WindowManager {
           row(onOff('No cooldown / free skills', g.noCooldown, () => run(gm.gmToggle(w, 'noCooldown'))), onOff('Invisible', g.invisible, () => run(gm.gmToggle(w, 'invisible')))),
           row('Move speed +%', num('spd', g.moveSpeedPct, 56), btn('Set', () => run(gm.gmMoveSpeed(w, val('spd')))), 'Game ×', num('ts', g.timeScale, 44), btn('Set', () => run(gm.gmTimeScale(w, val('ts', 1)))))),
         section('Rates (100 = normal)',
-          row('EXP', num('rexp', g.expRate, 60), 'Drop', num('rdrop', g.dropRate, 60), 'Luma', num('rluma', g.lumaRate, 60), btn('Apply', () => run(gm.gmRates(w, val('rexp', 100), val('rdrop', 100), val('rluma', 100)))))),
+          row('EXP', num('rexp', g.expRate, 60), 'Drops', num('rdrop', g.dropRate, 60), 'Luma', num('rluma', g.lumaRate, 60), btn('Apply', () => run(gm.gmRates(w, val('rexp', 100), val('rdrop', 100), val('rluma', 100)))))),
         section('Map',
           row(sel('map2', [...d.maps.values()].map((x) => [x.id, x.name])), 'x', num('tx', 20, 44), 'y', num('ty', 20, 44), btn('Warp', () => run(gm.gmTeleportXY(w, this.adminSel.map2, val('tx', 20), val('ty', 20))))),
           row(btn('Respawn boss now', () => run(gm.gmRespawnBoss(w))), btn('Clear ground items', () => run(gm.gmClearGround(w))))),

@@ -7,6 +7,8 @@ A 2D fantasy MMORPG with a top-down 3/4 view. It's built with TypeScript, Phaser
 > Online play (accounts, server, party, guild, trading) is planned for Phase 3 and isn't built yet.
 
 ## ภาพรวม (Thai summary)
+- **เปลี่ยนภาษาได้ อังกฤษ / ไทย** ที่มุมขวาบนของหน้าแรก หรือ ตั้งค่า → ภาษา ในเกม (ชื่อไอเทม มอนสเตอร์ สกิล แผนที่ คงเป็นภาษาอังกฤษ)
+- **ระบบ GM ควบคุมได้ทุกอย่าง** หน้าต่าง GM 4 แท็บ + คำสั่ง `@` ในแชท (`@help`) และคำสั่ง GM ฝั่งเซิร์ฟเวอร์ด้วยรหัสแอดมิน
 - **โลกสไตล์ Ragnarok Online มี 30 แมพใน 9 ภูมิภาค** มีเมือง 7 เมือง ทุ่ง และดันเจี้ยน แต่ละภูมิภาคมีสี สภาพอากาศ เพลง และมอนสเตอร์ของตัวเอง (ดู [docs/WORLD.md](docs/WORLD.md))
 - **เควสมีแค่เควสฝึกสอน 5 เควส** ได้แก่ ลงทะเบียนกิลด์ → ล่า Leaf Slime → ซื้อและสวมอาวุธ → ตีบวก +1 → เก็บ Job Lv 10
 - **เปลี่ยนอาชีพที่ Guild Master** (Knight อยู่ Aurelion, Ranger อยู่ Fernhollow, Mage อยู่ Arcanthe)
@@ -108,6 +110,14 @@ npm run dev           # then in the game: Social window (G) → server ws://loca
 ```
 Chat: plain text = map, `/p` party, `/g` guild, `/gl` global, `/w name` whisper. The Arena Master in Aurelion warps to the Proving Grounds (PvP) and Castle Veyl (guild war, daily 20:00–21:00 server time; `npm run server -- --woe-always` keeps it open).
 
+## Language (English / ไทย)
+
+Pick **English** or **ภาษาไทย** at the top right of the title screen, or under **Settings → Language** in game. The choice is saved with your settings and applies at once, without reloading.
+
+How it works: the game text is written in English, and in Thai mode `src/ui/i18n.ts` translates every piece of text shown in the HTML interface through the dictionaries in `src/i18n/` (about 1,700 entries: menus, windows, tooltips, chat-log and system messages, GM tools, NPC dialogue, the tutorial quests, class and skill descriptions, item descriptions). Text with numbers or names (for example `Bought 3× Red Potion for 150 Luma.`) is matched by patterns. Floating combat text on the game canvas is translated too.
+
+What stays in English on purpose: proper names (items, monsters, skills, maps, NPCs, classes, runes), stat abbreviations (STR, ATK, HIT…), chat typed by players and the `@`/`/` command words. A unit test checks that every quest line, NPC greeting, class, skill and item description has a Thai version.
+
 ## GM / admin tools
 
 Open the GM window with the **GM** button (bottom right), **F8**, or `/gm` in chat. It has four tabs:
@@ -126,13 +136,13 @@ Single-player GM tools edit the local save only, and any use sets `flags.gmUsed`
 
 | Suite | Result |
 |---|---|
-| Unit (`tests/unit`, 26 files) | **986 / 986 passed** (most are per-map checks for all 136 maps): second jobs and rebirth, over-upgrade, homunculus, mount, cart, pet evolution, runes, raids, 100-floor Spire, element levels, enriched refine and fees, jobs (bonus stats, weight, ASPD, steal, haggle, coin cost, cure), pets, combos, card album, autocast, elites, looters, memorial dungeons, database calculators, plus forge, random options, refine, cards, quests, GM, data validation and per-map reachability (44 maps), formulas, combat, inventory, save/migrations, world simulation |
+| Unit (`tests/unit`, 27 files) | **992 / 992 passed** (most are per-map checks for all 136 maps): second jobs and rebirth, over-upgrade, homunculus, mount, cart, pet evolution, runes, raids, 100-floor Spire, element levels, enriched refine and fees, jobs (bonus stats, weight, ASPD, steal, haggle, coin cost, cure), pets, combos, card album, autocast, elites, looters, memorial dungeons, database calculators, plus forge, random options, refine, cards, quests, GM, data validation and per-map reachability (44 maps), formulas, combat, inventory, save/migrations, world simulation |
 | Integration: full playthrough | **passed**. A bot using only player commands finishes the 5 tutorial quests, becomes a Knight at the guild in Aurelion, switches to a spear for the Large boss (RO size rule), refines, and defeats Grukk (≈94 simulated minutes, Base Lv 24, 1 attempt). A second test walks through portals to all 30 world maps |
 | Integration: Auto Quest / Auto Farm | **passed**. Auto Quest takes a new character through all 5 tutorial quests by itself (≈11 simulated minutes, no deaths); Auto Farm got 147 kills in 10 simulated minutes and stayed within its radius; it stops when overweight |
 | Integration: class balance | **passed**. First-try wins against Grukk at Lv 17 over 24 fixed seeds: Knight 24, Ranger 19, Mage 20, Cleric 11, Rogue 10, Merchant 22. Second jobs vs Archmage Valdris (12 seeds): 6–12 wins each (table in `docs/RO_SYSTEMS.md`) |
 | Integration: server | **7 / 7 passed**: accounts, presence and chat, party EXP share, trade, vending, guilds / PvP / guild war, server GM with admin token, with real WebSocket clients |
 | Online E2E, two browsers (`npm run test:online`) | **8 / 8 checks passed** three runs in a row: presence, map chat, party EXP share, trade, vending, PvP, guild war, no page errors |
-| E2E in Chromium (`npm run test:e2e`) | **28 / 28 checks passed** (incl. Auto Farm from the Auto window, pet window, database tools, entering the Endless Spire, GM window, refine and guild job change): boot, create character via UI, WASD, click NPC → dialogue → accept quest, windows by hotkey, portal travel, mouse-click combat kill with EXP, save and reload persistence, shop purchase, drag & drop equip, stat allocation, job change via dialogue, learn skill, drag skill to hotbar, cast by hotkey, death → respawn, drop part of a stack via the quantity dialog, delete a character with typed-name confirmation, zero page errors |
+| E2E in Chromium (`npm run test:e2e`) | **30 / 30 checks passed** (incl. switching to Thai and back on the title screen and in game, Auto Farm from the Auto window, pet window, database tools, entering the Endless Spire, GM window, refine and guild job change): boot, create character via UI, WASD, click NPC → dialogue → accept quest, windows by hotkey, portal travel, mouse-click combat kill with EXP, save and reload persistence, shop purchase, drag & drop equip, stat allocation, job change via dialogue, learn skill, drag skill to hotbar, cast by hotkey, death → respawn, drop part of a stack via the quantity dialog, delete a character with typed-name confirmation, zero page errors |
 
 Screenshots from the e2e run are written to `tests/e2e/screenshots/` (git-ignored).
 
