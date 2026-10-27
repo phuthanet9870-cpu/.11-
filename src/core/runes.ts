@@ -12,7 +12,7 @@ export interface Constellation { id: string; name: string; theme: string; color:
 export const RUNE_START_LEVEL = 30;
 export const RUNE_RESET_COST = 10000;
 
-export function runePointsTotal(c: CharacterState): number { return Math.max(0, Math.floor((c.baseLevel - RUNE_START_LEVEL) / 2) + 1); }
+export function runePointsTotal(c: CharacterState): number { return Math.max(0, Math.floor((c.baseLevel - RUNE_START_LEVEL) / 2) + 1) + Number(c.flags.gmRunePoints ?? 0); }
 export function runePointsSpent(c: CharacterState): number { return Object.values(c.runes ?? {}).reduce((a, b) => a + b, 0); }
 export function runePointsLeft(c: CharacterState): number { return runePointsTotal(c) - runePointsSpent(c); }
 
@@ -24,7 +24,7 @@ export function runeNode(data: GameData, id: string): RuneNode | undefined {
 export function canLearnRune(data: GameData, c: CharacterState, id: string): OpResult {
   const n = runeNode(data, id);
   if (!n) return { ok: false, error: 'Unknown star.' };
-  if (c.baseLevel < RUNE_START_LEVEL) return { ok: false, error: `The constellations open at Base Lv ${RUNE_START_LEVEL}.` };
+  if (c.baseLevel < RUNE_START_LEVEL && !c.flags.gmRunePoints) return { ok: false, error: `The constellations open at Base Lv ${RUNE_START_LEVEL}.` };
   if ((c.runes?.[id] ?? 0) >= n.max) return { ok: false, error: `${n.name} is at its maximum rank.` };
   if (runePointsLeft(c) <= 0) return { ok: false, error: 'No rune points left.' };
   const missing = n.requires.find((r) => !(c.runes?.[r]));

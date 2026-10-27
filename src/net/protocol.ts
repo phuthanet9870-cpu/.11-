@@ -33,7 +33,9 @@ export type ClientMsg =
   | { t: 'vend.open'; title: string; listings: Listing[] } | { t: 'vend.close' } | { t: 'vend.view'; seller: string }
   | { t: 'vend.buy'; seller: string; uid: string; qty: number } | { t: 'vend.saleResult'; buyer: string; uid: string; qty: number; ok: boolean; inst?: ItemInstance; price?: number }
   | { t: 'pvp.hit'; target: string; damage: number; crit: boolean } | { t: 'pvp.died'; killer: string }
-  | { t: 'woe.hit'; damage: number };
+  | { t: 'woe.hit'; damage: number }
+  /** Server GM command; only works with the server's --admin-token. */
+  | { t: 'gm'; token: string; cmd: string; args: string[] };
 
 export type ServerMsg =
   | { t: 'error'; text: string }
@@ -49,7 +51,8 @@ export type ServerMsg =
   | { t: 'vend.list'; seller: string; title: string; listings: Listing[] } | { t: 'vend.sale'; buyer: string; uid: string; qty: number; price: number }
   | { t: 'vend.bought'; seller: string; inst: ItemInstance; qty: number; price: number }
   | { t: 'pvp.damage'; from: string; damage: number; crit: boolean } | { t: 'pvp.kill'; killer: string; victim: string }
-  | { t: 'woe.state'; woe: WoeState };
+  | { t: 'woe.state'; woe: WoeState }
+  | { t: 'gm.result'; ok: boolean; text: string } | { t: 'kicked'; reason: string };
 
 /** Maps where players may fight each other, and the guild-war castle. */
 export const PVP_MAPS = ['proving_grounds', 'castle_veyl'];

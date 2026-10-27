@@ -108,6 +108,7 @@ export class Hud {
     const text = this.chatInput.value.trim();
     this.chatInput.value = '';
     if (!text) return;
+    if (text.startsWith('@')) { this.app.gmCommand(text); return; }
     if (this.app.online.chat(text)) return;
     if (text.startsWith('/')) { this.app.chatCommand(text); return; }
     this.log(`[${this.app.world?.char.name ?? 'You'}] ${text}  (offline — log in to a server in the Social window, G, to chat with other players)`, 'chat');

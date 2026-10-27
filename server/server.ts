@@ -23,6 +23,8 @@ export interface ServerOptions {
   woeAlways?: boolean;
   emperiumHp?: number;
   now?: () => number;
+  /** Enables server GM commands for clients that send this token. Unset = no server GM. */
+  adminToken?: string;
 }
 
 interface Account { user: string; salt: string; hash: string }
@@ -60,10 +62,11 @@ export function startServer(opts: ServerOptions = {}): Promise<{ port: number; c
 
   const online = (name: string) => [...sessions].find((s) => s.info?.name === name);
   const guildOf = (name: string) => Object.values(guilds).find((g) => g.members.includes(name)) ?? null;
-  const woeActive = () => opts.woeAlways || new Date(now()).getHours() === 20;
+  let woeOverride: boolean | null = null;
+  const woeActive = () => woeOverride ?? (opts.woeAlways || new Date(now()).getHours() === 20);
   const woeState = (): WoeState => {
     const d = new Date(now());
-    const end = opts.woeAlways ? null : woeActive() ? new Date(d.getFullYear(), d.getMonth(), d.getDate(), 21).getTime() : null;
+    const end = opts.woeAlways || woeOverride !== null ? null : woeActive() ? new Date(d.getFullYear(), d.getMonth(), d.getDate(), 21).getTime() : null;
     return { active: woeActive(), owner: castle.owner ? guilds[castle.owner]?.name ?? null : null, emperiumHp, emperiumMax, endsAt: end };
   };
   const guildInfo = (g: Guild | null): GuildInfo | null => g && { id: g.id, name: g.name, master: g.master, members: [...g.members], online: g.members.filter((m) => !!online(m)), notice: g.notice };
@@ -102,6 +105,45 @@ export function startServer(opts: ServerOptions = {}): Promise<{ port: number; c
     send(b, { t: 'trade.update', mine: b.trade!.offer, theirs: a.trade!.offer });
   };
 
+  const gmCommand = (s: Session, m: Extract<ClientMsg, { t: 'gm' }>) => {
+    const reply = (ok: boolean, text: string) => send(s, { t: 'gm.result', ok, text });
+    if (!opts.adminToken) return reply(false, 'Server GM is disabled (start the server with --admin-token=...).');
+    const tok = Buffer.from(String(m.token ?? '')), want = Buffer.from(opts.adminToken);
+    if (tok.length !== want.length || !timingSafeEqual(tok, want)) return reply(false, 'Wrong admin token.');
+    const a = Array.isArray(m.args) ? m.args.map(String) : [];
+    switch (m.cmd) {
+      case 'announce': {
+        const text = a.join(' ').slice(0, 300);
+        if (!text) return reply(false, 'announce <text>');
+        toAll({ t: 'chat', channel: 'global', from: 'GM', text });
+        return reply(true, 'Announced.');
+      }
+      case 'players': return reply(true, [...sessions].filter((o) => o.info).map((o) => `${o.info!.name} (Lv ${o.info!.level}, ${o.info!.mapId})`).join(', ') || 'Nobody online.');
+      case 'kick': {
+        const o = online(a[0] ?? '');
+        if (!o) return reply(false, `${a[0]} is not online.`);
+        send(o, { t: 'kicked', reason: a.slice(1).join(' ') || 'Kicked by a GM.' });
+        o.ws.close();
+        return reply(true, `Kicked ${a[0]}.`);
+      }
+      case 'woe': {
+        if (a[0] === 'open') woeOverride = true; else if (a[0] === 'close') woeOverride = false; else if (a[0] === 'auto') woeOverride = null; else return reply(false, 'woe open|close|auto');
+        toAll({ t: 'woe.state', woe: woeState() });
+        if (a[0] !== 'auto') toAll({ t: 'chat', channel: 'global', from: 'Herald', text: a[0] === 'open' ? 'The guild war has begun!' : 'The guild war is over.' });
+        return reply(true, `Guild war ${a[0]}.`);
+      }
+      case 'castle': {
+        const name = a.join(' ');
+        if (name === 'none') castle.owner = null;
+        else { const g = Object.values(guilds).find((x) => x.name.toLowerCase() === name.toLowerCase()); if (!g) return reply(false, `No guild named ${name}.`); castle.owner = g.id; }
+        save(); toAll({ t: 'woe.state', woe: woeState() });
+        return reply(true, `Castle owner: ${name}.`);
+      }
+      case 'emperium': emperiumHp = emperiumMax; toAll({ t: 'woe.state', woe: woeState() }); return reply(true, 'Emperium restored.');
+      default: return reply(false, 'Server GM commands: announce, players, kick, woe, castle, emperium.');
+    }
+  };
+
   const handle = (s: Session, m: ClientMsg) => {
     if (m.t === 'register' || m.t === 'login') {
       const user = String(m.user ?? '').trim();
@@ -121,6 +163,7 @@ export function startServer(opts: ServerOptions = {}): Promise<{ port: number; c
       s.user = accounts[key].user;
       return send(s, { t: 'welcome', user: s.user });
     }
+    if (m.t === 'gm') return gmCommand(s, m);
     if (!s.user) return err(s, 'Log in first.');
     if (m.t === 'join') {
       const info = m.info;

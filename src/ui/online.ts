@@ -110,6 +110,12 @@ export class Online {
     this.net.send({ t: 'chat', channel: 'map', text });
     return true;
   }
+  /** Server GM command (needs the server's admin token). Returns false when offline. */
+  serverGm(token: string, cmd: string, args: string[]) {
+    if (!this.net.online) return false;
+    this.net.send({ t: 'gm', token, cmd, args });
+    return true;
+  }
   partyInvite(name: string) { this.net.send({ t: 'party.invite', name }); }
   partyLeave() { this.net.send({ t: 'party.leave' }); }
   guildCreate(name: string) {
@@ -239,6 +245,8 @@ export class Online {
       case 'pvp.damage': w?.receivePvpHit(m.from, m.damage, m.crit); break;
       case 'pvp.kill': this.log(`⚔ ${m.killer} defeated ${m.victim}.`, 'quest'); break;
       case 'woe.state': this.woe = m.woe; this.app.markWindowsDirty(); break;
+      case 'gm.result': this.log(`[Server GM] ${m.text}`, m.ok ? 'system' : 'error'); break;
+      case 'kicked': this.log(`Disconnected: ${m.reason}`, 'error'); break;
     }
   }
 }

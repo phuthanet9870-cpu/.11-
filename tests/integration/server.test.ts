@@ -8,7 +8,7 @@ import { startServer } from '../../server/server';
 import { CASTLE_MAP, EMPERIUM_POS, type ClientMsg, type PresenceInfo, type ServerMsg } from '../../src/net/protocol';
 
 let srv: Awaited<ReturnType<typeof startServer>>;
-beforeAll(async () => { srv = await startServer({ port: 0, dataDir: mkdtempSync(join(tmpdir(), 'veyl-')), woeAlways: true, emperiumHp: 1000 }); });
+beforeAll(async () => { srv = await startServer({ port: 0, dataDir: mkdtempSync(join(tmpdir(), 'veyl-')), woeAlways: true, emperiumHp: 1000, adminToken: 'gm-secret-token' }); });
 afterAll(async () => { await srv.close(); });
 
 class Client {
@@ -125,5 +125,23 @@ describe('Veyloria server', () => {
     const d = await player('Gdx'), e = await player('Gex');
     d.send({ t: 'pvp.hit', target: 'Gex', damage: 50, crit: false }); expect((await d.wait('error')).text).toMatch(/PvP/);
     for (const x of [a, b, c, d, e]) x.ws.close();
+  });
+
+  it('server GM: needs the admin token; announce, players, kick, woe close/open', async () => {
+    const gmc = await player('GmBoss'), b = await player('Victim');
+    gmc.send({ t: 'gm', token: 'wrong', cmd: 'announce', args: ['hi'] });
+    expect((await gmc.wait('gm.result')).ok).toBe(false);
+    gmc.send({ t: 'gm', token: 'gm-secret-token', cmd: 'announce', args: ['Maintenance', 'soon'] });
+    expect((await b.wait('chat', (m) => m.from === 'GM')).text).toBe('Maintenance soon');
+    gmc.send({ t: 'gm', token: 'gm-secret-token', cmd: 'players', args: [] });
+    expect((await gmc.wait('gm.result', (m) => /Victim/.test(m.text))).ok).toBe(true);
+    gmc.send({ t: 'gm', token: 'gm-secret-token', cmd: 'woe', args: ['close'] });
+    expect((await b.wait('woe.state', (m) => !m.woe.active)).woe.active).toBe(false);
+    gmc.send({ t: 'gm', token: 'gm-secret-token', cmd: 'woe', args: ['auto'] });
+    await b.wait('woe.state', (m) => m.woe.active);
+    gmc.send({ t: 'gm', token: 'gm-secret-token', cmd: 'kick', args: ['Victim', 'bye'] });
+    expect((await b.wait('kicked')).reason).toBe('bye');
+    if (b.ws.readyState !== WebSocket.CLOSED) await new Promise((r) => b.ws.on('close', r));
+    gmc.ws.close();
   });
 });

@@ -303,6 +303,8 @@ export class World {
     const mods: StatModifiers[] = this.player.buffs.map((b) => b.mods);
     const pet = petMods(this.data, this.char);
     if (pet) mods.push(pet);
+    if (this.char.flags.gmInvisible) mods.push({ stealth: 1 });
+    if (this.char.flags.gmSpeed) mods.push({ moveSpeedPct: Number(this.char.flags.gmSpeed) });
     if (this.char.flags.mounted && this.canMount) mods.push({ moveSpeedPct: 25, weightLimit: 1000, aspdPct: -40 + 8 * (this.char.skills.drake_riding ?? 0) });
     for (const s of this.player.statuses) {
       const def = this.data.statuses.get(s.id);
@@ -457,6 +459,11 @@ export class World {
 
   // ---------------------------------------------------------------- main loop
   update(dtMs: number) {
+    const scale = this.char.flags.gmTimeScale ? Math.max(1, Math.min(10, Math.floor(Number(this.char.flags.gmTimeScale)))) : 1;
+    for (let i = 0; i < scale; i++) this.step(dtMs);
+  }
+
+  private step(dtMs: number) {
     const dt = Math.min(dtMs, 100);
     this.time += dt;
     this.char.stats_meta.playTimeMs += dt;
@@ -602,8 +609,17 @@ export class World {
   private nextEventAt = 0;
   event: { mapId: string; mapName: string; leaderDefId: string; raiderDefId: string; endsAt: number; done: boolean } | null = null;
 
+  /** End the current raid now (GM): raiders leave. */
+  endEvent() {
+    if (!this.event) return false;
+    for (const m of [...this.monsters.values()]) if (m.eventRaid) this.monsters.delete(m.id);
+    this.message(`The raid on ${this.event.mapName} was ended by a GM.`, 'system');
+    this.event = null;
+    return true;
+  }
+
   private updateEvents() {
-    if (!this.eventsOn) return;
+    if (!this.eventsOn && !this.event) return;
     const ev = this.event;
     if (ev && !ev.done && this.time >= ev.endsAt) {
       this.message(`The raid on ${ev.mapName} is over. The raiders withdrew.`, 'system');
@@ -611,7 +627,7 @@ export class World {
       this.event = null;
     }
     if (ev?.done && this.time >= ev.endsAt) this.event = null;
-    if (!this.event && this.time >= this.nextEventAt) this.startEvent();
+    if (this.eventsOn && !this.event && this.time >= this.nextEventAt) this.startEvent();
     const cur = this.event;
     if (cur && !cur.done && cur.mapId === this.map.def.id && ![...this.monsters.values()].some((m) => m.eventRaid)) this.spawnRaid();
   }
@@ -1290,6 +1306,7 @@ export class World {
   // ---------------------------------------------------------------- damage
   damageMonster(m: MonsterActor, amount: number, kind: 'physical' | 'magic' | 'dot', element: Element, crit: boolean, _fromZone: boolean, silentAggro = false, fromHomun = false) {
     if (m.dead) return;
+    if (this.gm.oneHitKill && !fromHomun && kind !== 'dot') amount = Math.max(amount, m.hp);
     m.hp = Math.max(0, m.hp - amount);
     // The owner gets the kill credit for homunculus damage (as in RO); the homunculus also draws threat.
     m.damageBy.player = (m.damageBy.player ?? 0) + amount;
@@ -1494,6 +1511,8 @@ export class World {
 
   grantExp(base: number, job: number, source?: string) {
     const c = this.char;
+    const rate = this.gm.expRate;
+    if (rate !== 100) { base = Math.round((base * rate) / 100); job = Math.round((job * rate) / 100); }
     const res = addExperience(this.data, c, base, job);
     if (source) this.message(`+${base} Base EXP, +${job} Job EXP (${source})`, 'combat');
     if (res.baseLevelsGained) {
@@ -1520,13 +1539,13 @@ export class World {
     const table = this.data.drops.get(m.def.dropTableId);
     if (!table) return;
     if (table.luma) {
-      const l = this.rng.int(table.luma[0], table.luma[1]);
+      const l = Math.round((this.rng.int(table.luma[0], table.luma[1]) * this.gm.lumaRate) / 100);
       this.char.luma += l;
       this.message(`+${l} Luma`, 'loot');
     }
     let n = 0;
     for (const e of table.entries) {
-      if (!this.rng.chance(e.chance)) continue;
+      if (!this.rng.chance(Math.min(1, (e.chance * this.gm.dropRate) / 100))) continue;
       const qty = this.rng.int(e.min ?? 1, e.max ?? 1);
       const angle = (n++ / 5) * Math.PI * 2 + this.rng.next();
       const r = n === 1 ? 0 : 18 + this.rng.next() * 10;
@@ -1582,7 +1601,7 @@ export class World {
     this.afterInventoryChange();
   }
 
-  private afterInventoryChange() {
+  afterInventoryChange() {
     refreshAllQuests(this.data, this.char);
     this.invalidateStats();
     this.emit({ type: 'questUpdate', questIds: [] });
@@ -1947,7 +1966,7 @@ export class World {
     if (this.hasStatusFlag(p, 'preventsSkills')) return { ok: false, error: 'You are silenced!' };
     if (this.hasStatusFlag(p, 'preventsAction')) return { ok: false, error: 'You cannot act right now.' };
     if ((p.cooldowns[skillId] ?? 0) > this.time) return { ok: false, error: `${skill.name} is on cooldown.` };
-    if (this.char.mp < this.skillMpCost(skill, lvl)) return { ok: false, error: 'Not enough MP.' };
+    if (!this.gm.noCooldown && this.char.mp < this.skillMpCost(skill, lvl)) return { ok: false, error: 'Not enough MP.' };
     if (this.char.luma < this.skillLumaCost(skill, lvl)) return { ok: false, error: `${skill.name} needs ${this.skillLumaCost(skill, lvl)} Luma.` };
     if (skill.requiresWeapon) {
       const w = this.char.equipment.weapon && this.data.items.get(this.char.equipment.weapon.itemId);
@@ -2018,7 +2037,7 @@ export class World {
   private executeSkill(skillId: string, level: number, targetId?: string, x?: number, y?: number, free = false) {
     const skill = this.data.skills.get(skillId)!;
     const p = this.player;
-    const cost = free ? 0 : this.skillMpCost(skill, level);
+    const cost = free || this.gm.noCooldown ? 0 : this.skillMpCost(skill, level);
     if (this.char.mp < cost) { this.message('Not enough MP.', 'error'); return; }
     let target = targetId ? this.monsters.get(targetId) : undefined;
     if (skill.targeting === 'enemy' && (!target || target.dead)) { if (!free) this.message('Target lost.', 'error'); return; }
@@ -2028,7 +2047,7 @@ export class World {
     this.char.luma -= luma;
     p.lastCombatAt = this.time;
     if (!free) {
-      p.cooldowns[skillId] = this.time + skill.cooldownMs * (1 - this.stats.cdrPct / 100);
+      p.cooldowns[skillId] = this.gm.noCooldown ? 0 : this.time + skill.cooldownMs * (1 - this.stats.cdrPct / 100);
       this.setAnim(p, skill.targeting === 'self' && skill.kind === 'buff' ? 'cast' : 'attack');
       p.animAt = this.time;
       // Basic attack resets after a skill to prevent double-dipping.
@@ -2256,6 +2275,26 @@ export class World {
     }
     if (best && bd < 420) { this.attack(best.id); return best; }
     return null;
+  }
+
+  /**
+   * GM controls for this world (see core/gm.ts). Rates are in % (100 = normal).
+   * Stored on the character (flags.gm*) so they survive a reload.
+   */
+  get gm() {
+    const f = this.char.flags;
+    return {
+      expRate: Number(f.gmExpRate ?? 100), dropRate: Number(f.gmDropRate ?? 100), lumaRate: Number(f.gmLumaRate ?? 100),
+      oneHitKill: !!f.gmOneHit, noCooldown: !!f.gmNoCooldown, invisible: !!f.gmInvisible, moveSpeedPct: Number(f.gmSpeed ?? 0), timeScale: Number(f.gmTimeScale ?? 1),
+    };
+  }
+
+  /** Respawn the map's boss now (GM). */
+  respawnBossNow(): boolean {
+    if (!this.map.def.bossSpawn) return false;
+    for (const m of [...this.monsters.values()]) if (m.boss) this.monsters.delete(m.id);
+    this.spawnBoss();
+    return true;
   }
 
   /** Last NPC the player talked to (Auto Quest uses it to know a conversation happened). */

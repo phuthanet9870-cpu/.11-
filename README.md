@@ -110,23 +110,27 @@ Chat: plain text = map, `/p` party, `/g` guild, `/gl` global, `/w name` whisper.
 
 ## GM / admin tools
 
-Open them with the **GM** button (bottom right), **F8**, or `/gm` in chat. You can:
-- heal, toggle god mode, add levels / Luma / stat and skill points, change class
-- give any item
-- teleport, spawn monsters near you, defeat all monsters on the map
-- fill or reset quest objectives
+Open the GM window with the **GM** button (bottom right), **F8**, or `/gm` in chat. It has four tabs:
+- **Main**: heal, god mode, add levels / Luma / points, change class, give items, teleport, spawn monsters, defeat all, fill/reset quests
+- **Character+**: set Base/Job level exactly, set one or all stats, max all skills, reset stats/skills, set Luma, rebirth now, make an item to order (refine +0–20, element, card), refine an equipped slot, clear inventory, give a pet, create a homunculus (any type/level), mount + cart, bonus rune points
+- **World & rates**: one-hit kill, no cooldown / free skills, invisible to monsters, move speed, game speed ×1–10, EXP/drop/Luma rates, warp to map x/y, respawn the boss now, clear ground items, start/end a raid, jump to any memorial-dungeon floor (Spire 1–100), reset dungeon cooldowns, complete/reset all quests, Auto Farm / Auto Quest
+- **@ Console**: RO-style text commands
 
-The tools edit the local save only, and any use sets `flags.gmUsed` on the character. The commands live in `src/core/gm.ts`. When the game moves to a server (Phase 3), they must become server-side commands behind an admin role.
+Text commands also work in the chat box. `@help` lists them all, e.g. `@lvl 99 50`, `@stat all 99`, `@item <id> 1 refine=15 element=fire cards=<cardId>`, `@rates 500 300 200`, `@onehit on`, `@gamespeed 3`, `@warp <mapId> 20 15`, `@dungeon endless_spire 50`, `@raid end`.
+
+Server GM (online): start the server with `npm run server -- --admin-token=YOURSECRET` (or `VEYLORIA_ADMIN_TOKEN`). In game type `@token YOURSECRET`, then `@announce text`, `@players`, `@kick name [reason]`, `@woe open|close|auto`, `@castle <guild>|none`, `@emperium`. Without a token on the server these are refused.
+
+Single-player GM tools edit the local save only, and any use sets `flags.gmUsed` on the character. The commands live in `src/core/gm.ts`. Because characters are stored in each browser (see Limitations), the server cannot edit another player's character, items or levels; server GM covers what the server owns (chat, players, guild war, castle).
 
 ## Test results (this commit)
 
 | Suite | Result |
 |---|---|
-| Unit (`tests/unit`, 25 files) | **977 / 977 passed** (most are per-map checks for all 136 maps): second jobs and rebirth, over-upgrade, homunculus, mount, cart, pet evolution, runes, raids, 100-floor Spire, element levels, enriched refine and fees, jobs (bonus stats, weight, ASPD, steal, haggle, coin cost, cure), pets, combos, card album, autocast, elites, looters, memorial dungeons, database calculators, plus forge, random options, refine, cards, quests, GM, data validation and per-map reachability (44 maps), formulas, combat, inventory, save/migrations, world simulation |
+| Unit (`tests/unit`, 26 files) | **986 / 986 passed** (most are per-map checks for all 136 maps): second jobs and rebirth, over-upgrade, homunculus, mount, cart, pet evolution, runes, raids, 100-floor Spire, element levels, enriched refine and fees, jobs (bonus stats, weight, ASPD, steal, haggle, coin cost, cure), pets, combos, card album, autocast, elites, looters, memorial dungeons, database calculators, plus forge, random options, refine, cards, quests, GM, data validation and per-map reachability (44 maps), formulas, combat, inventory, save/migrations, world simulation |
 | Integration: full playthrough | **passed**. A bot using only player commands finishes the 5 tutorial quests, becomes a Knight at the guild in Aurelion, switches to a spear for the Large boss (RO size rule), refines, and defeats Grukk (≈94 simulated minutes, Base Lv 24, 1 attempt). A second test walks through portals to all 30 world maps |
 | Integration: Auto Quest / Auto Farm | **passed**. Auto Quest takes a new character through all 5 tutorial quests by itself (≈11 simulated minutes, no deaths); Auto Farm got 147 kills in 10 simulated minutes and stayed within its radius; it stops when overweight |
 | Integration: class balance | **passed**. First-try wins against Grukk at Lv 17 over 24 fixed seeds: Knight 24, Ranger 19, Mage 20, Cleric 11, Rogue 10, Merchant 22. Second jobs vs Archmage Valdris (12 seeds): 6–12 wins each (table in `docs/RO_SYSTEMS.md`) |
-| Integration: server | **6 / 6 passed**: accounts, presence and chat, party EXP share, trade, vending, guilds / PvP / guild war, with real WebSocket clients |
+| Integration: server | **7 / 7 passed**: accounts, presence and chat, party EXP share, trade, vending, guilds / PvP / guild war, server GM with admin token, with real WebSocket clients |
 | Online E2E, two browsers (`npm run test:online`) | **8 / 8 checks passed** three runs in a row: presence, map chat, party EXP share, trade, vending, PvP, guild war, no page errors |
 | E2E in Chromium (`npm run test:e2e`) | **28 / 28 checks passed** (incl. Auto Farm from the Auto window, pet window, database tools, entering the Endless Spire, GM window, refine and guild job change): boot, create character via UI, WASD, click NPC → dialogue → accept quest, windows by hotkey, portal travel, mouse-click combat kill with EXP, save and reload persistence, shop purchase, drag & drop equip, stat allocation, job change via dialogue, learn skill, drag skill to hotbar, cast by hotkey, death → respawn, drop part of a stack via the quantity dialog, delete a character with typed-name confirmation, zero page errors |
 

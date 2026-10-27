@@ -1025,6 +1025,8 @@ export class WindowManager {
 
   // ---------------------------------------------------------------- GM / admin
   private adminSel: Record<string, string> = {};
+  private adminTab: 'main' | 'power' | 'world' | 'console' = 'main';
+  private adminLog: string[] = [];
   private renderAdmin() {
     const app = this.app, w = app.world, body = this.wins.get('admin')!.body;
     if (!w) { setChildren(body, h('div', {}, 'Enter the game to use GM tools.')); return; }
@@ -1051,8 +1053,69 @@ export class WindowManager {
       h('div', { class: 'gold', style: 'font-weight:bold;margin-bottom:3px' }, title), ...rows.map((r) => { r.style.marginBottom = '4px'; return r; }));
     const row = (...c: (HTMLElement | string)[]) => h('div', { class: 'row' }, ...c);
     const c = w.char;
-    setChildren(body, h('div', { style: 'width:400px' },
-      h('div', { style: 'font-size:11px;opacity:0.75;margin-bottom:6px' }, 'Local single-player tools. Changes apply to this save only; using them marks the character as GM-edited.'),
+    const tabs = h('div', { class: 'row', style: 'margin-bottom:6px;gap:4px' }, ...([['main', 'Main'], ['power', 'Character+'], ['world', 'World & rates'], ['console', '@ Console']] as const).map(([id, label]) =>
+      btn(label, () => { this.adminTab = id; this.renderAdmin(); }, this.adminTab === id ? 'btn small primary' : 'btn small')));
+    const note = h('div', { style: 'font-size:11px;opacity:0.75;margin-bottom:6px' }, 'Local single-player tools. Changes apply to this save only; using them marks the character as GM-edited.');
+    const onOff = (label: string, on: boolean, fn: () => void) => btn(`${label}: ${on ? 'ON' : 'OFF'}`, fn, on ? 'btn small primary' : 'btn small');
+    if (this.adminTab === 'power') {
+      setChildren(body, h('div', { style: 'width:400px' }, tabs, note,
+        section('Levels & stats',
+          row('Base Lv', num('setB', c.baseLevel, 52), 'Job Lv', num('setJ', c.jobLevel, 52), btn('Set exactly', () => run(gm.gmSetLevels(w, val('setB', c.baseLevel), val('setJ', c.jobLevel))))),
+          row(sel('stat', [['all', 'All stats'], ...STAT_KEYS.map((k) => [k, k.toUpperCase()] as [string, string])]), num('statv', 99, 52), btn('Set', () => run(this.adminSel.stat === 'all' ? gm.gmSetAllStats(w, val('statv', 99)) : gm.gmSetStat(w, this.adminSel.stat as never, val('statv', 99))))),
+          row(btn('Max all skills', () => run(gm.gmMaxSkills(w))), btn('Reset stats', () => run(gm.gmReset(w, 'stats'))), btn('Reset skills', () => run(gm.gmReset(w, 'skills')))),
+          row('Set Luma', num('setLuma', c.luma, 100), btn('Set', () => run(gm.gmSetLuma(w, val('setLuma', c.luma)))), btn('Rebirth now', () => run(gm.gmRebirth(w))))),
+        section('Item made to order',
+          row(sel('item2', [...d.items.values()].filter((x) => x.type === 'equipment').sort((a, b) => a.name.localeCompare(b.name)).map((x) => [x.id, x.name])), '+', num('ref', 10, 44)),
+          row(sel('elem', [['', 'No element'], ...['fire', 'water', 'earth', 'wind', 'holy', 'shadow', 'ghost', 'poison', 'undead'].map((e) => [e, e] as [string, string])]),
+            sel('card', [['', 'No card'], ...[...d.items.values()].filter((x) => x.type === 'card').sort((a, b) => a.name.localeCompare(b.name)).map((x) => [x.id, x.name] as [string, string])]),
+            btn('Give', () => run(gm.gmGiveItemFull(w, this.adminSel.item2, { refine: val('ref', 10), element: this.adminSel.elem || undefined, cards: this.adminSel.card ? [this.adminSel.card] : undefined })))),
+          row(sel('slot', EQUIP_SLOTS.map((s) => [s, s])), '+', num('ref2', 10, 44), btn('Refine equipped', () => run(gm.gmRefineEquipped(w, this.adminSel.slot, val('ref2', 10)))), btn('Clear inventory', () => run(gm.gmClearInventory(w)), 'btn small danger'))),
+        section('Companions & runes',
+          row(sel('pet', [...d.pets.values()].map((p) => [p.monsterId, p.name])), btn('Give pet', () => run(gm.gmPet(w, this.adminSel.pet)))),
+          row(sel('homun', [...d.homunculi.values()].map((x) => [x.id, x.name])), 'Lv', num('hlv', 50, 44), btn('Create homunculus', () => run(gm.gmHomun(w, this.adminSel.homun, val('hlv', 50))))),
+          row(btn('Mount + cart', () => run(gm.gmMountCart(w))), 'Rune pts +', num('rp', 10, 44), btn('Set', () => run(gm.gmRunePoints(w, val('rp', 10))))))));
+      return;
+    }
+    if (this.adminTab === 'world') {
+      const g = w.gm;
+      setChildren(body, h('div', { style: 'width:400px' }, tabs, note,
+        section('Cheats',
+          row(onOff('God mode', w.godMode, () => run(gm.gmGodMode(w, !w.godMode))), onOff('One-hit kill', g.oneHitKill, () => run(gm.gmToggle(w, 'oneHit')))),
+          row(onOff('No cooldown / free skills', g.noCooldown, () => run(gm.gmToggle(w, 'noCooldown'))), onOff('Invisible', g.invisible, () => run(gm.gmToggle(w, 'invisible')))),
+          row('Move speed +%', num('spd', g.moveSpeedPct, 56), btn('Set', () => run(gm.gmMoveSpeed(w, val('spd')))), 'Game ×', num('ts', g.timeScale, 44), btn('Set', () => run(gm.gmTimeScale(w, val('ts', 1)))))),
+        section('Rates (100 = normal)',
+          row('EXP', num('rexp', g.expRate, 60), 'Drop', num('rdrop', g.dropRate, 60), 'Luma', num('rluma', g.lumaRate, 60), btn('Apply', () => run(gm.gmRates(w, val('rexp', 100), val('rdrop', 100), val('rluma', 100)))))),
+        section('Map',
+          row(sel('map2', [...d.maps.values()].map((x) => [x.id, x.name])), 'x', num('tx', 20, 44), 'y', num('ty', 20, 44), btn('Warp', () => run(gm.gmTeleportXY(w, this.adminSel.map2, val('tx', 20), val('ty', 20))))),
+          row(btn('Respawn boss now', () => run(gm.gmRespawnBoss(w))), btn('Clear ground items', () => run(gm.gmClearGround(w))))),
+        section('Raids & dungeons',
+          row(btn('Start raid here', () => run(gm.gmRaid(w, w.map.def.id))), btn('End raid', () => run(gm.gmRaid(w, 'end')))),
+          row(sel('inst', [...d.instances.values()].map((x) => [x.id, x.name])), 'Floor', num('fl', 1, 52), btn('Go', () => run(gm.gmInstanceFloor(w, this.adminSel.inst, val('fl', 1))))),
+          row(btn('Reset dungeon cooldowns', () => run(gm.gmInstanceReset(w))))),
+        section('Quests & auto',
+          row(btn('Complete all quests', () => run(gm.gmQuestAll(w, 'complete'))), btn('Reset all quests', () => run(gm.gmQuestAll(w, 'reset')), 'btn small danger')),
+          row(btn('Auto Farm', () => { w.auto.start('farm'); this.refresh(); }), btn('Auto Quest', () => { w.auto.start('quest'); this.refresh(); }), btn('Auto off', () => { w.auto.stop(); this.refresh(); })))));
+      return;
+    }
+    if (this.adminTab === 'console') {
+      const input = h('input', { id: 'gm-console', placeholder: '@help', style: 'flex:1' });
+      const exec = () => {
+        const line = input.value.trim(); if (!line) return;
+        const cmd = line.startsWith('@') ? line : `@${line}`;
+        this.adminLog.push(`> ${cmd}`);
+        const r = gm.runGmCommand(w, cmd);
+        this.adminLog.push(...((r.ok ? r.message : `✖ ${r.error}`) ?? '').split('\n'));
+        this.adminLog = this.adminLog.slice(-120);
+        this.refresh();
+        (document.getElementById('gm-console') as HTMLInputElement | null)?.focus();
+      };
+      input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.stopPropagation(); exec(); } });
+      const log = h('pre', { id: 'gm-console-log', style: 'height:300px;overflow:auto;font-size:11px;white-space:pre-wrap;background:rgba(0,0,0,0.3);padding:4px;margin:0 0 4px' }, this.adminLog.join('\n') || 'Type @help for every command. You can also type @commands in the chat box. Server commands (@announce, @kick, @woe…) go through the chat box while online.');
+      setChildren(body, h('div', { style: 'width:400px' }, tabs, log, row(input, btn('Run', exec, 'btn small primary'))));
+      log.scrollTop = log.scrollHeight;
+      return;
+    }
+    setChildren(body, h('div', { style: 'width:400px' }, tabs, note,
       section('Character',
         row(`${c.name} · ${d.classes.get(c.classId)!.name} · Base Lv ${c.baseLevel} · Job Lv ${c.jobLevel} · ${c.luma} Luma`),
         row(btn('Full heal', () => run(gm.gmHeal(w))), btn(`God mode: ${w.godMode ? 'ON' : 'OFF'}`, () => run(gm.gmGodMode(w, !w.godMode)), w.godMode ? 'btn small primary' : 'btn small')),

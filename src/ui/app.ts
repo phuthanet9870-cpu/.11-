@@ -7,6 +7,7 @@ import { createCharacter } from '../core/character';
 import { DEFAULT_KEYBINDS, loadSave, newSaveFile, SAVE_KEY, writeSave } from '../core/save';
 import type { Appearance, HotbarSlot, SaveFile, Settings } from '../core/types';
 import { World, type WorldEvent } from '../core/world';
+import { runGmCommand } from '../core/gm';
 import { audio } from '../game/audio/audio';
 import type { GameHost } from '../game/host';
 import { BootScene } from '../game/scenes/BootScene';
@@ -295,11 +296,27 @@ export class App implements GameHost {
     } else w.castSkill(sk.id);
   }
 
+  /** RO-style GM text commands (@help). @announce/@kick/@woe/@castle/@emperium/@players go to the server. */
+  gmCommand(line: string) {
+    const [cmd, ...args] = line.trim().split(/\s+/);
+    const server = ['@announce', '@kick', '@woe', '@castle', '@emperium', '@players'];
+    if (cmd === '@token') { this.gmToken = args[0] ?? ''; this.hud?.log('Server admin token set for this session.', 'system'); return; }
+    if (server.includes(cmd.toLowerCase())) {
+      if (!this.online.serverGm(this.gmToken, cmd.slice(1).toLowerCase(), args)) this.hud?.log('Server GM commands need you to be online (Social window, G). Set the token with @token <admin token>.', 'error');
+      return;
+    }
+    const r = runGmCommand(this.world, line);
+    for (const l of ((r.ok ? r.message : r.error) ?? '').split('\n')) this.hud?.log(l, r.ok ? 'system' : 'error');
+    if (line.trim().toLowerCase() === '@help') this.hud?.log('Server (online, needs @token): @announce text · @players · @kick name · @woe open|close|auto · @castle guild|none · @emperium', 'system');
+    this.markWindowsDirty();
+  }
+  gmToken = '';
+
   chatCommand(cmd: string) {
     const w = this.world;
     const [name] = cmd.slice(1).split(/\s+/);
     switch (name) {
-      case 'help': this.hud?.log('Commands: /where /save /stuck /played /gm /help · F8 opens GM tools', 'system'); break;
+      case 'help': this.hud?.log('Commands: /where /save /stuck /played /gm /help · F8 opens GM tools · @help lists GM commands', 'system'); break;
       case 'gm': case 'admin': this.windows.toggle('admin'); break;
       case 'where': this.hud?.log(`${w.map.def.name} (${Math.floor(w.player.x / 32)}, ${Math.floor(w.player.y / 32)})`, 'system'); break;
       case 'save': this.saveNow(true); break;
