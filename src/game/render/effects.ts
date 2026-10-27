@@ -93,7 +93,7 @@ const SPRITE_FX: Record<string, string> = {
  * (feet for heal/level-up, centre for hits). Returns false when the art is
  * not loaded so callers can fall back to particles.
  */
-export function playSpriteFx(scene: Phaser.Scene, key: string, x: number, y: number, opts: { flipX?: boolean; depth?: number } = {}): boolean {
+export function playSpriteFx(scene: Phaser.Scene, key: string, x: number, y: number, opts: { flipX?: boolean; depth?: number; follow?: () => { x: number; y: number } | null } = {}): boolean {
   const v = vfxMeta(scene, key);
   if (!v) return false;
   const animKey = `anim_${key}`;
@@ -104,11 +104,15 @@ export function playSpriteFx(scene: Phaser.Scene, key: string, x: number, y: num
   s.setDepth(opts.depth ?? y + 2000);
   if (v.blendMode === 'add') s.setBlendMode(Phaser.BlendModes.ADD);
   s.play(animKey);
-  s.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => s.destroy());
+  // Target-attached effects track their target (offset kept) until they finish.
+  const follow = opts.follow;
+  const track = () => { const p = follow?.(); if (p) s.setPosition(Math.round(p.x), Math.round(p.y)); };
+  if (follow) scene.events.on(Phaser.Scenes.Events.POST_UPDATE, track);
+  s.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => { if (follow) scene.events.off(Phaser.Scenes.Events.POST_UPDATE, track); s.destroy(); });
   return true;
 }
 
-export function playFx(scene: Phaser.Scene, fx: string, x: number, y: number, radius?: number, opts: { flipX?: boolean } = {}) {
+export function playFx(scene: Phaser.Scene, fx: string, x: number, y: number, radius?: number, opts: { flipX?: boolean; follow?: () => { x: number; y: number } | null } = {}) {
   if (SPRITE_FX[fx] && playSpriteFx(scene, SPRITE_FX[fx], x, y, opts)) return;
   const spec = SPECS[fx];
   if (!spec || spec.count <= 1) return;

@@ -289,12 +289,22 @@ export class GameScene extends Phaser.Scene {
           const isPlayer = e.targetId === 'player';
           const col = isPlayer ? '#ff5a5a' : e.crit ? '#ffd34d' : e.kind === 'magic' ? '#c9a6ff' : e.kind === 'dot' ? '#a9e04a' : '#ffffff';
           floatText(this, tgt.x, y, e.crit ? `${e.amount}!` : `${e.amount}`, col, e.crit ? 24 : isPlayer ? 15 : 17);
-          if (e.kind === 'physical') playSpriteFx(this, 'fx_hit_basic', tgt.x, tgt.y - (isPlayer ? 30 : 16));
+          if (e.kind === 'physical') {
+            const dy = isPlayer ? 30 : 16;
+            playSpriteFx(this, 'fx_hit_basic', tgt.x, tgt.y - dy, { follow: () => ({ x: tgt.x, y: tgt.y - dy }) });
+          }
           if (!isPlayer && e.element && e.element !== 'neutral' && e.kind !== 'dot') playFx(this, ELEMENT_FX[e.element] ?? 'slash_small', tgt.x, tgt.y - 10);
         }
         break;
       }
-      case 'fx': playFx(this, e.fx, e.x, e.y, e.radius, { flipX: e.fx.startsWith('slash') && w.player.x > e.x }); break;
+      case 'fx': {
+        // Effects that carry an offset are attached to their target and move with it.
+        const actor = e.offsetY === undefined ? undefined : e.targetId === 'player' ? w.player : e.targetId ? w.monsters.get(e.targetId) : undefined;
+        const ox = 0, oy = e.offsetY ?? 0;
+        const follow = actor ? () => (e.targetId === 'player' || !(actor as MonsterActor).dead ? { x: actor.x + ox, y: actor.y + oy } : null) : undefined;
+        playFx(this, e.fx, e.x, e.y, e.radius, { flipX: e.fx.startsWith('slash') && w.player.x > e.x, follow });
+        break;
+      }
       case 'projectile': playProjectile(this, e.fx, e.fromX, e.fromY, e.toX, e.toY, e.durationMs, e.color); break;
       case 'sound': audio.play(e.key); break;
       case 'levelUp': floatText(this, w.player.x, w.player.y - 90, e.kind === 'base' ? 'LEVEL UP!' : 'JOB LEVEL UP!', e.kind === 'base' ? '#ffd34d' : '#7fd6ff', 22); break;

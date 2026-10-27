@@ -90,6 +90,8 @@ Ground-target skills (Arrow Rain, Wind Trap, Fire Wall, Thunderstorm, Meteor) la
 
 Screenshots from the e2e run are written to `tests/e2e/screenshots/` (git-ignored).
 
+**Batch 001 art (Willowbrook Starter Pack):** asset QA **551 / 551** checks passed (`npm run assets:batch001`), and the in-game demo **26 / 26** (`npm run demo:batch001`). See [docs/art/BATCH001.md](docs/art/BATCH001.md).
+
 ## Project structure
 ```
 src/
@@ -102,11 +104,12 @@ public/assets/asset-manifest.json   asset keys + sprite contracts (replace place
 tests/       unit/, integration/, e2e/, helpers/ (bot & scenario builders)
 docs/        ARCHITECTURE.md, ASSET_PIPELINE.md
 scripts/     generate-asset-manifest.mjs
+tools/asset-studio/   pixel-art generator + QA for the production art batches
 ```
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/ASSET_PIPELINE.md](docs/ASSET_PIPELINE.md).
 
 ## Not done yet (honest list)
-- **Everything is a placeholder in art and audio.** The sprites, tiles, icons, music and SFX are generated at runtime. They're original and readable, but they aren't production art.
+- **Most art and all audio are still placeholders.** Batch 001 production art covers the Novice, Leaf Slime, Mushling, Horn Rabbit, Willowbrook (tiles, props, buildings) and 4 VFX ([docs/art/BATCH001.md](docs/art/BATCH001.md)). Everything else (the other classes, NPCs, monsters and maps, plus all music and SFX) is still generated at runtime.
 - **No multiplayer.** There's no login/register, server, database, party, guild, trading or marketplace (Phase 3). Chat only echoes locally and says so. Saves live in browser `localStorage`.
 - **Not built in Phase 1:** Priest, Assassin and Merchant; advanced jobs; refinement (a stat-scaling hook exists in `refineMods`, but there's no UI or NPC); monster cards; Rune Constellation; pets and mounts; crafting; dungeons; world events; day/night; weather; PvP; Guild War.
 - Only 3 of the 30 maps, 8 of the 60 monsters, and 1 test boss (Grukk) exist. The 6 major bosses are planned for Phase 4.

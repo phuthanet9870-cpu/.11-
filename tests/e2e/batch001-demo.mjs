@@ -96,7 +96,11 @@ const watchFight = (mid, gameMs, untilSlash = false) => page.evaluate(([mid, gam
         if (key.includes('fx_hit_basic') && !out.hit && Math.abs(o.x - m.x) <= 2) out.hit = rec;
       }
       const ps = sc.player;
-      if (!out.attack && w.player.anim === 'attack') out.attack = { key: ps.texture.key, dir: w.player.dir, frame: Number(ps.frame.name) };
+      if (!out.attack && w.player.anim === 'attack') {
+        const dx = m.x - w.player.x, dy = m.y - w.player.y;
+        const toward = Math.abs(dx) >= Math.abs(dy) ? (dx < 0 ? 'left' : 'right') : (dy < 0 ? 'up' : 'down');
+        out.attack = { key: ps.texture.key, dir: w.player.dir, toward, row: Math.floor(Number(ps.frame.name) / 6), frame: Number(ps.frame.name) };
+      }
       if (m.dead) out.dead = true;
     }
     if (w.time - t0 >= gameMs || (out.dead && out.monAnims.includes('death')) || (untilSlash && out.slash && out.slash.frame >= 1)) resolve(out); else requestAnimationFrame(tick);
@@ -220,8 +224,8 @@ try {
     check(`${id}: 4-direction Batch 001 sheet, feet pivot`, ms.key.startsWith(`file:monsters/${id}/`) && Math.abs(ms.oy - 45 / 48) < 1e-6 && ms.sx === Math.round(ms.mx) && !ms.flip, `${ms.key.split('/').pop()} dir=${ms.dir} frame=${ms.frame}`);
     await shotMonster(`06-${id}-idle`, info.mid);
     // Low HP so the monster's hit → death sequence plays within the test window.
-    // Two-hit HP so the hit → death sequence plays within the test window.
-    await page.evaluate((mid) => { const m = window.__veyloria.world.monsters.get(mid); m.hp = Math.min(m.hp, 25); }, info.mid);
+    // A 1-damage poke guarantees the hit reaction; ~2–3 blows of HP keep the fight short.
+    await page.evaluate((mid) => { const w = window.__veyloria.world, m = w.monsters.get(mid); m.hp = Math.min(m.hp, 60); w.damageMonster(m, 1, 'physical', 'neutral', false, false); }, info.mid);
     const first = await watchFight(info.mid, 3000, true);
     const mid0 = await page.evaluate((mid) => { const m = window.__veyloria.world.monsters.get(mid); return { x: m.x, y: m.y }; }, info.mid);
     if (await freezeOnVfx('fx_sword_slash', 1)) { await shotAt(`07-${id}-combat`, mid0.x + 16, mid0.y - 20, 240, 180); await resume(); }
@@ -230,7 +234,7 @@ try {
     const sl = fight.slash, ht = fight.hit, at = fight.attack;
     check(`${id}: sword slash VFX centred on the target`, !!sl && Math.abs(sl.x - sl.tx) <= 2 && Math.abs(sl.y - (sl.ty - 12)) <= 2 && sl.blend === 0, JSON.stringify(sl));
     check(`${id}: hit VFX on the target`, !!ht, JSON.stringify(ht));
-    check(`${id}: player plays the Novice attack animation facing the monster`, !!at && at.key.endsWith('_attack') && at.dir === 'left', at ? `${at.key.split('_').pop()} dir=${at.dir} frame=${at.frame}` : 'none');
+    check(`${id}: player plays the Novice attack animation facing the monster`, !!at && at.key.endsWith('_attack') && at.dir === at.toward && at.row === ['down', 'left', 'right', 'up'].indexOf(at.dir), at ? `${at.key.split('_').pop()} dir=${at.dir} toward=${at.toward} row=${at.row} frame=${at.frame}` : 'none');
     check(`${id}: monster hit/attack and death animations play`, fight.dead && fight.monAnims.includes('death') && (fight.monAnims.includes('hit') || fight.monAnims.includes('attack')), fight.monAnims.join(','));
     await shotMonster(`08-${id}-death`, info.mid);
     await waitGame(1500);

@@ -134,7 +134,7 @@ export interface Telegraph {
 
 export type WorldEvent =
   | { type: 'damage'; targetId: string; amount: number; crit: boolean; miss: boolean; kind: 'physical' | 'magic' | 'heal' | 'mp' | 'dot'; element?: Element }
-  | { type: 'fx'; fx: string; x: number; y: number; radius?: number; targetId?: string }
+  | { type: 'fx'; fx: string; x: number; y: number; radius?: number; targetId?: string; /** offset from the target, for effects that follow it */ offsetY?: number }
   | { type: 'projectile'; fromX: number; fromY: number; toX: number; toY: number; durationMs: number; fx: string; color?: string }
   | { type: 'levelUp'; kind: 'base' | 'job'; level: number }
   | { type: 'death'; id: string }
@@ -749,7 +749,7 @@ export class World {
     };
     if (kind === 'melee') {
       this.emit({ type: 'sound', key: 'swing' });
-      this.emit({ type: 'fx', fx: 'slash_small', x: m.x, y: m.y - 12 });
+      this.emit({ type: 'fx', fx: 'slash_small', x: m.x, y: m.y - 12, targetId: m.id, offsetY: -12 });
       resolve();
     } else {
       const travel = (dist(p.x, p.y, m.x, m.y) / this.data.balance.combat.projectileSpeed) * 1000;
@@ -924,7 +924,7 @@ export class World {
       this.recomputeStats();
       c.hp = this.stats.maxHp; c.mp = this.stats.maxMp; this.player.hp = c.hp;
       this.emit({ type: 'levelUp', kind: 'base', level: c.baseLevel });
-      this.emit({ type: 'fx', fx: 'level_up', x: this.player.x, y: this.player.y });
+      this.emit({ type: 'fx', fx: 'level_up', x: this.player.x, y: this.player.y, targetId: 'player', offsetY: 0 });
       this.emit({ type: 'sound', key: 'level_up' });
       this.message(`Base Level up! You are now level ${c.baseLevel}. Stat points: ${c.statPoints}`, 'quest');
     }
@@ -1779,7 +1779,7 @@ export class World {
     this.char.mp = this.stats.maxMp;
     this.player.hp = this.char.hp;
     this.cureStatuses(this.player, ['poison', 'burn', 'bleed', 'curse', 'blind', 'silence', 'slow']);
-    this.emit({ type: 'fx', fx: 'heal', x: this.player.x, y: this.player.y, targetId: 'player' });
+    this.emit({ type: 'fx', fx: 'heal', x: this.player.x, y: this.player.y, targetId: 'player', offsetY: 0 });
     this.emit({ type: 'sound', key: 'heal' });
     return { ok: true, message: 'You feel fully rested.' };
   }
@@ -1836,7 +1836,7 @@ export class World {
       this.recomputeStats();
       this.char.hp = this.stats.maxHp; this.char.mp = this.stats.maxMp;
       this.emit({ type: 'levelUp', kind: 'base', level: this.char.baseLevel });
-      this.emit({ type: 'fx', fx: 'level_up', x: this.player.x, y: this.player.y });
+      this.emit({ type: 'fx', fx: 'level_up', x: this.player.x, y: this.player.y, targetId: 'player', offsetY: 0 });
       this.message(`Base Level up! You are now level ${this.char.baseLevel}.`, 'quest');
     }
     if (this.char.jobLevel > before.j && !r.jobChanged) {
