@@ -265,7 +265,7 @@ export class Hud {
     for (const m of w.monsters.values()) if (!m.dead) dot(m.x, m.y, m.boss ? '#ff3b30' : m.targetId ? '#ff8a3a' : '#e04a3a', m.boss ? 4 : 1.5);
     for (const n of w.npcs) dot(n.x, n.y, '#ffd34d', 2);
     dot(w.player.x, w.player.y, '#ffffff', 3);
-    this.miniCoords.textContent = `${Math.floor(w.player.x / TILE)}, ${Math.floor(w.player.y / TILE)}${w.map.def.levelRange ? `  ·  Lv.${w.map.def.levelRange.join('–')}` : '  ·  Town'}`;
+    this.miniCoords.textContent = `${Math.floor(w.player.x / TILE)}, ${Math.floor(w.player.y / TILE)}${w.map.def.levelRange ? `  ·  Lv.${w.map.def.levelRange.join('–')}` : w.map.def.type === 'instance' ? '  ·  Memorial dungeon' : w.map.def.type === 'town' ? '  ·  Town' : ''}`;
   }
 
   // ---------------------------------------------------------------- per frame

@@ -430,10 +430,12 @@ export class GameScene extends Phaser.Scene {
     const clip = (a.moving ? v.rig.clips.walk : undefined) ?? v.rig.clips.idle;
     const fr = clipFrame(clip, a.dir, this.clipStep(clip, 0));
     v.sprite.setTexture(clip.key, fr.frame).setFlipX(fr.flipX);
-    v.name.setText(pet.name).setPosition(Math.round(a.x), Math.round(a.y) + 4);
+    // Name above the pet so it never covers the player's name below the player.
+    const top = Math.round(a.y) - 26;
+    v.name.setText(pet.name).setOrigin(0.5, 1).setPosition(Math.round(a.x), top);
     // A heart floats over a Loyal pet; a sweat drop over a hungry one.
     const loyal = pet.intimacy >= 910, hungry = pet.hunger <= 25;
-    v.heart.setText(hungry ? '…' : '♥').setColor(hungry ? '#9ad8ff' : '#ff7aa8').setVisible(loyal || hungry).setPosition(Math.round(a.x), Math.round(a.y) - 26);
+    v.heart.setText(hungry ? '…' : '♥').setColor(hungry ? '#9ad8ff' : '#ff7aa8').setVisible(loyal || hungry).setPosition(Math.round(a.x), top - 14);
   }
 
   /** MVP tombstones: where a boss fell, who was MVP, and a countdown to its return. */

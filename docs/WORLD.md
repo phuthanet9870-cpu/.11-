@@ -1,4 +1,4 @@
-# The World of Veyloria (30 maps)
+# The World of Veyloria (30 maps + 14 dungeon floors)
 
 The world is laid out like Ragnarok Online: each region has a town (or a wilderness gateway) with field maps around it and a dungeon at the end. Exits sit at map edges, and Courier Guild NPCs in every town save your position, keep storage and sell warps to other towns. All names and designs are original.
 
@@ -82,11 +82,14 @@ Maps 4–30, their monsters, drops, shops, NPCs, bosses, palettes and music are 
 ## Systems added with the world
 
 - **Tutorial quests only.** The story, side and daily quests are gone. Five training quests remain: register at the Guild, hunt Leaf Slimes, buy and equip a weapon, refine to +1, and reach Job Lv 10.
-- **Job change** happens at guild masters: Knight in Aurelion, Ranger in Fernhollow, Mage in Arcanthe. It needs Job Lv 10 as a Novice.
-- **Refining** (+1…+10) is done at blacksmiths: Garrick in Willowbrook, and the smiths in Aurelion, Sandara and Frostholm.
-  - Weapons take Starsteel Ore and armor takes Moonstone Ore, plus a Luma fee.
-  - Weapons are safe up to +5 and armor up to +4. Past that, success drops from 60% to 10%, and **a failed attempt destroys the item**.
-  - Each level adds +3 ATK to a weapon (+3 MATK for magic weapons) or +1 DEF to armor.
+- **Job change** happens at guild masters: Knight and Cleric in Aurelion, Ranger in Fernhollow, Mage in Arcanthe, Rogue in Sandara, Merchant in Tidewatch. It needs Job Lv 10 as a Novice.
+- **Refining** (+1…+10) is done at blacksmiths: Garrick in Willowbrook, and the smiths in Aurelion, Sandara and Frostholm. Rules and rates are in [RO_SYSTEMS.md](RO_SYSTEMS.md).
+- **Pets:** the Pet Keeper in Fernhollow sells lures and pet food.
+- **Elite mini-bosses:** every field map has one (a tougher version of its strongest monster, 10-minute respawn).
+- **Memorial dungeons** (not on the world map, entered through a keeper):
+  - Endless Spire: 10 floors, Lv 20+, 30 minutes. Warden Isolde in Aurelion.
+  - Sealed Crypt: 4 rooms, Lv 45+, 20 minutes. Brother Halvard in Frostholm.
+  - Each floor's portal opens only when every monster on it is defeated. 1-hour cooldown.
 - **Courier Guild** NPCs in every town offer save, storage and warps to the other towns (300–600 Luma).
 - **Region looks:** each region has its own palette (snow, desert, lava, swamp, ruins, crystal heath…), weather (snow, rain, ash, fog), screen tint, music track and ambience. Dungeons are dark and room-based.
 

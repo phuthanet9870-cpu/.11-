@@ -18,7 +18,7 @@ researched from public community wikis (sources at the end) and then implemented
 | Cards | Every monster has a card at 0.01%. Compounded permanently into a slotted item; can't be removed; lost if the item is destroyed | 70 original cards, one per monster, at 0.01%. Weapon cards (race/size/ATK), armor (HP, element resist), shield (race resist), garment, footgear, headgear, accessory | `core/cards.ts`, `tools/world-gen/build-world.ts` |
 | Card slots | Up to 4 on weapons, 1 on other gear | Daggers 3, other weapons 2, rare weapons 1, other equipment 1; names show `[used/total]` | generator |
 | Weapon levels | Weapons are level 1–4; a higher level is stronger but harder to refine | Starter weapons Lv 1, common Lv 2, uncommon Lv 3, rare/epic Lv 4 | generator, `ItemDef.weaponLevel` |
-| Refining | Safe limits by weapon level +7 / +6 / +5 / +4, armor +4; classic success table above that; ATK per refine +2 / +3 / +5 / +7; a failure destroys the item and its cards | Same. Ores per grade: Glimmer (weapon Lv 1) and Bright (Lv 2) are sold by NPCs; Starsteel (Lv 3–4) and Moonstone (armor) only drop | `core/refine.ts` |
+| Refining | Safe limits by weapon level +7 / +6 / +5 / +4, armor +4; classic success table above that; ATK per refine +2 / +3 / +5 / +7; armor +0.7 DEF per refine; a failure destroys the item and its cards; enriched ores use a better table; refiner fees 50 / 200 / 5,000 / 20,000, armor 2,000 | Same tables and fees (from rAthena's pre-renewal `refine.yml`). Ores per grade: Glimmer (weapon Lv 1) and Bright (Lv 2) are sold by NPCs; Starsteel (Lv 3–4) and Moonstone (armor) only drop. Enriched Starsteel / Moonstone work on any level and drop from Lv 40+ monsters, MVPs and memorial dungeons | `core/refine.ts` |
 | Forging | Smiths forge weapons from materials. An element stone makes the weapon elemental, star crumbs (up to 3) add ATK, the maker's name goes on the weapon, and forged weapons have no slots. Chance = 50 + JobLv×0.2 + DEX×0.1 + LUK×0.1 − weapon-level, element and crumb penalties | Same formula, with a +20% forge-master bonus in place of the smith skills. 9 recipes made from monster materials (weapon Lv 1–3); Flame/Frost/Gale/Terra stones drop from monsters of that element; Star Crumbs from Lv 15+ monsters; crumbs give +5 / +10 / +40 ATK | `core/forge.ts`, `recipes.json` |
 | Random options | Ragnarok Zero: dropped gear rolls random options from weighted pools; an enchanter adds or rerolls them | Gear drops roll 0–3 options (60 / 25 / 11 / 4%). Options: stats, HP/MP, DEF, FLEE, element resist, ATK/MATK/HIT/CRIT, attack speed, race/size damage, status-on-hit, HP drain. The name colour shows the count. Enchantress Viveka in Arcanthe adds one (5,000 Luma, max 3) or rerolls all (10,000) | `core/options.ts` |
 | On-hit effects | Item bonuses such as status-on-hit and HP drain | `onHitStatusPct` and `hpDrainPct` apply on basic attacks. Cards of status-inflicting monsters give that status at 5%; bat cards drain 3% HP | `world.ts` |
@@ -29,7 +29,17 @@ researched from public community wikis (sources at the end) and then implemented
 | Full-heal items | Rare items that restore full or half HP/SP | Elder Sap (full HP/MP) and Elder Seed (half), as MVP rewards | `items.json` |
 | Towns and services | Kafra (save, storage, warp), class guilds, refiner | Courier Guild in every town, guild masters for job change, blacksmith refiners | `docs/WORLD.md` |
 | Status points per level | floor(level/5) + 3 | Same | `balance.levels.statPointsPerLevel` |
-| Element table | 9×9 element modifiers | 9 elements, tunable | `elements.json` |
+| Elements | 10 elements (Neutral, Fire, Water, Wind, Earth, Holy, Shadow, Poison, Undead, Ghost) with defender element levels 1–4; each level has its own table (e.g. Neutral vs Ghost is 25% at Lv 1–2 and 0% at Lv 3–4) | Same 10×10×4 tables (from rAthena's pre-renewal `attr_fix.yml`, Dark = Shadow). Monsters have element levels by level tier, bosses one higher; ghost monsters added. Elemental converters (Ember / Frost / Gale / Terra Oil, Blessed Water, Wraith Oil) make your weapon elemental for 10 minutes | `elements.json`, `combat.elementModifier` |
+| Jobs | Six first jobs (Swordman, Archer, Mage, Acolyte, Thief, Merchant) with job bonus stats per job level and a job weight bonus; ASPD shown as a 0–190 value | Six original first jobs: Knight, Ranger, Mage, Cleric, Rogue, Merchant, each with 8–9 skills incl. an ultimate. Job bonus stats per job level, job weight bonus (Merchant/Knight 800, Ranger 600, Cleric/Rogue 400, Mage 200), ASPD = 200 − delay/20 (cap 190) | `classes.json`, `skills.json`, `formulas.jobBonus` |
+| Job mechanics | Steal, Double Attack (daggers), Discount / Overcharge, Mammonite (costs zeny), Enlarge Weight, cure skills | Pilfer (steal once per monster, never bosses), Twin Fang (5%/level with daggers), Haggle / Silver Tongue (max 24%), Coin Strike / Golden Ruin (cost Luma), Pack Mule (+200 weight/level), Purify / Antidote | `world.ts`, `inventory.buyPrice` |
+| Pets | Tame with a taming item; capture rate (rate + (BaseLv − MonLv) × 30 + LUK × 20) × (200 − HP%) / 100; egg; hunger drops every minute; intimacy 0–1000 (start 250); feeding when hungry raises it, overfeeding lowers it, starving and owner death lower it; at 0 the pet leaves; Loyal pets give a bonus | Same rules and formula. 14 tameable monsters, lures and food at the Pet Keeper in Fernhollow, pet window (P), the pet follows you and shows a heart when Loyal | `core/pets.ts`, `pets.json` |
+| Card / item combos | Wearing certain cards or items together gives an extra bonus | 16 combos: every card set from one field map, plus Rogue / Merchant / Cleric gear sets. Tooltips show ✓ when active | `combos.json`, `formulas.activeCombos` |
+| Old Card Album | Opens into a random card | Faded Card Album (from elites, MVPs, memorial dungeons): a random non-boss card | `items.json` |
+| Autocast | Some cards cast a spell by themselves on attack | Cards of spell-casting monsters cast a Lv 3 bolt (5%) on basic hits, free of MP | `world.playerBasicAttack` |
+| Mini-bosses | Field mini-bosses with better drops | One elite per field map (×6 HP, ×1.5 ATK, 10-minute respawn, own card, card album 2%) | generator |
+| Looters | Some monsters pick up items on the ground | Goblins, crabs and gulls pick up items left 3+ seconds and drop them when killed | `world.updateLooter` |
+| Memorial dungeons | Timed instances with floors (e.g. Endless Tower), entry cooldown | Endless Spire (10 floors, Lv 20+, 30 min) and Sealed Crypt (4 rooms, Lv 45+, 20 min). A floor's portal stays sealed until it is cleared; no respawns; leaving, dying or timing out ends the run; 1-hour real-time cooldown; rewards on the last floor | `world.enterInstance`, `instances.json` |
+| Database tools | Refine simulator, forge calculator, affix list (the two sites you linked) | Database window tabs: Refine sim (chance per step, survival, expected ore / Luma / items), Forge calc, Options (chance per roll), Combos, Pets, Elements chart | `windows.renderDbTool`, `refine.simulateRefine` |
 
 ## Researched but not switched on
 
@@ -49,15 +59,18 @@ Turning it on needs RO-style ATK/MATK/DEF formulas and retuned monsters as one c
 
 - **Multiplayer systems:** party EXP sharing, guilds, War of Emperium, trading and vending need
   the Phase 3 server.
-- **Jobs:** RO's full job tree (6 first jobs, two second jobs each, transcendent classes). There
-  are 3 classes now.
-- **Monster classes:** element levels 1–4 per monster, and the mini-boss tier.
-- **Other systems:**
-  - pets and taming, homunculi
-  - card sets / combo bonuses, enriched ores, over-upgrade above +10
-  - memorial dungeons (timed instances)
-  - autocast skills on hit
-  - the ASPD 190 cap model, and job-specific weight bonuses
+- **Jobs:** second jobs and transcendent classes (only the six first jobs exist).
+- **Other systems:** homunculi, pet accessories and evolution, over-upgrade above +10, the full
+  100-floor tower (the Spire has 10), vending and trading (need the server).
+
+## Measured class balance (first boss, 24 fixed seeds, Lv 17, same potion kit)
+
+| Knight | Ranger | Mage | Cleric | Rogue | Merchant |
+|---|---|---|---|---|---|
+| 24/24 | 14/24 | 19/24 | 11/24 | 10/24 | 22/24 |
+
+Ranger, Cleric and Rogue win about half the time. Rogue daggers do 50% against Grukk (Large),
+which is the RO size rule. The Cleric bot heals itself with Heal.
 
 ## Sources
 
@@ -69,6 +82,7 @@ The two sites you sent, midgardhub.com (a Ragnarok Zero Global database) and rat
 - RevivalRO wiki — Forging: https://wiki.ragnarevival.com/crafting/blacksmith/forging ; forging calculator notes: https://github.com/breno-m-dev/Ragnarok-Online-Forging-Calculator
 - Ragnarok Zero enchant/options: https://wiki.playragnarokzero.com/wiki/Memorial_Dungeon_Equipment , https://midgardhub.com/guides/memorial-dungeons
 - rAthena item bonus reference: https://raw.githubusercontent.com/rathena/rathena/master/doc/item_bonus.txt
+- rAthena pre-renewal tables used for numbers only (refine rates and fees, element tables, pet capture formula, job stats): https://github.com/rathena/rathena/tree/master/db/pre-re (`refine.yml`, `attr_fix.yml`, `pet_db.yml`, `job_stats.yml`), https://github.com/rathena/rathena/blob/master/doc/yaml/db/pet_db.yml , rAthena `src/map/pet.cpp` (feeding rules)
 
 - iRO Wiki — Size: https://irowiki.org/wiki/Size (and classic: https://irowiki.org/classic/Size)
 - iRO Wiki — Weight Limit: https://irowiki.org/wiki/Weight

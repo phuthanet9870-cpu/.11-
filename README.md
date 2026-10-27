@@ -82,18 +82,18 @@ Ground-target skills (Arrow Rain, Wind Trap, Fire Wall, Thunderstorm, Meteor) la
 | Derived stats = Base + Equipment + Passives + Buffs + Statuses (cards and runes plug in later) | ✅ | `computeDerivedStats` |
 | Inventory: 60-slot grid, stacking, weight limit, drag & drop, tooltips, sort, filter, lock, use, drop, sell, storage, binding | ✅ | `src/core/inventory.ts`, `src/ui/windows.ts` |
 | Equipment: 8 slots, class/level requirements, two-handed rules | ✅ | |
-| Skills: Novice (2), **Knight / Ranger / Mage** (8–9 each: active, passive, buff, ultimate), skill tree, cooldowns, cast times, MP, requirements | ✅ | `src/data/skills.json` |
-| Job change at Job Lv 10 at a class guild master (Aurelion / Fernhollow / Arcanthe) | ✅ | NPC service `jobChange`, `World.changeJobAt` |
+| Six first jobs: **Knight, Ranger, Mage, Cleric, Rogue, Merchant** (8–9 skills each: active, passive, buff, ultimate) plus Novice; job bonus stats, job weight bonus, ASPD 0–190; steal, double attack, discount/overcharge, Luma-cost skills | ✅ | `src/data/classes.json`, `src/data/skills.json` |
+| Job change at Job Lv 10 at a guild master (Knight & Cleric: Aurelion, Ranger: Fernhollow, Mage: Arcanthe, Rogue: Sandara, Merchant: Tidewatch) | ✅ | NPC service `jobChange`, `World.changeJobAt` |
 | Tutorial quests only (5): register, hunt, buy & equip a weapon, refine +1, reach Job Lv 10; objective types include buy/equip/refine; journal, tracker, markers | ✅ | `src/data/quests.json`, `src/core/quests.ts` |
-| Refinement +1…+10 (ores + Luma, safe limits, failure destroys the item) at blacksmith NPCs | ✅ | `src/core/refine.ts` |
-| Ragnarok-style mechanics: monster cards (70, 0.01%, slots, compounding), weapon-vs-size table, race/size bonuses, perfect dodge, 90% weight lock, MVP (top damage, MVP EXP and items, tombstone), Wandering Feather; RO stat-cost curve available but off (measured) | ✅ | `docs/RO_SYSTEMS.md`, `src/core/cards.ts` |
-| 30 maps in 9 RO-style regions (7 towns, fields, 8 dungeons, 6 bosses), Courier Guild save/storage/warp, regional palettes, weather and music | ✅ | `docs/WORLD.md`, `tools/world-gen/build-world.ts` |
+| Refinement +1…+10 by weapon level (classic rates and fees, enriched ores, failure destroys the item), forging, random options + enchanter | ✅ | `src/core/refine.ts`, `forge.ts`, `options.ts` |
+| Ragnarok-style mechanics: monster cards (0.01%, slots, compounding, combos, autocast cards, card album), 10 elements × 4 element levels, elemental converters, weapon-vs-size table, race/size bonuses, perfect dodge, 90% weight lock, MVP (top damage, MVP EXP and items, tombstone), elite mini-bosses, looter monsters, pets (taming, hunger, intimacy, Loyal bonus), memorial dungeons; RO stat-cost curve available but off (measured) | ✅ | `docs/RO_SYSTEMS.md` |
+| 30 world maps in 9 RO-style regions (7 towns, fields, 8 dungeons, 6 bosses) plus 14 memorial-dungeon floors, Courier Guild save/storage/warp, regional palettes, weather and music | ✅ | `docs/WORLD.md`, `tools/world-gen/build-world.ts` |
 | Maps: **Willowbrook Village, Sunny Meadow, Whispering Forest** | ✅ | `src/data/maps/` |
-| Monsters: 8 normal + 1 boss | ✅ | `src/data/monsters.json` |
+| Monsters: 64 normal, 12 elite mini-bosses, 6 bosses | ✅ | `src/data/monsters.json` |
 | Boss: Grukk the Thornking. Intro, HP bar, 3 phases, enrage, telegraphed AoE (circle, ring, charge line), summons, threat, rare drops, contribution reward, respawn timer | ✅ | `src/data/bosses.json` |
 | Save/Load: versioned with migrations, backup, sanitizing, autosave every 30s | ✅ tested | `src/core/save.ts` |
 | HUD: HP/MP, EXP/Job EXP, hotbar with cooldowns, chat log, minimap, quest tracker, buffs, target frame, boss bar, cast bar, Luma | ✅ | `src/ui/hud.ts` |
-| Windows: status, inventory, equipment, skill tree, quest journal, world map, settings (volume, toggles, key rebinding) | ✅ | `src/ui/windows.ts` |
+| Windows: status, inventory, equipment, skill tree, quest journal, world map, pet (P), database with refine simulator / forge calculator / option odds / combos / pets / element chart (B), settings (volume, toggles, key rebinding) | ✅ | `src/ui/windows.ts` |
 | Audio: BGM per map, boss music, ambience, SFX; Master/Music/SFX/Ambient volume | ✅ (procedural) | `src/game/audio/audio.ts` |
 | Asset manifest and replacement system with sprite metadata | ✅ | `docs/ASSET_PIPELINE.md` |
 
@@ -111,10 +111,10 @@ The tools edit the local save only, and any use sets `flags.gmUsed` on the chara
 
 | Suite | Result |
 |---|---|
-| Unit (`tests/unit`, 11 files) | **285 / 285 passed** (incl. forge, random options, procs, weapon-level refine) (includes per-map data checks for all 30 maps): refine, tutorial quests, NPC job change and warps, GM commands, data validation and map reachability, formulas, combat and elements, inventory/shop/storage, quests, save/migrations, world simulation (collision, portals, AI, skills, boss, invalid commands, no double-spend) |
-| Integration: full playthrough | **passed**. A bot using only player commands finishes the 5 tutorial quests, becomes a Knight at the guild in Aurelion, switches to a spear for the Large boss (RO size rule), refines, and defeats Grukk (≈121 simulated minutes, Base Lv 28, 5 attempts). A second test walks through portals to all 30 maps |
-| Integration: class balance | **passed**. First-try boss wins at Lv 17: Knight 6/6, Ranger 6/6, Mage 4/6 (fixed seeds) |
-| E2E in Chromium (`npm run test:e2e`) | **24 / 24 checks passed** (incl. GM window, refine and guild job change): boot, create character via UI, WASD, click NPC → dialogue → accept quest, windows by hotkey, portal travel, mouse-click combat kill with EXP, save and reload persistence, shop purchase, drag & drop equip, stat allocation, job change via dialogue, learn skill, drag skill to hotbar, cast by hotkey, death → respawn, drop part of a stack via the quantity dialog, delete a character with typed-name confirmation, zero page errors |
+| Unit (`tests/unit`, 16 files) | **402 / 402 passed**: element levels, enriched refine and fees, jobs (bonus stats, weight, ASPD, steal, haggle, coin cost, cure), pets, combos, card album, autocast, elites, looters, memorial dungeons, database calculators, plus forge, random options, refine, cards, quests, GM, data validation and per-map reachability (44 maps), formulas, combat, inventory, save/migrations, world simulation |
+| Integration: full playthrough | **passed**. A bot using only player commands finishes the 5 tutorial quests, becomes a Knight at the guild in Aurelion, switches to a spear for the Large boss (RO size rule), refines, and defeats Grukk (≈94 simulated minutes, Base Lv 24, 1 attempt). A second test walks through portals to all 30 world maps |
+| Integration: class balance | **passed**. First-try wins against Grukk at Lv 17 over 24 fixed seeds: Knight 24, Ranger 14, Mage 19, Cleric 11, Rogue 10, Merchant 22 |
+| E2E in Chromium (`npm run test:e2e`) | **27 / 27 checks passed** (incl. pet window, database tools, entering the Endless Spire, GM window, refine and guild job change): boot, create character via UI, WASD, click NPC → dialogue → accept quest, windows by hotkey, portal travel, mouse-click combat kill with EXP, save and reload persistence, shop purchase, drag & drop equip, stat allocation, job change via dialogue, learn skill, drag skill to hotbar, cast by hotkey, death → respawn, drop part of a stack via the quantity dialog, delete a character with typed-name confirmation, zero page errors |
 
 Screenshots from the e2e run are written to `tests/e2e/screenshots/` (git-ignored).
 
@@ -139,7 +139,7 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/ASSET_PIPELINE.md](do
 ## Not done yet (honest list)
 - **Most art and all audio are still placeholders.** Batch 001 production art covers the Novice, Leaf Slime, Mushling, Horn Rabbit, Willowbrook (tiles, props, buildings) and 4 VFX ([docs/art/BATCH001.md](docs/art/BATCH001.md)). Everything else (the other classes, NPCs, monsters and maps, plus all music and SFX) is still generated at runtime.
 - **No multiplayer.** There's no login/register, server, database, party, guild, trading or marketplace (Phase 3). Chat only echoes locally and says so. Saves live in browser `localStorage`.
-- **Not built in Phase 1:** Priest, Assassin and Merchant; advanced jobs; refinement (a stat-scaling hook exists in `refineMods`, but there's no UI or NPC); monster cards; Rune Constellation; pets and mounts; crafting; dungeons; world events; day/night; weather; PvP; Guild War.
+- **Not built yet:** second and transcendent jobs; homunculi, mounts and pet evolution; over-upgrade above +10; Rune Constellation; world events; day/night; PvP; Guild War; vending and trading (need the server).
 - All 30 maps exist. Their 64 regular monsters and 6 bosses reuse 14 procedural body types in regional colours, and the stats of the newer monsters come from a level formula. Equipment still tops out around level 20, so the Lv 40–85 regions need new gear tiers and haven't been balance-tested.
 - The world map shows the other regions as "Unexplored". They're labels, not playable areas.
 
@@ -151,8 +151,8 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/ASSET_PIPELINE.md](do
 - Performance has only been checked with the Phase 1 entity counts (about 40 monsters per map). It hasn't been load-tested.
 - The layout targets desktop 1280×720 and scales to fit the window. There are no touch controls.
 
-## Next phase (Phase 2: Complete RPG System)
-Add Priest, Assassin and Merchant plus the advanced jobs and full skill trees. Add refinement +1…+15 (results resolved in the simulation only), monster cards, Rune Constellation, pets and mounts, and crafting. Expand to 10 maps. All of it plugs into the existing data files and `World` APIs. Phase 3 then moves `World` onto a Node.js (Colyseus) server with PostgreSQL/Redis for authoritative online play.
+## Next phase
+Second jobs and their skill trees, gear tiers for the Lv 40–85 regions with bot balance passes, and production art for more monsters and classes. All of it plugs into the existing data files and `World` APIs. Phase 3 then moves `World` onto a Node.js (Colyseus) server with PostgreSQL/Redis for authoritative online play.
 
 ## Credits & licensing
 All code, data, procedural art and synthesized audio in this repository are original. The game is inspired by classic MMORPGs, but it doesn't use any characters, art, maps or sounds from other games.

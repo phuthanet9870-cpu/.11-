@@ -316,7 +316,49 @@ try {
   const gmMap = await page.evaluate(() => window.__veyloria.world.map.def.id);
   check('GM window: give Luma, spawn monsters, teleport', gmMid.luma === gmBefore.luma + 777 && gmMid.mons === gmBefore.mons + 3 && gmMid.flag === true && gmMap === 'sunny_meadow',
     `luma +${gmMid.luma - gmBefore.luma}, monsters +${gmMid.mons - gmBefore.mons}, map ${gmMap}`);
+  // Pets: GM gives an egg + food, hatch it from the pet window (P), feed it.
+  await page.selectOption('#gm-item', 'egg_leaf_slime');
+  await page.click('#win-admin button:has-text("Give") >> nth=2');
+  await page.selectOption('#gm-item', 'pet_dewdrop');
+  await page.click('#win-admin button:has-text("Give") >> nth=2');
   await page.click('#win-admin .x');
+  await page.keyboard.press('p');
+  await page.waitForSelector('#win-pet:not(.hidden)');
+  await page.click('#win-pet button:has-text("Hatch")');
+  await sleep(1500);
+  const pet = await page.evaluate(() => { const w = window.__veyloria.world; return { name: w.char.pet?.name, actor: !!w.petActor, hunger: w.char.pet?.hunger }; });
+  await page.screenshot({ path: join(shots, '17-pet.png') });
+  await page.evaluate(() => { window.__veyloria.world.char.pet.hunger = 50; });
+  await page.click('#pet-feed');
+  const fed = await page.evaluate(() => window.__veyloria.world.char.pet?.intimacy);
+  check('pet: hatch from the pet window, it follows the player, feeding raises intimacy', !!pet.name && pet.actor && fed > 250, `${pet.name} actor=${pet.actor} intimacy=${fed}`);
+  await page.keyboard.press('p');
+
+  // Database tools: refine simulator, forge calculator, element chart.
+  await page.keyboard.press('b');
+  await page.waitForSelector('#win-database:not(.hidden)');
+  await page.click('#db-tab-refine');
+  await page.selectOption('#dbt-rk', 'w4');
+  const refineTxt = await page.textContent('#db-refine');
+  await page.click('#db-tab-forge');
+  const forgeTxt = await page.textContent('#dbt-forge-result');
+  await page.click('#db-tab-elements');
+  const elemCells = await page.locator('#db-elements td').count();
+  await page.screenshot({ path: join(shots, '18-db-tools.png') });
+  check('database tools: refine simulator, forge calculator, element chart', /\+4 → \+5/.test(refineTxt) && /Success: \d/.test(forgeTxt) && elemCells === 100, `${forgeTxt} cells=${elemCells}`);
+  await page.keyboard.press('b');
+
+  // Memorial dungeon: talk to the Spire Warden in Aurelion and enter; the HUD shows floor + timer.
+  await page.evaluate(() => { const w = window.__veyloria.world; w.char.baseLevel = Math.max(w.char.baseLevel, 20); w.enterMap('aurelion', 'default'); });
+  await sleep(600);
+  await page.evaluate(() => { const w = window.__veyloria.world; const n = w.npcs.find((x) => x.npcId === 'spire_warden'); w.player.x = n.x; w.player.y = n.y + 40; w.interactNpc('spire_warden'); });
+  await page.waitForSelector('#npc-dialog .dopt:has-text("Enter the Endless Spire")');
+  await page.click('#npc-dialog .dopt:has-text("Enter the Endless Spire")');
+  await page.click('.modal button:has-text("Enter")');
+  await sleep(1200);
+  const inst = await page.evaluate(() => ({ map: window.__veyloria.world.map.def.id, timer: document.getElementById('inst-timer')?.textContent ?? '' }));
+  await page.screenshot({ path: join(shots, '19-endless-spire.png') });
+  check('memorial dungeon entered through the keeper; HUD shows floor and time', inst.map === 'endless_spire_f1' && /Floor 1\/10/.test(inst.timer), `${inst.map} "${inst.timer}"`);
 
   // Delete the character from the select screen (typed-name confirmation).
   await page.evaluate(() => window.__veyloria.exitToSelect());
