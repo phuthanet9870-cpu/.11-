@@ -82,20 +82,30 @@ Ground-target skills (Arrow Rain, Wind Trap, Fire Wall, Thunderstorm, Meteor) la
 | Derived stats = Base + Equipment + Passives + Buffs + Statuses (cards and runes plug in later) | ✅ | `computeDerivedStats` |
 | Inventory: 60-slot grid, stacking, weight limit, drag & drop, tooltips, sort, filter, lock, use, drop, sell, storage, binding | ✅ | `src/core/inventory.ts`, `src/ui/windows.ts` |
 | Equipment: 8 slots, class/level requirements, two-handed rules | ✅ | |
-| Six first jobs: **Knight, Ranger, Mage, Cleric, Rogue, Merchant** (8–9 skills each: active, passive, buff, ultimate) plus Novice; job bonus stats, job weight bonus, ASPD 0–190; steal, double attack, discount/overcharge, Luma-cost skills | ✅ | `src/data/classes.json`, `src/data/skills.json` |
+| Jobs: Novice, 6 first jobs, 12 second jobs, rebirth (High Novice + 6 High first jobs) and 12 transcendent jobs (38 classes, 173 skills); job bonus stats, job weight, ASPD 0–190; steal, mug, double attack, endow, discount/overcharge, Luma-cost skills | ✅ | `src/data/classes.json`, `tools/world-gen/build-jobs.ts` |
 | Job change at Job Lv 10 at a guild master (Knight & Cleric: Aurelion, Ranger: Fernhollow, Mage: Arcanthe, Rogue: Sandara, Merchant: Tidewatch) | ✅ | NPC service `jobChange`, `World.changeJobAt` |
 | Tutorial quests only (5): register, hunt, buy & equip a weapon, refine +1, reach Job Lv 10; objective types include buy/equip/refine; journal, tracker, markers | ✅ | `src/data/quests.json`, `src/core/quests.ts` |
-| Refinement +1…+10 by weapon level (classic rates and fees, enriched ores, failure destroys the item), forging, random options + enchanter | ✅ | `src/core/refine.ts`, `forge.ts`, `options.ts` |
+| Refinement +1…+20 (classic rates to +10, renewal over-upgrade to +20), enriched ores, forging, random options + enchanter | ✅ | `src/core/refine.ts`, `forge.ts`, `options.ts` |
 | Ragnarok-style mechanics: monster cards (0.01%, slots, compounding, combos, autocast cards, card album), 10 elements × 4 element levels, elemental converters, weapon-vs-size table, race/size bonuses, perfect dodge, 90% weight lock, MVP (top damage, MVP EXP and items, tombstone), elite mini-bosses, looter monsters, pets (taming, hunger, intimacy, Loyal bonus), memorial dungeons; RO stat-cost curve available but off (measured) | ✅ | `docs/RO_SYSTEMS.md` |
-| 30 world maps in 9 RO-style regions (7 towns, fields, 8 dungeons, 6 bosses) plus 14 memorial-dungeon floors, Courier Guild save/storage/warp, regional palettes, weather and music | ✅ | `docs/WORLD.md`, `tools/world-gen/build-world.ts` |
+| 30 world maps in 9 RO-style regions (7 towns, fields, 8 dungeons, 6 bosses), 104 memorial-dungeon floors (100-floor Endless Spire, Sealed Crypt), PvP arena and guild-war castle; day/night cycle; timed raids | ✅ | `docs/WORLD.md`, `tools/world-gen/build-world.ts` |
+| Companions: pets (accessories, evolution), homunculus (4 types), war-drake mount, merchant pushcart; Rune Constellation talent board | ✅ | `src/core/pets.ts`, `homunculus.ts`, `runes.ts` |
+| Online play (optional): server with accounts, chat, party with even EXP share, guild, trade, vending, PvP, guild war | ✅ (local server) | `server/`, `src/ui/online.ts` |
 | Maps: **Willowbrook Village, Sunny Meadow, Whispering Forest** | ✅ | `src/data/maps/` |
 | Monsters: 64 normal, 12 elite mini-bosses, 6 bosses | ✅ | `src/data/monsters.json` |
 | Boss: Grukk the Thornking. Intro, HP bar, 3 phases, enrage, telegraphed AoE (circle, ring, charge line), summons, threat, rare drops, contribution reward, respawn timer | ✅ | `src/data/bosses.json` |
 | Save/Load: versioned with migrations, backup, sanitizing, autosave every 30s | ✅ tested | `src/core/save.ts` |
 | HUD: HP/MP, EXP/Job EXP, hotbar with cooldowns, chat log, minimap, quest tracker, buffs, target frame, boss bar, cast bar, Luma | ✅ | `src/ui/hud.ts` |
-| Windows: status, inventory, equipment, skill tree, quest journal, world map, pet (P), database with refine simulator / forge calculator / option odds / combos / pets / element chart (B), settings (volume, toggles, key rebinding) | ✅ | `src/ui/windows.ts` |
+| Windows: status, inventory, equipment, skill tree, quest journal, world map, pet (P), homunculus (H), pushcart (V), runes (N), social / online (G), database with refine simulator / forge calculator / option odds / combos / pets / element chart (B), settings (volume, toggles, key rebinding) | ✅ | `src/ui/windows.ts` |
 | Audio: BGM per map, boss music, ambience, SFX; Master/Music/SFX/Ambient volume | ✅ (procedural) | `src/game/audio/audio.ts` |
 | Asset manifest and replacement system with sprite metadata | ✅ | `docs/ASSET_PIPELINE.md` |
+
+## Online play (optional)
+
+```
+npm run server        # ws://localhost:7171 (accounts & guilds saved in ./server-data)
+npm run dev           # then in the game: Social window (G) → server ws://localhost:7171 → Create account
+```
+Chat: plain text = map, `/p` party, `/g` guild, `/gl` global, `/w name` whisper. The Arena Master in Aurelion warps to the Proving Grounds (PvP) and Castle Veyl (guild war, daily 20:00–21:00 server time; `npm run server -- --woe-always` keeps it open).
 
 ## GM / admin tools
 
@@ -111,9 +121,11 @@ The tools edit the local save only, and any use sets `flags.gmUsed` on the chara
 
 | Suite | Result |
 |---|---|
-| Unit (`tests/unit`, 16 files) | **402 / 402 passed**: element levels, enriched refine and fees, jobs (bonus stats, weight, ASPD, steal, haggle, coin cost, cure), pets, combos, card album, autocast, elites, looters, memorial dungeons, database calculators, plus forge, random options, refine, cards, quests, GM, data validation and per-map reachability (44 maps), formulas, combat, inventory, save/migrations, world simulation |
+| Unit (`tests/unit`, 25 files) | **977 / 977 passed** (most are per-map checks for all 136 maps): second jobs and rebirth, over-upgrade, homunculus, mount, cart, pet evolution, runes, day/night, raids, 100-floor Spire, element levels, enriched refine and fees, jobs (bonus stats, weight, ASPD, steal, haggle, coin cost, cure), pets, combos, card album, autocast, elites, looters, memorial dungeons, database calculators, plus forge, random options, refine, cards, quests, GM, data validation and per-map reachability (44 maps), formulas, combat, inventory, save/migrations, world simulation |
 | Integration: full playthrough | **passed**. A bot using only player commands finishes the 5 tutorial quests, becomes a Knight at the guild in Aurelion, switches to a spear for the Large boss (RO size rule), refines, and defeats Grukk (≈94 simulated minutes, Base Lv 24, 1 attempt). A second test walks through portals to all 30 world maps |
-| Integration: class balance | **passed**. First-try wins against Grukk at Lv 17 over 24 fixed seeds: Knight 24, Ranger 14, Mage 19, Cleric 11, Rogue 10, Merchant 22 |
+| Integration: class balance | **passed**. First-try wins against Grukk at Lv 17 over 24 fixed seeds: Knight 24, Ranger 19, Mage 20, Cleric 11, Rogue 10, Merchant 22. Second jobs vs Archmage Valdris (12 seeds): 6–12 wins each (table in `docs/RO_SYSTEMS.md`) |
+| Integration: server | **6 / 6 passed**: accounts, presence and chat, party EXP share, trade, vending, guilds / PvP / guild war, with real WebSocket clients |
+| Online E2E, two browsers (`npm run test:online`) | **8 / 8 checks passed** three runs in a row: presence, map chat, party EXP share, trade, vending, PvP, guild war, no page errors |
 | E2E in Chromium (`npm run test:e2e`) | **27 / 27 checks passed** (incl. pet window, database tools, entering the Endless Spire, GM window, refine and guild job change): boot, create character via UI, WASD, click NPC → dialogue → accept quest, windows by hotkey, portal travel, mouse-click combat kill with EXP, save and reload persistence, shop purchase, drag & drop equip, stat allocation, job change via dialogue, learn skill, drag skill to hotbar, cast by hotkey, death → respawn, drop part of a stack via the quantity dialog, delete a character with typed-name confirmation, zero page errors |
 
 Screenshots from the e2e run are written to `tests/e2e/screenshots/` (git-ignored).
@@ -138,8 +150,8 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/ASSET_PIPELINE.md](do
 
 ## Not done yet (honest list)
 - **Most art and all audio are still placeholders.** Batch 001 production art covers the Novice, Leaf Slime, Mushling, Horn Rabbit, Willowbrook (tiles, props, buildings) and 4 VFX ([docs/art/BATCH001.md](docs/art/BATCH001.md)). Everything else (the other classes, NPCs, monsters and maps, plus all music and SFX) is still generated at runtime.
-- **No multiplayer.** There's no login/register, server, database, party, guild, trading or marketplace (Phase 3). Chat only echoes locally and says so. Saves live in browser `localStorage`.
-- **Not built yet:** second and transcendent jobs; homunculi, mounts and pet evolution; over-upgrade above +10; Rune Constellation; world events; day/night; PvP; Guild War; vending and trading (need the server).
+- **Online play is not server-authoritative.** `npm run server` connects players (accounts, chat, party, guild, trade, vending, PvP, guild war), but each character lives in its own browser's `localStorage` and the server trusts what clients report, so it is not cheat-proof. The published web page can't reach a server on your computer; online play needs the server plus `npm run dev`/`preview` on a reachable machine. PvP and the Emperium use basic attacks only.
+- **Not built yet:** third jobs; skills against other players; server-side characters and anti-cheat.
 - All 30 maps exist. Their 64 regular monsters and 6 bosses reuse 14 procedural body types in regional colours, and the stats of the newer monsters come from a level formula. Equipment still tops out around level 20, so the Lv 40–85 regions need new gear tiers and haven't been balance-tested.
 - The world map shows the other regions as "Unexplored". They're labels, not playable areas.
 

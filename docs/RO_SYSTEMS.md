@@ -39,6 +39,14 @@ researched from public community wikis (sources at the end) and then implemented
 | Mini-bosses | Field mini-bosses with better drops | One elite per field map (×6 HP, ×1.5 ATK, 10-minute respawn, own card, card album 2%) | generator |
 | Looters | Some monsters pick up items on the ground | Goblins, crabs and gulls pick up items left 3+ seconds and drop them when killed | `world.updateLooter` |
 | Memorial dungeons | Timed instances with floors (e.g. Endless Tower), entry cooldown | Endless Spire (10 floors, Lv 20+, 30 min) and Sealed Crypt (4 rooms, Lv 45+, 20 min). A floor's portal stays sealed until it is cleared; no respawns; leaving, dying or timing out ends the run; 1-hour real-time cooldown; rewards on the last floor | `world.enterInstance`, `instances.json` |
+| Second jobs | Two second jobs per first job | 12: Dragoon / Templar, Beastmaster / Minstrel, Sorcerer / Sage, Bishop / Ascetic, Shadowblade / Outlaw, Artisan / Alchemist. 8 skills each (passive + ultimate), Job Lv 40 of the first job, guild masters in the first job's town. New weapon types: katar, knuckle, instrument, book | `tools/world-gen/build-jobs.ts` |
+| Rebirth / transcendent | At Base 99 / Job 50 a second job is reborn as a High Novice with 100 stat points, goes through a High first job, and becomes the transcendent version of the same path (+25% HP/SP) | Same path rule. Oracle Seraphel in Aurelion. 12 transcendent jobs, each with 2 extra skills and Job Lv 70 | `character.rebirth`, `lineage.ts` |
+| Over-upgrade | +11…+20 with special ores and 100,000 zeny; failure breaks the item 20% of the time, otherwise −3 levels (renewal) | Same rates (18/17/15% for weapon Lv 1–3, 8/7/5% for weapon Lv 4 and armor) and bonus totals from rAthena's renewal `refine.yml`. Stellar / Lunar Shards | `core/refine.ts` |
+| Homunculus | Alchemists create one from an Embryo (Bioethics); four types; it levels, gets hungry, fights, can die, and evolves (Stone of Sages, Loyal) | Same loop with four original homunculi: Sylph (heals you), Golemite (taunts), Fawnling (combo strikes), Gloom (random-element bolts). Takes hits when it holds more threat than you | `core/homunculus.ts` |
+| Mounts and carts | Knights ride Pecos (+speed, +weight, ASPD penalty reduced by Cavalier Mastery); Merchants rent a pushcart | War-drake: +25% move, +1,000 weight, −40% attack speed (Drake Riding gives 8% back per level). Pushcart: 100 slots, 8,000 weight | `world.toggleMount`, `inventory.putInCart` |
+| Pet accessories and evolution | Each pet has an accessory; some pets evolve with materials when Loyal | Ribbons give +1 all stats while Cordial+; evolution needs Loyal + 10 of the monster's material + a Spirit Chime, Loyal bonus ×1.5 | `core/pets.ts` |
+| Endless Tower | 100 floors, harder every floor | Endless Spire: 100 floors scaled Lv 4–88, elite every 10th, milestone rewards at 25/50/75, 3 hours, once per day | `instances.json` |
+| Online play | Party (even share), guild, trade window, vending, PvP, War of Emperium | Real WebSocket server: parties with even EXP share (same map, 15-level gap), guilds, two-sided locked trades, player shops, PvP in the Proving Grounds, guild war over Castle Veyl's Emperium (holding guild +10% EXP). Characters stay on each client, so it is not cheat-proof | `server/server.ts`, `src/ui/online.ts` |
 | Database tools | Refine simulator, forge calculator, affix list (the two sites you linked) | Database window tabs: Refine sim (chance per step, survival, expected ore / Luma / items), Forge calc, Options (chance per roll), Combos, Pets, Elements chart | `windows.renderDbTool`, `refine.simulateRefine` |
 
 ## Researched but not switched on
@@ -57,11 +65,11 @@ Turning it on needs RO-style ATK/MATK/DEF formulas and retuned monsters as one c
 
 ## Not implemented
 
-- **Multiplayer systems:** party EXP sharing, guilds, War of Emperium, trading and vending need
-  the Phase 3 server.
-- **Jobs:** second jobs and transcendent classes (only the six first jobs exist).
-- **Other systems:** homunculi, pet accessories and evolution, over-upgrade above +10, the full
-  100-floor tower (the Spire has 10), vending and trading (need the server).
+- **Third jobs** and the renewal job tree beyond transcendent.
+- **Skills on other players:** PvP and the Emperium use basic attacks only; skills hit monsters.
+- **Server authority:** the server does not own characters or run combat; a modified client could cheat.
+- **Hosting:** the published web page cannot reach a server on your computer, so online play needs
+  `npm run server` plus `npm run dev` / `npm run preview` on a machine both players can reach.
 
 ## Measured class balance (first boss, 24 fixed seeds, Lv 17, same potion kit)
 
@@ -71,6 +79,12 @@ Turning it on needs RO-style ATK/MATK/DEF formulas and retuned monsters as one c
 
 Ranger, Cleric and Rogue win about half the time. Rogue daggers do 50% against Grukk (Large),
 which is the RO size rule. The Cleric bot heals itself with Heal.
+
+## Measured second-job balance (Archmage Valdris, Lv 44 boss, at Lv 50 with Lv 45 gear, 12 seeds)
+
+| Dragoon | Templar | Beastmaster | Minstrel | Sorcerer | Sage | Bishop | Ascetic | Shadowblade | Outlaw | Artisan | Alchemist |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 11 | 9 | 9 | 6 | 11 | 12 | 12 | 12 | 12 | 12 | 11 | 11 |
 
 ## Sources
 
@@ -82,6 +96,7 @@ The two sites you sent, midgardhub.com (a Ragnarok Zero Global database) and rat
 - RevivalRO wiki — Forging: https://wiki.ragnarevival.com/crafting/blacksmith/forging ; forging calculator notes: https://github.com/breno-m-dev/Ragnarok-Online-Forging-Calculator
 - Ragnarok Zero enchant/options: https://wiki.playragnarokzero.com/wiki/Memorial_Dungeon_Equipment , https://midgardhub.com/guides/memorial-dungeons
 - rAthena item bonus reference: https://raw.githubusercontent.com/rathena/rathena/master/doc/item_bonus.txt
+- rAthena renewal `refine.yml` for the +11…+20 rates and bonuses: https://github.com/rathena/rathena/blob/master/db/re/refine.yml
 - rAthena pre-renewal tables used for numbers only (refine rates and fees, element tables, pet capture formula, job stats): https://github.com/rathena/rathena/tree/master/db/pre-re (`refine.yml`, `attr_fix.yml`, `pet_db.yml`, `job_stats.yml`), https://github.com/rathena/rathena/blob/master/doc/yaml/db/pet_db.yml , rAthena `src/map/pet.cpp` (feeding rules)
 
 - iRO Wiki — Size: https://irowiki.org/wiki/Size (and classic: https://irowiki.org/classic/Size)
