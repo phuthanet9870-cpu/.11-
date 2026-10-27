@@ -19,8 +19,10 @@ import { audio } from '../game/audio/audio';
 import * as gm from '../core/gm';
 import { MAX_REFINE, refineInfo } from '../core/refine';
 import { compoundTargets, itemDisplayName } from '../core/cards';
+import { canForge, CRUMB_ATK, ELEMENT_STONES, forgeChance, STAR_CRUMB } from '../core/forge';
+import { ENCHANT_COST, MAX_OPTIONS, optionLabel, REROLL_COST } from '../core/options';
 
-export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin';
+export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database';
 
 interface WinState { el: HTMLElement; body: HTMLElement; render: () => void; open: boolean }
 
@@ -40,6 +42,10 @@ export function modsText(m?: StatModifiers): string[] {
       for (const [el, n] of Object.entries(v as Record<string, number>)) out.push(`${el} ${k === 'elementDamagePct' ? 'damage' : 'resist'} ${n > 0 ? '+' : ''}${n}%`);
     } else if (k === 'raceDamagePct' || k === 'sizeDamagePct') {
       for (const [r, n] of Object.entries(v as Record<string, number>)) out.push(`+${n}% damage vs ${r}${k === 'sizeDamagePct' ? '-size' : ''} monsters`);
+    } else if (k === 'onHitStatusPct') {
+      for (const [st, n] of Object.entries(v as Record<string, number>)) out.push(`${n}% chance to ${st} on hit`);
+    } else if (k === 'hpDrainPct') {
+      out.push(`Drain ${v}% of damage as HP`);
     } else if (k === 'raceResistPct') {
       for (const [r, n] of Object.entries(v as Record<string, number>)) out.push(`-${n}% damage from ${r} monsters`);
     } else out.push(`${MOD_LABEL[k] ?? k} ${(v as number) > 0 ? '+' : ''}${v}`);
@@ -74,6 +80,7 @@ export class WindowManager {
     this.define('shop', 'Shop', 16, 90, () => this.renderShop());
     this.define('storage', 'Storage', 16, 90, () => this.renderStorage());
     this.define('admin', 'GM / Admin Tools', 820, 70, () => this.renderAdmin());
+    this.define('database', 'Database', 200, 50, () => this.renderDatabase());
   }
 
   get anyOpen() { return [...this.wins.values()].some((w) => w.open) || !!this.dialogEl || !!this.modalEl; }
@@ -153,9 +160,10 @@ export class WindowManager {
 
   itemTooltip(def: ItemDef, inst?: ItemInstance): HTMLElement[] {
     const w = this.app.world!;
-    const out: HTMLElement[] = [h('div', { class: 'tn', style: { color: RARITY_COLOR[def.rarity] } }, itemDisplayName(def, inst))];
+    const optCol = ['', '#7fb0ff', '#5ad8c8', '#c9a6ff'][Math.min(3, inst?.options?.length ?? 0)];
+    const out: HTMLElement[] = [h('div', { class: 'tn', style: { color: optCol || RARITY_COLOR[def.rarity] } }, itemDisplayName(def, inst))];
     const typeLine = def.type === 'equipment'
-      ? `${def.rarity} ${def.weaponType ?? def.slot}${def.twoHanded ? ' (two-handed)' : ''}${def.element ? ` · ${def.element}` : ''}`
+      ? `${def.rarity} ${def.weaponType ?? def.slot}${def.weaponLevel ? ` · Weapon Lv ${def.weaponLevel}` : ''}${def.twoHanded ? ' (two-handed)' : ''}${(inst?.element ?? def.element) ? ` · ${inst?.element ?? def.element}` : ''}`
       : `${def.rarity} ${def.type}`;
     out.push(h('div', { class: 'tt' }, typeLine));
     for (const line of modsText(def.mods)) out.push(h('div', { class: 'good' }, line));
@@ -163,6 +171,8 @@ export class WindowManager {
       out.push(h('div', { class: 'tt' }, `Compounds into: ${def.card.equip}`));
       for (const line of modsText(def.card.mods)) out.push(h('div', { class: 'good' }, line));
     }
+    for (const o of inst?.options ?? []) out.push(h('div', { style: `color:${optCol}` }, `✦ ${optionLabel(o)}`));
+    if (inst?.crafter) out.push(h('div', { class: 'muted' }, `Forged by ${inst.crafter}${inst.starCrumbs ? ` · +${CRUMB_ATK[inst.starCrumbs]} ATK from star crumbs` : ''}`));
     for (const cardId of inst?.cards ?? []) {
       const cd = w.data.items.get(cardId);
       if (cd?.card) out.push(h('div', { style: 'color:#c9a6ff' }, `◆ ${cd.name}: ${modsText(cd.card.mods).join(', ')}`));
@@ -181,6 +191,72 @@ export class WindowManager {
     }
     out.push(h('div', { class: 'tt', style: 'margin-top:4px' }, `Weight ${def.weight} · Sell ${sellPrice(w.data, def.id)} Luma${inst?.bound || def.bound ? ' · Bound' : ''}${inst?.locked ? ' · Locked' : ''}`));
     return out;
+  }
+
+  /** Enchanter: pick unequipped equipment, then add one random option or reroll all. */
+  private enchantDialog(uid?: string) {
+    const w = this.app.world!, d = w.data, c = w.char;
+    if (!uid) {
+      const items = c.inventory.filter((i) => d.items.get(i.itemId)?.type === 'equipment');
+      this.modal('Enchant equipment', [
+        h('p', { class: 'muted', style: 'max-width:420px' }, `Add a random option (${ENCHANT_COST} Luma, up to ${MAX_OPTIONS}) or reroll every option (${REROLL_COST} Luma). Only unequipped items in your bag can be enchanted.`),
+        ...(items.length ? items.map((i) => h('button', { class: 'btn small', style: 'display:block;width:100%;margin:2px 0;text-align:left', onclick: () => this.enchantDialog(i.uid) },
+          `${itemDisplayName(d.items.get(i.itemId)!, i)}${i.options?.length ? ` · ${i.options.length} option${i.options.length > 1 ? 's' : ''}` : ''}`)) : [h('p', {}, 'No unequipped equipment in your bag.')]),
+      ], [['Close', () => this.closeModal()]], true);
+      return;
+    }
+    const inst = c.inventory.find((i) => i.uid === uid);
+    if (!inst) { this.enchantDialog(); return; }
+    const def = d.items.get(inst.itemId)!;
+    this.modal(itemDisplayName(def, inst), [
+      h('div', { style: 'min-width:340px' },
+        ...(inst.options?.length ? inst.options.map((o) => h('div', { style: 'color:#c9a6ff' }, `✦ ${optionLabel(o)}`)) : [h('div', { class: 'muted' }, 'No options yet.')]),
+        h('div', { class: 'muted', style: 'margin-top:6px' }, `You have ${c.luma} Luma.`)),
+    ], [
+      [`Add option (${ENCHANT_COST})`, () => { w.enchant(uid, 'add'); this.enchantDialog(uid); }],
+      [`Reroll all (${REROLL_COST})`, () => { w.enchant(uid, 'reroll'); this.enchantDialog(uid); }],
+      ['Back', () => this.enchantDialog()],
+    ], true);
+  }
+
+  /** Forging: recipe list → materials, optional element stone and star crumbs, live success chance. */
+  private forgeDialog(recipeId?: string, stone = '', crumbs = 0) {
+    const w = this.app.world!, d = w.data, c = w.char;
+    const name = (id: string) => d.items.get(id)?.name ?? id;
+    if (!recipeId) {
+      const rows = [...d.recipes.values()].map((r) => {
+        const def = d.items.get(r.itemId)!;
+        const ready = canForge(d, c, { recipeId: r.id }).ok;
+        return h('button', { class: 'btn small', style: `display:block;width:100%;margin:2px 0;text-align:left;${ready ? '' : 'opacity:0.7'}`, onclick: () => this.forgeDialog(r.id) },
+          `${def.name} (Weapon Lv ${def.weaponLevel ?? 1})${ready ? ' ✔' : ''}`);
+      });
+      this.modal('Forge a weapon', [h('p', { class: 'muted', style: 'max-width:420px' }, 'Pick a weapon. Materials and the fee are used up even if forging fails. Forged weapons have no card slots but carry your name.'), ...rows], [['Close', () => this.closeModal()]], true);
+      return;
+    }
+    const r = d.recipes.get(recipeId)!, def = d.items.get(r.itemId)!;
+    const choice = { recipeId, stone: stone || undefined, crumbs };
+    const chance = Math.round(forgeChance(d, c, choice) * 100);
+    const check = canForge(d, c, choice);
+    const stones = Object.keys(ELEMENT_STONES).filter((id) => countItem(c, id) > 0);
+    const stoneSel = h('select', { id: 'forge-stone' }, h('option', { value: '' }, 'No element'), stones.map((id) => h('option', { value: id }, `${name(id)} → ${ELEMENT_STONES[id]}`)));
+    stoneSel.value = stone;
+    stoneSel.addEventListener('change', () => this.forgeDialog(recipeId, stoneSel.value, crumbs));
+    const maxCrumbs = Math.min(3, countItem(c, STAR_CRUMB));
+    const crumbSel = h('select', { id: 'forge-crumbs' }, [0, 1, 2, 3].filter((n) => n <= maxCrumbs).map((n) => h('option', { value: String(n) }, n ? `${n} Star Crumb (+${CRUMB_ATK[n]} ATK)` : 'No star crumbs')));
+    crumbSel.value = String(Math.min(crumbs, maxCrumbs));
+    crumbSel.addEventListener('change', () => this.forgeDialog(recipeId, stone, Number(crumbSel.value)));
+    this.modal(`Forge ${def.name}`, [
+      h('div', { style: 'min-width:380px' },
+        ...r.materials.map((m) => h('div', { class: countItem(c, m.itemId) >= m.qty ? 'good' : 'bad' }, `${name(m.itemId)}: ${countItem(c, m.itemId)} / ${m.qty}`)),
+        h('div', { class: c.luma >= r.fee ? 'good' : 'bad' }, `Fee: ${r.fee} Luma`),
+        h('div', { class: 'row', style: 'margin-top:6px' }, stoneSel, crumbSel),
+        h('div', { style: 'margin-top:6px;font-weight:bold' }, `Success chance: ${chance}%`),
+        h('div', { class: 'muted', style: 'font-size:11px' }, '50% + Job Lv×0.2 + DEX×0.1 + LUK×0.1 + forge bonus 20%; −20/−30% for Lv 2/3 weapons, −20% with an element, −15% per star crumb.'),
+        check.ok ? null : h('div', { class: 'bad' }, check.error)),
+    ], [
+      ['Forge', () => { if (!check.ok) return; const res = w.forge(choice); if (res.ok) this.app.hud?.banner(res.success ? 'Forged!' : 'Forging failed', res.message!); this.forgeDialog(recipeId, stone, crumbs); }],
+      ['Back', () => this.forgeDialog()],
+    ], true);
   }
 
   /** Pick an unequipped item with a free slot of the right type, confirm, compound (permanent). */
@@ -529,6 +605,83 @@ export class WindowManager {
           h('button', { class: 'btn', onclick: () => app.exitToSelect() }, 'Character Select')) : null));
   }
 
+  // ---------------------------------------------------------------- database (monsters / items / cards)
+  private db = { tab: 'monsters' as 'monsters' | 'items' | 'cards', q: '', filter: '', sel: '' };
+  private renderDatabase() {
+    const w = this.app.world!, d = w.data, body = this.wins.get('database')!.body, st = this.db;
+    const pct = (c: number) => (c >= 0.01 ? `${+(c * 100).toFixed(2)}%` : `${+(c * 100).toFixed(3)}%`);
+    const itemName = (id: string) => d.items.get(id)?.name ?? id;
+    const mapsOf = (monsterId: string) => [...d.maps.values()].filter((m) => m.monsterSpawns.some((s) => s.monsterId === monsterId) || (m.bossSpawn && d.bosses.get(m.bossSpawn.bossId)?.monsterId === monsterId)).map((m) => m.name);
+    const droppedBy = (itemId: string) => [...d.monsters.values()].flatMap((m) => {
+      const e = d.drops.get(m.dropTableId)?.entries.find((x) => x.itemId === itemId);
+      return e ? [{ m, chance: e.chance }] : [];
+    }).sort((a, b) => b.chance - a.chance);
+    const link = (label: string, tab: typeof st.tab, id: string) => h('a', { href: '#', style: 'color:#7fd6ff', onclick: (e: MouseEvent) => { e.preventDefault(); Object.assign(st, { tab, sel: id }); this.renderDatabase(); } }, label);
+
+    // List
+    const q = st.q.toLowerCase();
+    let rows: { id: string; label: string; sub: string }[] = [];
+    let filters: [string, string][] = [];
+    if (st.tab === 'monsters') {
+      filters = [['', 'All races'], ...[...new Set([...d.monsters.values()].map((m) => m.race))].sort().map((r): [string, string] => [r, r])];
+      rows = [...d.monsters.values()].filter((m) => (!st.filter || m.race === st.filter) && m.name.toLowerCase().includes(q))
+        .sort((a, b) => a.level - b.level).map((m) => ({ id: m.id, label: `${m.name}`, sub: `Lv ${m.level} · ${m.element} · ${m.size}${m.aiType === 'boss' ? ' · MVP' : ''}` }));
+    } else {
+      const cards = st.tab === 'cards';
+      filters = cards ? [['', 'All slots'], ...['weapon', 'armor', 'shield', 'garment', 'boots', 'headgear', 'accessory'].map((s): [string, string] => [s, s])]
+        : [['', 'All types'], ['equipment', 'equipment'], ['consumable', 'consumable'], ['material', 'material'], ...['weapon', 'armor', 'headgear', 'shield', 'garment', 'boots', 'accessory'].map((s): [string, string] => [`slot:${s}`, `· ${s}`])];
+      rows = [...d.items.values()].filter((i) => (cards ? i.type === 'card' && (!st.filter || i.card?.equip === st.filter)
+        : i.type !== 'card' && (!st.filter || (st.filter.startsWith('slot:') ? i.slot === st.filter.slice(5) : i.type === st.filter))) && i.name.toLowerCase().includes(q))
+        .sort((a, b) => a.name.localeCompare(b.name)).map((i) => ({ id: i.id, label: i.name, sub: cards ? `${i.card!.equip}` : `${i.weaponType ?? i.slot ?? i.type}${i.weaponLevel ? ` · W.Lv ${i.weaponLevel}` : ''}` }));
+    }
+    if (!rows.some((r) => r.id === st.sel)) st.sel = rows[0]?.id ?? '';
+    const search = h('input', { id: 'db-search', class: 'text-input', placeholder: 'Search…', value: st.q, style: 'width:100%' });
+    search.addEventListener('input', () => { st.q = search.value; this.renderDatabase(); const el = document.getElementById('db-search') as HTMLInputElement | null; el?.focus(); el?.setSelectionRange(st.q.length, st.q.length); });
+    const filt = h('select', { id: 'db-filter', style: 'width:100%' }, filters.map(([v, l]) => h('option', { value: v }, l)));
+    filt.value = st.filter;
+    filt.addEventListener('change', () => { st.filter = filt.value; this.renderDatabase(); });
+    const list = h('div', { style: 'height:330px;overflow:auto;margin-top:4px' }, rows.map((r) => h('div', {
+      class: 'db-row', style: `padding:3px 5px;cursor:pointer;border-radius:3px;${r.id === st.sel ? 'background:rgba(255,211,77,0.18)' : ''}`,
+      onclick: () => { st.sel = r.id; this.renderDatabase(); },
+    }, h('div', {}, r.label), h('div', { class: 'muted', style: 'font-size:10px' }, r.sub))));
+
+    // Detail
+    const detail: HTMLElement[] = [];
+    const kv = (k: string, v: string | number) => h('tr', {}, h('td', { class: 'muted', style: 'padding-right:8px' }, k), h('td', {}, String(v)));
+    if (st.tab === 'monsters' && st.sel) {
+      const m = d.monsters.get(st.sel)!;
+      const table = d.drops.get(m.dropTableId);
+      detail.push(h('h3', { style: 'margin:0 0 4px' }, `${m.name}${m.aiType === 'boss' ? ' (MVP)' : ''}`),
+        h('table', {}, kv('Level', m.level), kv('Race / Size', `${m.race} / ${m.size}`), kv('Element', m.element), kv('HP', m.maxHp),
+          kv('ATK / DEF / MDEF', `${m.attack} / ${m.defense} / ${m.magicDefense ?? 0}`), kv('Base / Job EXP', `${m.exp} / ${m.jobExp}`),
+          kv('Behaviour', m.aiType), kv('Luma', table?.luma ? `${table.luma[0]}–${table.luma[1]}` : '—')),
+        h('div', { class: 'gold', style: 'margin-top:6px' }, 'Found in'), h('div', {}, mapsOf(m.id).join(', ') || '—'),
+        h('div', { class: 'gold', style: 'margin-top:6px' }, 'Drops'),
+        h('table', {}, (table?.entries ?? []).map((e) => h('tr', {}, h('td', { style: 'padding-right:8px' }, link(itemName(e.itemId), d.items.get(e.itemId)?.type === 'card' ? 'cards' : 'items', e.itemId)), h('td', { class: 'muted' }, pct(e.chance))))));
+    } else if (st.sel) {
+      const it = d.items.get(st.sel)!;
+      detail.push(...this.itemTooltip(it));
+      if (it.weaponLevel) detail.push(h('div', {}, `Weapon Lv ${it.weaponLevel} · safe refine +${[7, 6, 5, 4][it.weaponLevel - 1]}`));
+      if (it.cardSlots) detail.push(h('div', {}, `Card slots: ${it.cardSlots}`));
+      const by = droppedBy(it.id);
+      detail.push(h('div', { class: 'gold', style: 'margin-top:6px' }, 'Dropped by'),
+        by.length ? h('table', {}, by.slice(0, 12).map(({ m, chance }) => h('tr', {}, h('td', { style: 'padding-right:8px' }, link(`${m.name} (Lv ${m.level})`, 'monsters', m.id)), h('td', { class: 'muted' }, pct(chance))))) : h('div', { class: 'muted' }, '—'));
+      const shops = [...d.shops.values()].filter((s) => s.items.includes(it.id)).map((s) => s.name);
+      if (shops.length) detail.push(h('div', { class: 'gold', style: 'margin-top:6px' }, 'Sold at'), h('div', {}, shops.join(', ')));
+      const rec = [...d.recipes.values()].find((r) => r.itemId === it.id);
+      if (rec) detail.push(h('div', { class: 'gold', style: 'margin-top:6px' }, 'Forge recipe'), h('div', {}, `${rec.materials.map((m) => `${m.qty}× ${itemName(m.itemId)}`).join(', ')} · ${rec.fee} Luma`));
+      const usedIn = [...d.recipes.values()].filter((r) => r.materials.some((m) => m.itemId === it.id)).map((r) => itemName(r.itemId));
+      if (usedIn.length) detail.push(h('div', { class: 'gold', style: 'margin-top:6px' }, 'Used to forge'), h('div', {}, usedIn.join(', ')));
+    }
+    const tabs = h('div', { class: 'filters' }, (['monsters', 'items', 'cards'] as const).map((t) => h('button', {
+      class: `btn small${st.tab === t ? ' active' : ''}`, id: `db-tab-${t}`, onclick: () => { Object.assign(st, { tab: t, filter: '', sel: '' }); this.renderDatabase(); },
+    }, t === 'monsters' ? `Monsters (${d.monsters.size})` : t === 'items' ? 'Items' : 'Cards')));
+    setChildren(body, h('div', { style: 'width:720px' }, tabs,
+      h('div', { style: 'display:grid;grid-template-columns:240px 1fr;gap:12px;margin-top:6px' },
+        h('div', {}, search, filt, list),
+        h('div', { id: 'db-detail', style: 'height:400px;overflow:auto' }, detail))));
+  }
+
   // ---------------------------------------------------------------- GM / admin
   private adminSel: Record<string, string> = {};
   private renderAdmin() {
@@ -611,6 +764,8 @@ export class WindowManager {
       if (s.type === 'save') opts.push(['Set save point here', () => { w.setSavePoint(); this.app.saveNow(false); this.app.hud?.toast('Save point set.'); this.closeDialog(); }]);
       if (s.type === 'resetStats') opts.push([`Reset stat points${s.cost ? ` (${s.cost} Luma)` : ' (free)'}`, () => { this.closeDialog(); this.confirmAction('Reset stats', 'Refund every allocated stat point so you can spend them again?', 'Reset stats', () => w.doResetStats(s.cost)); }]);
       if (s.type === 'refine') opts.push(['Refine equipment', () => this.refineDialog(npc)]);
+      if (s.type === 'enchant') opts.push(['Enchant equipment', () => { this.closeDialog(); this.enchantDialog(); }]);
+      if (s.type === 'forge') opts.push(['Forge a weapon', () => { this.closeDialog(); this.forgeDialog(); }]);
       if (s.type === 'warp') opts.push(['Warp service', () => this.warpDialog(npc, s.destinations)]);
       if (s.type === 'jobChange') for (const id of s.classIds) {
         const cls = w.data.classes.get(id)!;
@@ -639,7 +794,7 @@ export class WindowManager {
         .filter((i) => { const def = d.items.get(i.itemId)!; return def.type === 'equipment' && def.slot && def.slot !== 'accessory'; });
       const opts: [string, () => void][] = items.slice(0, 8).map((i) => [`${label(i)}${Object.values(c.equipment).includes(i) ? ' (equipped)' : ''}`, () => this.refineDialog(npc, i.uid)]);
       opts.push(['Never mind', () => this.openNpcDialog(npc.id)]);
-      this.showDialog(npc, [items.length ? 'Which piece shall I work on? Weapons take Starsteel Ore, armor takes Moonstone Ore.' : 'You have nothing I can refine. Bring me a weapon or some armor.'], opts, null, 'Refine');
+      this.showDialog(npc, [items.length ? 'Which piece shall I work on? Weapons need ore of their level (Glimmer Lv1, Bright Lv2, Starsteel Lv3–4); armor takes Moonstone Ore.' : 'You have nothing I can refine. Bring me a weapon or some armor.'], opts, null, 'Refine');
       return;
     }
     const info = refineInfo(d, c, picked);

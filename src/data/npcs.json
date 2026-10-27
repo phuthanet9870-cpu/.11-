@@ -51,6 +51,9 @@
    },
    {
     "type": "refine"
+   },
+   {
+    "type": "forge"
    }
   ]
  },
@@ -390,6 +393,9 @@
    },
    {
     "type": "refine"
+   },
+   {
+    "type": "forge"
    }
   ],
   "generated": true
@@ -794,6 +800,33 @@
   "generated": true
  },
  {
+  "id": "arcanthe_enchanter",
+  "name": "Enchantress Viveka",
+  "title": "Equipment Enchanter",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "robe"
+  },
+  "greeting": [
+   "I weave hidden power into equipment. One more option, or a fresh roll of them all, for a price."
+  ],
+  "services": [
+   {
+    "type": "enchant"
+   }
+  ],
+  "generated": true
+ },
+ {
   "id": "guild_mage",
   "name": "Magister Ophelia",
   "title": "Mage Guild Master",
@@ -945,6 +978,9 @@
    },
    {
     "type": "refine"
+   },
+   {
+    "type": "forge"
    }
   ],
   "generated": true
@@ -1256,6 +1292,9 @@
    },
    {
     "type": "refine"
+   },
+   {
+    "type": "forge"
    }
   ],
   "generated": true

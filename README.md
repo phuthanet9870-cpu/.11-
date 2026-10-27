@@ -16,6 +16,11 @@ A 2D fantasy MMORPG with a top-down 3/4 view. It's built with TypeScript, Phaser
   - โบนัสความเสียหายตามเผ่าและขนาด, Perfect Dodge
   - น้ำหนักเกิน 90% จะตีและใช้สกิลไม่ได้
   - ระบบ MVP พร้อมป้ายหลุมศพ
+  - อาวุธมีเลเวล 1–4 และตารางโอกาสตีบวกตามเลเวลอาวุธ
+  - ตีอาวุธ (Forging) ใส่หินธาตุและ Star Crumb ได้
+  - ออปชันสุ่มบนอุปกรณ์ และ NPC เอนแชนต์
+  - เอฟเฟกต์ติดสถานะ/ดูด HP เมื่อโจมตี
+  - หน้าต่างฐานข้อมูลมอนสเตอร์ ไอเทม และการ์ดในเกม (กด B)
   - ดูรายละเอียดที่ [docs/RO_SYSTEMS.md](docs/RO_SYSTEMS.md)
 - **ระบบตีบวก +1 ถึง +10:** อาวุธตีได้ปลอดภัยถึง +5 และชุดเกราะถึง +4 ถ้าเกินจากนั้นแล้วตีพลาด ของจะแตก
 - ระบบที่ทำเสร็จแล้ว ได้แก่ การเดิน (คลิกเมาส์/WASD), กล้องติดตาม, Collision ที่ตรงกับภาพ, NPC/บทสนทนา, Monster AI แบบ State Machine, การต่อสู้แบบ Real-time พร้อมธาตุและ Status, EXP/เลเวล (Base และ Job), Stat Points, Inventory/Equipment, สกิลและ Hotbar, เควสต์ 17 เควสต์, ร้านค้า, คลังเก็บของ, การเซฟ/โหลดแบบมีเวอร์ชัน, เสียง และ UI ครบชุดสำหรับ Phase 1
@@ -106,7 +111,7 @@ The tools edit the local save only, and any use sets `flags.gmUsed` on the chara
 
 | Suite | Result |
 |---|---|
-| Unit (`tests/unit`, 9 files) | **275 / 275 passed** (includes per-map data checks for all 30 maps): refine, tutorial quests, NPC job change and warps, GM commands, data validation and map reachability, formulas, combat and elements, inventory/shop/storage, quests, save/migrations, world simulation (collision, portals, AI, skills, boss, invalid commands, no double-spend) |
+| Unit (`tests/unit`, 11 files) | **285 / 285 passed** (incl. forge, random options, procs, weapon-level refine) (includes per-map data checks for all 30 maps): refine, tutorial quests, NPC job change and warps, GM commands, data validation and map reachability, formulas, combat and elements, inventory/shop/storage, quests, save/migrations, world simulation (collision, portals, AI, skills, boss, invalid commands, no double-spend) |
 | Integration: full playthrough | **passed**. A bot using only player commands finishes the 5 tutorial quests, becomes a Knight at the guild in Aurelion, switches to a spear for the Large boss (RO size rule), refines, and defeats Grukk (≈121 simulated minutes, Base Lv 28, 5 attempts). A second test walks through portals to all 30 maps |
 | Integration: class balance | **passed**. First-try boss wins at Lv 17: Knight 6/6, Ranger 6/6, Mage 4/6 (fixed seeds) |
 | E2E in Chromium (`npm run test:e2e`) | **24 / 24 checks passed** (incl. GM window, refine and guild job change): boot, create character via UI, WASD, click NPC → dialogue → accept quest, windows by hotkey, portal travel, mouse-click combat kill with EXP, save and reload persistence, shop purchase, drag & drop equip, stat allocation, job change via dialogue, learn skill, drag skill to hotbar, cast by hotkey, death → respawn, drop part of a stack via the quantity dialog, delete a character with typed-name confirmation, zero page errors |

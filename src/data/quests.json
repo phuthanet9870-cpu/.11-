@@ -111,7 +111,7 @@
    "luma": 200,
    "items": [
     {
-     "itemId": "starsteel_ore",
+     "itemId": "glimmer_ore",
      "qty": 3
     }
    ]
@@ -125,7 +125,7 @@
     "Buy a weapon from Garrick, then equip it from your inventory (I)."
    ],
    "complete": [
-    "Good steel suits you. Here, three Starsteel Ores, on the house.",
+    "Good steel suits you. Here, three Glimmer Ores, on the house.",
     "Ores are what I use to refine weapons. Want to learn how?"
    ]
   }
@@ -137,7 +137,7 @@
   "chapter": 1,
   "giverNpc": "garrick",
   "turnInNpc": "garrick",
-  "summary": "Ask Garrick to refine a piece of equipment to +1. Weapons use Starsteel Ore, armor uses Moonstone Ore. Refines up to +5 (weapons) and +4 (armor) never fail.",
+  "summary": "Ask Garrick to refine a piece of equipment to +1. Level 1 weapons use Glimmer Ore, level 2 Bright Ore, level 3–4 Starsteel Ore, armor Moonstone Ore. Level 1 weapons are safe up to +7, armor up to +4.",
   "prerequisites": {
    "quests": [
     "tut_weapon"
@@ -168,7 +168,7 @@
   "dialogue": {
    "offer": [
     "Refining hardens a weapon or armor and raises its power.",
-    "Up to +5 on weapons and +4 on armor it's safe. Beyond that, a failed attempt destroys the item, so be careful!",
+    "A level 1 weapon is safe up to +7, armor up to +4. Higher-level weapons are less forgiving. Fail past the safe limit and the item is destroyed!",
     "Pick 'Refine equipment' and bring me to +1."
    ],
    "progress": [
@@ -176,7 +176,7 @@
    ],
    "complete": [
     "Feel that edge? That's +1.",
-    "Keep refining safely to +5. Past that, it's a gamble."
+    "Your club is safe to +7. Past that, it's a gamble."
    ]
   }
  },

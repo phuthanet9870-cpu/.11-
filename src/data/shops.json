@@ -16,8 +16,8 @@
   "id": "garrick_smithy",
   "name": "Ironhand Smithy",
   "items": [
-   "starsteel_ore",
-   "moonstone_ore",
+   "glimmer_ore",
+   "bright_ore",
    "training_knife",
    "oak_club",
    "iron_sword",
@@ -72,8 +72,8 @@
   "id": "aurelion_arms",
   "name": "Royal Capital Aurelion Armory",
   "items": [
-   "starsteel_ore",
-   "moonstone_ore",
+   "glimmer_ore",
+   "bright_ore",
    "iron_sword",
    "steel_sword",
    "knight_spear",
@@ -102,6 +102,8 @@
   "id": "fernhollow_arms",
   "name": "Fernhollow Village Armory",
   "items": [
+   "glimmer_ore",
+   "bright_ore",
    "short_bow",
    "hunter_bow",
    "hunter_vest",
@@ -129,6 +131,8 @@
   "id": "arcanthe_arms",
   "name": "Tower City Arcanthe Armory",
   "items": [
+   "glimmer_ore",
+   "bright_ore",
    "apprentice_wand",
    "oak_staff",
    "apprentice_robe",
@@ -156,8 +160,8 @@
   "id": "sandara_arms",
   "name": "Desert City Sandara Armory",
   "items": [
-   "starsteel_ore",
-   "moonstone_ore",
+   "glimmer_ore",
+   "bright_ore",
    "steel_sword",
    "hunter_bow",
    "oak_staff",
@@ -185,6 +189,8 @@
   "id": "tidewatch_arms",
   "name": "Port Town Tidewatch Armory",
   "items": [
+   "glimmer_ore",
+   "bright_ore",
    "iron_sword",
    "short_bow",
    "leather_jacket",
@@ -212,8 +218,8 @@
   "id": "frostholm_arms",
   "name": "Snow Town Frostholm Armory",
   "items": [
-   "starsteel_ore",
-   "moonstone_ore",
+   "glimmer_ore",
+   "bright_ore",
    "steel_sword",
    "knight_spear",
    "hunter_bow",

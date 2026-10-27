@@ -68,7 +68,7 @@ export function mergeMods(target: StatModifiers, src: StatModifiers | undefined,
   if (!src) return target;
   for (const [k, v] of Object.entries(src)) {
     if (v == null) continue;
-    if (k === 'elementDamagePct' || k === 'elementResistPct' || k === 'raceDamagePct' || k === 'sizeDamagePct' || k === 'raceResistPct') {
+    if (k === 'elementDamagePct' || k === 'elementResistPct' || k === 'raceDamagePct' || k === 'sizeDamagePct' || k === 'raceResistPct' || k === 'onHitStatusPct') {
       const t = (target[k] ??= {}) as Record<string, number>;
       for (const [el, n] of Object.entries(v as Record<string, number>)) {
         t[el] = (t[el] ?? 0) + n * scale;
@@ -81,10 +81,19 @@ export function mergeMods(target: StatModifiers, src: StatModifiers | undefined,
   return target;
 }
 
+/** Random option (affix) → stat modifiers. Keys are plain StatModifiers keys, or race/element bonuses as "raceDamagePct.undead". */
+export function optionMods(o: { key: string; value: number }): StatModifiers {
+  const [k, sub] = o.key.split('.');
+  return (sub ? { [k]: { [sub]: o.value } } : { [k]: o.value }) as StatModifiers;
+}
+
 /** Bonus applied per refine level (Phase 2 refinement plugs in here). */
 export function refineMods(item: ItemDef, refine: number): StatModifiers {
   if (!refine) return {};
-  if (item.slot === 'weapon') return { patk: refine * 3, matk: item.attackKind === 'magic' ? refine * 3 : 0 };
+  if (item.slot === 'weapon') {
+    const per = [2, 3, 5, 7][Math.min(4, Math.max(1, item.weaponLevel ?? 1)) - 1];
+    return { patk: refine * per, matk: item.attackKind === 'magic' ? refine * per : 0 };
+  }
   return { pdef: refine };
 }
 
@@ -97,6 +106,8 @@ export function equipmentMods(data: GameData, c: CharacterState): StatModifiers 
     mergeMods(mods, def.mods);
     mergeMods(mods, refineMods(def, inst.refine ?? 0));
     for (const cardId of inst.cards ?? []) mergeMods(mods, data.items.get(cardId)?.card?.mods);
+    if (inst.starCrumbs) mergeMods(mods, { patk: [0, 5, 10, 40][inst.starCrumbs] });
+    for (const o of inst.options ?? []) mergeMods(mods, optionMods(o));
   }
   return mods;
 }
@@ -170,7 +181,7 @@ export function computeDerivedStats(data: GameData, c: CharacterState, runtimeMo
     maxHp, maxMp, patk, matk, pdef, mdef, hit, flee, crit, critDmg,
     attackIntervalMs, moveSpeed, castTimeMul, cdrPct, hpRegen, mpRegen,
     attackRange, attackKind,
-    weaponElement: weapon?.element ?? 'neutral',
+    weaponElement: c.equipment.weapon?.element ?? weapon?.element ?? 'neutral',
     weightLimit: B.weightBase + str * B.weightStr + (mods.weightLimit ?? 0),
     elementDamagePct: mods.elementDamagePct ?? {},
     elementResistPct: mods.elementResistPct ?? {},
@@ -178,6 +189,8 @@ export function computeDerivedStats(data: GameData, c: CharacterState, runtimeMo
     sizeDamagePct: mods.sizeDamagePct ?? {},
     raceResistPct: mods.raceResistPct ?? {},
     perfectDodge: B.perfectDodgeBase + luk / B.perfectDodgeLukDiv + (mods.perfectDodge ?? 0),
+    onHitStatusPct: mods.onHitStatusPct ?? {},
+    hpDrainPct: Math.min(20, mods.hpDrainPct ?? 0),
     weaponType: weapon?.weaponType ?? 'unarmed',
     totalStats: total,
   };

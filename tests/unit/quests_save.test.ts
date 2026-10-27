@@ -46,9 +46,9 @@ describe('tutorial quests', () => {
     questEvents.buy(data, c, 'oak_club');
     questEvents.equip(data, c, 'weapon');
     expect(c.quests.tut_weapon.status).toBe('ready');
-    const ore = countItem(c, 'starsteel_ore');
+    const ore = countItem(c, 'glimmer_ore');
     expect(turnInQuest(data, c, 'tut_weapon', 99999).ok).toBe(true);
-    expect(countItem(c, 'starsteel_ore')).toBe(ore + 3);
+    expect(countItem(c, 'glimmer_ore')).toBe(ore + 3);
   });
 
   it('refine: a +1 refine completes it; path needs Job Lv 10', () => {

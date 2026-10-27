@@ -235,6 +235,12 @@
    "facing": "down"
   },
   {
+   "npcId": "arcanthe_enchanter",
+   "x": 20,
+   "y": 21,
+   "facing": "down"
+  },
+  {
    "npcId": "guild_mage",
    "x": 38,
    "y": 32,

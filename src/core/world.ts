@@ -14,6 +14,8 @@ import {
 import { allocateStat, changeJob, learnSkill, resetSkills, resetStats } from './character';
 import { refineItem, type RefineResult } from './refine';
 import { compoundCard } from './cards';
+import { enchantAdd, enchantReroll, rollDropOptions } from './options';
+import { forgeWeapon, type ForgeChoice, type ForgeResult } from './forge';
 import {
   acceptQuest, abandonQuest, questEvents, refreshAllQuests, turnInQuest, type TurnInResult,
 } from './quests';
@@ -117,7 +119,7 @@ export interface MonsterActor extends ActorBase {
 
 export interface NpcActor { id: string; npcId: string; def: NpcDef; x: number; y: number; dir: Direction }
 
-export interface GroundItem { id: string; itemId: string; qty: number; x: number; y: number; expiresAt: number; droppedAt: number }
+export interface GroundItem { id: string; itemId: string; qty: number; x: number; y: number; expiresAt: number; droppedAt: number; options?: { key: string; value: number }[] }
 
 export interface GroundZone {
   id: string; skillId: string; zoneId: string; x: number; y: number; radius: number;
@@ -774,6 +776,12 @@ export class World {
       this.emit({ type: 'sound', key: res.crit ? 'crit' : 'hit' });
       if (res.crit) this.emit({ type: 'fx', fx: 'crit', x: m.x, y: m.y - 16 });
       this.damageMonster(m, res.damage, opts.kind, opts.element, res.crit, false);
+      // Card / option procs on basic attacks: status on hit and HP drain.
+      for (const [st, pct] of Object.entries(this.stats.onHitStatusPct)) if (pct && !m.dead) this.applyStatus(m, st as StatusId, pct / 100);
+      if (this.stats.hpDrainPct > 0 && !this.player.dead) {
+        const heal = Math.min(this.stats.maxHp - this.char.hp, Math.floor((res.damage * this.stats.hpDrainPct) / 100));
+        if (heal > 0) { this.char.hp += heal; this.player.hp = this.char.hp; this.emit({ type: 'damage', targetId: 'player', amount: heal, crit: false, miss: false, kind: 'heal' }); }
+      }
     };
     if (kind === 'melee') {
       this.emit({ type: 'sound', key: 'swing' });
@@ -999,11 +1007,15 @@ export class World {
       const qty = this.rng.int(e.min ?? 1, e.max ?? 1);
       const angle = (n++ / 5) * Math.PI * 2 + this.rng.next();
       const r = n === 1 ? 0 : 18 + this.rng.next() * 10;
-      this.dropToGround(e.itemId, qty, m.x + Math.cos(angle) * r, m.y + Math.sin(angle) * r * 0.6);
+      const g = this.dropToGround(e.itemId, qty, m.x + Math.cos(angle) * r, m.y + Math.sin(angle) * r * 0.6, true);
+      // Equipment from monsters may carry random options (Ragnarok Zero style).
+      const def = this.data.items.get(e.itemId);
+      if (def?.type === 'equipment') { const opts = rollDropOptions(def, () => this.rng.next()); if (opts.length) g.options = opts; }
+      if (this.autoLoot) this.pickup(g.id, true);
     }
   }
 
-  dropToGround(itemId: string, qty: number, x: number, y: number): GroundItem {
+  dropToGround(itemId: string, qty: number, x: number, y: number, deferLoot = false): GroundItem {
     const g: GroundItem = {
       id: this.uid('g'), itemId, qty, x, y, droppedAt: this.time,
       expiresAt: this.time + this.data.balance.combat.groundItemLifetimeMs,
@@ -1011,7 +1023,7 @@ export class World {
     this.groundItems.set(g.id, g);
     const rarity = this.data.items.get(itemId)?.rarity;
     this.emit({ type: 'fx', fx: rarity === 'rare' || rarity === 'epic' || rarity === 'legendary' ? 'drop_rare' : 'drop', x, y });
-    if (this.autoLoot) this.pickup(g.id, true);
+    if (this.autoLoot && !deferLoot) this.pickup(g.id, true);
     return g;
   }
 
@@ -1020,6 +1032,10 @@ export class World {
     if (!g) return { ok: false, error: 'Item is gone.' };
     const r = addItem(this.data, this.char, g.itemId, g.qty, { weightLimit: this.weightLimit });
     if (!r.ok) { if (!silentFail) this.message(r.error, 'error'); return r; }
+    if (g.options?.length) {
+      const inst = [...this.char.inventory].reverse().find((i) => i.itemId === g.itemId && !i.options && !i.crafter);
+      if (inst) inst.options = g.options;
+    }
     this.groundItems.delete(groundId);
     const name = this.data.items.get(g.itemId)!.name;
     this.emit({ type: 'loot', itemId: g.itemId, qty: g.qty });
@@ -1790,6 +1806,27 @@ export class World {
       this.emit({ type: 'sound', key: 'equip' });
       this.emit({ type: 'fx', fx: 'sparkle', x: this.player.x, y: this.player.y - 20 });
     });
+  }
+
+  /** Enchanter NPC: add one random option, or reroll all options. */
+  enchant(uid: string, mode: 'add' | 'reroll'): OpResult {
+    if (!this.nearService((s) => s.type === 'enchant')) return this.err('Talk to an enchanter first.');
+    return this.wrap((mode === 'add' ? enchantAdd : enchantReroll)(this.data, this.char, uid, () => this.rng.next()), () => {
+      this.emit({ type: 'sound', key: 'learn' });
+      this.emit({ type: 'fx', fx: 'arcane', x: this.player.x, y: this.player.y - 20 });
+    });
+  }
+
+  /** Forge a weapon at a forge NPC. */
+  forge(choice: ForgeChoice): ForgeResult {
+    if (!this.nearService((s) => s.type === 'forge')) return this.err('You need a forge master to forge weapons.');
+    const r = forgeWeapon(this.data, this.char, choice, this.rng.next());
+    if (!r.ok) return this.err(r.error);
+    this.message(r.message!, r.success ? 'loot' : 'error');
+    this.emit({ type: 'sound', key: r.success ? 'level_up' : 'error' });
+    this.emit({ type: 'fx', fx: r.success ? 'sparkle' : 'spawn', x: this.player.x, y: this.player.y - 20 });
+    this.afterInventoryChange();
+    return r;
   }
 
   /** Refine an equipped or carried item at a refine NPC. */

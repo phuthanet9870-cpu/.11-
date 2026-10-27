@@ -26,6 +26,21 @@
     "itemId": "card_leaf_slime",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
    }
   ]
  },
@@ -56,6 +71,16 @@
     "itemId": "card_horn_rabbit",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
    }
   ]
  },
@@ -86,6 +111,21 @@
     "itemId": "card_mushling",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
    }
   ]
  },
@@ -116,6 +156,21 @@
     "itemId": "card_buzz_wasp",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
+   },
+   {
+    "itemId": "gale_stone",
+    "chance": 0.01,
+    "forge": true
    }
   ]
  },
@@ -150,6 +205,16 @@
     "itemId": "card_forest_goblin",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
    }
   ]
  },
@@ -180,6 +245,16 @@
     "itemId": "card_venom_spore",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
    }
   ]
  },
@@ -210,6 +285,21 @@
     "itemId": "card_thorn_wolf",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
    }
   ]
  },
@@ -244,6 +334,21 @@
     "itemId": "card_bone_soldier",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ]
  },
@@ -294,6 +399,26 @@
     "itemId": "card_grukk_thornking",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.5,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
    }
   ]
  },
@@ -355,6 +480,11 @@
     "itemId": "card_clover_slime",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "gale_stone",
+    "chance": 0.01,
+    "forge": true
    }
   ],
   "generated": true
@@ -417,6 +547,16 @@
     "itemId": "card_pebble_golem",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -448,6 +588,11 @@
     "itemId": "card_road_goblin",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -479,6 +624,11 @@
     "itemId": "card_crypt_bat",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -510,6 +660,11 @@
     "itemId": "card_wailing_spirit",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -541,6 +696,11 @@
     "itemId": "card_grave_soldier",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -572,6 +732,16 @@
     "itemId": "card_mist_spore",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -603,6 +773,16 @@
     "itemId": "card_pine_goblin",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -634,6 +814,16 @@
     "itemId": "card_elder_mushling",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -665,6 +855,11 @@
     "itemId": "card_shadow_wolf",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -696,6 +891,16 @@
     "itemId": "card_bramble_hornet",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "gale_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -727,6 +932,11 @@
     "itemId": "card_cave_bat",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -758,6 +968,16 @@
     "itemId": "card_moss_golem",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -789,6 +1009,11 @@
     "itemId": "card_lantern_ghost",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -820,6 +1045,16 @@
     "itemId": "card_crystal_slime",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -851,6 +1086,11 @@
     "itemId": "card_moon_hare",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -882,6 +1122,11 @@
     "itemId": "card_arcane_wisp",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -913,6 +1158,11 @@
     "itemId": "card_animated_armor",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -944,6 +1194,11 @@
     "itemId": "card_rune_golem",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -975,6 +1230,16 @@
     "itemId": "card_mana_wisp",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1006,6 +1271,16 @@
     "itemId": "card_dune_slime",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1037,6 +1312,16 @@
     "itemId": "card_sand_scorpion",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1068,6 +1353,16 @@
     "itemId": "card_desert_wolf",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1099,6 +1394,16 @@
     "itemId": "card_oasis_crab",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1130,6 +1435,16 @@
     "itemId": "card_mirage_wisp",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1161,6 +1476,16 @@
     "itemId": "card_giant_scorpion",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1192,6 +1517,11 @@
     "itemId": "card_tomb_mummy",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1223,6 +1553,16 @@
     "itemId": "card_gilded_scarab",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1254,6 +1594,11 @@
     "itemId": "card_tomb_bat",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1285,6 +1630,16 @@
     "itemId": "card_shore_crab",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1316,6 +1671,16 @@
     "itemId": "card_sea_slime",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1347,6 +1712,16 @@
     "itemId": "card_reef_gull",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "gale_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1378,6 +1753,16 @@
     "itemId": "card_grotto_crab",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1409,6 +1794,16 @@
     "itemId": "card_kelp_spore",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1440,6 +1835,16 @@
     "itemId": "card_drowned_spirit",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1471,6 +1876,16 @@
     "itemId": "card_frost_slime",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1502,6 +1917,16 @@
     "itemId": "card_snow_wolf",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1533,6 +1958,16 @@
     "itemId": "card_ice_golem",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1564,6 +1999,16 @@
     "itemId": "card_ice_bat",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1595,6 +2040,16 @@
     "itemId": "card_frost_wraith",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1626,6 +2081,16 @@
     "itemId": "card_glacier_golem",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1657,6 +2122,16 @@
     "itemId": "card_ember_slime",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1688,6 +2163,16 @@
     "itemId": "card_ash_scorpion",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1719,6 +2204,16 @@
     "itemId": "card_fire_drake",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1750,6 +2245,16 @@
     "itemId": "card_magma_golem",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1781,6 +2286,16 @@
     "itemId": "card_flame_drake",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1812,6 +2327,11 @@
     "itemId": "card_bog_slime",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1843,6 +2363,11 @@
     "itemId": "card_marsh_spore",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1874,6 +2399,11 @@
     "itemId": "card_mire_crab",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1905,6 +2435,11 @@
     "itemId": "card_raven_bat",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1936,6 +2471,11 @@
     "itemId": "card_cursed_knight",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1967,6 +2507,11 @@
     "itemId": "card_banshee",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -1998,6 +2543,11 @@
     "itemId": "card_grave_knight",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -2029,6 +2579,11 @@
     "itemId": "card_lich_spirit",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
    }
   ],
   "generated": true
@@ -2060,6 +2615,11 @@
     "itemId": "card_bone_warden_boss",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
    }
   ],
   "generated": true
@@ -2091,6 +2651,11 @@
     "itemId": "card_valdris_boss",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
    }
   ],
   "generated": true
@@ -2122,6 +2687,11 @@
     "itemId": "card_sun_king_boss",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
    }
   ],
   "generated": true
@@ -2153,6 +2723,16 @@
     "itemId": "card_pyrewyrm_boss",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.5,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
    }
   ],
   "generated": true
@@ -2184,6 +2764,11 @@
     "itemId": "card_dread_lord_boss",
     "chance": 0.0001,
     "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
    }
   ],
   "generated": true

@@ -1,27 +1,36 @@
-// Equipment refinement (+1 … +10), Ragnarok-style: each attempt costs one ore
-// and a Luma fee. Up to the safe limit an attempt always succeeds; above it the
-// chance drops per level, and a failure destroys the item. Weapons use
-// Starsteel Ore, everything else Moonstone Ore. Results come from the World's
-// seeded Rng, so a server can replay them.
+// Equipment refinement (+1 … +10), Ragnarok-style. Weapons have a weapon level
+// (1–4): higher levels are stronger but less safe to refine. Each attempt costs
+// one ore of the right grade and a Luma fee. Up to the safe limit an attempt
+// always succeeds; above it the chance drops, and a failure destroys the item
+// (and any compounded cards). Results come from the World's seeded Rng.
 import type { GameData } from './data';
 import type { CharacterState, EquipSlot, ItemDef, ItemInstance } from './types';
 import { EQUIP_SLOTS } from './types';
 import { removeItem, type OpResult } from './inventory';
 
 export const MAX_REFINE = 10;
-export const WEAPON_ORE = 'starsteel_ore';
+/** Ore per weapon level (1–4) and for armor. Levels 1–2 are sold by NPCs; Starsteel / Moonstone only drop. */
+export const WEAPON_ORES = ['glimmer_ore', 'bright_ore', 'starsteel_ore', 'starsteel_ore'];
 export const ARMOR_ORE = 'moonstone_ore';
-const SAFE = { weapon: 5, armor: 4 };
-/** Success chance for the attempt that would reach refine level N (index N). */
-const CHANCE = {
-  weapon: [1, 1, 1, 1, 1, 1, 0.6, 0.5, 0.4, 0.3, 0.2],
-  armor: [1, 1, 1, 1, 1, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1],
+/** Success chance for the attempt that reaches refine level N (index N). Classic normal-ore table. */
+const CHANCE: Record<string, number[]> = {
+  w1: [1, 1, 1, 1, 1, 1, 1, 1, 0.6, 0.4, 0.2],
+  w2: [1, 1, 1, 1, 1, 1, 1, 0.6, 0.4, 0.2, 0.2],
+  w3: [1, 1, 1, 1, 1, 1, 0.6, 0.5, 0.2, 0.2, 0.2],
+  w4: [1, 1, 1, 1, 1, 0.6, 0.4, 0.4, 0.2, 0.2, 0.1],
+  armor: [1, 1, 1, 1, 1, 0.6, 0.4, 0.4, 0.2, 0.2, 0.1],
 };
-const FEE = [0, 100, 150, 200, 300, 400, 600, 800, 1000, 1500, 2000];
+/** Luma per attempt. */
+const FEE: Record<string, number> = { w1: 50, w2: 200, w3: 1000, w4: 2500, armor: 500 };
+/** ATK added per refine level, by weapon level. */
+export const ATK_PER_REFINE = [2, 3, 5, 7];
+
+export function weaponLevel(def: ItemDef): number { return Math.min(4, Math.max(1, def.weaponLevel ?? 1)); }
+const kind = (def: ItemDef) => (def.slot === 'weapon' ? `w${weaponLevel(def)}` : 'armor');
+/** Highest refine level that can never fail. */
+export function safeLimit(def: ItemDef): number { return CHANCE[kind(def)].findIndex((c, i) => i > 0 && c < 1) - 1; }
 
 export interface RefineInfo { ok: boolean; error?: string; current: number; next: number; chance: number; safe: number; ore: string; fee: number }
-
-const kind = (def: ItemDef) => (def.slot === 'weapon' ? 'weapon' : 'armor');
 
 export function locateItem(c: CharacterState, uid: string): { inst: ItemInstance; slot: EquipSlot | null } | null {
   const inv = c.inventory.find((i) => i.uid === uid);
@@ -37,7 +46,10 @@ export function refineInfo(data: GameData, c: CharacterState, uid: string): Refi
   const def = data.items.get(at.inst.itemId)!;
   if (def.type !== 'equipment' || !def.slot || def.slot === 'accessory') return { ok: false, error: 'Only weapons and armor can be refined.', ...blank };
   const k = kind(def), cur = at.inst.refine ?? 0;
-  const info = { current: cur, next: cur + 1, chance: CHANCE[k][Math.min(MAX_REFINE, cur + 1)], safe: SAFE[k], ore: k === 'weapon' ? WEAPON_ORE : ARMOR_ORE, fee: FEE[Math.min(MAX_REFINE, cur + 1)] };
+  const info = {
+    current: cur, next: cur + 1, chance: CHANCE[k][Math.min(MAX_REFINE, cur + 1)], safe: safeLimit(def),
+    ore: def.slot === 'weapon' ? WEAPON_ORES[weaponLevel(def) - 1] : ARMOR_ORE, fee: FEE[k],
+  };
   if (cur >= MAX_REFINE) return { ok: false, error: `Already at +${MAX_REFINE}.`, ...info };
   if (c.luma < info.fee) return { ok: false, error: `Needs ${info.fee} Luma.`, ...info };
   if (!c.inventory.some((i) => i.itemId === info.ore && i.qty > 0)) return { ok: false, error: `Needs 1 ${data.items.get(info.ore)?.name ?? info.ore}.`, ...info };

@@ -11,6 +11,7 @@ import bossesJson from '../data/bosses.json';
 import dropsJson from '../data/drops.json';
 import npcsJson from '../data/npcs.json';
 import shopsJson from '../data/shops.json';
+import recipesJson from '../data/recipes.json';
 import questsJson from '../data/quests.json';
 import tilesJson from '../data/tiles.json';
 import tilesetsJson from '../data/tilesets.json';
@@ -18,7 +19,7 @@ import objectsJson from '../data/objects.json';
 import { MAP_FILES } from '../data/maps';
 import type {
   BossDef, DropTable, Element, ItemDef, JobClassDef, MapDef, MonsterDef, NpcDef,
-  ObjectKindDef, QuestDef, ShopDef, SkillDef, StatusDef, StatusId, TileDef, TilesetDef,
+  ObjectKindDef, QuestDef, RecipeDef, ShopDef, SkillDef, StatusDef, StatusId, TileDef, TilesetDef,
 } from './types';
 
 export type Balance = typeof balanceJson;
@@ -35,6 +36,7 @@ export interface GameData {
   drops: Map<string, DropTable>;
   npcs: Map<string, NpcDef>;
   shops: Map<string, ShopDef>;
+  recipes: Map<string, RecipeDef>;
   quests: Map<string, QuestDef>;
   tiles: Map<string, TileDef>;
   tilesets: Map<string, TilesetDef>;
@@ -67,6 +69,7 @@ export function loadGameData(): GameData {
     drops: byId(dropsJson as DropTable[]),
     npcs: byId(npcsJson as NpcDef[]),
     shops: byId(shopsJson as ShopDef[]),
+    recipes: byId(recipesJson as unknown as RecipeDef[]),
     quests: byId(questsJson as QuestDef[]),
     tiles: byId(tilesJson.tiles as TileDef[]),
     tilesets: byId(tilesetsJson as unknown as TilesetDef[]),
@@ -105,6 +108,7 @@ export function validateGameData(d: GameData): string[] {
   }
   for (const t of d.drops.values()) for (const e of t.entries) need(d.items.has(e.itemId), `drops ${t.id}: item ${e.itemId}`);
   for (const sh of d.shops.values()) for (const i of sh.items) need(d.items.has(i), `shop ${sh.id}: item ${i}`);
+  for (const r of d.recipes.values()) { need(d.items.get(r.itemId)?.slot === 'weapon', `recipe ${r.id}: weapon`); for (const m of r.materials) need(d.items.has(m.itemId), `recipe ${r.id}: ${m.itemId}`); }
   for (const it of d.items.values()) if (it.type === 'card') {
     need(!!it.card && d.monsters.has(it.card.monsterId), `card ${it.id}: monster`);
     need(!!it.card && ['weapon', 'armor', 'headgear', 'shield', 'garment', 'boots', 'accessory'].includes(it.card.equip), `card ${it.id}: slot`);

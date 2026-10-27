@@ -5,8 +5,10 @@
 import type { GameData } from './data';
 import type { CharacterState, ItemDef, ItemInstance } from './types';
 import { removeByUid, type OpResult } from './inventory';
+import { forgedName } from './forge';
 
 export function freeSlots(def: ItemDef, inst: ItemInstance): number {
+  if (inst.crafter) return 0; // forged weapons have no card slots
   return Math.max(0, (def.cardSlots ?? 0) - (inst.cards?.length ?? 0));
 }
 
@@ -37,6 +39,6 @@ export function compoundCard(data: GameData, c: CharacterState, cardUid: string,
 /** Display name with refine and slots, e.g. "+3 Iron Sword [1/2]". */
 export function itemDisplayName(def: ItemDef, inst?: ItemInstance): string {
   const ref = inst?.refine ? `+${inst.refine} ` : '';
-  const slots = def.cardSlots ? ` [${inst?.cards?.length ?? 0}/${def.cardSlots}]` : '';
-  return `${ref}${def.name}${slots}`;
+  const slots = def.cardSlots && !inst?.crafter ? ` [${inst?.cards?.length ?? 0}/${def.cardSlots}]` : '';
+  return `${ref}${inst ? forgedName(def.name, inst) : def.name}${slots}`;
 }

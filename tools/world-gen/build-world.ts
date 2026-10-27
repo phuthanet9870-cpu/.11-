@@ -177,7 +177,7 @@ interface MapSpec {
   id: string; name: string; region: string; type: 'town' | 'field' | 'dungeon'; tileset: string; lv?: [number, number];
   bgm: string; ambient: string; weather: string[]; pos: [number, number]; exits: Partial<Record<Exit, string>>;
   monsters?: [string, number][]; boss?: string; trees?: string[]; lake?: 'water' | 'none'; size?: [number, number];
-  guild?: string[]; refine?: boolean; town?: { style: string; shop: string };
+  guild?: string[]; refine?: boolean; enchanter?: boolean; town?: { style: string; shop: string };
 }
 const REG = {
   wb: 'Willowbrook Region', cap: 'Aurelion — Royal Capital', fern: 'Fernhollow Woods', arc: 'Arcanthe — City of Magic',
@@ -194,7 +194,7 @@ const NEW_MAPS: MapSpec[] = [
   { id: 'deepwood_hollow', name: 'Deepwood Hollow', region: REG.fern, type: 'field', tileset: 'fernwood', lv: [22, 32], bgm: 'field_forest', ambient: 'forest', weather: ['fog'], pos: [0.57, 0.1], exits: { W: 'fernhollow' }, monsters: [['elder_mushling', 8], ['shadow_wolf', 7], ['bramble_hornet', 7]], trees: ['tree_dark', 'tree_pine'] },
   { id: 'fernhollow_cave', name: 'Fernhollow Cave', region: REG.fern, type: 'dungeon', tileset: 'dg_cave', lv: [25, 35], bgm: 'dungeon_cave', ambient: 'cave', weather: [], pos: [0.36, 0.12], exits: { E: 'fernhollow' }, monsters: [['cave_bat', 9], ['moss_golem', 6], ['lantern_ghost', 7]] },
   { id: 'arcanthe_heath', name: 'Arcanthe Heath', region: REG.arc, type: 'field', tileset: 'arcane', lv: [20, 30], bgm: 'field_plains', ambient: 'meadow', weather: ['sunny'], pos: [0.57, 0.5], exits: { W: 'aurelion', E: 'arcanthe' }, monsters: [['crystal_slime', 9], ['moon_hare', 7], ['arcane_wisp', 6]], trees: ['tree_pine', 'obelisk', 'rock'] },
-  { id: 'arcanthe', name: 'Tower City Arcanthe', region: REG.arc, type: 'town', tileset: 'arcane', bgm: 'town_mage', ambient: 'village', weather: ['sunny'], pos: [0.67, 0.48], exits: { W: 'arcanthe_heath', N: 'arcanthe_tower', S: 'sunscar_dunes' }, guild: ['mage'], town: { style: 'guild', shop: 'mage' } },
+  { id: 'arcanthe', name: 'Tower City Arcanthe', region: REG.arc, type: 'town', tileset: 'arcane', bgm: 'town_mage', ambient: 'village', weather: ['sunny'], pos: [0.67, 0.48], exits: { W: 'arcanthe_heath', N: 'arcanthe_tower', S: 'sunscar_dunes' }, guild: ['mage'], enchanter: true, town: { style: 'guild', shop: 'mage' } },
   { id: 'arcanthe_tower', name: 'Arcanthe Tower Depths', region: REG.arc, type: 'dungeon', tileset: 'dg_tower', lv: [30, 44], bgm: 'dungeon_dark', ambient: 'cave', weather: [], pos: [0.67, 0.34], exits: { S: 'arcanthe' }, monsters: [['animated_armor', 8], ['rune_golem', 6], ['mana_wisp', 8]], boss: 'archmage_valdris' },
   { id: 'sunscar_dunes', name: 'Sunscar Dunes', region: REG.des, type: 'field', tileset: 'desert', lv: [25, 35], bgm: 'field_desert', ambient: 'desert', weather: ['sunny'], pos: [0.67, 0.64], exits: { N: 'arcanthe', S: 'sandara' }, monsters: [['dune_slime', 9], ['sand_scorpion', 8], ['desert_wolf', 6]], trees: ['rock', 'rock_big'], lake: 'none' },
   { id: 'sandara', name: 'Desert City Sandara', region: REG.des, type: 'town', tileset: 'desert', bgm: 'town_desert', ambient: 'desert', weather: ['sunny'], pos: [0.67, 0.8], exits: { N: 'sunscar_dunes', E: 'mirage_oasis', S: 'kings_tomb' }, refine: true, town: { style: 'shop', shop: 'desert' } },
@@ -240,12 +240,12 @@ function npc(id: string, name: string, title: string, seed: number, style: strin
 }
 
 const TOWN_SHOPS: Record<string, { tools: string[]; arms: string[] }> = {
-  capital: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather', 'swiftness_tonic'], arms: ['starsteel_ore', 'moonstone_ore', 'iron_sword', 'steel_sword', 'knight_spear', 'chain_mail', 'iron_helm', 'iron_shield', 'leather_boots', 'travel_cape'] },
+  capital: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather', 'swiftness_tonic'], arms: ['iron_sword', 'steel_sword', 'knight_spear', 'chain_mail', 'iron_helm', 'iron_shield', 'leather_boots', 'travel_cape'] },
   forest: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'green_potion', 'wing_of_return', 'wandering_feather'], arms: ['short_bow', 'hunter_bow', 'hunter_vest', 'leather_jacket', 'leaf_cap', 'leather_boots', 'travel_cape'] },
   mage: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'blue_potion', 'wing_of_return', 'wandering_feather'], arms: ['apprentice_wand', 'oak_staff', 'apprentice_robe', 'sapphire_pendant', 'copper_ring', 'sandals'] },
-  desert: { tools: ['orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather', 'swiftness_tonic'], arms: ['starsteel_ore', 'moonstone_ore', 'steel_sword', 'hunter_bow', 'oak_staff', 'chain_mail', 'iron_shield', 'swift_boots'] },
+  desert: { tools: ['orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather', 'swiftness_tonic'], arms: ['steel_sword', 'hunter_bow', 'oak_staff', 'chain_mail', 'iron_shield', 'swift_boots'] },
   port: { tools: ['red_potion', 'orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather'], arms: ['iron_sword', 'short_bow', 'leather_jacket', 'bandana', 'wooden_buckler', 'sandals', 'copper_ring'] },
-  snow: { tools: ['orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather'], arms: ['starsteel_ore', 'moonstone_ore', 'steel_sword', 'knight_spear', 'hunter_bow', 'oak_staff', 'chain_mail', 'iron_helm', 'wolfhide_cloak'] },
+  snow: { tools: ['orange_potion', 'yellow_potion', 'blue_potion', 'green_potion', 'wing_of_return', 'wandering_feather'], arms: ['steel_sword', 'knight_spear', 'hunter_bow', 'oak_staff', 'chain_mail', 'iron_helm', 'wolfhide_cloak'] },
 };
 const GUILD_NPC: Record<string, [string, string, string]> = {
   knight: ['Commander Aldric', 'Knight Guild Master', 'plate'], ranger: ['Ranger Sylvi', 'Ranger Guild Master', 'hood'], mage: ['Magister Ophelia', 'Mage Guild Master', 'robe'],
@@ -276,7 +276,7 @@ function buildTown(s: MapSpec): Built {
   paint.push({ op: 'scatter', kind: (s.trees ?? (s.tileset === 'snow' || s.tileset === 'fernwood' ? ['tree_pine'] : ['tree_oak']))[0], density: 0.012, seed: hash(s.id) + 1 });
   const shopKey = s.town!.shop;
   shops.push({ id: `${s.id}_tools`, name: `${s.name} Tool Shop`, items: TOWN_SHOPS[shopKey].tools, generated: true });
-  shops.push({ id: `${s.id}_arms`, name: `${s.name} Armory`, items: TOWN_SHOPS[shopKey].arms, generated: true });
+  shops.push({ id: `${s.id}_arms`, name: `${s.name} Armory`, items: ['glimmer_ore', 'bright_ore', ...TOWN_SHOPS[shopKey].arms], generated: true });
   const towns = TOWN_IDS().filter((t) => t !== s.id);
   const short = s.name.split(' ').slice(-1)[0];
   npcs.push(npc(`${s.id}_courier`, `Courier ${['Lina', 'Mira', 'Tessa', 'Nadia', 'Rosa', 'Elsa', 'Kaia'][hash(s.id) % 7]}`, 'Courier Guild Service', hash(s.id) + 3, 'coat',
@@ -285,10 +285,15 @@ function buildTown(s: MapSpec): Built {
   npcs.push(npc(`${s.id}_merchant`, `${['Bertram', 'Odile', 'Fenwick', 'Zahra', 'Corin', 'Hilde', 'Pell'][hash(s.id + 'm') % 7]}`, 'Tool Merchant', hash(s.id) + 5, 'tunic',
     [{ type: 'shop', shopId: `${s.id}_tools`, label: 'Buy potions & supplies' }], ['Potions, wings, tonics — everything a traveller needs.']));
   npcs.push(npc(`${s.id}_smith`, `${['Torvald', 'Bruna', 'Kesh', 'Darius', 'Mag', 'Ulf', 'Yara'][hash(s.id + 's') % 7]}`, s.refine ? 'Blacksmith & Refiner' : 'Armorer', hash(s.id) + 7, 'apron',
-    [{ type: 'shop', shopId: `${s.id}_arms`, label: 'Browse weapons & armor' }, ...(s.refine ? [{ type: 'refine' }] : [])], ['Fine steel, fair prices.']));
+    [{ type: 'shop', shopId: `${s.id}_arms`, label: 'Browse weapons & armor' }, ...(s.refine ? [{ type: 'refine' }, { type: 'forge' }] : [])], ['Fine steel, fair prices.']));
   npcs.push(npc(`${s.id}_innkeeper`, `${['Greta', 'Amos', 'Sabine', 'Idris', 'Molly', 'Gunnar', 'Fae'][hash(s.id + 'i') % 7]}`, 'Innkeeper', hash(s.id) + 9, 'tunic',
     [{ type: 'heal', cost: 20 }, { type: 'save' }], ['A warm bed and a hot meal, traveller?']));
   places.push([`${s.id}_innkeeper`, 9, 10], [`${s.id}_smith`, 37, 10], [`${s.id}_merchant`, 9, 32], [`${s.id}_courier`, cx + 3, cy + 2]);
+  if (s.enchanter) {
+    npcs.push(npc(`${s.id}_enchanter`, 'Enchantress Viveka', 'Equipment Enchanter', hash(s.id) + 11, 'robe', [{ type: 'enchant' }],
+      ['I weave hidden power into equipment. One more option, or a fresh roll of them all, for a price.']));
+    places.push([`${s.id}_enchanter`, cx - 4, cy + 2]);
+  }
   for (const g of s.guild ?? []) {
     const [nm, tt, style] = GUILD_NPC[g];
     npcs.push(npc(`guild_${g}`, nm, tt, hash(g), style, [{ type: 'jobChange', classIds: [g] }],
@@ -435,7 +440,9 @@ export async function main() {
     monsters.push(def);
     const [part, icon] = PART[s.shape];
     const matId = `${s.id.replace(/_boss$/, '')}_${part.toLowerCase().replace(/[^a-z]+/g, '_')}`;
-    items.push({ id: matId, name: `${s.name.replace(/^(Sun-King|Archmage|Dread Lord) /, '')} ${part}`, type: 'material', rarity: b ? 'rare' : 'common', description: `Dropped by ${s.name}. Merchants pay well for it.`, weight: 1, price: Math.round(4 + s.lv * (b ? 30 : 2.2)), stackable: true, maxStack: 999, icon: { shape: icon, color: s.colors[0], accent: s.colors[2] }, generated: true });
+    const baseName = s.name.replace(/^(Sun-King|Archmage|Dread Lord) /, '');
+    const matName = baseName.split(' ').pop() === part.split(' ')[0] ? `${baseName} ${part.split(' ').slice(1).join(' ')}` : `${baseName} ${part}`;
+    items.push({ id: matId, name: matName, type: 'material', rarity: b ? 'rare' : 'common', description: `Dropped by ${s.name}. Merchants pay well for it.`, weight: 1, price: Math.round(4 + s.lv * (b ? 30 : 2.2)), stackable: true, maxStack: 999, icon: { shape: icon, color: s.colors[0], accent: s.colors[2] }, generated: true });
     const tier = s.lv < 25 ? 'orange_potion' : s.lv < 50 ? 'yellow_potion' : 'yellow_potion';
     drops.push({ id: `${s.id}_drops`, luma: [Math.round(2 + s.lv * 0.6), Math.round(6 + s.lv * 1.4)], entries: [
       { itemId: matId, chance: b ? 1 : 0.55 }, { itemId: tier, chance: b ? 1 : 0.06 },
@@ -454,9 +461,12 @@ export async function main() {
     const pick = <T>(a: readonly T[], salt = 0) => a[(h >>> salt) % a.length];
     let mods: J;
     switch (equip) {
-      case 'weapon': mods = boss ? { patkPct: 10, raceDamagePct: { [pick(RACES, 3)]: 15 } } : [
-        { raceDamagePct: { [pick(RACES, 5)]: 20 } }, { sizeDamagePct: { [pick(['small', 'medium', 'large'], 7)]: 15 } }, { patk: 4 + 3 * tier, hit: 5 * tier },
-      ][h % 3]; break;
+      case 'weapon': mods = boss ? { patkPct: 10, raceDamagePct: { [pick(RACES, 3)]: 15 } }
+        // Procs: monsters that inflict a status give it to their card; bats drain HP.
+        : m.onHitStatus ? { onHitStatusPct: { [m.onHitStatus.status]: 5 }, patk: 2 * tier }
+          : m.art.shape === 'bat' ? { hpDrainPct: 3 }
+            : [{ raceDamagePct: { [pick(RACES, 5)]: 20 } }, { sizeDamagePct: { [pick(['small', 'medium', 'large'], 7)]: 15 } }, { patk: 4 + 3 * tier, hit: 5 * tier }][h % 3];
+        break;
       case 'armor': mods = boss ? { maxHpPct: 15, pdef: 3 * tier } : [{ maxHp: 80 * tier }, { vit: 1, maxHpPct: 10 }, { elementResistPct: { [m.element === 'neutral' ? 'fire' : m.element]: 20 } }][h % 3]; break;
       case 'shield': mods = { raceResistPct: { [m.race]: 25 } }; break;
       case 'garment': mods = m.element === 'neutral' ? { flee: 5 + 3 * tier } : { elementResistPct: { [m.element]: 20 }, flee: 2 * tier }; break;
@@ -473,11 +483,70 @@ export async function main() {
     const t = drops.find((d: J) => d.id === m.dropTableId);
     if (t) t.entries.push({ itemId: `card_${m.id}`, chance: cardChance, card: true });
   });
+  // Refining ores: grades 1–2 are sold by NPCs, Starsteel (weapon Lv 3–4) and Moonstone (armor) only drop.
+  for (const [id, name, price, desc, col] of [
+    ['glimmer_ore', 'Glimmer Ore', 50, 'Soft, shiny ore. Used to refine level 1 weapons.', '#c8a86a'],
+    ['bright_ore', 'Bright Ore', 200, 'Ore with a steady inner light. Used to refine level 2 weapons.', '#8ab8d8'],
+  ] as const) {
+    if (!items.some((i: J) => i.id === id)) items.push({ id, name, type: 'material', rarity: 'common', description: desc, weight: 2, price, stackable: true, maxStack: 999, icon: { shape: 'ore', color: col, accent: '#ffffff' }, generated: true });
+  }
+  const starsteel = items.find((i: J) => i.id === 'starsteel_ore'), moonstone = items.find((i: J) => i.id === 'moonstone_ore');
+  starsteel.description = 'Ore with a faint starry glint. Used to refine level 3 and 4 weapons. Found on monsters, not in shops.';
+  moonstone.description = 'Pale, cool-to-the-touch ore. Used to refine armor. Found on monsters, not in shops.';
+  for (const sh of shops) sh.items = sh.items.filter((i: string) => i !== 'starsteel_ore' && i !== 'moonstone_ore');
+  for (const sh of shops) if (sh.items.some((i: string) => items.find((x: J) => x.id === i)?.slot === 'weapon') && !sh.items.includes('glimmer_ore')) sh.items.unshift('glimmer_ore', 'bright_ore');
+  // Early monsters drop the drop-only ores rarely, so armor refining is possible from the start.
+  for (const t of drops) {
+    t.entries = t.entries.filter((e: J) => !e.oreHint);
+    if (!t.entries.some((e: J) => e.itemId === 'moonstone_ore')) t.entries.push({ itemId: 'moonstone_ore', chance: 0.005, oreHint: true }, { itemId: 'starsteel_ore', chance: 0.003, oreHint: true });
+  }
+
   // Card slots on equipment (Ragnarok-style: daggers 3, other weapons 2, rarer weapons 1; armor pieces 1).
   for (const it of items) {
     if (it.type !== 'equipment') continue;
+    // Weapon level 1–4 by tier: starter 1, common 2, uncommon 3, rare/epic 4.
+    if (it.slot === 'weapon') it.weaponLevel = (it.equipLevel ?? 1) <= 1 ? 1 : it.rarity === 'common' ? 2 : it.rarity === 'uncommon' ? 3 : 4;
     it.cardSlots = it.slot === 'weapon' ? (it.rarity === 'rare' || it.rarity === 'epic' ? 1 : it.weaponType === 'dagger' ? 3 : 2) : 1;
   }
+
+  // ---------------------------------------------------------------- forging: stones, crumbs, recipes
+  const FORGE_ITEMS: [string, string, string, string, string][] = [
+    ['flame_stone', 'Flame Stone', 'A stone that is always warm. Forged into a weapon, it gives the weapon the fire element.', 'gem', '#ff6a2e'],
+    ['frost_stone', 'Frost Stone', 'A stone rimed with frost. Forged into a weapon, it gives the weapon the water element.', 'gem', '#7ab8ff'],
+    ['gale_stone', 'Gale Stone', 'A stone that hums in the wind. Forged into a weapon, it gives the weapon the wind element.', 'gem', '#b6f0d0'],
+    ['terra_stone', 'Terra Stone', 'A heavy stone full of life. Forged into a weapon, it gives the weapon the earth element.', 'gem', '#8b6b3e'],
+    ['star_crumb', 'Star Crumb', 'A fragment of a fallen star. Up to three can be forged into a weapon for bonus ATK.', 'gem', '#ffe14d'],
+  ];
+  for (const [id, name, desc, icon, col] of FORGE_ITEMS) items.push({ id, name, type: 'material', rarity: 'uncommon', description: desc, weight: 1, price: id === 'star_crumb' ? 400 : 300, stackable: true, maxStack: 999, icon: { shape: icon, color: col, accent: '#ffffff' }, generated: true });
+  const STONE_OF: Record<string, string> = { fire: 'flame_stone', water: 'frost_stone', wind: 'gale_stone', earth: 'terra_stone' };
+  for (const t of drops) t.entries = t.entries.filter((e: J) => !e.forge);
+  for (const m of monsters) {
+    const t = drops.find((d: J) => d.id === m.dropTableId);
+    if (!t) continue;
+    if (STONE_OF[m.element]) t.entries.push({ itemId: STONE_OF[m.element], chance: m.aiType === 'boss' ? 0.5 : 0.01, forge: true });
+    if (m.level >= 15) t.entries.push({ itemId: 'star_crumb', chance: m.aiType === 'boss' ? 0.5 : 0.005, forge: true });
+  }
+  // Materials by monster level, for recipes.
+  const matByLevel: { id: string; lv: number }[] = [];
+  for (const m of monsters) {
+    if (m.aiType === 'boss') continue;
+    const t = drops.find((d: J) => d.id === m.dropTableId);
+    const mat = t?.entries.map((e: J) => items.find((i: J) => i.id === e.itemId)).find((i: J) => i?.type === 'material' && !/_ore$|_stone$|star_crumb/.test(i.id));
+    if (mat && !matByLevel.some((x) => x.id === mat.id)) matByLevel.push({ id: mat.id, lv: m.level });
+  }
+  const recipes: J[] = [];
+  for (const w of items.filter((i: J) => i.slot === 'weapon' && (i.weaponLevel ?? 1) <= 3)) {
+    const wl = w.weaponLevel ?? 1, hw = hash(w.id);
+    const band = wl === 1 ? [1, 12] : wl === 2 ? [8, 25] : [18, 45];
+    const pool = matByLevel.filter((m) => m.lv >= band[0] && m.lv <= band[1]);
+    const a = pool[hw % pool.length], b = pool[(hw >>> 4) % pool.length];
+    const mats = wl === 1 ? [{ itemId: 'glimmer_ore', qty: 2 }, { itemId: a.id, qty: 5 }]
+      : wl === 2 ? [{ itemId: 'bright_ore', qty: 3 }, { itemId: a.id, qty: 6 }, ...(b.id !== a.id ? [{ itemId: b.id, qty: 3 }] : [])]
+        : [{ itemId: 'starsteel_ore', qty: 2 }, { itemId: 'bright_ore', qty: 4 }, { itemId: a.id, qty: 8 }, ...(b.id !== a.id ? [{ itemId: b.id, qty: 4 }] : [])];
+    recipes.push({ id: `forge_${w.id}`, itemId: w.id, materials: mats, fee: 200 * wl * wl });
+  }
+  write('recipes.json', recipes);
+  for (const n of npcs) if (n.services.some((sv: J) => sv.type === 'refine') && !n.services.some((sv: J) => sv.type === 'forge')) n.services.push({ type: 'forge' });
 
   const grukk = bosses.find((b: J) => b.id === 'grukk');
   for (const b of BOSSES) bosses.push(bossDef(b, grukk));

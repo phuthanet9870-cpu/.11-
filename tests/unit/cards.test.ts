@@ -48,10 +48,10 @@ describe('monster cards', () => {
   it('a destroyed (failed refine) item takes its cards with it', () => {
     const c = newChar(); c.luma = 99999;
     const card = [...data.items.values()].find((i) => i.card?.equip === 'weapon')!;
-    addItem(data, c, card.id, 1); addItem(data, c, 'training_knife', 1); addItem(data, c, 'starsteel_ore', 10);
+    addItem(data, c, card.id, 1); addItem(data, c, 'training_knife', 1); addItem(data, c, 'glimmer_ore', 10);
     const knife = c.inventory.find((i) => i.itemId === 'training_knife')!;
     compoundCard(data, c, c.inventory.find((i) => i.itemId === card.id)!.uid, knife.uid);
-    for (let i = 0; i < 5; i++) refineItem(data, c, knife.uid, 0);
+    for (let i = 0; i < 7; i++) refineItem(data, c, knife.uid, 0);
     const r = refineItem(data, c, knife.uid, 0.999);
     expect(r.outcome).toBe('broken');
     expect(r.ok && r.message).toContain('card');

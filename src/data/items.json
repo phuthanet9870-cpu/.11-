@@ -413,7 +413,8 @@
    "shape": "dagger",
    "color": "#c8ccd8"
   },
-  "cardSlots": 3
+  "cardSlots": 3,
+  "weaponLevel": 1
  },
  {
   "id": "oak_club",
@@ -438,7 +439,8 @@
    "shape": "club",
    "color": "#8b5a2b"
   },
-  "cardSlots": 2
+  "cardSlots": 2,
+  "weaponLevel": 1
  },
  {
   "id": "iron_sword",
@@ -465,7 +467,8 @@
    "shape": "sword",
    "color": "#c8ccd8"
   },
-  "cardSlots": 2
+  "cardSlots": 2,
+  "weaponLevel": 2
  },
  {
   "id": "steel_sword",
@@ -494,7 +497,8 @@
    "color": "#e0e6f2",
    "accent": "#4a6fa5"
   },
-  "cardSlots": 2
+  "cardSlots": 2,
+  "weaponLevel": 3
  },
  {
   "id": "knight_spear",
@@ -524,7 +528,8 @@
    "color": "#c8ccd8",
    "accent": "#b33a3a"
   },
-  "cardSlots": 2
+  "cardSlots": 2,
+  "weaponLevel": 3
  },
  {
   "id": "thornbane_blade",
@@ -555,7 +560,8 @@
    "color": "#7fd65a",
    "accent": "#f2d23a"
   },
-  "cardSlots": 1
+  "cardSlots": 1,
+  "weaponLevel": 4
  },
  {
   "id": "short_bow",
@@ -584,7 +590,8 @@
    "shape": "bow",
    "color": "#9a6a3a"
   },
-  "cardSlots": 2
+  "cardSlots": 2,
+  "weaponLevel": 2
  },
  {
   "id": "hunter_bow",
@@ -614,7 +621,8 @@
    "color": "#6a4a2a",
    "accent": "#d9c27a"
   },
-  "cardSlots": 2
+  "cardSlots": 2,
+  "weaponLevel": 3
  },
  {
   "id": "thornwood_longbow",
@@ -646,7 +654,8 @@
    "color": "#4f8f3a",
    "accent": "#f2d23a"
   },
-  "cardSlots": 1
+  "cardSlots": 1,
+  "weaponLevel": 4
  },
  {
   "id": "apprentice_wand",
@@ -677,7 +686,8 @@
    "color": "#b48a5a",
    "accent": "#7fd6ff"
   },
-  "cardSlots": 2
+  "cardSlots": 2,
+  "weaponLevel": 2
  },
  {
   "id": "oak_staff",
@@ -710,7 +720,8 @@
    "color": "#8b5a2b",
    "accent": "#9a7aff"
   },
-  "cardSlots": 2
+  "cardSlots": 2,
+  "weaponLevel": 3
  },
  {
   "id": "thornheart_staff",
@@ -743,7 +754,8 @@
    "color": "#4f8f3a",
    "accent": "#f2d23a"
   },
-  "cardSlots": 1
+  "cardSlots": 1,
+  "weaponLevel": 4
  },
  {
   "id": "cotton_shirt",
@@ -1233,7 +1245,7 @@
   "name": "Starsteel Ore",
   "type": "material",
   "rarity": "uncommon",
-  "description": "Ore with a faint starry glint. A refiner uses one per weapon refine attempt.",
+  "description": "Ore with a faint starry glint. Used to refine level 3 and 4 weapons. Found on monsters, not in shops.",
   "weight": 3,
   "price": 200,
   "stackable": true,
@@ -1249,7 +1261,7 @@
   "name": "Moonstone Ore",
   "type": "material",
   "rarity": "uncommon",
-  "description": "Pale, cool-to-the-touch ore. A refiner uses one per armor refine attempt.",
+  "description": "Pale, cool-to-the-touch ore. Used to refine armor. Found on monsters, not in shops.",
   "weight": 3,
   "price": 250,
   "stackable": true,
@@ -1468,7 +1480,7 @@
  },
  {
   "id": "mist_spore_spore_dust",
-  "name": "Mist Spore Spore Dust",
+  "name": "Mist Spore Dust",
   "type": "material",
   "rarity": "common",
   "description": "Dropped by Mist Spore. Merchants pay well for it.",
@@ -1927,7 +1939,7 @@
  },
  {
   "id": "kelp_spore_spore_dust",
-  "name": "Kelp Spore Spore Dust",
+  "name": "Kelp Spore Dust",
   "type": "material",
   "rarity": "common",
   "description": "Dropped by Kelp Spore. Merchants pay well for it.",
@@ -2165,7 +2177,7 @@
  },
  {
   "id": "marsh_spore_spore_dust",
-  "name": "Marsh Spore Spore Dust",
+  "name": "Marsh Spore Dust",
   "type": "material",
   "rarity": "common",
   "description": "Dropped by Marsh Spore. Merchants pay well for it.",
@@ -2512,9 +2524,10 @@
   "card": {
    "equip": "weapon",
    "mods": {
-    "sizeDamagePct": {
-     "small": 15
-    }
+    "onHitStatusPct": {
+     "poison": 5
+    },
+    "patk": 2
    },
    "monsterId": "venom_spore"
   },
@@ -3442,8 +3455,7 @@
   "card": {
    "equip": "weapon",
    "mods": {
-    "patk": 10,
-    "hit": 10
+    "hpDrainPct": 3
    },
    "monsterId": "reef_gull"
   },
@@ -3774,8 +3786,10 @@
   "card": {
    "equip": "weapon",
    "mods": {
-    "patk": 16,
-    "hit": 20
+    "onHitStatusPct": {
+     "burn": 5
+    },
+    "patk": 8
    },
    "monsterId": "magma_golem"
   },
@@ -3824,8 +3838,10 @@
   "card": {
    "equip": "weapon",
    "mods": {
-    "patk": 16,
-    "hit": 20
+    "onHitStatusPct": {
+     "poison": 5
+    },
+    "patk": 8
    },
    "monsterId": "bog_slime"
   },
@@ -3900,8 +3916,7 @@
   "card": {
    "equip": "weapon",
    "mods": {
-    "patk": 16,
-    "hit": 20
+    "hpDrainPct": 3
    },
    "monsterId": "raven_bat"
   },
@@ -4136,6 +4151,125 @@
     }
    },
    "monsterId": "dread_lord_boss"
+  },
+  "generated": true
+ },
+ {
+  "id": "glimmer_ore",
+  "name": "Glimmer Ore",
+  "type": "material",
+  "rarity": "common",
+  "description": "Soft, shiny ore. Used to refine level 1 weapons.",
+  "weight": 2,
+  "price": 50,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "ore",
+   "color": "#c8a86a",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "bright_ore",
+  "name": "Bright Ore",
+  "type": "material",
+  "rarity": "common",
+  "description": "Ore with a steady inner light. Used to refine level 2 weapons.",
+  "weight": 2,
+  "price": 200,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "ore",
+   "color": "#8ab8d8",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "flame_stone",
+  "name": "Flame Stone",
+  "type": "material",
+  "rarity": "uncommon",
+  "description": "A stone that is always warm. Forged into a weapon, it gives the weapon the fire element.",
+  "weight": 1,
+  "price": 300,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#ff6a2e",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "frost_stone",
+  "name": "Frost Stone",
+  "type": "material",
+  "rarity": "uncommon",
+  "description": "A stone rimed with frost. Forged into a weapon, it gives the weapon the water element.",
+  "weight": 1,
+  "price": 300,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#7ab8ff",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "gale_stone",
+  "name": "Gale Stone",
+  "type": "material",
+  "rarity": "uncommon",
+  "description": "A stone that hums in the wind. Forged into a weapon, it gives the weapon the wind element.",
+  "weight": 1,
+  "price": 300,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#b6f0d0",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "terra_stone",
+  "name": "Terra Stone",
+  "type": "material",
+  "rarity": "uncommon",
+  "description": "A heavy stone full of life. Forged into a weapon, it gives the weapon the earth element.",
+  "weight": 1,
+  "price": 300,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#8b6b3e",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "star_crumb",
+  "name": "Star Crumb",
+  "type": "material",
+  "rarity": "uncommon",
+  "description": "A fragment of a fallen star. Up to three can be forged into a weapon for bonus ATK.",
+  "weight": 1,
+  "price": 400,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#ffe14d",
+   "accent": "#ffffff"
   },
   "generated": true
  }

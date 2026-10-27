@@ -40,6 +40,10 @@ export interface StatModifiers {
   raceResistPct?: Partial<Record<string, number>>;
   /** % chance to completely avoid a physical hit (on top of FLEE). */
   perfectDodge?: number;
+  /** % chance per basic attack to inflict a status on the target (cards / options). */
+  onHitStatusPct?: Partial<Record<string, number>>;
+  /** % of basic-attack damage returned as HP. */
+  hpDrainPct?: number;
   weightLimit?: number;
   attackRange?: number;
   /** % chance to counter a melee hit with a basic attack. */
@@ -146,6 +150,8 @@ export interface ItemDef {
   // equipment
   slot?: 'weapon' | 'armor' | 'headgear' | 'shield' | 'garment' | 'boots' | 'accessory';
   weaponType?: string;
+  /** Weapon level 1–4 (Ragnarok-style): sets refine safety, ATK per refine and ore grade. */
+  weaponLevel?: number;
   twoHanded?: boolean;
   attackKind?: 'melee' | 'ranged' | 'magic';
   attackRange?: number;
@@ -168,6 +174,12 @@ export interface ItemInstance {
   qty: number;
   refine?: number;
   cards?: string[];
+  /** Forged weapons: element from an element stone, maker's name, star crumbs (bonus ATK). */
+  element?: Element;
+  crafter?: string;
+  starCrumbs?: number;
+  /** Random options (affixes) rolled on drops or added by an enchanter. */
+  options?: { key: string; value: number }[];
   locked?: boolean;
   bound?: boolean;
 }
@@ -364,12 +376,17 @@ export type NpcService =
   | { type: 'heal'; cost: number }
   | { type: 'jobChange'; classIds: string[] }
   | { type: 'refine' }
+  | { type: 'forge' }
+  | { type: 'enchant' }
   | { type: 'warp'; destinations: { mapId: string; spawn: string; cost: number }[] }
   | { type: 'resetStats'; cost: number }
   | { type: 'resetSkills'; cost: number }
   | { type: 'save' };
 
 export interface ShopDef { id: string; name: string; items: string[] }
+
+/** Forging recipe (Ragnarok-style blacksmith forging, done at a forge NPC). */
+export interface RecipeDef { id: string; itemId: string; materials: { itemId: string; qty: number }[]; fee: number }
 
 export type QuestObjective =
   | { type: 'talk'; npcId: string; label: string }
@@ -484,6 +501,8 @@ export interface DerivedStats {
   sizeDamagePct: Partial<Record<string, number>>;
   raceResistPct: Partial<Record<string, number>>;
   perfectDodge: number;
+  onHitStatusPct: Partial<Record<string, number>>;
+  hpDrainPct: number;
   /** Weapon type for the size table ('unarmed' without a weapon). */
   weaponType: string;
   totalStats: BaseStats;

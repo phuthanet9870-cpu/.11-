@@ -1,0 +1,177 @@
+[
+ {
+  "id": "forge_training_knife",
+  "itemId": "training_knife",
+  "materials": [
+   {
+    "itemId": "glimmer_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "clover_slime_gel",
+    "qty": 5
+   }
+  ],
+  "fee": 200
+ },
+ {
+  "id": "forge_oak_club",
+  "itemId": "oak_club",
+  "materials": [
+   {
+    "itemId": "glimmer_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "wasp_stinger",
+    "qty": 5
+   }
+  ],
+  "fee": 200
+ },
+ {
+  "id": "forge_iron_sword",
+  "itemId": "iron_sword",
+  "materials": [
+   {
+    "itemId": "bright_ore",
+    "qty": 3
+   },
+   {
+    "itemId": "spore_dust",
+    "qty": 6
+   },
+   {
+    "itemId": "elder_mushling_spore_cap",
+    "qty": 3
+   }
+  ],
+  "fee": 800
+ },
+ {
+  "id": "forge_steel_sword",
+  "itemId": "steel_sword",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "grave_soldier_bone_shard",
+    "qty": 8
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_knight_spear",
+  "itemId": "knight_spear",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "oasis_crab_shell",
+    "qty": 8
+   },
+   {
+    "itemId": "snow_wolf_fang",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_short_bow",
+  "itemId": "short_bow",
+  "materials": [
+   {
+    "itemId": "bright_ore",
+    "qty": 3
+   },
+   {
+    "itemId": "crystal_slime_gel",
+    "qty": 6
+   },
+   {
+    "itemId": "dusk_bat_wing",
+    "qty": 3
+   }
+  ],
+  "fee": 800
+ },
+ {
+  "id": "forge_hunter_bow",
+  "itemId": "hunter_bow",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "sand_scorpion_venom_tail",
+    "qty": 8
+   },
+   {
+    "itemId": "animated_armor_bone_shard",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ },
+ {
+  "id": "forge_apprentice_wand",
+  "itemId": "apprentice_wand",
+  "materials": [
+   {
+    "itemId": "bright_ore",
+    "qty": 3
+   },
+   {
+    "itemId": "old_bone",
+    "qty": 6
+   },
+   {
+    "itemId": "reef_gull_wing",
+    "qty": 3
+   }
+  ],
+  "fee": 800
+ },
+ {
+  "id": "forge_oak_staff",
+  "itemId": "oak_staff",
+  "materials": [
+   {
+    "itemId": "starsteel_ore",
+    "qty": 2
+   },
+   {
+    "itemId": "bright_ore",
+    "qty": 4
+   },
+   {
+    "itemId": "mist_spore_spore_dust",
+    "qty": 8
+   },
+   {
+    "itemId": "oasis_crab_shell",
+    "qty": 4
+   }
+  ],
+  "fee": 1800
+ }
+]

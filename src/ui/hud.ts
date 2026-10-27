@@ -69,7 +69,7 @@ export class Hud {
       w.moveTo(sx * w.map.width * TILE, sy * w.map.height * TILE);
     });
     const menu = h('div', { class: 'menu-buttons' },
-      ...([['status', 'Status'], ['inventory', 'Items'], ['equipment', 'Equip'], ['skills', 'Skills'], ['quests', 'Quests'], ['worldMap', 'Map'], ['settings', 'Menu']] as const)
+      ...([['status', 'Status'], ['inventory', 'Items'], ['equipment', 'Equip'], ['skills', 'Skills'], ['quests', 'Quests'], ['worldMap', 'Map'], ['database', 'DB'], ['settings', 'Menu']] as const)
         .map(([id, label]) => h('button', { class: 'btn', title: `${label} (${this.app.keyLabel(id)})`, onclick: () => this.app.windows.toggle(id) }, label)),
       h('button', { class: 'btn', id: 'btn-gm', title: 'GM / Admin tools (F8 or /gm)', onclick: () => this.app.windows.toggle('admin') }, 'GM'));
     this.root = h('div', { id: 'hud', class: 'passthrough', style: 'position:absolute;inset:0' },

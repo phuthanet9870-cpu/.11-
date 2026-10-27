@@ -213,7 +213,7 @@ try {
     w.enterMap('willowbrook', 'default');
     const g = w.npcs.find((n) => n.npcId === 'garrick');
     w.player.x = g.x; w.player.y = g.y + 40;
-    w.giveItem('training_knife', 1, 'test'); w.giveItem('starsteel_ore', 1, 'test'); w.char.luma += 500;
+    w.giveItem('training_knife', 1, 'test'); w.giveItem('glimmer_ore', 1, 'test'); w.char.luma += 500;
     w.interactNpc('garrick');
   });
   await page.waitForSelector('#npc-dialog', { timeout: 20000 });

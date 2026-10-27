@@ -3,7 +3,7 @@
 import Phaser from 'phaser';
 import { loadGameData, type GameData } from '../core/data';
 import { createCharacter } from '../core/character';
-import { loadSave, newSaveFile, SAVE_KEY, writeSave } from '../core/save';
+import { DEFAULT_KEYBINDS, loadSave, newSaveFile, SAVE_KEY, writeSave } from '../core/save';
 import type { Appearance, HotbarSlot, SaveFile, Settings } from '../core/types';
 import { World, type WorldEvent } from '../core/world';
 import { audio } from '../game/audio/audio';
@@ -17,7 +17,7 @@ import { characterCreateScreen, characterSelectScreen, titleScreen } from './scr
 import { WindowManager, type WindowId } from './windows';
 
 const WINDOW_ACTIONS: Record<string, WindowId> = {
-  inventory: 'inventory', equipment: 'equipment', status: 'status', skills: 'skills', quests: 'quests', worldMap: 'worldMap', settings: 'settings',
+  inventory: 'inventory', equipment: 'equipment', status: 'status', skills: 'skills', quests: 'quests', worldMap: 'worldMap', settings: 'settings', database: 'database',
 };
 
 export class App implements GameHost {
@@ -254,7 +254,7 @@ export class App implements GameHost {
 
   // ---------------------------------------------------------------- hotbar & chat
   keyLabel(action: string): string {
-    const k = this.settings.keybinds[action] ?? '';
+    const k = this.settings.keybinds[action] ?? DEFAULT_KEYBINDS[action] ?? '';
     return k === ' ' ? 'Space' : k.length === 1 ? k.toUpperCase() : k;
   }
 
@@ -305,6 +305,8 @@ export class App implements GameHost {
   private actionForKey(key: string): string | null {
     const k = key.length === 1 ? key.toLowerCase() : key;
     for (const [action, bound] of Object.entries(this.settings.keybinds)) if (bound === k) return action;
+    // Actions added after a save was made fall back to their default key.
+    for (const [action, bound] of Object.entries(DEFAULT_KEYBINDS)) if (bound === k && !(action in this.settings.keybinds)) return action;
     return null;
   }
 
