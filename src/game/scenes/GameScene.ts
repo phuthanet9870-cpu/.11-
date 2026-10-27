@@ -1,5 +1,6 @@
 // Renders the World simulation with Phaser and turns mouse input into world
 // commands. All game rules live in src/core; this scene only draws them.
+import { homunStats } from '../../core/homunculus';
 import Phaser from 'phaser';
 import type { World, WorldEvent, MonsterActor, AnimState } from '../../core/world';
 import { TILE } from '../../core/mapCompiler';
@@ -41,6 +42,7 @@ export class GameScene extends Phaser.Scene {
   private stepTimer = 0;
   private builtMapId = '';
   private builtMap: World['map'] | null = null;
+  private homView: { key: string; sprite: Phaser.GameObjects.Sprite; name: Phaser.GameObjects.Text; rig: Rig; bar: Phaser.GameObjects.Graphics } | null = null;
   private petView: { petId: string; sprite: Phaser.GameObjects.Sprite; name: Phaser.GameObjects.Text; rig: Rig; heart: Phaser.GameObjects.Text } | null = null;
   private tombViews = new Map<string, { img: Phaser.GameObjects.Image; label: Phaser.GameObjects.Text }>();
 
@@ -297,6 +299,7 @@ export class GameScene extends Phaser.Scene {
     this.syncGround();
     this.syncTombstones();
     this.syncPet();
+    this.syncHomun();
     this.drawOverlays();
     this.host.onFrame();
   }
@@ -307,14 +310,14 @@ export class GameScene extends Phaser.Scene {
     switch (e.type) {
       case 'damage': {
         if (!show) break;
-        const tgt = e.targetId === 'player' ? w.player : w.monsters.get(e.targetId);
+        const tgt = e.targetId === 'player' ? w.player : e.targetId === 'homun' ? w.homunActor : w.monsters.get(e.targetId);
         if (!tgt) break;
-        const y = tgt.y - (e.targetId === 'player' ? 64 : ((tgt as MonsterActor).def?.art.h ?? 48)) - 4;
+        const y = tgt.y - (e.targetId === 'player' ? 64 : e.targetId === 'homun' ? 44 : ((tgt as MonsterActor).def?.art.h ?? 48)) - 4;
         if (e.miss) floatText(this, tgt.x, y, 'MISS', '#c8c8d8', 14);
         else if (e.kind === 'heal') floatText(this, tgt.x, y, `+${e.amount}`, '#6fe08a', 16);
         else if (e.kind === 'mp') floatText(this, tgt.x, y, `+${e.amount}`, '#7fb0ff', 14);
         else {
-          const isPlayer = e.targetId === 'player';
+          const isPlayer = e.targetId === 'player' || e.targetId === 'homun';
           const col = isPlayer ? '#ff5a5a' : e.crit ? '#ffd34d' : e.kind === 'magic' ? '#c9a6ff' : e.kind === 'dot' ? '#a9e04a' : '#ffffff';
           floatText(this, tgt.x, y, e.crit ? `${e.amount}!` : `${e.amount}`, col, e.crit ? 24 : isPlayer ? 15 : 17);
           if (e.kind === 'physical') {
@@ -350,9 +353,23 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
+  private mountView: { sprite: Phaser.GameObjects.Sprite; rig: Rig } | null = null;
   private syncPlayer(delta: number) {
     const p = this.world.player;
-    this.player.setPosition(Math.round(p.x), Math.round(p.y)).setDepth(p.y);
+    // Riding: a war-drake (the Fire Drake body, tinted) under the rider, who sits 14 px higher.
+    const riding = !!this.world.char.flags.mounted && this.world.canMount;
+    if (riding && (!this.mountView || !this.mountView.sprite.active)) {
+      const def = this.world.data.monsters.get('fire_drake')!;
+      const rig = monsterRig(this, def.id) ?? proceduralMonRig(ensureMonsterTexture(this, def));
+      this.mountView = { sprite: this.track(this.add.sprite(p.x, p.y, rig.clips.idle.key, 0).setOrigin(rig.originX, rig.originY).setScale(0.85).setTint(0x9ab8ff)), rig };
+    }
+    if (!riding && this.mountView) { this.mountView.sprite.destroy(); this.mountView = null; }
+    if (this.mountView) {
+      const mv = this.mountView, clip = (p.moving ? mv.rig.clips.walk : undefined) ?? mv.rig.clips.idle;
+      const f = clipFrame(clip, p.dir, this.clipStep(clip, 0));
+      mv.sprite.setPosition(Math.round(p.x), Math.round(p.y) + 6).setDepth(p.y - 1).setTexture(clip.key, f.frame).setFlipX(f.flipX);
+    }
+    this.player.setPosition(Math.round(p.x), Math.round(p.y) - (riding ? 14 : 0)).setDepth(p.y);
     const clip = this.playerRig.clips[toCharAnim(p.anim)] ?? this.playerRig.clips.idle;
     const fr = clipFrame(clip, p.dir, this.clipStep(clip, p.animAt));
     this.player.setTexture(clip.key, fr.frame).setFlipX(fr.flipX);
@@ -407,6 +424,34 @@ export class GameScene extends Phaser.Scene {
     for (const [id, v] of this.monViews) {
       if (!w.monsters.has(id)) { v.sprite.destroy(); v.name.destroy(); this.monViews.delete(id); }
     }
+  }
+
+  /** The Alchemist's homunculus: its borrowed monster body, name and a small HP bar. */
+  private syncHomun() {
+    const w = this.world, h = w.char.homunculus, a = w.homunActor;
+    const key = h ? `${h.typeId}:${h.evolved}` : '';
+    if (this.homView && (!h || !a || this.homView.key !== key || !this.homView.sprite.active)) {
+      this.homView.sprite.destroy(); this.homView.name.destroy(); this.homView.bar.destroy(); this.homView = null;
+    }
+    if (!h || !a) return;
+    const def = w.data.monsters.get(w.data.homunculi.get(h.typeId)?.art ?? '');
+    if (!def) return;
+    if (!this.homView) {
+      const rig = monsterRig(this, def.id) ?? proceduralMonRig(ensureMonsterTexture(this, def));
+      const sprite = this.track(this.add.sprite(a.x, a.y, rig.clips.idle.key, 0).setOrigin(rig.originX, rig.originY).setScale(h.evolved ? 1 : 0.8).setTint(0xe8d8ff));
+      const name = this.track(this.add.text(a.x, a.y, '', labelStyle('#d8c8ff')).setOrigin(0.5, 1).setDepth(1e5 + 2).setResolution(2));
+      const bar = this.track(this.add.graphics().setDepth(1e5 + 1));
+      this.homView = { key, sprite, name, rig, bar };
+    }
+    const v = this.homView;
+    v.sprite.setPosition(Math.round(a.x), Math.round(a.y) + 2).setDepth(a.y);
+    const clip = (a.anim === 'attack' && w.time - a.animAt < 400 ? v.rig.clips.attack : a.moving ? v.rig.clips.walk : undefined) ?? v.rig.clips.idle;
+    const fr = clipFrame(clip, a.dir, this.clipStep(clip, a.anim === 'attack' ? a.animAt : 0));
+    v.sprite.setTexture(clip.key, fr.frame).setFlipX(fr.flipX);
+    const top = Math.round(a.y) - 34;
+    v.name.setText(`${h.name} Lv ${h.level}`).setPosition(Math.round(a.x), top);
+    const max = homunStats(w.data, h).maxHp;
+    v.bar.clear().fillStyle(0x1c1622, 1).fillRect(a.x - 16, a.y + 4, 32, 4).fillStyle(0x9a7aff, 1).fillRect(a.x - 16, a.y + 4, Math.round(32 * (h.hp / max)), 4);
   }
 
   /** The player's pet: the monster's own sprite at 70% scale, trailing the player. */

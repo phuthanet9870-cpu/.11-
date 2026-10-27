@@ -276,6 +276,12 @@
    "facing": "down"
   },
   {
+   "npcId": "aurelion_stable",
+   "x": 18,
+   "y": 32,
+   "facing": "down"
+  },
+  {
    "npcId": "guild_dragoon",
    "x": 14,
    "y": 28,

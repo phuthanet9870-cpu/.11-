@@ -199,6 +199,7 @@ export interface ItemDef {
   lure?: string;
   petEgg?: string;
   petFood?: boolean;
+  petAccessory?: string;
   // consumables
   use?: UseEffect[];
   cooldownMs?: number;
@@ -258,9 +259,14 @@ export interface PetDef {
   /** Bonus while the pet is Loyal. */
   loyalBonus: StatModifiers;
   loyalText: string;
+  accessoryItem?: string;
+  /** Evolution: Loyal pet + materials → stronger form (loyal bonus ×1.5). */
+  evolution?: { name: string; materials: { itemId: string; qty: number }[] };
 }
 
-export interface PetState { petId: string; name: string; hunger: number; intimacy: number; nextHungerAt?: number }
+export interface HomunculusState { typeId: string; name: string; level: number; exp: number; hp: number; hunger: number; intimacy: number; alive: boolean; out: boolean; evolved: boolean; nextHungerAt?: number }
+
+export interface PetState { petId: string; name: string; hunger: number; intimacy: number; nextHungerAt?: number; accessory?: string; evolved?: boolean }
 
 // ---------------------------------------------------------------- monsters
 export type AiType = 'passive' | 'aggressive' | 'assist' | 'ranged' | 'magic' | 'elite' | 'boss';
@@ -463,6 +469,10 @@ export type NpcService =
   | { type: 'heal'; cost: number }
   | { type: 'jobChange'; classIds: string[] }
   | { type: 'rebirth' }
+  /** Rent a war-drake mount (Knight line). */
+  | { type: 'stable'; cost: number }
+  /** Rent a pushcart (Merchant line). */
+  | { type: 'cart'; cost: number }
   | { type: 'instance'; instanceId: string }
   | { type: 'refine' }
   | { type: 'forge' }
@@ -556,6 +566,10 @@ export interface CharacterState {
   hotbar: (HotbarSlot | null)[];
   /** The pet that is out (hatched); null/undefined when it is in its egg. */
   pet?: PetState | null;
+  /** Alchemist's homunculus. */
+  homunculus?: HomunculusState | null;
+  /** Merchant pushcart contents (undefined/null = no cart). */
+  cart?: ItemInstance[] | null;
   stats_meta: { kills: number; deaths: number; playTimeMs: number; bossKills: Record<string, number> };
 }
 

@@ -4,7 +4,7 @@
 // lowers it. A Loyal pet gives its owner a bonus. At 0 intimacy it runs away.
 import type { GameData } from './data';
 import type { CharacterState, ItemInstance, PetDef, PetState, StatModifiers } from './types';
-import { addItem, removeByUid, type OpResult } from './inventory';
+import { addItem, removeByUid, removeItem, type OpResult } from './inventory';
 
 export const MAX_HUNGER = 100;
 export const MAX_INTIMACY = 1000;
@@ -46,8 +46,56 @@ export function newPetState(def: PetDef): PetState {
 /** Bonus for the active pet (only when Loyal). */
 export function petMods(data: GameData, c: CharacterState): StatModifiers | null {
   const p = c.pet;
-  if (!p || p.intimacy < LOYAL_AT) return null;
-  return petDef(data, p.petId)?.loyalBonus ?? null;
+  if (!p) return null;
+  const out: StatModifiers = {};
+  const def = petDef(data, p.petId);
+  if (p.intimacy >= LOYAL_AT && def) for (const [k, v] of Object.entries(def.loyalBonus)) {
+    (out as Record<string, unknown>)[k] = typeof v === 'number' ? Math.round(v * (p.evolved ? 1.5 : 1)) : v;
+  }
+  if (p.accessory && p.intimacy >= 750) for (const k of ['str', 'agi', 'vit', 'int', 'dex', 'luk'] as const) out[k] = (out[k] ?? 0) + 1;
+  return Object.keys(out).length ? out : null;
+}
+
+/** Put an accessory on the active pet (it must be that pet's own accessory). */
+export function equipPetAccessory(data: GameData, c: CharacterState, uid: string): OpResult {
+  const p = c.pet;
+  if (!p) return { ok: false, error: 'You have no pet out.' };
+  const inst = c.inventory.find((i) => i.uid === uid);
+  const def = inst && data.items.get(inst.itemId);
+  const pd = petDef(data, p.petId)!;
+  if (!inst || !def?.petAccessory) return { ok: false, error: 'That is not a pet accessory.' };
+  if (def.id !== pd.accessoryItem) return { ok: false, error: `${p.name} can't wear that.` };
+  if (p.accessory) addItem(data, c, p.accessory, 1, { ignoreWeight: true });
+  removeByUid(c, uid, 1);
+  p.accessory = def.id;
+  return { ok: true, message: `${p.name} wears the ${def.name}.` };
+}
+
+export function removePetAccessory(data: GameData, c: CharacterState): OpResult {
+  const p = c.pet;
+  if (!p?.accessory) return { ok: false, error: 'Nothing to remove.' };
+  addItem(data, c, p.accessory, 1, { ignoreWeight: true });
+  p.accessory = undefined;
+  return { ok: true, message: 'Accessory removed.' };
+}
+
+/** Evolve a Loyal pet with its materials: new name, Loyal bonus ×1.5. Intimacy drops back to Neutral. */
+export function evolvePet(data: GameData, c: CharacterState): OpResult {
+  const p = c.pet;
+  if (!p) return { ok: false, error: 'You have no pet out.' };
+  const pd = petDef(data, p.petId)!;
+  if (!pd.evolution) return { ok: false, error: `${p.name} cannot evolve.` };
+  if (p.evolved) return { ok: false, error: 'Already evolved.' };
+  if (p.intimacy < LOYAL_AT) return { ok: false, error: 'Only a Loyal pet can evolve.' };
+  for (const m of pd.evolution.materials) {
+    const have = c.inventory.filter((i) => i.itemId === m.itemId).reduce((a, i) => a + i.qty, 0);
+    if (have < m.qty) return { ok: false, error: `Needs ${m.qty}× ${data.items.get(m.itemId)?.name ?? m.itemId}.` };
+  }
+  for (const m of pd.evolution.materials) removeItem(c, m.itemId, m.qty);
+  p.evolved = true;
+  if (p.name === pd.name) p.name = pd.evolution.name;
+  p.intimacy = 250;
+  return { ok: true, message: `Your pet evolved into ${pd.evolution.name}! (Its Loyal bonus is 50% stronger; earn its loyalty again.)` };
 }
 
 /** Hatch an egg from the inventory. Only one pet can be out. */
@@ -73,7 +121,7 @@ export function returnToEgg(data: GameData, c: CharacterState): OpResult {
   const r = addItem(data, c, pd.eggItem, 1, { ignoreWeight: true });
   if (!r.ok) return r;
   const egg = [...c.inventory].reverse().find((i) => i.itemId === pd.eggItem && !i.pet)!;
-  egg.pet = { petId: p.petId, name: p.name, hunger: p.hunger, intimacy: p.intimacy };
+  egg.pet = { petId: p.petId, name: p.name, hunger: p.hunger, intimacy: p.intimacy, accessory: p.accessory, evolved: p.evolved };
   c.pet = null;
   return { ok: true, message: `${p.name} returned to its egg.` };
 }

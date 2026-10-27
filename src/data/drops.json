@@ -5729,6 +5729,11 @@
     "forge": true
    },
    {
+    "itemId": "sage_stone",
+    "chance": 0.01,
+    "oreHint": true
+   },
+   {
     "itemId": "tempered_sword",
     "chance": 0.02,
     "oreHint": true
@@ -5967,6 +5972,11 @@
     "forge": true
    },
    {
+    "itemId": "sage_stone",
+    "chance": 0.01,
+    "oreHint": true
+   },
+   {
     "itemId": "runed_dagger",
     "chance": 0.02,
     "oreHint": true
@@ -6044,6 +6054,11 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "sage_stone",
+    "chance": 0.01,
+    "oreHint": true
    },
    {
     "itemId": "starforged_dagger",
@@ -6153,6 +6168,11 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "sage_stone",
+    "chance": 0.01,
+    "oreHint": true
    },
    {
     "itemId": "starforged_axe",
@@ -6292,6 +6312,11 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "sage_stone",
+    "chance": 0.01,
+    "oreHint": true
    },
    {
     "itemId": "mythril_dagger",

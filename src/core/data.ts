@@ -15,6 +15,8 @@ import recipesJson from '../data/recipes.json';
 import petsJson from '../data/pets.json';
 import combosJson from '../data/combos.json';
 import instancesJson from '../data/instances.json';
+import homunculiJson from '../data/homunculi.json';
+import type { HomunDef } from './homunculus';
 import questsJson from '../data/quests.json';
 import tilesJson from '../data/tiles.json';
 import tilesetsJson from '../data/tilesets.json';
@@ -46,6 +48,7 @@ export interface GameData {
   pets: Map<string, PetDef>;
   combos: Map<string, ComboDef>;
   instances: Map<string, InstanceDef>;
+  homunculi: Map<string, HomunDef>;
   quests: Map<string, QuestDef>;
   tiles: Map<string, TileDef>;
   tilesets: Map<string, TilesetDef>;
@@ -83,6 +86,7 @@ export function loadGameData(): GameData {
     pets: byId(petsJson as unknown as PetDef[]),
     combos: byId(combosJson as unknown as ComboDef[]),
     instances: byId(instancesJson as unknown as InstanceDef[]),
+    homunculi: byId(homunculiJson as unknown as HomunDef[]),
     quests: byId(questsJson as QuestDef[]),
     tiles: byId(tilesJson.tiles as TileDef[]),
     tilesets: byId(tilesetsJson as unknown as TilesetDef[]),
@@ -132,12 +136,15 @@ export function validateGameData(d: GameData): string[] {
     need(d.maps.has(ins.exitMap), `instance ${ins.id}: exit ${ins.exitMap}`);
     for (const r of ins.reward.items) need(d.items.has(r.itemId), `instance ${ins.id}: reward ${r.itemId}`);
   }
+  for (const hd of d.homunculi.values()) need(d.monsters.has(hd.art), `homunculus ${hd.id}: art ${hd.art}`);
   for (const cb of d.combos.values()) for (const part of cb.parts) need(d.items.has(part), `combo ${cb.id}: ${part}`);
   for (const it of d.items.values()) for (const ac of [it.autocast, it.card?.autocast]) if (ac) need(d.skills.has(ac.skillId), `item ${it.id}: autocast ${ac.skillId}`);
   for (const p of d.pets.values()) {
     need(d.monsters.has(p.monsterId), `pet ${p.id}: monster`);
     for (const i of [p.lureItem, p.eggItem, p.foodItem]) need(d.items.has(i), `pet ${p.id}: item ${i}`);
     need(d.items.get(p.lureItem)?.lure === p.monsterId && d.items.get(p.eggItem)?.petEgg === p.monsterId, `pet ${p.id}: lure/egg link`);
+    if (p.accessoryItem) need(d.items.get(p.accessoryItem)?.petAccessory === p.monsterId, `pet ${p.id}: accessory`);
+    for (const m of p.evolution?.materials ?? []) need(d.items.has(m.itemId), `pet ${p.id}: evolution ${m.itemId}`);
   }
   for (const n of d.npcs.values()) for (const s of n.services) {
     if (s.type === 'shop') need(d.shops.has(s.shopId), `npc ${n.id}: shop ${s.shopId}`);

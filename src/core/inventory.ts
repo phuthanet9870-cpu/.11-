@@ -277,6 +277,41 @@ export function sellItem(data: GameData, c: CharacterState, uid: string, qty: nu
 }
 
 // ------------------------------------------------------------------ storage
+// ------------------------------------------------------------------ pushcart (Merchant line)
+export const CART_SLOTS = 100;
+export const CART_WEIGHT = 8000;
+export function cartWeight(data: GameData, c: CharacterState): number {
+  return (c.cart ?? []).reduce((a, i) => a + itemDef(data, i.itemId).weight * i.qty, 0);
+}
+/** Move items into the cart: they no longer count toward your own weight. */
+export function putInCart(data: GameData, c: CharacterState, uid: string, qty: number): OpResult {
+  if (!c.cart) return fail('You have no pushcart.');
+  const inst = findInstance(c, uid);
+  if (!inst) return fail('Item not found.');
+  if (inst.locked) return fail('This item is locked.');
+  if (!Number.isInteger(qty) || qty <= 0 || qty > inst.qty) return fail('Invalid quantity.');
+  const def = itemDef(data, inst.itemId);
+  if (def.type === 'quest') return fail('Quest items cannot go in the cart.');
+  if (cartWeight(data, c) + def.weight * qty > CART_WEIGHT) return fail(`The cart can hold ${CART_WEIGHT} weight.`);
+  const need = def.stackable ? slotsNeeded(data, c.cart, inst.itemId, qty) : 1;
+  if (c.cart.length + need > CART_SLOTS) return fail('The cart is full.');
+  if (def.stackable) { removeByUid(c, uid, qty); pushItems(data, c.cart, inst.itemId, qty, inst.bound); }
+  else { c.inventory.splice(c.inventory.indexOf(inst), 1); c.cart.push(inst); }
+  return ok(`Put ${def.name} in the cart.`);
+}
+export function takeFromCart(data: GameData, c: CharacterState, uid: string, qty: number, weightLimit: number): OpResult {
+  if (!c.cart) return fail('You have no pushcart.');
+  const inst = c.cart.find((i) => i.uid === uid);
+  if (!inst) return fail('Item not found.');
+  if (!Number.isInteger(qty) || qty <= 0 || qty > inst.qty) return fail('Invalid quantity.');
+  const def = itemDef(data, inst.itemId);
+  const check = canAddItem(data, c, inst.itemId, qty, { weightLimit });
+  if (!check.ok) return check;
+  if (def.stackable) { inst.qty -= qty; if (inst.qty <= 0) c.cart.splice(c.cart.indexOf(inst), 1); pushItems(data, c.inventory, inst.itemId, qty, inst.bound); }
+  else { c.cart.splice(c.cart.indexOf(inst), 1); c.inventory.push(inst); }
+  return ok(`Took ${def.name} from the cart.`);
+}
+
 export function depositToStorage(data: GameData, c: CharacterState, uid: string, qty: number): OpResult {
   const inst = findInstance(c, uid);
   if (!inst) return fail('Item not found.');

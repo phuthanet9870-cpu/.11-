@@ -1256,6 +1256,10 @@
     "classIds": [
      "merchant"
     ]
+   },
+   {
+    "type": "cart",
+    "cost": 800
    }
   ],
   "generated": true
@@ -1510,6 +1514,34 @@
       "cost": 600
      }
     ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "aurelion_stable",
+  "name": "Stablemaster Rook",
+  "title": "War-drake Stable",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "bob",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "apron"
+  },
+  "greeting": [
+   "Knights ride war-drakes: faster, and they carry 1,000 more weight, but you swing slower until you train Drake Riding."
+  ],
+  "services": [
+   {
+    "type": "stable",
+    "cost": 2500
    }
   ],
   "generated": true
@@ -1840,6 +1872,10 @@
     "classIds": [
      "artisan"
     ]
+   },
+   {
+    "type": "cart",
+    "cost": 800
    }
   ],
   "generated": true
@@ -1870,6 +1906,15 @@
     "classIds": [
      "alchemist"
     ]
+   },
+   {
+    "type": "cart",
+    "cost": 800
+   },
+   {
+    "type": "shop",
+    "shopId": "tidewatch_alchemy",
+    "label": "Alchemy supplies"
    }
   ],
   "generated": true

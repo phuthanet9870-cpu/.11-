@@ -297,7 +297,7 @@ function buildTown(s: MapSpec): Built {
   }
   for (const [gi, g] of (s.guild ?? []).entries()) {
     const [nm, tt, style] = GUILD_NPC[g];
-    npcs.push(npc(`guild_${g}`, nm, tt, hash(g), style, [{ type: 'jobChange', classIds: [g] }],
+    npcs.push(npc(`guild_${g}`, nm, tt, hash(g), style, [{ type: 'jobChange', classIds: [g] }, ...(g === 'merchant' ? [{ type: 'cart', cost: 800 }] : [])],
       [`So you wish to walk the path of the ${title(g)}? Prove you've reached Job Level 10 as a Novice and I will accept you.`]));
     places.push([`guild_${g}`, 38 - gi * 4, 32]);
   }
@@ -662,15 +662,20 @@ export async function main() {
     const lureId = `lure_${m.id}`, eggId = `egg_${m.id}`;
     items.push({ id: lureId, name: `${m.name} Lure`, type: 'misc', rarity: 'uncommon', description: `Use it on a ${m.name} to try to tame it. Weaker monsters and higher LUK make it easier. Consumed either way.`, weight: 2, price: 600 + m.level * 60, stackable: true, maxStack: 99, lure: m.id, icon: { shape: 'horn', color: '#e8c070', accent: foodCol }, generated: true });
     items.push({ id: eggId, name: `${m.name} Egg`, type: 'misc', rarity: 'rare', description: `A pet egg. Use it to hatch your ${m.name}. Loyal bonus: ${bonusText}.`, weight: 5, price: 0, stackable: false, maxStack: 1, petEgg: m.id, icon: { shape: 'gem', color: '#fff6e0', accent: foodCol }, generated: true });
+    const accId = `acc_${m.id}`;
+    items.push({ id: accId, name: `${m.name} Ribbon`, type: 'misc', rarity: 'uncommon', description: `An accessory for a pet ${m.name}. While worn and the pet is Cordial or better: +1 to every stat.`, weight: 2, price: 1500 + m.level * 40, stackable: false, maxStack: 1, petAccessory: m.id, icon: { shape: 'hat', color: foodCol }, generated: true });
+    const mat = drops.find((d: J) => d.id === m.dropTableId)?.entries.map((e: J) => items.find((x: J) => x.id === e.itemId)).find((x: J) => x?.type === 'material' && !/ore|shard|starsteel|moonstone/.test(x.id));
     pets.push({
-      id: `pet_${m.id}`, monsterId: m.id, name: m.name, lureItem: lureId, eggItem: eggId, foodItem: foodId,
+      id: `pet_${m.id}`, monsterId: m.id, name: m.name, lureItem: lureId, eggItem: eggId, foodItem: foodId, accessoryItem: accId,
+      evolution: { name: `Elder ${m.name}`, materials: [...(mat ? [{ itemId: mat.id, qty: 10 }] : []), { itemId: 'spirit_chime', qty: 1 }] },
       captureRate: Math.max(500, 2500 - m.level * 40), fullness: m.level < 20 ? 3 : m.level < 40 ? 4 : 5, hungerTickMs: 60000,
       intimacyStart: 250, intimacyFed: m.level < 20 ? 50 : 30, intimacyOverfed: 100, intimacyHungry: 5, intimacyOwnerDie: 20,
       loyalBonus: bonus, loyalText: bonusText, generated: true,
     });
   }
+  items.push({ id: 'spirit_chime', name: 'Spirit Chime', type: 'material', rarity: 'rare', description: 'A chime that awakens a pet\'s hidden strength. Used (with monster materials) to evolve a Loyal pet.', weight: 2, price: 8000, stackable: true, maxStack: 99, icon: { shape: 'amulet', color: '#ffe9a8' }, generated: true });
   write('pets.json', pets);
-  shops.push({ id: 'fernhollow_pets', name: 'Pet Keeper Supplies', items: [...foodsUsed, ...pets.map((p) => p.lureItem)], generated: true });
+  shops.push({ id: 'fernhollow_pets', name: 'Pet Keeper Supplies', items: [...foodsUsed, ...pets.map((p) => p.lureItem), ...pets.map((p) => p.accessoryItem), 'spirit_chime'], generated: true });
   npcs.push(npc('fernhollow_petkeeper', 'Pet Keeper Lumi', 'Pet Keeper', 91, 'hood', [{ type: 'shop', shopId: 'fernhollow_pets', label: 'Lures & pet food' }],
     ['Tame a monster with its lure: weaken it first, the lower its HP the better your chance. Feed your pet when it is hungry — never when it is full — and it will grow Loyal.']));
   built.find((b) => b.map.id === 'fernhollow')!.map.npcs.push({ npcId: 'fernhollow_petkeeper', x: 31, y: 21, facing: 'down' });
@@ -701,13 +706,27 @@ export async function main() {
   wb.region = REG.wb; hand.sunny_meadow.region = REG.wb; hand.whispering_forest.region = REG.wb;
   wb.worldMapPos = { x: 0.19, y: 0.6 }; hand.sunny_meadow.worldMapPos = { x: 0.29, y: 0.59 }; hand.whispering_forest.worldMapPos = { x: 0.31, y: 0.43 };
 
+  // ---------------------------------------------------------------- homunculus supplies, stable, carts
+  for (const [id, name, type, desc, price, shape, col] of [
+    ['homun_embryo', 'Homunculus Embryo', 'consumable', 'An embryo in a flask. An Alchemist with Bioethics can bring it to life (random type).', 5000, 'flask', '#c9a6ff'],
+    ['homun_ration', 'Homunculus Ration', 'consumable', 'Food for a homunculus. Feed it when it is hungry; overfeeding upsets it.', 60, 'apple', '#b0e070'],
+    ['homun_revive', 'Revival Tonic', 'consumable', 'Brings a fallen homunculus back with 30% HP.', 1500, 'potion', '#ff8ad8'],
+  ] as const) items.push({ id, name, type, rarity: 'uncommon', description: desc, weight: 3, price, stackable: true, maxStack: 99, icon: { shape, color: col }, generated: true });
+  items.push({ id: 'sage_stone', name: 'Stone of Sages', type: 'material', rarity: 'epic', description: 'A philosopher\'s stone. Evolves a Lv 50 Loyal homunculus.', weight: 5, price: 50000, stackable: true, maxStack: 99, icon: { shape: 'gem', color: '#ff5a8a' }, generated: true });
+  for (const m of monsters) { const t = drops.find((d: J) => d.id === m.dropTableId); if (t && m.elite && m.level >= 40) t.entries.push({ itemId: 'sage_stone', chance: 0.01, oreHint: true }); }
+  shops.push({ id: 'tidewatch_alchemy', name: 'Alchemy Supplies', items: ['homun_embryo', 'homun_ration', 'homun_revive'], generated: true });
+  npcs.push(npc('aurelion_stable', 'Stablemaster Rook', 'War-drake Stable', 5151, 'apron', [{ type: 'stable', cost: 2500 }],
+    ['Knights ride war-drakes: faster, and they carry 1,000 more weight, but you swing slower until you train Drake Riding.']));
+  built.find((b) => b.map.id === 'aurelion')!.map.npcs.push({ npcId: 'aurelion_stable', x: 18, y: 32, facing: 'down' });
+
   // ---------------------------------------------------------------- second-job masters, Oracle of Rebirth, gear placement
   const classes = read('classes.json');
   const perTown: Record<string, number> = {};
   for (const cls of classes.filter((c: J) => c.guildMaster)) {
     const g = cls.guildMaster, idx = (perTown[g.town] = (perTown[g.town] ?? 0) + 1) - 1;
     const parentName = classes.find((c: J) => c.id === cls.parent)?.name ?? cls.parent;
-    npcs.push(npc(`guild_${cls.id}`, g.name, g.title, hash(cls.id), cls.outfit.style, [{ type: 'jobChange', classIds: [cls.id] }],
+    npcs.push(npc(`guild_${cls.id}`, g.name, g.title, hash(cls.id), cls.outfit.style, [{ type: 'jobChange', classIds: [cls.id] },
+      ...(cls.parent === 'merchant' ? [{ type: 'cart', cost: 800 }] : []), ...(cls.id === 'alchemist' ? [{ type: 'shop', shopId: 'tidewatch_alchemy', label: 'Alchemy supplies' }] : [])],
       [`${cls.description} Come back as a ${parentName} of Job Level ${cls.requirements.jobLevel} and I will promote you.`]));
     built.find((b) => b.map.id === g.town)!.map.npcs.push({ npcId: `guild_${cls.id}`, x: [14, 18, 26, 30][idx], y: 28, facing: 'down' });
   }

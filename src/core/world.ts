@@ -8,11 +8,14 @@ import {
 } from './combat';
 import { addExperience, computeDerivedStats, expToNextBase, mergeMods, specialMods } from './formulas';
 import {
-  addItem, buyItem, canAddItem, canDiscard, depositToStorage, equipItem, findInstance, inventoryWeight,
+  addItem, buyItem, putInCart, takeFromCart, canAddItem, canDiscard, depositToStorage, equipItem, findInstance, inventoryWeight,
   removeByUid, sellItem, sortInventory, toggleLock, unequipItem, withdrawFromStorage, type OpResult,
 } from './inventory';
 import { allocateStat, changeJob, learnSkill, rebirth, resetSkills, resetStats } from './character';
 import { refineItem, type RefineResult } from './refine';
+import { classLineage } from './lineage';
+import { addHomunExp, createHomunculus, evolveHomun, feedHomun, homunStats, releaseHomun, reviveHomun, tickHomun } from './homunculus';
+import { equipPetAccessory, evolvePet, removePetAccessory } from './pets';
 import { captureChance, feedPet, hatchEgg, petForMonster, petMods, petOwnerDied, renamePet, returnToEgg, tickPet, newPetState } from './pets';
 import { compoundCard } from './cards';
 import { enchantAdd, enchantReroll, rollDropOptions } from './options';
@@ -240,6 +243,7 @@ export class World {
     character.mp = Math.min(Math.max(0, character.mp), this.stats.maxMp);
     refreshAllQuests(data, character);
     if (character.pet) character.pet.nextHungerAt = undefined;
+    if (character.homunculus) character.homunculus.nextHungerAt = undefined;
     const pos = character.position;
     this.enterMap(pos.mapId, { x: pos.x, y: pos.y });
   }
@@ -270,6 +274,7 @@ export class World {
     const mods: StatModifiers[] = this.player.buffs.map((b) => b.mods);
     const pet = petMods(this.data, this.char);
     if (pet) mods.push(pet);
+    if (this.char.flags.mounted && this.canMount) mods.push({ moveSpeedPct: 25, weightLimit: 1000, aspdPct: -40 + 8 * (this.char.skills.drake_riding ?? 0) });
     for (const s of this.player.statuses) {
       const def = this.data.statuses.get(s.id);
       if (def?.mods) mods.push(def.mods);
@@ -312,6 +317,7 @@ export class World {
     this.map = map;
     this.monsters.clear();
     this.petActor = null;
+    this.homunActor = null;
     this.groundItems.clear();
     this.zones = [];
     this.telegraphs = [];
@@ -432,6 +438,7 @@ export class World {
     this.updatePending();
     this.updateGroundItems();
     this.updatePet(dt);
+    this.updateHomun(dt);
     this.updateInstance();
     this.telegraphs = this.telegraphs.filter((t) => t.endsAt > this.time - 200);
     if (this.statsDirty) this.recomputeStats();
@@ -524,6 +531,125 @@ export class World {
     this.afterInventoryChange();
   }
 
+  // ---------------------------------------------------------------- homunculus
+  homunActor: { x: number; y: number; dir: Direction; moving: boolean; attackReadyAt: number; skillReadyAt: number; targetId: string | null; animAt: number; anim: 'idle' | 'attack' } | null = null;
+
+  homunProfile(): CombatProfile {
+    const st = homunStats(this.data, this.char.homunculus!);
+    const lv = this.char.homunculus!.level;
+    return {
+      level: lv, patk: st.atk, matk: st.matk, pdef: st.def, mdef: Math.round(st.def / 2), hit: st.hit + lv, flee: st.flee + lv, crit: 2, critDmg: 140,
+      element: st.element, elementLevel: 1, elementDamagePct: {}, elementResistPct: {}, race: 'formless', size: 'small',
+      raceDamagePct: {}, sizeDamagePct: {}, raceResistPct: {}, perfectDodge: 0, weaponType: 'monster',
+    };
+  }
+
+  private damageHomun(amount: number, crit: boolean) {
+    const h = this.char.homunculus;
+    if (!h?.alive) return;
+    h.hp = Math.max(0, h.hp - amount);
+    this.emit({ type: 'damage', targetId: 'homun', amount, crit, miss: false, kind: 'physical' });
+    if (h.hp <= 0) {
+      h.alive = false; h.out = false; this.homunActor = null;
+      h.intimacy = Math.max(0, h.intimacy - 20);
+      for (const m of this.monsters.values()) delete m.threat.homun;
+      this.message(`${h.name} has fallen! Use a Revival Tonic to bring it back.`, 'error');
+    }
+  }
+
+  private updateHomun(dt: number) {
+    const c = this.char, h = c.homunculus;
+    const ev = tickHomun(c, this.time);
+    if (ev === 'left') { this.message('Your homunculus was starved of affection and left you...', 'error'); this.homunActor = null; return; }
+    if (ev === 'hungry' && h) this.message(`${h.name} is hungry.`);
+    if (!h || !h.alive || !h.out || this.player.dead) { this.homunActor = null; return; }
+    const st = homunStats(this.data, h);
+    const p = this.player;
+    const a = (this.homunActor ??= { x: p.x + 24, y: p.y + 8, dir: p.dir, moving: false, attackReadyAt: 0, skillReadyAt: this.time + 2000, targetId: null, animAt: 0, anim: 'idle' });
+    // Natural regen out of combat.
+    if (this.time - p.lastCombatAt > 4000 && h.hp < st.maxHp) h.hp = Math.min(st.maxHp, h.hp + (st.maxHp * 0.02 * dt) / 1000);
+    // Pick a target: the owner's target, else a monster attacking the owner.
+    let target = a.targetId ? this.monsters.get(a.targetId) : undefined;
+    if (!target || target.dead || dist(target.x, target.y, p.x, p.y) > 450) {
+      target = this.currentTarget && !this.currentTarget.dead ? this.currentTarget
+        : [...this.monsters.values()].find((m) => !m.dead && m.targetId === 'player' && dist(m.x, m.y, p.x, p.y) < 260);
+      a.targetId = target?.id ?? null;
+    }
+    const speed = this.stats.moveSpeed * 1.1;
+    const step = (gx: number, gy: number, stop: number) => {
+      const dx = gx - a.x, dy = gy - a.y, d = Math.hypot(dx, dy);
+      if (d > 600) { a.x = gx; a.y = gy; a.moving = false; return true; }
+      a.moving = d > stop;
+      if (!a.moving) return true;
+      const s = Math.min(d - stop, (speed * dt) / 1000);
+      a.x += (dx / d) * s; a.y += (dy / d) * s; a.dir = dirFromVector(dx, dy, a.dir);
+      return false;
+    };
+    const d = this.data.homunculi.get(h.typeId)!;
+    // Support skills work without a target.
+    if (this.time >= a.skillReadyAt && d.skill.kind === 'heal' && c.hp < this.stats.maxHp * 0.6) {
+      const heal = Math.round((this.stats.maxHp * d.skill.value) / 100 + st.matk);
+      const healed = Math.min(heal, this.stats.maxHp - c.hp);
+      c.hp += healed; p.hp = c.hp;
+      this.emit({ type: 'damage', targetId: 'player', amount: healed, crit: false, miss: false, kind: 'heal' });
+      this.emit({ type: 'fx', fx: 'heal', x: p.x, y: p.y, targetId: 'player', offsetY: 0 });
+      a.skillReadyAt = this.time + d.skill.cooldownMs;
+    }
+    if (this.time >= a.skillReadyAt && d.skill.kind === 'taunt') {
+      const near = [...this.monsters.values()].filter((m) => !m.dead && m.targetId === 'player' && dist(m.x, m.y, a.x, a.y) <= d.skill.value);
+      if (near.length) {
+        for (const m of near) m.threat.homun = (m.threat.player ?? 0) + 500;
+        this.emit({ type: 'fx', fx: 'taunt', x: a.x, y: a.y - 20 });
+        a.skillReadyAt = this.time + d.skill.cooldownMs;
+      }
+    }
+    if (!target) { step(p.x + 28, p.y + 10, 30); return; }
+    const range = st.range + target.halfW;
+    if (dist(a.x, a.y, target.x, target.y) > range) { step(target.x, target.y, range - 6); return; }
+    a.moving = false;
+    a.dir = dirFromVector(target.x - a.x, target.y - a.y, a.dir);
+    if (this.time < a.attackReadyAt) return;
+    a.attackReadyAt = this.time + st.aspdMs;
+    a.anim = 'attack'; a.animAt = this.time;
+    const hit = (mult: number, element: Element, kind: 'physical' | 'magic') => {
+      if (target!.dead) return;
+      const res = resolveAttack(this.data, this.rng, this.homunProfile(), this.monsterProfile(target!), { kind, multiplier: mult, element });
+      if (!res.hit) { this.emit({ type: 'damage', targetId: target!.id, amount: 0, crit: false, miss: true, kind }); return; }
+      this.damageMonster(target!, res.damage, kind, element, res.crit, false, false, true);
+    };
+    const kind = st.magic ? 'magic' : 'physical';
+    if (st.magic) this.emit({ type: 'projectile', fromX: a.x, fromY: a.y - 18, toX: target.x, toY: target.y - 14, durationMs: 200, fx: 'magic_orb', color: '#c9a6ff' });
+    if (this.time >= a.skillReadyAt && (d.skill.kind === 'flurry' || d.skill.kind === 'bolt')) {
+      a.skillReadyAt = this.time + d.skill.cooldownMs;
+      if (d.skill.kind === 'flurry') { for (let i = 0; i < d.skill.value; i++) this.schedule(i * 140, () => hit(0.8, st.element, 'physical')); }
+      else { const els: Element[] = ['fire', 'water', 'wind', 'earth', 'shadow']; hit(d.skill.value, els[Math.floor(this.rng.next() * els.length)], 'magic'); }
+      this.emit({ type: 'message', text: `${h.name}: ${d.skill.name}!`, channel: 'combat' });
+      return;
+    }
+    hit(1, st.element, kind);
+  }
+
+  createHomunCmd(): OpResult {
+    const r = createHomunculus(this.data, this.char, () => this.rng.next());
+    if (!r.ok) return this.err(r.error);
+    this.message(r.message!, 'quest'); this.afterInventoryChange();
+    return r;
+  }
+  homunCallRest(): OpResult {
+    const h = this.char.homunculus;
+    if (!h) return this.err('You have no homunculus.');
+    if (!h.alive) return this.err(`${h.name} has fallen. Revive it first.`);
+    if (h.out && h.hp < homunStats(this.data, h).maxHp * 0.8) return this.err(`${h.name} needs 80% HP to rest (as in RO's Vaporize).`);
+    h.out = !h.out;
+    if (!h.out) this.homunActor = null;
+    this.message(h.out ? `${h.name} is by your side.` : `${h.name} is resting.`);
+    return { ok: true };
+  }
+  homunFeedCmd(): OpResult { const r = feedHomun(this.char); if (!r.ok) return this.err(r.error); this.message(r.message!); this.afterInventoryChange(); return r; }
+  homunReviveCmd(): OpResult { const r = reviveHomun(this.data, this.char); if (!r.ok) return this.err(r.error); this.message(r.message!); this.afterInventoryChange(); return r; }
+  homunEvolveCmd(): OpResult { const r = evolveHomun(this.data, this.char); if (!r.ok) return this.err(r.error); this.message(r.message!, 'quest'); this.emit({ type: 'fx', fx: 'job_change', x: this.homunActor?.x ?? this.player.x, y: this.homunActor?.y ?? this.player.y }); this.afterInventoryChange(); return r; }
+  homunReleaseCmd(): OpResult { const r = releaseHomun(this.data, this.char); if (!r.ok) return this.err(r.error); this.homunActor = null; this.message(r.message!); this.afterInventoryChange(); return r; }
+
   // ---------------------------------------------------------------- pets
   /** Use a lure on a monster: consumes the lure and rolls the capture chance. */
   tamePet(lureUid: string, targetId?: string): OpResult {
@@ -586,6 +712,21 @@ export class World {
     if (this.petActor) this.emit({ type: 'fx', fx: r.delta! < 0 ? 'spawn' : 'heal', x: this.petActor.x, y: this.petActor.y - 10 });
     if (wasLoyal !== !!petMods(this.data, this.char)) { this.invalidateStats(); if (!wasLoyal) this.message(`${this.char.pet!.name} is now Loyal! Its bonus is active.`, 'loot'); }
     this.afterInventoryChange();
+    return r;
+  }
+
+  petAccessoryCmd(uid?: string): OpResult {
+    const r = uid ? equipPetAccessory(this.data, this.char, uid) : removePetAccessory(this.data, this.char);
+    if (!r.ok) return this.err(r.error);
+    this.message(r.message!); this.invalidateStats(); this.afterInventoryChange();
+    return r;
+  }
+
+  evolvePetCmd(): OpResult {
+    const r = evolvePet(this.data, this.char);
+    if (!r.ok) return this.err(r.error);
+    this.message(r.message!, 'quest'); this.petActor = null; this.invalidateStats(); this.afterInventoryChange();
+    if (this.player) this.emit({ type: 'fx', fx: 'job_change', x: this.player.x - 24, y: this.player.y });
     return r;
   }
 
@@ -996,10 +1137,12 @@ export class World {
   }
 
   // ---------------------------------------------------------------- damage
-  damageMonster(m: MonsterActor, amount: number, kind: 'physical' | 'magic' | 'dot', element: Element, crit: boolean, _fromZone: boolean, silentAggro = false) {
+  damageMonster(m: MonsterActor, amount: number, kind: 'physical' | 'magic' | 'dot', element: Element, crit: boolean, _fromZone: boolean, silentAggro = false, fromHomun = false) {
     if (m.dead) return;
     m.hp = Math.max(0, m.hp - amount);
+    // The owner gets the kill credit for homunculus damage (as in RO); the homunculus also draws threat.
     m.damageBy.player = (m.damageBy.player ?? 0) + amount;
+    if (fromHomun) { m.damageBy.homun = (m.damageBy.homun ?? 0) + amount; m.threat.homun = (m.threat.homun ?? 0) + amount; }
     this.emit({ type: 'damage', targetId: m.id, amount, crit, miss: false, kind: kind === 'dot' ? 'dot' : kind, element });
     // Sleep/freeze break on damage.
     m.statuses = m.statuses.filter((s) => !this.data.statuses.get(s.id)?.breaksOnDamage || kind === 'dot');
@@ -1113,6 +1256,11 @@ export class World {
     if (contributed) {
       this.char.stats_meta.kills++;
       this.grantExp(m.def.exp, m.def.jobExp, m.def.name);
+      const hm = this.char.homunculus;
+      if (hm?.alive && (m.damageBy.homun ?? 0) > 0) {
+        const lv = addHomunExp(this.data, hm, Math.ceil(m.def.exp * 0.5));
+        if (lv) this.message(`${hm.name} reached Lv ${hm.level}!`, 'quest');
+      }
       this.rollDrops(m);
       for (const l of m.loot ?? []) { const g = this.dropToGround(l.itemId, l.qty, m.x + this.rng.range(-16, 16), m.y + this.rng.range(-10, 10), true); if (l.options) g.options = l.options; if (this.autoLoot) this.pickup(g.id, true); }
       m.loot = [];
@@ -1412,6 +1560,14 @@ export class World {
     m.animAt = this.time;
     const isMagic = m.def.aiType === 'magic';
     const opts: AttackOptions = { kind: isMagic ? 'magic' : 'physical', multiplier: 1, element: m.def.projectile?.element ?? (isMagic ? m.def.element : 'neutral') };
+    // A homunculus that holds more threat than its owner and stands in reach takes the hit instead.
+    const ha = this.homunActor, hs = this.char.homunculus;
+    if (ha && hs?.alive && (m.threat.homun ?? 0) > (m.threat.player ?? 0) && dist(m.x, m.y, ha.x, ha.y) <= m.def.attackRange + m.halfW + 24) {
+      const res = resolveAttack(this.data, this.rng, this.monsterProfile(m), this.homunProfile(), opts);
+      if (!res.hit) { this.emit({ type: 'damage', targetId: 'homun', amount: 0, crit: false, miss: true, kind: 'physical' }); return; }
+      this.damageHomun(res.damage, res.crit);
+      return;
+    }
     const resolve = () => {
       if (m.dead || p.dead) return;
       const res = resolveAttack(this.data, this.rng, this.monsterProfile(m), this.playerProfile(), opts);
@@ -1981,8 +2137,12 @@ export class World {
     const def = this.data.items.get(inst.itemId)!;
     if (def.type === 'equipment') return this.equip(uid);
     if (def.lure) return this.tamePet(uid);
+    if (def.id === 'homun_embryo') return this.createHomunCmd();
+    if (def.id === 'homun_ration') return this.homunFeedCmd();
+    if (def.id === 'homun_revive') return this.homunReviveCmd();
     if (def.petEgg) return this.hatchPet(uid);
     if (def.petFood) return this.feedPetCmd();
+    if (def.petAccessory) return this.petAccessoryCmd(uid);
     if (def.type !== 'consumable' || !def.use) return this.err(`${def.name} cannot be used.`);
     if (p.dead) return this.err('You are dead.');
     if ((p.itemCooldowns[def.id] ?? 0) > this.time) return this.err('Wait a moment before using that again.');
@@ -2160,6 +2320,40 @@ export class World {
     this.emit({ type: 'sound', key: 'level_up' });
     return r;
   }
+
+  // ---------------------------------------------------------------- mount & cart
+  get canMount(): boolean { return classLineage(this.data, this.char.classId).includes('knight'); }
+  rentMount(): OpResult {
+    let cost = 0;
+    if (!this.nearService((s) => s.type === 'stable' && ((cost = s.cost), true))) return this.err('Talk to the stable master.');
+    if (!this.canMount) return this.err('Only the Knight line can ride war-drakes.');
+    if (this.char.flags.mountOwned) return this.err('You already have a war-drake.');
+    if (this.char.luma < cost) return this.err(`Needs ${cost} Luma.`);
+    this.char.luma -= cost; this.char.flags.mountOwned = true;
+    this.message('You now own a war-drake. Mount or dismount from the Status window.', 'quest');
+    return this.toggleMount();
+  }
+  /** Ride: +25% move speed and +1000 weight, but −40% attack speed (Drake Riding gives 8% back per level). */
+  toggleMount(): OpResult {
+    if (!this.char.flags.mountOwned || !this.canMount) return this.err('You have no mount.');
+    this.char.flags.mounted = !this.char.flags.mounted;
+    this.invalidateStats();
+    this.message(this.char.flags.mounted ? 'You mount your war-drake.' : 'You dismount.');
+    return { ok: true };
+  }
+  get canCart(): boolean { return classLineage(this.data, this.char.classId).includes('merchant'); }
+  rentCart(): OpResult {
+    let cost = 0;
+    if (!this.nearService((s) => s.type === 'cart' && ((cost = s.cost), true))) return this.err('Talk to the Merchant guild.');
+    if (!this.canCart) return this.err('Only the Merchant line can push a cart.');
+    if (this.char.cart) return this.err('You already have a pushcart.');
+    if (this.char.luma < cost) return this.err(`Needs ${cost} Luma.`);
+    this.char.luma -= cost; this.char.cart = [];
+    this.message('You rent a pushcart: 100 slots, 8,000 weight. Open it from the Items window.', 'quest');
+    return { ok: true };
+  }
+  cartPut(uid: string, qty: number): OpResult { return this.wrap(putInCart(this.data, this.char, uid, qty)); }
+  cartTake(uid: string, qty: number): OpResult { return this.wrap(takeFromCart(this.data, this.char, uid, qty, this.weightLimit)); }
 
   /** Paid teleport at a warp-service NPC. */
   warpTo(mapId: string): OpResult {

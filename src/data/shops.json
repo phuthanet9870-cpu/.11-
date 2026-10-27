@@ -458,7 +458,32 @@
    "lure_grotto_crab",
    "lure_oasis_crab",
    "lure_mirage_wisp",
-   "lure_tomb_bat"
+   "lure_tomb_bat",
+   "acc_leaf_slime",
+   "acc_clover_slime",
+   "acc_forest_goblin",
+   "acc_thorn_wolf",
+   "acc_road_goblin",
+   "acc_crypt_bat",
+   "acc_sea_slime",
+   "acc_reef_gull",
+   "acc_bramble_hornet",
+   "acc_arcane_wisp",
+   "acc_grotto_crab",
+   "acc_oasis_crab",
+   "acc_mirage_wisp",
+   "acc_tomb_bat",
+   "spirit_chime"
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_alchemy",
+  "name": "Alchemy Supplies",
+  "items": [
+   "homun_embryo",
+   "homun_ration",
+   "homun_revive"
   ],
   "generated": true
  }

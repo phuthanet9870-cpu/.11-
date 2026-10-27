@@ -10,7 +10,7 @@ export const DEFAULT_KEYBINDS: Record<string, string> = {
   hotbar1: '1', hotbar2: '2', hotbar3: '3', hotbar4: '4', hotbar5: '5',
   hotbar6: '6', hotbar7: '7', hotbar8: '8', hotbar9: '9', hotbar10: '0',
   inventory: 'i', equipment: 'e', status: 'c', skills: 'k', quests: 'q',
-  worldMap: 'm', settings: 'o', database: 'b', pet: 'p', pickup: 'z', interact: 'f', cancel: 'Escape',
+  worldMap: 'm', settings: 'o', database: 'b', pet: 'p', homun: 'h', cart: 'v', pickup: 'z', interact: 'f', cancel: 'Escape',
   up: 'w', down: 's', left: 'a', right: 'd',
 };
 

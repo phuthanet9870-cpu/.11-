@@ -1,0 +1,18 @@
+[
+  { "id": "sylph", "name": "Sylph", "role": "Healer", "description": "A gentle wind spirit. Heals you when your HP falls below 60%.", "art": "mana_wisp",
+    "base": { "hp": 150, "atk": 12, "matk": 22, "def": 5, "flee": 12, "hit": 20, "aspdMs": 1100, "range": 180, "magic": true, "element": "wind" },
+    "growth": { "hp": 32, "atk": 2, "matk": 4, "def": 1, "flee": 1, "hit": 1 },
+    "skill": { "kind": "heal", "name": "Healing Breeze", "cooldownMs": 12000, "value": 12 } },
+  { "id": "golemite", "name": "Golemite", "role": "Tank", "description": "A stubborn little stone golem. Taunts monsters that attack you so they hit it instead.", "art": "pebble_golem",
+    "base": { "hp": 320, "atk": 18, "matk": 4, "def": 16, "flee": 4, "hit": 18, "aspdMs": 1300, "range": 48, "magic": false, "element": "earth" },
+    "growth": { "hp": 58, "atk": 3, "matk": 0, "def": 2.5, "flee": 0.5, "hit": 1 },
+    "skill": { "kind": "taunt", "name": "Stone Challenge", "cooldownMs": 12000, "value": 220 } },
+  { "id": "fawnling", "name": "Fawnling", "role": "Striker", "description": "A quick winged fawn that strikes several times in a row.", "art": "moon_hare",
+    "base": { "hp": 180, "atk": 22, "matk": 4, "def": 6, "flee": 22, "hit": 26, "aspdMs": 700, "range": 48, "magic": false, "element": "neutral" },
+    "growth": { "hp": 30, "atk": 4, "matk": 0, "def": 1, "flee": 1.6, "hit": 1.5 },
+    "skill": { "kind": "flurry", "name": "Hoof Flurry", "cooldownMs": 8000, "value": 3 } },
+  { "id": "gloom", "name": "Gloom", "role": "Caster", "description": "A floating lantern of dark fire that casts bolts of random elements.", "art": "lantern_ghost",
+    "base": { "hp": 140, "atk": 6, "matk": 28, "def": 4, "flee": 10, "hit": 22, "aspdMs": 1200, "range": 220, "magic": true, "element": "shadow" },
+    "growth": { "hp": 26, "atk": 1, "matk": 5.5, "def": 0.8, "flee": 0.8, "hit": 1 },
+    "skill": { "kind": "bolt", "name": "Chaos Bolt", "cooldownMs": 6000, "value": 2.5 } }
+]

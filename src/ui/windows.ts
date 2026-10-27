@@ -11,6 +11,8 @@ import { buyPrice, canEquip, countItem, filterInventory, inventoryWeight, sellPr
 import { refineFee, refineOre, simulateRefine, type RefineKind } from '../core/refine';
 import { forgeChanceRaw } from '../core/forge';
 import { DROP_OPTION_COUNT, optionOdds } from '../core/options';
+import { homunExpToNext, homunStats } from '../core/homunculus';
+import { CART_SLOTS, CART_WEIGHT, cartWeight } from '../core/inventory';
 import { hungerLabel, intimacyLabel, LOYAL_AT } from '../core/pets';
 import { canRaiseStat, expToNextBase, expToNextJob, statRaiseCost } from '../core/formulas';
 import {
@@ -27,7 +29,7 @@ import { canForge, CRUMB_ATK, ELEMENT_STONES, forgeChance, STAR_CRUMB } from '..
 import { ENCHANT_COST, MAX_OPTIONS, optionLabel, REROLL_COST } from '../core/options';
 
 type DbTab = 'monsters' | 'items' | 'cards' | 'refine' | 'forge' | 'options' | 'combos' | 'pets' | 'elements';
-export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet';
+export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet' | 'homun' | 'cart';
 
 interface WinState { el: HTMLElement; body: HTMLElement; render: () => void; open: boolean }
 
@@ -87,6 +89,8 @@ export class WindowManager {
     this.define('admin', 'GM / Admin Tools', 820, 70, () => this.renderAdmin());
     this.define('database', 'Database', 200, 50, () => this.renderDatabase());
     this.define('pet', 'Pet', 520, 90, () => this.renderPet());
+    this.define('homun', 'Homunculus', 520, 120, () => this.renderHomun());
+    this.define('cart', 'Pushcart', 16, 90, () => this.renderCart());
   }
 
   get anyOpen() { return [...this.wins.values()].some((w) => w.open) || !!this.dialogEl || !!this.modalEl; }
@@ -474,6 +478,7 @@ export class WindowManager {
         `Base Lv ${c.baseLevel} (${c.baseExp}/${expToNextBase(w.data, c.baseLevel)}) · Job Lv ${c.jobLevel}/${cls.maxJobLevel} (${c.jobExp}/${expToNextJob(w.data, c.jobLevel)})`),
       h('div', { class: 'muted', style: 'font-size:11px' }, 'STR: ATK & weight · AGI: attack speed & FLEE · VIT: HP & DEF · INT: MATK & MP · DEX: HIT & cast speed · LUK: CRIT. Shift-click + adds 10.'),
       h('div', { class: 'muted', style: 'font-size:11px' }, `Kills ${c.stats_meta.kills} · Deaths ${c.stats_meta.deaths} · Played ${Math.floor(c.stats_meta.playTimeMs / 60000)} min`),
+      w.canMount && c.flags.mountOwned ? h('button', { class: 'btn small', id: 'mount-toggle', style: 'margin-top:6px', onclick: () => { w.toggleMount(); this.renderStatus(); } }, c.flags.mounted ? 'Dismount war-drake' : 'Mount war-drake') : '',
     );
   }
 
@@ -734,7 +739,68 @@ export class WindowManager {
       h('div', { class: 'row', style: 'margin-top:8px;gap:6px' },
         h('button', { class: 'btn small', id: 'pet-feed', onclick: () => { w.feedPetCmd(); this.renderPet(); } }, `Feed ${food.name}`),
         h('button', { class: 'btn small', id: 'pet-egg', onclick: () => { w.petToEgg(); this.renderPet(); } }, 'Return to egg')),
-      h('div', { class: 'row', style: 'margin-top:6px;gap:6px' }, name, h('button', { class: 'btn small', onclick: () => { w.renamePetCmd(name.value); this.renderPet(); } }, 'Rename'))));
+      h('div', { class: 'row', style: 'margin-top:6px;gap:6px' }, name, h('button', { class: 'btn small', onclick: () => { w.renamePetCmd(name.value); this.renderPet(); } }, 'Rename')),
+      h('div', { style: 'margin-top:8px' }, `Accessory: ${pet.accessory ? d.items.get(pet.accessory)!.name : 'none'}${pd.accessoryItem ? ` (${d.items.get(pd.accessoryItem)!.name}: +1 all stats while Cordial+)` : ''}`),
+      h('div', { class: 'row', style: 'margin-top:4px;gap:6px' },
+        pet.accessory ? h('button', { class: 'btn small', onclick: () => { w.petAccessoryCmd(); this.renderPet(); } }, 'Remove accessory')
+          : c.inventory.find((i) => i.itemId === pd.accessoryItem) ? h('button', { class: 'btn small', id: 'pet-acc', onclick: () => { w.petAccessoryCmd(c.inventory.find((i) => i.itemId === pd.accessoryItem)!.uid); this.renderPet(); } }, 'Put on accessory') : '',
+        pd.evolution && !pet.evolved ? h('button', { class: 'btn small', id: 'pet-evolve', title: `Needs Loyal + ${pd.evolution.materials.map((m) => `${m.qty}× ${d.items.get(m.itemId)?.name}`).join(', ')}`, onclick: () => { w.evolvePetCmd(); this.renderPet(); } }, `Evolve → ${pd.evolution.name}`) : ''),
+      pd.evolution && !pet.evolved ? h('div', { class: 'muted', style: 'font-size:11px' }, `Evolution needs Loyal and ${pd.evolution.materials.map((m) => `${m.qty}× ${d.items.get(m.itemId)?.name}`).join(', ')}. Loyal bonus becomes 50% stronger.`) : pet.evolved ? h('div', { class: 'good', style: 'font-size:11px' }, 'Evolved: Loyal bonus ×1.5') : ''));
+  }
+
+  // ---------------------------------------------------------------- homunculus
+  private renderHomun() {
+    const w = this.app.world!, d = w.data, c = w.char, body = this.wins.get('homun')!.body;
+    const hm = c.homunculus;
+    if (!hm) {
+      setChildren(body, h('div', { style: 'width:300px' }, h('div', { class: 'muted' }, 'You have no homunculus.'),
+        h('div', { class: 'muted', style: 'font-size:11px;margin-top:6px' }, 'Alchemists who learn Bioethics can use a Homunculus Embryo (Alchemy Supplies in Tidewatch) to create one: Sylph (healer), Golemite (tank), Fawnling (striker) or Gloom (caster), chosen at random.'),
+        c.inventory.some((i) => i.itemId === 'homun_embryo') ? h('button', { class: 'btn small', style: 'margin-top:6px', onclick: () => { w.createHomunCmd(); this.renderHomun(); } }, 'Use embryo') : ''));
+      return;
+    }
+    const hd = d.homunculi.get(hm.typeId)!, st = homunStats(d, hm);
+    const bar = (v: number, max: number, col: string) => h('div', { style: 'height:8px;background:#2a2433;border-radius:4px;overflow:hidden;width:200px' }, h('div', { style: `height:100%;width:${Math.round((v / max) * 100)}%;background:${col}` }));
+    setChildren(body, h('div', { style: 'width:320px' },
+      h('div', { style: 'font-size:15px;font-weight:bold;color:#d8c8ff' }, `${hm.name}`, h('span', { class: 'muted', style: 'font-size:11px;font-weight:normal' }, `  ${hd.role} · Lv ${hm.level}${hm.evolved ? ' · Evolved' : ''}`)),
+      h('div', { style: 'margin-top:6px' }, `HP ${Math.round(hm.hp)} / ${st.maxHp}${hm.alive ? '' : ' (fallen)'}`), bar(hm.hp, st.maxHp, '#9a7aff'),
+      h('div', { style: 'margin-top:4px' }, `EXP ${hm.exp} / ${homunExpToNext(hm.level)}`), bar(hm.exp, homunExpToNext(hm.level), '#ffd34d'),
+      h('div', { style: 'margin-top:4px' }, `Hunger ${hm.hunger}/100 · Intimacy ${hm.intimacy}/1000 (${intimacyLabel(hm.intimacy)}${hm.intimacy >= 910 ? ', +10% stats' : ''})`),
+      h('div', { class: 'muted', style: 'font-size:11px;margin-top:4px' }, `ATK ${st.atk} · MATK ${st.matk} · DEF ${st.def} · FLEE ${st.flee} · ${st.magic ? 'casts' : 'melee'} · skill: ${hd.skill.name}`),
+      h('div', { class: 'muted', style: 'font-size:11px' }, hd.description),
+      h('div', { class: 'row', style: 'margin-top:8px;gap:6px;flex-wrap:wrap' },
+        h('button', { class: 'btn small', id: 'homun-call', onclick: () => { w.homunCallRest(); this.renderHomun(); } }, hm.out ? 'Rest' : 'Call'),
+        h('button', { class: 'btn small', id: 'homun-feed', onclick: () => { w.homunFeedCmd(); this.renderHomun(); } }, `Feed (${countItem(c, 'homun_ration')})`),
+        !hm.alive ? h('button', { class: 'btn small', onclick: () => { w.homunReviveCmd(); this.renderHomun(); } }, `Revive (${countItem(c, 'homun_revive')})`) : '',
+        !hm.evolved ? h('button', { class: 'btn small', title: 'Lv 50, Loyal, 1 Stone of Sages', onclick: () => { w.homunEvolveCmd(); this.renderHomun(); } }, 'Evolve') : '')));
+  }
+
+  // ---------------------------------------------------------------- pushcart
+  private renderCart() {
+    const w = this.app.world!, c = w.char, body = this.wins.get('cart')!.body;
+    if (!c.cart) { setChildren(body, h('div', { class: 'muted' }, 'No pushcart. Merchants can rent one at a Merchant guild.')); return; }
+    const grid = h('div', { class: 'inv-grid' });
+    for (let i = 0; i < 60; i++) {
+      const inst = c.cart[i];
+      const el = h('div', { class: 'islot' });
+      if (inst) {
+        const def = w.data.items.get(inst.itemId)!;
+        el.append(h('img', { src: itemIconUrl(def) }), inst.qty > 1 ? h('span', { class: 'q' }, String(inst.qty)) : '');
+        el.addEventListener('mousemove', (e) => this.showTooltip(e, this.itemTooltip(def, inst)));
+        el.addEventListener('mouseleave', () => this.hideTooltip());
+        el.addEventListener('dblclick', () => this.qtyPrompt(inst, 'Take how many?', (n) => w.cartTake(inst.uid, n)));
+      }
+      grid.appendChild(el);
+    }
+    grid.addEventListener('dragover', (e) => e.preventDefault());
+    grid.addEventListener('drop', (e) => {
+      const dd = getDragData(e);
+      if (dd?.type !== 'inv') return;
+      e.preventDefault();
+      const inst = c.inventory.find((x) => x.uid === dd.id);
+      if (inst) this.qtyPrompt(inst, 'Put how many in the cart?', (n) => w.cartPut(inst.uid, n));
+    });
+    setChildren(body, h('div', { class: 'row', style: 'margin-bottom:6px' }, h('span', {}, `Cart ${c.cart.length}/${CART_SLOTS} · weight ${cartWeight(w.data, c)}/${CART_WEIGHT}`)), grid,
+      h('div', { class: 'muted', style: 'font-size:11px;margin-top:6px' }, 'Drag items from your inventory here · Double-click to take out. Cart weight does not count toward yours.'));
   }
 
   private renderDatabase() {
@@ -902,6 +968,8 @@ export class WindowManager {
       if (s.type === 'enchant') opts.push(['Enchant equipment', () => { this.closeDialog(); this.enchantDialog(); }]);
       if (s.type === 'forge') opts.push(['Forge a weapon', () => { this.closeDialog(); this.forgeDialog(); }]);
       if (s.type === 'warp') opts.push(['Warp service', () => this.warpDialog(npc, s.destinations)]);
+      if (s.type === 'stable') opts.push([w.char.flags.mountOwned ? 'You already own a war-drake' : `Buy a war-drake (${s.cost} Luma)`, () => { this.closeDialog(); w.rentMount(); }]);
+      if (s.type === 'cart') opts.push([w.char.cart ? 'You already have a pushcart' : `Rent a pushcart (${s.cost} Luma)`, () => { this.closeDialog(); w.rentCart(); }]);
       if (s.type === 'rebirth') {
         const chk = canRebirth(w.data, w.char);
         opts.push([`Be reborn${chk.ok ? '' : ` (${chk.error})`}`, () => {
