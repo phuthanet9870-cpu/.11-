@@ -8,7 +8,7 @@ A 2D fantasy MMORPG with a top-down 3/4 view. It's built with TypeScript, Phaser
 
 ## ภาพรวม (Thai summary)
 - **เปลี่ยนภาษาได้ อังกฤษ / ไทย** ที่มุมขวาบนของหน้าแรก หรือ ตั้งค่า → ภาษา ในเกม (ชื่อไอเทม มอนสเตอร์ สกิล แผนที่ คงเป็นภาษาอังกฤษ)
-- **แมพใหญ่ขึ้นหลายเท่า** ทุ่ง 160×120 ดันเจี้ยน 120×96 (มีห้องบอสใหญ่) เมือง 96×76 และมี **ช่องสี่เหลี่ยมตามเมาส์แบบ Ragnarok** (เขียว = เดินได้, แดง = เดินไม่ได้) คลิกแล้วเดินไปกลางช่อง
+- **แมพใหญ่ขึ้นหลายเท่า** ทุ่ง 160×120 ดันเจี้ยน 120×96 (มีห้องบอสใหญ่) เมือง 96×76 และมี **ช่องสี่เหลี่ยมตามเมาส์แบบ Ragnarok** (มุมสี่มุมสีเขียว = เดินได้, สีแดง = เดินไม่ได้) คลิกแล้วเดินไปกลางช่อง
 - **NPC เปลี่ยนอาชีพ (Job Master) มีทุกเมือง** รวมทุกการเปลี่ยนอาชีพไว้ที่เดียว: อาชีพแรก (Job Lv 10) อาชีพขั้นสอง (Job Lv 40) เกิดใหม่ (Base 99 / Job 50) อาชีพ High และอาชีพขั้นสูง แสดงเฉพาะอาชีพที่ตัวละครเปลี่ยนไปได้
 - **ระบบ GM ควบคุมได้ทุกอย่าง** หน้าต่าง GM 4 แท็บ + คำสั่ง `@` ในแชท (`@help`) และคำสั่ง GM ฝั่งเซิร์ฟเวอร์ด้วยรหัสแอดมิน
 - **โลกสไตล์ Ragnarok Online มี 30 แมพใน 9 ภูมิภาค** มีเมือง 7 เมือง ทุ่ง และดันเจี้ยน แต่ละภูมิภาคมีสี สภาพอากาศ เพลง และมอนสเตอร์ของตัวเอง (ดู [docs/WORLD.md](docs/WORLD.md))
@@ -118,7 +118,7 @@ Maps are several times larger than at first: fields are 160×120 tiles (Willowbr
 
 The map art is painted in 16×16-tile chunks around the camera and freed when you walk away, so a big map never needs one huge texture.
 
-**Cell cursor (Ragnarok style):** the tile under the mouse is outlined — green where you can walk, red where you can't, yellow over NPCs and items, red-pink over monsters. Clicking the ground walks to the centre of that cell and marks it until you arrive. Settings → *Cell cursor under the mouse* turns it off; *Show grid lines on the map* draws the whole grid.
+**Cell cursor (Ragnarok style):** four green corner brackets mark the cell under the mouse (red where you can't walk); over a monster, NPC or item the mouse pointer changes instead. Clicking the ground walks to the centre of that cell and marks it until you arrive. Settings → *Cell cursor under the mouse* turns it off; *Show grid lines on the map* draws the whole grid.
 
 ## Job Master (class change in every town)
 

@@ -152,26 +152,24 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
-  /** Cell cursor under the mouse (green = walkable, red = blocked) and the walk destination cell. */
+  /** Ragnarok-style cell cursor: four corner brackets on the cell under the mouse (green walkable, red blocked). */
   private drawCellCursor() {
     const g = this.cellCursor, w = this.world, map = w.map;
     // Recomputed every frame: the camera follows the player, so the cell under a still mouse changes.
     const pt = this.host.pointerWorld ? this.worldPoint(this.input.activePointer) : null;
     g.clear();
-    if (this.host.settings.cellCursor !== false && pt && !w.player.dead) {
+    // Over a monster, NPC or item the mouse pointer itself changes, so no cell is marked (as in Ragnarok).
+    if (this.host.settings.cellCursor !== false && pt && !w.player.dead && !this.hovered.kind) {
       const tx = Math.floor(pt.x / TILE), ty = Math.floor(pt.y / TILE);
       if (tx >= 0 && ty >= 0 && tx < map.width && ty < map.height) {
         const free = !map.collision[ty * map.width + tx];
-        const col = this.hovered.kind === 'monster' ? 0xff5a5a : this.hovered.kind ? 0xffd34d : free ? 0x7fffa0 : 0xff6a6a;
-        g.fillStyle(col, 0.16).fillRect(tx * TILE, ty * TILE, TILE, TILE);
-        g.lineStyle(2, col, 0.9).strokeRect(tx * TILE + 1, ty * TILE + 1, TILE - 2, TILE - 2);
+        cornerBrackets(g, tx * TILE, ty * TILE, free ? 0x6ff0c0 : 0xff6a6a, 0.95);
       }
     }
+    // Destination of a click-walk: fainter brackets until the player arrives.
     const t = this.moveTargetCell;
-    if (t && w.player.moving && this.time.now - t.at < 8000) {
-      const pulse = 0.5 + 0.3 * Math.sin(this.time.now / 120);
-      g.lineStyle(2, 0xffffff, pulse).strokeRect(t.x * TILE + 3, t.y * TILE + 3, TILE - 6, TILE - 6);
-    } else if (t && !w.player.moving) this.moveTargetCell = null;
+    if (t && w.player.moving && this.time.now - t.at < 8000) cornerBrackets(g, t.x * TILE, t.y * TILE, 0xffffff, 0.45 + 0.25 * Math.sin(this.time.now / 140));
+    else if (t && !w.player.moving) this.moveTargetCell = null;
   }
 
   /** Optional faint grid over the walkable map (Settings → Show grid). */
@@ -760,4 +758,16 @@ function proceduralCharRig(key: string): Rig {
 }
 function proceduralMonRig(key: string): Rig {
   return { clips: procClips(key, MON_ANIMS, MON_SHEET_COLS, 1), originX: 0.5, originY: 1 };
+}
+
+/** Four L-shaped corners around one map cell, with a dark under-stroke so they read on any ground. */
+function cornerBrackets(g: Phaser.GameObjects.Graphics, x: number, y: number, color: number, alpha: number) {
+  const L = 9, i = 2, s = TILE - 2 * i;
+  const corners: [number, number, number, number][] = [[x + i, y + i, 1, 1], [x + i + s, y + i, -1, 1], [x + i, y + i + s, 1, -1], [x + i + s, y + i + s, -1, -1]];
+  for (const [w, c, a] of [[4, 0x0c2a20, alpha * 0.45], [2, color, alpha]] as const) {
+    g.lineStyle(w, c, a);
+    for (const [cx, cy, dx, dy] of corners) {
+      g.beginPath(); g.moveTo(cx + dx * L, cy); g.lineTo(cx, cy); g.lineTo(cx, cy + dy * L); g.strokePath();
+    }
+  }
 }
