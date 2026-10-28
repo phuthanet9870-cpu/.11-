@@ -2128,7 +2128,7 @@
     "classId": "templar",
     "kind": "passive",
     "targeting": "passive",
-    "description": "+3% max HP and 3% holy resist per level.",
+    "description": "+3% max HP, +2 MDEF and 3% holy resist per level.",
     "maxLevel": 10,
     "range": 0,
     "mpCost": 0,
@@ -2137,6 +2137,7 @@
     "cooldownMs": 0,
     "passive": {
       "maxHpPct": 3,
+      "mdef": 2,
       "elementResistPct": {
         "holy": 3
       }
@@ -2238,8 +2239,8 @@
       {
         "type": "damage",
         "kind": "physical",
-        "multiplier": 1.7,
-        "perLevel": 0.3,
+        "multiplier": 1.8,
+        "perLevel": 0.36,
         "element": "holy"
       }
     ],
@@ -4472,8 +4473,8 @@
       {
         "type": "damage",
         "kind": "physical",
-        "multiplier": 2.2,
-        "perLevel": 0.35,
+        "multiplier": 2.6,
+        "perLevel": 0.45,
         "element": "weapon",
         "alwaysHit": true
       }

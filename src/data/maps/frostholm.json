@@ -3,8 +3,8 @@
  "name": "Snow Town Frostholm",
  "region": "Frostpeak Mountains",
  "type": "town",
- "width": 48,
- "height": 38,
+ "width": 96,
+ "height": 76,
  "tileset": "snow",
  "base": "grass",
  "border": {
@@ -25,8 +25,8 @@
   {
    "op": "rect",
    "tile": "path_stone",
-   "x": 17,
-   "y": 14,
+   "x": 41,
+   "y": 33,
    "w": 14,
    "h": 10
   },
@@ -35,12 +35,12 @@
    "tile": "path_stone",
    "points": [
     [
-     23,
-     34
+     47,
+     53
     ],
     [
-     23,
-     18
+     47,
+     37
     ]
    ],
    "width": 3
@@ -50,12 +50,12 @@
    "tile": "path_stone",
    "points": [
     [
-     23,
-     3
+     47,
+     22
     ],
     [
-     23,
-     18
+     47,
+     37
     ]
    ],
    "width": 3
@@ -65,12 +65,12 @@
    "tile": "path_stone",
    "points": [
     [
-     44,
-     18
+     68,
+     37
     ],
     [
-     23,
-     18
+     47,
+     37
     ]
    ],
    "width": 3
@@ -78,39 +78,39 @@
   {
    "op": "object",
    "kind": "fountain",
-   "x": 23,
-   "y": 17,
+   "x": 47,
+   "y": 36,
    "id": "frostholm_fountain"
   },
   {
    "op": "object",
    "kind": "lamp_post",
-   "x": 17,
-   "y": 14
+   "x": 41,
+   "y": 33
   },
   {
    "op": "object",
    "kind": "lamp_post",
-   "x": 30,
-   "y": 14
+   "x": 54,
+   "y": 33
   },
   {
    "op": "object",
    "kind": "lamp_post",
-   "x": 17,
-   "y": 23
+   "x": 41,
+   "y": 42
   },
   {
    "op": "object",
    "kind": "lamp_post",
-   "x": 30,
-   "y": 23
+   "x": 54,
+   "y": 42
   },
   {
    "op": "building",
    "style": "inn",
-   "x": 5,
-   "y": 4,
+   "x": 29,
+   "y": 23,
    "w": 8,
    "h": 5,
    "door": 4,
@@ -119,8 +119,8 @@
   {
    "op": "building",
    "style": "smithy",
-   "x": 34,
-   "y": 4,
+   "x": 58,
+   "y": 23,
    "w": 8,
    "h": 5,
    "door": 3,
@@ -129,8 +129,8 @@
   {
    "op": "building",
    "style": "shop",
-   "x": 5,
-   "y": 26,
+   "x": 29,
+   "y": 45,
    "w": 8,
    "h": 5,
    "door": 4,
@@ -139,11 +139,152 @@
   {
    "op": "building",
    "style": "house",
-   "x": 34,
-   "y": 26,
+   "x": 58,
+   "y": 45,
    "w": 8,
    "h": 5,
    "door": 4
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     47,
+     71
+    ],
+    [
+     47,
+     71
+    ],
+    [
+     47,
+     62
+    ],
+    [
+     47,
+     53
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     47,
+     3
+    ],
+    [
+     47,
+     3
+    ],
+    [
+     47,
+     13
+    ],
+    [
+     47,
+     22
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     91,
+     37
+    ],
+    [
+     80,
+     37
+    ],
+    [
+     80,
+     37
+    ],
+    [
+     68,
+     37
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 6,
+   "y": 7,
+   "w": 6,
+   "h": 5,
+   "door": 3
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 15,
+   "y": 7,
+   "w": 6,
+   "h": 5,
+   "door": 3
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 75,
+   "y": 7,
+   "w": 6,
+   "h": 5,
+   "door": 3
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 84,
+   "y": 7,
+   "w": 6,
+   "h": 5,
+   "door": 3
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 6,
+   "y": 63,
+   "w": 6,
+   "h": 5,
+   "door": 3
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 15,
+   "y": 63,
+   "w": 6,
+   "h": 5,
+   "door": 3
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 75,
+   "y": 63,
+   "w": 6,
+   "h": 5,
+   "door": 3
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 84,
+   "y": 63,
+   "w": 6,
+   "h": 5,
+   "door": 3
   },
   {
    "op": "scatter",
@@ -161,8 +302,8 @@
  "portals": [
   {
    "id": "to_frostpeak_slopes",
-   "x": 22,
-   "y": 36,
+   "x": 46,
+   "y": 74,
    "w": 4,
    "h": 2,
    "targetMap": "frostpeak_slopes",
@@ -171,7 +312,7 @@
   },
   {
    "id": "to_ice_caverns",
-   "x": 22,
+   "x": 46,
    "y": 0,
    "w": 4,
    "h": 2,
@@ -181,8 +322,8 @@
   },
   {
    "id": "to_cinder_wastes",
-   "x": 46,
-   "y": 17,
+   "x": 94,
+   "y": 36,
    "w": 2,
    "h": 4,
    "targetMap": "cinder_wastes",
@@ -192,57 +333,57 @@
  ],
  "spawnPoints": {
   "from_frostpeak_slopes": {
-   "x": 24,
-   "y": 33
+   "x": 48,
+   "y": 71
   },
   "from_ice_caverns": {
-   "x": 24,
+   "x": 48,
    "y": 4
   },
   "from_cinder_wastes": {
-   "x": 43,
-   "y": 19
+   "x": 91,
+   "y": 38
   },
   "default": {
-   "x": 24,
-   "y": 22
+   "x": 48,
+   "y": 41
   }
  },
  "npcs": [
   {
    "npcId": "frostholm_innkeeper",
-   "x": 9,
-   "y": 10,
+   "x": 33,
+   "y": 29,
    "facing": "down"
   },
   {
    "npcId": "frostholm_smith",
-   "x": 37,
-   "y": 10,
+   "x": 61,
+   "y": 29,
    "facing": "down"
   },
   {
    "npcId": "frostholm_merchant",
-   "x": 9,
-   "y": 32,
+   "x": 33,
+   "y": 51,
    "facing": "down"
   },
   {
    "npcId": "frostholm_courier",
-   "x": 27,
-   "y": 21,
+   "x": 51,
+   "y": 40,
    "facing": "down"
   },
   {
    "npcId": "frostholm_jobmaster",
-   "x": 17,
-   "y": 21,
+   "x": 41,
+   "y": 40,
    "facing": "down"
   },
   {
    "npcId": "crypt_keeper",
-   "x": 30,
-   "y": 32,
+   "x": 54,
+   "y": 51,
    "facing": "down"
   }
  ],
@@ -251,8 +392,8 @@
   {
    "id": "frostholm_fountain",
    "kind": "fountain",
-   "x": 23,
-   "y": 17,
+   "x": 47,
+   "y": 36,
    "name": "Frostholm Fountain",
    "interact": {
     "text": "Snow Town Frostholm. Frostpeak Mountains."
@@ -260,5 +401,9 @@
   }
  ],
  "areas": [],
- "generated": true
+ "generated": true,
+ "origin": {
+  "x": 24,
+  "y": 19
+ }
 }

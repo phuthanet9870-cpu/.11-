@@ -7,8 +7,8 @@
   55,
   65
  ],
- "width": 58,
- "height": 44,
+ "width": 160,
+ "height": 120,
  "tileset": "volcano",
  "base": "grass",
  "border": {
@@ -28,20 +28,38 @@
   {
    "op": "blob",
    "tile": "water",
-   "cx": 13,
-   "cy": 11,
+   "cx": 33,
+   "cy": 34,
    "rx": 6,
-   "ry": 3,
-   "seed": 315109361
+   "ry": 5,
+   "seed": 315109358
   },
   {
    "op": "blob",
    "tile": "water",
-   "cx": 45,
-   "cy": 33,
-   "rx": 4,
-   "ry": 3,
-   "seed": 315109363
+   "cx": 122,
+   "cy": 91,
+   "rx": 8,
+   "ry": 5,
+   "seed": 315109366
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 121,
+   "cy": 28,
+   "rx": 10,
+   "ry": 5,
+   "seed": 315109364
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 37,
+   "cy": 86,
+   "rx": 9,
+   "ry": 7,
+   "seed": 315109360
   },
   {
    "op": "path",
@@ -49,15 +67,15 @@
    "points": [
     [
      3,
-     21
+     59
     ],
     [
-     16,
-     23
+     40,
+     61
     ],
     [
-     28,
-     21
+     79,
+     59
     ]
    ],
    "width": 2
@@ -67,16 +85,16 @@
    "tile": "dirt",
    "points": [
     [
-     54,
-     21
+     156,
+     59
     ],
     [
-     41,
-     20
+     120,
+     61
     ],
     [
-     28,
-     21
+     79,
+     59
     ]
    ],
    "width": 2
@@ -103,7 +121,7 @@
    "op": "object",
    "kind": "signpost",
    "x": 5,
-   "y": 20,
+   "y": 58,
    "id": "sign_cinder_wastes"
   }
  ],
@@ -111,7 +129,7 @@
   {
    "id": "to_frostholm",
    "x": 0,
-   "y": 20,
+   "y": 58,
    "w": 2,
    "h": 4,
    "targetMap": "frostholm",
@@ -120,8 +138,8 @@
   },
   {
    "id": "to_magma_core",
-   "x": 56,
-   "y": 20,
+   "x": 158,
+   "y": 58,
    "w": 2,
    "h": 4,
    "targetMap": "magma_core",
@@ -132,77 +150,117 @@
  "spawnPoints": {
   "from_frostholm": {
    "x": 4,
-   "y": 22
+   "y": 60
   },
   "from_magma_core": {
-   "x": 53,
-   "y": 22
+   "x": 155,
+   "y": 60
   },
   "default": {
    "x": 4,
-   "y": 22
+   "y": 60
   }
  },
  "npcs": [],
  "monsterSpawns": [
   {
    "monsterId": "ember_slime",
-   "count": 5,
+   "count": 21,
    "area": {
-    "x": 3,
-    "y": 3,
-    "w": 23,
-    "h": 16
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "ember_slime",
-   "count": 5,
+   "count": 21,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "ember_slime",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "ash_scorpion",
-   "count": 4,
+   "count": 18,
    "area": {
-    "x": 31,
-    "y": 3,
-    "w": 23,
-    "h": 16
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "ash_scorpion",
-   "count": 4,
+   "count": 18,
    "area": {
-    "x": 31,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "ash_scorpion",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "fire_drake",
-   "count": 6,
+   "count": 14,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "fire_drake",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "fire_drake",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "elite_fire_drake",
    "count": 1,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   }
  ],
@@ -211,7 +269,7 @@
    "id": "sign_cinder_wastes",
    "kind": "signpost",
    "x": 5,
-   "y": 20,
+   "y": 58,
    "name": "Signpost",
    "interact": {
     "text": "Cinder Wastes (Lv.55–65).  WEST → Snow Town Frostholm.  EAST → Magma Core."

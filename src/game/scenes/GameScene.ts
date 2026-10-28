@@ -7,7 +7,8 @@ import { TILE } from '../../core/mapCompiler';
 import type { Direction } from '../../core/types';
 import { npcQuestMarker } from '../../core/quests';
 import {
-  ensureCharacterTexture, ensureFxTextures, ensureItemTexture, ensureMapTextures, ensureMonsterTexture, ensureTombstoneTexture,
+  CHUNK_TILES, ensureCharacterTexture, ensureFxTextures, ensureItemTexture, ensureMapChunk, ensureMapTextures, ensureMonsterTexture, ensureTombstoneTexture,
+  releaseMapChunk, type ChunkLayers,
 } from '../assets';
 import type { CharacterLook } from '../art/characterSprite';
 import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_PIVOT, CHAR_SHEET_COLS, MON_ANIMS, MON_SHEET_COLS, type CharAnim, type MonAnim } from '../art/spriteMeta';
@@ -37,6 +38,12 @@ export class GameScene extends Phaser.Scene {
   private gfx!: Phaser.GameObjects.Graphics; // telegraphs, zones, cast circle
   private bars!: Phaser.GameObjects.Graphics; // hp bars
   private collisionGfx: Phaser.GameObjects.Graphics | null = null;
+  /** Painted map chunks around the camera (streamed in and out as it moves). */
+  private chunks = new Map<string, { keys: ChunkLayers; imgs: Phaser.GameObjects.Image[] }>();
+  /** Ragnarok-style cell cursor: the tile under the mouse, and the tile the player is walking to. */
+  private cellCursor!: Phaser.GameObjects.Graphics;
+  private gridGfx: Phaser.GameObjects.Graphics | null = null;
+  private moveTargetCell: { x: number; y: number; at: number } | null = null;
   private hovered: { kind: 'monster' | 'npc' | 'item' | 'object' | null; id: string | null } = { kind: null, id: null };
   private markerTimer = 0;
   private stepTimer = 0;
@@ -112,7 +119,71 @@ export class GameScene extends Phaser.Scene {
     for (const e of this.zoneEmitters.values()) e.destroy();
     this.zoneEmitters.clear();
     this.collisionGfx = null;
+    this.gridGfx = null;
     this.tombViews.clear();
+    for (const c of this.chunks.values()) { for (const i of c.imgs) i.destroy(); releaseMapChunk(this, c.keys); }
+    this.chunks.clear();
+  }
+
+  /** Paints the chunks the camera can see (plus a one-chunk margin) and frees the far ones. */
+  private updateChunks(all = false) {
+    const map = this.world.map, view = this.cameras.main.worldView, span = CHUNK_TILES * TILE;
+    const maxX = Math.ceil(map.width / CHUNK_TILES) - 1, maxY = Math.ceil(map.height / CHUNK_TILES) - 1;
+    const cx0 = Math.max(0, Math.floor(view.x / span) - 1), cy0 = Math.max(0, Math.floor(view.y / span) - 1);
+    const cx1 = Math.min(maxX, Math.floor((view.x + view.width) / span) + 1), cy1 = Math.min(maxY, Math.floor((view.y + view.height) / span) + 1);
+    let budget = all ? Infinity : 2; // painting is spread over frames while walking
+    for (let cy = cy0; cy <= cy1; cy++) for (let cx = cx0; cx <= cx1; cx++) {
+      const id = `${cx},${cy}`;
+      if (this.chunks.has(id) || budget <= 0) continue;
+      budget--;
+      const keys = ensureMapChunk(this, this.world.data, map, cx, cy);
+      const x = cx * span, y = cy * span;
+      const imgs = [this.add.image(x, y, keys.ground).setOrigin(0).setDepth(-20)];
+      if (keys.walls) imgs.push(this.add.image(x, y, keys.walls).setOrigin(0).setDepth(-10));
+      if (keys.above) imgs.push(this.add.image(x, y, keys.above).setOrigin(0).setDepth(1e5));
+      this.chunks.set(id, { keys, imgs });
+    }
+    for (const [id, c] of this.chunks) {
+      const [cx, cy] = id.split(',').map(Number);
+      if (cx >= cx0 - 1 && cx <= cx1 + 1 && cy >= cy0 - 1 && cy <= cy1 + 1) continue;
+      for (const i of c.imgs) i.destroy();
+      releaseMapChunk(this, c.keys);
+      this.chunks.delete(id);
+    }
+  }
+
+  /** Cell cursor under the mouse (green = walkable, red = blocked) and the walk destination cell. */
+  private drawCellCursor() {
+    const g = this.cellCursor, w = this.world, map = w.map;
+    // Recomputed every frame: the camera follows the player, so the cell under a still mouse changes.
+    const pt = this.host.pointerWorld ? this.worldPoint(this.input.activePointer) : null;
+    g.clear();
+    if (this.host.settings.cellCursor !== false && pt && !w.player.dead) {
+      const tx = Math.floor(pt.x / TILE), ty = Math.floor(pt.y / TILE);
+      if (tx >= 0 && ty >= 0 && tx < map.width && ty < map.height) {
+        const free = !map.collision[ty * map.width + tx];
+        const col = this.hovered.kind === 'monster' ? 0xff5a5a : this.hovered.kind ? 0xffd34d : free ? 0x7fffa0 : 0xff6a6a;
+        g.fillStyle(col, 0.16).fillRect(tx * TILE, ty * TILE, TILE, TILE);
+        g.lineStyle(2, col, 0.9).strokeRect(tx * TILE + 1, ty * TILE + 1, TILE - 2, TILE - 2);
+      }
+    }
+    const t = this.moveTargetCell;
+    if (t && w.player.moving && this.time.now - t.at < 8000) {
+      const pulse = 0.5 + 0.3 * Math.sin(this.time.now / 120);
+      g.lineStyle(2, 0xffffff, pulse).strokeRect(t.x * TILE + 3, t.y * TILE + 3, TILE - 6, TILE - 6);
+    } else if (t && !w.player.moving) this.moveTargetCell = null;
+  }
+
+  /** Optional faint grid over the walkable map (Settings → Show grid). */
+  setGridVisible(on: boolean) {
+    if (on && !this.gridGfx) {
+      const map = this.world.map, g = this.track(this.add.graphics().setDepth(-9));
+      g.lineStyle(1, 0xffffff, 0.08);
+      for (let x = 0; x <= map.width; x++) g.lineBetween(x * TILE, 0, x * TILE, map.height * TILE);
+      for (let y = 0; y <= map.height; y++) g.lineBetween(0, y * TILE, map.width * TILE, y * TILE);
+      this.gridGfx = g;
+    }
+    if (!on && this.gridGfx) { this.gridGfx.destroy(); this.gridGfx = null; }
   }
 
   private track<T extends Phaser.GameObjects.GameObject>(o: T): T { this.mapObjects.push(o); return o; }
@@ -124,9 +195,6 @@ export class GameScene extends Phaser.Scene {
     this.builtMap = map;
     const tex = ensureMapTextures(this, data, map);
     const W = map.width * TILE, H = map.height * TILE;
-    this.track(this.add.image(0, 0, tex.ground).setOrigin(0).setDepth(-20));
-    this.track(this.add.image(0, 0, tex.walls).setOrigin(0).setDepth(-10));
-    this.track(this.add.image(0, 0, tex.above).setOrigin(0).setDepth(1e5));
 
     for (const o of map.objects) {
       const kind = data.objectKinds.get(o.kind)!;
@@ -203,8 +271,13 @@ export class GameScene extends Phaser.Scene {
     const cam = this.cameras.main;
     cam.setBounds(0, 0, W, H);
     cam.startFollow(this.player, true, 0.15, 0.15);
+    cam.centerOn(this.player.x, this.player.y);
+    cam.preRender();
+    this.updateChunks(true);
+    this.cellCursor = this.track(this.add.graphics().setDepth(-8));
     cam.fadeIn(350, 0, 0, 0);
     if (this.host.settings.showCollision) this.drawCollision();
+    if (this.host.settings.showGrid) this.setGridVisible(true);
     audio.playMusic(map.def.bgm);
     audio.playAmbient(map.def.ambient);
   }
@@ -319,9 +392,10 @@ export class GameScene extends Phaser.Scene {
       case 'item': this.world.pickupCmd(target.id!); break;
       case 'object': this.world.interactObjectCmd(target.id!); break;
       default: {
-        this.world.moveTo(wp.x, wp.y);
-        const ring = this.add.circle(wp.x, wp.y, 10, 0xffffff, 0).setStrokeStyle(2, 0xffffff, 0.8).setDepth(-2);
-        this.tweens.add({ targets: ring, radius: 2, alpha: 0, duration: 350, onComplete: () => ring.destroy() });
+        // Cell-based walking as in Ragnarok: the destination is the centre of the clicked cell.
+        const tx = Math.floor(wp.x / TILE), ty = Math.floor(wp.y / TILE);
+        this.world.moveTo(tx * TILE + TILE / 2, ty * TILE + TILE / 2);
+        this.moveTargetCell = { x: tx, y: ty, at: this.time.now };
       }
     }
   }
@@ -347,6 +421,8 @@ export class GameScene extends Phaser.Scene {
     this.syncHomun();
     this.syncRemotes();
     this.drawOverlays();
+    this.updateChunks();
+    this.drawCellCursor();
     this.host.onFrame();
   }
 

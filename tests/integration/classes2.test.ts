@@ -44,7 +44,9 @@ function build(cs: Case, seedName: string) {
   for (const g of cs.gear) { addItem(data, c, g, 1, { ignoreWeight: true }); const r = equipItem(data, c, c.inventory.find((x) => x.itemId === g)!.uid); if (!r.ok) throw new Error(`${cs.id} ${g}: ${r.error}`); }
   addItem(data, c, 'yellow_potion', 40, { ignoreWeight: true }); addItem(data, c, 'blue_potion', 20, { ignoreWeight: true });
   c.luma = 50000;
-  c.position = { mapId: 'arcanthe_tower', x: 25 * TILE, y: 14 * TILE };
+  // Seven tiles south of the boss, in its hall.
+  const boss = data.maps.get('arcanthe_tower')!.bossSpawn!;
+  c.position = { mapId: 'arcanthe_tower', x: boss.x * TILE, y: (boss.y + 7) * TILE };
   return c;
 }
 

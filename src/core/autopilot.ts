@@ -194,7 +194,9 @@ export class AutoPilot {
     const w = this.w, p = w.player, c = this.c, s = w.stats;
     const anchor = this.anchor && this.anchor.mapId === w.map.def.id ? this.anchor : { mapId: w.map.def.id, x: p.x, y: p.y };
     if (!this.anchor || this.anchor.mapId !== w.map.def.id) this.anchor = anchor;
-    const attackers = [...w.monsters.values()].filter((m) => !m.dead && m.targetId === 'player');
+    // Big maps: only answer attackers near the farm spot, and never chase one out of the area.
+    const leash = this.settings.radius + 300;
+    const attackers = [...w.monsters.values()].filter((m) => !m.dead && m.targetId === 'player' && (!!only || dist(m.x, m.y, anchor.x, anchor.y) <= leash));
     // Out of potions and hurt: rest until 80% unless something attacks.
     if (!this.hasHealing() && c.hp < s.maxHp * 0.35) this.resting = true;
     if (this.resting) {
@@ -202,7 +204,12 @@ export class AutoPilot {
       else { this.status = 'Resting (no healing potions)'; if (p.intent.type !== 'none') w.stop(); return; }
     }
     const cur = p.intent.type === 'attack' ? w.monsters.get(p.intent.targetId) : undefined;
-    if (cur && !cur.dead) { this.status = `Fighting ${cur.def.name}`; this.useSkills(cur); return; }
+    if (cur && !cur.dead && (only || dist(cur.x, cur.y, anchor.x, anchor.y) <= leash)) { this.status = `Fighting ${cur.def.name}`; this.useSkills(cur); return; }
+    if (!only && !attackers.length && dist(p.x, p.y, anchor.x, anchor.y) > this.settings.radius + 200) {
+      this.status = 'Returning to the farm spot';
+      if (!p.move || p.intent.type === 'attack') w.moveTo(anchor.x, anchor.y);
+      return;
+    }
     // Loot first when nothing is attacking.
     if (this.settings.loot && !attackers.length && p.intent.type !== 'pickup') {
       const near = [...w.groundItems.values()].filter((g) => dist(g.x, g.y, p.x, p.y) < 320 && (this.lootTries.get(g.id) ?? 0) < 3);
@@ -230,7 +237,10 @@ export class AutoPilot {
     if (w.time >= this.wanderAt && !p.move) {
       this.wanderAt = w.time + 4000;
       const ang = this.w.rng.next() * Math.PI * 2, r = this.w.rng.next() * (only ? 600 : this.settings.radius * 0.8);
-      w.moveTo(anchor.x + Math.cos(ang) * r, anchor.y + Math.sin(ang) * r);
+      const tx = anchor.x + Math.cos(ang) * r, ty = anchor.y + Math.sin(ang) * r;
+      // Never wander into (or right next to) a portal: Auto Farm stays on its map.
+      const nearPortal = w.map.def.portals.some((q) => tx > (q.x - 4) * TILE && tx < (q.x + q.w + 4) * TILE && ty > (q.y - 4) * TILE && ty < (q.y + q.h + 4) * TILE);
+      if (!nearPortal) w.moveTo(tx, ty);
     }
   }
 

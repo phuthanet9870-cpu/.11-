@@ -33,8 +33,9 @@ describe('Auto Quest', () => {
 describe('Auto Farm', () => {
   it('fights around its start point, loots, drinks potions and stays in the area', () => {
     const c = newChar('AutoF');
-    const sp = data.maps.get('sunny_meadow')!.spawnPoints.default;
-    c.position = { mapId: 'sunny_meadow', x: sp.x * TILE + TILE / 2, y: sp.y * TILE + TILE / 2 };
+    // Start in the Leaf Slime meadow (on the widened map the arrival point is at the edge, far from the hunting grounds).
+    const area = data.maps.get('sunny_meadow')!.monsterSpawns.find((s) => s.monsterId === 'leaf_slime')!.area;
+    c.position = { mapId: 'sunny_meadow', x: (area.x + area.w / 2) * TILE, y: (area.y + area.h / 2) * TILE };
     addItem(data, c, 'red_potion', 20);
     const w = newWorld(c, 5);
     w.update(16);

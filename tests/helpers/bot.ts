@@ -282,6 +282,8 @@ export function fightBoss(bot: Bot, maxMs = 600_000, kite = 0): boolean {
     // Ranged classes step back when the boss is in melee range.
     if (kiteFrom && w.time - kiteFrom.at > 1500) {
       if (Math.hypot(w.player.x - kiteFrom.x, w.player.y - kiteFrom.y) < 60) { noKiteUntil = w.time + 4000; w.attack(target.id); }
+      // After a step back, stand and cast for a moment (in an open hall the boss always catches up).
+      else noKiteUntil = w.time + 2500;
       kiteFrom = null;
     }
     if (kite && w.time > noKiteUntil && !w.player.cast && Math.hypot(boss.x - w.player.x, boss.y - w.player.y) < kite && w.player.intent.type !== 'move') {

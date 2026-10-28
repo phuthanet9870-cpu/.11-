@@ -228,6 +228,71 @@ function edge(e: Exit, W: number, H: number) {
 
 interface Built { map: J; npcs: J[]; shops: J[] }
 
+// Map sizes (tiles). Fields and dungeons are generated at this size; towns are laid
+// out around a 48×38 core and then widened; the hand-made maps are widened once.
+const FIELD_SIZE: [number, number] = [160, 120];
+const DUNGEON_SIZE: [number, number] = [120, 96];
+const TOWN_SIZE: [number, number] = [96, 76];
+const HAND_SIZE: Record<string, [number, number]> = { willowbrook: [100, 76], sunny_meadow: [150, 110], whispering_forest: [150, 120] };
+
+/**
+ * Widens a map: its content moves to the middle, portals move out to the new
+ * edges with a road back to where they were, and arrival spawns follow them.
+ * Records the shift in `origin` so later runs can place things in old coordinates.
+ */
+function expandMap(m: J, W2: number, H2: number, road: string): { dx: number; dy: number } {
+  const W = m.width, H = m.height, dx = Math.floor((W2 - W) / 2), dy = Math.floor((H2 - H) / 2);
+  const sh = (o: J) => { if (o && typeof o.x === 'number') { o.x += dx; o.y += dy; } };
+  for (const op of m.paint) {
+    if (op.points) op.points = op.points.map(([x, y]: number[]) => [x + dx, y + dy]);
+    if (typeof op.cx === 'number') { op.cx += dx; op.cy += dy; }
+    sh(op); if (op.area) sh(op.area);
+  }
+  for (const o of [...m.npcs, ...m.objects]) sh(o);
+  for (const a of m.areas ?? []) sh(a.rect);
+  for (const sp of m.monsterSpawns) sh(sp.area);
+  if (m.bossSpawn) sh(m.bossSpawn);
+  const spawns = Object.values(m.spawnPoints) as J[];
+  for (const sp of spawns) sh(sp);
+  const roads: J[] = [];
+  for (const p of m.portals) {
+    const side = p.x <= 1 ? 'W' : p.x + p.w >= W - 1 ? 'E' : p.y <= 1 ? 'N' : p.y + p.h >= H - 1 ? 'S' : null;
+    sh(p);
+    if (!side) continue;
+    const oldIn = side === 'W' ? [p.x + p.w + 1, p.y + 1] : side === 'E' ? [p.x - 2, p.y + 1] : side === 'N' ? [p.x + 1, p.y + p.h + 1] : [p.x + 1, p.y - 2];
+    if (side === 'W') p.x = 0; else if (side === 'E') p.x = W2 - p.w; else if (side === 'N') p.y = 0; else p.y = H2 - p.h;
+    const newIn = side === 'W' ? [3, p.y + 1] : side === 'E' ? [W2 - 5, p.y + 1] : side === 'N' ? [p.x + 1, 3] : [p.x + 1, H2 - 5];
+    // Arrival spawns next to the old portal move out with it.
+    for (const sp of spawns) if (Math.abs(sp.x - oldIn[0]) <= 7 && Math.abs(sp.y - oldIn[1]) <= 7) { sp.x = newIn[0] + (side === 'W' ? 1 : side === 'E' ? 0 : 1); sp.y = newIn[1] + (side === 'N' ? 1 : side === 'S' ? 0 : 1); }
+    const bend = side === 'W' || side === 'E' ? [Math.round((newIn[0] + oldIn[0]) / 2), oldIn[1]] : [oldIn[0], Math.round((newIn[1] + oldIn[1]) / 2)];
+    roads.push({ op: 'path', tile: road, points: [newIn, [bend[0], newIn[1] + (side === 'W' || side === 'E' ? 0 : 0)], bend, oldIn], width: 3 });
+  }
+  // Roads go in before the scatter ops so no tree lands on them.
+  const at = m.paint.findIndex((op: J) => op.op === 'scatter');
+  m.paint.splice(at < 0 ? m.paint.length : at, 0, ...roads);
+  m.width = W2; m.height = H2;
+  m.origin = { x: (m.origin?.x ?? 0) + dx, y: (m.origin?.y ?? 0) + dy };
+  return { dx, dy };
+}
+
+/** Extra monster groups in the ring a widened field gained (copies of its own species). */
+function ringSpawns(m: J, dx: number, dy: number): J[] {
+  const W = m.width, H = m.height, base = m.monsterSpawns.filter((s: J) => !s.ring);
+  if (!base.length) return [];
+  const areas = [
+    { x: 4, y: 4, w: dx - 6, h: H - 8 }, { x: W - dx + 2, y: 4, w: dx - 6, h: H - 8 },
+    { x: dx, y: 4, w: W - 2 * dx, h: dy - 6 }, { x: dx, y: H - dy + 2, w: W - 2 * dx, h: dy - 6 },
+  ].filter((a) => a.w >= 8 && a.h >= 8);
+  const out: J[] = [];
+  areas.forEach((area, i) => {
+    for (let k = 0; k < 2; k++) {
+      const b = base[(i * 2 + k) % base.length];
+      out.push({ monsterId: b.monsterId, count: b.count * 2, area, ring: true });
+    }
+  });
+  return out;
+}
+
 function npc(id: string, name: string, title: string, seed: number, style: string, services: J[], greeting: string[]): J {
   const r = rng(seed);
   const pick = <T>(a: T[]) => a[Math.floor(r() * a.length)];
@@ -311,12 +376,12 @@ function buildTown(s: MapSpec): Built {
 }
 
 function buildField(s: MapSpec): Built {
-  const W = s.size?.[0] ?? 58, H = s.size?.[1] ?? 44, cx = Math.floor(W / 2), cy = Math.floor(H / 2), r = rng(hash(s.id));
+  const W = s.size?.[0] ?? FIELD_SIZE[0], H = s.size?.[1] ?? FIELD_SIZE[1], cx = Math.floor(W / 2), cy = Math.floor(H / 2), r = rng(hash(s.id));
   const paint: J[] = [], portals: J[] = [], spawn: J = {};
   const road = s.tileset === 'desert' ? 'sand' : s.tileset === 'snow' ? 'path_stone' : 'dirt';
   if (s.lake !== 'none') {
-    // Lakes / lava pools in two opposite quadrants, away from the cross of roads.
-    for (const [qx, qy] of [[-1, -1], [1, 1]]) paint.push({ op: 'blob', tile: 'water', cx: cx + qx * Math.round(W * 0.27), cy: cy + qy * Math.round(H * 0.25), rx: 4 + Math.floor(r() * 3), ry: 3 + Math.floor(r() * 2), seed: hash(s.id) + qx });
+    // Lakes / lava pools in the four quadrants, away from the cross of roads.
+    for (const [qx, qy] of [[-1, -1], [1, 1], [1, -1], [-1, 1]]) paint.push({ op: 'blob', tile: 'water', cx: cx + qx * Math.round(W * (0.22 + r() * 0.08)), cy: cy + qy * Math.round(H * (0.2 + r() * 0.08)), rx: 6 + Math.floor(r() * 5), ry: 4 + Math.floor(r() * 4), seed: hash(s.id) + qx * 3 + qy });
   }
   for (const [e, target] of Object.entries(s.exits) as [Exit, string][]) {
     const g = edge(e, W, H);
@@ -329,14 +394,11 @@ function buildField(s: MapSpec): Built {
   const trees = s.trees ?? ['tree_oak'];
   trees.forEach((t, i) => paint.push({ op: 'scatter', kind: t, density: i === 0 ? 0.035 : 0.012, seed: hash(s.id) + 10 + i }));
   for (const d of s.tileset === 'volcano' || s.tileset === 'desert' ? ['pebbles'] : s.tileset === 'snow' ? ['pebbles', 'tuft'] : ['flowers', 'tuft']) paint.push({ op: 'scatter', kind: `deco:${d}`, density: 0.05, seed: hash(s.id + d) });
-  // Monster areas in the four quadrants (cycling through the species list).
-  const quads = [[3, 3], [cx + 2, 3], [3, cy + 2], [cx + 2, cy + 2]];
-  const spawns = (s.monsters ?? []).flatMap(([id, n], i) => {
-    const out: J[] = [];
-    const parts = n > 6 ? 2 : 1;
-    for (let k = 0; k < parts; k++) { const [x, y] = quads[(i + k * 2) % 4]; out.push({ monsterId: id, count: Math.ceil(n / parts), area: { x, y, w: cx - 6, h: cy - 6 } }); }
-    return out;
-  });
+  // Monster areas on a 3×3 grid over the whole field; each species lives in three of them.
+  // About 7× the monsters of the old 58×44 field, so density stays the same on a 7.5× larger map.
+  const aw = Math.floor((W - 8) / 3), ah = Math.floor((H - 8) / 3);
+  const cells = [0, 1, 2].flatMap((gy) => [0, 1, 2].map((gx) => ({ x: 4 + gx * aw, y: 4 + gy * ah, w: aw - 2, h: ah - 2 })));
+  const spawns = (s.monsters ?? []).flatMap(([id, n], i) => [0, 1, 2].map((k) => ({ monsterId: id, count: Math.round(n * 2.3), area: cells[(i + k * 3) % 9] })));
   const signText = Object.entries(s.exits).map(([e, t]) => `${{ N: 'NORTH', S: 'SOUTH', E: 'EAST', W: 'WEST' }[e as Exit]} → ${MAP_NAME[t!]}`).join('.  ');
   const sp = spawn.default;
   paint.push({ op: 'object', kind: 'signpost', x: sp.x + 1, y: sp.y - 2, id: `sign_${s.id}` });
@@ -350,13 +412,14 @@ function buildField(s: MapSpec): Built {
 }
 
 function buildDungeon(s: MapSpec): Built {
-  const W = 50, H = 40, r = rng(hash(s.id));
+  const [W, H] = DUNGEON_SIZE, r = rng(hash(s.id));
   const paint: J[] = [], portals: J[] = [], spawn: J = {};
-  // 3×3 rooms separated by wall lines; every shared wall gets a 3-tile doorway, so all rooms connect.
-  const xs = [17, 33], ys = [14, 26];
+  // 5×4 rooms separated by wall lines; every shared wall gets a 3-tile doorway, so all rooms connect.
+  const COLS = 5, ROWS = 4, rw = Math.floor((W - 4) / COLS), rh = Math.floor((H - 4) / ROWS);
+  const xs = Array.from({ length: COLS - 1 }, (_, i) => 2 + rw * (i + 1)), ys = Array.from({ length: ROWS - 1 }, (_, i) => 2 + rh * (i + 1));
   for (const x of xs) {
     const bounds = [2, ...ys, H - 2];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < ROWS; i++) {
       const y0 = bounds[i], y1 = bounds[i + 1], gap = y0 + 2 + Math.floor(r() * Math.max(1, y1 - y0 - 6));
       if (gap > y0) paint.push({ op: 'rect', tile: 'ruin_wall', layer: 'wall', x, y: y0, w: 1, h: gap - y0 });
       if (y1 > gap + 3) paint.push({ op: 'rect', tile: 'ruin_wall', layer: 'wall', x, y: gap + 3, w: 1, h: y1 - gap - 3 });
@@ -364,7 +427,7 @@ function buildDungeon(s: MapSpec): Built {
   }
   for (const y of ys) {
     const bounds = [2, ...xs, W - 2];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < COLS; i++) {
       const x0 = bounds[i] + 1, x1 = bounds[i + 1], gap = x0 + 2 + Math.floor(r() * Math.max(1, x1 - x0 - 6));
       if (gap > x0) paint.push({ op: 'rect', tile: 'ruin_wall', layer: 'wall', x: x0, y, w: gap - x0, h: 1 });
       if (x1 > gap + 3) paint.push({ op: 'rect', tile: 'ruin_wall', layer: 'wall', x: gap + 3, y, w: x1 - gap - 3, h: 1 });
@@ -376,16 +439,31 @@ function buildDungeon(s: MapSpec): Built {
   spawn[`from_${target}`] = g.spawn; spawn.default = g.spawn;
   // Keep the corridor from the entrance free of wall lines.
   paint.push({ op: 'path', tile: 'ruin_floor', points: [g.inner, [Math.floor(W / 2), Math.floor(H / 2)]], width: 3 });
+  // The room farthest from the entrance and its three neighbours (toward the middle) become one
+  // big boss hall: the two inner wall lines are knocked out and no normal monsters spawn there.
+  const grid = Array.from({ length: ROWS }, (_, ry) => Array.from({ length: COLS }, (__, rx) => [rx, ry])).flat();
+  const centre = (rx: number, ry: number) => [3 + rx * rw + (rw - 3) / 2, 3 + ry * rh + (rh - 3) / 2];
+  const [frx, fry] = grid.sort((a, b) => Math.hypot(...centre(b[0], b[1]).map((v, k) => v - g.inner[k]) as [number, number]) - Math.hypot(...centre(a[0], a[1]).map((v, k) => v - g.inner[k]) as [number, number]))[0];
+  const hc = Math.min(frx, frx < COLS / 2 ? frx + 1 : frx - 1), hr = Math.min(fry, fry < ROWS / 2 ? fry + 1 : fry - 1);
+  const hall = { x: 3 + hc * rw, y: 3 + hr * rh, w: 2 * rw - 3, h: 2 * rh - 3 };
+  const inHall = (rx: number, ry: number) => s.boss && (rx === hc || rx === hc + 1) && (ry === hr || ry === hr + 1);
+  if (s.boss) {
+    paint.push({ op: 'path', tile: 'ruin_floor', points: [[xs[hc], hall.y], [xs[hc], hall.y + hall.h - 1]], width: 1 });
+    paint.push({ op: 'path', tile: 'ruin_floor', points: [[hall.x, ys[hr]], [hall.x + hall.w - 1, ys[hr]]], width: 1 });
+    // Keep the boss's own spot clear; pillars elsewhere in the hall stay as cover.
+    paint.push({ op: 'clear', x: xs[hc] - 3, y: ys[hr] - 3, w: 7, h: 7 });
+  }
   const deco = s.tileset === 'dg_catacomb' || s.tileset === 'dg_crypt' ? ['gravestone', 'ruin_pillar'] : s.tileset === 'dg_tower' || s.tileset === 'dg_tomb' ? ['ruin_pillar', 'obelisk'] : ['rock', 'rock_big'];
   deco.forEach((k, i) => paint.push({ op: 'scatter', kind: k, density: 0.012, seed: hash(s.id) + i, area: { x: 3, y: 3, w: W - 6, h: H - 6 } }));
   paint.push({ op: 'scatter', kind: 'deco:pebbles', density: 0.05, seed: hash(s.id) + 9 });
-  const rooms = [[3, 3], [18, 3], [34, 3], [3, 15], [18, 15], [34, 15], [3, 27], [18, 27], [34, 27]];
-  const spawns = (s.monsters ?? []).flatMap(([id, n], i) => [0, 1, 2].map((k) => {
-    const [x, y] = rooms[(i * 3 + k * 2 + 1) % 9];
-    return { monsterId: id, count: Math.max(1, Math.round(n / 3)), area: { x, y, w: 13, h: 10 } };
+  const rooms = Array.from({ length: ROWS }, (_, ry) => Array.from({ length: COLS }, (__, rx) => [rx, ry])).flat()
+    .filter(([rx, ry]) => !inHall(rx, ry)).map(([rx, ry]) => [3 + rx * rw, 3 + ry * rh]);
+  const spawns = (s.monsters ?? []).flatMap(([id, n], i) => Array.from({ length: 6 }, (_, k) => {
+    const [x, y] = rooms[(i * 7 + k * 3 + 1) % rooms.length];
+    return { monsterId: id, count: Math.max(1, n), area: { x, y, w: rw - 3, h: rh - 3 } };
   }));
-  // Boss in the room farthest from the entrance.
-  const far = e === 'N' ? [W / 2, H - 7] : e === 'S' ? [W / 2, 7] : e === 'E' ? [8, H / 2] : [W - 9, H / 2];
+  // Boss in the middle of the hall.
+  const far = [xs[hc], ys[hr]];
   const map = {
     id: s.id, name: s.name, region: s.region, type: 'dungeon', levelRange: s.lv, width: W, height: H, tileset: s.tileset, base: 'ruin_floor', border: { kind: 'ruin_wall', thickness: 2 },
     bgm: s.bgm, ambient: s.ambient, weather: [], worldMapPos: { x: s.pos[0], y: s.pos[1] }, paint, portals, spawnPoints: spawn, npcs: [],
@@ -702,7 +780,8 @@ export async function main() {
   }
   const wb = hand.willowbrook;
   wb.npcs = wb.npcs.filter((n: J) => n.npcId !== 'willowbrook_courier');
-  wb.npcs.push({ npcId: 'willowbrook_courier', x: 27, y: 24, facing: 'down' });
+  const wo = wb.origin ?? { x: 0, y: 0 };
+  wb.npcs.push({ npcId: 'willowbrook_courier', x: 27 + wo.x, y: 24 + wo.y, facing: 'down' });
   wb.region = REG.wb; hand.sunny_meadow.region = REG.wb; hand.whispering_forest.region = REG.wb;
   wb.worldMapPos = { x: 0.19, y: 0.6 }; hand.sunny_meadow.worldMapPos = { x: 0.29, y: 0.59 }; hand.whispering_forest.worldMapPos = { x: 0.31, y: 0.43 };
 
@@ -748,7 +827,7 @@ export async function main() {
       ['I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs.']));
     const m = town === 'willowbrook' ? hand.willowbrook : built.find((x) => x.map.id === town)!.map;
     m.npcs = m.npcs.filter((n: J) => n.npcId !== `${town}_jobmaster`);
-    m.npcs.push({ npcId: `${town}_jobmaster`, ...(town === 'willowbrook' ? { x: 21, y: 24 } : { x: 17, y: 21 }), facing: 'down' });
+    m.npcs.push({ npcId: `${town}_jobmaster`, ...(town === 'willowbrook' ? { x: 21 + wo.x, y: 24 + wo.y } : { x: 17, y: 21 }), facing: 'down' });
   }
   for (const sh of shops) if (sh.id === 'frostholm_arms') for (const x of ['stellar_shard', 'lunar_shard']) if (!sh.items.includes(x)) sh.items.push(x);
   for (const it of items) {
@@ -836,6 +915,25 @@ export async function main() {
     built.find((b) => b.map.id === inst.town)!.map.npcs.push({ npcId: nid, x: nx, y: ny, facing: 'down' });
   }
   write('instances.json', instances);
+
+  // ---------------------------------------------------------------- bigger maps
+  // Towns: the 48×38 core moves to the middle of a wider map with a ring of houses and woods.
+  for (const b of built.filter((x) => x.map.type === 'town')) {
+    const m = b.map;
+    expandMap(m, TOWN_SIZE[0], TOWN_SIZE[1], m.tileset === 'desert' ? 'sand' : 'path_stone');
+    const [W, H] = TOWN_SIZE;
+    const houses = [[6, 7], [15, 7], [W - 21, 7], [W - 12, 7], [6, H - 13], [15, H - 13], [W - 21, H - 13], [W - 12, H - 13]]
+      .map(([x, y]) => ({ op: 'building', style: 'house', x, y, w: 6, h: 5, door: 3 }));
+    const at = m.paint.findIndex((op: J) => op.op === 'scatter');
+    m.paint.splice(at, 0, ...houses);
+  }
+  // Hand-made maps: widened once (later runs see the new size and leave them).
+  for (const [id, [W2, H2]] of Object.entries(HAND_SIZE)) {
+    const m = hand[id];
+    if (m.width >= W2) continue;
+    const { dx, dy } = expandMap(m, W2, H2, id === 'willowbrook' ? 'path_stone' : 'dirt');
+    if (m.type === 'field') m.monsterSpawns.push(...ringSpawns(m, dx, dy));
+  }
 
   // Portal labels from target names.
   const allMaps: J[] = [...Object.values(hand), ...built.map((b) => b.map)];

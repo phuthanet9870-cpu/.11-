@@ -7,8 +7,8 @@
   5,
   12
  ],
- "width": 58,
- "height": 44,
+ "width": 160,
+ "height": 120,
  "tileset": "clover",
  "base": "grass",
  "border": {
@@ -28,36 +28,54 @@
   {
    "op": "blob",
    "tile": "water",
-   "cx": 13,
-   "cy": 11,
-   "rx": 5,
-   "ry": 3,
-   "seed": 3890872698
+   "cx": 40,
+   "cy": 33,
+   "rx": 10,
+   "ry": 5,
+   "seed": 3890872695
   },
   {
    "op": "blob",
    "tile": "water",
-   "cx": 45,
-   "cy": 33,
+   "cx": 121,
+   "cy": 88,
    "rx": 6,
-   "ry": 3,
-   "seed": 3890872700
+   "ry": 4,
+   "seed": 3890872703
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 117,
+   "cy": 28,
+   "rx": 10,
+   "ry": 4,
+   "seed": 3890872701
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 44,
+   "cy": 84,
+   "rx": 8,
+   "ry": 4,
+   "seed": 3890872697
   },
   {
    "op": "path",
    "tile": "dirt",
    "points": [
     [
-     28,
+     79,
      3
     ],
     [
-     28,
-     12
+     81,
+     33
     ],
     [
-     28,
-     21
+     79,
+     59
     ]
    ],
    "width": 2
@@ -67,16 +85,16 @@
    "tile": "dirt",
    "points": [
     [
-     54,
-     21
+     156,
+     59
     ],
     [
-     39,
-     20
+     118,
+     60
     ],
     [
-     28,
-     21
+     79,
+     59
     ]
    ],
    "width": 2
@@ -108,7 +126,7 @@
   {
    "op": "object",
    "kind": "signpost",
-   "x": 30,
+   "x": 81,
    "y": 2,
    "id": "sign_clover_hills"
   }
@@ -116,7 +134,7 @@
  "portals": [
   {
    "id": "to_sunny_meadow",
-   "x": 27,
+   "x": 78,
    "y": 0,
    "w": 4,
    "h": 2,
@@ -126,8 +144,8 @@
   },
   {
    "id": "to_aurelion_fields_south",
-   "x": 56,
-   "y": 20,
+   "x": 158,
+   "y": 58,
    "w": 2,
    "h": 4,
    "targetMap": "aurelion_fields_south",
@@ -137,15 +155,15 @@
  ],
  "spawnPoints": {
   "from_sunny_meadow": {
-   "x": 29,
+   "x": 80,
    "y": 4
   },
   "from_aurelion_fields_south": {
-   "x": 53,
-   "y": 22
+   "x": 155,
+   "y": 60
   },
   "default": {
-   "x": 29,
+   "x": 80,
    "y": 4
   }
  },
@@ -153,62 +171,102 @@
  "monsterSpawns": [
   {
    "monsterId": "clover_slime",
-   "count": 5,
+   "count": 23,
    "area": {
-    "x": 3,
-    "y": 3,
-    "w": 23,
-    "h": 16
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "clover_slime",
-   "count": 5,
+   "count": 23,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "clover_slime",
+   "count": 23,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "horn_rabbit",
-   "count": 4,
+   "count": 18,
    "area": {
-    "x": 31,
-    "y": 3,
-    "w": 23,
-    "h": 16
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "horn_rabbit",
-   "count": 4,
+   "count": 18,
    "area": {
-    "x": 31,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "horn_rabbit",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "dusk_bat",
-   "count": 6,
+   "count": 14,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "dusk_bat",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "dusk_bat",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "elite_dusk_bat",
    "count": 1,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   }
  ],
@@ -216,7 +274,7 @@
   {
    "id": "sign_clover_hills",
    "kind": "signpost",
-   "x": 30,
+   "x": 81,
    "y": 2,
    "name": "Signpost",
    "interact": {

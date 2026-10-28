@@ -7,8 +7,8 @@
   40,
   50
  ],
- "width": 58,
- "height": 44,
+ "width": 160,
+ "height": 120,
  "tileset": "snow",
  "base": "grass",
  "border": {
@@ -28,36 +28,54 @@
   {
    "op": "blob",
    "tile": "water",
-   "cx": 13,
-   "cy": 11,
-   "rx": 6,
+   "cx": 36,
+   "cy": 28,
+   "rx": 10,
    "ry": 4,
-   "seed": 1184229334
+   "seed": 1184229331
   },
   {
    "op": "blob",
    "tile": "water",
-   "cx": 45,
-   "cy": 33,
+   "cx": 120,
+   "cy": 86,
+   "rx": 8,
+   "ry": 5,
+   "seed": 1184229339
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 126,
+   "cy": 36,
+   "rx": 10,
+   "ry": 7,
+   "seed": 1184229337
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 35,
+   "cy": 89,
    "rx": 6,
-   "ry": 3,
-   "seed": 1184229336
+   "ry": 7,
+   "seed": 1184229333
   },
   {
    "op": "path",
    "tile": "path_stone",
    "points": [
     [
-     28,
-     40
+     79,
+     116
     ],
     [
-     28,
-     30
+     82,
+     88
     ],
     [
-     28,
-     21
+     79,
+     59
     ]
    ],
    "width": 2
@@ -67,16 +85,16 @@
    "tile": "path_stone",
    "points": [
     [
-     28,
+     79,
      3
     ],
     [
-     28,
-     11
+     79,
+     30
     ],
     [
-     28,
-     21
+     79,
+     59
     ]
    ],
    "width": 2
@@ -108,16 +126,16 @@
   {
    "op": "object",
    "kind": "signpost",
-   "x": 30,
-   "y": 37,
+   "x": 81,
+   "y": 113,
    "id": "sign_frostpeak_slopes"
   }
  ],
  "portals": [
   {
    "id": "to_tidewatch",
-   "x": 27,
-   "y": 42,
+   "x": 78,
+   "y": 118,
    "w": 4,
    "h": 2,
    "targetMap": "tidewatch",
@@ -126,7 +144,7 @@
   },
   {
    "id": "to_frostholm",
-   "x": 27,
+   "x": 78,
    "y": 0,
    "w": 4,
    "h": 2,
@@ -137,78 +155,118 @@
  ],
  "spawnPoints": {
   "from_tidewatch": {
-   "x": 29,
-   "y": 39
+   "x": 80,
+   "y": 115
   },
   "from_frostholm": {
-   "x": 29,
+   "x": 80,
    "y": 4
   },
   "default": {
-   "x": 29,
-   "y": 39
+   "x": 80,
+   "y": 115
   }
  },
  "npcs": [],
  "monsterSpawns": [
   {
    "monsterId": "frost_slime",
-   "count": 5,
+   "count": 21,
    "area": {
-    "x": 3,
-    "y": 3,
-    "w": 23,
-    "h": 16
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "frost_slime",
-   "count": 5,
+   "count": 21,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "frost_slime",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "snow_wolf",
-   "count": 4,
+   "count": 18,
    "area": {
-    "x": 31,
-    "y": 3,
-    "w": 23,
-    "h": 16
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "snow_wolf",
-   "count": 4,
+   "count": 18,
    "area": {
-    "x": 31,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "snow_wolf",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "ice_golem",
-   "count": 5,
+   "count": 12,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "ice_golem",
+   "count": 12,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "ice_golem",
+   "count": 12,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "elite_ice_golem",
    "count": 1,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   }
  ],
@@ -216,8 +274,8 @@
   {
    "id": "sign_frostpeak_slopes",
    "kind": "signpost",
-   "x": 30,
-   "y": 37,
+   "x": 81,
+   "y": 113,
    "name": "Signpost",
    "interact": {
     "text": "Frostpeak Slopes (Lv.40–50).  SOUTH → Port Town Tidewatch.  NORTH → Snow Town Frostholm."

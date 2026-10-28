@@ -6,6 +6,7 @@ import Phaser from 'phaser';
 import type { Appearance, Direction } from '../core/types';
 import type { CompiledMap } from '../core/mapCompiler';
 import { TILE } from '../core/mapCompiler';
+import type { Region } from './art/mapPainter';
 import { hashString } from '../core/rng';
 
 export interface AnimMeta {
@@ -243,35 +244,39 @@ function tilesetFor(scene: Phaser.Scene, tileset: string) {
  * above-player layers from a production tileset. Same tile choice as the
  * exported Tiled map (tools/asset-studio/src/tiled.ts).
  */
-export function paintTiledLayers(scene: Phaser.Scene, map: CompiledMap): { ground: HTMLCanvasElement; walls: HTMLCanvasElement; above: HTMLCanvasElement } | null {
+export function paintTiledLayers(scene: Phaser.Scene, map: CompiledMap, region?: Region): { ground: HTMLCanvasElement; walls: HTMLCanvasElement; above: HTMLCanvasElement } | null {
   const ts = tilesetFor(scene, map.def.tileset);
   if (!ts) return null;
   const W = map.width, H = map.height;
-  const make = () => { const c = document.createElement('canvas'); c.width = W * TILE; c.height = H * TILE; return c; };
+  const rg = region ?? { x: 0, y: 0, w: W, h: H };
+  const x0 = Math.max(0, rg.x - 1), y0 = Math.max(0, rg.y - 1), x1 = Math.min(W, rg.x + rg.w + 1), y1 = Math.min(H, rg.y + rg.h + 1);
+  const make = () => { const c = document.createElement('canvas'); c.width = rg.w * TILE; c.height = rg.h * TILE; return c; };
   const ground = make(), walls = make(), above = make();
+  const ctxOf = (c: HTMLCanvasElement) => { const x = c.getContext('2d')!; x.translate(-rg.x * TILE, -rg.y * TILE); return x; };
   const draw = (ctx: CanvasRenderingContext2D, name: string, x: number, y: number) => {
     const id = ts.ids.get(name);
     if (id === undefined) return;
     ctx.drawImage(ts.img, (id % ts.cols) * ts.size, Math.floor(id / ts.cols) * ts.size, ts.size, ts.size, x, y, ts.size, ts.size);
   };
-  const g = ground.getContext('2d')!;
-  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) draw(g, `grass_${(x * 7 + y * 3) % 4}`, x * TILE, y * TILE);
+  const g = ctxOf(ground);
+  for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) draw(g, `grass_${(x * 7 + y * 3) % 4}`, x * TILE, y * TILE);
   const at = (ter: string, cx: number, cy: number) => cx >= 0 && cy >= 0 && cx < W && cy < H && map.ground[cy * W + cx] === ter;
   for (const ter of ['dirt', 'path_stone', 'soil']) {
-    for (let y = 0; y <= H; y++) for (let x = 0; x <= W; x++) {
+    for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
       const mask = (at(ter, x - 1, y - 1) ? 1 : 0) | (at(ter, x, y - 1) ? 2 : 0) | (at(ter, x - 1, y) ? 4 : 0) | (at(ter, x, y) ? 8 : 0);
       if (!mask) continue;
       const v = (x * 5 + y * 3) % 3;
       draw(g, mask === 15 && v ? `${ter}_15_v${v}` : `${ter}_${mask}`, x * TILE - TILE / 2, y * TILE - TILE / 2);
     }
   }
-  map.deco.forEach((d, i) => {
+  const wc = ctxOf(walls), ac = ctxOf(above);
+  for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
+    const i = y * W + x, d = map.deco[i];
     const name = d === 'flowers' ? `flowers_${i % 3}` : d === 'tuft' ? `tuft_${i % 2}` : d === 'crops' ? 'crops_0' : d === 'pebbles' ? 'pebbles_0' : null;
-    if (name) draw(g, name, (i % W) * TILE, Math.floor(i / W) * TILE);
-  });
-  const wc = walls.getContext('2d')!, ac = above.getContext('2d')!;
-  map.wall.forEach((w, i) => { if (w) draw(wc, w, (i % W) * TILE, Math.floor(i / W) * TILE); });
-  map.above.forEach((a, i) => { if (a) draw(ac, 'canopy_overhang', (i % W) * TILE, Math.floor(i / W) * TILE); });
+    if (name) draw(g, name, x * TILE, y * TILE);
+    if (map.wall[i]) draw(wc, map.wall[i], x * TILE, y * TILE);
+    if (map.above[i]) draw(ac, 'canopy_overhang', x * TILE, y * TILE);
+  }
   return { ground, walls, above };
 }
 

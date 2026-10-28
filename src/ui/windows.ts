@@ -607,8 +607,8 @@ export class WindowManager {
       input.addEventListener('input', () => { st.volume[key] = Number(input.value) / 100; val.textContent = input.value; app.applySettings(); });
       return h('div', { class: 'range-row' }, h('span', {}, label), input, val);
     };
-    const toggle = (key: 'showDamageNumbers' | 'autoLoot' | 'showCollision' | 'wasdMovement', label: string) => {
-      const cb = h('input', { type: 'checkbox', checked: st[key] });
+    const toggle = (key: 'showDamageNumbers' | 'autoLoot' | 'showCollision' | 'wasdMovement' | 'cellCursor' | 'showGrid', label: string) => {
+      const cb = h('input', { type: 'checkbox', checked: key === 'cellCursor' ? st[key] !== false : !!st[key] });
       cb.addEventListener('change', () => { st[key] = cb.checked; app.applySettings(); });
       return h('label', { class: 'row', style: 'margin-bottom:4px' }, cb, label);
     };
@@ -627,6 +627,8 @@ export class WindowManager {
         slider('master', 'Master'), slider('music', 'Music'), slider('sfx', 'SFX'), slider('ambient', 'Ambient'),
         h('div', { class: 'gold', style: 'font-weight:bold;margin-top:8px' }, 'Gameplay'),
         toggle('showDamageNumbers', 'Show damage numbers'), toggle('autoLoot', 'Auto-loot drops'), toggle('wasdMovement', 'WASD movement'),
+        toggle('cellCursor', 'Cell cursor under the mouse (Ragnarok style)'),
+        toggle('showGrid', 'Show grid lines on the map'),
         toggle('showCollision', 'Show collision / spawn debug overlay'),
         h('div', { class: 'gold', style: 'font-weight:bold;margin-top:8px' }, 'Key Bindings'),
         h('div', { style: 'max-height:180px;overflow:auto;padding-right:6px' }, binds),

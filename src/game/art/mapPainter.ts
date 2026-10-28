@@ -149,14 +149,28 @@ function drawWall(ctx: CanvasRenderingContext2D, id: string, ox: number, oy: num
   }
 }
 
+/** Part of a map in tiles. Layers are painted per region (chunk) so big maps never need one huge image. */
+export interface Region { x: number; y: number; w: number; h: number }
+
+/** Canvas for a region, translated so tile (x, y) is drawn at its map position; plus the tile range to visit (1-tile margin for overhang). */
+export function regionCanvas(map: CompiledMap, region?: Region) {
+  const r = region ?? { x: 0, y: 0, w: map.width, h: map.height };
+  const { canvas, ctx } = makeCanvas(r.w * T, r.h * T);
+  ctx.translate(-r.x * T, -r.y * T);
+  return {
+    canvas, ctx,
+    x0: Math.max(0, r.x - 1), y0: Math.max(0, r.y - 1), x1: Math.min(map.width, r.x + r.w + 1), y1: Math.min(map.height, r.y + r.h + 1),
+  };
+}
+
 /** Ground + decoration composed into one image (Ground & Ground Decoration layers). */
-export function paintGroundLayer(map: CompiledMap, pal: Palette): HTMLCanvasElement {
-  const { canvas, ctx } = makeCanvas(map.width * T, map.height * T);
-  for (let y = 0; y < map.height; y++) for (let x = 0; x < map.width; x++) {
+export function paintGroundLayer(map: CompiledMap, pal: Palette, region?: Region): HTMLCanvasElement {
+  const { canvas, ctx, x0, y0, x1, y1 } = regionCanvas(map, region);
+  for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
     drawGround(ctx, map.ground[y * map.width + x], x * T, y * T, pal, cellSeed(x, y));
   }
   // Soft transitions: darken water edges, add path edge pebbles.
-  for (let y = 0; y < map.height; y++) for (let x = 0; x < map.width; x++) {
+  for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
     const id = map.ground[y * map.width + x];
     const nb = (dx: number, dy: number) => map.ground[(y + dy) * map.width + (x + dx)];
     if (id === 'water') {
@@ -176,9 +190,9 @@ export function paintGroundLayer(map: CompiledMap, pal: Palette): HTMLCanvasElem
 }
 
 /** Walls layer (fences, hedges, border thicket, ruins). */
-export function paintWallLayer(map: CompiledMap, pal: Palette): HTMLCanvasElement {
-  const { canvas, ctx } = makeCanvas(map.width * T, map.height * T);
-  for (let y = 0; y < map.height; y++) for (let x = 0; x < map.width; x++) {
+export function paintWallLayer(map: CompiledMap, pal: Palette, region?: Region): HTMLCanvasElement {
+  const { canvas, ctx, x0, y0, x1, y1 } = regionCanvas(map, region);
+  for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
     const w = map.wall[y * map.width + x];
     if (w) drawWall(ctx, w, x * T, y * T, pal, cellSeed(x, y, 5), map, x, y);
   }
@@ -186,9 +200,9 @@ export function paintWallLayer(map: CompiledMap, pal: Palette): HTMLCanvasElemen
 }
 
 /** Above-player layer: canopy overhang drawn over characters. */
-export function paintAboveLayer(map: CompiledMap, pal: Palette): HTMLCanvasElement {
-  const { canvas, ctx } = makeCanvas(map.width * T, map.height * T);
-  for (let y = 0; y < map.height; y++) for (let x = 0; x < map.width; x++) {
+export function paintAboveLayer(map: CompiledMap, pal: Palette, region?: Region): HTMLCanvasElement {
+  const { canvas, ctx, x0, y0, x1, y1 } = regionCanvas(map, region);
+  for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
     if (map.above[y * map.width + x] !== 'canopy_overhang') continue;
     const r = noise(cellSeed(x, y, 9));
     for (let i = 0; i < 4; i++) ellipse(ctx, x * T + 4 + Math.floor(r() * 24), y * T + 20 + Math.floor(r() * 14), 7, 6, i % 2 ? pal.thicket1 : pal.thicket2);

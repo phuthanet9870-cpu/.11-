@@ -106,6 +106,24 @@ try {
   check('tutorial quest accepted through dialogue', s.quests.tut_welcome === 'active', JSON.stringify(s.quests));
   await page.keyboard.press('Escape');
 
+  // Ragnarok-style cell cursor under the mouse; clicking ground walks to that cell's centre; the big map streams in chunks.
+  {
+    const p0 = await state();
+    const target = await toScreen(p0.x + 4 * 32, p0.y + 2 * 32);
+    await page.mouse.move(target.x, target.y);
+    await sleep(150);
+    const cur = await page.evaluate(() => {
+      const sc = window.__veyloria.game.scene.getScene('Game');
+      return { cmds: sc.cellCursor.commandBuffer.length, chunks: sc.chunks.size, w: window.__veyloria.world.map.width };
+    });
+    await page.mouse.click(target.x, target.y);
+    await sleep(100);
+    const goal = await page.evaluate(() => { const m = window.__veyloria.world.player.move; return m ? { x: m.goalX, y: m.goalY } : null; });
+    await sleep(1500);
+    check('cell cursor follows the mouse; clicks walk to the cell centre; map drawn in chunks', cur.cmds > 0 && cur.chunks >= 4 && !!goal && goal.x % 32 === 16 && goal.y % 32 === 16,
+      `cursor cmds=${cur.cmds} chunks=${cur.chunks} map width=${cur.w} goal=${goal && `${goal.x},${goal.y}`}`);
+  }
+
   // Windows
   await page.keyboard.press('i');
   await page.keyboard.press('k');

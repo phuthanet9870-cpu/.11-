@@ -7,8 +7,8 @@
   15,
   25
  ],
- "width": 58,
- "height": 44,
+ "width": 160,
+ "height": 120,
  "tileset": "fernwood",
  "base": "grass",
  "border": {
@@ -29,36 +29,54 @@
   {
    "op": "blob",
    "tile": "water",
-   "cx": 13,
-   "cy": 11,
-   "rx": 4,
-   "ry": 3,
-   "seed": 3108594086
+   "cx": 42,
+   "cy": 33,
+   "rx": 7,
+   "ry": 4,
+   "seed": 3108594083
   },
   {
    "op": "blob",
    "tile": "water",
-   "cx": 45,
-   "cy": 33,
-   "rx": 4,
-   "ry": 3,
-   "seed": 3108594088
+   "cx": 121,
+   "cy": 88,
+   "rx": 8,
+   "ry": 6,
+   "seed": 3108594091
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 117,
+   "cy": 35,
+   "rx": 6,
+   "ry": 6,
+   "seed": 3108594089
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 38,
+   "cy": 89,
+   "rx": 8,
+   "ry": 6,
+   "seed": 3108594085
   },
   {
    "op": "path",
    "tile": "dirt",
    "points": [
     [
-     28,
-     40
+     79,
+     116
     ],
     [
-     28,
-     30
+     77,
+     89
     ],
     [
-     28,
-     21
+     79,
+     59
     ]
    ],
    "width": 2
@@ -68,16 +86,16 @@
    "tile": "dirt",
    "points": [
     [
-     28,
+     79,
      3
     ],
     [
-     28,
-     13
+     80,
+     29
     ],
     [
-     28,
-     21
+     79,
+     59
     ]
    ],
    "width": 2
@@ -115,16 +133,16 @@
   {
    "op": "object",
    "kind": "signpost",
-   "x": 30,
-   "y": 37,
+   "x": 81,
+   "y": 113,
    "id": "sign_mistpine_woods"
   }
  ],
  "portals": [
   {
    "id": "to_aurelion_fields_north",
-   "x": 27,
-   "y": 42,
+   "x": 78,
+   "y": 118,
    "w": 4,
    "h": 2,
    "targetMap": "aurelion_fields_north",
@@ -133,7 +151,7 @@
   },
   {
    "id": "to_fernhollow",
-   "x": 27,
+   "x": 78,
    "y": 0,
    "w": 4,
    "h": 2,
@@ -144,78 +162,118 @@
  ],
  "spawnPoints": {
   "from_aurelion_fields_north": {
-   "x": 29,
-   "y": 39
+   "x": 80,
+   "y": 115
   },
   "from_fernhollow": {
-   "x": 29,
+   "x": 80,
    "y": 4
   },
   "default": {
-   "x": 29,
-   "y": 39
+   "x": 80,
+   "y": 115
   }
  },
  "npcs": [],
  "monsterSpawns": [
   {
    "monsterId": "mist_spore",
-   "count": 4,
+   "count": 18,
    "area": {
-    "x": 3,
-    "y": 3,
-    "w": 23,
-    "h": 16
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "mist_spore",
-   "count": 4,
+   "count": 18,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "mist_spore",
+   "count": 18,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "pine_goblin",
-   "count": 4,
+   "count": 18,
    "area": {
-    "x": 31,
-    "y": 3,
-    "w": 23,
-    "h": 16
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "pine_goblin",
-   "count": 4,
+   "count": 18,
    "area": {
-    "x": 31,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "pine_goblin",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "venom_spore",
-   "count": 4,
+   "count": 9,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "venom_spore",
+   "count": 9,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "venom_spore",
+   "count": 9,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "elite_pine_goblin",
    "count": 1,
    "area": {
-    "x": 31,
-    "y": 3,
-    "w": 23,
-    "h": 16
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   }
  ],
@@ -223,8 +281,8 @@
   {
    "id": "sign_mistpine_woods",
    "kind": "signpost",
-   "x": 30,
-   "y": 37,
+   "x": 81,
+   "y": 113,
    "name": "Signpost",
    "interact": {
     "text": "Mistpine Woods (Lv.15–25).  SOUTH → Aurelion Fields North.  NORTH → Fernhollow Village."

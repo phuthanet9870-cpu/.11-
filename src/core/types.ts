@@ -405,6 +405,8 @@ export interface MapObjectDef {
 
 export interface MapDef {
   id: string;
+  /** How far a widened map's original content was shifted (tiles); set by the world generator. */
+  origin?: { x: number; y: number };
   name: string;
   region: string;
   type: 'town' | 'field' | 'dungeon' | 'boss' | 'instance' | 'arena';
@@ -586,6 +588,10 @@ export interface Settings {
   showDamageNumbers: boolean;
   autoLoot: boolean;
   showCollision: boolean;
+  /** Ragnarok-style square under the mouse (default on). */
+  cellCursor?: boolean;
+  /** Faint grid lines over the map (default off). */
+  showGrid?: boolean;
   wasdMovement: boolean;
   /** Interface language (default English). */
   language?: 'en' | 'th';

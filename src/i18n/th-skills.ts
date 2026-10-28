@@ -61,7 +61,7 @@ export const TH_SKILLS: Record<string, string> = {
   'Brace behind your armor: +8% DEF and +4% max HP per level.': 'ตั้งรับด้วยเกราะ: DEF +8% และ HP สูงสุด +4% ต่อเลเวล',
   'Drive the lance through a whole line of enemies.': 'แทงทวนทะลุศัตรูทั้งแถว',
   'ULTIMATE. The drake leaps and crashes down: huge damage in an area, stunning foes.': 'สุดยอดสกิล มังกรศึกกระโดดและกระแทกลงมา: ดาเมจมหาศาลในพื้นที่ ทำให้ศัตรูมึนงง',
-  '+3% max HP and 3% holy resist per level.': 'HP สูงสุด +3% และต้านทานศักดิ์สิทธิ์ 3% ต่อเลเวล',
+  '+3% max HP, +2 MDEF and 3% holy resist per level.': 'HP สูงสุด +3%, MDEF +2 และต้านทานศักดิ์สิทธิ์ 3% ต่อเลเวล',
   'Lift your shield: 4% chance per level to block with a counter, +5% DEF per level.': 'ยกโล่: โอกาสป้องกันพร้อมสวนกลับ 4% ต่อเลเวล และ DEF +5% ต่อเลเวล',
   'Slam your shield into the foe: may stun.': 'กระแทกโล่ใส่ศัตรู: อาจทำให้มึนงง',
   'A holy weapon strike.': 'โจมตีด้วยอาวุธศักดิ์สิทธิ์',

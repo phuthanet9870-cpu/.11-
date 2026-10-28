@@ -7,10 +7,11 @@
 // intended difficulty and should be revisited when balance data changes.
 import { describe, expect, it } from 'vitest';
 import { Bot, fightBoss } from '../helpers/bot';
-import { newWorld } from '../helpers/fixtures';
+import { data, newWorld } from '../helpers/fixtures';
 import { buildCharacter } from '../helpers/scenarios';
 import { TILE } from '../../src/core/mapCompiler';
 
+const GRUKK = data.maps.get('whispering_forest')!.bossSpawn!;
 const kit: [string, number][] = [['orange_potion', 30], ['blue_potion', 10]];
 // 24 fixed seeds: boss fights are chaotic enough that 6 seeds swing by ±2 wins.
 const SEEDS = Array.from({ length: 24 }, (_, i) => i + 1);
@@ -62,7 +63,7 @@ describe('every first job can defeat Grukk the Thornking', () => {
       let wins = 0;
       for (const seed of SEEDS) {
         const c = cs.build();
-        c.position = { mapId: 'whispering_forest', x: 44 * TILE, y: 38 * TILE };
+        c.position = { mapId: 'whispering_forest', x: (GRUKK.x - 3) * TILE, y: GRUKK.y * TILE }; // three tiles west of Grukk
         const w = newWorld(c, seed * 7919);
         const bot = new Bot(w);
         bot.combatSkills = cs.skills;

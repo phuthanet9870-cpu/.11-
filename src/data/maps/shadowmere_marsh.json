@@ -7,8 +7,8 @@
   60,
   70
  ],
- "width": 58,
- "height": 44,
+ "width": 160,
+ "height": 120,
  "tileset": "swamp",
  "base": "grass",
  "border": {
@@ -29,20 +29,38 @@
   {
    "op": "blob",
    "tile": "water",
-   "cx": 13,
-   "cy": 11,
+   "cx": 36,
+   "cy": 30,
    "rx": 6,
-   "ry": 4,
-   "seed": 1293583413
+   "ry": 5,
+   "seed": 1293583410
   },
   {
    "op": "blob",
    "tile": "water",
-   "cx": 45,
-   "cy": 33,
-   "rx": 4,
-   "ry": 3,
-   "seed": 1293583415
+   "cx": 119,
+   "cy": 90,
+   "rx": 6,
+   "ry": 5,
+   "seed": 1293583418
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 122,
+   "cy": 29,
+   "rx": 8,
+   "ry": 5,
+   "seed": 1293583416
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 44,
+   "cy": 86,
+   "rx": 9,
+   "ry": 7,
+   "seed": 1293583412
   },
   {
    "op": "path",
@@ -50,15 +68,15 @@
    "points": [
     [
      3,
-     21
+     59
     ],
     [
-     15,
-     22
+     41,
+     61
     ],
     [
-     28,
-     21
+     79,
+     59
     ]
    ],
    "width": 2
@@ -68,16 +86,16 @@
    "tile": "dirt",
    "points": [
     [
-     28,
+     79,
      3
     ],
     [
-     26,
-     11
+     81,
+     31
     ],
     [
-     28,
-     21
+     79,
+     59
     ]
    ],
    "width": 2
@@ -110,7 +128,7 @@
    "op": "object",
    "kind": "signpost",
    "x": 5,
-   "y": 20,
+   "y": 58,
    "id": "sign_shadowmere_marsh"
   }
  ],
@@ -118,7 +136,7 @@
   {
    "id": "to_mirage_oasis",
    "x": 0,
-   "y": 20,
+   "y": 58,
    "w": 2,
    "h": 4,
    "targetMap": "mirage_oasis",
@@ -127,7 +145,7 @@
   },
   {
    "id": "to_ravenhold_ruins",
-   "x": 27,
+   "x": 78,
    "y": 0,
    "w": 4,
    "h": 2,
@@ -139,87 +157,117 @@
  "spawnPoints": {
   "from_mirage_oasis": {
    "x": 4,
-   "y": 22
+   "y": 60
   },
   "from_ravenhold_ruins": {
-   "x": 29,
+   "x": 80,
    "y": 4
   },
   "default": {
    "x": 4,
-   "y": 22
+   "y": 60
   }
  },
  "npcs": [],
  "monsterSpawns": [
   {
    "monsterId": "bog_slime",
-   "count": 5,
+   "count": 21,
    "area": {
-    "x": 3,
-    "y": 3,
-    "w": 23,
-    "h": 16
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "bog_slime",
-   "count": 5,
+   "count": 21,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "bog_slime",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "marsh_spore",
-   "count": 4,
+   "count": 18,
    "area": {
-    "x": 31,
-    "y": 3,
-    "w": 23,
-    "h": 16
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "marsh_spore",
-   "count": 4,
+   "count": 18,
    "area": {
-    "x": 31,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "marsh_spore",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "mire_crab",
-   "count": 4,
+   "count": 16,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "mire_crab",
-   "count": 4,
+   "count": 16,
    "area": {
-    "x": 3,
-    "y": 3,
-    "w": 23,
-    "h": 16
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "mire_crab",
+   "count": 16,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "elite_mire_crab",
    "count": 1,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   }
  ],
@@ -228,7 +276,7 @@
    "id": "sign_shadowmere_marsh",
    "kind": "signpost",
    "x": 5,
-   "y": 20,
+   "y": 58,
    "name": "Signpost",
    "interact": {
     "text": "Shadowmere Marsh (Lv.60–70).  WEST → Mirage Oasis.  NORTH → Ravenhold Castle Ruins."

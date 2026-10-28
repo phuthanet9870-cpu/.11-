@@ -218,7 +218,7 @@ export class App implements GameHost {
     audio.setVolumes(this.settings.volume);
     if (this.world) this.world.autoLoot = this.settings.autoLoot;
     const scene = this.game.scene.getScene('Game') as GameScene | null;
-    if (scene && scene.scene.isActive()) scene.setCollisionVisible(this.settings.showCollision);
+    if (scene && scene.scene.isActive()) { scene.setCollisionVisible(this.settings.showCollision); scene.setGridVisible(!!this.settings.showGrid); }
     this.hud?.buildHotbar();
     this.persist();
   }

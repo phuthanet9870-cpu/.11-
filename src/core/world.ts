@@ -203,6 +203,8 @@ export interface WorldOptions {
 
 /** World events: one every 15 minutes of play, lasting 10 minutes. */
 export const EVENT_INTERVAL_MS = 15 * 60000;
+/** Idle monsters farther than this from the player do not patrol (saves work on big maps). */
+export const DORMANT_RANGE = 1600;
 export const EVENT_DURATION_MS = 10 * 60000;
 
 const INTERACT_RANGE = 64;
@@ -993,7 +995,7 @@ export class World {
   }
 
   /** Moves toward a goal using direct steps when clear, otherwise A*. Returns true on arrival. */
-  private moveToward(a: ActorBase, gx: number, gy: number, speed: number, dt: number, stopDist = 2): boolean {
+  private moveToward(a: ActorBase, gx: number, gy: number, speed: number, dt: number, stopDist = 2, maxNodes = 6000): boolean {
     if (dist(a.x, a.y, gx, gy) <= stopDist) { a.move = null; return true; }
     const needRepath = !a.move || a.move.repathAt <= this.time || dist(a.move.goalX, a.move.goalY, gx, gy) > 24;
     if (needRepath) {
@@ -1001,7 +1003,7 @@ export class World {
       if (lineClear(this.map, a.x, a.y, gx, gy, a.halfW, a.halfH)) {
         a.move = { path: [{ x: gx, y: gy }], goalX: gx, goalY: gy, repathAt: this.time + 250, stuckMs };
       } else {
-        const path = findPath(this.map, a.x, a.y, gx, gy);
+        const path = findPath(this.map, a.x, a.y, gx, gy, maxNodes);
         a.move = { path: path ?? [], goalX: gx, goalY: gy, repathAt: this.time + 600, stuckMs };
         if (!path) return false;
       }
@@ -1651,6 +1653,8 @@ export class World {
           break;
         }
         if (m.def.looter && !cannotMove && this.updateLooter(m, speed, dt)) break;
+        // Far from the player, idle monsters doze (as in Ragnarok, only monsters near players act).
+        if (!m.boss && dist(m.x, m.y, p.x, p.y) > DORMANT_RANGE) { if (m.state === 'patrol') { m.state = 'idle'; m.patrol = null; m.move = null; } break; }
         if (m.state === 'idle') {
           if (this.time >= m.stateUntil && !m.boss) {
             const cells = this.spawnCells[m.spawnGroup];
@@ -1666,7 +1670,7 @@ export class World {
             } else m.stateUntil = this.time + 3000;
           }
         } else if (m.patrol && !cannotMove) {
-          const arrived = this.moveToward(m, m.patrol.x, m.patrol.y, speed * 0.5, dt, 4);
+          const arrived = this.moveToward(m, m.patrol.x, m.patrol.y, speed * 0.5, dt, 4, 500);
           if (arrived || this.time > m.stateUntil) {
             m.state = 'idle'; m.patrol = null; m.move = null;
             m.stateUntil = this.time + this.rng.range(2000, 6000);
@@ -1816,6 +1820,8 @@ export class World {
     const skill = ready[Math.floor(this.rng.next() * ready.length)];
     if (skill.kind === 'charge' && distToPlayer < 90) return false;
     if (skill.kind === 'self_circle' && distToPlayer > (skill.radius ?? 0) + 60) return false;
+    // One wave of servants at a time: no new summon while the last wave is alive (big halls let them live long).
+    if (skill.kind === 'summon' && b.minions.some((id) => { const x = this.monsters.get(id); return x && !x.dead; })) return false;
     b.skillReadyAt[skill.id] = this.time + skill.cooldownMs * (b.enraged ? 0.75 : 1);
     const tid = this.uid('t');
     const endsAt = this.time + skill.telegraphMs;
@@ -2210,7 +2216,7 @@ export class World {
     if (p.cast) this.interruptCast();
     p.intent = { type: 'move' };
     p.move = null;
-    const path = findPath(this.map, p.x, p.y, x, y);
+    const path = findPath(this.map, p.x, p.y, x, y, 40000);
     if (!path || !path.length) { p.intent = { type: 'none' }; return; }
     const last = path[path.length - 1];
     p.move = { path, goalX: last.x, goalY: last.y, repathAt: Infinity };

@@ -7,8 +7,8 @@
   10,
   18
  ],
- "width": 58,
- "height": 44,
+ "width": 160,
+ "height": 120,
  "tileset": "capital",
  "base": "grass",
  "border": {
@@ -29,20 +29,38 @@
   {
    "op": "blob",
    "tile": "water",
-   "cx": 13,
-   "cy": 11,
-   "rx": 4,
+   "cx": 43,
+   "cy": 26,
+   "rx": 10,
    "ry": 4,
-   "seed": 525238657
+   "seed": 525238654
   },
   {
    "op": "blob",
    "tile": "water",
-   "cx": 45,
+   "cx": 128,
+   "cy": 88,
+   "rx": 7,
+   "ry": 6,
+   "seed": 525238662
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 121,
    "cy": 33,
    "rx": 6,
-   "ry": 3,
-   "seed": 525238659
+   "ry": 7,
+   "seed": 525238660
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 39,
+   "cy": 93,
+   "rx": 7,
+   "ry": 5,
+   "seed": 525238656
   },
   {
    "op": "path",
@@ -50,15 +68,15 @@
    "points": [
     [
      3,
-     21
+     59
     ],
     [
-     19,
-     21
+     42,
+     58
     ],
     [
-     28,
-     21
+     79,
+     59
     ]
    ],
    "width": 2
@@ -68,16 +86,16 @@
    "tile": "dirt",
    "points": [
     [
-     28,
+     79,
      3
     ],
     [
-     27,
-     13
+     77,
+     34
     ],
     [
-     28,
-     21
+     79,
+     59
     ]
    ],
    "width": 2
@@ -87,16 +105,16 @@
    "tile": "dirt",
    "points": [
     [
-     54,
-     21
+     156,
+     59
     ],
     [
-     41,
-     20
+     117,
+     61
     ],
     [
-     28,
-     21
+     79,
+     59
     ]
    ],
    "width": 2
@@ -129,7 +147,7 @@
    "op": "object",
    "kind": "signpost",
    "x": 5,
-   "y": 20,
+   "y": 58,
    "id": "sign_aurelion_fields_south"
   }
  ],
@@ -137,7 +155,7 @@
   {
    "id": "to_clover_hills",
    "x": 0,
-   "y": 20,
+   "y": 58,
    "w": 2,
    "h": 4,
    "targetMap": "clover_hills",
@@ -146,7 +164,7 @@
   },
   {
    "id": "to_aurelion",
-   "x": 27,
+   "x": 78,
    "y": 0,
    "w": 4,
    "h": 2,
@@ -156,8 +174,8 @@
   },
   {
    "id": "to_coral_beach",
-   "x": 56,
-   "y": 20,
+   "x": 158,
+   "y": 58,
    "w": 2,
    "h": 4,
    "targetMap": "coral_beach",
@@ -168,71 +186,121 @@
  "spawnPoints": {
   "from_clover_hills": {
    "x": 4,
-   "y": 22
+   "y": 60
   },
   "from_aurelion": {
-   "x": 29,
+   "x": 80,
    "y": 4
   },
   "from_coral_beach": {
-   "x": 53,
-   "y": 22
+   "x": 155,
+   "y": 60
   },
   "default": {
    "x": 4,
-   "y": 22
+   "y": 60
   }
  },
  "npcs": [],
  "monsterSpawns": [
   {
    "monsterId": "plains_wolf",
-   "count": 4,
+   "count": 18,
    "area": {
-    "x": 3,
-    "y": 3,
-    "w": 23,
-    "h": 16
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "plains_wolf",
-   "count": 4,
+   "count": 18,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "plains_wolf",
+   "count": 18,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "pebble_golem",
-   "count": 6,
+   "count": 14,
    "area": {
-    "x": 31,
-    "y": 3,
-    "w": 23,
-    "h": 16
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "pebble_golem",
+   "count": 14,
+   "area": {
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "pebble_golem",
+   "count": 14,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "road_goblin",
-   "count": 6,
+   "count": 14,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "road_goblin",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "road_goblin",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "elite_road_goblin",
    "count": 1,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   }
  ],
@@ -241,7 +309,7 @@
    "id": "sign_aurelion_fields_south",
    "kind": "signpost",
    "x": 5,
-   "y": 20,
+   "y": 58,
    "name": "Signpost",
    "interact": {
     "text": "Aurelion Fields South (Lv.10–18).  WEST → Clover Hills.  NORTH → Royal Capital Aurelion.  EAST → Coral Beach."

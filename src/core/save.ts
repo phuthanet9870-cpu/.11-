@@ -21,6 +21,8 @@ export function defaultSettings(): Settings {
     showDamageNumbers: true,
     autoLoot: false,
     showCollision: false,
+    cellCursor: true,
+    showGrid: false,
     wasdMovement: true,
   };
 }

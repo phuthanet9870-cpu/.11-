@@ -2,7 +2,7 @@
 import Phaser from 'phaser';
 import { loadGameData } from '../../core/data';
 import { compileMap, TILE } from '../../core/mapCompiler';
-import { ensureFxTextures, ensureMapTextures } from '../assets';
+import { CHUNK_TILES, ensureFxTextures, ensureMapChunk, ensureMapTextures } from '../assets';
 
 export class MenuScene extends Phaser.Scene {
   constructor() { super('Menu'); }
@@ -12,8 +12,14 @@ export class MenuScene extends Phaser.Scene {
     const map = compileMap(data, data.maps.get('willowbrook')!);
     ensureFxTextures(this);
     const tex = ensureMapTextures(this, data, map);
-    this.add.image(0, 0, tex.ground).setOrigin(0);
-    this.add.image(0, 0, tex.walls).setOrigin(0);
+    // The village centre (spawn point); only the chunks around it are painted.
+    const home = map.def.spawnPoints.default, hx = home.x * TILE, hy = home.y * TILE, span = CHUNK_TILES * TILE;
+    for (let cy = Math.max(0, Math.floor((hy - 700) / span)); cy <= Math.min(Math.ceil(map.height / CHUNK_TILES) - 1, Math.floor((hy + 700) / span)); cy++)
+      for (let cx = Math.max(0, Math.floor((hx - 900) / span)); cx <= Math.min(Math.ceil(map.width / CHUNK_TILES) - 1, Math.floor((hx + 1200) / span)); cx++) {
+        const k = ensureMapChunk(this, data, map, cx, cy);
+        this.add.image(cx * span, cy * span, k.ground).setOrigin(0);
+        if (k.walls) this.add.image(cx * span, cy * span, k.walls).setOrigin(0);
+      }
     for (const o of map.objects) {
       const by = (o.y + o.h) * TILE;
       this.add.image((o.x + o.w / 2) * TILE, by + 2, tex.objects.get(o.uid)!).setOrigin(0.5, 1).setDepth(by);
@@ -26,7 +32,7 @@ export class MenuScene extends Phaser.Scene {
     const cam = this.cameras.main;
     cam.setZoom(1.25);
     cam.setBounds(0, 0, map.width * TILE, map.height * TILE);
-    cam.centerOn(24 * TILE, 18 * TILE);
+    cam.centerOn(hx, hy - 3 * TILE);
     this.tweens.add({ targets: cam, scrollX: cam.scrollX + 260, scrollY: cam.scrollY - 60, duration: 40000, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
   }
 }

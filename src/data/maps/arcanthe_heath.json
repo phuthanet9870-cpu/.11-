@@ -7,8 +7,8 @@
   20,
   30
  ],
- "width": 58,
- "height": 44,
+ "width": 160,
+ "height": 120,
  "tileset": "arcane",
  "base": "grass",
  "border": {
@@ -28,20 +28,38 @@
   {
    "op": "blob",
    "tile": "water",
-   "cx": 13,
-   "cy": 11,
-   "rx": 5,
-   "ry": 4,
-   "seed": 153573281
+   "cx": 37,
+   "cy": 27,
+   "rx": 10,
+   "ry": 7,
+   "seed": 153573278
   },
   {
    "op": "blob",
    "tile": "water",
-   "cx": 45,
-   "cy": 33,
-   "rx": 6,
-   "ry": 4,
-   "seed": 153573283
+   "cx": 120,
+   "cy": 88,
+   "rx": 10,
+   "ry": 6,
+   "seed": 153573286
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 127,
+   "cy": 35,
+   "rx": 7,
+   "ry": 7,
+   "seed": 153573284
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 41,
+   "cy": 88,
+   "rx": 10,
+   "ry": 6,
+   "seed": 153573280
   },
   {
    "op": "path",
@@ -49,15 +67,15 @@
    "points": [
     [
      3,
-     21
+     59
     ],
     [
-     15,
-     21
+     40,
+     60
     ],
     [
-     28,
-     21
+     79,
+     59
     ]
    ],
    "width": 2
@@ -67,16 +85,16 @@
    "tile": "dirt",
    "points": [
     [
-     54,
-     21
+     156,
+     59
     ],
     [
-     43,
-     22
+     118,
+     57
     ],
     [
-     28,
-     21
+     79,
+     59
     ]
    ],
    "width": 2
@@ -115,7 +133,7 @@
    "op": "object",
    "kind": "signpost",
    "x": 5,
-   "y": 20,
+   "y": 58,
    "id": "sign_arcanthe_heath"
   }
  ],
@@ -123,7 +141,7 @@
   {
    "id": "to_aurelion",
    "x": 0,
-   "y": 20,
+   "y": 58,
    "w": 2,
    "h": 4,
    "targetMap": "aurelion",
@@ -132,8 +150,8 @@
   },
   {
    "id": "to_arcanthe",
-   "x": 56,
-   "y": 20,
+   "x": 158,
+   "y": 58,
    "w": 2,
    "h": 4,
    "targetMap": "arcanthe",
@@ -144,77 +162,117 @@
  "spawnPoints": {
   "from_aurelion": {
    "x": 4,
-   "y": 22
+   "y": 60
   },
   "from_arcanthe": {
-   "x": 53,
-   "y": 22
+   "x": 155,
+   "y": 60
   },
   "default": {
    "x": 4,
-   "y": 22
+   "y": 60
   }
  },
  "npcs": [],
  "monsterSpawns": [
   {
    "monsterId": "crystal_slime",
-   "count": 5,
+   "count": 21,
    "area": {
-    "x": 3,
-    "y": 3,
-    "w": 23,
-    "h": 16
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "crystal_slime",
-   "count": 5,
+   "count": 21,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "crystal_slime",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "moon_hare",
-   "count": 4,
+   "count": 16,
    "area": {
-    "x": 31,
-    "y": 3,
-    "w": 23,
-    "h": 16
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "moon_hare",
-   "count": 4,
+   "count": 16,
    "area": {
-    "x": 31,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "moon_hare",
+   "count": 16,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "arcane_wisp",
-   "count": 6,
+   "count": 14,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "arcane_wisp",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "arcane_wisp",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
    }
   },
   {
    "monsterId": "elite_arcane_wisp",
    "count": 1,
    "area": {
-    "x": 3,
-    "y": 24,
-    "w": 23,
-    "h": 16
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
    }
   }
  ],
@@ -223,7 +281,7 @@
    "id": "sign_arcanthe_heath",
    "kind": "signpost",
    "x": 5,
-   "y": 20,
+   "y": 58,
    "name": "Signpost",
    "interact": {
     "text": "Arcanthe Heath (Lv.20–30).  WEST → Royal Capital Aurelion.  EAST → Tower City Arcanthe."

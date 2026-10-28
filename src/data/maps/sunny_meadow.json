@@ -7,8 +7,8 @@
   1,
   12
  ],
- "width": 60,
- "height": 44,
+ "width": 150,
+ "height": 110,
  "tileset": "sunny_meadow",
  "base": "grass",
  "border": {
@@ -31,28 +31,28 @@
    "tile": "dirt",
    "points": [
     [
-     0,
-     20
-    ],
-    [
-     14,
-     20
-    ],
-    [
-     22,
-     16
-    ],
-    [
-     34,
-     16
-    ],
-    [
-     42,
-     11
+     45,
+     53
     ],
     [
      59,
-     11
+     53
+    ],
+    [
+     67,
+     49
+    ],
+    [
+     79,
+     49
+    ],
+    [
+     87,
+     44
+    ],
+    [
+     104,
+     44
     ]
    ],
    "width": 2
@@ -62,16 +62,16 @@
    "tile": "dirt",
    "points": [
     [
-     22,
-     16
+     67,
+     49
     ],
     [
-     26,
-     8
+     71,
+     41
     ],
     [
-     30,
-     8
+     75,
+     41
     ]
    ],
    "width": 1
@@ -81,16 +81,16 @@
    "tile": "dirt",
    "points": [
     [
-     34,
-     17
+     79,
+     50
     ],
     [
-     40,
-     24
+     85,
+     57
     ],
     [
-     46,
-     33
+     91,
+     66
     ]
    ],
    "width": 1
@@ -98,8 +98,8 @@
   {
    "op": "blob",
    "tile": "sand",
-   "cx": 30,
-   "cy": 31,
+   "cx": 75,
+   "cy": 64,
    "rx": 8,
    "ry": 6,
    "seed": 5
@@ -107,8 +107,8 @@
   {
    "op": "blob",
    "tile": "water",
-   "cx": 30,
-   "cy": 31,
+   "cx": 75,
+   "cy": 64,
    "rx": 6,
    "ry": 4,
    "seed": 6
@@ -116,94 +116,163 @@
   {
    "op": "rect",
    "tile": "soil",
-   "x": 5,
-   "y": 9,
+   "x": 50,
+   "y": 42,
    "w": 7,
    "h": 5
   },
   {
    "op": "rect",
    "tile": "crops",
-   "x": 5,
-   "y": 9,
+   "x": 50,
+   "y": 42,
    "w": 7,
    "h": 5,
    "layer": "deco"
   },
   {
    "op": "fence",
-   "x": 4,
-   "y": 8,
+   "x": 49,
+   "y": 41,
    "length": 9,
    "dir": "h"
   },
   {
    "op": "fence",
-   "x": 4,
-   "y": 14,
+   "x": 49,
+   "y": 47,
    "length": 5,
    "dir": "h"
   },
   {
    "op": "fence",
-   "x": 10,
-   "y": 14,
+   "x": 55,
+   "y": 47,
    "length": 3,
    "dir": "h"
   },
   {
    "op": "fence",
-   "x": 4,
-   "y": 9,
+   "x": 49,
+   "y": 42,
    "length": 5,
    "dir": "v"
   },
   {
    "op": "fence",
-   "x": 12,
-   "y": 9,
+   "x": 57,
+   "y": 42,
    "length": 5,
    "dir": "v"
   },
   {
    "op": "object",
    "kind": "haystack",
-   "x": 14,
-   "y": 12
+   "x": 59,
+   "y": 45
   },
   {
    "op": "object",
    "kind": "haystack",
-   "x": 15,
-   "y": 13
+   "x": 60,
+   "y": 46
   },
   {
    "op": "object",
    "kind": "signpost",
-   "x": 4,
-   "y": 18,
+   "x": 49,
+   "y": 51,
    "id": "sign_meadow"
   },
   {
    "op": "object",
    "kind": "obelisk",
-   "x": 30,
-   "y": 6,
+   "x": 75,
+   "y": 39,
    "id": "astral_obelisk"
   },
   {
    "op": "clear",
-   "x": 26,
-   "y": 4,
+   "x": 71,
+   "y": 37,
    "w": 9,
    "h": 6
   },
   {
    "op": "clear",
-   "x": 2,
-   "y": 16,
+   "x": 47,
+   "y": 49,
    "w": 16,
    "h": 8
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     3,
+     53
+    ],
+    [
+     26,
+     53
+    ],
+    [
+     26,
+     53
+    ],
+    [
+     48,
+     53
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     145,
+     43
+    ],
+    [
+     123,
+     43
+    ],
+    [
+     123,
+     43
+    ],
+    [
+     101,
+     43
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     74,
+     105
+    ],
+    [
+     74,
+     105
+    ],
+    [
+     74,
+     89
+    ],
+    [
+     74,
+     73
+    ]
+   ],
+   "width": 3
   },
   {
    "op": "scatter",
@@ -240,16 +309,16 @@
    "tile": "dirt",
    "points": [
     [
-     29,
-     40
+     74,
+     106
     ],
     [
-     29,
-     30
+     74,
+     80
     ],
     [
      16,
-     17
+     51
     ]
    ],
    "width": 2,
@@ -260,7 +329,7 @@
   {
    "id": "to_village",
    "x": 0,
-   "y": 19,
+   "y": 52,
    "w": 2,
    "h": 4,
    "targetMap": "willowbrook",
@@ -269,8 +338,8 @@
   },
   {
    "id": "to_forest",
-   "x": 58,
-   "y": 9,
+   "x": 148,
+   "y": 42,
    "w": 2,
    "h": 4,
    "targetMap": "whispering_forest",
@@ -279,8 +348,8 @@
   },
   {
    "id": "to_clover_hills",
-   "x": 28,
-   "y": 42,
+   "x": 73,
+   "y": 108,
    "w": 4,
    "h": 2,
    "targetMap": "clover_hills",
@@ -291,26 +360,26 @@
  "spawnPoints": {
   "default": {
    "x": 4,
-   "y": 20
+   "y": 54
   },
   "from_village": {
    "x": 4,
-   "y": 20
+   "y": 54
   },
   "from_forest": {
-   "x": 55,
-   "y": 11
+   "x": 145,
+   "y": 44
   },
   "from_clover_hills": {
-   "x": 30,
-   "y": 39
+   "x": 75,
+   "y": 105
   }
  },
  "npcs": [
   {
    "npcId": "hollis",
-   "x": 14,
-   "y": 17,
+   "x": 59,
+   "y": 50,
    "facing": "down"
   }
  ],
@@ -319,8 +388,8 @@
    "monsterId": "leaf_slime",
    "count": 10,
    "area": {
-    "x": 5,
-    "y": 23,
+    "x": 50,
+    "y": 56,
     "w": 16,
     "h": 14
    }
@@ -329,8 +398,8 @@
    "monsterId": "leaf_slime",
    "count": 4,
    "area": {
-    "x": 18,
-    "y": 17,
+    "x": 63,
+    "y": 50,
     "w": 10,
     "h": 6
    }
@@ -339,8 +408,8 @@
    "monsterId": "horn_rabbit",
    "count": 8,
    "area": {
-    "x": 16,
-    "y": 4,
+    "x": 61,
+    "y": 37,
     "w": 22,
     "h": 9
    }
@@ -349,8 +418,8 @@
    "monsterId": "mushling",
    "count": 8,
    "area": {
-    "x": 40,
-    "y": 15,
+    "x": 85,
+    "y": 48,
     "w": 15,
     "h": 10
    }
@@ -359,19 +428,107 @@
    "monsterId": "buzz_wasp",
    "count": 6,
    "area": {
-    "x": 40,
-    "y": 29,
+    "x": 85,
+    "y": 62,
     "w": 15,
     "h": 11
    }
+  },
+  {
+   "monsterId": "leaf_slime",
+   "count": 20,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 39,
+    "h": 102
+   },
+   "ring": true
+  },
+  {
+   "monsterId": "leaf_slime",
+   "count": 8,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 39,
+    "h": 102
+   },
+   "ring": true
+  },
+  {
+   "monsterId": "horn_rabbit",
+   "count": 16,
+   "area": {
+    "x": 107,
+    "y": 4,
+    "w": 39,
+    "h": 102
+   },
+   "ring": true
+  },
+  {
+   "monsterId": "mushling",
+   "count": 16,
+   "area": {
+    "x": 107,
+    "y": 4,
+    "w": 39,
+    "h": 102
+   },
+   "ring": true
+  },
+  {
+   "monsterId": "buzz_wasp",
+   "count": 12,
+   "area": {
+    "x": 45,
+    "y": 4,
+    "w": 60,
+    "h": 27
+   },
+   "ring": true
+  },
+  {
+   "monsterId": "leaf_slime",
+   "count": 20,
+   "area": {
+    "x": 45,
+    "y": 4,
+    "w": 60,
+    "h": 27
+   },
+   "ring": true
+  },
+  {
+   "monsterId": "leaf_slime",
+   "count": 8,
+   "area": {
+    "x": 45,
+    "y": 79,
+    "w": 60,
+    "h": 27
+   },
+   "ring": true
+  },
+  {
+   "monsterId": "horn_rabbit",
+   "count": 16,
+   "area": {
+    "x": 45,
+    "y": 79,
+    "w": 60,
+    "h": 27
+   },
+   "ring": true
   }
  ],
  "objects": [
   {
    "id": "sign_meadow",
    "kind": "signpost",
-   "x": 4,
-   "y": 18,
+   "x": 49,
+   "y": 51,
    "name": "Signpost",
    "interact": {
     "text": "WEST → Willowbrook.  NORTH-EAST → Whispering Forest (Lv.8+)."
@@ -380,8 +537,8 @@
   {
    "id": "astral_obelisk",
    "kind": "obelisk",
-   "x": 30,
-   "y": 6,
+   "x": 75,
+   "y": 39,
    "name": "Astral Obelisk",
    "interact": {
     "text": "Faint runes flare under your palm. You feel the stars answer.",
@@ -394,8 +551,8 @@
    "id": "pond",
    "name": "Mirror Pond",
    "rect": {
-    "x": 22,
-    "y": 25,
+    "x": 67,
+    "y": 58,
     "w": 16,
     "h": 12
    }
@@ -404,11 +561,15 @@
    "id": "obelisk_hill",
    "name": "Obelisk Hill",
    "rect": {
-    "x": 26,
-    "y": 4,
+    "x": 71,
+    "y": 37,
     "w": 9,
     "h": 6
    }
   }
- ]
+ ],
+ "origin": {
+  "x": 45,
+  "y": 33
+ }
 }

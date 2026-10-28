@@ -82,22 +82,16 @@ export function ensureMonsterTexture(scene: Phaser.Scene, def: MonsterDef): stri
   return key;
 }
 
-export interface MapTextures { ground: string; walls: string; above: string; objects: Map<string, string>; buildings: string[] }
+export interface MapTextures { objects: Map<string, string>; buildings: string[] }
 
-/** Builds (or loads replacement art for) all layer images of a map. */
+/** Builds (or loads replacement art for) the object and building sprites of a map. Layers are painted per chunk (ensureMapChunk). */
 export function ensureMapTextures(scene: Phaser.Scene, data: GameData, map: CompiledMap): MapTextures {
   const id = map.def.id;
   const pal = data.tilesets.get(map.def.tileset)!.palette;
-  const k = (s: string) => `map_${id}_${s}`;
   const add = (key: string, make: () => HTMLCanvasElement) => {
     if (!scene.textures.exists(key)) scene.textures.addCanvas(key, make());
     return key;
   };
-  // Production tileset when the map's tileset has one, else the procedural painter.
-  const tiled = scene.textures.exists(k('ground')) ? null : paintTiledLayers(scene, map);
-  const ground = add(k('ground'), () => tiled?.ground ?? paintGroundLayer(map, pal));
-  const walls = add(k('walls'), () => tiled?.walls ?? paintWallLayer(map, pal));
-  const above = add(k('above'), () => tiled?.above ?? paintAboveLayer(map, pal));
   const objects = new Map<string, string>();
   for (const o of map.objects) {
     const kind = data.objectKinds.get(o.kind)!;
@@ -107,8 +101,36 @@ export function ensureMapTextures(scene: Phaser.Scene, data: GameData, map: Comp
     if (!art) add(key, () => paintObject(kind, pal, 1000 + variant * 77 + hashString(o.kind)));
     objects.set(o.uid, key);
   }
-  const buildings = map.buildings.map((b, i) => buildingTexture(scene, map.def.tileset, b.style, b.w, b.h) ?? add(k(`bld${i}`), () => paintBuilding(b)));
-  return { ground, walls, above, objects, buildings };
+  const buildings = map.buildings.map((b, i) => buildingTexture(scene, map.def.tileset, b.style, b.w, b.h) ?? add(`map_${id}_bld${i}`, () => paintBuilding(b)));
+  return { objects, buildings };
+}
+
+/** Map layers are drawn in square chunks of this many tiles. */
+export const CHUNK_TILES = 16;
+export type ChunkLayers = { ground: string; walls: string | null; above: string | null };
+export const chunkKey = (map: CompiledMap, layer: string, cx: number, cy: number) => `mc_${map.def.id}_${layer}_${cx}_${cy}`;
+
+/** Paints one chunk (ground, and walls / above-player only when the chunk has any). Returns texture keys. */
+export function ensureMapChunk(scene: Phaser.Scene, data: GameData, map: CompiledMap, cx: number, cy: number): ChunkLayers {
+  const region = { x: cx * CHUNK_TILES, y: cy * CHUNK_TILES, w: Math.min(CHUNK_TILES, map.width - cx * CHUNK_TILES), h: Math.min(CHUNK_TILES, map.height - cy * CHUNK_TILES) };
+  const has = (layer: (string | null | undefined)[]) => {
+    for (let y = Math.max(0, region.y - 1); y < Math.min(map.height, region.y + region.h + 1); y++)
+      for (let x = Math.max(0, region.x - 1); x < Math.min(map.width, region.x + region.w + 1); x++) if (layer[y * map.width + x]) return true;
+    return false;
+  };
+  const keys: ChunkLayers = { ground: chunkKey(map, 'ground', cx, cy), walls: has(map.wall) ? chunkKey(map, 'walls', cx, cy) : null, above: has(map.above) ? chunkKey(map, 'above', cx, cy) : null };
+  if (scene.textures.exists(keys.ground)) return keys;
+  const pal = data.tilesets.get(map.def.tileset)!.palette;
+  const tiled = paintTiledLayers(scene, map, region);
+  scene.textures.addCanvas(keys.ground, tiled?.ground ?? paintGroundLayer(map, pal, region));
+  if (keys.walls) scene.textures.addCanvas(keys.walls, tiled?.walls ?? paintWallLayer(map, pal, region));
+  if (keys.above) scene.textures.addCanvas(keys.above, tiled?.above ?? paintAboveLayer(map, pal, region));
+  return keys;
+}
+
+/** Frees one chunk's textures. */
+export function releaseMapChunk(scene: Phaser.Scene, keys: ChunkLayers) {
+  for (const k of [keys.ground, keys.walls, keys.above]) if (k && scene.textures.exists(k)) scene.textures.remove(k);
 }
 
 /** Small shared FX textures. */
