@@ -51,7 +51,7 @@ export function createCharacter(data: GameData, name: string, appearance: Appear
     position: { mapId: start.id, x: start.spawnPoints.default.x * 32 + 16, y: start.spawnPoints.default.y * 32 + 16 },
     savePoint: { mapId: start.id, spawn: 'default' },
     hotbar: [
-      { type: 'item', id: 'red_potion' }, null, null, null, null, null, null, null, null, null,
+      { type: 'item', id: 'red_potion' }, ...Array<null>(19).fill(null),
     ],
     stats_meta: { kills: 0, deaths: 0, playTimeMs: 0, bossKills: {} },
   };

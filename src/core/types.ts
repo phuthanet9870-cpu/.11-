@@ -592,6 +592,10 @@ export interface Settings {
   cellCursor?: boolean;
   /** Faint grid lines over the map (default off). */
   showGrid?: boolean;
+  /** Camera zoom (0.75–2.5, default 1.5). */
+  zoom?: number;
+  /** The bottom-right icon menu is folded away. */
+  menuCollapsed?: boolean;
   wasdMovement: boolean;
   /** Interface language (default English). */
   language?: 'en' | 'th';

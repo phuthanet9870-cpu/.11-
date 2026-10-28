@@ -1,6 +1,7 @@
 // Draggable game windows: inventory, equipment, status, skills, quests, world
 // map, settings — plus NPC dialogue, shop, storage, tooltips and menus.
 import type { App } from './app';
+import { keyFromEvent } from './keys';
 import { h, setChildren, RARITY_COLOR } from './dom';
 import { getLang, LANGS, type Lang } from './i18n';
 import { itemIconUrl, skillIconUrl } from '../game/art/icons';
@@ -95,7 +96,7 @@ export class WindowManager {
     this.define('cart', 'Pushcart', 16, 90, () => this.renderCart());
     this.define('runes', 'Rune Constellation', 300, 70, () => this.renderRunes());
     this.define('social', 'Social — Online Play', 360, 60, () => this.renderSocial());
-    this.define('auto', 'Auto Farm / Auto Quest', 440, 120, () => this.renderAuto());
+    this.define('auto', 'Auto Settings', 440, 120, () => this.renderAuto());
   }
 
   get anyOpen() { return [...this.wins.values()].some((w) => w.open) || !!this.dialogEl || !!this.modalEl; }
@@ -164,11 +165,16 @@ export class WindowManager {
   }
   hideTooltip() { this.tooltip.classList.add('hidden'); }
 
-  private openContext(e: MouseEvent, items: [string, () => void][]) {
+  /** Small action menu at the mouse. With a title, the first action is shown as a big button (Equip / Use). */
+  private openContext(e: MouseEvent, items: [string, () => void][], title?: string) {
     this.closeContext();
     const r = this.root.getBoundingClientRect(), s = this.app.uiScale;
-    this.ctxMenu = h('div', { class: 'panel ctx-menu', style: { left: `${(e.clientX - r.left) / s}px`, top: `${(e.clientY - r.top) / s}px` } },
-      items.map(([label, fn]) => h('div', { onclick: () => { this.closeContext(); fn(); } }, label)));
+    const run = (fn: () => void) => () => { this.closeContext(); fn(); };
+    const rest = title ? items.slice(1) : items;
+    this.ctxMenu = h('div', { class: 'panel ctx-menu', id: 'item-actions', style: { left: `${(e.clientX - r.left) / s + 6}px`, top: `${(e.clientY - r.top) / s + 6}px` } },
+      title ? h('div', { class: 'ctx-title' }, title) : null,
+      title ? h('button', { class: 'btn primary ctx-main', onclick: run(items[0][1]) }, items[0][0]) : null,
+      rest.map(([label, fn]) => h('div', { onclick: run(fn) }, label)));
     this.root.appendChild(this.ctxMenu);
   }
   private closeContext() { this.ctxMenu?.remove(); this.ctxMenu = null; }
@@ -316,11 +322,13 @@ export class WindowManager {
         el.style.borderColor = def.rarity !== 'common' ? RARITY_COLOR[def.rarity] + '88' : '';
         el.append(h('img', { src: itemIconUrl(def) }), inst.qty > 1 ? h('span', { class: 'q' }, String(inst.qty)) : '', inst.locked ? h('span', { class: 'lock' }, '🔒') : '');
         el.addEventListener('dragstart', (e) => { setDragData(e, { type: 'inv', id: inst.uid }); this.hideTooltip(); });
-        el.addEventListener('dblclick', () => this.useOrEquip(inst));
+        el.addEventListener('dblclick', () => { this.closeContext(); this.useOrEquip(inst); });
         el.addEventListener('mousemove', (e) => this.showTooltip(e, this.itemTooltip(def, inst)));
         el.addEventListener('mouseleave', () => this.hideTooltip());
-        el.addEventListener('contextmenu', (e) => {
+        // A click (left or right) opens the item's actions; Equip / Use comes first as a big button.
+        const openActions = (e: MouseEvent) => {
           e.preventDefault();
+          this.hideTooltip();
           const actions: [string, () => void][] = [];
           if (def.type === 'consumable') actions.push(['Use', () => this.useOrEquip(inst)]);
           if (def.type === 'equipment') actions.push(['Equip', () => this.useOrEquip(inst)]);
@@ -330,8 +338,10 @@ export class WindowManager {
           if (this.isOpen('storage')) actions.push(['Store', () => this.qtyPrompt(inst, 'Store how many?', (n) => w.deposit(inst.uid, n))]);
           actions.push([inst.locked ? 'Unlock' : 'Lock', () => w.lock(inst.uid)]);
           actions.push(['Drop', () => this.qtyPrompt(inst, 'Drop how many?', (n) => w.dropItem(inst.uid, n))]);
-          this.openContext(e, actions);
-        });
+          this.openContext(e, actions, ['Equip', 'Use'].includes(actions[0]?.[0]) ? def.name : undefined);
+        };
+        el.addEventListener('click', openActions);
+        el.addEventListener('contextmenu', openActions);
       }
       grid.appendChild(el);
     }
@@ -355,7 +365,7 @@ export class WindowManager {
         h('span', { class: weight > w.weightLimit * 0.7 ? 'bad' : 'muted' }, `Weight ${weight} / ${w.weightLimit}${weight > w.weightLimit * 0.7 ? ' (no regen)' : ''}`),
         h('span', { class: 'spacer' }),
         h('span', { class: 'gold' }, `${w.char.luma.toLocaleString()} Luma`)),
-      h('div', { class: 'muted', style: 'font-size:11px;margin-top:4px' }, 'Double-click to use/equip · Right-click for options · Drag to hotbar or equipment'),
+      h('div', { class: 'muted', style: 'font-size:11px;margin-top:4px' }, 'Click an item for Equip / Use and more · Double-click to use or equip · Drag to the hotbar or equipment'),
     );
   }
 
@@ -803,12 +813,10 @@ export class WindowManager {
     };
     const q = au.currentQuest();
     setChildren(body, h('div', { style: 'width:330px' },
+      // Settings only: Auto Farm starts with the AUTO button beside the hotbar, Auto Quest from the quest tracker.
       h('div', { class: au.mode === 'off' ? 'muted' : 'good' }, au.mode === 'off' ? 'Stopped.' : `${au.mode === 'farm' ? 'Auto Farm' : 'Auto Quest'}: ${au.status || '…'}`),
-      h('div', { class: 'row', style: 'gap:6px;margin-top:6px' },
-        h('button', { class: `btn${au.mode === 'farm' ? ' primary' : ''}`, id: 'auto-farm', onclick: () => { if (au.mode === 'farm') au.stop(); else au.start('farm'); this.renderAuto(); } }, au.mode === 'farm' ? 'Stop Auto Farm' : 'Start Auto Farm'),
-        h('button', { class: `btn${au.mode === 'quest' ? ' primary' : ''}`, id: 'auto-quest', onclick: () => { if (au.mode === 'quest') au.stop(); else au.start('quest'); this.renderAuto(); } }, au.mode === 'quest' ? 'Stop Auto Quest' : 'Start Auto Quest')),
-      h('div', { class: 'muted', style: 'font-size:11px;margin-top:4px' }, q ? `Next quest: ${q.name}` : 'No quests left — Auto Quest has nothing to do.'),
-      h('div', { class: 'gold', style: 'margin-top:8px;font-weight:bold' }, 'Settings'),
+      h('div', { class: 'muted', style: 'font-size:11px;margin-top:2px' }, q ? `Next quest: ${q.name}` : 'No quests left — Auto Quest has nothing to do.'),
+      h('div', { class: 'gold', style: 'margin-top:8px;font-weight:bold' }, 'Auto Farm settings'),
       num('auto-radius', 'Farm radius (px)', 'radius', 150, 2000),
       num('auto-hp', 'Drink HP potion below (%)', 'hpPotionPct', 0, 95),
       num('auto-mp', 'Drink MP potion below (%)', 'mpPotionPct', 0, 95),
@@ -816,7 +824,7 @@ export class WindowManager {
       tick('auto-loot', 'Pick up loot', 'loot'),
       tick('auto-elites', 'Leave elites and bosses alone (unless they attack)', 'skipElites'),
       h('div', { class: 'muted', style: 'font-size:11px;margin-top:6px' },
-        'Auto Farm fights around the spot where you start it. Auto Quest walks to quest givers, does each objective (hunting, buying and equipping, safe refining, levelling) and hands quests in. Both stop when you click, move by hand, die, or carry 90% weight. Put skills on the hotbar for them to be used.')));
+        'Press AUTO beside the hotbar to fight the monsters around you; press it again to stop. Auto Quest starts from the quest list (top right). Both stop when you click, move by hand, die, or carry 90% weight. Put skills on the hotbar for them to be used.')));
   }
 
   // ---------------------------------------------------------------- social / online play
@@ -1147,7 +1155,8 @@ export class WindowManager {
     if (!this.listening) return false;
     e.preventDefault();
     if (e.key !== 'Escape') {
-      const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      if (e.key === 'Shift') return true; // wait for the key pressed with it
+      const key = keyFromEvent(e);
       for (const [a, k] of Object.entries(this.app.settings.keybinds)) if (k === key && a !== this.listening) this.app.settings.keybinds[a] = '';
       this.app.settings.keybinds[this.listening] = key;
       this.app.applySettings();

@@ -7,6 +7,7 @@ import type { HotbarSlot } from '../core/types';
 import { itemIconUrl, skillIconUrl } from '../game/art/icons';
 import { portraitFromSheet, generateCharacterSheet } from '../game/art/characterSprite';
 import { h, setChildren } from './dom';
+import { HOTBAR_SLOTS } from '../core/save';
 import type { App } from './app';
 import { lookForCharacter } from './screens';
 
@@ -27,8 +28,18 @@ export class Hud {
   root: HTMLElement;
   private portrait = h('canvas', { class: 'portrait', width: 96, height: 96 });
   private whoName = h('div', { class: 'who' });
+  private whoClass = h('div', { class: 'cls' });
+  private baseLvEl = h('span');
+  private jobLvEl = h('span');
+  private pointsEl = h('button', { class: 'pts', id: 'btn-points', onclick: () => this.app.windows.open('status') });
+  /** Big AUTO (Auto Farm) toggle beside the hotbar, and the Auto Quest button in the quest tracker. */
+  private autoBtn = h('button', { class: 'auto-btn', id: 'btn-auto-farm', title: 'Auto Farm: fights the monsters around you', onclick: () => this.toggleAutoFarm() });
+  private autoQuestBtn = h('button', { class: 'btn small', id: 'btn-auto-quest', onclick: () => this.toggleAutoQuest() });
+  private zoomSlider = h('input', { type: 'range', id: 'zoom-slider', min: 75, max: 250, step: 5 }) as HTMLInputElement;
+  private menuEl: HTMLElement | null = null;
+  private menuToggle = h('button', { class: 'menu-toggle', id: 'btn-menu-toggle', onclick: () => this.setMenuCollapsed(!this.app.settings.menuCollapsed) });
   /** Auto Farm / Auto Quest status. */
-  private autoEl = h('div', { id: 'auto-status', style: 'position:absolute;bottom:108px;left:50%;transform:translateX(-50%);padding:3px 10px;background:#1c1622dd;border:1px solid #6fe08a;border-radius:6px;color:#b8ffc8;font-size:12px;display:none;z-index:5;pointer-events:auto;cursor:pointer' });
+  private autoEl = h('div', { id: 'auto-status', style: 'position:absolute;bottom:150px;left:50%;transform:translateX(-50%);padding:3px 10px;background:#1c1622dd;border:1px solid #6fe08a;border-radius:6px;color:#b8ffc8;font-size:12px;display:none;z-index:5;pointer-events:auto;cursor:pointer' });
   /** Active raid (map and time left). */
   private clockEl = h('div', { id: 'world-clock', style: 'position:absolute;top:8px;right:222px;min-width:110px;text-align:center;padding:2px 6px;background:#1c1622cc;border:1px solid #5a4a3a;border-radius:5px;color:#e8dcc0;font-size:11px;z-index:5' });
   /** Memorial-dungeon timer (floor and time left). */
@@ -52,6 +63,7 @@ export class Hud {
   private castEl = h('div', { class: 'panel castbar hidden passthrough' });
   private toastArea = h('div', { class: 'toast-area' });
   private lumaEl = h('span', { class: 'gold' });
+  private zoomEl = h('span', { class: 'zval' });
   private lastSlow = 0;
   private lastPortraitKey = '';
 
@@ -74,34 +86,86 @@ export class Hud {
       const sx = (e.clientX - r.left) / r.width, sy = (e.clientY - r.top) / r.height;
       w.moveTo(sx * w.map.width * TILE, sy * w.map.height * TILE);
     });
-    const menu = h('div', { class: 'menu-buttons' },
-      ...([['status', 'Status'], ['inventory', 'Items'], ['equipment', 'Equip'], ['skills', 'Skills'], ['quests', 'Quests'], ['worldMap', 'Map'], ['database', 'DB'], ['pet', 'Pet'], ['social', 'Social'], ['runes', 'Runes'], ['homun', 'Homun'], ['cart', 'Cart'], ['settings', 'Menu']] as const)
-        .map(([id, label]) => h('button', { class: 'btn', title: `${label} (${this.app.keyLabel(id)})`, onclick: () => this.app.windows.toggle(id) }, label)),
-      h('button', { class: 'btn', id: 'btn-auto', title: `Auto Farm / Auto Quest (${this.app.keyLabel('auto')})`, onclick: () => this.app.windows.toggle('auto') }, 'Auto'),
-      h('button', { class: 'btn', id: 'btn-gm', title: 'GM / Admin tools (F8 or /gm)', onclick: () => this.app.windows.toggle('admin') }, 'GM'));
+    // Icon menu (two rows), Ragnarok-style: icon + short label, hotkey in the tooltip.
+    const MENU: [string, string, string, string?][] = [
+      ['status', '📊', 'Status'], ['inventory', '🎒', 'Items'], ['equipment', '🛡️', 'Equip'], ['skills', '✨', 'Skills'], ['quests', '📜', 'Quests'], ['worldMap', '🗺️', 'Map'], ['social', '👥', 'Social'], ['settings', '⚙️', 'Menu'],
+      ['pet', '🐾', 'Pet'], ['homun', '🧪', 'Homun'], ['cart', '🛒', 'Cart'], ['runes', '⭐', 'Runes'], ['database', '📖', 'DB'], ['admin', '👑', 'GM', 'btn-gm'],
+    ];
+    const menu = h('div', { class: 'panel menu-grid', id: 'menu-grid' },
+      ...MENU.map(([id, icon, label, elId]) => h('button', {
+        class: 'mbtn', id: elId, dataset: { win: id },
+        title: id === 'admin' ? 'GM / Admin tools (F8 or /gm)' : id === 'auto' ? `Auto Farm / Auto Quest (${this.app.keyLabel('auto')})` : `${label} (${this.app.keyLabel(id)})`,
+        onclick: () => this.app.windows.toggle(id as never),
+      }, h('span', { class: 'ico' }, icon), h('span', { class: 'lbl' }, label))));
+    this.menuEl = menu;
+    this.zoomSlider.addEventListener('input', () => this.app.setZoom(Number(this.zoomSlider.value) / 100));
+    const zoomBox = h('div', { class: 'zoom-box' },
+      h('button', { class: 'zbtn', id: 'zoom-out', title: 'Zoom out (−)', onclick: () => this.app.zoomBy(-1) }, '−'),
+      this.zoomSlider,
+      h('button', { class: 'zbtn', id: 'zoom-in', title: 'Zoom in (+)', onclick: () => this.app.zoomBy(1) }, '+'),
+      this.zoomEl);
+    const autoBox = h('div', { class: 'auto-box', id: 'auto-box' }, this.autoBtn,
+      h('button', { class: 'auto-gear', id: 'btn-auto-settings', title: 'Auto settings', onclick: () => this.app.windows.toggle('auto') }, '⚙'));
+    const statRow = (label: string, b: { el: HTMLElement }) => h('div', { class: 'srow' }, h('span', { class: 'sl' }, label), b.el);
     this.root = h('div', { id: 'hud', class: 'passthrough', style: 'position:absolute;inset:0' },
-      h('div', { class: 'panel hud-status' }, this.portrait, this.whoName, this.hpBar.el, this.mpBar.el),
+      h('div', { class: 'panel hud-status' },
+        h('div', { class: 'head' }, this.portrait, h('div', {}, this.whoName, this.whoClass)),
+        h('div', { class: 'lvs' }, this.baseLvEl, this.jobLvEl),
+        statRow('HP', this.hpBar), statRow('MP', this.mpBar), statRow('Base', this.expBar), statRow('Job', this.jexpBar),
+        h('div', { class: 'foot' }, this.lumaEl, this.pointsEl)),
       this.buffsEl,
       this.targetEl,
       this.bossEl,
-      h('div', { class: 'panel minimap' }, this.miniName, this.miniCanvas, this.miniCoords),
+      h('div', { class: 'panel minimap' }, this.miniCanvas, h('div', { class: 'row', style: 'justify-content:space-between;margin-top:3px' }, this.miniName, this.miniCoords), zoomBox),
       this.trackerEl,
       h('div', { class: 'panel chat' }, chatTabs, this.chatLog, this.chatInput),
       this.hotbarEl,
       this.castEl,
       this.toastArea,
-      h('div', { class: 'expbars' },
-        h('div', { class: 'row' }, h('span', { style: 'font-size:10px;width:30px' }, 'EXP'), this.expBar.el),
-        h('div', { class: 'row' }, h('span', { style: 'font-size:10px;width:30px' }, 'JOB'), this.jexpBar.el),
-        h('div', { class: 'row' }, this.lumaEl, menu)),
+      autoBox,
+      menu,
+      this.menuToggle,
     );
-    for (const el of [this.root.querySelector('.hud-status'), this.root.querySelector('.minimap'), this.trackerEl, this.root.querySelector('.chat'), this.hotbarEl, this.root.querySelector('.expbars')]) {
+    for (const el of [this.root.querySelector('.hud-status'), this.root.querySelector('.minimap'), this.trackerEl, this.root.querySelector('.chat'), this.hotbarEl, autoBox, menu, this.menuToggle]) {
       (el as HTMLElement).style.pointerEvents = 'auto';
     }
     this.buildHotbar();
+    this.showZoom(this.app.settings.zoom ?? 1.5);
+    this.setMenuCollapsed(!!this.app.settings.menuCollapsed);
+  }
+
+  /** The icon menu folds away with the Menu button (state saved). */
+  setMenuCollapsed(on: boolean) {
+    this.app.settings.menuCollapsed = on;
+    this.menuEl?.classList.toggle('collapsed', on);
+    this.menuToggle.textContent = on ? '▲ Menu' : '▼ Menu';
+    this.app.persist();
+  }
+
+  private toggleAutoFarm() {
+    const au = this.app.world?.auto;
+    if (!au) return;
+    if (au.mode === 'off') au.start('farm'); else au.stop('manual control');
+    this.updateAutoButtons();
+  }
+
+  private toggleAutoQuest() {
+    const au = this.app.world?.auto;
+    if (!au) return;
+    if (au.mode === 'quest') au.stop('manual control'); else au.start('quest');
+    this.updateAutoButtons();
+  }
+
+  private updateAutoButtons() {
+    const mode = this.app.world?.auto.mode ?? 'off';
+    setChildren(this.autoBtn, h('b', {}, 'AUTO'), h('small', {}, mode === 'farm' ? 'ON' : mode === 'quest' ? 'Quest' : 'OFF'));
+    this.autoBtn.classList.toggle('on', mode !== 'off');
+    this.autoQuestBtn.textContent = mode === 'quest' ? '■ Stop Auto Quest' : '▶ Auto Quest';
+    this.autoQuestBtn.classList.toggle('primary', mode === 'quest');
   }
 
   focusChat() { this.chatInput.focus(); }
+  showZoom(z: number) { this.zoomEl.textContent = `${Math.round(z * 100)}%`; this.zoomSlider.value = String(Math.round(z * 100)); }
   get chatFocused() { return document.activeElement === this.chatInput; }
 
   private submitChat() {
@@ -161,9 +225,10 @@ export class Hud {
   buildHotbar() {
     const w = this.app.world;
     const slots = w?.char.hotbar ?? [];
-    setChildren(this.hotbarEl, Array.from({ length: 10 }, (_, i) => {
+    setChildren(this.hotbarEl, Array.from({ length: HOTBAR_SLOTS }, (_, i) => {
       const s = slots[i] ?? null;
-      const el = h('div', { class: 'hslot', dataset: { i: String(i) }, title: this.slotTitle(s) },
+      // Slots 1–10 are the bottom row (keys 1–0); 11–20 the row above (Shift + 1–0).
+      const el = h('div', { class: `hslot${i >= 10 ? ' row2' : ''}`, dataset: { i: String(i) }, title: this.slotTitle(s), style: `grid-row:${i >= 10 ? 1 : 2};grid-column:${(i % 10) + 1}` },
         s ? h('img', { src: this.slotIcon(s), draggable: false }) : null,
         h('span', { class: 'key' }, this.app.keyLabel(`hotbar${i + 1}`)),
         h('span', { class: 'cnt' }),
@@ -204,7 +269,7 @@ export class Hud {
   private updateHotbar() {
     const w = this.app.world!;
     const slots = this.hotbarEl.children;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < HOTBAR_SLOTS; i++) {
       const s = w.char.hotbar[i];
       const el = slots[i] as HTMLElement;
       if (!el) continue;
@@ -291,6 +356,7 @@ export class Hud {
     if (!this.clockEl.parentElement) this.root.appendChild(this.clockEl);
     if (!this.autoEl.parentElement) { this.root.appendChild(this.autoEl); this.autoEl.addEventListener('click', () => this.app.world?.auto.stop('manual control')); }
     const au = w.auto;
+    this.updateAutoButtons();
     this.autoEl.style.display = au.mode === 'off' ? 'none' : 'block';
     if (au.mode !== 'off') this.autoEl.textContent = `● ${au.mode === 'farm' ? 'AUTO FARM' : 'AUTO QUEST'} — ${au.status || '…'}   (click to stop)`;
     const ev = w.event;
@@ -305,7 +371,14 @@ export class Hud {
       this.instTimer.textContent = ins.done ? `${idef.name} — cleared!` : `${idef.name} · ${idef.floors.length > 4 ? 'Floor' : 'Room'} ${ins.floor}/${idef.floors.length}${ins.cleared ? ' · cleared' : ''} · ${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
     } else this.instTimer.style.display = 'none';
     const cls = w.data.classes.get(c.classId)!;
-    setChildren(this.whoName, c.name, h('span', {}, `${cls.name} · Lv ${c.baseLevel} / ${c.jobLevel}`));
+    this.whoName.textContent = c.name;
+    this.whoClass.textContent = cls.name;
+    this.baseLvEl.textContent = `Base Lv. ${c.baseLevel}`;
+    this.jobLvEl.textContent = `Job Lv. ${c.jobLevel}`;
+    const pts = [c.statPoints ? `Stat points ${c.statPoints}` : '', c.skillPoints ? `Skill points ${c.skillPoints}` : ''].filter(Boolean).join(' · ');
+    this.pointsEl.textContent = pts;
+    this.pointsEl.style.display = pts ? '' : 'none';
+    this.pointsEl.onclick = () => this.app.windows.open(c.statPoints ? 'status' : 'skills');
     const bn = expToNextBase(w.data, c.baseLevel), jn = expToNextJob(w.data, c.jobLevel);
     this.expBar.set(c.baseExp, bn, `${((c.baseExp / bn) * 100).toFixed(1)}%`);
     this.jexpBar.set(c.jobExp, jn, c.jobLevel >= cls.maxJobLevel ? 'MAX' : `${((c.jobExp / jn) * 100).toFixed(1)}%`);
@@ -376,10 +449,10 @@ export class Hud {
     const w = this.app.world!;
     const list = activeQuests(w.data, w.char).sort((a, b) => order(a.def.category) - order(b.def.category));
     if (!list.length) {
-      setChildren(this.trackerEl, h('h4', {}, 'Quests'), h('div', { class: 'muted', style: 'font-size:11px' }, 'No active quests. Look for NPCs with a ! above them.'));
+      setChildren(this.trackerEl, h('div', { class: 'thead' }, h('h4', {}, 'Quests'), this.autoQuestBtn), h('div', { class: 'muted', style: 'font-size:11px' }, 'No active quests. Look for NPCs with a ! above them.'));
       return;
     }
-    setChildren(this.trackerEl, h('h4', {}, `Quests (${list.length})`), list.slice(0, 5).map(({ def, prog }) =>
+    setChildren(this.trackerEl, h('div', { class: 'thead' }, h('h4', {}, `Quests (${list.length})`), this.autoQuestBtn), list.slice(0, 5).map(({ def, prog }) =>
       h('div', { class: 'q' },
         h('div', { class: 'qn' }, prog.status === 'ready' ? '✔ ' : '', def.name),
         prog.status === 'ready'

@@ -313,6 +313,39 @@ try {
   const alive = await page.evaluate(() => ({ dead: window.__veyloria.world.player.dead, map: window.__veyloria.world.map.def.id }));
   check('death modal respawns the player at the save point', !alive.dead && alive.map === 'willowbrook', JSON.stringify(alive));
 
+  // Zoom with the mouse wheel; second hotbar row on Shift+number; click an item → Equip button.
+  {
+    const z0 = await page.evaluate(() => window.__veyloria.game.scene.getScene('Game').cameras.main.zoom);
+    for (let i = 0; i < 4; i++) await page.keyboard.press('Escape'); // no window over the map
+    await page.evaluate(() => window.__veyloria.windows.closeTop?.());
+    const c = await page.evaluate(() => { const r = document.querySelector('#game canvas').getBoundingClientRect(); return { x: r.left + r.width * 0.45, y: r.top + r.height * 0.35 }; });
+    await page.mouse.move(c.x, c.y);
+    await page.mouse.wheel(0, -200);
+    await sleep(400);
+    const z1 = await page.evaluate(() => window.__veyloria.game.scene.getScene('Game').cameras.main.zoom);
+    await page.click('#zoom-out'); await page.click('#zoom-out');
+    await sleep(400);
+    const z2 = await page.evaluate(() => ({ cam: window.__veyloria.game.scene.getScene('Game').cameras.main.zoom, saved: window.__veyloria.settings.zoom, label: document.querySelector('.zoom-box .zval').textContent }));
+    await page.evaluate(() => window.__veyloria.setZoom(1.5));
+    const pots0 = await page.evaluate(() => { const a = window.__veyloria; a.assignHotbar(10, { type: 'item', id: 'red_potion' }); a.world.char.hp = 5; return a.world.char.inventory.filter((i) => i.itemId === 'red_potion').reduce((n, i) => n + i.qty, 0); });
+    await page.keyboard.down('Shift'); await page.keyboard.press('Digit1'); await page.keyboard.up('Shift');
+    await sleep(200);
+    const pots1 = await page.evaluate(() => window.__veyloria.world.char.inventory.filter((i) => i.itemId === 'red_potion').reduce((n, i) => n + i.qty, 0));
+    const slots = await page.$$eval('.hotbar .hslot', (els) => els.length);
+    await page.evaluate(() => { const a = window.__veyloria; a.world.char.inventory.push({ uid: 'e2e-cap', itemId: 'leaf_cap', qty: 1 }); a.windows.open('inventory'); a.windows.refresh(); });
+    await sleep(200);
+    const capIdx = await page.evaluate(() => window.__veyloria.world.char.inventory.findIndex((i) => i.uid === 'e2e-cap'));
+    await page.click(`#win-inventory .islot >> nth=${capIdx}`);
+    const mainBtn = await page.textContent('#item-actions .ctx-main');
+    await page.click('#item-actions .ctx-main');
+    await sleep(200);
+    const worn = await page.evaluate(() => window.__veyloria.world.char.equipment.headgear?.uid === 'e2e-cap');
+    check('zoom (wheel + buttons, saved), 20-slot hotbar with Shift row, click item → Equip button',
+      z1 > z0 && z2.cam < z1 && z2.saved === z2.cam && slots === 20 && pots1 === pots0 - 1 && mainBtn === 'Equip' && worn,
+      `zoom ${z0}→${z1}→${z2.cam} (${z2.label}) slots=${slots} potions ${pots0}→${pots1} button=${mainBtn} worn=${worn}`);
+    await page.keyboard.press('Escape');
+  }
+
   // Drop part of a stack through the context menu + quantity dialog.
   await page.keyboard.press('i');
   await page.waitForSelector('#win-inventory:not(.hidden)');
@@ -378,22 +411,28 @@ try {
   check('database tools: refine simulator, forge calculator, element chart', /\+4 → \+5/.test(refineTxt) && /Success: \d/.test(forgeTxt) && elemCells === 100, `${forgeTxt} cells=${elemCells}`);
   await page.keyboard.press('b');
 
-  // Auto Farm: start it from the Auto window, watch it fight, click the map to take control back.
+  // Auto: ⚙ opens the auto settings; Auto Quest starts from the quest tracker; AUTO beside the hotbar farms at once.
+  await page.click('#btn-auto-settings');
+  const settingsOpen = await page.evaluate(() => !document.getElementById('win-auto').classList.contains('hidden') && !!document.getElementById('auto-radius'));
+  await page.click('#btn-auto-settings');
   await page.evaluate(() => { const w = window.__veyloria.world; w.godMode = true; });
   const kAuto0 = await page.evaluate(() => window.__veyloria.world.char.stats_meta.kills);
-  await page.keyboard.press('u');
-  await page.waitForSelector('#win-auto:not(.hidden)');
-  await page.click('#auto-farm');
-  await page.keyboard.press('u');
-  await page.waitForFunction((k0) => window.__veyloria.world.char.stats_meta.kills >= k0 + 2, kAuto0, { timeout: 120000 });
+  await page.click('#btn-auto-farm');
+  await page.waitForFunction((k0) => window.__veyloria.world.char.stats_meta.kills >= k0 + 2, kAuto0, { timeout: 120000 }).catch(async (err) => {
+    console.log('AUTO DEBUG', await page.evaluate(() => { const w = window.__veyloria.world; return `${w.map.def.id} ${w.auto.mode} ${w.auto.status} kills=${w.char.stats_meta.kills} pos=${Math.round(w.player.x / 32)},${Math.round(w.player.y / 32)} near=${[...w.monsters.values()].filter((m) => !m.dead && Math.hypot(m.x - w.player.x, m.y - w.player.y) < 600).length}`; }));
+    throw err;
+  });
   const autoBar = await page.textContent('#auto-status');
   await page.screenshot({ path: join(shots, '18b-auto-farm.png') });
   const cv = await page.locator('#game canvas').boundingBox();
   await page.mouse.click(cv.x + cv.width * 0.3, cv.y + cv.height * 0.3);
   await sleep(300);
   const autoMode = await page.evaluate(() => window.__veyloria.world.auto.mode);
+  await page.click('#btn-auto-quest');
+  const questMode = await page.evaluate(() => window.__veyloria.world.auto.mode);
+  await page.click('#btn-auto-quest');
   await page.evaluate(() => { window.__veyloria.world.godMode = false; });
-  check('Auto Farm fights by itself and stops on a manual click', /AUTO FARM/.test(autoBar) && autoMode === 'off', `${autoBar?.slice(0, 60)} → ${autoMode}`);
+  check('AUTO button farms by itself and stops on a manual click; ⚙ opens auto settings; Auto Quest from the tracker', /AUTO FARM/.test(autoBar) && autoMode === 'off' && settingsOpen && questMode === 'quest', `${autoBar?.slice(0, 60)} → ${autoMode} settings=${settingsOpen} quest=${questMode}`);
 
   // Memorial dungeon: talk to the Spire Warden in Aurelion and enter; the HUD shows floor + timer.
   await page.evaluate(() => { const w = window.__veyloria.world; w.char.baseLevel = Math.max(w.char.baseLevel, 20); w.enterMap('aurelion', 'default'); });
@@ -416,7 +455,7 @@ try {
   const th = await page.evaluate(() => ({
     title: document.querySelector('#win-inventory .wtitle')?.textContent ?? '',
     log: [...document.querySelectorAll('#hud .log div')].slice(-3).map((d) => d.textContent).join(' | '),
-    chat: document.querySelector('#hud input')?.getAttribute('placeholder') ?? '',
+    chat: document.querySelector('#hud .chat input')?.getAttribute('placeholder') ?? '',
     saved: window.__veyloria.settings.language,
   }));
   await page.selectOption('#set-language', 'en');

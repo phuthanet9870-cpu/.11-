@@ -98,13 +98,15 @@ export class GameScene extends Phaser.Scene {
 
   create() {
     ensureFxTextures(this);
-    this.cameras.main.setZoom(ZOOM);
+    this.cameras.main.setZoom(this.host.settings.zoom ?? ZOOM);
     this.cameras.main.setRoundPixels(true);
     this.cameras.main.setBackgroundColor('#0c0a12');
     this.input.mouse?.disableContextMenu();
     this.buildMap();
     this.input.on('pointerdown', (p: Phaser.Input.Pointer) => this.onPointerDown(p));
     this.input.on('pointermove', (p: Phaser.Input.Pointer) => this.onPointerMove(p));
+    // Mouse wheel zooms the camera (saved in the settings).
+    this.input.on('wheel', (_p: Phaser.Input.Pointer, _o: unknown, _dx: number, dy: number) => { if (dy) this.host.zoomBy?.(dy > 0 ? -1 : 1); });
     this.events.on('shutdown', () => this.clearMap());
   }
 
@@ -170,6 +172,12 @@ export class GameScene extends Phaser.Scene {
     const t = this.moveTargetCell;
     if (t && w.player.moving && this.time.now - t.at < 8000) cornerBrackets(g, t.x * TILE, t.y * TILE, 0xffffff, 0.45 + 0.25 * Math.sin(this.time.now / 140));
     else if (t && !w.player.moving) this.moveTargetCell = null;
+  }
+
+  /** Smooth camera zoom; the chunk streamer then fills in the newly visible area. */
+  applyZoom(z: number) {
+    this.tweens.killTweensOf(this.cameras.main);
+    this.tweens.add({ targets: this.cameras.main, zoom: z, duration: 160, ease: 'Sine.easeOut' });
   }
 
   /** Optional faint grid over the walkable map (Settings → Show grid). */
@@ -282,7 +290,8 @@ export class GameScene extends Phaser.Scene {
 
   /** Screen-space weather particles: snow, rain, ash or drifting fog. */
   private addWeather(kind: string | undefined) {
-    const cam = this.cameras.main, vw = cam.width / ZOOM, vh = cam.height / ZOOM;
+    // Weather covers the view at the farthest zoom-out.
+    const cam = this.cameras.main, vw = cam.width / 0.75, vh = cam.height / 0.75;
     const zone = { type: 'random', source: new Phaser.Geom.Rectangle(-40, -30, vw + 80, 10) } as never;
     const base = { emitZone: zone, scrollFactor: 0 } as Record<string, unknown>;
     let cfg: Record<string, unknown> | null = null;

@@ -8,6 +8,7 @@ import { DEFAULT_KEYBINDS, loadSave, newSaveFile, SAVE_KEY, writeSave } from '..
 import type { Appearance, HotbarSlot, SaveFile, Settings } from '../core/types';
 import { World, type WorldEvent } from '../core/world';
 import { runGmCommand } from '../core/gm';
+import { keyFromEvent } from './keys';
 import { setLang, type Lang } from './i18n';
 import { audio } from '../game/audio/audio';
 import type { GameHost } from '../game/host';
@@ -18,6 +19,8 @@ import { h, setChildren } from './dom';
 import { Hud } from './hud';
 import { characterCreateScreen, characterSelectScreen, titleScreen } from './screens';
 import { WindowManager, type WindowId } from './windows';
+
+export const ZOOM_MIN = 0.75, ZOOM_MAX = 2.5;
 
 const WINDOW_ACTIONS: Record<string, WindowId> = {
   inventory: 'inventory', equipment: 'equipment', status: 'status', skills: 'skills', quests: 'quests', worldMap: 'worldMap', settings: 'settings', database: 'database', social: 'social', auto: 'auto', pet: 'pet', homun: 'homun', cart: 'cart', runes: 'runes',
@@ -196,7 +199,7 @@ export class App implements GameHost {
   }
 
   // ---------------------------------------------------------------- saving
-  private persist(): boolean {
+  persist(): boolean {
     try {
       writeSave(window.localStorage, this.save);
       return true;
@@ -274,7 +277,23 @@ export class App implements GameHost {
   // ---------------------------------------------------------------- hotbar & chat
   keyLabel(action: string): string {
     const k = this.settings.keybinds[action] ?? DEFAULT_KEYBINDS[action] ?? '';
+    if (k.startsWith('shift+')) return `⇧${k.slice(6).toUpperCase()}`;
     return k === ' ' ? 'Space' : k.length === 1 ? k.toUpperCase() : k;
+  }
+
+  /** Camera zoom, saved with the settings (mouse wheel, minimap buttons, + / − keys). */
+  setZoom(z: number) {
+    this.settings.zoom = Math.round(Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, z)) * 100) / 100;
+    const scene = this.game.scene.getScene('Game') as GameScene | null;
+    if (scene && scene.scene.isActive()) scene.applyZoom(this.settings.zoom);
+    this.hud?.showZoom(this.settings.zoom);
+    this.persistSoon();
+  }
+  zoomBy(steps: number) { this.setZoom((this.settings.zoom ?? 1.5) + steps * 0.25); }
+  private persistTimer: ReturnType<typeof setTimeout> | null = null;
+  private persistSoon() {
+    if (this.persistTimer) clearTimeout(this.persistTimer);
+    this.persistTimer = setTimeout(() => { this.persistTimer = null; this.persist(); }, 500);
   }
 
   assignHotbar(i: number, slot: HotbarSlot) {
@@ -337,7 +356,8 @@ export class App implements GameHost {
   }
 
   // ---------------------------------------------------------------- input
-  private actionForKey(key: string): string | null {
+  private actionForKey(key: string, e?: KeyboardEvent): string | null {
+    if (e) key = keyFromEvent(e);
     const k = key.length === 1 ? key.toLowerCase() : key;
     for (const [action, bound] of Object.entries(this.settings.keybinds)) if (bound === k) return action;
     // Actions added after a save was made fall back to their default key.
@@ -359,8 +379,8 @@ export class App implements GameHost {
     if (e.key === 'Tab') { e.preventDefault(); this.world.targetNearestMonster(); return; }
     if (e.key === 'F8') { e.preventDefault(); this.windows.toggle('admin'); return; }
     if (this.windows.dialogOpen && /^[1-9]$/.test(e.key)) { if (this.windows.dialogKey(Number(e.key))) return; }
-    const action = this.actionForKey(e.key);
-    const moveKey = this.moveDirKey(e.key);
+    const action = this.actionForKey(e.key, e);
+    const moveKey = e.shiftKey ? null : this.moveDirKey(e.key);
     if (moveKey && this.settings.wasdMovement && (!action || ['up', 'down', 'left', 'right'].includes(action))) {
       this.held.add(moveKey);
       this.updateMoveDir();
@@ -368,7 +388,8 @@ export class App implements GameHost {
       return;
     }
     if (!action || e.repeat) return;
-    if (action.startsWith('hotbar')) { this.useHotbar(Number(action.slice(6)) - 1); return; }
+    if (action.startsWith('hotbar')) { e.preventDefault(); this.useHotbar(Number(action.slice(6)) - 1); return; }
+    if (action === 'zoomIn' || action === 'zoomOut') { this.zoomBy(action === 'zoomIn' ? 1 : -1); return; }
     if (WINDOW_ACTIONS[action]) { this.windows.toggle(WINDOW_ACTIONS[action]); return; }
     if (action === 'pickup') { this.world.pickupNearest(); return; }
     if (action === 'interact') { this.interactNearest(); return; }

@@ -8,6 +8,7 @@ A 2D fantasy MMORPG with a top-down 3/4 view. It's built with TypeScript, Phaser
 
 ## ภาพรวม (Thai summary)
 - **เปลี่ยนภาษาได้ อังกฤษ / ไทย** ที่มุมขวาบนของหน้าแรก หรือ ตั้งค่า → ภาษา ในเกม (ชื่อไอเทม มอนสเตอร์ สกิล แผนที่ คงเป็นภาษาอังกฤษ)
+- **หน้าจอแบบใหม่:** สถานะมุมซ้ายบน · มินิแมพมีแถบซูม (ล้อเมาส์ / ปุ่ม + − ก็ซูมได้) · ฮอตบาร์ 2 แถว (1–0 และ Shift+1–0) · ปุ่ม AUTO ข้างฮอตบาร์กดแล้วฟาร์มทันที, ⚙ = ตั้งค่าออโต้ · เควสออโต้อยู่ในช่องเควส · เมนูไอคอน 5 คอลัมน์ ย่อได้ด้วยปุ่ม ▼ เมนู · คลิกไอเทมแล้วมีปุ่ม "สวมใส่"
 - **แมพใหญ่ขึ้นหลายเท่า** ทุ่ง 160×120 ดันเจี้ยน 120×96 (มีห้องบอสใหญ่) เมือง 96×76 และมี **ช่องสี่เหลี่ยมตามเมาส์แบบ Ragnarok** (มุมสี่มุมสีเขียว = เดินได้, สีแดง = เดินไม่ได้) คลิกแล้วเดินไปกลางช่อง
 - **NPC เปลี่ยนอาชีพ (Job Master) มีทุกเมือง** รวมทุกการเปลี่ยนอาชีพไว้ที่เดียว: อาชีพแรก (Job Lv 10) อาชีพขั้นสอง (Job Lv 40) เกิดใหม่ (Base 99 / Job 50) อาชีพ High และอาชีพขั้นสูง แสดงเฉพาะอาชีพที่ตัวละครเปลี่ยนไปได้
 - **ระบบ GM ควบคุมได้ทุกอย่าง** หน้าต่าง GM 4 แท็บ + คำสั่ง `@` ในแชท (`@help`) และคำสั่ง GM ฝั่งเซิร์ฟเวอร์ด้วยรหัสแอดมิน
@@ -112,6 +113,16 @@ npm run dev           # then in the game: Social window (G) → server ws://loca
 ```
 Chat: plain text = map, `/p` party, `/g` guild, `/gl` global, `/w name` whisper. The Arena Master in Aurelion warps to the Proving Grounds (PvP) and Castle Veyl (guild war, daily 20:00–21:00 server time; `npm run server -- --woe-always` keeps it open).
 
+## Screen layout, zoom, hotbar and Auto
+
+- **Status (top left):** name, class, Base / Job level, HP, MP, Base and Job EXP bars, Luma, and a stat/skill points badge that opens the right window.
+- **Minimap (top right)** with a zoom slider, − / + buttons and the zoom %. The mouse wheel and the `=` / `-` keys zoom too (75–250%, saved).
+- **Quest tracker** under the minimap, with the **▶ Auto Quest** button.
+- **Hotbar:** two rows of 10 — keys 1–0 and Shift+1–0 (rebindable).
+- **AUTO** beside the hotbar starts Auto Farm at once (press again to stop); **⚙** opens the auto settings only (radius, potions, skills, loot, elites).
+- **Menu (bottom right):** 15 icon buttons in 5 columns; **▼ Menu** folds it away (remembered).
+- **Items:** click an item to get its actions, with a big **Equip** (or **Use**) button first; double-click still equips/uses.
+
 ## Big maps and the cell cursor
 
 Maps are several times larger than at first: fields are 160×120 tiles (Willowbrook's meadow and forest 150×110 / 150×120), dungeons 120×96 with 5×4 rooms and a boss hall made of four rooms, towns 96×76 (the old town is the centre, with a ring of houses and woods). Monster counts were raised with the area, so fields stay as crowded as before. Monsters far from the player (over 1,600 px) and idle don't patrol, as in Ragnarok where only monsters near players act; this keeps the simulation fast.
@@ -156,7 +167,7 @@ Single-player GM tools edit the local save only, and any use sets `flags.gmUsed`
 | Integration: class balance | **passed**. All six first jobs beat Grukk at Lv 17 on the first try at least as often as their thresholds over 24 fixed seeds (Knight ≥22, Ranger ≥12, Mage ≥17, Cleric ≥9, Rogue ≥8, Merchant ≥20); re-checked on the widened Whispering Forest. Second jobs vs Archmage Valdris in its new boss hall (12 seeds): 7–12 wins each (table in `docs/RO_SYSTEMS.md`) |
 | Integration: server | **7 / 7 passed**: accounts, presence and chat, party EXP share, trade, vending, guilds / PvP / guild war, server GM with admin token, with real WebSocket clients |
 | Online E2E, two browsers (`npm run test:online`) | **8 / 8 checks passed** three runs in a row: presence, map chat, party EXP share, trade, vending, PvP, guild war, no page errors |
-| E2E in Chromium (`npm run test:e2e`) | **31 / 31 checks passed** (incl. the cell cursor, cell-centred click walking and chunked map drawing, switching to Thai and back on the title screen and in game, Auto Farm from the Auto window, pet window, database tools, entering the Endless Spire, GM window, refine and guild job change): boot, create character via UI, WASD, click NPC → dialogue → accept quest, windows by hotkey, portal travel, mouse-click combat kill with EXP, save and reload persistence, shop purchase, drag & drop equip, stat allocation, job change via dialogue, learn skill, drag skill to hotbar, cast by hotkey, death → respawn, drop part of a stack via the quantity dialog, delete a character with typed-name confirmation, zero page errors |
+| E2E in Chromium (`npm run test:e2e`) | **32 / 32 checks passed** (incl. zoom, the 20-slot hotbar, click-to-Equip, the AUTO button and Auto Quest from the tracker, the cell cursor, cell-centred click walking and chunked map drawing, switching to Thai and back on the title screen and in game, pet window, database tools, entering the Endless Spire, GM window, refine and guild job change): boot, create character via UI, WASD, click NPC → dialogue → accept quest, windows by hotkey, portal travel, mouse-click combat kill with EXP, save and reload persistence, shop purchase, drag & drop equip, stat allocation, job change via dialogue, learn skill, drag skill to hotbar, cast by hotkey, death → respawn, drop part of a stack via the quantity dialog, delete a character with typed-name confirmation, zero page errors |
 
 Screenshots from the e2e run are written to `tests/e2e/screenshots/` (git-ignored).
 
