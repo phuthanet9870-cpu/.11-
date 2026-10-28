@@ -25,7 +25,9 @@ export class MenuScene extends Phaser.Scene {
       this.add.image((o.x + o.w / 2) * TILE, by + 2, tex.objects.get(o.uid)!).setOrigin(0.5, 1).setDepth(by);
     }
     map.buildings.forEach((b, i) => this.add.image(b.x * TILE - 4, (b.y + b.h) * TILE + 4, tex.buildings[i]).setOrigin(0, 1).setDepth((b.y + b.h) * TILE));
-    this.add.particles(0, 0, 'fx_spark', {
+    // Sparkles only with visual effects on (Settings).
+    const fx = (window as unknown as { __veyloria?: { settings: { effects?: boolean } } }).__veyloria?.settings.effects === true;
+    if (fx) this.add.particles(0, 0, 'fx_spark', {
       x: { min: 0, max: map.width * TILE }, y: { min: 0, max: map.height * TILE }, lifespan: 4000, speed: { min: 4, max: 16 },
       scale: { start: 0.5, end: 0 }, alpha: { start: 0.8, end: 0 }, tint: [0xffe9a8, 0x9ad8ff], blendMode: Phaser.BlendModes.ADD, frequency: 60,
     }).setDepth(1e5);

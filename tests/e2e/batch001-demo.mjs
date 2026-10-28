@@ -146,6 +146,8 @@ try {
   await page.fill('#char-name', 'Batch Demo');
   await page.click('#btn-create');
   await page.waitForSelector('#hud', { timeout: 15000 });
+  // This demo shows the Batch 001 effect art, so visual effects (off by default) are turned on for it.
+  await page.evaluate(() => { window.__veyloria.settings.effects = true; });
   await sleep(1500);
 
   // ---------------------------------------------------------------- Willowbrook tileset / props / buildings

@@ -30,6 +30,7 @@ export function defaultSettings(): Settings {
     cellCursor: true,
     showGrid: false,
     zoom: 1.5,
+    effects: false,
     wasdMovement: true,
   };
 }

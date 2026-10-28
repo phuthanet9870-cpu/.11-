@@ -448,6 +448,10 @@ export class Hud {
   private updateTracker() {
     const w = this.app.world!;
     const list = activeQuests(w.data, w.char).sort((a, b) => order(a.def.category) - order(b.def.category));
+    // Every quest finished (the 5 tutorial quests): the quest panel goes away.
+    const allDone = [...w.data.quests.keys()].every((id) => w.char.quests[id]?.status === 'completed');
+    this.trackerEl.style.display = allDone ? 'none' : '';
+    if (allDone) return;
     if (!list.length) {
       setChildren(this.trackerEl, h('div', { class: 'thead' }, h('h4', {}, 'Quests'), this.autoQuestBtn), h('div', { class: 'muted', style: 'font-size:11px' }, 'No active quests. Look for NPCs with a ! above them.'));
       return;

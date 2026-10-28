@@ -594,6 +594,8 @@ export interface Settings {
   showGrid?: boolean;
   /** Camera zoom (0.75–2.5, default 1.5). */
   zoom?: number;
+  /** Visual effects: skill/hit effects, particles, weather, flashes (default off). */
+  effects?: boolean;
   /** The bottom-right icon menu is folded away. */
   menuCollapsed?: boolean;
   wasdMovement: boolean;

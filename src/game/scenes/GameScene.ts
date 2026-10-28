@@ -91,6 +91,9 @@ export class GameScene extends Phaser.Scene {
 
   constructor() { super('Game'); }
 
+  /** Visual effects (skill and hit effects, particles, weather, flashes, bobbing) — off unless turned on in Settings. */
+  private get fxOn() { return this.host.settings.effects === true; }
+
   init(data: { host: GameHost }) {
     this.host = data.host;
     this.world = data.host.world;
@@ -209,16 +212,16 @@ export class GameScene extends Phaser.Scene {
       const img = this.track(this.add.image(bx, by + 2, key).setOrigin(0.5, 1).setDepth(by - 1));
       if (kind.id === 'glint') {
         img.setDepth(-5).setBlendMode(Phaser.BlendModes.ADD).setY(by - 6);
-        this.tweens.add({ targets: img, alpha: { from: 0.3, to: 1 }, scale: { from: 0.7, to: 1.1 }, yoyo: true, repeat: -1, duration: 700 });
+        if (this.fxOn) this.tweens.add({ targets: img, alpha: { from: 0.3, to: 1 }, scale: { from: 0.7, to: 1.1 }, yoyo: true, repeat: -1, duration: 700 });
       }
-      if (kind.id === 'campfire') {
+      if (kind.id === 'campfire' && this.fxOn) {
         const em = this.track(this.add.particles(bx, by - 14, 'fx_dot', {
           speed: { min: 10, max: 30 }, angle: { min: 250, max: 290 }, lifespan: 700, scale: { start: 0.6, end: 0 },
           tint: [0xff7a2e, 0xffd34d], blendMode: Phaser.BlendModes.ADD, frequency: 90, gravityY: -30,
         }).setDepth(by));
         void em;
       }
-      if (kind.id === 'obelisk') {
+      if (kind.id === 'obelisk' && this.fxOn) {
         this.track(this.add.particles(bx, by - 50, 'fx_spark', {
           speed: { min: 5, max: 20 }, lifespan: 1200, scale: { start: 0.5, end: 0 }, tint: [0x9ad8ff, 0xffffff],
           blendMode: Phaser.BlendModes.ADD, frequency: 220, gravityY: -20, emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(-10, -40, 20, 80) } as never,
@@ -234,8 +237,8 @@ export class GameScene extends Phaser.Scene {
     for (const p of map.def.portals) {
       const cx = (p.x + p.w / 2) * TILE, cy = (p.y + p.h / 2) * TILE;
       const glow = this.track(this.add.ellipse(cx, cy + 6, p.w * TILE + 10, p.h * TILE * 0.6, 0x7fd6ff, 0.25).setDepth(-4).setBlendMode(Phaser.BlendModes.ADD));
-      this.tweens.add({ targets: glow, alpha: { from: 0.15, to: 0.45 }, yoyo: true, repeat: -1, duration: 900 });
-      this.track(this.add.particles(cx, cy, 'fx_spark', {
+      if (this.fxOn) this.tweens.add({ targets: glow, alpha: { from: 0.15, to: 0.45 }, yoyo: true, repeat: -1, duration: 900 });
+      if (this.fxOn) this.track(this.add.particles(cx, cy, 'fx_spark', {
         speed: { min: 5, max: 25 }, angle: { min: 260, max: 280 }, lifespan: 1400, scale: { start: 0.6, end: 0 },
         tint: [0x7fd6ff, 0xffffff], blendMode: Phaser.BlendModes.ADD, frequency: 120, gravityY: -40,
         emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(-p.w * 16, -p.h * 16, p.w * 32, p.h * 32) } as never,
@@ -252,7 +255,7 @@ export class GameScene extends Phaser.Scene {
       s.setDepth(n.y);
       const name = this.track(this.add.text(n.x, n.y + 6, n.def.name, labelStyle('#ffe9a8')).setOrigin(0.5, 0).setDepth(1e5 + 2).setResolution(2));
       const marker = this.track(this.add.text(n.x, n.y - 72, '', { fontFamily: 'Verdana', fontSize: '22px', fontStyle: 'bold', color: '#ffd34d', stroke: '#1c1622', strokeThickness: 5 }).setOrigin(0.5).setDepth(1e5 + 3).setResolution(2));
-      this.tweens.add({ targets: marker, y: n.y - 78, yoyo: true, repeat: -1, duration: 600, ease: 'Sine.easeInOut' });
+      if (this.fxOn) this.tweens.add({ targets: marker, y: n.y - 78, yoyo: true, repeat: -1, duration: 600, ease: 'Sine.easeInOut' });
       this.npcViews.set(n.npcId, { sprite: s, name, marker });
     }
 
@@ -272,7 +275,7 @@ export class GameScene extends Phaser.Scene {
     };
     const [tintColor, tintAlpha] = TINT[map.def.tileset] ?? (map.def.type === 'dungeon' ? [0x000008, 0.3] : [0xffe0b0, 0.05]);
     this.track(this.add.rectangle(0, 0, W, H, tintColor, tintAlpha).setOrigin(0).setDepth(1e5 - 1));
-    this.addWeather(map.def.weather[0]);
+    if (this.fxOn) this.addWeather(map.def.weather[0]);
 
     const cam = this.cameras.main;
     cam.setBounds(0, 0, W, H);
@@ -281,7 +284,7 @@ export class GameScene extends Phaser.Scene {
     cam.preRender();
     this.updateChunks(true);
     this.cellCursor = this.track(this.add.graphics().setDepth(-8));
-    cam.fadeIn(350, 0, 0, 0);
+    if (this.fxOn) cam.fadeIn(350, 0, 0, 0);
     if (this.host.settings.showCollision) this.drawCollision();
     if (this.host.settings.showGrid) this.setGridVisible(true);
     audio.playMusic(map.def.bgm);
@@ -451,13 +454,14 @@ export class GameScene extends Phaser.Scene {
           floatText(this, tgt.x, y, e.crit ? `${e.amount}!` : `${e.amount}`, col, e.crit ? 24 : isPlayer ? 15 : 17);
           if (e.kind === 'physical') {
             const dy = isPlayer ? 30 : 16;
-            playSpriteFx(this, 'fx_hit_basic', tgt.x, tgt.y - dy, { follow: () => ({ x: tgt.x, y: tgt.y - dy }) });
+            if (this.fxOn) playSpriteFx(this, 'fx_hit_basic', tgt.x, tgt.y - dy, { follow: () => ({ x: tgt.x, y: tgt.y - dy }) });
           }
-          if (!isPlayer && e.element && e.element !== 'neutral' && e.kind !== 'dot') playFx(this, ELEMENT_FX[e.element] ?? 'slash_small', tgt.x, tgt.y - 10);
+          if (this.fxOn && !isPlayer && e.element && e.element !== 'neutral' && e.kind !== 'dot') playFx(this, ELEMENT_FX[e.element] ?? 'slash_small', tgt.x, tgt.y - 10);
         }
         break;
       }
       case 'fx': {
+        if (!this.fxOn) break;
         // Effects that carry an offset are attached to their target and move with it.
         const actor = e.offsetY === undefined ? undefined : e.targetId === 'player' ? w.player : e.targetId ? w.monsters.get(e.targetId) : undefined;
         const ox = 0, oy = e.offsetY ?? 0;
@@ -465,17 +469,17 @@ export class GameScene extends Phaser.Scene {
         playFx(this, e.fx, e.x, e.y, e.radius, { flipX: e.fx.startsWith('slash') && w.player.x > e.x, follow });
         break;
       }
-      case 'projectile': playProjectile(this, e.fx, e.fromX, e.fromY, e.toX, e.toY, e.durationMs, e.color); break;
+      case 'projectile': if (this.fxOn) playProjectile(this, e.fx, e.fromX, e.fromY, e.toX, e.toY, e.durationMs, e.color); break;
       case 'sound': audio.play(e.key); break;
-      case 'levelUp': floatText(this, w.player.x, w.player.y - 90, e.kind === 'base' ? 'LEVEL UP!' : 'JOB LEVEL UP!', e.kind === 'base' ? '#ffd34d' : '#7fd6ff', 22); break;
+      case 'levelUp': if (this.fxOn) floatText(this, w.player.x, w.player.y - 90, e.kind === 'base' ? 'LEVEL UP!' : 'JOB LEVEL UP!', e.kind === 'base' ? '#ffd34d' : '#7fd6ff', 22); break;
       case 'death': {
         const v = this.monViews.get(e.id);
         if (v) v.deadAt = this.time.now;
         break;
       }
-      case 'bossIntro': this.cameras.main.flash(400, 80, 20, 80); audio.playMusic('boss_battle'); break;
-      case 'bossDefeated': this.cameras.main.flash(600, 255, 230, 160); this.time.delayedCall(3000, () => audio.playMusic(this.world.map.def.bgm)); break;
-      case 'playerDied': this.cameras.main.shake(300, 0.01); break;
+      case 'bossIntro': if (this.fxOn) this.cameras.main.flash(400, 80, 20, 80); audio.playMusic('boss_battle'); break;
+      case 'bossDefeated': if (this.fxOn) this.cameras.main.flash(600, 255, 230, 160); this.time.delayedCall(3000, () => audio.playMusic(this.world.map.def.bgm)); break;
+      case 'playerDied': if (this.fxOn) this.cameras.main.shake(300, 0.01); break;
       case 'jobChanged': this.ensurePlayerTexture(); break;
       case 'statsChanged': this.ensurePlayerTexture(); break;
       default: break;
@@ -652,7 +656,7 @@ export class GameScene extends Phaser.Scene {
     for (const [id, g] of w.groundItems) {
       if (this.groundViews.has(id)) continue;
       const def = w.data.items.get(g.itemId)!;
-      if (def.rarity !== 'common') {
+      if (def.rarity !== 'common' && this.fxOn) {
         const glowColor = { uncommon: 0x6fe08a, rare: 0x7fb0ff, epic: 0xc9a6ff, legendary: 0xffd34d }[def.rarity] ?? 0xffffff;
         const glow = this.track(this.add.image(g.x, g.y, 'fx_glow').setTint(glowColor).setScale(0.6).setBlendMode(Phaser.BlendModes.ADD).setDepth(g.y - 21));
         this.tweens.add({ targets: glow, alpha: { from: 0.4, to: 1 }, yoyo: true, repeat: -1, duration: 600 });
@@ -660,7 +664,7 @@ export class GameScene extends Phaser.Scene {
         this.groundGlows.set(id, glow);
       }
       const img = this.track(this.add.image(g.x, g.y, ensureItemTexture(this, def)).setScale(0.75).setDepth(g.y - 20));
-      this.tweens.add({ targets: img, y: g.y - 4, yoyo: true, repeat: -1, duration: 700, ease: 'Sine.easeInOut' });
+      if (this.fxOn) this.tweens.add({ targets: img, y: g.y - 4, yoyo: true, repeat: -1, duration: 700, ease: 'Sine.easeInOut' });
       this.groundViews.set(id, img);
     }
     for (const [id, img] of this.groundViews) {
@@ -682,7 +686,7 @@ export class GameScene extends Phaser.Scene {
       const pulse = 0.25 + 0.1 * Math.sin(now / 120);
       g.fillStyle(col, pulse); g.fillCircle(z.x, z.y, z.radius);
       g.lineStyle(2, col, 0.8); g.strokeCircle(z.x, z.y, z.radius);
-      if (!this.zoneEmitters.has(z.id)) {
+      if (this.fxOn && !this.zoneEmitters.has(z.id)) {
         const em = this.track(this.add.particles(z.x, z.y, 'fx_dot', {
           speed: { min: 10, max: 40 }, angle: { min: 250, max: 290 }, lifespan: 600, scale: { start: 0.6, end: 0 }, tint: [col, 0xffffff],
           blendMode: Phaser.BlendModes.ADD, frequency: 60, gravityY: -60,

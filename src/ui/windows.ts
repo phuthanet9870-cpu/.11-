@@ -617,7 +617,7 @@ export class WindowManager {
       input.addEventListener('input', () => { st.volume[key] = Number(input.value) / 100; val.textContent = input.value; app.applySettings(); });
       return h('div', { class: 'range-row' }, h('span', {}, label), input, val);
     };
-    const toggle = (key: 'showDamageNumbers' | 'autoLoot' | 'showCollision' | 'wasdMovement' | 'cellCursor' | 'showGrid', label: string) => {
+    const toggle = (key: 'showDamageNumbers' | 'autoLoot' | 'showCollision' | 'wasdMovement' | 'cellCursor' | 'showGrid' | 'effects', label: string) => {
       const cb = h('input', { type: 'checkbox', checked: key === 'cellCursor' ? st[key] !== false : !!st[key] });
       cb.addEventListener('change', () => { st[key] = cb.checked; app.applySettings(); });
       return h('label', { class: 'row', style: 'margin-bottom:4px' }, cb, label);
@@ -637,6 +637,7 @@ export class WindowManager {
         slider('master', 'Master'), slider('music', 'Music'), slider('sfx', 'SFX'), slider('ambient', 'Ambient'),
         h('div', { class: 'gold', style: 'font-weight:bold;margin-top:8px' }, 'Gameplay'),
         toggle('showDamageNumbers', 'Show damage numbers'), toggle('autoLoot', 'Auto-loot drops'), toggle('wasdMovement', 'WASD movement'),
+        toggle('effects', 'Visual effects (skills, hits, particles, weather) — applies on the next map'),
         toggle('cellCursor', 'Cell cursor under the mouse (Ragnarok style)'),
         toggle('showGrid', 'Show grid lines on the map'),
         toggle('showCollision', 'Show collision / spawn debug overlay'),
@@ -803,12 +804,12 @@ export class WindowManager {
     if (focused && body.contains(focused) && focused.tagName === 'INPUT' && (focused as HTMLInputElement).type === 'number') return;
     const num = (id: string, label: string, key: 'radius' | 'hpPotionPct' | 'mpPotionPct', min: number, max: number) => {
       const el = h('input', { type: 'number', id, value: st[key], min, max, style: 'width:64px' }) as HTMLInputElement;
-      el.addEventListener('change', () => { st[key] = Math.max(min, Math.min(max, Number(el.value) || min)); this.renderAuto(); });
+      el.addEventListener('change', () => { st[key] = Math.max(min, Math.min(max, Number(el.value) || min)); au.saveSettings(); this.renderAuto(); });
       return h('div', { class: 'row', style: 'gap:6px;margin:3px 0' }, h('span', { style: 'width:170px' }, label), el);
     };
     const tick = (id: string, label: string, key: 'useSkills' | 'loot' | 'skipElites') => {
       const el = h('input', { type: 'checkbox', id }) as HTMLInputElement;
-      el.checked = st[key]; el.addEventListener('change', () => { st[key] = el.checked; });
+      el.checked = st[key]; el.addEventListener('change', () => { st[key] = el.checked; au.saveSettings(); });
       return h('label', { style: 'display:block;margin:3px 0' }, el, ` ${label}`);
     };
     const q = au.currentQuest();
@@ -823,6 +824,22 @@ export class WindowManager {
       tick('auto-skills', 'Use skills on the hotbar', 'useSkills'),
       tick('auto-loot', 'Pick up loot', 'loot'),
       tick('auto-elites', 'Leave elites and bosses alone (unless they attack)', 'skipElites'),
+      // Which monsters to farm: only species that live on this map are listed.
+      h('div', { class: 'gold', style: 'margin-top:8px;font-weight:bold' }, `Monsters to farm on ${w.map.def.name}`),
+      au.mapSpecies().length
+        ? h('div', { id: 'auto-targets', style: 'display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;margin-top:3px' }, au.mapSpecies().map((id) => {
+          const md = w.data.monsters.get(id)!;
+          const cb = h('input', { type: 'checkbox', dataset: { mon: id } }) as HTMLInputElement;
+          cb.checked = st.targets.includes(id);
+          cb.addEventListener('change', () => {
+            st.targets = cb.checked ? [...new Set([...st.targets, id])] : st.targets.filter((x) => x !== id);
+            au.saveSettings();
+            this.renderAuto();
+          });
+          return h('label', { style: 'font-size:12px' }, cb, ` ${md.name} Lv.${md.level}`);
+        }))
+        : h('div', { class: 'muted', style: 'font-size:11px' }, 'No monsters live on this map.'),
+      h('div', { class: 'muted', style: 'font-size:11px;margin-top:2px' }, au.pickedOnMap() ? `Farming only: ${au.pickedOnMap()!.map((id) => w.data.monsters.get(id)!.name).join(', ')} (monsters that attack you are still fought back).` : 'None ticked: every monster here is farmed.'),
       h('div', { class: 'muted', style: 'font-size:11px;margin-top:6px' },
         'Press AUTO beside the hotbar to fight the monsters around you; press it again to stop. Auto Quest starts from the quest list (top right). Both stop when you click, move by hand, die, or carry 90% weight. Put skills on the hotbar for them to be used.')));
   }

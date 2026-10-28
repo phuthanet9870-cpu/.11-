@@ -14,7 +14,7 @@ try { ({ chromium } = require('playwright')); } catch { ({ chromium } = require(
 const root = join(dirname(fileURLToPath(import.meta.url)), '../..');
 const shots = join(root, 'tests/e2e/screenshots');
 mkdirSync(shots, { recursive: true });
-const PORT = 4173;
+const PORT = Number(process.env.E2E_PORT ?? 4173);
 const URL = `http://localhost:${PORT}/`;
 
 const results = [];
@@ -463,6 +463,15 @@ try {
   const en = await page.evaluate(() => document.querySelector('#win-inventory .wtitle')?.textContent ?? '');
   check('Thai in game: windows, messages and chat box translate, and switch back', th.title.includes('กระเป๋า') && th.log.includes('ฟื้นฟู') && th.chat.includes('แชท') && th.saved === 'th' && en.includes('Inventory'), `${th.title} · ${th.log.slice(-60)} · ${th.chat} → ${en}`);
   await page.evaluate(() => { window.__veyloria.windows.close?.('settings'); window.__veyloria.windows.close?.('inventory'); });
+
+  // The quest panel disappears once every quest is completed.
+  {
+    const before = await page.evaluate(() => getComputedStyle(document.querySelector('#hud .tracker')).display);
+    await page.evaluate(() => { window.__veyloria.gmCommand('@questall complete'); });
+    await sleep(400);
+    const after = await page.evaluate(() => getComputedStyle(document.querySelector('#hud .tracker')).display);
+    check('quest panel hides when all quests are completed', before !== 'none' && after === 'none', `${before} → ${after}`);
+  }
 
   // Delete the character from the select screen (typed-name confirmation).
   await page.evaluate(() => window.__veyloria.exitToSelect());

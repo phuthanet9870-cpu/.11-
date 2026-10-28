@@ -32,15 +32,26 @@ export interface AutoSettings {
   loot: boolean;
   /** Leave elites and bosses alone. */
   skipElites: boolean;
+  /** Monster species to farm. Only the ones living on the current map count; none picked = every monster. */
+  targets: string[];
 }
 
-export const DEFAULT_AUTO: AutoSettings = { radius: 520, hpPotionPct: 45, mpPotionPct: 20, useSkills: true, loot: true, skipElites: true };
+export const DEFAULT_AUTO: AutoSettings = { radius: 520, hpPotionPct: 45, mpPotionPct: 20, useSkills: true, loot: true, skipElites: true, targets: [] };
 
 const dist = (ax: number, ay: number, bx: number, by: number) => Math.hypot(ax - bx, ay - by);
 
 export class AutoPilot {
   mode: AutoMode = 'off';
-  settings: AutoSettings = { ...DEFAULT_AUTO };
+  private loaded: AutoSettings | null = null;
+  /** Settings are kept with the character (read when first needed: the World sets its character after creating the AutoPilot). */
+  get settings(): AutoSettings {
+    if (!this.loaded) {
+      this.loaded = { ...DEFAULT_AUTO };
+      try { const s = this.w.char?.flags.autoSettings; if (typeof s === 'string') this.loaded = { ...DEFAULT_AUTO, ...JSON.parse(s) }; } catch { /* keep defaults */ }
+    }
+    return this.loaded!;
+  }
+  set settings(v: AutoSettings) { this.loaded = v; }
   /** One line for the HUD. */
   status = '';
   private anchor: { mapId: string; x: number; y: number } | null = null;
@@ -51,6 +62,20 @@ export class AutoPilot {
   private lootTries = new Map<string, number>();
 
   constructor(private w: World) {}
+
+  saveSettings() { this.w.char.flags.autoSettings = JSON.stringify(this.settings); }
+
+  /** Monster species living on the current map (what Auto Farm can be told to hunt), weakest first. */
+  mapSpecies(): string[] {
+    const ids = new Set(this.w.map.def.monsterSpawns.map((s) => s.monsterId));
+    return [...ids].filter((id) => this.data.monsters.has(id)).sort((a, b) => this.data.monsters.get(a)!.level - this.data.monsters.get(b)!.level);
+  }
+
+  /** The picked species that live on this map, or null for "every monster". */
+  pickedOnMap(): string[] | null {
+    const here = this.mapSpecies(), picked = this.settings.targets.filter((id) => here.includes(id));
+    return picked.length ? picked : null;
+  }
 
   private get data(): GameData { return this.w.data; }
   private get c() { return this.w.char; }
@@ -222,7 +247,10 @@ export class AutoPilot {
       }
     }
     if (p.intent.type === 'pickup') return;
-    const ok = (m: MonsterActor) => !m.dead && (!only || only.includes(m.def.id)) && !(this.settings.skipElites && (m.boss || m.def.elite) && m.targetId !== 'player');
+    // Quest hunting uses its own list; otherwise the species picked in the Auto settings (on this map).
+    const picked = only ? null : this.pickedOnMap();
+    const ok = (m: MonsterActor) => !m.dead && (!only || only.includes(m.def.id)) && (!picked || picked.includes(m.def.id) || m.targetId === 'player')
+      && !(this.settings.skipElites && (m.boss || m.def.elite) && m.targetId !== 'player');
     const pool = attackers.filter(ok).length ? attackers.filter(ok)
       : [...w.monsters.values()].filter((m) => ok(m) && dist(m.x, m.y, anchor.x, anchor.y) <= (only ? 5000 : this.settings.radius));
     if (pool.length) {

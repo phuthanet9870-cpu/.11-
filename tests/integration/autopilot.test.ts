@@ -50,6 +50,30 @@ describe('Auto Farm', () => {
     expect(maxDist).toBeLessThan(w.auto.settings.radius + 400);
   }, 300_000);
 
+  it('farms only the monsters picked in the settings, and only ones from the current map count', () => {
+    const c = newChar('AutoT');
+    const m = data.maps.get('sunny_meadow')!;
+    const area = m.monsterSpawns.find((s) => s.monsterId === 'horn_rabbit')!.area;
+    c.position = { mapId: 'sunny_meadow', x: (area.x + area.w / 2) * TILE, y: (area.y + area.h / 2) * TILE };
+    const w = newWorld(c, 9);
+    w.godMode = true;
+    w.update(16);
+    expect(w.auto.mapSpecies()).toEqual(expect.arrayContaining(['leaf_slime', 'horn_rabbit']));
+    w.auto.settings.targets = ['horn_rabbit', 'ice_golem']; // ice_golem does not live here and is ignored
+    expect(w.auto.pickedOnMap()).toEqual(['horn_rabbit']);
+    w.auto.saveSettings();
+    const killed: string[] = [];
+    w.onEvent((e) => { if (e.type === 'death') { const mm = w.monsters.get(e.id); if (mm) killed.push(mm.def.id); } });
+    w.auto.start('farm');
+    runUntil(w, () => killed.length >= 4, 6 * 60000);
+    expect(killed.length).toBeGreaterThanOrEqual(4);
+    // God mode keeps attackers harmless; anything else killed would be a monster that attacked first.
+    expect(killed.filter((id) => id === 'horn_rabbit').length).toBeGreaterThanOrEqual(killed.length - 1);
+    // Settings are kept with the character.
+    const w2 = newWorld(w.char, 9);
+    expect(w2.auto.settings.targets).toEqual(['horn_rabbit', 'ice_golem']);
+  }, 300_000);
+
   it('stops when overweight and on manual control', () => {
     const c = newChar('AutoW');
     const w = newWorld(c, 5);
