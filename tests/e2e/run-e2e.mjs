@@ -135,7 +135,12 @@ try {
   for (let i = 0; i < 3; i++) await page.keyboard.press('Escape');
 
   // Travel to Sunny Meadow through the east portal.
-  await page.evaluate(() => { const w = window.__veyloria.world; w.moveTo(49 * 32, 18.5 * 32); });
+  // Willowbrook is big now: start near the east portal (as if walking there), then click-walk into it.
+  await page.evaluate(() => {
+    const w = window.__veyloria.world, p = w.map.def.portals.find((x) => x.targetMap === 'sunny_meadow');
+    w.player.x = (p.x - 6) * 32; w.player.y = (p.y + p.h / 2) * 32;
+    w.moveTo((p.x + p.w / 2) * 32, (p.y + p.h / 2) * 32);
+  });
   await page.waitForFunction(() => window.__veyloria.world.map.def.id === 'sunny_meadow', null, { timeout: 30000 });
   await sleep(800);
   s = await state();
@@ -187,7 +192,7 @@ try {
   await page.screenshot({ path: join(shots, '08-reloaded.png') });
 
   // Whispering Forest render check (boss map)
-  await page.evaluate(() => { const w = window.__veyloria.world; w.enterMap('whispering_forest', 'from_meadow'); w.player.x = 44 * 32; w.player.y = 39 * 32; });
+  await page.evaluate(() => { const w = window.__veyloria.world; w.enterMap('whispering_forest', 'from_meadow'); const b = w.map.def.bossSpawn; w.player.x = (b.x - 3) * 32; w.player.y = (b.y + 1) * 32; });
   await sleep(1500);
   await page.screenshot({ path: join(shots, '09-forest-boss.png') });
   const boss = await page.evaluate(() => [...window.__veyloria.world.monsters.values()].some((m) => m.boss));

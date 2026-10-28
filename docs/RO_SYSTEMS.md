@@ -84,7 +84,9 @@ which is the RO size rule. The Cleric bot heals itself with Heal.
 
 | Dragoon | Templar | Beastmaster | Minstrel | Sorcerer | Sage | Bishop | Ascetic | Shadowblade | Outlaw | Artisan | Alchemist |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 11 | 9 | 9 | 6 | 11 | 12 | 12 | 12 | 12 | 12 | 11 | 11 |
+| 12 | 12 | 7 | 9 | 12 | 12 | 12 | 12 | 12 | 11 | 11 | 10 |
+
+Measured in the boss hall of the widened Arcanthe Tower (four rooms merged). The open hall made the summoned Mana Wisps much more dangerous for melee jobs, so bosses now summon a new wave only when the last one is dead, Templar's Faith gives +2 MDEF per level, and Sacred Strike (1.8 + 0.36/lv) and Backstab (2.6 + 0.45/lv) hit harder. The test bot also stands and casts for 2.5 s after each step back while kiting.
 
 ## Sources
 

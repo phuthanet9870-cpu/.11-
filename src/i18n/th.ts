@@ -283,6 +283,8 @@ const UI: Record<string, string> = {
   'Auto-loot drops': 'เก็บของอัตโนมัติ',
   'WASD movement': 'เดินด้วย WASD',
   'Show collision / spawn debug overlay': 'แสดงขอบชน / จุดเกิด (ดีบัก)',
+  'Cell cursor under the mouse (Ragnarok style)': 'ช่องสี่เหลี่ยมตามเมาส์ (แบบ Ragnarok)',
+  'Show grid lines on the map': 'แสดงเส้นกริดบนแผนที่',
   'Key Bindings': 'ตั้งปุ่ม',
   'Reset key bindings': 'รีเซ็ตปุ่ม',
   'Save Game': 'บันทึกเกม',

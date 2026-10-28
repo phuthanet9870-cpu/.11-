@@ -17,6 +17,7 @@ export const TH_MESSAGES: Record<string, string> = {
   'Resting (no healing potions)': 'กำลังพัก (ไม่มียาฟื้นฟู)',
   'Fighting {}': 'กำลังสู้กับ {}',
   'Picking up loot': 'กำลังเก็บของ',
+  'Returning to the farm spot': 'กำลังกลับไปจุดฟาร์ม',
   'Looking for monsters': 'กำลังหามอนสเตอร์',
   'no quests left to do — try Auto Farm': 'ไม่มีเควสเหลือ — ลองใช้ฟาร์มอัตโนมัติ',
   '{}: accepting from {}': '{}: กำลังรับเควสจาก {}',
