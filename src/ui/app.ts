@@ -19,6 +19,8 @@ import { h, setChildren } from './dom';
 import { Hud } from './hud';
 import { characterCreateScreen, characterSelectScreen, titleScreen } from './screens';
 import { WindowManager, type WindowId } from './windows';
+import { achievementDef, dailyStatus } from '../core/achievements';
+import { bindPinchZoom, isTouchDevice, TouchControls } from './touch';
 
 export const ZOOM_MIN = 0.75, ZOOM_MAX = 2.5;
 
@@ -88,6 +90,7 @@ export class App implements GameHost {
       fps: { target: 60 },
       audio: { noAudio: true },
     });
+    bindPinchZoom(document.getElementById('game')!, this);
   }
 
   private loadOrRecover(): SaveFile {
@@ -180,11 +183,25 @@ export class App implements GameHost {
     this.hud.log(`Welcome to Veyloria, ${c.name}! Click to move, click monsters to attack. Talk to NPCs marked with ! for quests.`, 'system');
     this.hud.log('Keys: I inventory · E equipment · C status · K skills · Q quests · M map · O settings · 1-0 hotbar · Tab target · Z loot · F talk', 'system');
     this.lastAutosave = performance.now();
+    this.applyTouch();
+    if (dailyStatus(c, this.world.now()).canClaim) this.windows.open('daily');
     this.online.join();
   }
 
   markWindowsDirty() { this.windowsDirty = true; }
   openSocial() { this.windows.open('social'); }
+  playerMenu(name: string, e: MouseEvent) {
+    const on = this.online, info = on.players.get(name);
+    const items: [string, () => void][] = [
+      ['Trade', () => { on.tradeRequest(name); this.windows.open('social'); }],
+      ['Invite to party', () => on.partyInvite(name)],
+    ];
+    if (on.guild) items.push(['Invite to guild', () => on.guildInvite(name)]);
+    items.push(['Whisper', () => this.hud?.startWhisper(name)]);
+    if (info?.vending) items.push([`View shop: ${info.vending}`, () => { on.viewShop(name); this.windows.open('social'); }]);
+    // Next tick: the same mouse press would otherwise close the menu straight away.
+    setTimeout(() => this.windows.openContextAt(e, items, `${name}${info ? ` · Lv ${info.level}` : ''}`), 0);
+  }
 
   exitToSelect() {
     this.saveNow(false);
@@ -223,7 +240,20 @@ export class App implements GameHost {
     const scene = this.game.scene.getScene('Game') as GameScene | null;
     if (scene && scene.scene.isActive()) { scene.setCollisionVisible(this.settings.showCollision); scene.setGridVisible(!!this.settings.showGrid); }
     this.hud?.buildHotbar();
+    this.applyTouch();
     this.persist();
+  }
+
+  /** Touch controls: on for touch screens unless turned off in the settings. */
+  touch: TouchControls | null = null;
+  applyTouch() {
+    const on = this.settings.touchControls ?? isTouchDevice();
+    if (!this.world || !this.hud) return;
+    if (on && !this.touch) { this.touch = new TouchControls(this); }
+    if (this.touch) {
+      if (on && !this.touch.root.parentElement) this.hud.root.appendChild(this.touch.root);
+      if (!on) this.touch.root.remove();
+    }
   }
 
   // ---------------------------------------------------------------- GameHost
@@ -238,6 +268,8 @@ export class App implements GameHost {
           break;
         case 'npcInteract': if (this.world.auto.mode !== 'quest') this.windows.openNpcDialog(e.npcId); break;
         case 'objectInteract': this.windows.showObjectText(e.name, e.text); break;
+        case 'openWindow': this.windows.open(e.id); break;
+        case 'achievement': { const a = achievementDef(e.id); if (a) hud.banner('Achievement unlocked!', `${a.name} — title «${a.title}»`); this.windowsDirty = true; break; }
         case 'levelUp': hud.banner(e.kind === 'base' ? `Level ${e.level}!` : `Job Level ${e.level}!`, e.kind === 'base' ? 'Stat points gained — open Status (C)' : 'Skill point gained — open Skills (K)'); this.windowsDirty = true; break;
         case 'bossIntro': hud.banner(e.name, e.title, 'boss'); hud.log(e.text, 'combat'); break;
         case 'bossPhase': hud.banner(e.name, e.text, 'boss'); break;
@@ -417,7 +449,7 @@ export class App implements GameHost {
     this.world.setMoveDir(dx, dy);
   }
 
-  private interactNearest() {
+  interactNearest() {
     const w = this.world;
     let best: string | null = null, bd = 220;
     for (const n of w.npcs) {

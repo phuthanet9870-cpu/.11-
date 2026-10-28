@@ -11,6 +11,8 @@ export interface GameHost {
   onFrame(): void;
   /** Opens the Social window (clicking another player outside PvP). */
   openSocial?(): void;
+  /** Clicked another player (outside PvP): show what you can do with them. */
+  playerMenu?(name: string, e: MouseEvent): void;
   /** Zoom the camera in (+) or out (−) by steps. */
   zoomBy?(steps: number): void;
 }

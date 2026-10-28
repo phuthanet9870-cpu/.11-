@@ -2568,5 +2568,418 @@
    }
   ],
   "generated": true
+ },
+ {
+  "id": "willowbrook_trader",
+  "name": "Trader Moss",
+  "title": "Market Trader",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#a35d30",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "apron"
+  },
+  "greeting": [
+   "I buy anything — at today's price. Prices change every hour with supply and rarity; check the graph before you sell."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "starter_goods",
+    "label": "Buy starter goods"
+   },
+   {
+    "type": "trader"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "willowbrook_market",
+  "name": "Market Hall Clerk",
+  "title": "Market Hall",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#e8d090",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "coat"
+  },
+  "greeting": [
+   "The Market Hall lists goods from other adventurers. Only real players buy here, so price your goods well."
+  ],
+  "services": [
+   {
+    "type": "market"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "aurelion_trader",
+  "name": "Trader Ilka",
+  "title": "Market Trader",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "apron"
+  },
+  "greeting": [
+   "I buy anything — at today's price. Prices change every hour with supply and rarity; check the graph before you sell."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "starter_goods",
+    "label": "Buy starter goods"
+   },
+   {
+    "type": "trader"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "aurelion_market",
+  "name": "Market Hall Clerk",
+  "title": "Market Hall",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#e8dcc0",
+   "accent": "#c8ccd8",
+   "style": "coat"
+  },
+  "greeting": [
+   "The Market Hall lists goods from other adventurers. Only real players buy here, so price your goods well."
+  ],
+  "services": [
+   {
+    "type": "market"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_trader",
+  "name": "Trader Bodo",
+  "title": "Market Trader",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#2a2a3a",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "apron"
+  },
+  "greeting": [
+   "I buy anything — at today's price. Prices change every hour with supply and rarity; check the graph before you sell."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "starter_goods",
+    "label": "Buy starter goods"
+   },
+   {
+    "type": "trader"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_market",
+  "name": "Market Hall Clerk",
+  "title": "Market Hall",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "coat"
+  },
+  "greeting": [
+   "The Market Hall lists goods from other adventurers. Only real players buy here, so price your goods well."
+  ],
+  "services": [
+   {
+    "type": "market"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_trader",
+  "name": "Trader Nesrin",
+  "title": "Market Trader",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "apron"
+  },
+  "greeting": [
+   "I buy anything — at today's price. Prices change every hour with supply and rarity; check the graph before you sell."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "starter_goods",
+    "label": "Buy starter goods"
+   },
+   {
+    "type": "trader"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_market",
+  "name": "Market Hall Clerk",
+  "title": "Market Hall",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "long",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "coat"
+  },
+  "greeting": [
+   "The Market Hall lists goods from other adventurers. Only real players buy here, so price your goods well."
+  ],
+  "services": [
+   {
+    "type": "market"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sandara_trader",
+  "name": "Trader Quay",
+  "title": "Market Trader",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#e8dcc0",
+   "accent": "#c8ccd8",
+   "style": "apron"
+  },
+  "greeting": [
+   "I buy anything — at today's price. Prices change every hour with supply and rarity; check the graph before you sell."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "starter_goods",
+    "label": "Buy starter goods"
+   },
+   {
+    "type": "trader"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sandara_market",
+  "name": "Market Hall Clerk",
+  "title": "Market Hall",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "long",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "coat"
+  },
+  "greeting": [
+   "The Market Hall lists goods from other adventurers. Only real players buy here, so price your goods well."
+  ],
+  "services": [
+   {
+    "type": "market"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_trader",
+  "name": "Trader Ruta",
+  "title": "Market Trader",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#e8dcc0",
+   "accent": "#e8dcc0",
+   "style": "apron"
+  },
+  "greeting": [
+   "I buy anything — at today's price. Prices change every hour with supply and rarity; check the graph before you sell."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "starter_goods",
+    "label": "Buy starter goods"
+   },
+   {
+    "type": "trader"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_market",
+  "name": "Market Hall Clerk",
+  "title": "Market Hall",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "spiky",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "coat"
+  },
+  "greeting": [
+   "The Market Hall lists goods from other adventurers. Only real players buy here, so price your goods well."
+  ],
+  "services": [
+   {
+    "type": "market"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frostholm_trader",
+  "name": "Trader Vane",
+  "title": "Market Trader",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#e8dcc0",
+   "accent": "#c8ccd8",
+   "style": "apron"
+  },
+  "greeting": [
+   "I buy anything — at today's price. Prices change every hour with supply and rarity; check the graph before you sell."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "starter_goods",
+    "label": "Buy starter goods"
+   },
+   {
+    "type": "trader"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frostholm_market",
+  "name": "Market Hall Clerk",
+  "title": "Market Hall",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#e8dcc0",
+   "accent": "#e8dcc0",
+   "style": "coat"
+  },
+  "greeting": [
+   "The Market Hall lists goods from other adventurers. Only real players buy here, so price your goods well."
+  ],
+  "services": [
+   {
+    "type": "market"
+   }
+  ],
+  "generated": true
  }
 ]

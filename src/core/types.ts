@@ -163,7 +163,9 @@ export type UseEffect =
   /** Opens into a random non-boss card. */
   | { type: 'randomCard' }
   | { type: 'resetStats' }
-  | { type: 'resetSkills' };
+  | { type: 'resetSkills' }
+  /** Thrown at the current target (or the nearest monster): damage + base level × perLevel, optional splash and status. */
+  | { type: 'throw'; element: Element; damage: number; perLevel: number; radius?: number; status?: StatusId; statusChance?: number };
 
 export interface ItemDef {
   id: string;
@@ -471,6 +473,10 @@ export interface NpcDef {
 export type NpcService =
   | { type: 'shop'; shopId: string; label?: string }
   | { type: 'storage' }
+  /** Market Trader: buys anything at today's market price (moves every hour). */
+  | { type: 'trader' }
+  /** Market Hall: the player-to-player market (online). */
+  | { type: 'market' }
   | { type: 'heal'; cost: number }
   | { type: 'jobChange'; classIds: string[] }
   | { type: 'rebirth' }
@@ -580,6 +586,14 @@ export interface CharacterState {
   /** Merchant pushcart contents (undefined/null = no cart). */
   cart?: ItemInstance[] | null;
   stats_meta: { kills: number; deaths: number; playTimeMs: number; bossKills: Record<string, number> };
+  /** What this character sold to Market Traders: item id → [hour index, qty] (last 48 h). Lowers that item's price for a while. */
+  marketSales?: Record<string, [number, number][]>;
+  /** Achievements earned: id → time. */
+  achievements?: Record<string, number>;
+  /** Title shown under the name (an achievement id). */
+  title?: string;
+  /** Daily login rewards: last claimed day (YYYY-MM-DD, local time) and the streak (1–7). */
+  daily?: { lastDay: string; streak: number };
 }
 
 export interface Settings {
@@ -590,6 +604,8 @@ export interface Settings {
   showCollision: boolean;
   /** Ragnarok-style square under the mouse (default on). */
   cellCursor?: boolean;
+  /** Virtual joystick and action buttons; undefined = on for touch screens. */
+  touchControls?: boolean;
   /** Faint grid lines over the map (default off). */
   showGrid?: boolean;
   /** Camera zoom (0.75–2.5, default 1.5). */

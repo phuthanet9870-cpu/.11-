@@ -410,6 +410,18 @@
    "x": 41,
    "y": 40,
    "facing": "down"
+  },
+  {
+   "npcId": "arcanthe_trader",
+   "x": 58,
+   "y": 40,
+   "facing": "down"
+  },
+  {
+   "npcId": "arcanthe_market",
+   "x": 41,
+   "y": 36,
+   "facing": "down"
   }
  ],
  "monsterSpawns": [],

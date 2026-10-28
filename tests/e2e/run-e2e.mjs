@@ -84,6 +84,16 @@ try {
   await sleep(1200);
   let s = await state();
   check('character created and entered Willowbrook', s?.map === 'willowbrook', JSON.stringify(s && { map: s.map }));
+  // Daily login calendar opens on the first login of the day; claim it and close it.
+  {
+    const opened = await page.isVisible('#win-daily');
+    const luma0 = await page.evaluate(() => window.__veyloria.world.char.luma);
+    await page.click('#daily-claim');
+    await sleep(100);
+    const d = await page.evaluate(() => ({ daily: window.__veyloria.world.char.daily, luma: window.__veyloria.world.char.luma }));
+    await page.click('#win-daily .x');
+    check('daily reward calendar opens at login and Day 1 can be claimed once', opened && d.daily?.streak === 1 && d.luma === luma0 + 500, JSON.stringify(d.daily));
+  }
   await page.screenshot({ path: join(shots, '03-willowbrook.png') });
 
   // Keyboard movement (WASD)
@@ -471,6 +481,72 @@ try {
     await sleep(400);
     const after = await page.evaluate(() => getComputedStyle(document.querySelector('#hud .tracker')).display);
     check('quest panel hides when all quests are completed', before !== 'none' && after === 'none', `${before} → ${after}`);
+  }
+
+  // Market Trader: hourly price chart and instant sale.
+  {
+    await page.evaluate(() => {
+      const w = window.__veyloria.world;
+      w.enterMap('willowbrook', 'default');
+      const n = w.npcs.find((x) => x.npcId === 'willowbrook_trader');
+      w.player.x = n.x + 40; w.player.y = n.y;
+      w.char.inventory = w.char.inventory.filter((i) => i.itemId !== 'rabbit_horn');
+      w.char.inventory.push({ uid: 'e2e-horn', itemId: 'rabbit_horn', qty: 5 });
+      window.__veyloria.windows.open('trader');
+    });
+    await page.waitForSelector('#trader-list .trow[data-item=rabbit_horn] button');
+    const charts = await page.locator('#win-trader canvas').count();
+    const luma0 = await page.evaluate(() => window.__veyloria.world.char.luma);
+    await page.click('#trader-list .trow[data-item=rabbit_horn] button');
+    await page.fill('#qty-input', '2');
+    await page.click('.modal button:has-text("OK")');
+    await sleep(150);
+    const after = await page.evaluate(() => ({ luma: window.__veyloria.world.char.luma, horn: window.__veyloria.world.char.inventory.filter((i) => i.itemId === 'rabbit_horn').reduce((a, i) => a + i.qty, 0) }));
+    check('Market Trader: price graph shown, selling 2 of 5 pays at once', charts >= 2 && after.horn === 3 && after.luma > luma0, `charts=${charts} luma ${luma0}→${after.luma} left=${after.horn}`);
+    await page.evaluate(() => { window.__veyloria.windows.close('trader'); window.__veyloria.windows.open('market'); });
+    const offline = await page.textContent('#win-market');
+    check('Market Hall says it needs a server when offline (only real players buy)', /offline/.test(offline), offline.slice(0, 80));
+    await page.evaluate(() => window.__veyloria.windows.close('market'));
+  }
+
+  // Item compare in the tooltip.
+  {
+    const txt = await page.evaluate(() => {
+      const a = window.__veyloria, w = a.world;
+      const inst = { uid: 'e2e-sword', itemId: 'iron_sword', qty: 1 };
+      w.char.inventory.push(inst);
+      return a.windows.itemTooltip(w.data.items.get('iron_sword'), inst).map((e) => e.textContent).join(' | ');
+    });
+    check('item tooltip compares with what is equipped (ATK ▲/▼)', /Compared with/.test(txt) && /ATK [▲▼]/.test(txt), txt.slice(-160));
+  }
+
+  // Achievements & titles (the first kill was earned in combat above).
+  {
+    await page.click('#menu-grid [data-win=achievements]').catch(async () => page.evaluate(() => window.__veyloria.windows.open('achievements')));
+    await page.waitForSelector('#ach-list');
+    const done = await page.locator('#ach-list .ach.done').count();
+    await page.click('#ach-list .ach.done button:has-text("Use title")');
+    await sleep(200);
+    const label = await page.evaluate(() => window.__veyloria.game.scene.getScene('Game').playerName.text);
+    check('achievements earned from play; a title shows under the name', done >= 1 && /«.+»/.test(label), `done=${done} label=${JSON.stringify(label)}`);
+    await page.evaluate(() => window.__veyloria.windows.close('achievements'));
+  }
+
+  // Alchemist brewing: the Medicine Bowl opens the brewing window; a brew uses the bowl and materials.
+  {
+    await page.evaluate(() => {
+      const w = window.__veyloria.world;
+      w.char.classId = 'alchemist'; w.char.skills.potion_research = 5;
+      w.char.inventory.push({ uid: 'e2e-bowl', itemId: 'medicine_bowl', qty: 1 }, { uid: 'e2e-herb', itemId: 'red_herb', qty: 1 }, { uid: 'e2e-bottle', itemId: 'empty_bottle', qty: 1 });
+      w.useItem('e2e-bowl');
+    });
+    await page.waitForSelector('#win-brew:not(.hidden) #brew-list');
+    await page.click('#brew-list .brow[data-recipe=brew_red_potion] button');
+    await sleep(150);
+    const b = await page.evaluate(() => { const inv = window.__veyloria.world.char.inventory; return { bowl: inv.some((i) => i.itemId === 'medicine_bowl'), herb: inv.some((i) => i.itemId === 'red_herb') }; });
+    const log = await page.textContent('#hud');
+    check('brewing window: a brew uses the Medicine Bowl and herbs (success or failure is logged)', !b.bowl && !b.herb && /Brewing (succeeded|failed)/.test(log), JSON.stringify(b));
+    await page.evaluate(() => window.__veyloria.windows.close('brew'));
   }
 
   // Delete the character from the select screen (typed-name confirmation).

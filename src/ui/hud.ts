@@ -89,7 +89,7 @@ export class Hud {
     // Icon menu (two rows), Ragnarok-style: icon + short label, hotkey in the tooltip.
     const MENU: [string, string, string, string?][] = [
       ['status', '📊', 'Status'], ['inventory', '🎒', 'Items'], ['equipment', '🛡️', 'Equip'], ['skills', '✨', 'Skills'], ['quests', '📜', 'Quests'], ['worldMap', '🗺️', 'Map'], ['social', '👥', 'Social'], ['settings', '⚙️', 'Menu'],
-      ['pet', '🐾', 'Pet'], ['homun', '🧪', 'Homun'], ['cart', '🛒', 'Cart'], ['runes', '⭐', 'Runes'], ['database', '📖', 'DB'], ['admin', '👑', 'GM', 'btn-gm'],
+      ['pet', '🐾', 'Pet'], ['homun', '🧪', 'Homun'], ['cart', '🛒', 'Cart'], ['runes', '⭐', 'Runes'], ['database', '📖', 'DB'], ['achievements', '🏆', 'Titles'], ['daily', '🎁', 'Daily'], ['admin', '👑', 'GM', 'btn-gm'],
     ];
     const menu = h('div', { class: 'panel menu-grid', id: 'menu-grid' },
       ...MENU.map(([id, icon, label, elId]) => h('button', {
@@ -165,6 +165,7 @@ export class Hud {
   }
 
   focusChat() { this.chatInput.focus(); }
+  startWhisper(name: string) { this.chatInput.value = `/w ${name} `; this.chatInput.focus(); }
   showZoom(z: number) { this.zoomEl.textContent = `${Math.round(z * 100)}%`; this.zoomSlider.value = String(Math.round(z * 100)); }
   get chatFocused() { return document.activeElement === this.chatInput; }
 
@@ -341,6 +342,8 @@ export class Hud {
   }
 
   // ---------------------------------------------------------------- per frame
+  private bonusEl = h('div', { class: 'bonus-ind', id: 'bonus-ind', style: 'display:none' });
+
   update() {
     const w = this.app.world;
     if (!w) return;
@@ -354,6 +357,10 @@ export class Hud {
     this.lastSlow = now;
     if (!this.instTimer.parentElement) this.root.appendChild(this.instTimer);
     if (!this.clockEl.parentElement) this.root.appendChild(this.clockEl);
+    if (!this.bonusEl.parentElement) this.root.appendChild(this.bonusEl);
+    const bonus = w.bonus();
+    const bonusText = bonus.labels.length ? `🎉 Bonus event: ${bonus.labels.join(' · ')}` : '';
+    if (this.bonusEl.textContent !== bonusText) { this.bonusEl.textContent = bonusText; this.bonusEl.style.display = bonusText ? '' : 'none'; }
     if (!this.autoEl.parentElement) { this.root.appendChild(this.autoEl); this.autoEl.addEventListener('click', () => this.app.world?.auto.stop('manual control')); }
     const au = w.auto;
     this.updateAutoButtons();

@@ -1,9 +1,10 @@
 // The world simulation: map instance, player, monsters, NPCs, combat, skills,
 // loot and portals. It is renderer-agnostic (no Phaser) so it can be unit
 // tested headlessly and later run authoritative on the server (Phase 3).
+import { traderSell } from './market';
 import type { GameData } from './data';
 import {
-  profileFromDerived, profileFromMonster, resolveAttack, rollStatus,
+  elementModifier, profileFromDerived, profileFromMonster, resolveAttack, rollStatus,
   type AttackOptions, type CombatProfile,
 } from './combat';
 import { addExperience, computeDerivedStats, expToNextBase, mergeMods, specialMods } from './formulas';
@@ -29,6 +30,8 @@ import {
 import { compileMap, moveWithCollision, TILE, type CompiledMap } from './mapCompiler';
 import { findPath, lineClear } from './pathfinding';
 import { Rng } from './rng';
+import { bonusNow, checkAchievements, claimDaily, setTitle } from './achievements';
+import { brew, BREW_BOWL, canBrew } from './brewing';
 import type {
   BossDef, BossSkillDef, CharacterState, DerivedStats, Direction, Element, EquipSlot, MonsterDef,
   NpcDef, SkillDef, SkillEffect, StatKey, StatModifiers, StatusId,
@@ -162,6 +165,8 @@ export type WorldEvent =
   | { type: 'fx'; fx: string; x: number; y: number; radius?: number; targetId?: string; /** offset from the target, for effects that follow it */ offsetY?: number }
   | { type: 'projectile'; fromX: number; fromY: number; toX: number; toY: number; durationMs: number; fx: string; color?: string }
   | { type: 'levelUp'; kind: 'base' | 'job'; level: number }
+  | { type: 'achievement'; id: string }
+  | { type: 'openWindow'; id: 'brew' }
   | { type: 'death'; id: string }
   | { type: 'loot'; itemId: string; qty: number }
   | { type: 'message'; text: string; channel: 'system' | 'combat' | 'loot' | 'quest' | 'error' }
@@ -259,6 +264,7 @@ export class World {
     this.now = opts.now ?? (() => Date.now());
     this.autoLoot = opts.autoLoot ?? false;
     this.eventsOn = !opts.noEvents;
+    this.timedBonuses = !opts.noEvents;
     this.nextEventAt = 5 * 60000;
     this.player = {
       id: 'player', kind: 'player', x: 0, y: 0, dir: 'down', hp: 1, maxHp: 1, statuses: [], buffs: [], dead: false,
@@ -481,6 +487,7 @@ export class World {
     this.updateHomun(dt);
     this.updateInstance();
     this.updateEvents();
+    if (this.time >= this.nextAchCheck) { this.nextAchCheck = this.time + 1000; this.updateAchievements(); }
     this.telegraphs = this.telegraphs.filter((t) => t.endsAt > this.time - 200);
     if (this.statsDirty) this.recomputeStats();
     this.char.position = { mapId: this.map.def.id, x: this.player.x, y: this.player.y };
@@ -608,6 +615,12 @@ export class World {
 
   // ---------------------------------------------------------------- world events (raids)
   private eventsOn = true;
+  /** Timed bonus events (EXP hours, weekend drops) by the real clock. Off in tests. */
+  timedBonuses = true;
+  private nextAchCheck = 0;
+
+  /** Current timed bonus (EXP / drop multipliers). */
+  bonus() { return this.timedBonuses ? bonusNow(this.now()) : { exp: 1, drop: 1, labels: [] as string[], nextChangeMs: 3_600_000 }; }
   private nextEventAt = 0;
   event: { mapId: string; mapName: string; leaderDefId: string; raiderDefId: string; endsAt: number; done: boolean } | null = null;
 
@@ -1425,7 +1438,7 @@ export class World {
     const contributed = (m.damageBy.player ?? 0) > 0;
     if (contributed) {
       this.char.stats_meta.kills++;
-      const mul = 1 + this.expBonusPct / 100, n = this.partyShareWith + 1;
+      const mul = (1 + this.expBonusPct / 100) * this.bonus().exp, n = this.partyShareWith + 1;
       const base = Math.round(m.def.exp * mul), job = Math.round(m.def.jobExp * mul);
       this.grantExp(Math.floor(base / n), Math.floor(job / n), m.def.name);
       if (n > 1) this.emit({ type: 'partyExp', base, job, mapId: this.map.def.id, monsterLevel: m.def.level });
@@ -1546,8 +1559,9 @@ export class World {
       this.message(`+${l} Luma`, 'loot');
     }
     let n = 0;
+    const bonus = this.bonus().drop;
     for (const e of table.entries) {
-      if (!this.rng.chance(Math.min(1, (e.chance * this.gm.dropRate) / 100))) continue;
+      if (!this.rng.chance(Math.min(1, (e.chance * this.gm.dropRate * bonus) / 100))) continue;
       const qty = this.rng.int(e.min ?? 1, e.max ?? 1);
       const angle = (n++ / 5) * Math.PI * 2 + this.rng.next();
       const r = n === 1 ? 0 : 18 + this.rng.next() * 10;
@@ -2349,11 +2363,21 @@ export class World {
     if (def.petEgg) return this.hatchPet(uid);
     if (def.petFood) return this.feedPetCmd();
     if (def.petAccessory) return this.petAccessoryCmd(uid);
+    if (def.id === BREW_BOWL) {
+      if (!canBrew(this.char)) return this.err('Only an Alchemist who knows Potion Research can brew.');
+      this.emit({ type: 'openWindow', id: 'brew' });
+      return { ok: true };
+    }
     if (def.type !== 'consumable' || !def.use) return this.err(`${def.name} cannot be used.`);
     if (p.dead) return this.err('You are dead.');
     if ((p.itemCooldowns[def.id] ?? 0) > this.time) return this.err('Wait a moment before using that again.');
+    let throwAt: MonsterActor | undefined;
     for (const u of def.use) {
       if (u.type === 'returnToSave' && p.cast) return this.err('Cannot use while casting.');
+      if (u.type === 'throw') {
+        throwAt = this.throwTarget();
+        if (!throwAt) return this.err('No monster close enough to throw at.');
+      }
     }
     const r = removeByUid(this.char, uid, 1);
     if (!r.ok) return this.err(r.error);
@@ -2418,6 +2442,20 @@ export class World {
         case 'resetSkills':
           { const rs = resetSkills(this.data, this.char); if (rs.ok && rs.message) this.message(rs.message); }
           break;
+        case 'throw': {
+          const t = throwAt!;
+          this.emit({ type: 'projectile', fromX: p.x, fromY: p.y - 18, toX: t.x, toY: t.y - 14, durationMs: 250, fx: 'magic_orb', color: def.icon.color });
+          const base = u.damage + u.perLevel * this.char.baseLevel;
+          const mul = 1 + 0.05 * (this.char.skills.potion_research ?? 0);
+          const hits = u.radius ? [...this.monsters.values()].filter((m) => !m.dead && Math.hypot(m.x - t.x, m.y - t.y) <= u.radius!) : [t];
+          for (const m of hits) {
+            const amount = Math.max(1, Math.round(base * mul * elementModifier(this.data, u.element, m.def.element, m.def.elementLevel ?? 1) * (0.9 + this.rng.next() * 0.2)));
+            this.damageMonster(m, amount, 'physical', u.element, false, false);
+            if (u.status && !m.dead) this.applyStatus(m, u.status, u.statusChance ?? 0);
+          }
+          if (u.radius) this.emit({ type: 'fx', fx: u.element === 'fire' ? 'fire' : 'hit', x: t.x, y: t.y, radius: u.radius });
+          break;
+        }
       }
     }
     this.emit({ type: 'sound', key: 'potion' });
@@ -2604,6 +2642,58 @@ export class World {
       this.emit({ type: 'sound', key: 'coin' });
       this.questTick(questEvents.buy(this.data, this.char, itemId));
     });
+  }
+  private updateAchievements() {
+    for (const a of checkAchievements(this.data, this.char, this.now())) {
+      this.message(`Achievement unlocked: ${a.name}! Title "${a.title}" is now yours.`, 'quest');
+      this.emit({ type: 'sound', key: 'level_up' });
+      this.emit({ type: 'achievement', id: a.id });
+    }
+  }
+
+  /** Who a thrown bottle hits: the current target if it is close enough, else the nearest monster. */
+  private throwTarget(): MonsterActor | undefined {
+    const p = this.player, range = 260;
+    const t = this.currentTarget;
+    if (t && !t.dead && Math.hypot(t.x - p.x, t.y - p.y) <= range) return t;
+    let best: MonsterActor | undefined, bd = range;
+    for (const m of this.monsters.values()) {
+      if (m.dead || m.summoned) continue;
+      const d = Math.hypot(m.x - p.x, m.y - p.y);
+      if (d <= bd) { bd = d; best = m; }
+    }
+    return best;
+  }
+
+  /** Alchemist brewing: one try at a recipe (uses a Medicine Bowl). */
+  brew(recipeId: string): OpResult {
+    const st = this.stats.totalStats;
+    const r = brew(this.data, this.char, recipeId, { dex: st.dex, luk: st.luk, int: st.int }, this.rng.next());
+    if (!r.ok) return this.err(r.error);
+    const name = this.data.items.get(recipeId.replace(/^brew_/, ''))?.name ?? recipeId;
+    if (r.success) { this.message(`Brewing succeeded: ${name}! (${r.chance}% chance)`, 'loot'); this.emit({ type: 'sound', key: 'potion' }); }
+    else this.message(`Brewing failed — the mixture spoiled. (${r.chance}% chance)`, 'error');
+    this.afterInventoryChange();
+    return { ok: true };
+  }
+
+  claimDaily(): OpResult {
+    const r = claimDaily(this.data, this.char, this.now());
+    if (!r.ok) return this.err(r.error!);
+    this.message(`Daily reward claimed (day ${r.day}).`, 'loot');
+    this.emit({ type: 'sound', key: 'coin' });
+    return { ok: true };
+  }
+
+  setTitle(id: string | null): OpResult {
+    const r = setTitle(this.char, id);
+    return r.ok ? { ok: true } : this.err(r.error!);
+  }
+
+  /** Sell to a Market Trader at the current market price. */
+  traderSell(uid: string, qty: number): OpResult {
+    if (!this.nearService((s) => s.type === 'trader')) return this.err('You are too far from the Market Trader.');
+    return this.wrap(traderSell(this.data, this.char, uid, qty, this.now()), () => this.emit({ type: 'sound', key: 'coin' }));
   }
   sell(uid: string, qty: number): OpResult {
     if (!this.nearService((s) => s.type === 'shop')) return this.err('You are too far from a merchant.');

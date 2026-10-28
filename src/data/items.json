@@ -9944,5 +9944,174 @@
    "color": "#ff5a8a"
   },
   "generated": true
+ },
+ {
+  "id": "red_herb",
+  "name": "Red Herb",
+  "type": "material",
+  "rarity": "common",
+  "description": "A bitter red leaf. Alchemists brew it into Red and Orange Potions.",
+  "weight": 1,
+  "price": 18,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "leaf",
+   "color": "#e0413a"
+  },
+  "generated": true
+ },
+ {
+  "id": "yellow_herb",
+  "name": "Yellow Herb",
+  "type": "material",
+  "rarity": "common",
+  "description": "A sunny leaf. Brewed into Orange and Yellow Potions and Acid Bottles.",
+  "weight": 1,
+  "price": 40,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "leaf",
+   "color": "#f2d23a"
+  },
+  "generated": true
+ },
+ {
+  "id": "green_herb",
+  "name": "Green Herb",
+  "type": "material",
+  "rarity": "common",
+  "description": "A sharp green leaf that clears poison. Brewed into Green Potions.",
+  "weight": 1,
+  "price": 15,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "leaf",
+   "color": "#5cc45a"
+  },
+  "generated": true
+ },
+ {
+  "id": "blue_herb",
+  "name": "Blue Herb",
+  "type": "material",
+  "rarity": "uncommon",
+  "description": "A cool blue leaf. Brewed into Blue Potions.",
+  "weight": 1,
+  "price": 90,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "leaf",
+   "color": "#4a8cff"
+  },
+  "generated": true
+ },
+ {
+  "id": "empty_bottle",
+  "name": "Empty Bottle",
+  "type": "material",
+  "rarity": "common",
+  "description": "A clean glass bottle for brewing.",
+  "weight": 2,
+  "price": 6,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "potion",
+   "color": "#d8e4ee"
+  },
+  "generated": true
+ },
+ {
+  "id": "medicine_bowl",
+  "name": "Medicine Bowl",
+  "type": "misc",
+  "rarity": "common",
+  "description": "A mortar bowl. Use it to open the brewing window. One is used up on every brew.",
+  "weight": 1,
+  "price": 8,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "flask",
+   "color": "#b9a27a"
+  },
+  "generated": true
+ },
+ {
+  "id": "alcohol",
+  "name": "Distilled Spirit",
+  "type": "material",
+  "rarity": "common",
+  "description": "Strong spirit for fire flasks. Brewed from mushling caps and spore dust.",
+  "weight": 2,
+  "price": 120,
+  "stackable": true,
+  "maxStack": 99,
+  "icon": {
+   "shape": "potion",
+   "color": "#f0f0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "fire_bottle",
+  "name": "Fire Bottle",
+  "type": "consumable",
+  "rarity": "uncommon",
+  "description": "Throw it at your target (or the nearest monster): a fire burst that hurts nearby enemies and may burn them. Alchemists throw harder with Potion Research.",
+  "weight": 3,
+  "price": 360,
+  "stackable": true,
+  "maxStack": 99,
+  "cooldownMs": 1000,
+  "use": [
+   {
+    "type": "throw",
+    "element": "fire",
+    "damage": 120,
+    "perLevel": 6,
+    "radius": 60,
+    "status": "burn",
+    "statusChance": 0.3
+   }
+  ],
+  "icon": {
+   "shape": "potion",
+   "color": "#ff6a2e",
+   "accent": "#ffd36a"
+  },
+  "generated": true
+ },
+ {
+  "id": "acid_bottle",
+  "name": "Acid Bottle",
+  "type": "consumable",
+  "rarity": "uncommon",
+  "description": "Throw it at your target (or the nearest monster): acid that eats through armor and may cause bleeding. Alchemists throw harder with Potion Research.",
+  "weight": 3,
+  "price": 380,
+  "stackable": true,
+  "maxStack": 99,
+  "cooldownMs": 1000,
+  "use": [
+   {
+    "type": "throw",
+    "element": "neutral",
+    "damage": 150,
+    "perLevel": 7,
+    "status": "bleed",
+    "statusChance": 0.25
+   }
+  ],
+  "icon": {
+   "shape": "potion",
+   "color": "#a6e22e",
+   "accent": "#ffffff"
+  },
+  "generated": true
  }
 ]

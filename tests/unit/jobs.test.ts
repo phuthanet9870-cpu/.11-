@@ -1,3 +1,4 @@
+import { ACHIEVEMENTS } from '../../src/core/achievements';
 import { describe, expect, it } from 'vitest';
 import { buyPrice, buyItem, sellPrice } from '../../src/core/inventory';
 import { computeDerivedStats, jobBonus } from '../../src/core/formulas';
@@ -62,6 +63,7 @@ describe('first jobs', () => {
 
   it('Coin Strike costs Luma and refuses without enough', () => {
     const c = buildCharacter({ classId: 'merchant', base: 20, job: 20, stats: ['str'], skills: [['coin_strike', 3]], gear: [] });
+    c.achievements = Object.fromEntries(ACHIEVEMENTS.map((a) => [a.id, 1])); // no achievement Luma muddies the count
     const w = newWorld(c);
     c.luma = 250;
     expect(w.canUseSkill('coin_strike').ok).toBe(false);

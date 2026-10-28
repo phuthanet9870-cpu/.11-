@@ -12,8 +12,8 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { AddressInfo } from 'node:net';
 import {
-  CASTLE_MAP, EMPERIUM_POS, PARTY_LEVEL_GAP, PVP_MAPS,
-  type ClientMsg, type GuildInfo, type Listing, type PartyInfo, type PresenceInfo, type ServerMsg, type TradeOffer, type WoeState,
+  CASTLE_MAP, EMPERIUM_POS, MARKET_MAX_LISTINGS, PARTY_LEVEL_GAP, PVP_MAPS,
+  type ClientMsg, type MarketListing, type GuildInfo, type Listing, type PartyInfo, type PresenceInfo, type ServerMsg, type TradeOffer, type WoeState,
 } from '../src/net/protocol';
 
 export interface ServerOptions {
@@ -49,6 +49,10 @@ export function startServer(opts: ServerOptions = {}): Promise<{ port: number; c
   const accounts: Record<string, Account> = load('accounts.json', {});
   const guilds: Record<string, Guild> = load('guilds.json', {});
   const castle: { owner: string | null } = load('castle.json', { owner: null });
+  // Market Hall: listings held in escrow, sale history for the price graph, payouts for sellers who were offline.
+  const market: { listings: MarketListing[]; history: Record<string, [number, number][]>; payouts: Record<string, { itemId: string; qty: number; total: number; buyer: string }[]>; next: number } =
+    load('market.json', { listings: [], history: {}, payouts: {}, next: 1 });
+  const saveMarket = () => writeFileSync(file('market.json'), JSON.stringify(market));
   const save = () => {
     writeFileSync(file('accounts.json'), JSON.stringify(accounts));
     writeFileSync(file('guilds.json'), JSON.stringify(guilds));
@@ -170,13 +174,54 @@ export function startServer(opts: ServerOptions = {}): Promise<{ port: number; c
       if (!NAME_RE.test(info.name.replace(/ /g, '_'))) return err(s, 'Invalid character name.');
       if (online(info.name) && online(info.name) !== s) return err(s, 'A character with that name is online.');
       const g = guildOf(info.name);
-      s.info = { ...info, guild: g?.name, party: undefined, vending: undefined };
+      s.info = { ...info, guild: g?.name, party: undefined, vending: undefined, title: typeof info.title === 'string' && info.title ? info.title.slice(0, 24) : undefined };
       toMap(info.mapId, { t: 'player', info: s.info }, s);
+      // Goods that sold while this seller was away.
+      const paid = market.payouts[info.name];
+      if (paid?.length) { setTimeout(() => { for (const p of paid) send(s, { t: 'market.sold', ...p }); }, 50); delete market.payouts[info.name]; saveMarket(); }
       return send(s, { t: 'joined', you: info.name, players: [...sessions].filter((o) => o !== s && o.info).map((o) => o.info!), woe: woeState(), guild: guildInfo(g) });
     }
     const me = s.info;
     if (!me) return err(s, 'Join with a character first.');
     switch (m.t) {
+      case 'market.browse': return send(s, { t: 'market.listings', listings: market.listings.slice(-300) });
+      case 'market.history': return send(s, { t: 'market.history', itemId: String(m.itemId), points: market.history[String(m.itemId)] ?? [] });
+      case 'market.list': {
+        const qty = Math.floor(Number(m.qty)), price = Math.floor(Number(m.price));
+        if (!m.inst || typeof m.inst.itemId !== 'string' || typeof m.inst.uid !== 'string') return err(s, 'Invalid item.');
+        if (!(qty >= 1 && qty <= 9999) || !(price >= 1 && price <= 1_000_000_000)) return err(s, 'Quantity 1–9999 and a price of at least 1 Luma.');
+        const mine = market.listings.filter((l) => l.seller === me.name);
+        if (mine.length >= MARKET_MAX_LISTINGS) return err(s, `You can list up to ${MARKET_MAX_LISTINGS} items at once.`);
+        if (mine.some((l) => l.inst.uid === m.inst.uid)) return err(s, 'That item is already listed.');
+        const listing: MarketListing = { id: `L${market.next++}`, seller: me.name, itemId: m.inst.itemId, inst: { ...m.inst, qty: 1 }, qty, price, listedAt: now() };
+        market.listings.push(listing); saveMarket();
+        return send(s, { t: 'market.listed', listing });
+      }
+      case 'market.cancel': {
+        const i = market.listings.findIndex((l) => l.id === m.id && l.seller === me.name);
+        if (i < 0) return err(s, 'Listing not found.');
+        const [l] = market.listings.splice(i, 1); saveMarket();
+        return send(s, { t: 'market.returned', inst: l.inst, qty: l.qty, reason: 'Listing cancelled.' });
+      }
+      case 'market.buy': {
+        const l = market.listings.find((x) => x.id === m.id);
+        const qty = Math.floor(Number(m.qty));
+        if (!l) return err(s, 'That listing is gone (sold or cancelled).');
+        if (l.seller === me.name) return err(s, 'You cannot buy your own listing.');
+        if (!(qty >= 1 && qty <= l.qty)) return err(s, 'Invalid quantity.');
+        const total = l.price * qty;
+        l.qty -= qty;
+        if (l.qty <= 0) market.listings.splice(market.listings.indexOf(l), 1);
+        const hist = (market.history[l.itemId] ??= []);
+        hist.push([now(), l.price]);
+        if (hist.length > 200) hist.splice(0, hist.length - 200);
+        send(s, { t: 'market.bought', inst: l.inst, qty, total, seller: l.seller });
+        const seller = online(l.seller);
+        const sale = { itemId: l.itemId, qty, total, buyer: me.name };
+        if (seller) send(seller, { t: 'market.sold', ...sale }); else (market.payouts[l.seller] ??= []).push(sale);
+        saveMarket();
+        return;
+      }
       case 'move': {
         const changedMap = me.mapId !== m.mapId;
         if (changedMap) {
@@ -184,9 +229,10 @@ export function startServer(opts: ServerOptions = {}): Promise<{ port: number; c
           if (s.shop) { s.shop = null; me.vending = undefined; }
           if (s.trade) cancelTrade(s, 'Trade cancelled: a trader left the map.');
         }
-        Object.assign(me, { mapId: m.mapId, x: m.x, y: m.y, dir: m.dir, anim: m.anim, hpPct: m.hpPct, level: m.level });
+        const title = typeof m.title === 'string' && m.title ? m.title.slice(0, 24) : undefined;
+        Object.assign(me, { mapId: m.mapId, x: m.x, y: m.y, dir: m.dir, anim: m.anim, hpPct: m.hpPct, level: m.level, title });
         if (changedMap) { toMap(m.mapId, { t: 'player', info: me }, s); for (const o of sessions) if (o !== s && o.info?.mapId === m.mapId) send(s, { t: 'player', info: o.info }); }
-        else toMap(m.mapId, { t: 'playerMove', name: me.name, mapId: m.mapId, x: m.x, y: m.y, dir: m.dir, anim: m.anim, hpPct: m.hpPct, level: m.level }, s);
+        else toMap(m.mapId, { t: 'playerMove', name: me.name, mapId: m.mapId, x: m.x, y: m.y, dir: m.dir, anim: m.anim, hpPct: m.hpPct, level: m.level, title }, s);
         // Party windows only need map / level / HP changes, at most once a second.
         if (s.partyId && (changedMap || now() - s.lastPartyPush > 1000)) { s.lastPartyPush = now(); pushParty(s.partyId); }
         return;

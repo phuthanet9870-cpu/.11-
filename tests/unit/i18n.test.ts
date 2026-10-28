@@ -21,6 +21,17 @@ describe('language switch (English / Thai)', () => {
     expect(t('Leaf Slime')).toBe('Leaf Slime');
   });
 
+  it('translates the market, achievements, daily rewards and brewing text', () => {
+    setLang('th');
+    expect(t('Sold 3× Jelly for 120 Luma.')).toBe('ขาย 3× Jelly ได้ 120 ลูมา');
+    expect(t('Up to 10 listings · only real players buy here')).toBe('วางขายได้สูงสุด 10 รายการ · มีแต่ผู้เล่นจริงที่ซื้อ');
+    expect(t('Compared with Iron Sword +7')).toBe('เทียบกับ Iron Sword +7');
+    expect(t('Defeat 100 monsters.')).toBe('ปราบมอนสเตอร์ 100 ตัว');
+    expect(t('Reward: 1,000 Luma, Orange Potion ×10')).toBe('รางวัล: 1,000 ลูมา, Orange Potion ×10');
+    expect(t('Claim Day 3')).toBe('รับรางวัลวันที่ 3');
+    expect(t('Brewing succeeded: Red Potion! (64% chance)')).toBe('ปรุงสำเร็จ: Red Potion! (โอกาส 64%)');
+  });
+
   it('translates joined pieces and leaves unknown text alone', () => {
     setLang('th');
     expect(t('Storage · Shop')).toBe('คลังเก็บของ · ร้านค้า');

@@ -483,7 +483,28 @@
   "items": [
    "homun_embryo",
    "homun_ration",
-   "homun_revive"
+   "homun_revive",
+   "medicine_bowl",
+   "empty_bottle"
+  ],
+  "generated": true
+ },
+ {
+  "id": "starter_goods",
+  "name": "Starter Goods",
+  "items": [
+   "red_potion",
+   "orange_potion",
+   "green_potion",
+   "blue_potion",
+   "wing_of_return",
+   "wandering_feather",
+   "training_knife",
+   "oak_club",
+   "cotton_shirt",
+   "bandana",
+   "sandals",
+   "wooden_buckler"
   ],
   "generated": true
  }

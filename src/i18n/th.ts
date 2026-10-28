@@ -4,6 +4,7 @@
 // Proper names (items, monsters, skills, maps, NPCs) are not translated.
 import { TH_DATA } from './th-data';
 import { TH_MESSAGES } from './th-messages';
+import { TH_MARKET } from './th-market';
 
 const UI: Record<string, string> = {
   // ---------------------------------------------------------------- title / select / create
@@ -755,4 +756,4 @@ export const TH_FRAGMENTS: Record<string, string> = {
   ' (card)': ' (การ์ด)', ' (equipment)': ' (อุปกรณ์)', ' (material)': ' (วัตถุดิบ)', ' (consumable)': ' (ไอเทมใช้)', ' (misc)': ' (อื่นๆ)', ' (quest)': ' (เควส)',
 };
 
-export const TH: Record<string, string> = { ...UI, ...TH_MESSAGES, ...TH_DATA };
+export const TH: Record<string, string> = { ...UI, ...TH_MESSAGES, ...TH_DATA, ...TH_MARKET };

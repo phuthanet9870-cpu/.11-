@@ -144,4 +144,39 @@ describe('Veyloria server', () => {
     if (b.ws.readyState !== WebSocket.CLOSED) await new Promise((r) => b.ws.on('close', r));
     gmc.ws.close();
   });
+
+  it('Market Hall: list, real players buy, seller paid (also when offline), sale history, cancel returns the item', async () => {
+    const a = await player('MkSeller'), b = await player('MkBuyer');
+    const inst = { uid: 'u-sword', itemId: 'iron_sword', qty: 1, refine: 5 };
+    a.send({ t: 'market.list', inst, qty: 1, price: 777 });
+    const listed = (await a.wait('market.listed')).listing;
+    expect(listed.price).toBe(777);
+    a.send({ t: 'market.list', inst, qty: 1, price: 5 });
+    expect((await a.wait('error')).text).toMatch(/already listed/);
+    b.send({ t: 'market.browse' });
+    const ls = (await b.wait('market.listings')).listings;
+    expect(ls.some((l) => l.id === listed.id)).toBe(true);
+    a.send({ t: 'market.buy', id: listed.id, qty: 1 });
+    expect((await a.wait('error')).text).toMatch(/own listing/);
+    b.send({ t: 'market.buy', id: listed.id, qty: 1 });
+    const got = await b.wait('market.bought');
+    expect(got.inst.refine).toBe(5); expect(got.total).toBe(777);
+    expect((await a.wait('market.sold')).total).toBe(777);
+    b.send({ t: 'market.history', itemId: 'iron_sword' });
+    expect((await b.wait('market.history')).points.at(-1)?.[1]).toBe(777);
+    // Seller offline: paid on the next join.
+    a.send({ t: 'market.list', inst: { uid: 'u-pot', itemId: 'red_potion', qty: 20 }, qty: 20, price: 30 });
+    const l2 = (await a.wait('market.listed')).listing;
+    a.ws.close(); await new Promise((r) => setTimeout(r, 100));
+    b.send({ t: 'market.buy', id: l2.id, qty: 5 });
+    await b.wait('market.bought');
+    const a2 = await new Client().open();
+    a2.send({ t: 'login', user: 'MkSeller', pass: 'secret123' }); await a2.wait('welcome');
+    a2.send({ t: 'join', info: info('MkSeller') }); await a2.wait('joined');
+    expect((await a2.wait('market.sold')).total).toBe(150);
+    // Cancel returns the remaining 15.
+    a2.send({ t: 'market.cancel', id: l2.id });
+    expect((await a2.wait('market.returned')).qty).toBe(15);
+    a2.ws.close(); b.ws.close();
+  });
 });

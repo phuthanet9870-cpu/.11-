@@ -41,6 +41,10 @@
     "itemId": "terra_stone",
     "chance": 0.01,
     "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.1
    }
   ]
  },
@@ -81,6 +85,14 @@
     "itemId": "starsteel_ore",
     "chance": 0.003,
     "oreHint": true
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.08
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.06
    }
   ]
  },
@@ -126,6 +138,14 @@
     "itemId": "terra_stone",
     "chance": 0.01,
     "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.12
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.1
    }
   ]
  },
@@ -171,6 +191,14 @@
     "itemId": "gale_stone",
     "chance": 0.01,
     "forge": true
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.08
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.06
    }
   ]
  },
@@ -255,6 +283,14 @@
     "itemId": "starsteel_ore",
     "chance": 0.003,
     "oreHint": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.12
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.1
    }
   ]
  },
@@ -485,6 +521,10 @@
     "itemId": "gale_stone",
     "chance": 0.01,
     "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.1
    }
   ],
   "generated": true
@@ -802,6 +842,14 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.12
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.1
    }
   ],
   "generated": true
@@ -884,6 +932,14 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.12
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.1
    }
   ],
   "generated": true
@@ -1006,6 +1062,14 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.08
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.06
    },
    {
     "itemId": "tempered_dagger",
@@ -1355,6 +1419,14 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.06
    }
   ],
   "generated": true
@@ -1391,6 +1463,14 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.08
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.06
    }
   ],
   "generated": true
@@ -1766,6 +1846,14 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.06
    },
    {
     "itemId": "tempered_dagger",
@@ -2410,6 +2498,14 @@
     "forge": true
    },
    {
+    "itemId": "yellow_herb",
+    "chance": 0.08
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.06
+   },
+   {
     "itemId": "tempered_twohand_sword",
     "chance": 0.002,
     "oreHint": true
@@ -2641,6 +2737,14 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.06
    }
   ],
   "generated": true
@@ -2779,6 +2883,18 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.12
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "blue_herb",
+    "chance": 0.04
    },
    {
     "itemId": "tempered_sword",
@@ -2966,6 +3082,14 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.06
    },
    {
     "itemId": "tempered_sword",
@@ -3664,6 +3788,14 @@
     "forge": true
    },
    {
+    "itemId": "red_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.06
+   },
+   {
     "itemId": "runed_dagger",
     "chance": 0.002,
     "oreHint": true
@@ -4294,6 +4426,14 @@
     "forge": true
    },
    {
+    "itemId": "red_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.06
+   },
+   {
     "itemId": "runed_heavy_armor",
     "chance": 0.002,
     "oreHint": true
@@ -4438,6 +4578,18 @@
     "itemId": "star_crumb",
     "chance": 0.005,
     "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.12
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "blue_herb",
+    "chance": 0.04
    },
    {
     "itemId": "starforged_sword",

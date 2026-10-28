@@ -517,6 +517,18 @@
    "x": 46,
    "y": 43,
    "facing": "down"
+  },
+  {
+   "npcId": "willowbrook_trader",
+   "x": 58,
+   "y": 43,
+   "facing": "down"
+  },
+  {
+   "npcId": "willowbrook_market",
+   "x": 42,
+   "y": 40,
+   "facing": "down"
   }
  ],
  "monsterSpawns": [],

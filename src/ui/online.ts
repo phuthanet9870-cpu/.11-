@@ -5,11 +5,12 @@
 // sends back (other players, chat, shared EXP, completed trades and sales).
 import type { App } from './app';
 import { NetClient } from '../net/client';
-import { CASTLE_MAP, EMPERIUM_POS, GUILD_CREATE_COST, PARTY_LEVEL_GAP, type GuildInfo, type Listing, type PartyInfo, type PresenceInfo, type ServerMsg, type TradeOffer, type WoeState } from '../net/protocol';
+import { CASTLE_MAP, EMPERIUM_POS, GUILD_CREATE_COST, PARTY_LEVEL_GAP, type GuildInfo, type Listing, type MarketListing, type PartyInfo, type PresenceInfo, type ServerMsg, type TradeOffer, type WoeState } from '../net/protocol';
 import type { WorldEvent } from '../core/world';
 import type { ItemInstance } from '../core/types';
 import { addItem, findInstance, newUid, removeByUid, removeItem } from '../core/inventory';
 import { lookForCharacter } from './screens';
+import { titleOf } from '../core/achievements';
 
 export class Online {
   net = new NetClient();
@@ -56,7 +57,7 @@ export class Online {
     const w = this.world, c = w.char, s = w.stats;
     return {
       name: c.name, classId: c.classId, level: c.baseLevel, mapId: w.map.def.id, x: w.player.x, y: w.player.y, dir: w.player.dir, anim: w.player.anim,
-      look: lookForCharacter(w.data, c), hpPct: c.hp / s.maxHp,
+      look: lookForCharacter(w.data, c), hpPct: c.hp / s.maxHp, title: titleOf(c),
       pvp: { level: c.baseLevel, pdef: s.pdef, mdef: s.mdef, flee: s.flee, perfectDodge: s.perfectDodge, element: 'neutral' },
     };
   }
@@ -71,7 +72,7 @@ export class Online {
     const t = performance.now();
     if (t - this.lastSent > 100) {
       this.lastSent = t;
-      this.net.send({ t: 'move', mapId: w.map.def.id, x: Math.round(w.player.x), y: Math.round(w.player.y), dir: w.player.dir, anim: w.player.anim, hpPct: w.char.hp / w.stats.maxHp, level: w.char.baseLevel });
+      this.net.send({ t: 'move', mapId: w.map.def.id, x: Math.round(w.player.x), y: Math.round(w.player.y), dir: w.player.dir, anim: w.player.anim, hpPct: w.char.hp / w.stats.maxHp, level: w.char.baseLevel, title: titleOf(w.char) });
     }
     // Remote actors for drawing / PvP: players on this map, plus the Emperium during the guild war.
     for (const id of [...w.remotes.keys()]) if (id !== 'emperium' && this.players.get(id)?.mapId !== w.map.def.id) w.remotes.delete(id);
@@ -116,6 +117,25 @@ export class Online {
     this.net.send({ t: 'gm', token, cmd, args });
     return true;
   }
+  // ------------------------------------------------------------ Market Hall (player-to-player market)
+  marketListings: MarketListing[] = [];
+  marketHistory = new Map<string, [number, number][]>();
+  get isOnline() { return this.net.online && this.joined; }
+  marketBrowse() { if (this.isOnline) this.net.send({ t: 'market.browse' }); }
+  marketHistoryOf(itemId: string) { if (this.isOnline) this.net.send({ t: 'market.history', itemId }); }
+  marketList(uid: string, qty: number, price: number) {
+    const w = this.world, inst = w.char.inventory.find((i) => i.uid === uid);
+    if (!inst) return;
+    const def = w.data.items.get(inst.itemId)!;
+    if (inst.locked || inst.bound || def.bound || def.type === 'quest') { this.log('That item cannot be sold.', 'error'); return; }
+    this.net.send({ t: 'market.list', inst: { ...inst }, qty, price });
+  }
+  marketCancel(id: string) { this.net.send({ t: 'market.cancel', id }); }
+  marketBuy(l: MarketListing, qty: number) {
+    if (this.world.char.luma < l.price * qty) { this.log('Not enough Luma.', 'error'); return; }
+    this.net.send({ t: 'market.buy', id: l.id, qty });
+  }
+
   partyInvite(name: string) { this.net.send({ t: 'party.invite', name }); }
   partyLeave() { this.net.send({ t: 'party.leave' }); }
   guildCreate(name: string) {
@@ -247,6 +267,22 @@ export class Online {
       case 'woe.state': this.woe = m.woe; this.app.markWindowsDirty(); break;
       case 'gm.result': this.log(`[Server GM] ${m.text}`, m.ok ? 'system' : 'error'); break;
       case 'kicked': this.log(`Disconnected: ${m.reason}`, 'error'); break;
+      case 'market.listings': this.marketListings = m.listings; this.app.markWindowsDirty(); break;
+      case 'market.history': this.marketHistory.set(m.itemId, m.points); this.app.markWindowsDirty(); break;
+      case 'market.listed': {
+        // The server holds the goods now: take them out of the bag (or cancel if they are gone).
+        if (!w) break;
+        const inst = w.char.inventory.find((i) => i.uid === m.listing.inst.uid);
+        if (!inst || inst.qty < m.listing.qty) { this.net.send({ t: 'market.cancel', id: m.listing.id }); break; }
+        removeByUid(w.char, inst.uid, m.listing.qty);
+        w.afterInventoryChange();
+        this.log(`Listed ${m.listing.qty}× ${w.data.items.get(m.listing.itemId)?.name} for ${m.listing.price.toLocaleString()} Luma each.`, 'loot');
+        this.marketBrowse();
+        break;
+      }
+      case 'market.returned': if (w) { this.putIn({ ...m.inst, qty: m.qty }); this.log(`${m.reason} ${m.qty}× ${w.data.items.get(m.inst.itemId)?.name} is back in your bag.`, 'loot'); this.marketBrowse(); } break;
+      case 'market.bought': if (w) { w.char.luma -= m.total; this.putIn({ ...m.inst, qty: m.qty }); this.log(`Bought ${m.qty}× ${w.data.items.get(m.inst.itemId)?.name} from ${m.seller} for ${m.total.toLocaleString()} Luma.`, 'loot'); this.marketBrowse(); } break;
+      case 'market.sold': if (w) { w.char.luma += m.total; this.log(`Market Hall: ${m.buyer} bought ${m.qty}× ${w.data.items.get(m.itemId)?.name} — +${m.total.toLocaleString()} Luma.`, 'loot'); this.app.markWindowsDirty(); } break;
     }
   }
 }

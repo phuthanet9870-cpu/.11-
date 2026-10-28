@@ -793,7 +793,29 @@ export async function main() {
   ] as const) items.push({ id, name, type, rarity: 'uncommon', description: desc, weight: 3, price, stackable: true, maxStack: 99, icon: { shape, color: col }, generated: true });
   items.push({ id: 'sage_stone', name: 'Stone of Sages', type: 'material', rarity: 'epic', description: 'A philosopher\'s stone. Evolves a Lv 50 Loyal homunculus.', weight: 5, price: 50000, stackable: true, maxStack: 99, icon: { shape: 'gem', color: '#ff5a8a' }, generated: true });
   for (const m of monsters) { const t = drops.find((d: J) => d.id === m.dropTableId); if (t && m.elite && m.level >= 40) t.entries.push({ itemId: 'sage_stone', chance: 0.01, oreHint: true }); }
-  shops.push({ id: 'tidewatch_alchemy', name: 'Alchemy Supplies', items: ['homun_embryo', 'homun_ration', 'homun_revive'], generated: true });
+  // Brewing (Alchemist Pharmacy): herbs drop from plant-like monsters; bottles and bowls are sold by alchemy shops.
+  for (const [id, name, type, desc, price, shape, col, rarity, weight] of [
+    ['red_herb', 'Red Herb', 'material', 'A bitter red leaf. Alchemists brew it into Red and Orange Potions.', 18, 'leaf', '#e0413a', 'common', 1],
+    ['yellow_herb', 'Yellow Herb', 'material', 'A sunny leaf. Brewed into Orange and Yellow Potions and Acid Bottles.', 40, 'leaf', '#f2d23a', 'common', 1],
+    ['green_herb', 'Green Herb', 'material', 'A sharp green leaf that clears poison. Brewed into Green Potions.', 15, 'leaf', '#5cc45a', 'common', 1],
+    ['blue_herb', 'Blue Herb', 'material', 'A cool blue leaf. Brewed into Blue Potions.', 90, 'leaf', '#4a8cff', 'uncommon', 1],
+    ['empty_bottle', 'Empty Bottle', 'material', 'A clean glass bottle for brewing.', 6, 'potion', '#d8e4ee', 'common', 2],
+    ['medicine_bowl', 'Medicine Bowl', 'misc', 'A mortar bowl. Use it to open the brewing window. One is used up on every brew.', 8, 'flask', '#b9a27a', 'common', 1],
+    ['alcohol', 'Distilled Spirit', 'material', 'Strong spirit for fire flasks. Brewed from mushling caps and spore dust.', 120, 'potion', '#f0f0ff', 'common', 2],
+  ] as const) items.push({ id, name, type, rarity, description: desc, weight, price, stackable: true, maxStack: 99, icon: { shape, color: col }, generated: true });
+  items.push({ id: 'fire_bottle', name: 'Fire Bottle', type: 'consumable', rarity: 'uncommon', description: 'Throw it at your target (or the nearest monster): a fire burst that hurts nearby enemies and may burn them. Alchemists throw harder with Potion Research.', weight: 3, price: 360, stackable: true, maxStack: 99, cooldownMs: 1000, use: [{ type: 'throw', element: 'fire', damage: 120, perLevel: 6, radius: 60, status: 'burn', statusChance: 0.3 }], icon: { shape: 'potion', color: '#ff6a2e', accent: '#ffd36a' }, generated: true });
+  items.push({ id: 'acid_bottle', name: 'Acid Bottle', type: 'consumable', rarity: 'uncommon', description: 'Throw it at your target (or the nearest monster): acid that eats through armor and may cause bleeding. Alchemists throw harder with Potion Research.', weight: 3, price: 380, stackable: true, maxStack: 99, cooldownMs: 1000, use: [{ type: 'throw', element: 'neutral', damage: 150, perLevel: 7, status: 'bleed', statusChance: 0.25 }], icon: { shape: 'potion', color: '#a6e22e', accent: '#ffffff' }, generated: true });
+  const herbFor = (m: J): [string, number][] =>
+    /spore|mushling/.test(m.id) ? [['red_herb', 0.12], ['green_herb', 0.1], ['blue_herb', m.level >= 25 ? 0.04 : 0]]
+      : /slime/.test(m.id) ? [['red_herb', 0.1], ['yellow_herb', m.level >= 15 ? 0.06 : 0]]
+        : /hare|rabbit|wasp|hornet|scarab/.test(m.id) ? [['yellow_herb', 0.08], ['green_herb', 0.06]]
+          : [];
+  for (const m of monsters) {
+    const t = drops.find((d: J) => d.id === m.dropTableId);
+    if (!t || m.aiType === 'boss') continue;
+    for (const [itemId, chance] of herbFor(m)) if (chance > 0 && !t.entries.some((e: J) => e.itemId === itemId)) t.entries.push({ itemId, chance });
+  }
+  shops.push({ id: 'tidewatch_alchemy', name: 'Alchemy Supplies', items: ['homun_embryo', 'homun_ration', 'homun_revive', 'medicine_bowl', 'empty_bottle'], generated: true });
   npcs.push(npc('arcanthe_astrologer', 'Astrologer Nim', 'Reader of the Rune Constellation', 6262, 'robe', [{ type: 'runeReset', cost: 10000 }],
     ['From Base Level 30 the stars answer you: one rune point every two levels. Spend them in the Rune window (N). For 10,000 Luma I can clear the sky and give the points back.']));
   built.find((b) => b.map.id === 'arcanthe')!.map.npcs.push({ npcId: 'arcanthe_astrologer', x: 22, y: 28, facing: 'down' });
@@ -915,6 +937,23 @@ export async function main() {
     built.find((b) => b.map.id === inst.town)!.map.npcs.push({ npcId: nid, x: nx, y: ny, facing: 'down' });
   }
   write('instances.json', instances);
+
+  // ---------------------------------------------------------------- Market Traders and the Market Hall (every town)
+  // Trader: starter goods to buy, and buys anything at the hourly market price. Market Hall: player-to-player market (online).
+  shops.push({ id: 'starter_goods', name: 'Starter Goods', items: ['red_potion', 'orange_potion', 'green_potion', 'blue_potion', 'wing_of_return', 'wandering_feather', 'training_knife', 'oak_club', 'cotton_shirt', 'bandana', 'sandals', 'wooden_buckler'], generated: true });
+  const TRADER = ['Trader Moss', 'Trader Ilka', 'Trader Bodo', 'Trader Nesrin', 'Trader Quay', 'Trader Ruta', 'Trader Vane'];
+  for (const [i, town] of TOWN_IDS().entries()) {
+    npcs.push(npc(`${town}_trader`, TRADER[i % TRADER.length], 'Market Trader', hash(`${town}_trader`), 'apron',
+      [{ type: 'shop', shopId: 'starter_goods', label: 'Buy starter goods' }, { type: 'trader' }],
+      ['I buy anything — at today\'s price. Prices change every hour with supply and rarity; check the graph before you sell.']));
+    npcs.push(npc(`${town}_market`, 'Market Hall Clerk', 'Market Hall', hash(`${town}_market`), 'coat', [{ type: 'market' }],
+      ['The Market Hall lists goods from other adventurers. Only real players buy here, so price your goods well.']));
+    const m = town === 'willowbrook' ? hand.willowbrook : built.find((x) => x.map.id === town)!.map;
+    m.npcs = m.npcs.filter((n: J) => n.npcId !== `${town}_trader` && n.npcId !== `${town}_market`);
+    const o = town === 'willowbrook' ? wo : { x: 0, y: 0 };
+    const [tx, ty, mx, my] = town === 'willowbrook' ? [33, 24, 17, 21] : [34, 21, 17, 17];
+    m.npcs.push({ npcId: `${town}_trader`, x: tx + o.x, y: ty + o.y, facing: 'down' }, { npcId: `${town}_market`, x: mx + o.x, y: my + o.y, facing: 'down' });
+  }
 
   // ---------------------------------------------------------------- bigger maps
   // Towns: the 48×38 core moves to the middle of a wider map with a ring of houses and woods.

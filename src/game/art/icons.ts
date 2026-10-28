@@ -115,6 +115,11 @@ function drawItemShape(ctx: CanvasRenderingContext2D, shape: string, c: string, 
     case 'cape':
       ctx.fillStyle = c; ctx.beginPath(); ctx.moveTo(9, 6); ctx.lineTo(23, 6); ctx.lineTo(27, 28); ctx.lineTo(5, 28); ctx.closePath(); ctx.fill(); px(ctx, 9, 6, 14, 3, L);
       break;
+    case 'leaf':
+      ctx.fillStyle = c; ctx.beginPath(); ctx.moveTo(6, 26); ctx.quadraticCurveTo(6, 6, 26, 6); ctx.quadraticCurveTo(26, 26, 6, 26); ctx.fill();
+      ctx.strokeStyle = L; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(7, 25); ctx.lineTo(23, 9); ctx.stroke();
+      px(ctx, 4, 26, 4, 2, D);
+      break;
     case 'boots':
       px(ctx, 8, 6, 7, 18, c); px(ctx, 8, 22, 12, 6, D); px(ctx, 18, 8, 6, 16, shade(c, -0.1));
       break;

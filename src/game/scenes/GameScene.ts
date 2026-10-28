@@ -16,6 +16,7 @@ import { characterRig, clipFrame, monsterRig, type Clip, type Rig } from '../bat
 import { ELEMENT_FX, floatText, playFx, playProjectile, playSpriteFx } from '../render/effects';
 import { audio } from '../audio/audio';
 import type { GameHost } from '../host';
+import { titleOf } from '../../core/achievements';
 
 interface MonView { sprite: Phaser.GameObjects.Sprite; name: Phaser.GameObjects.Text; deadAt: number; rig: Rig }
 interface NpcView { sprite: Phaser.GameObjects.Sprite; name: Phaser.GameObjects.Text; marker: Phaser.GameObjects.Text }
@@ -80,7 +81,7 @@ export class GameScene extends Phaser.Scene {
         v.sprite.setTexture(clip.key, fr.frame).setFlipX(fr.flipX);
       }
       const p = r.info;
-      v.name.setText(r.emperium ? r.name : `${r.name}${p?.guild ? `\n<${p.guild}>` : ''}${p?.vending ? `\n🛒 ${p.vending}` : ''}`).setPosition(Math.round(r.x), Math.round(r.y) + 6);
+      v.name.setText(r.emperium ? r.name : `${r.name}${p?.title ? `\n« ${p.title} »` : ''}${p?.guild ? `\n<${p.guild}>` : ''}${p?.vending ? `\n🛒 ${p.vending}` : ''}`).setPosition(Math.round(r.x), Math.round(r.y) + 6);
       v.bar.clear().fillStyle(0x1c1622, 1).fillRect(r.x - 16, r.y + 2, 32, 4).fillStyle(r.emperium ? 0xffd34d : 0x6fe08a, 1).fillRect(r.x - 16, r.y + 2, Math.round(32 * Math.max(0, Math.min(1, r.hpPct))), 4);
     }
   }
@@ -387,10 +388,11 @@ export class GameScene extends Phaser.Scene {
     const wp = this.worldPoint(p);
     if (this.world.auto.mode !== 'off') this.world.auto.stop('manual control');
     if (p.rightButtonDown()) { this.world.stop(); return; }
-    // Other players / the Emperium: attack in PvP areas, otherwise open the Social window.
+    // Other players / the Emperium: attack in PvP areas, otherwise a menu (Trade, Party, Whisper...).
     for (const r of this.world.remotes.values()) {
       if (Math.abs(wp.x - r.x) < 16 && wp.y < r.y + 6 && wp.y > r.y - (r.emperium ? 70 : 52)) {
         if (['proving_grounds', 'castle_veyl'].includes(this.world.map.def.id)) this.world.attackRemote(r.id);
+        else if (this.host.playerMenu) this.host.playerMenu(r.id, p.event as MouseEvent);
         else this.host.openSocial?.();
         return;
       }
@@ -507,6 +509,8 @@ export class GameScene extends Phaser.Scene {
     const fr = clipFrame(clip, p.dir, this.clipStep(clip, p.animAt));
     this.player.setTexture(clip.key, fr.frame).setFlipX(fr.flipX);
     this.player.setAlpha(this.world.playerStealthed ? 0.45 : 1);
+    const nameLabel = `${this.world.char.name}${titleOf(this.world.char) ? `\n« ${titleOf(this.world.char)} »` : ''}`;
+    if (this.playerName.text !== nameLabel) this.playerName.setText(nameLabel);
     this.playerName.setPosition(Math.round(p.x), Math.round(p.y) + 6);
     if (p.moving) {
       this.stepTimer -= delta;

@@ -266,3 +266,34 @@ img.icon, canvas.icon { image-rendering: pixelated; }
 .loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: var(--bg); }
 .loading .bar { width: 420px; height: 16px; }
 .loading .bar .fill { background: linear-gradient(#ffe98a, #b8862e); }
+
+/* Market Trader / Market Hall */
+.tlist { max-height: 230px; overflow-y: auto; border: 1px solid #3a2e4a; border-radius: 4px; }
+.trow { display: grid; grid-template-columns: 26px 1fr 64px 70px 64px 46px; gap: 6px; align-items: center; padding: 3px 6px; cursor: pointer; font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.trow:hover { background: rgba(255,211,77,0.06); }
+.trow.on { background: rgba(255,211,77,0.12); }
+.trow img { width: 24px; height: 24px; image-rendering: pixelated; }
+.trow .tn { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.trow .tp { text-align: right; }
+.pchart { width: 470px; height: 150px; display: block; background: rgba(0,0,0,0.25); border-radius: 4px; }
+.mrow { display: grid; grid-template-columns: 26px 1fr 50px 80px 90px 52px; gap: 6px; align-items: center; padding: 3px 6px; font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.mrow img { width: 24px; height: 24px; image-rendering: pixelated; }
+.ach { padding: 6px 8px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.ach.done b { color: #f3d27a; }
+.ach .bar { height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; margin-top: 4px; overflow: hidden; }
+.ach .bar > div { height: 100%; background: #6fb3ff; }
+.daily-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.dday { border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; padding: 4px; text-align: center; font-size: 11px; min-height: 84px; }
+.dday img { width: 20px; height: 20px; vertical-align: middle; image-rendering: pixelated; }
+.dday.claimed { opacity: 0.55; }
+.dday.today { border-color: #f3d27a; box-shadow: 0 0 0 1px #f3d27a inset; }
+.bonus-ind { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); padding: 3px 10px; font-size: 12px; color: #ffe08a; background: rgba(20,16,8,0.75); border: 1px solid #a8822e; border-radius: 10px; pointer-events: none; }
+/* Touch controls (phones / tablets) */
+#game, #game canvas { touch-action: none; }
+.win .wtitle { touch-action: none; }
+.touch-controls { position: absolute; inset: 0; }
+.touch-controls .tc-pad { position: absolute; left: 40px; bottom: 300px; width: 150px; height: 150px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.25); pointer-events: auto; touch-action: none; display: flex; align-items: center; justify-content: center; }
+.touch-controls .tc-knob { width: 64px; height: 64px; border-radius: 50%; background: rgba(243,210,122,0.55); border: 2px solid rgba(255,255,255,0.5); pointer-events: none; }
+.touch-controls .tc-actions { position: absolute; left: 470px; bottom: 228px; display: flex; gap: 12px; pointer-events: auto; }
+.touch-controls .tc-btn { width: 64px; height: 64px; border-radius: 50%; font-size: 26px; background: rgba(20,16,28,0.7); color: #fff; border: 2px solid rgba(243,210,122,0.6); touch-action: none; }
+.touch-controls .tc-btn:active { background: rgba(243,210,122,0.4); }

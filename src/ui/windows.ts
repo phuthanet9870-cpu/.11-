@@ -2,7 +2,13 @@
 // map, settings — plus NPC dialogue, shop, storage, tooltips and menus.
 import type { App } from './app';
 import { keyFromEvent } from './keys';
+import { drawPriceChart } from './chart';
+import { computeDerivedStats } from '../core/formulas';
+import { HOUR_MS, priceChangePct, priceHistory, traderPrice } from '../core/market';
+import { BREW_BOWL, BREW_RECIPES, brewChance, canBrew, missingFor } from '../core/brewing';
+import { ACHIEVEMENTS, BONUS_HOURS, DAILY_REWARDS, dailyStatus, titleOf, type AchievementDef } from '../core/achievements';
 import { h, setChildren, RARITY_COLOR } from './dom';
+import { isTouchDevice } from './touch';
 import { getLang, LANGS, type Lang } from './i18n';
 import { itemIconUrl, skillIconUrl } from '../game/art/icons';
 import { generateCharacterSheet, portraitFromSheet } from '../game/art/characterSprite';
@@ -32,7 +38,7 @@ import { canForge, CRUMB_ATK, ELEMENT_STONES, forgeChance, STAR_CRUMB } from '..
 import { ENCHANT_COST, MAX_OPTIONS, optionLabel, REROLL_COST } from '../core/options';
 
 type DbTab = 'monsters' | 'items' | 'cards' | 'refine' | 'forge' | 'options' | 'combos' | 'pets' | 'elements';
-export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet' | 'homun' | 'cart' | 'runes' | 'social' | 'auto';
+export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet' | 'homun' | 'cart' | 'runes' | 'social' | 'auto' | 'trader' | 'market' | 'achievements' | 'daily' | 'brew';
 
 interface WinState { el: HTMLElement; body: HTMLElement; render: () => void; open: boolean }
 
@@ -97,6 +103,11 @@ export class WindowManager {
     this.define('runes', 'Rune Constellation', 300, 70, () => this.renderRunes());
     this.define('social', 'Social — Online Play', 360, 60, () => this.renderSocial());
     this.define('auto', 'Auto Settings', 440, 120, () => this.renderAuto());
+    this.define('trader', 'Market Trader', 300, 60, () => this.renderTrader());
+    this.define('market', 'Market Hall', 280, 50, () => this.renderMarket());
+    this.define('achievements', 'Achievements & Titles', 260, 60, () => this.renderAchievements());
+    this.define('daily', 'Daily Rewards', 320, 120, () => this.renderDaily());
+    this.define('brew', 'Brewing', 300, 80, () => this.renderBrew());
   }
 
   get anyOpen() { return [...this.wins.values()].some((w) => w.open) || !!this.dialogEl || !!this.modalEl; }
@@ -105,15 +116,17 @@ export class WindowManager {
     const body = h('div', { class: 'wbody' });
     const titleBar = h('div', { class: 'wtitle' }, title, h('span', { class: 'x', onclick: () => this.close(id) }, '✕'));
     const el = h('div', { class: 'panel win hidden', id: `win-${id}`, style: { left: `${x}px`, top: `${y}px` } }, titleBar, body);
-    el.addEventListener('mousedown', () => { el.style.zIndex = String(++this.z); });
     // Drag by title bar (positions are in the 1280x720 UI space).
-    titleBar.addEventListener('mousedown', (e) => {
+    el.addEventListener('pointerdown', () => { el.style.zIndex = String(++this.z); });
+    titleBar.addEventListener('pointerdown', (e) => {
+      if ((e.target as HTMLElement).classList.contains('x')) return;
       const scale = this.app.uiScale;
       const sx = e.clientX, sy = e.clientY, ox = el.offsetLeft, oy = el.offsetTop;
-      const move = (ev: MouseEvent) => { el.style.left = `${Math.max(0, Math.min(1180, ox + (ev.clientX - sx) / scale))}px`; el.style.top = `${Math.max(0, Math.min(680, oy + (ev.clientY - sy) / scale))}px`; };
-      const up = () => { document.removeEventListener('mousemove', move); document.removeEventListener('mouseup', up); };
-      document.addEventListener('mousemove', move);
-      document.addEventListener('mouseup', up);
+      const move = (ev: PointerEvent) => { el.style.left = `${Math.max(0, Math.min(1180, ox + (ev.clientX - sx) / scale))}px`; el.style.top = `${Math.max(0, Math.min(680, oy + (ev.clientY - sy) / scale))}px`; };
+      const up = () => { document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', up); document.removeEventListener('pointercancel', up); };
+      document.addEventListener('pointermove', move);
+      document.addEventListener('pointerup', up);
+      document.addEventListener('pointercancel', up);
     });
     this.root.appendChild(el);
     this.wins.set(id, { el, body, render, open: false });
@@ -165,6 +178,12 @@ export class WindowManager {
   }
   hideTooltip() { this.tooltip.classList.add('hidden'); }
 
+  /** Action menu with a heading (e.g. another player's name) at the mouse. */
+  openContextAt(e: MouseEvent, items: [string, () => void][], heading: string) {
+    this.openContext(e, items);
+    this.ctxMenu?.prepend(h('div', { class: 'ctx-title' }, heading));
+  }
+
   /** Small action menu at the mouse. With a title, the first action is shown as a big button (Equip / Use). */
   private openContext(e: MouseEvent, items: [string, () => void][], title?: string) {
     this.closeContext();
@@ -212,6 +231,7 @@ export class WindowManager {
     if (inst?.pet) out.push(h('div', { style: 'color:#ffb0d8' }, `♥ ${inst.pet.name} · ${intimacyLabel(inst.pet.intimacy)} (${inst.pet.intimacy}/1000) · ${hungerLabel(inst.pet.hunger)}`));
     if (def.lure) out.push(h('div', { class: 'muted' }, 'Target the monster, then use this item.'));
     out.push(h('div', { style: 'margin-top:4px' }, def.description));
+    out.push(...this.compareLines(def, inst));
     if (def.type === 'equipment') {
       const chk = canEquip(w.data, w.char, def);
       if (def.equipLevel && def.equipLevel > 1) out.push(h('div', { class: w.char.baseLevel >= def.equipLevel ? 'muted' : 'bad' }, `Requires Lv.${def.equipLevel}`));
@@ -219,6 +239,29 @@ export class WindowManager {
       if (!chk.ok && !def.classes && !(def.equipLevel && def.equipLevel > w.char.baseLevel)) out.push(h('div', { class: 'bad' }, chk.error));
     }
     out.push(h('div', { class: 'tt', style: 'margin-top:4px' }, `Weight ${def.weight} · Sell ${sellPrice(w.data, def.id, w.char)} Luma${inst?.bound || def.bound ? ' · Bound' : ''}${inst?.locked ? ' · Locked' : ''}`));
+    return out;
+  }
+
+  /** Item compare: your stats with this item worn instead of what is in that slot now (green = better). */
+  private compareCache = new Map<string, HTMLElement[]>();
+  private compareLines(def: ItemDef, inst?: ItemInstance): HTMLElement[] {
+    const w = this.app.world!, c = w.char;
+    if (def.type !== 'equipment' || !def.slot || !inst || Object.values(c.equipment).some((e) => e?.uid === inst.uid)) return [];
+    const slot: EquipSlot = def.slot === 'accessory' ? (!c.equipment.accessory1 ? 'accessory1' : !c.equipment.accessory2 ? 'accessory2' : 'accessory1') : def.slot as EquipSlot;
+    const key = `${inst.uid}:${inst.refine ?? 0}:${JSON.stringify(c.equipment)}:${c.baseLevel}:${JSON.stringify(c.stats)}`;
+    const hit = this.compareCache.get(key);
+    if (hit) return hit;
+    const equipment = { ...c.equipment, [slot]: inst };
+    if (slot === 'weapon' && def.twoHanded) delete equipment.shield;
+    const now = computeDerivedStats(w.data, c), next = computeDerivedStats(w.data, { ...c, equipment });
+    const rows: [string, number][] = [['ATK', next.patk - now.patk], ['MATK', next.matk - now.matk], ['DEF', next.pdef - now.pdef], ['MDEF', next.mdef - now.mdef],
+      ['HIT', next.hit - now.hit], ['FLEE', next.flee - now.flee], ['CRIT', next.crit - now.crit], ['ASPD', next.aspd - now.aspd], ['Max HP', next.maxHp - now.maxHp], ['Max MP', next.maxMp - now.maxMp]];
+    const cur = c.equipment[slot];
+    const lines = rows.filter(([, v]) => Math.abs(v) >= 0.5).map(([k, v]) => h('div', { class: v > 0 ? 'good' : 'bad', style: 'font-size:11px' }, `${k} ${v > 0 ? '▲ +' : '▼ '}${Math.round(v)}`));
+    const out = [h('div', { class: 'tt', style: 'margin-top:5px;border-top:1px solid #4a3a2a;padding-top:3px' }, cur ? `Compared with ${w.data.items.get(cur.itemId)?.name ?? ''}${cur.refine ? ` +${cur.refine}` : ''}` : 'Compared with an empty slot'),
+      ...(lines.length ? lines : [h('div', { class: 'muted', style: 'font-size:11px' }, 'No change to your stats')])];
+    if (this.compareCache.size > 200) this.compareCache.clear();
+    this.compareCache.set(key, out);
     return out;
   }
 
@@ -617,8 +660,8 @@ export class WindowManager {
       input.addEventListener('input', () => { st.volume[key] = Number(input.value) / 100; val.textContent = input.value; app.applySettings(); });
       return h('div', { class: 'range-row' }, h('span', {}, label), input, val);
     };
-    const toggle = (key: 'showDamageNumbers' | 'autoLoot' | 'showCollision' | 'wasdMovement' | 'cellCursor' | 'showGrid' | 'effects', label: string) => {
-      const cb = h('input', { type: 'checkbox', checked: key === 'cellCursor' ? st[key] !== false : !!st[key] });
+    const toggle = (key: 'showDamageNumbers' | 'autoLoot' | 'showCollision' | 'wasdMovement' | 'cellCursor' | 'showGrid' | 'effects' | 'touchControls', label: string) => {
+      const cb = h('input', { type: 'checkbox', id: `set-${key}`, checked: key === 'cellCursor' ? st[key] !== false : key === 'touchControls' ? (st[key] ?? isTouchDevice()) : !!st[key] });
       cb.addEventListener('change', () => { st[key] = cb.checked; app.applySettings(); });
       return h('label', { class: 'row', style: 'margin-bottom:4px' }, cb, label);
     };
@@ -640,6 +683,7 @@ export class WindowManager {
         toggle('effects', 'Visual effects (skills, hits, particles, weather) — applies on the next map'),
         toggle('cellCursor', 'Cell cursor under the mouse (Ragnarok style)'),
         toggle('showGrid', 'Show grid lines on the map'),
+        toggle('touchControls', 'Touch controls (joystick and buttons for phones / tablets)'),
         toggle('showCollision', 'Show collision / spawn debug overlay'),
         h('div', { class: 'gold', style: 'font-weight:bold;margin-top:8px' }, 'Key Bindings'),
         h('div', { style: 'max-height:180px;overflow:auto;padding-right:6px' }, binds),
@@ -842,6 +886,197 @@ export class WindowManager {
       h('div', { class: 'muted', style: 'font-size:11px;margin-top:2px' }, au.pickedOnMap() ? `Farming only: ${au.pickedOnMap()!.map((id) => w.data.monsters.get(id)!.name).join(', ')} (monsters that attack you are still fought back).` : 'None ticked: every monster here is farmed.'),
       h('div', { class: 'muted', style: 'font-size:11px;margin-top:6px' },
         'Press AUTO beside the hotbar to fight the monsters around you; press it again to stop. Auto Quest starts from the quest list (top right). Both stop when you click, move by hand, die, or carry 90% weight. Put skills on the hotbar for them to be used.')));
+  }
+
+  // ---------------------------------------------------------------- Market Trader (hourly market prices + graph)
+  private traderPick = '';
+  private renderTrader() {
+    const w = this.app.world!, d = w.data, c = w.char, body = this.wins.get('trader')!.body, now = w.now();
+    const focused = document.activeElement;
+    if (focused && body.contains(focused) && focused.tagName === 'SELECT') return;
+    const sellable = c.inventory.filter((i) => { const def = d.items.get(i.itemId)!; return def.type !== 'quest' && !i.bound && !def.bound && !i.locked; });
+    if (!this.traderPick || !d.items.has(this.traderPick)) this.traderPick = sellable[0]?.itemId ?? 'red_potion';
+    const chart = (itemId: string, w0: number, h0: number, mini: boolean) => {
+      const cv = h('canvas', { width: w0, height: h0, class: mini ? 'spark' : 'pchart' }) as HTMLCanvasElement;
+      const hist = priceHistory(d, c, itemId, now, 24);
+      drawPriceChart(cv, hist.map((p, i) => ({ label: i === hist.length - 1 ? 'now' : `-${hist.length - 1 - i}h`, value: p.price })), { mini });
+      return cv;
+    };
+    const arrow = (pct: number) => h('span', { class: pct > 0.05 ? 'good' : pct < -0.05 ? 'bad' : 'muted' }, `${pct > 0.05 ? '▲' : pct < -0.05 ? '▼' : '■'} ${Math.abs(pct).toFixed(1)}%`);
+    const near = w.npcs.some((n) => n.def.services.some((s) => s.type === 'trader') && Math.hypot(n.x - w.player.x, n.y - w.player.y) < 160);
+    const rows = sellable.map((inst) => {
+      const def = d.items.get(inst.itemId)!, price = traderPrice(d, c, inst.itemId, now), pct = priceChangePct(d, c, inst.itemId, now);
+      return h('div', { class: `trow${inst.itemId === this.traderPick ? ' on' : ''}`, dataset: { item: inst.itemId }, onclick: () => { this.traderPick = inst.itemId; this.renderTrader(); } },
+        h('img', { src: itemIconUrl(def) }),
+        h('span', { class: 'tn' }, `${inst.refine ? `+${inst.refine} ` : ''}${def.name}${inst.qty > 1 ? ` ×${inst.qty}` : ''}`),
+        chart(inst.itemId, 60, 18, true),
+        h('span', { class: 'tp gold' }, `${price.toLocaleString()}`),
+        arrow(pct),
+        h('button', { class: 'btn small', disabled: !near, onclick: (e: Event) => { e.stopPropagation(); this.qtyPrompt(inst, 'Sell how many?', (n) => { w.traderSell(inst.uid, n); this.renderTrader(); }); } }, 'Sell'));
+    });
+    const pickDef = d.items.get(this.traderPick)!;
+    const allItems = [...d.items.values()].filter((i) => i.type !== 'quest' && !i.bound).sort((a, b) => a.name.localeCompare(b.name));
+    const sel = h('select', { id: 'trader-pick', style: 'max-width:220px' }, allItems.map((i) => h('option', { value: i.id }, i.name))) as HTMLSelectElement;
+    sel.value = this.traderPick;
+    sel.addEventListener('change', () => { this.traderPick = sel.value; this.renderTrader(); });
+    const nowPrice = traderPrice(d, c, this.traderPick, now), base = Math.max(1, sellPrice(d, this.traderPick, c));
+    const nextHour = Math.ceil((Math.floor(now / HOUR_MS) + 1) * HOUR_MS - now) / 60000;
+    setChildren(body, h('div', { style: 'width:470px' },
+      h('div', { class: 'muted', style: 'font-size:11px;margin-bottom:6px' }, `Prices change every hour (next change in ${Math.ceil(nextHour)} min). Rare items swing more; selling many of one item lowers its price for a few hours.`),
+      h('div', { class: 'row', style: 'gap:8px;align-items:center' }, h('b', {}, 'Price chart'), sel),
+      h('div', { class: 'row', style: 'gap:10px;margin:4px 0;font-size:12px' },
+        h('span', {}, `${pickDef.name}: `, h('b', { class: 'gold' }, `${nowPrice.toLocaleString()} Luma`)), arrow(priceChangePct(d, c, this.traderPick, now)),
+        h('span', { class: 'muted' }, `normal shop price ${base.toLocaleString()} · ${Math.round((nowPrice / base) * 100)}%`)),
+      chart(this.traderPick, 470, 150, false),
+      h('div', { class: 'gold', style: 'font-weight:bold;margin:8px 0 4px' }, 'Sell from your bag (instant)'),
+      near ? '' : h('div', { class: 'bad', style: 'font-size:11px' }, 'Stand next to a Market Trader to sell.'),
+      h('div', { class: 'tlist', id: 'trader-list' }, rows.length ? rows : h('div', { class: 'muted' }, 'Nothing to sell.')),
+      h('div', { class: 'row', style: 'margin-top:6px' }, h('span', { class: 'spacer' }), h('span', { class: 'gold' }, `${c.luma.toLocaleString()} Luma`))));
+  }
+
+  // ---------------------------------------------------------------- achievements, titles, daily rewards
+  private renderAchievements() {
+    const w = this.app.world!, d = w.data, c = w.char, body = this.wins.get('achievements')!.body;
+    const got = c.achievements ?? {};
+    const reward = (a: AchievementDef) => [a.reward.luma ? `${a.reward.luma.toLocaleString()} Luma` : '', ...(a.reward.items ?? []).map((i) => `${d.items.get(i.itemId)?.name ?? i.itemId} ×${i.qty}`)].filter(Boolean).join(', ');
+    const rows = ACHIEVEMENTS.map((a) => {
+      const [n, goal] = a.progress(d, c), done = !!got[a.id];
+      return h('div', { class: `ach${done ? ' done' : ''}`, dataset: { ach: a.id } },
+        h('div', { class: 'row', style: 'gap:6px;align-items:center' },
+          h('b', {}, `${done ? '🏆' : '🔒'} ${a.name}`), h('span', { class: 'spacer' }),
+          done
+            ? (c.title === a.id ? h('span', { class: 'good', style: 'font-size:11px' }, 'Shown') : h('button', { class: 'btn small', onclick: () => { w.setTitle(a.id); this.renderAchievements(); } }, 'Use title'))
+            : h('span', { class: 'muted', style: 'font-size:11px' }, `${n.toLocaleString()} / ${goal.toLocaleString()}`)),
+        h('div', { class: 'muted', style: 'font-size:11px' }, h('span', {}, a.desc), ' ', h('span', {}, 'Title: '), h('b', { 'data-noi18n': true }, `«${a.title}»`), ' ', h('span', {}, `Reward: ${reward(a)}`)),
+        done ? '' : h('div', { class: 'bar' }, h('div', { style: `width:${Math.round((n / goal) * 100)}%` })));
+    });
+    const count = ACHIEVEMENTS.filter((a) => got[a.id]).length;
+    setChildren(body, h('div', { style: 'width:420px' },
+      h('div', { class: 'row', style: 'gap:8px;align-items:center;margin-bottom:6px' },
+        h('span', {}, `Earned ${count} / ${ACHIEVEMENTS.length}`), h('span', { class: 'spacer' }),
+        h('span', { class: 'muted' }, 'Title: '), titleOf(c) ? h('b', { class: 'gold', 'data-noi18n': true }, titleOf(c)!) : h('b', { class: 'gold' }, 'none'),
+        c.title ? h('button', { class: 'btn small', onclick: () => { w.setTitle(null); this.renderAchievements(); } }, 'Hide') : ''),
+      h('div', { class: 'tlist', id: 'ach-list', style: 'max-height:420px' }, rows)));
+  }
+
+  private renderBrew() {
+    const w = this.app.world!, d = w.data, c = w.char, body = this.wins.get('brew')!.body;
+    const st = w.stats.totalStats;
+    const name = (id: string) => d.items.get(id)?.name ?? id;
+    const rows = BREW_RECIPES.map((r) => {
+      const out = d.items.get(r.itemId)!, miss = missingFor(c, r), chance = brewChance(c, r, st);
+      return h('div', { class: 'trow brow', dataset: { recipe: r.id } },
+        h('img', { src: itemIconUrl(out) }),
+        h('span', { class: 'tn' }, h('b', {}, out.name), h('div', { class: 'muted', style: 'font-size:11px' },
+          r.materials.map((m) => `${name(m.itemId)} ${Math.min(countItem(c, m.itemId), m.qty)}/${m.qty}`).join(' · '))),
+        h('span', { class: chance >= 60 ? 'good' : chance >= 30 ? '' : 'bad' }, `${chance}%`),
+        h('button', { class: 'btn small', disabled: !!miss.length, title: miss.length ? `Missing: ${miss.map((m) => name(m.itemId)).join(', ')}` : '', onclick: () => { w.brew(r.id); this.renderBrew(); } }, 'Brew'));
+    });
+    setChildren(body, h('div', { style: 'width:440px' },
+      h('div', { class: 'muted', style: 'font-size:11px;margin-bottom:6px' },
+        `Each try uses one Medicine Bowl (you have ${countItem(c, BREW_BOWL)}). A failed brew loses the materials. Chance grows with Potion Research (Lv ${c.skills.potion_research ?? 0}), Job Level, DEX, LUK and INT. Herbs drop from plant-like monsters; bottles and bowls are sold at alchemy shops.`),
+      canBrew(c) ? '' : h('div', { class: 'bad' }, 'Only an Alchemist who knows Potion Research can brew.'),
+      h('div', { class: 'tlist', id: 'brew-list' }, rows)));
+  }
+
+  private renderDaily() {
+    const w = this.app.world!, d = w.data, c = w.char, body = this.wins.get('daily')!.body, now = w.now();
+    const st = dailyStatus(c, now);
+    const days = DAILY_REWARDS.map((r, i) => {
+      const day = i + 1;
+      const claimed = st.canClaim ? day < st.day : day <= st.day;
+      const today = st.canClaim && day === st.day;
+      return h('div', { class: `dday${claimed ? ' claimed' : ''}${today ? ' today' : ''}` },
+        h('b', {}, `Day ${day}`),
+        ...r.items.map((it) => { const def = d.items.get(it.itemId); return def ? h('div', { title: def.name }, h('img', { src: itemIconUrl(def) }), ` ×${it.qty}`) : ''; }),
+        h('div', { class: 'gold', style: 'font-size:11px' }, `${r.luma.toLocaleString()} Luma`),
+        claimed ? h('div', { class: 'good' }, '✔') : '');
+    });
+    const b = w.bonus();
+    setChildren(body, h('div', { style: 'width:470px' },
+      h('div', { class: 'muted', style: 'font-size:11px;margin-bottom:6px' }, 'Log in every day to move along the 7-day calendar. Missing a day starts it over at Day 1.'),
+      h('div', { class: 'daily-grid' }, days),
+      h('div', { class: 'row', style: 'margin-top:8px;align-items:center' },
+        st.canClaim
+          ? h('button', { class: 'btn', id: 'daily-claim', onclick: () => { w.claimDaily(); this.renderDaily(); } }, `Claim Day ${st.day}`)
+          : h('span', { class: 'muted' }, 'Claimed today. Come back tomorrow.')),
+      h('div', { class: 'gold', style: 'font-weight:bold;margin:10px 0 4px' }, 'Bonus events (local time)'),
+      h('div', { style: 'font-size:12px' }, `EXP +50% every day ${BONUS_HOURS.map(([a, z]) => `${a}:00–${z}:00`).join(' and ')}. Drops +50% all day Saturday and Sunday.`),
+      h('div', { style: 'font-size:12px;margin-top:4px' }, b.labels.length ? h('span', { class: 'good' }, `Active now: ${b.labels.join(', ')}`) : h('span', { class: 'muted' }, 'No bonus is active right now.'))));
+  }
+
+  // ---------------------------------------------------------------- Market Hall (player-to-player, online only)
+  private marketTab: 'browse' | 'sell' | 'mine' = 'browse';
+  private marketQuery = '';
+  private marketPick = '';
+  private marketDraft = { uid: '', qty: 1, price: 0 };
+  private marketLoadedAt = 0;
+  private renderMarket() {
+    const app = this.app, on = app.online, w = app.world!, d = w.data, c = w.char, body = this.wins.get('market')!.body;
+    const focused = document.activeElement;
+    if (focused && body.contains(focused) && (focused.tagName === 'INPUT' || focused.tagName === 'SELECT')) return;
+    if (!on.isOnline) {
+      setChildren(body, h('div', { style: 'width:420px' },
+        h('div', {}, 'The Market Hall lists goods from other adventurers, and only real players buy them.'),
+        h('div', { class: 'bad', style: 'margin-top:6px' }, 'You are offline. Log in to a server in the Social window (G) to use the Market Hall.'),
+        h('button', { class: 'btn small', style: 'margin-top:6px', onclick: () => this.open('social') }, 'Open Social')));
+      return;
+    }
+    if (performance.now() - this.marketLoadedAt > 5000) { this.marketLoadedAt = performance.now(); on.marketBrowse(); }
+    const tabs = h('div', { class: 'row', style: 'gap:4px;margin-bottom:6px' }, ...([['browse', 'Browse'], ['sell', 'Sell'], ['mine', 'My listings']] as const).map(([id, label]) =>
+      h('button', { class: `btn small${this.marketTab === id ? ' primary' : ''}`, id: `mk-tab-${id}`, onclick: () => { this.marketTab = id; this.renderMarket(); } }, label)));
+    const icon = (itemId: string) => h('img', { src: itemIconUrl(d.items.get(itemId)!) });
+    const label = (l: { itemId: string; inst: ItemInstance }) => `${l.inst.refine ? `+${l.inst.refine} ` : ''}${d.items.get(l.itemId)?.name ?? l.itemId}${l.inst.cards?.length ? ` [${l.inst.cards.length}]` : ''}`;
+    // Price chart from real sales in the Market Hall.
+    const salesChart = (itemId: string) => {
+      const pts = on.marketHistory.get(itemId) ?? [];
+      const cv = h('canvas', { width: 420, height: 120, class: 'pchart', style: 'width:420px;height:120px' }) as HTMLCanvasElement;
+      drawPriceChart(cv, pts.slice(-30).map(([t, p]) => ({ label: new Date(t).toLocaleDateString(undefined, { month: 'numeric', day: 'numeric' }), value: p })));
+      return h('div', { style: 'margin-top:6px' }, h('div', { style: 'font-size:12px;margin-bottom:2px' }, `Sale prices of ${d.items.get(itemId)?.name ?? itemId} (${pts.length} sales)`), cv);
+    };
+    let content: HTMLElement;
+    if (this.marketTab === 'browse') {
+      const q = this.marketQuery.toLowerCase();
+      const list = on.marketListings.filter((l) => l.seller !== c.name && (!q || (d.items.get(l.itemId)?.name ?? l.itemId).toLowerCase().includes(q)));
+      const search = h('input', { id: 'mk-search', placeholder: 'Search…', value: this.marketQuery, class: 'text-input', style: 'width:200px' }) as HTMLInputElement;
+      search.addEventListener('change', () => { this.marketQuery = search.value; this.renderMarket(); });
+      content = h('div', {},
+        h('div', { class: 'row', style: 'gap:6px' }, search, h('button', { class: 'btn small', onclick: () => { this.marketLoadedAt = 0; this.renderMarket(); } }, 'Refresh')),
+        h('div', { class: 'tlist', id: 'mk-list', style: 'margin-top:6px' }, list.length ? list.map((l) =>
+          h('div', { class: 'mrow', onclick: () => { this.marketPick = l.itemId; on.marketHistoryOf(l.itemId); this.renderMarket(); } },
+            icon(l.itemId), h('span', { class: 'tn' }, label(l)), h('span', {}, `×${l.qty}`), h('span', { class: 'gold' }, `${l.price.toLocaleString()}`), h('span', { class: 'muted' }, l.seller),
+            h('button', { class: 'btn small', onclick: (e: Event) => { e.stopPropagation(); if (l.qty === 1) on.marketBuy(l, 1); else this.askNumber('Buy how many?', l.qty, (n) => on.marketBuy(l, n)); } }, 'Buy'))) : h('div', { class: 'muted', style: 'padding:6px' }, 'No goods listed by other players right now.')),
+        this.marketPick ? salesChart(this.marketPick) : '');
+    } else if (this.marketTab === 'sell') {
+      const sellable = c.inventory.filter((i) => { const def = d.items.get(i.itemId)!; return def.type !== 'quest' && !i.bound && !def.bound && !i.locked; });
+      if (!sellable.some((i) => i.uid === this.marketDraft.uid)) this.marketDraft = { uid: sellable[0]?.uid ?? '', qty: 1, price: 0 };
+      const inst = sellable.find((i) => i.uid === this.marketDraft.uid);
+      const sel = h('select', { id: 'mk-item', style: 'width:220px' }, sellable.map((i) => h('option', { value: i.uid }, `${i.refine ? `+${i.refine} ` : ''}${d.items.get(i.itemId)!.name}${i.qty > 1 ? ` ×${i.qty}` : ''}`))) as HTMLSelectElement;
+      sel.value = this.marketDraft.uid;
+      sel.addEventListener('change', () => { this.marketDraft = { uid: sel.value, qty: 1, price: 0 }; const it = c.inventory.find((i) => i.uid === sel.value); if (it) on.marketHistoryOf(it.itemId); this.renderMarket(); });
+      const npcPrice = inst ? traderPrice(d, c, inst.itemId, w.now()) : 0;
+      const hist = inst ? on.marketHistory.get(inst.itemId) ?? [] : [];
+      const lastSale = hist.length ? hist[hist.length - 1][1] : 0;
+      if (inst && !this.marketDraft.price) this.marketDraft.price = Math.max(1, lastSale || Math.round(npcPrice * 1.5));
+      const qty = h('input', { id: 'mk-qty', type: 'number', min: 1, max: inst?.qty ?? 1, value: this.marketDraft.qty, style: 'width:64px' }) as HTMLInputElement;
+      const price = h('input', { id: 'mk-price', type: 'number', min: 1, value: this.marketDraft.price, style: 'width:110px' }) as HTMLInputElement;
+      qty.addEventListener('change', () => { this.marketDraft.qty = Math.max(1, Math.min(inst?.qty ?? 1, Math.floor(Number(qty.value) || 1))); });
+      price.addEventListener('change', () => { this.marketDraft.price = Math.max(1, Math.floor(Number(price.value) || 1)); });
+      content = inst ? h('div', {},
+        h('div', { class: 'row', style: 'gap:6px' }, 'Item', sel),
+        h('div', { class: 'row', style: 'gap:6px;margin-top:6px' }, 'Qty', qty, 'Price each', price, 'Luma'),
+        h('div', { class: 'muted', style: 'font-size:11px;margin-top:4px' }, `Market Trader pays ${npcPrice.toLocaleString()} now${lastSale ? ` · last sale here ${lastSale.toLocaleString()}` : ''}. The item stays with the Market Hall until a player buys it or you cancel; you are paid even if you are offline.`),
+        h('button', { class: 'btn primary', id: 'mk-list-btn', style: 'margin-top:6px', onclick: () => { this.marketDraft.qty = Math.max(1, Math.min(inst.qty, Math.floor(Number(qty.value) || 1))); this.marketDraft.price = Math.max(1, Math.floor(Number(price.value) || 1)); on.marketList(inst.uid, this.marketDraft.qty, this.marketDraft.price); } }, 'List for sale'),
+        salesChart(inst.itemId))
+        : h('div', { class: 'muted' }, 'Nothing in your bag can be sold.');
+    } else {
+      const mine = on.marketListings.filter((l) => l.seller === c.name);
+      content = h('div', { class: 'tlist', id: 'mk-mine' }, mine.length ? mine.map((l) => h('div', { class: 'mrow' },
+        icon(l.itemId), h('span', { class: 'tn' }, label(l)), h('span', {}, `×${l.qty}`), h('span', { class: 'gold' }, `${l.price.toLocaleString()}`), h('span', { class: 'muted' }, new Date(l.listedAt).toLocaleDateString()),
+        h('button', { class: 'btn small', onclick: () => on.marketCancel(l.id) }, 'Cancel'))) : h('div', { class: 'muted', style: 'padding:6px' }, 'You have nothing listed.'));
+    }
+    setChildren(body, h('div', { style: 'width:460px' }, tabs, content,
+      h('div', { class: 'row', style: 'margin-top:6px' }, h('span', { class: 'muted', style: 'font-size:11px' }, `Up to 10 listings · only real players buy here`), h('span', { class: 'spacer' }), h('span', { class: 'gold' }, `${c.luma.toLocaleString()} Luma`))));
   }
 
   // ---------------------------------------------------------------- social / online play
@@ -1197,6 +1432,8 @@ export class WindowManager {
     for (const s of npc.services) {
       if (s.type === 'shop') opts.push([s.label ?? 'Shop', () => { this.closeDialog(); this.shopId = s.shopId; this.open('inventory'); this.open('shop'); }]);
       if (s.type === 'storage') opts.push(['Open storage', () => { this.closeDialog(); this.open('inventory'); this.open('storage'); }]);
+      if (s.type === 'trader') opts.push(['Sell at today\'s market price', () => { this.closeDialog(); this.open('trader'); }]);
+      if (s.type === 'market') opts.push(['Open the Market Hall', () => { this.closeDialog(); this.open('market'); }]);
       if (s.type === 'heal') opts.push([`Rest at the inn (${s.cost} Luma)`, () => { const r = w.healAtInn(s.cost); this.app.hud?.toast(r.ok ? r.message! : r.error, !r.ok); this.closeDialog(); }]);
       if (s.type === 'save') opts.push(['Set save point here', () => { w.setSavePoint(); this.app.saveNow(false); this.app.hud?.toast('Save point set.'); this.closeDialog(); }]);
       if (s.type === 'resetStats') opts.push([`Reset stat points${s.cost ? ` (${s.cost} Luma)` : ' (free)'}`, () => { this.closeDialog(); this.confirmAction('Reset stats', 'Refund every allocated stat point so you can spend them again?', 'Reset stats', () => w.doResetStats(s.cost)); }]);
