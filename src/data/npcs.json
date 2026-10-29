@@ -2587,13 +2587,13 @@
    "style": "apron"
   },
   "greeting": [
-   "I buy anything — at today's price. Prices change every hour with supply and rarity; check the graph before you sell."
+   "I buy anything — at today's price. Prices change every hour, and my wares change every two hours: gear of every level, potions and more. Check the graph before you trade."
   ],
   "services": [
    {
     "type": "shop",
-    "shopId": "starter_goods",
-    "label": "Buy starter goods"
+    "shopId": "moss_wares",
+    "label": "Browse today's wares"
    },
    {
     "type": "trader"
@@ -2631,7 +2631,7 @@
  {
   "id": "aurelion_trader",
   "name": "Trader Ilka",
-  "title": "Market Trader",
+  "title": "Goods Trader",
   "appearance": {
    "body": "b",
    "hairStyle": "bob",
@@ -2646,16 +2646,13 @@
    "style": "apron"
   },
   "greeting": [
-   "I buy anything — at today's price. Prices change every hour with supply and rarity; check the graph before you sell."
+   "Starter goods at fair, fixed prices. For market prices, see Trader Moss in Willowbrook."
   ],
   "services": [
    {
     "type": "shop",
     "shopId": "starter_goods",
     "label": "Buy starter goods"
-   },
-   {
-    "type": "trader"
    }
   ],
   "generated": true
@@ -2690,7 +2687,7 @@
  {
   "id": "fernhollow_trader",
   "name": "Trader Bodo",
-  "title": "Market Trader",
+  "title": "Goods Trader",
   "appearance": {
    "body": "b",
    "hairStyle": "long",
@@ -2705,16 +2702,13 @@
    "style": "apron"
   },
   "greeting": [
-   "I buy anything — at today's price. Prices change every hour with supply and rarity; check the graph before you sell."
+   "Starter goods at fair, fixed prices. For market prices, see Trader Moss in Willowbrook."
   ],
   "services": [
    {
     "type": "shop",
     "shopId": "starter_goods",
     "label": "Buy starter goods"
-   },
-   {
-    "type": "trader"
    }
   ],
   "generated": true
@@ -2749,7 +2743,7 @@
  {
   "id": "arcanthe_trader",
   "name": "Trader Nesrin",
-  "title": "Market Trader",
+  "title": "Goods Trader",
   "appearance": {
    "body": "b",
    "hairStyle": "short",
@@ -2764,16 +2758,13 @@
    "style": "apron"
   },
   "greeting": [
-   "I buy anything — at today's price. Prices change every hour with supply and rarity; check the graph before you sell."
+   "Starter goods at fair, fixed prices. For market prices, see Trader Moss in Willowbrook."
   ],
   "services": [
    {
     "type": "shop",
     "shopId": "starter_goods",
     "label": "Buy starter goods"
-   },
-   {
-    "type": "trader"
    }
   ],
   "generated": true
@@ -2808,7 +2799,7 @@
  {
   "id": "sandara_trader",
   "name": "Trader Quay",
-  "title": "Market Trader",
+  "title": "Goods Trader",
   "appearance": {
    "body": "a",
    "hairStyle": "spiky",
@@ -2823,16 +2814,13 @@
    "style": "apron"
   },
   "greeting": [
-   "I buy anything — at today's price. Prices change every hour with supply and rarity; check the graph before you sell."
+   "Starter goods at fair, fixed prices. For market prices, see Trader Moss in Willowbrook."
   ],
   "services": [
    {
     "type": "shop",
     "shopId": "starter_goods",
     "label": "Buy starter goods"
-   },
-   {
-    "type": "trader"
    }
   ],
   "generated": true
@@ -2867,7 +2855,7 @@
  {
   "id": "tidewatch_trader",
   "name": "Trader Ruta",
-  "title": "Market Trader",
+  "title": "Goods Trader",
   "appearance": {
    "body": "b",
    "hairStyle": "ponytail",
@@ -2882,16 +2870,13 @@
    "style": "apron"
   },
   "greeting": [
-   "I buy anything — at today's price. Prices change every hour with supply and rarity; check the graph before you sell."
+   "Starter goods at fair, fixed prices. For market prices, see Trader Moss in Willowbrook."
   ],
   "services": [
    {
     "type": "shop",
     "shopId": "starter_goods",
     "label": "Buy starter goods"
-   },
-   {
-    "type": "trader"
    }
   ],
   "generated": true
@@ -2926,7 +2911,7 @@
  {
   "id": "frostholm_trader",
   "name": "Trader Vane",
-  "title": "Market Trader",
+  "title": "Goods Trader",
   "appearance": {
    "body": "a",
    "hairStyle": "short",
@@ -2941,16 +2926,13 @@
    "style": "apron"
   },
   "greeting": [
-   "I buy anything — at today's price. Prices change every hour with supply and rarity; check the graph before you sell."
+   "Starter goods at fair, fixed prices. For market prices, see Trader Moss in Willowbrook."
   ],
   "services": [
    {
     "type": "shop",
     "shopId": "starter_goods",
     "label": "Buy starter goods"
-   },
-   {
-    "type": "trader"
    }
   ],
   "generated": true

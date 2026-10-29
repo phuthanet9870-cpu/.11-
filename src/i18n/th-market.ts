@@ -22,6 +22,16 @@ export const TH_MARKET: Record<string, string> = {
   'That item cannot be sold.': 'ไอเทมนี้ขายไม่ได้',
   'Sold {}× {} for {} Luma.': 'ขาย {}× {} ได้ {} ลูมา',
   'now': 'ตอนนี้',
+  'Goods Trader': 'พ่อค้าสินค้าทั่วไป',
+  "Moss's Wares": 'สินค้าของ Moss',
+  "Browse today's wares": 'ดูสินค้าวันนี้',
+  "I buy anything — at today's price. Prices change every hour, and my wares change every two hours: gear of every level, potions and more. Check the graph before you trade.": 'ข้ารับซื้อทุกอย่าง — ตามราคาของวันนี้ ราคาเปลี่ยนทุกชั่วโมง และสินค้าของข้าเปลี่ยนทุกสองชั่วโมง: อุปกรณ์ทุกเลเวล ยา และอื่นๆ ดูกราฟก่อนซื้อขายนะ',
+  'Starter goods at fair, fixed prices. For market prices, see Trader Moss in Willowbrook.': 'สินค้าเริ่มต้นราคาคงที่ยุติธรรม ถ้าอยากได้ราคาตลาด ไปหา Trader Moss ที่ Willowbrook',
+  'Trader pays': 'ราคารับซื้อ',
+  'Trader sells': 'ราคาขาย',
+  'Market prices: they change every hour, and buying a lot of one item raises its price for a few hours. New wares in {} min (every 2 hours, gear of every level). See the graph in the Market Trader window.': 'ราคาตลาด: เปลี่ยนทุกชั่วโมง และการซื้อของชิ้นเดียวกันเยอะๆ จะทำให้ราคาขึ้นไปสักพัก สินค้าใหม่ในอีก {} นาที (ทุก 2 ชั่วโมง อุปกรณ์ทุกเลเวล) ดูกราฟได้ในหน้าต่างพ่อค้าตลาด',
+  'No sales of this item yet.': 'ยังไม่มีใครขายไอเทมนี้',
+  'Recent sales of {}: last {} · average {} ({} sales)': 'ยอดขายล่าสุดของ {}: ล่าสุด {} · เฉลี่ย {} ({} ครั้ง)',
 
   // Market Hall (players only)
   'The Market Hall lists goods from other adventurers, and only real players buy them.': 'ตลาดกลางรวมสินค้าจากนักผจญภัยคนอื่น และมีแต่ผู้เล่นจริงเท่านั้นที่ซื้อ',

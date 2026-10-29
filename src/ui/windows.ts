@@ -4,7 +4,7 @@ import type { App } from './app';
 import { keyFromEvent } from './keys';
 import { drawPriceChart } from './chart';
 import { computeDerivedStats } from '../core/formulas';
-import { HOUR_MS, priceChangePct, priceHistory, traderPrice } from '../core/market';
+import { HOUR_MS, nextRestockMs, priceChangePct, priceHistory, shopStock, traderBuyPrice, traderPrice } from '../core/market';
 import { BREW_BOWL, BREW_RECIPES, brewChance, canBrew, missingFor } from '../core/brewing';
 import { ACHIEVEMENTS, BONUS_HOURS, DAILY_REWARDS, dailyStatus, titleOf, type AchievementDef } from '../core/achievements';
 import { h, setChildren, RARITY_COLOR } from './dom';
@@ -890,19 +890,24 @@ export class WindowManager {
 
   // ---------------------------------------------------------------- Market Trader (hourly market prices + graph)
   private traderPick = '';
+  private traderSide: 'sell' | 'buy' = 'sell';
+  private pctArrow(pct: number) {
+    return h('span', { class: pct > 0.05 ? 'good' : pct < -0.05 ? 'bad' : 'muted' }, `${pct > 0.05 ? '▲' : pct < -0.05 ? '▼' : '■'} ${Math.abs(pct).toFixed(1)}%`);
+  }
+
   private renderTrader() {
     const w = this.app.world!, d = w.data, c = w.char, body = this.wins.get('trader')!.body, now = w.now();
     const focused = document.activeElement;
     if (focused && body.contains(focused) && focused.tagName === 'SELECT') return;
     const sellable = c.inventory.filter((i) => { const def = d.items.get(i.itemId)!; return def.type !== 'quest' && !i.bound && !def.bound && !i.locked; });
     if (!this.traderPick || !d.items.has(this.traderPick)) this.traderPick = sellable[0]?.itemId ?? 'red_potion';
-    const chart = (itemId: string, w0: number, h0: number, mini: boolean) => {
-      const cv = h('canvas', { width: w0, height: h0, class: mini ? 'spark' : 'pchart' }) as HTMLCanvasElement;
-      const hist = priceHistory(d, c, itemId, now, 24);
+    const chart = (itemId: string, w0: number, h0: number, mini: boolean, side: 'sell' | 'buy' = 'sell') => {
+      const cv = h('canvas', { width: w0, height: h0, class: mini ? 'spark' : 'pchart', dataset: { side } }) as HTMLCanvasElement;
+      const hist = priceHistory(d, c, itemId, now, 24, side);
       drawPriceChart(cv, hist.map((p, i) => ({ label: i === hist.length - 1 ? 'now' : `-${hist.length - 1 - i}h`, value: p.price })), { mini });
       return cv;
     };
-    const arrow = (pct: number) => h('span', { class: pct > 0.05 ? 'good' : pct < -0.05 ? 'bad' : 'muted' }, `${pct > 0.05 ? '▲' : pct < -0.05 ? '▼' : '■'} ${Math.abs(pct).toFixed(1)}%`);
+    const arrow = (pct: number) => this.pctArrow(pct);
     const near = w.npcs.some((n) => n.def.services.some((s) => s.type === 'trader') && Math.hypot(n.x - w.player.x, n.y - w.player.y) < 160);
     const rows = sellable.map((inst) => {
       const def = d.items.get(inst.itemId)!, price = traderPrice(d, c, inst.itemId, now), pct = priceChangePct(d, c, inst.itemId, now);
@@ -919,15 +924,20 @@ export class WindowManager {
     const sel = h('select', { id: 'trader-pick', style: 'max-width:220px' }, allItems.map((i) => h('option', { value: i.id }, i.name))) as HTMLSelectElement;
     sel.value = this.traderPick;
     sel.addEventListener('change', () => { this.traderPick = sel.value; this.renderTrader(); });
-    const nowPrice = traderPrice(d, c, this.traderPick, now), base = Math.max(1, sellPrice(d, this.traderPick, c));
+    const forSale = [...d.shops.values()].some((sh) => sh.market && shopStock(d, sh, now).includes(this.traderPick));
+    if (!forSale) this.traderSide = 'sell';
+    const side = this.traderSide;
+    const sideBtn = (id: 'sell' | 'buy', label: string) => h('button', { class: `btn small${side === id ? ' primary' : ''}`, id: `trader-side-${id}`, disabled: id === 'buy' && !forSale, onclick: () => { this.traderSide = id; this.renderTrader(); } }, label);
+    const nowPrice = side === 'buy' ? traderBuyPrice(d, c, this.traderPick, now) : traderPrice(d, c, this.traderPick, now);
+    const base = Math.max(1, side === 'buy' ? buyPrice(d, c, this.traderPick) : sellPrice(d, this.traderPick, c));
     const nextHour = Math.ceil((Math.floor(now / HOUR_MS) + 1) * HOUR_MS - now) / 60000;
     setChildren(body, h('div', { style: 'width:470px' },
       h('div', { class: 'muted', style: 'font-size:11px;margin-bottom:6px' }, `Prices change every hour (next change in ${Math.ceil(nextHour)} min). Rare items swing more; selling many of one item lowers its price for a few hours.`),
-      h('div', { class: 'row', style: 'gap:8px;align-items:center' }, h('b', {}, 'Price chart'), sel),
+      h('div', { class: 'row', style: 'gap:8px;align-items:center' }, h('b', {}, 'Price chart'), sel, sideBtn('sell', 'Trader pays'), sideBtn('buy', 'Trader sells')),
       h('div', { class: 'row', style: 'gap:10px;margin:4px 0;font-size:12px' },
-        h('span', {}, `${pickDef.name}: `, h('b', { class: 'gold' }, `${nowPrice.toLocaleString()} Luma`)), arrow(priceChangePct(d, c, this.traderPick, now)),
+        h('span', {}, `${pickDef.name}: `, h('b', { class: 'gold' }, `${nowPrice.toLocaleString()} Luma`)), arrow(priceChangePct(d, c, this.traderPick, now, side)),
         h('span', { class: 'muted' }, `normal shop price ${base.toLocaleString()} · ${Math.round((nowPrice / base) * 100)}%`)),
-      chart(this.traderPick, 470, 150, false),
+      chart(this.traderPick, 470, 150, false, side),
       h('div', { class: 'gold', style: 'font-weight:bold;margin:8px 0 4px' }, 'Sell from your bag (instant)'),
       near ? '' : h('div', { class: 'bad', style: 'font-size:11px' }, 'Stand next to a Market Trader to sell.'),
       h('div', { class: 'tlist', id: 'trader-list' }, rows.length ? rows : h('div', { class: 'muted' }, 'Nothing to sell.')),
@@ -1027,12 +1037,12 @@ export class WindowManager {
       h('button', { class: `btn small${this.marketTab === id ? ' primary' : ''}`, id: `mk-tab-${id}`, onclick: () => { this.marketTab = id; this.renderMarket(); } }, label)));
     const icon = (itemId: string) => h('img', { src: itemIconUrl(d.items.get(itemId)!) });
     const label = (l: { itemId: string; inst: ItemInstance }) => `${l.inst.refine ? `+${l.inst.refine} ` : ''}${d.items.get(l.itemId)?.name ?? l.itemId}${l.inst.cards?.length ? ` [${l.inst.cards.length}]` : ''}`;
-    // Price chart from real sales in the Market Hall.
+    // Recent real sales in the Market Hall (as text; the price graphs are at Trader Moss).
     const salesChart = (itemId: string) => {
-      const pts = on.marketHistory.get(itemId) ?? [];
-      const cv = h('canvas', { width: 420, height: 120, class: 'pchart', style: 'width:420px;height:120px' }) as HTMLCanvasElement;
-      drawPriceChart(cv, pts.slice(-30).map(([t, p]) => ({ label: new Date(t).toLocaleDateString(undefined, { month: 'numeric', day: 'numeric' }), value: p })));
-      return h('div', { style: 'margin-top:6px' }, h('div', { style: 'font-size:12px;margin-bottom:2px' }, `Sale prices of ${d.items.get(itemId)?.name ?? itemId} (${pts.length} sales)`), cv);
+      const pts = (on.marketHistory.get(itemId) ?? []).slice(-10);
+      if (!pts.length) return h('div', { class: 'muted', style: 'font-size:11px;margin-top:6px' }, 'No sales of this item yet.');
+      const avg = Math.round(pts.reduce((a, [, p]) => a + p, 0) / pts.length);
+      return h('div', { style: 'font-size:12px;margin-top:6px' }, `Recent sales of ${d.items.get(itemId)?.name ?? itemId}: last ${pts[pts.length - 1][1].toLocaleString()} · average ${avg.toLocaleString()} (${pts.length} sales)`);
     };
     let content: HTMLElement;
     if (this.marketTab === 'browse') {
@@ -1606,21 +1616,24 @@ export class WindowManager {
     const body = this.wins.get('shop')!.body;
     const shop = this.shopId ? w.data.shops.get(this.shopId) : null;
     if (!shop) { setChildren(body, 'No shop open.'); return; }
-    const rows = shop.items.map((id) => {
+    const rows = shopStock(w.data, shop, w.now()).map((id) => {
       const def = w.data.items.get(id)!;
       const qty = h('input', { type: 'number', min: 1, max: 99, value: 1 });
       const icon = h('img', { src: itemIconUrl(def) });
       icon.addEventListener('mousemove', (e) => this.showTooltip(e, this.itemTooltip(def)));
       icon.addEventListener('mouseleave', () => this.hideTooltip());
       const usable = def.type !== 'equipment' || canEquip(w.data, w.char, def).ok;
-      return h('div', { class: 'shop-row' }, icon,
+      return h('div', { class: 'shop-row', dataset: { item: id } }, icon,
         h('div', {}, h('div', { style: { color: RARITY_COLOR[def.rarity] } }, def.name), h('div', { class: usable ? 'muted' : 'bad', style: 'font-size:10px' }, def.type === 'equipment' ? (usable ? 'Can equip' : 'Cannot equip yet') : def.description)),
-        h('div', { class: 'gold' }, buyPrice(w.data, w.char, id) < def.price ? h('span', { title: `Discount (list price ${def.price})` }, `${buyPrice(w.data, w.char, id)} L`) : `${def.price} L`), qty,
+        shop.market
+          ? h('div', { class: 'gold', style: 'text-align:right' }, `${traderBuyPrice(w.data, w.char, id, w.now()).toLocaleString()} L`, h('div', { style: 'font-size:10px' }, this.pctArrow(priceChangePct(w.data, w.char, id, w.now(), 'buy'))))
+          : h('div', { class: 'gold' }, buyPrice(w.data, w.char, id) < def.price ? h('span', { title: `Discount (list price ${def.price})` }, `${buyPrice(w.data, w.char, id)} L`) : `${def.price} L`), qty,
         h('button', { class: 'btn small', onclick: () => w.buy(shop.id, id, Math.floor(Number(qty.value) || 1)) }, 'Buy'));
     });
     setChildren(body,
       h('div', { style: 'width:420px' },
         h('div', { class: 'row' }, h('span', { class: 'gold', style: 'font-weight:bold' }, shop.name), h('span', { class: 'spacer' }), h('span', {}, `You have ${w.char.luma.toLocaleString()} Luma`)),
+        shop.market ? h('div', { class: 'muted', style: 'font-size:11px;margin-top:4px' }, `Market prices: they change every hour, and buying a lot of one item raises its price for a few hours. New wares in ${Math.ceil(nextRestockMs(w.now()) / 60000)} min (every 2 hours, gear of every level). See the graph in the Market Trader window.`) : '',
         h('div', { style: 'max-height:380px;overflow:auto;margin-top:6px' }, rows),
         h('div', { class: 'muted', style: 'font-size:11px;margin-top:6px' }, `To sell: right-click an item in your inventory and choose Sell (${sellPrice(w.data, 'red_potion', w.char) > sellPrice(w.data, 'red_potion') ? '50% of its value + Overcharge' : '50% of its value'}).`)));
   }

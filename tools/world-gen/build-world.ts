@@ -938,14 +938,25 @@ export async function main() {
   }
   write('instances.json', instances);
 
-  // ---------------------------------------------------------------- Market Traders and the Market Hall (every town)
-  // Trader: starter goods to buy, and buys anything at the hourly market price. Market Hall: player-to-player market (online).
+  // ---------------------------------------------------------------- Market Trader Moss, goods traders and the Market Hall
+  // Moss (Willowbrook) is the only Market Trader: hourly prices with graphs, buys anything, and sells a
+  // stock that is re-rolled every 2 hours from every tier (the pool below). Other towns have a goods trader
+  // at fixed prices. Market Hall: player-to-player market (online).
   shops.push({ id: 'starter_goods', name: 'Starter Goods', items: ['red_potion', 'orange_potion', 'green_potion', 'blue_potion', 'wing_of_return', 'wandering_feather', 'training_knife', 'oak_club', 'cotton_shirt', 'bandana', 'sandals', 'wooden_buckler'], generated: true });
+  const stockPool = items.filter((it: J) => it.price > 0 && !it.bound && (
+    (it.type === 'equipment') || (it.type === 'consumable' && ['common', 'uncommon', 'rare'].includes(it.rarity) && !String(it.id).startsWith('homun_')))).map((it: J) => it.id);
+  shops.push({ id: 'moss_wares', name: "Moss's Wares", items: stockPool, market: true, rotating: true, generated: true });
   const TRADER = ['Trader Moss', 'Trader Ilka', 'Trader Bodo', 'Trader Nesrin', 'Trader Quay', 'Trader Ruta', 'Trader Vane'];
   for (const [i, town] of TOWN_IDS().entries()) {
-    npcs.push(npc(`${town}_trader`, TRADER[i % TRADER.length], 'Market Trader', hash(`${town}_trader`), 'apron',
-      [{ type: 'shop', shopId: 'starter_goods', label: 'Buy starter goods' }, { type: 'trader' }],
-      ['I buy anything — at today\'s price. Prices change every hour with supply and rarity; check the graph before you sell.']));
+    if (town === 'willowbrook') {
+      npcs.push(npc(`${town}_trader`, TRADER[0], 'Market Trader', hash(`${town}_trader`), 'apron',
+        [{ type: 'shop', shopId: 'moss_wares', label: 'Browse today\'s wares' }, { type: 'trader' }],
+        ['I buy anything — at today\'s price. Prices change every hour, and my wares change every two hours: gear of every level, potions and more. Check the graph before you trade.']));
+    } else {
+      npcs.push(npc(`${town}_trader`, TRADER[i % TRADER.length], 'Goods Trader', hash(`${town}_trader`), 'apron',
+        [{ type: 'shop', shopId: 'starter_goods', label: 'Buy starter goods' }],
+        ['Starter goods at fair, fixed prices. For market prices, see Trader Moss in Willowbrook.']));
+    }
     npcs.push(npc(`${town}_market`, 'Market Hall Clerk', 'Market Hall', hash(`${town}_market`), 'coat', [{ type: 'market' }],
       ['The Market Hall lists goods from other adventurers. Only real players buy here, so price your goods well.']));
     const m = town === 'willowbrook' ? hand.willowbrook : built.find((x) => x.map.id === town)!.map;

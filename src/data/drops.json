@@ -23,6 +23,10 @@
     "chance": 0.004
    },
    {
+    "itemId": "red_herb",
+    "chance": 0.1
+   },
+   {
     "itemId": "card_leaf_slime",
     "chance": 0.0001,
     "card": true
@@ -41,10 +45,6 @@
     "itemId": "terra_stone",
     "chance": 0.01,
     "forge": true
-   },
-   {
-    "itemId": "red_herb",
-    "chance": 0.1
    }
   ]
  },
@@ -72,6 +72,14 @@
     "chance": 0.003
    },
    {
+    "itemId": "yellow_herb",
+    "chance": 0.08
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.06
+   },
+   {
     "itemId": "card_horn_rabbit",
     "chance": 0.0001,
     "card": true
@@ -85,14 +93,6 @@
     "itemId": "starsteel_ore",
     "chance": 0.003,
     "oreHint": true
-   },
-   {
-    "itemId": "yellow_herb",
-    "chance": 0.08
-   },
-   {
-    "itemId": "green_herb",
-    "chance": 0.06
    }
   ]
  },
@@ -120,6 +120,14 @@
     "chance": 0.01
    },
    {
+    "itemId": "red_herb",
+    "chance": 0.12
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.1
+   },
+   {
     "itemId": "card_mushling",
     "chance": 0.0001,
     "card": true
@@ -138,14 +146,6 @@
     "itemId": "terra_stone",
     "chance": 0.01,
     "forge": true
-   },
-   {
-    "itemId": "red_herb",
-    "chance": 0.12
-   },
-   {
-    "itemId": "green_herb",
-    "chance": 0.1
    }
   ]
  },
@@ -173,6 +173,14 @@
     "chance": 0.002
    },
    {
+    "itemId": "yellow_herb",
+    "chance": 0.08
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.06
+   },
+   {
     "itemId": "card_buzz_wasp",
     "chance": 0.0001,
     "card": true
@@ -191,14 +199,6 @@
     "itemId": "gale_stone",
     "chance": 0.01,
     "forge": true
-   },
-   {
-    "itemId": "yellow_herb",
-    "chance": 0.08
-   },
-   {
-    "itemId": "green_herb",
-    "chance": 0.06
    }
   ]
  },
@@ -270,6 +270,14 @@
     "chance": 0.004
    },
    {
+    "itemId": "red_herb",
+    "chance": 0.12
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.1
+   },
+   {
     "itemId": "card_venom_spore",
     "chance": 0.0001,
     "card": true
@@ -283,14 +291,6 @@
     "itemId": "starsteel_ore",
     "chance": 0.003,
     "oreHint": true
-   },
-   {
-    "itemId": "red_herb",
-    "chance": 0.12
-   },
-   {
-    "itemId": "green_herb",
-    "chance": 0.1
    }
   ]
  },

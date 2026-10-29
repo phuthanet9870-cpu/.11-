@@ -495,7 +495,7 @@ export type NpcService =
   | { type: 'resetSkills'; cost: number }
   | { type: 'save' };
 
-export interface ShopDef { id: string; name: string; items: string[] }
+export interface ShopDef { id: string; name: string; items: string[]; /** Market Trader stock: prices move every hour. */ market?: boolean; /** `items` is a pool; the shop shows a random pick from every tier, re-rolled every 2 hours. */ rotating?: boolean }
 
 /** Forging recipe (Ragnarok-style blacksmith forging, done at a forge NPC). */
 export interface RecipeDef { id: string; itemId: string; materials: { itemId: string; qty: number }[]; fee: number }
@@ -588,6 +588,8 @@ export interface CharacterState {
   stats_meta: { kills: number; deaths: number; playTimeMs: number; bossKills: Record<string, number> };
   /** What this character sold to Market Traders: item id → [hour index, qty] (last 48 h). Lowers that item's price for a while. */
   marketSales?: Record<string, [number, number][]>;
+  /** What this character bought from Market Traders (same format). Raises that item's price for a while. */
+  marketBuys?: Record<string, [number, number][]>;
   /** Achievements earned: id → time. */
   achievements?: Record<string, number>;
   /** Title shown under the name (an achievement id). */

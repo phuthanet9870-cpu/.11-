@@ -89,6 +89,8 @@ try {
   // Trade: Alya gives 2 potions, Borin gives 300 Luma.
   await ev(b, () => { const w = window.__veyloria.world; w.char.luma += 1000; });
   const bPotions0 = await ev(b, () => window.__veyloria.world.char.inventory.filter((i) => i.itemId === 'red_potion').reduce((x, i) => x + i.qty, 0));
+  // Pay out any achievement earned in the party fight now, so its reward is not counted as trade Luma.
+  for (const p of [a, b]) await ev(p, () => window.__veyloria.world.updateAchievements());
   const aLuma0 = await ev(a, () => window.__veyloria.world.char.luma);
   await ev(b, () => { const w = window.__veyloria.world, pa = window.__veyloria.online.players.get('Alya'); w.player.x = pa.x + 30; w.player.y = pa.y; });
   await a.waitForTimeout(400);

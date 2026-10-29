@@ -1,7 +1,7 @@
 // The world simulation: map instance, player, monsters, NPCs, combat, skills,
 // loot and portals. It is renderer-agnostic (no Phaser) so it can be unit
 // tested headlessly and later run authoritative on the server (Phase 3).
-import { traderSell } from './market';
+import { traderBuy, traderSell } from './market';
 import type { GameData } from './data';
 import {
   elementModifier, profileFromDerived, profileFromMonster, resolveAttack, rollStatus,
@@ -2638,7 +2638,10 @@ export class World {
 
   buy(shopId: string, itemId: string, qty: number): OpResult {
     if (!this.nearService((s) => s.type === 'shop' && s.shopId === shopId)) return this.err('You are too far from the merchant.');
-    return this.wrap(buyItem(this.data, this.char, shopId, itemId, qty, this.weightLimit), () => {
+    const r = this.data.shops.get(shopId)?.market
+      ? traderBuy(this.data, this.char, shopId, itemId, qty, this.now(), this.weightLimit)
+      : buyItem(this.data, this.char, shopId, itemId, qty, this.weightLimit);
+    return this.wrap(r, () => {
       this.emit({ type: 'sound', key: 'coin' });
       this.questTick(questEvents.buy(this.data, this.char, itemId));
     });
