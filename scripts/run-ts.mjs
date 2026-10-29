@@ -1,4 +1,4 @@
-// Runs an asset-studio TypeScript entry (export function main) through Vite's SSR loader.
+// Runs a TypeScript entry (export function main) through Vite's SSR loader.
 import { createServer } from 'vite';
 const entry = process.argv[2];
 const server = await createServer({ server: { middlewareMode: true }, appType: 'custom', logLevel: 'error', configFile: false });

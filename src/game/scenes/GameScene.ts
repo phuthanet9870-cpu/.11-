@@ -12,8 +12,8 @@ import {
 } from '../assets';
 import type { CharacterLook } from '../art/characterSprite';
 import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_PIVOT, CHAR_SHEET_COLS, MON_ANIMS, MON_SHEET_COLS, type CharAnim, type MonAnim } from '../art/spriteMeta';
-import { characterRig, clipFrame, monsterRig, type Clip, type Rig } from '../batchArt';
-import { ELEMENT_FX, floatText, playFx, playProjectile, playSpriteFx } from '../render/effects';
+import { clipFrame, type Clip, type Rig } from '../rig';
+import { ELEMENT_FX, floatText, playFx, playProjectile } from '../render/effects';
 import { audio } from '../audio/audio';
 import type { GameHost } from '../host';
 import { titleOf } from '../../core/achievements';
@@ -66,7 +66,7 @@ export class GameScene extends Phaser.Scene {
           rig = proceduralMonRig(ensureMonsterTexture(this, def));
           sprite = this.track(this.add.sprite(r.x, r.y, rig.clips.idle.key, 0).setOrigin(0.5, 1).setScale(1.6).setTint(0xffe27a));
         } else {
-          rig = proceduralCharRig(ensureCharacterTexture(this, r.info!.look as never, `remote_${r.id}_${lookKey.length}`));
+          rig = proceduralCharRig(ensureCharacterTexture(this, r.info!.look as never));
           sprite = this.track(this.add.sprite(r.x, r.y, rig.clips.idle.key, 0).setOrigin(rig.originX, rig.originY));
         }
         const name = this.track(this.add.text(r.x, r.y + 6, '', labelStyle(r.emperium ? '#ffe27a' : '#9ad8ff')).setOrigin(0.5, 0).setDepth(1e5 + 2).setResolution(2));
@@ -251,7 +251,7 @@ export class GameScene extends Phaser.Scene {
     // NPCs
     for (const n of w.npcs) {
       const look: CharacterLook = { appearance: n.def.appearance, outfit: n.def.outfit, weapon: null };
-      const key = ensureCharacterTexture(this, look, `npc_${n.npcId}`);
+      const key = ensureCharacterTexture(this, look);
       const s = this.track(this.add.sprite(n.x, n.y, key, frameIndex(n.dir, 'idle', 0)).setOrigin(CHAR_PIVOT.x, CHAR_PIVOT.y));
       s.setDepth(n.y);
       const name = this.track(this.add.text(n.x, n.y + 6, n.def.name, labelStyle('#ffe9a8')).setOrigin(0.5, 0).setDepth(1e5 + 2).setResolution(2));
@@ -338,7 +338,7 @@ export class GameScene extends Phaser.Scene {
     if (lookId === this.playerLookKey && this.playerRig) return;
     this.playerLookKey = lookId;
     const look: CharacterLook = { appearance: c.appearance, outfit: cls.outfit, weapon, shield: !!c.equipment.shield };
-    this.playerRig = characterRig(this, c.classId, c.appearance, weapon) ?? proceduralCharRig(ensureCharacterTexture(this, look, `chr_${c.classId}`));
+    this.playerRig = proceduralCharRig(ensureCharacterTexture(this, look));
     if (this.player?.active) this.player.setOrigin(this.playerRig.originX, this.playerRig.originY);
   }
 
@@ -454,10 +454,6 @@ export class GameScene extends Phaser.Scene {
           const isPlayer = e.targetId === 'player' || e.targetId === 'homun';
           const col = isPlayer ? '#ff5a5a' : e.crit ? '#ffd34d' : e.kind === 'magic' ? '#c9a6ff' : e.kind === 'dot' ? '#a9e04a' : '#ffffff';
           floatText(this, tgt.x, y, e.crit ? `${e.amount}!` : `${e.amount}`, col, e.crit ? 24 : isPlayer ? 15 : 17);
-          if (e.kind === 'physical') {
-            const dy = isPlayer ? 30 : 16;
-            if (this.fxOn) playSpriteFx(this, 'fx_hit_basic', tgt.x, tgt.y - dy, { follow: () => ({ x: tgt.x, y: tgt.y - dy }) });
-          }
           if (this.fxOn && !isPlayer && e.element && e.element !== 'neutral' && e.kind !== 'dot') playFx(this, ELEMENT_FX[e.element] ?? 'slash_small', tgt.x, tgt.y - 10);
         }
         break;
@@ -495,7 +491,7 @@ export class GameScene extends Phaser.Scene {
     const riding = !!this.world.char.flags.mounted && this.world.canMount;
     if (riding && (!this.mountView || !this.mountView.sprite.active)) {
       const def = this.world.data.monsters.get('fire_drake')!;
-      const rig = monsterRig(this, def.id) ?? proceduralMonRig(ensureMonsterTexture(this, def));
+      const rig = proceduralMonRig(ensureMonsterTexture(this, def));
       this.mountView = { sprite: this.track(this.add.sprite(p.x, p.y, rig.clips.idle.key, 0).setOrigin(rig.originX, rig.originY).setScale(0.85).setTint(0x9ab8ff)), rig };
     }
     if (!riding && this.mountView) { this.mountView.sprite.destroy(); this.mountView = null; }
@@ -528,7 +524,7 @@ export class GameScene extends Phaser.Scene {
     for (const [id, m] of w.monsters) {
       let v = this.monViews.get(id);
       if (!v) {
-        const rig = monsterRig(this, m.def.id) ?? proceduralMonRig(ensureMonsterTexture(this, m.def));
+        const rig = proceduralMonRig(ensureMonsterTexture(this, m.def));
         const sprite = this.track(this.add.sprite(m.x, m.y, rig.clips.idle.key, 0).setOrigin(rig.originX, rig.originY));
         if (m.boss) sprite.setScale(1.15);
         const name = this.track(this.add.text(m.x, m.y + 4, `${m.def.name}  Lv.${m.def.level}`, labelStyle(m.boss ? '#ff8a7a' : '#ffffff')).setOrigin(0.5, 0).setDepth(1e5 + 2).setResolution(2));
@@ -574,7 +570,7 @@ export class GameScene extends Phaser.Scene {
     const def = w.data.monsters.get(w.data.homunculi.get(h.typeId)?.art ?? '');
     if (!def) return;
     if (!this.homView) {
-      const rig = monsterRig(this, def.id) ?? proceduralMonRig(ensureMonsterTexture(this, def));
+      const rig = proceduralMonRig(ensureMonsterTexture(this, def));
       const sprite = this.track(this.add.sprite(a.x, a.y, rig.clips.idle.key, 0).setOrigin(rig.originX, rig.originY).setScale(h.evolved ? 1 : 0.8).setTint(0xe8d8ff));
       const name = this.track(this.add.text(a.x, a.y, '', labelStyle('#d8c8ff')).setOrigin(0.5, 1).setDepth(1e5 + 2).setResolution(2));
       const bar = this.track(this.add.graphics().setDepth(1e5 + 1));
@@ -601,7 +597,7 @@ export class GameScene extends Phaser.Scene {
     const def = w.data.monsters.get(w.data.pets.get(pet.petId)?.monsterId ?? '');
     if (!def) return;
     if (!this.petView) {
-      const rig = monsterRig(this, def.id) ?? proceduralMonRig(ensureMonsterTexture(this, def));
+      const rig = proceduralMonRig(ensureMonsterTexture(this, def));
       const sprite = this.track(this.add.sprite(a.x, a.y, rig.clips.idle.key, 0).setOrigin(rig.originX, rig.originY).setScale(0.7));
       const name = this.track(this.add.text(a.x, a.y + 4, '', labelStyle('#ffd8f0')).setOrigin(0.5, 0).setDepth(1e5 + 2).setResolution(2));
       const heart = this.track(this.add.text(a.x, a.y - 30, '♥', { fontFamily: 'Verdana', fontSize: '12px', color: '#ff7aa8', stroke: '#1c1622', strokeThickness: 3 }).setOrigin(0.5, 1).setDepth(1e5 + 2).setResolution(2));

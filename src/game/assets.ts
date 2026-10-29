@@ -1,8 +1,5 @@
-// Asset registry with replacement support.
-// Every texture the game uses has a key (see docs/ASSET_PIPELINE.md). At boot
-// the manifest (public/assets/asset-manifest.json) is read: entries with a
-// `file` are loaded from disk; everything else is generated procedurally.
-// Swapping in real artwork is therefore a data change, not a code change.
+// Texture registry. Every sprite, map layer and icon the game uses is drawn
+// procedurally at runtime (./art); there are no image files.
 import Phaser from 'phaser';
 import type { GameData } from '../core/data';
 import type { CompiledMap } from '../core/mapCompiler';
@@ -14,45 +11,7 @@ import { CHAR_DIRECTIONS, CHAR_FRAME_H, CHAR_FRAME_W, CHAR_SHEET_COLS, MON_SHEET
 import { hashString } from '../core/rng';
 import { makeCanvas, ellipse } from './art/canvas';
 import { itemIconCanvas } from './art/icons';
-import { setFileOverrides } from './assetOverrides';
-import { buildingTexture, paintTiledLayers, propTexture } from './batchArt';
 import type { ItemDef } from '../core/types';
-
-export interface ManifestEntry {
-  key: string;
-  type: 'spritesheet' | 'image';
-  source: 'procedural' | 'file';
-  file?: string;
-  frameWidth?: number;
-  frameHeight?: number;
-  rows?: string[];
-  animations?: Record<string, { start: number; count: number; frameMs: number; loop: boolean }>;
-  pivot?: { x: number; y: number };
-  collisionBox?: { w: number; h: number };
-  placeholder?: boolean;
-  notes?: string;
-}
-
-export interface AssetManifest { version: number; namingConvention: Record<string, string>; entries: ManifestEntry[] }
-
-let manifest: AssetManifest = { version: 1, namingConvention: {}, entries: [] };
-const fileEntries = new Map<string, ManifestEntry>();
-
-export function setManifest(m: AssetManifest) {
-  manifest = m;
-  fileEntries.clear();
-  for (const e of m.entries) if (e.source === 'file' && e.file) fileEntries.set(e.key, e);
-  setFileOverrides([...fileEntries.values()].map((e) => ({ key: e.key, file: e.file! })));
-}
-export function getManifest() { return manifest; }
-
-/** Queue file-based replacements into the Phaser loader. */
-export function queueFileAssets(scene: Phaser.Scene) {
-  for (const e of fileEntries.values()) {
-    if (e.type === 'spritesheet') scene.load.spritesheet(e.key, `assets/${e.file}`, { frameWidth: e.frameWidth!, frameHeight: e.frameHeight! });
-    else scene.load.image(e.key, `assets/${e.file}`);
-  }
-}
 
 function addCanvasSheet(scene: Phaser.Scene, key: string, canvas: HTMLCanvasElement, fw: number, fh: number, cols: number, rows: number) {
   if (scene.textures.exists(key)) scene.textures.remove(key);
@@ -65,9 +24,8 @@ export function lookKey(look: CharacterLook): string {
   return `chr_${hashString(JSON.stringify(look)).toString(36)}`;
 }
 
-/** Character sheet (player or NPC). Real art: key `npc_<id>` in the manifest. */
-export function ensureCharacterTexture(scene: Phaser.Scene, look: CharacterLook, overrideKey?: string): string {
-  if (overrideKey && scene.textures.exists(overrideKey) && fileEntries.has(overrideKey)) return overrideKey;
+/** Character sheet (player or NPC). */
+export function ensureCharacterTexture(scene: Phaser.Scene, look: CharacterLook): string {
   const key = lookKey(look);
   if (!scene.textures.exists(key)) {
     addCanvasSheet(scene, key, generateCharacterSheet(look), CHAR_FRAME_W, CHAR_FRAME_H, CHAR_SHEET_COLS, CHAR_DIRECTIONS.length);
@@ -84,7 +42,7 @@ export function ensureMonsterTexture(scene: Phaser.Scene, def: MonsterDef): stri
 
 export interface MapTextures { objects: Map<string, string>; buildings: string[] }
 
-/** Builds (or loads replacement art for) the object and building sprites of a map. Layers are painted per chunk (ensureMapChunk). */
+/** Builds the object and building sprites of a map. Layers are painted per chunk (ensureMapChunk). */
 export function ensureMapTextures(scene: Phaser.Scene, data: GameData, map: CompiledMap): MapTextures {
   const id = map.def.id;
   const pal = data.tilesets.get(map.def.tileset)!.palette;
@@ -96,12 +54,10 @@ export function ensureMapTextures(scene: Phaser.Scene, data: GameData, map: Comp
   for (const o of map.objects) {
     const kind = data.objectKinds.get(o.kind)!;
     const variant = kind.id.startsWith('tree') ? (o.x * 7 + o.y * 13) % 3 : 0;
-    const art = propTexture(scene, map.def.tileset, o.kind, variant);
-    const key = art ?? `obj_${map.def.tileset}_${o.kind}_${variant}`;
-    if (!art) add(key, () => paintObject(kind, pal, 1000 + variant * 77 + hashString(o.kind)));
+    const key = add(`obj_${map.def.tileset}_${o.kind}_${variant}`, () => paintObject(kind, pal, 1000 + variant * 77 + hashString(o.kind)));
     objects.set(o.uid, key);
   }
-  const buildings = map.buildings.map((b, i) => buildingTexture(scene, map.def.tileset, b.style, b.w, b.h) ?? add(`map_${id}_bld${i}`, () => paintBuilding(b)));
+  const buildings = map.buildings.map((b, i) => add(`map_${id}_bld${i}`, () => paintBuilding(b)));
   return { objects, buildings };
 }
 
@@ -121,10 +77,9 @@ export function ensureMapChunk(scene: Phaser.Scene, data: GameData, map: Compile
   const keys: ChunkLayers = { ground: chunkKey(map, 'ground', cx, cy), walls: has(map.wall) ? chunkKey(map, 'walls', cx, cy) : null, above: has(map.above) ? chunkKey(map, 'above', cx, cy) : null };
   if (scene.textures.exists(keys.ground)) return keys;
   const pal = data.tilesets.get(map.def.tileset)!.palette;
-  const tiled = paintTiledLayers(scene, map, region);
-  scene.textures.addCanvas(keys.ground, tiled?.ground ?? paintGroundLayer(map, pal, region));
-  if (keys.walls) scene.textures.addCanvas(keys.walls, tiled?.walls ?? paintWallLayer(map, pal, region));
-  if (keys.above) scene.textures.addCanvas(keys.above, tiled?.above ?? paintAboveLayer(map, pal, region));
+  scene.textures.addCanvas(keys.ground, paintGroundLayer(map, pal, region));
+  if (keys.walls) scene.textures.addCanvas(keys.walls, paintWallLayer(map, pal, region));
+  if (keys.above) scene.textures.addCanvas(keys.above, paintAboveLayer(map, pal, region));
   return keys;
 }
 

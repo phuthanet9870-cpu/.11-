@@ -1,6 +1,4 @@
-// Sprite sheet contracts. Replacement artwork must follow these layouts
-// (or ship its own atlas JSON with the same animation names) — see
-// docs/ASSET_PIPELINE.md and public/assets/asset-manifest.json.
+// Layout of the procedurally drawn sprite sheets: frame size, directions and animation frames.
 import type { Direction } from '../../core/types';
 
 export const CHAR_FRAME_W = 48;

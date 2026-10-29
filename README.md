@@ -3,7 +3,7 @@
 A 2D fantasy MMORPG with a top-down 3/4 view. It's built with TypeScript, Phaser 3 (WebGL), HTML/CSS UI and Vite.
 
 > **Status: Phase 1 (Playable Game Foundation): done and tested in single-player development mode.**
-> The art and audio are **procedural placeholders** that the game generates itself; you can swap in real assets through the asset manifest.
+> All art and audio are **procedural**: the game draws every sprite, tile, icon and sound itself. There are no image or sprite-sheet files.
 > Online play (accounts, server, party, guild, trading) is planned for Phase 3 and isn't built yet.
 
 ## ภาพรวม (Thai summary)
@@ -32,7 +32,7 @@ A 2D fantasy MMORPG with a top-down 3/4 view. It's built with TypeScript, Phaser
   - ดูรายละเอียดที่ [docs/RO_SYSTEMS.md](docs/RO_SYSTEMS.md)
 - **ระบบตีบวก +1 ถึง +10:** อาวุธตีได้ปลอดภัยถึง +5 และชุดเกราะถึง +4 ถ้าเกินจากนั้นแล้วตีพลาด ของจะแตก
 - ระบบที่ทำเสร็จแล้ว ได้แก่ การเดิน (คลิกเมาส์/WASD), กล้องติดตาม, Collision ที่ตรงกับภาพ, NPC/บทสนทนา, Monster AI แบบ State Machine, การต่อสู้แบบ Real-time พร้อมธาตุและ Status, EXP/เลเวล (Base และ Job), Stat Points, Inventory/Equipment, สกิลและ Hotbar, เควสต์ 17 เควสต์, ร้านค้า, คลังเก็บของ, การเซฟ/โหลดแบบมีเวอร์ชัน, เสียง และ UI ครบชุดสำหรับ Phase 1
-- ภาพและเสียงตอนนี้เป็น **Placeholder ที่เกมสร้างขึ้นเอง** (ต้นฉบับทั้งหมด) และเปลี่ยนเป็น Artwork จริงได้ผ่าน `public/assets/asset-manifest.json` โดยไม่ต้องแก้ Logic
+- ภาพและเสียงทั้งหมด **เกมวาดและสร้างเองตอนรัน** (ต้นฉบับทั้งหมด) ไม่มีไฟล์ภาพ sprite sheet หรือไฟล์ animation ในโปรเจกต์
 - ระบบออนไลน์ยังไม่ได้ทำ (อยู่ใน Phase 3)
 
 ---
@@ -54,7 +54,6 @@ npm test                 # all unit + integration tests (Vitest)
 npm run test:unit        # unit tests only
 npm run test:integration # headless playthrough + class balance tests
 npm run test:e2e         # builds, then drives the real game in Chromium (Playwright)
-npm run assets:manifest  # regenerate public/assets/asset-manifest.json from data
 ```
 `test:e2e` uses Playwright's Chromium. If it isn't installed: `npx playwright install chromium`.
 
@@ -106,7 +105,6 @@ Ground-target skills (Arrow Rain, Wind Trap, Fire Wall, Thunderstorm, Meteor) la
 | HUD: HP/MP, EXP/Job EXP, hotbar with cooldowns, chat log, minimap, quest tracker, buffs, target frame, boss bar, cast bar, Luma | ✅ | `src/ui/hud.ts` |
 | Windows: status, inventory, equipment, skill tree, quest journal, world map, pet (P), homunculus (H), pushcart (V), runes (N), social / online (G), database with refine simulator / forge calculator / option odds / combos / pets / element chart (B), settings (volume, toggles, key rebinding) | ✅ | `src/ui/windows.ts` |
 | Audio: BGM per map, boss music, ambience, SFX; Master/Music/SFX/Ambient volume | ✅ (procedural) | `src/game/audio/audio.ts` |
-| Asset manifest and replacement system with sprite metadata | ✅ | `docs/ASSET_PIPELINE.md` |
 
 ## Online play (optional)
 
@@ -189,7 +187,6 @@ Single-player GM tools edit the local save only, and any use sets `flags.gmUsed`
 
 Screenshots from the e2e run are written to `tests/e2e/screenshots/` (git-ignored).
 
-**Batch 001 art (Willowbrook Starter Pack):** asset QA **551 / 551** checks passed (`npm run assets:batch001`), and the in-game demo **26 / 26** (`npm run demo:batch001`). See [docs/art/BATCH001.md](docs/art/BATCH001.md).
 
 ## Project structure
 ```
@@ -197,18 +194,17 @@ src/
   core/      game rules & simulation (no rendering): world, combat, formulas, inventory, quests, maps, save
   data/      JSON content: classes, skills, items, monsters, bosses, drops, NPCs, shops, quests, maps, tiles, audio
   config/    balance.json (all tunable numbers)
-  game/      Phaser scenes, procedural art, effects, audio, asset registry
+  game/      Phaser scenes, procedural art, effects, audio, texture registry
   ui/        HTML UI: app shell, screens, HUD, windows, CSS
-public/assets/asset-manifest.json   asset keys + sprite contracts (replace placeholders here)
 tests/       unit/, integration/, e2e/, helpers/ (bot & scenario builders)
-docs/        ARCHITECTURE.md, ASSET_PIPELINE.md
-scripts/     generate-asset-manifest.mjs
-tools/asset-studio/   pixel-art generator + QA for the production art batches
+docs/        ARCHITECTURE.md, RO_SYSTEMS.md, WORLD.md
+scripts/     run-ts.mjs (runs the TypeScript server and world generator)
+tools/world-gen/      generators for maps, NPCs, items and jobs
 ```
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/ASSET_PIPELINE.md](docs/ASSET_PIPELINE.md).
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Not done yet (honest list)
-- **Most art and all audio are still placeholders.** Batch 001 production art covers the Novice, Leaf Slime, Mushling, Horn Rabbit, Willowbrook (tiles, props, buildings) and 4 VFX ([docs/art/BATCH001.md](docs/art/BATCH001.md)). Everything else (the other classes, NPCs, monsters and maps, plus all music and SFX) is still generated at runtime.
+- **All art and audio are generated at runtime.** The hand-made art files (Batch 001 sprite sheets, animations, VFX, tilesets) and the art tools were removed; characters, monsters, maps, icons, music and sounds are all drawn or synthesised by the game.
 - **Online play is not server-authoritative.** `npm run server` connects players (accounts, chat, party, guild, trade, vending, PvP, guild war), but each character lives in its own browser's `localStorage` and the server trusts what clients report, so it is not cheat-proof. The published web page can't reach a server on your computer; online play needs the server plus `npm run dev`/`preview` on a reachable machine. PvP and the Emperium use basic attacks only.
 - **Not built yet:** third jobs; skills against other players; server-side characters and anti-cheat.
 - All 30 maps exist. Their 64 regular monsters and 6 bosses reuse 14 procedural body types in regional colours, and the stats of the newer monsters come from a level formula. Equipment still tops out around level 20, so the Lv 40–85 regions need new gear tiers and haven't been balance-tested.
@@ -224,7 +220,7 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/ASSET_PIPELINE.md](do
 - Trader Moss's prices are calculated in each game client (his stock is the same for everyone, from the clock): "player demand" is what *you* sold recently, not what every player sold, because characters are not stored on the server. Market Hall prices and sales are real and shared, but the server trusts the client about the item it lists (same trust model as trading).
 
 ## Next phase
-Second jobs and their skill trees, gear tiers for the Lv 40–85 regions with bot balance passes, and production art for more monsters and classes. All of it plugs into the existing data files and `World` APIs. Phase 3 then moves `World` onto a Node.js (Colyseus) server with PostgreSQL/Redis for authoritative online play.
+Second jobs and their skill trees, gear tiers for the Lv 40–85 regions with bot balance passes, and better procedural art for monsters and classes. All of it plugs into the existing data files and `World` APIs. Phase 3 then moves `World` onto a Node.js (Colyseus) server with PostgreSQL/Redis for authoritative online play.
 
 ## Credits & licensing
 All code, data, procedural art and synthesized audio in this repository are original. The game is inspired by classic MMORPGs, but it doesn't use any characters, art, maps or sounds from other games.

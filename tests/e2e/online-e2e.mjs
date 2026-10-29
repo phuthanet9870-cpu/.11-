@@ -25,7 +25,7 @@ const until = (proc, text, ms = 30000) => new Promise((res, rej) => {
 });
 
 const preview = spawn(process.execPath, [join(root, 'node_modules/vite/bin/vite.js'), 'preview', '--port', String(PORT), '--strictPort'], { cwd: root, stdio: 'pipe' });
-const server = spawn(process.execPath, [join(root, 'tools/asset-studio/scripts/run.mjs'), './server/main.ts', `--port=${WS}`, `--data=${mkdtempSync(join(tmpdir(), 'veyl-e2e-'))}`, '--woe-always', '--emperium-hp=500'], { cwd: root, stdio: 'pipe' });
+const server = spawn(process.execPath, [join(root, 'scripts/run-ts.mjs'), './server/main.ts', `--port=${WS}`, `--data=${mkdtempSync(join(tmpdir(), 'veyl-e2e-'))}`, '--woe-always', '--emperium-hp=500'], { cwd: root, stdio: 'pipe' });
 await Promise.all([until(preview, String(PORT)), until(server, 'listening')]);
 
 // Two windows at once: keep both game loops running at full speed.

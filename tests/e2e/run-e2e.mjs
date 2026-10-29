@@ -202,14 +202,15 @@ try {
   await page.screenshot({ path: join(shots, '08-reloaded.png') });
 
   // Whispering Forest render check (boss map)
-  await page.evaluate(() => { const w = window.__veyloria.world; w.enterMap('whispering_forest', 'from_meadow'); const b = w.map.def.bossSpawn; w.player.x = (b.x - 3) * 32; w.player.y = (b.y + 1) * 32; });
+  // A render check only: GM god mode keeps the Lv 1 character from being killed by the boss meanwhile.
+  await page.evaluate(() => { const w = window.__veyloria.world; w.godMode = true; w.enterMap('whispering_forest', 'from_meadow'); const b = w.map.def.bossSpawn; w.player.x = (b.x - 3) * 32; w.player.y = (b.y + 1) * 32; });
   await sleep(1500);
   await page.screenshot({ path: join(shots, '09-forest-boss.png') });
   const boss = await page.evaluate(() => [...window.__veyloria.world.monsters.values()].some((m) => m.boss));
   check('Whispering Forest loads with its boss', boss);
 
   // ---- UI flows in town: shop, drag & drop equip, stats, job change, skills, hotbar, death.
-  await page.evaluate(() => { const w = window.__veyloria.world; w.enterMap('willowbrook', 'default'); });
+  await page.evaluate(() => { const w = window.__veyloria.world; w.godMode = false; w.enterMap('willowbrook', 'default'); });
   await sleep(800);
   await page.evaluate(() => window.__veyloria.world.interactNpc('pip'));
   await page.waitForSelector('#npc-dialog', { timeout: 15000 });
@@ -534,6 +535,7 @@ try {
 
   // Alchemist brewing: the Medicine Bowl opens the brewing window; a brew uses the bowl and materials.
   {
+    const herbs0 = await page.evaluate(() => window.__veyloria.world.char.inventory.filter((i) => i.itemId === 'red_herb').reduce((a, i) => a + i.qty, 0));
     await page.evaluate(() => {
       const w = window.__veyloria.world;
       w.char.classId = 'alchemist'; w.char.skills.potion_research = 5;
@@ -543,9 +545,9 @@ try {
     await page.waitForSelector('#win-brew:not(.hidden) #brew-list');
     await page.click('#brew-list .brow[data-recipe=brew_red_potion] button');
     await sleep(150);
-    const b = await page.evaluate(() => { const inv = window.__veyloria.world.char.inventory; return { bowl: inv.some((i) => i.itemId === 'medicine_bowl'), herb: inv.some((i) => i.itemId === 'red_herb') }; });
+    const b = await page.evaluate(() => { const inv = window.__veyloria.world.char.inventory; return { bowl: inv.some((i) => i.itemId === 'medicine_bowl'), herbs: inv.filter((i) => i.itemId === 'red_herb').reduce((a, i) => a + i.qty, 0) }; });
     const log = await page.textContent('#hud');
-    check('brewing window: a brew uses the Medicine Bowl and herbs (success or failure is logged)', !b.bowl && !b.herb && /Brewing (succeeded|failed)/.test(log), JSON.stringify(b));
+    check('brewing window: a brew uses the Medicine Bowl and herbs (success or failure is logged)', !b.bowl && b.herbs === herbs0 && /Brewing (succeeded|failed)/.test(log), JSON.stringify(b));
     await page.evaluate(() => window.__veyloria.windows.close('brew'));
   }
 

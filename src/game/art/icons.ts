@@ -1,7 +1,6 @@
 // Procedural item & skill icons rendered to data URLs for the HTML UI.
 import type { ItemDef, SkillDef } from '../../core/types';
 import { addOutline, ellipse, makeCanvas, px, shade } from './canvas';
-import { fileUrlFor } from '../assetOverrides';
 
 const cache = new Map<string, string>();
 
@@ -139,7 +138,7 @@ export function itemIconUrl(def: ItemDef): string {
   const key = `item:${def.id}`;
   const hit = cache.get(key);
   if (hit) return hit;
-  const url = fileUrlFor(`icon_item_${def.id}`) ?? itemIconCanvas(def).toDataURL();
+  const url = itemIconCanvas(def).toDataURL();
   cache.set(key, url);
   return url;
 }
@@ -148,8 +147,6 @@ export function skillIconUrl(def: SkillDef): string {
   const key = `skill:${def.id}`;
   const hit = cache.get(key);
   if (hit) return hit;
-  const file = fileUrlFor(`icon_skill_${def.id}`);
-  if (file) { cache.set(key, file); return file; }
   const { canvas, ctx } = makeCanvas(32, 32);
   const c = def.icon.color;
   const g = ctx.createLinearGradient(0, 0, 32, 32);

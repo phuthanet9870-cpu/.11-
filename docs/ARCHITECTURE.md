@@ -21,7 +21,7 @@ src/game/   (Phaser 3 + WebGL)
   scenes/GameScene renders the World, turns mouse input into World commands
   art/*            procedural placeholder art generators
   audio/audio.ts   WebAudio synth: BGM sequencer, ambience, SFX
-  assets.ts        asset registry; manifest-driven replacement with real files
+  assets.ts        texture registry; builds every texture procedurally
 src/ui/     (HTML/CSS overlay)
   app.ts           screen flow, save management, keybinds, GameHost bridge
   screens.ts       title / character select / character creation
