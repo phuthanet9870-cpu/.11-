@@ -8,6 +8,7 @@
 //   npm run world:build
 import { readFileSync, writeFileSync, readdirSync, unlinkSync } from 'node:fs';
 import { join } from 'node:path';
+import { layoutTown, npcRole, type Plan, type Side } from './town-layout';
 
 const DATA = join(process.cwd(), 'src/data');
 const read = (f: string) => JSON.parse(readFileSync(join(DATA, f), 'utf8'));
@@ -319,27 +320,17 @@ const GUILD_NPC: Record<string, [string, string, string]> = {
 const TOWN_IDS = () => ['willowbrook', ...NEW_MAPS.filter((m) => m.type === 'town').map((m) => m.id)];
 
 function buildTown(s: MapSpec): Built {
-  const W = 48, H = 38, cx = 24, cy = 19;
-  const paint: J[] = [], portals: J[] = [], spawn: J = {}, npcs: J[] = [], shops: J[] = [], places: J[] = [];
+  // Full-size town shell: exits, shops and NPCs. The street plan and every NPC's spot are
+  // laid out at the end (layoutTowns), once all the NPCs living in the town are known.
+  const [W, H] = TOWN_SIZE;
+  const portals: J[] = [], spawn: J = {}, npcs: J[] = [], shops: J[] = [], places: J[] = [];
   const base = s.tileset === 'desert' ? 'sand' : 'grass';
-  paint.push({ op: 'rect', tile: 'path_stone', x: cx - 7, y: cy - 5, w: 14, h: 10 });
   for (const [e, target] of Object.entries(s.exits) as [Exit, string][]) {
     const g = edge(e, W, H);
     portals.push({ id: `to_${target}`, ...g.portal, targetMap: target, targetSpawn: `from_${s.id}`, label: '' });
     spawn[`from_${target}`] = g.spawn;
-    paint.push({ op: 'path', tile: 'path_stone', points: [g.inner, [cx - 1, cy - 1]], width: 3 });
   }
-  spawn.default = { x: cx, y: cy + 3 };
-  paint.push({ op: 'object', kind: 'fountain', x: cx - 1, y: cy - 2, id: `${s.id}_fountain` });
-  for (const [x, y] of [[cx - 7, cy - 5], [cx + 6, cy - 5], [cx - 7, cy + 4], [cx + 6, cy + 4]]) paint.push({ op: 'object', kind: 'lamp_post', x, y });
-  // Four buildings in the quadrants (never on the cross-shaped roads), doors facing the plaza roads.
-  const B = [
-    { style: 'inn', x: 5, y: 4, w: 8, h: 5, door: 4, sign: 'inn' }, { style: 'smithy', x: 34, y: 4, w: 8, h: 5, door: 3, sign: 'smithy' },
-    { style: 'shop', x: 5, y: 26, w: 8, h: 5, door: 4, sign: 'shop' }, { style: s.guild ? 'guild' : 'house', x: 34, y: 26, w: 8, h: 5, door: 4, sign: s.guild ? 'guild' : undefined },
-  ];
-  for (const b of B) paint.push({ op: 'building', ...b });
-  paint.push({ op: 'scatter', kind: 'deco:flowers', density: 0.04, seed: hash(s.id) });
-  paint.push({ op: 'scatter', kind: (s.trees ?? (s.tileset === 'snow' || s.tileset === 'fernwood' ? ['tree_pine'] : ['tree_oak']))[0], density: 0.012, seed: hash(s.id) + 1 });
+  spawn.default = { x: Math.floor(W / 2), y: Math.floor(H / 2) };
   const shopKey = s.town!.shop;
   shops.push({ id: `${s.id}_tools`, name: `${s.name} Tool Shop`, items: TOWN_SHOPS[shopKey].tools, generated: true });
   shops.push({ id: `${s.id}_arms`, name: `${s.name} Armory`, items: ['glimmer_ore', 'bright_ore', ...TOWN_SHOPS[shopKey].arms], generated: true });
@@ -354,23 +345,23 @@ function buildTown(s: MapSpec): Built {
     [{ type: 'shop', shopId: `${s.id}_arms`, label: 'Browse weapons & armor' }, ...(s.refine ? [{ type: 'refine' }, { type: 'forge' }] : [])], ['Fine steel, fair prices.']));
   npcs.push(npc(`${s.id}_innkeeper`, `${['Greta', 'Amos', 'Sabine', 'Idris', 'Molly', 'Gunnar', 'Fae'][hash(s.id + 'i') % 7]}`, 'Innkeeper', hash(s.id) + 9, 'tunic',
     [{ type: 'heal', cost: 20 }, { type: 'save' }], ['A warm bed and a hot meal, traveller?']));
-  places.push([`${s.id}_innkeeper`, 9, 10], [`${s.id}_smith`, 37, 10], [`${s.id}_merchant`, 9, 32], [`${s.id}_courier`, cx + 3, cy + 2]);
+  places.push([`${s.id}_innkeeper`, 0, 0], [`${s.id}_smith`, 0, 0], [`${s.id}_merchant`, 0, 0], [`${s.id}_courier`, 0, 0]);
   if (s.enchanter) {
     npcs.push(npc(`${s.id}_enchanter`, 'Enchantress Viveka', 'Equipment Enchanter', hash(s.id) + 11, 'robe', [{ type: 'enchant' }],
       ['I weave hidden power into equipment. One more option, or a fresh roll of them all, for a price.']));
-    places.push([`${s.id}_enchanter`, cx - 4, cy + 2]);
+    places.push([`${s.id}_enchanter`, 0, 0]);
   }
-  for (const [gi, g] of (s.guild ?? []).entries()) {
+  for (const g of s.guild ?? []) {
     const [nm, tt, style] = GUILD_NPC[g];
     npcs.push(npc(`guild_${g}`, nm, tt, hash(g), style, [{ type: 'jobChange', classIds: [g] }, ...(g === 'merchant' ? [{ type: 'cart', cost: 800 }] : [])],
       [`So you wish to walk the path of the ${title(g)}? Prove you've reached Job Level 10 as a Novice and I will accept you.`]));
-    places.push([`guild_${g}`, 38 - gi * 4, 32]);
+    places.push([`guild_${g}`, 0, 0]);
   }
   const map = {
     id: s.id, name: s.name, region: s.region, type: 'town', width: W, height: H, tileset: s.tileset, base, border: { kind: 'thicket', thickness: 2 },
     bgm: s.bgm, ambient: s.ambient, weather: s.weather, isSavePoint: true, worldMapPos: { x: s.pos[0], y: s.pos[1] },
-    paint, portals, spawnPoints: spawn, npcs: places.map(([id, x, y]) => ({ npcId: id, x, y, facing: 'down' })), monsterSpawns: [],
-    objects: [{ id: `${s.id}_fountain`, kind: 'fountain', x: cx - 1, y: cy - 2, name: `${short} Fountain`, interact: { text: `${s.name}. ${s.region}.` } }], areas: [], generated: true,
+    paint: [], portals, spawnPoints: spawn, npcs: places.map(([id, x, y]) => ({ npcId: id, x, y, facing: 'down' })), monsterSpawns: [],
+    objects: [{ id: `${s.id}_fountain`, kind: 'fountain', x: 0, y: 0, name: `${short} Fountain`, interact: { text: `${s.name}. ${s.region}.` } }], areas: [], generated: true,
   };
   return { map, npcs, shops };
 }
@@ -966,17 +957,53 @@ export async function main() {
     m.npcs.push({ npcId: `${town}_trader`, x: tx + o.x, y: ty + o.y, facing: 'down' }, { npcId: `${town}_market`, x: mx + o.x, y: my + o.y, facing: 'down' });
   }
 
-  // ---------------------------------------------------------------- bigger maps
-  // Towns: the 48×38 core moves to the middle of a wider map with a ring of houses and woods.
-  for (const b of built.filter((x) => x.map.type === 'town')) {
-    const m = b.map;
-    expandMap(m, TOWN_SIZE[0], TOWN_SIZE[1], m.tileset === 'desert' ? 'sand' : 'path_stone');
-    const [W, H] = TOWN_SIZE;
-    const houses = [[6, 7], [15, 7], [W - 21, 7], [W - 12, 7], [6, H - 13], [15, H - 13], [W - 21, H - 13], [W - 12, H - 13]]
-      .map(([x, y]) => ({ op: 'building', style: 'house', x, y, w: 6, h: 5, door: 3 }));
-    const at = m.paint.findIndex((op: J) => op.op === 'scatter');
-    m.paint.splice(at, 0, ...houses);
+  // ---------------------------------------------------------------- town layouts
+  // Each town gets its own street plan (no two alike) chosen to suit it, with random details
+  // from the town's seed; then every NPC is placed by what it does (see town-layout.ts).
+  const TOWN_DESIGN: Record<string, { plan: Plan; road: string; trees: string[]; density: number; wall?: string; plaza: string; houses: number }> = {
+    willowbrook: { plan: 'river', road: 'dirt', trees: ['tree_oak', 'bush'], density: 0.022, plaza: 'Fountain Plaza', houses: 12 },
+    aurelion: { plan: 'grid', road: 'path_stone', trees: ['tree_oak'], density: 0.01, plaza: 'Royal Square', houses: 16 },
+    fernhollow: { plan: 'ring', road: 'dirt', trees: ['tree_pine', 'tree_dark', 'bush'], density: 0.04, plaza: 'Village Green', houses: 11 },
+    arcanthe: { plan: 'star', road: 'path_stone', trees: ['tree_pine', 'obelisk'], density: 0.012, plaza: 'Star Court', houses: 12 },
+    sandara: { plan: 'quarters', road: 'path_stone', trees: [], density: 0, wall: 'ruin_wall', plaza: 'Bazaar Square', houses: 14 },
+    tidewatch: { plan: 'harbor', road: 'path_stone', trees: ['tree_oak', 'bush'], density: 0.016, plaza: 'Harbor Promenade', houses: 12 },
+    frostholm: { plan: 'diagonal', road: 'path_stone', trees: ['tree_pine', 'rock'], density: 0.03, plaza: 'Hearth Square', houses: 12 },
+  };
+  const SIGN: Record<string, string> = { inn: 'Inn', smithy: 'Smithy', shop: 'Tools', guild: 'Guild Hall', market: 'Market Hall', courier: 'Courier', stable: 'Stable' };
+  const WB_SIGN: Record<string, string> = { inn: 'Sleeping Willow Inn', smithy: 'Ironhand Smithy', shop: "Pip's Tools", guild: "Adventurer's Guild", market: "Moss's Market" };
+  const npcById = new Map(npcs.map((n: J) => [n.id, n]));
+  for (const id of TOWN_IDS()) {
+    const m = id === 'willowbrook' ? hand.willowbrook : built.find((b) => b.map.id === id)!.map;
+    const td = TOWN_DESIGN[id];
+    if (!td) throw new Error(`no town design for ${id}`);
+    const roles: [string, string][] = m.npcs.map((n: J) => [n.npcId, npcRole(n.npcId, npcById.get(n.npcId)?.title ?? '')]);
+    const needed = new Set(roles.map(([, role]) => role));
+    const buildings = [
+      { role: 'inn', style: 'inn', w: 8, h: 6 }, { role: 'guild', style: 'guild', w: 10, h: 6 }, { role: 'smithy', style: 'smithy', w: 8, h: 5 },
+      { role: 'shop', style: 'shop', w: 7, h: 5 }, { role: 'market', style: 'shop', w: 9, h: 5 }, { role: 'courier', style: 'house', w: 6, h: 5 },
+      ...(needed.has('stable') ? [{ role: 'stable', style: 'house', w: 7, h: 5 }] : []),
+    ].map((b) => ({ ...b, sign: (id === 'willowbrook' ? WB_SIGN[b.role] : undefined) ?? SIGN[b.role] }));
+    const W = m.width, H = m.height;
+    const exits = m.portals.map((p: J) => {
+      const side: Side = p.x <= 1 ? 'W' : p.x + p.w >= W - 1 ? 'E' : p.y <= 1 ? 'N' : 'S';
+      const inner: [number, number] = side === 'W' ? [3, p.y + 1] : side === 'E' ? [W - 4, p.y + 1] : side === 'N' ? [p.x + 1, 3] : [p.x + 1, H - 4];
+      return { side, inner };
+    });
+    const named = m.objects.filter((o: J) => o.kind !== 'fountain')
+      .map((o: J) => ({ id: o.id, kind: o.kind, near: (o.kind === 'well' ? 'park' : o.kind === 'signpost' ? 'gate' : 'road') as 'park' | 'gate' | 'road' }));
+    const L = layoutTown({
+      id, name: m.name, W, H, plan: td.plan, seed: hash(`${id}:layout`), base: m.base, road: td.road, trees: td.trees, treeDensity: td.density,
+      wallTile: td.wall, exits, buildings, houses: td.houses, objects: named, plazaName: td.plaza,
+    });
+    m.paint = L.paint;
+    m.npcs = L.placeNpcs(roles);
+    for (const o of m.objects) { const p = L.objects[o.id]; if (p) { o.x = p.x; o.y = p.y; } }
+    m.spawnPoints.default = L.spawn;
+    if (m.spawnPoints.inn && L.doors.inn) m.spawnPoints.inn = { x: L.doors.inn.x, y: L.doors.inn.y + 1 };
+    m.areas = [{ id: 'plaza', name: td.plaza, rect: L.plaza }];
+    delete m.origin;
   }
+
   // Hand-made maps: widened once (later runs see the new size and leave them).
   for (const [id, [W2, H2]] of Object.entries(HAND_SIZE)) {
     const m = hand[id];

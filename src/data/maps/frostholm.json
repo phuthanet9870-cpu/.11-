@@ -23,24 +23,20 @@
  },
  "paint": [
   {
-   "op": "rect",
-   "tile": "path_stone",
-   "x": 41,
-   "y": 33,
-   "w": 14,
-   "h": 10
-  },
-  {
    "op": "path",
    "tile": "path_stone",
    "points": [
     [
-     47,
-     53
+     7,
+     8
     ],
     [
-     47,
-     37
+     46,
+     35
+    ],
+    [
+     86,
+     66
     ]
    ],
    "width": 3
@@ -50,100 +46,60 @@
    "tile": "path_stone",
    "points": [
     [
-     47,
-     22
+     22,
+     19
     ],
     [
-     47,
-     37
+     22,
+     5
     ]
    ],
-   "width": 3
+   "width": 2
   },
   {
    "op": "path",
    "tile": "path_stone",
    "points": [
     [
-     68,
-     37
+     39,
+     31
     ],
     [
-     47,
-     37
+     39,
+     69
     ]
    ],
-   "width": 3
+   "width": 2
   },
   {
-   "op": "object",
-   "kind": "fountain",
-   "x": 47,
-   "y": 36,
-   "id": "frostholm_fountain"
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     54,
+     42
+    ],
+    [
+     54,
+     5
+    ]
+   ],
+   "width": 2
   },
   {
-   "op": "object",
-   "kind": "lamp_post",
-   "x": 41,
-   "y": 33
-  },
-  {
-   "op": "object",
-   "kind": "lamp_post",
-   "x": 54,
-   "y": 33
-  },
-  {
-   "op": "object",
-   "kind": "lamp_post",
-   "x": 41,
-   "y": 42
-  },
-  {
-   "op": "object",
-   "kind": "lamp_post",
-   "x": 54,
-   "y": 42
-  },
-  {
-   "op": "building",
-   "style": "inn",
-   "x": 29,
-   "y": 23,
-   "w": 8,
-   "h": 5,
-   "door": 4,
-   "sign": "inn"
-  },
-  {
-   "op": "building",
-   "style": "smithy",
-   "x": 58,
-   "y": 23,
-   "w": 8,
-   "h": 5,
-   "door": 3,
-   "sign": "smithy"
-  },
-  {
-   "op": "building",
-   "style": "shop",
-   "x": 29,
-   "y": 45,
-   "w": 8,
-   "h": 5,
-   "door": 4,
-   "sign": "shop"
-  },
-  {
-   "op": "building",
-   "style": "house",
-   "x": 58,
-   "y": 45,
-   "w": 8,
-   "h": 5,
-   "door": 4
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     75,
+     58
+    ],
+    [
+     75,
+     69
+    ]
+   ],
+   "width": 2
   },
   {
    "op": "path",
@@ -155,15 +111,11 @@
     ],
     [
      47,
-     71
+     70
     ],
     [
-     47,
-     62
-    ],
-    [
-     47,
-     53
+     40,
+     70
     ]
    ],
    "width": 3
@@ -178,15 +130,11 @@
     ],
     [
      47,
-     3
+     5
     ],
     [
-     47,
-     13
-    ],
-    [
-     47,
-     22
+     54,
+     5
     ]
    ],
    "width": 3
@@ -200,61 +148,880 @@
      37
     ],
     [
-     80,
+     85,
      37
     ],
     [
-     80,
-     37
-    ],
-    [
-     68,
-     37
+     85,
+     63
     ]
    ],
    "width": 3
   },
   {
-   "op": "building",
-   "style": "house",
-   "x": 6,
-   "y": 7,
-   "w": 6,
-   "h": 5,
-   "door": 3
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     49,
+     28
+    ],
+    [
+     49,
+     29
+    ],
+    [
+     49,
+     30
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     51,
+     69
+    ],
+    [
+     51,
+     70
+    ],
+    [
+     50,
+     70
+    ],
+    [
+     49,
+     70
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     34,
+     44
+    ],
+    [
+     35,
+     44
+    ],
+    [
+     36,
+     44
+    ],
+    [
+     37,
+     44
+    ],
+    [
+     38,
+     44
+    ],
+    [
+     39,
+     44
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     60,
+     32
+    ],
+    [
+     59,
+     32
+    ],
+    [
+     58,
+     32
+    ],
+    [
+     57,
+     32
+    ],
+    [
+     56,
+     32
+    ],
+    [
+     55,
+     32
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     46,
+     48
+    ],
+    [
+     45,
+     48
+    ],
+    [
+     44,
+     48
+    ],
+    [
+     43,
+     48
+    ],
+    [
+     42,
+     48
+    ],
+    [
+     41,
+     48
+    ],
+    [
+     40,
+     48
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     38,
+     24
+    ],
+    [
+     38,
+     25
+    ],
+    [
+     38,
+     26
+    ],
+    [
+     38,
+     27
+    ],
+    [
+     38,
+     28
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     27,
+     35
+    ],
+    [
+     28,
+     35
+    ],
+    [
+     28,
+     34
+    ],
+    [
+     28,
+     33
+    ],
+    [
+     28,
+     32
+    ],
+    [
+     28,
+     31
+    ],
+    [
+     28,
+     30
+    ],
+    [
+     28,
+     29
+    ],
+    [
+     28,
+     28
+    ],
+    [
+     28,
+     27
+    ],
+    [
+     28,
+     26
+    ],
+    [
+     28,
+     25
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     63,
+     63
+    ],
+    [
+     64,
+     63
+    ],
+    [
+     65,
+     63
+    ],
+    [
+     66,
+     63
+    ],
+    [
+     67,
+     63
+    ],
+    [
+     68,
+     63
+    ],
+    [
+     69,
+     63
+    ],
+    [
+     70,
+     63
+    ],
+    [
+     71,
+     63
+    ],
+    [
+     72,
+     63
+    ],
+    [
+     73,
+     63
+    ],
+    [
+     74,
+     63
+    ],
+    [
+     75,
+     63
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     65,
+     19
+    ],
+    [
+     64,
+     19
+    ],
+    [
+     63,
+     19
+    ],
+    [
+     62,
+     19
+    ],
+    [
+     61,
+     19
+    ],
+    [
+     60,
+     19
+    ],
+    [
+     59,
+     19
+    ],
+    [
+     58,
+     19
+    ],
+    [
+     57,
+     19
+    ],
+    [
+     56,
+     19
+    ],
+    [
+     55,
+     19
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     81,
+     32
+    ],
+    [
+     81,
+     33
+    ],
+    [
+     81,
+     34
+    ],
+    [
+     81,
+     35
+    ],
+    [
+     81,
+     36
+    ],
+    [
+     81,
+     37
+    ],
+    [
+     82,
+     37
+    ],
+    [
+     83,
+     37
+    ],
+    [
+     84,
+     37
+    ],
+    [
+     85,
+     37
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     73,
+     39
+    ],
+    [
+     74,
+     39
+    ],
+    [
+     75,
+     39
+    ],
+    [
+     76,
+     39
+    ],
+    [
+     77,
+     39
+    ],
+    [
+     78,
+     39
+    ],
+    [
+     79,
+     39
+    ],
+    [
+     80,
+     39
+    ],
+    [
+     81,
+     39
+    ],
+    [
+     81,
+     38
+    ],
+    [
+     81,
+     37
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     69,
+     30
+    ],
+    [
+     69,
+     31
+    ],
+    [
+     69,
+     32
+    ],
+    [
+     68,
+     32
+    ],
+    [
+     67,
+     32
+    ],
+    [
+     66,
+     32
+    ],
+    [
+     65,
+     32
+    ],
+    [
+     64,
+     32
+    ],
+    [
+     63,
+     32
+    ],
+    [
+     62,
+     32
+    ],
+    [
+     61,
+     32
+    ],
+    [
+     60,
+     32
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     33,
+     62
+    ],
+    [
+     34,
+     62
+    ],
+    [
+     35,
+     62
+    ],
+    [
+     36,
+     62
+    ],
+    [
+     37,
+     62
+    ],
+    [
+     38,
+     62
+    ],
+    [
+     39,
+     62
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     73,
+     48
+    ],
+    [
+     73,
+     49
+    ],
+    [
+     73,
+     50
+    ],
+    [
+     73,
+     51
+    ],
+    [
+     73,
+     52
+    ],
+    [
+     73,
+     53
+    ],
+    [
+     73,
+     54
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     50,
+     54
+    ],
+    [
+     49,
+     54
+    ],
+    [
+     48,
+     54
+    ],
+    [
+     47,
+     54
+    ],
+    [
+     46,
+     54
+    ],
+    [
+     45,
+     54
+    ],
+    [
+     44,
+     54
+    ],
+    [
+     43,
+     54
+    ],
+    [
+     42,
+     54
+    ],
+    [
+     41,
+     54
+    ],
+    [
+     40,
+     54
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     33,
+     70
+    ],
+    [
+     34,
+     70
+    ],
+    [
+     35,
+     70
+    ],
+    [
+     36,
+     70
+    ],
+    [
+     37,
+     70
+    ],
+    [
+     38,
+     70
+    ],
+    [
+     39,
+     70
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     29,
+     52
+    ],
+    [
+     30,
+     52
+    ],
+    [
+     31,
+     52
+    ],
+    [
+     32,
+     52
+    ],
+    [
+     33,
+     52
+    ],
+    [
+     34,
+     52
+    ],
+    [
+     35,
+     52
+    ],
+    [
+     36,
+     52
+    ],
+    [
+     37,
+     52
+    ],
+    [
+     38,
+     52
+    ],
+    [
+     39,
+     52
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     20,
+     50
+    ],
+    [
+     20,
+     51
+    ],
+    [
+     20,
+     52
+    ],
+    [
+     21,
+     52
+    ],
+    [
+     22,
+     52
+    ],
+    [
+     23,
+     52
+    ],
+    [
+     24,
+     52
+    ],
+    [
+     25,
+     52
+    ],
+    [
+     26,
+     52
+    ],
+    [
+     27,
+     52
+    ],
+    [
+     28,
+     52
+    ],
+    [
+     29,
+     52
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 40,
+   "y": 30,
+   "w": 13,
+   "h": 10
   },
   {
    "op": "building",
-   "style": "house",
-   "x": 15,
-   "y": 7,
-   "w": 6,
-   "h": 5,
-   "door": 3
+   "style": "inn",
+   "x": 45,
+   "y": 22,
+   "w": 8,
+   "h": 6,
+   "door": 4,
+   "sign": "Inn"
   },
   {
    "op": "building",
-   "style": "house",
-   "x": 75,
-   "y": 7,
-   "w": 6,
-   "h": 5,
-   "door": 3
-  },
-  {
-   "op": "building",
-   "style": "house",
-   "x": 84,
-   "y": 7,
-   "w": 6,
-   "h": 5,
-   "door": 3
-  },
-  {
-   "op": "building",
-   "style": "house",
-   "x": 6,
+   "style": "guild",
+   "x": 46,
    "y": 63,
+   "w": 10,
+   "h": 6,
+   "door": 5,
+   "sign": "Guild Hall"
+  },
+  {
+   "op": "building",
+   "style": "smithy",
+   "x": 30,
+   "y": 39,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "Smithy"
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 57,
+   "y": 27,
+   "w": 7,
+   "h": 5,
+   "door": 3,
+   "sign": "Tools"
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 42,
+   "y": 43,
+   "w": 9,
+   "h": 5,
+   "door": 4,
+   "sign": "Market Hall"
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 35,
+   "y": 19,
+   "w": 6,
+   "h": 5,
+   "door": 3,
+   "sign": "Courier"
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 24,
+   "y": 31,
+   "w": 7,
+   "h": 4,
+   "door": 3
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 60,
+   "y": 59,
+   "w": 7,
+   "h": 4,
+   "door": 3
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 62,
+   "y": 14,
+   "w": 7,
+   "h": 5,
+   "door": 3
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 79,
+   "y": 27,
+   "w": 5,
+   "h": 5,
+   "door": 2
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 71,
+   "y": 34,
+   "w": 5,
+   "h": 5,
+   "door": 2
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 66,
+   "y": 25,
    "w": 6,
    "h": 5,
    "door": 3
@@ -262,41 +1029,237 @@
   {
    "op": "building",
    "style": "house",
-   "x": 15,
-   "y": 63,
-   "w": 6,
-   "h": 5,
+   "x": 31,
+   "y": 58,
+   "w": 5,
+   "h": 4,
+   "door": 2
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 70,
+   "y": 44,
+   "w": 7,
+   "h": 4,
    "door": 3
   },
   {
    "op": "building",
    "style": "house",
-   "x": 75,
-   "y": 63,
+   "x": 47,
+   "y": 50,
    "w": 6,
-   "h": 5,
+   "h": 4,
    "door": 3
   },
   {
    "op": "building",
    "style": "house",
-   "x": 84,
-   "y": 63,
+   "x": 31,
+   "y": 66,
+   "w": 5,
+   "h": 4,
+   "door": 2
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 27,
+   "y": 48,
+   "w": 5,
+   "h": 4,
+   "door": 2
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 17,
+   "y": 46,
    "w": 6,
-   "h": 5,
+   "h": 4,
    "door": 3
+  },
+  {
+   "op": "object",
+   "kind": "fountain",
+   "x": 45,
+   "y": 33,
+   "id": "frostholm_fountain"
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 40,
+   "y": 30
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 52,
+   "y": 30
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 40,
+   "y": 39
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 52,
+   "y": 39
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 43,
+   "y": 40
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 51,
+   "y": 42
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 50,
+   "y": 29
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 50,
+   "y": 41
+  },
+  {
+   "op": "object",
+   "kind": "anvil",
+   "x": 38,
+   "y": 43
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 36,
+   "y": 45
+  },
+  {
+   "op": "object",
+   "kind": "crate",
+   "x": 64,
+   "y": 31
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 62,
+   "y": 33
+  },
+  {
+   "op": "object",
+   "kind": "crate",
+   "x": 42,
+   "y": 49
+  },
+  {
+   "op": "object",
+   "kind": "crate",
+   "x": 47,
+   "y": 49
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 43,
+   "y": 49
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 45,
+   "y": 29
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 55,
+   "y": 51
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 62,
+   "y": 51
+  },
+  {
+   "op": "object",
+   "kind": "bush",
+   "x": 55,
+   "y": 56
+  },
+  {
+   "op": "object",
+   "kind": "bush",
+   "x": 62,
+   "y": 56
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 44,
+   "y": 69
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 46,
+   "y": 3
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 91,
+   "y": 36
   },
   {
    "op": "scatter",
    "kind": "deco:flowers",
-   "density": 0.04,
-   "seed": 2964844667
+   "area": {
+    "x": 55,
+    "y": 51,
+    "w": 8,
+    "h": 6
+   },
+   "density": 0.35,
+   "seed": 2631916384
   },
   {
    "op": "scatter",
    "kind": "tree_pine",
-   "density": 0.012,
-   "seed": 2964844668
+   "density": 0.03,
+   "seed": 2631916388
+  },
+  {
+   "op": "scatter",
+   "kind": "rock",
+   "density": 0.01,
+   "seed": 2631916389
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.03,
+   "seed": 2631916380
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.03,
+   "seed": 2631916382
   }
  ],
  "portals": [
@@ -345,57 +1308,57 @@
    "y": 38
   },
   "default": {
-   "x": 48,
-   "y": 41
+   "x": 46,
+   "y": 36
   }
  },
  "npcs": [
   {
    "npcId": "frostholm_innkeeper",
-   "x": 33,
-   "y": 29,
+   "x": 48,
+   "y": 30,
    "facing": "down"
   },
   {
    "npcId": "frostholm_smith",
-   "x": 61,
-   "y": 29,
+   "x": 35,
+   "y": 45,
    "facing": "down"
   },
   {
    "npcId": "frostholm_merchant",
-   "x": 33,
-   "y": 51,
+   "x": 61,
+   "y": 33,
    "facing": "down"
   },
   {
    "npcId": "frostholm_courier",
-   "x": 51,
-   "y": 40,
+   "x": 37,
+   "y": 26,
    "facing": "down"
   },
   {
    "npcId": "frostholm_jobmaster",
-   "x": 41,
-   "y": 40,
+   "x": 52,
+   "y": 70,
    "facing": "down"
   },
   {
    "npcId": "crypt_keeper",
-   "x": 54,
-   "y": 51,
+   "x": 42,
+   "y": 34,
    "facing": "down"
   },
   {
    "npcId": "frostholm_trader",
-   "x": 58,
-   "y": 40,
+   "x": 59,
+   "y": 33,
    "facing": "down"
   },
   {
    "npcId": "frostholm_market",
-   "x": 41,
-   "y": 36,
+   "x": 45,
+   "y": 49,
    "facing": "down"
   }
  ],
@@ -404,18 +1367,25 @@
   {
    "id": "frostholm_fountain",
    "kind": "fountain",
-   "x": 47,
-   "y": 36,
+   "x": 45,
+   "y": 33,
    "name": "Frostholm Fountain",
    "interact": {
     "text": "Snow Town Frostholm. Frostpeak Mountains."
    }
   }
  ],
- "areas": [],
- "generated": true,
- "origin": {
-  "x": 24,
-  "y": 19
- }
+ "areas": [
+  {
+   "id": "plaza",
+   "name": "Hearth Square",
+   "rect": {
+    "x": 40,
+    "y": 30,
+    "w": 13,
+    "h": 10
+   }
+  }
+ ],
+ "generated": true
 }

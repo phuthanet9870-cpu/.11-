@@ -18,22 +18,27 @@ function spawnNear(w: World, monsterId: string, dx = 60, dy = 0): MonsterActor {
 
 // Sunny Meadow too.
 const SM = data.maps.get('sunny_meadow')!.origin ?? { x: 0, y: 0 };
-// Willowbrook was widened: its original layout sits at this offset.
-const WB = data.maps.get('willowbrook')!.origin ?? { x: 0, y: 0 };
 
 describe('movement & collision', () => {
   it('starts in Willowbrook at the default spawn', () => {
     const w = newWorld();
     expect(w.map.def.id).toBe('willowbrook');
-    expect(Math.floor(w.player.x / TILE)).toBe(24 + WB.x);
+    const sp = data.maps.get('willowbrook')!.spawnPoints.default;
+    expect(Math.floor(w.player.x / TILE)).toBe(sp.x);
+    expect(Math.floor(w.player.y / TILE)).toBe(sp.y);
   });
 
   it('cannot walk through a building', () => {
-    // Stand just south of the inn (x 7..14, y 6..11) and walk north into it.
-    const w = newWorld(at(newChar(), 'willowbrook', 9 + WB.x, 13 + WB.y));
+    // Stand on the open row just south of a building (not at its door) and walk north into it.
+    const w = newWorld();
+    const cm = w.map;
+    const b = cm.buildings[0];
+    const col = [...Array(b.w).keys()].map((i) => b.x + i).find((x) => x !== b.x + (b.door ?? -1) && !cm.collision[(b.y + b.h) * cm.width + x])!;
+    expect(col).toBeDefined();
+    w.player.x = col * TILE + 16; w.player.y = (b.y + b.h) * TILE + 16;
     w.setMoveDir(0, -1);
     run(w, 3000);
-    expect(w.player.y / TILE).toBeGreaterThan(11.9 + WB.y);
+    expect(w.player.y / TILE).toBeGreaterThan(b.y + b.h - 0.1);
   });
 
   it('cannot leave the map through the border', () => {
@@ -56,7 +61,8 @@ describe('movement & collision', () => {
 
   it('click-to-move pathfinds around obstacles', () => {
     const w = newWorld();
-    const goal = { x: (11 + WB.x) * TILE + 16, y: (14 + WB.y) * TILE + 16 }; // in front of the inn
+    const inn = data.maps.get('willowbrook')!.spawnPoints.inn; // in front of the inn, around buildings from the plaza
+    const goal = { x: inn.x * TILE + 16, y: inn.y * TILE + 16 };
     w.moveTo(goal.x, goal.y);
     run(w, 15000);
     expect(Math.hypot(w.player.x - goal.x, w.player.y - goal.y)).toBeLessThan(8);
@@ -138,7 +144,7 @@ describe('combat', () => {
   });
 
   it('poison ticks damage but cannot kill; green potion cures it', () => {
-    const c = at(newChar(), 'willowbrook', 24 + WB.x, 21 + WB.y);
+    const c = newChar();
     const w = newWorld(c, 5);
     while (!w.applyStatus(w.player, 'poison', 1, 60000)) { /* VIT may resist; retry */ }
     w.update(10);
@@ -329,10 +335,12 @@ describe('npc services & invalid commands', () => {
   });
 
   it('tutorial steps run through real NPC services: buy, equip, refine, job change', () => {
-    const c = at(newChar(), 'willowbrook', 39 + WB.x, 14 + WB.y); // next to Garrick
+    const c = newChar();
     for (const q of ['tut_welcome', 'tut_hunt']) c.quests[q] = { questId: q, status: 'completed', counts: [1], acceptedAt: 0, completedAt: 0 };
     c.luma = 5000;
     const w = newWorld(c);
+    const garrick = data.maps.get('willowbrook')!.npcs.find((n) => n.npcId === 'garrick')!;
+    w.player.x = garrick.x * TILE + 16; w.player.y = (garrick.y + 1) * TILE + 16; // next to Garrick
     expect(w.accept('tut_weapon').ok).toBe(true);
     expect(w.buy('garrick_smithy', 'oak_club', 1).ok).toBe(true);
     const club = c.inventory.find((i) => i.itemId === 'oak_club')!;

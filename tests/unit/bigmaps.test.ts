@@ -35,12 +35,22 @@ describe('bigger maps', () => {
     }
   });
 
-  it('widened hand-made maps keep their content together and record the shift', () => {
-    const wb = data.maps.get('willowbrook')!;
-    expect(wb.origin!.x).toBeGreaterThan(0);
-    const lyra = wb.npcs.find((n) => n.npcId === 'lyra')!;
-    const garrick = wb.npcs.find((n) => n.npcId === 'garrick')!;
-    expect(garrick.x - lyra.x).toBe(39 - 21); // same layout, shifted together
+  it('every town has its own street plan and every NPC stands next to a street', () => {
+    const towns = ['willowbrook', 'aurelion', 'fernhollow', 'arcanthe', 'sandara', 'tidewatch', 'frostholm'];
+    const plans = new Set<string>();
+    for (const id of towns) {
+      const def = data.maps.get(id)!;
+      const cm = compileMap(data, def);
+      // A fingerprint of the street grid: no two towns share one.
+      plans.add(cm.ground.map((g) => (g === 'path_stone' || g === 'dirt' ? 1 : 0)).join(''));
+      const roads = new Set(['path_stone', 'dirt']);
+      for (const n of def.npcs) {
+        const near = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => roads.has(cm.ground[(n.y + dy) * cm.width + n.x + dx]));
+        expect(near, `${id} ${n.npcId}`).toBe(true);
+        expect(cm.reachable[n.y * cm.width + n.x] || [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => cm.reachable[(n.y + dy) * cm.width + n.x + dx]), `${id} ${n.npcId} reachable`).toBeTruthy();
+      }
+    }
+    expect(plans.size).toBe(towns.length);
   });
 
   it('a long click across a big field still finds a path', () => {
