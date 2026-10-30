@@ -9,9 +9,9 @@
 import { readFileSync, writeFileSync, readdirSync, unlinkSync } from 'node:fs';
 import { join } from 'node:path';
 import { layoutTown, npcRole, type Plan, type Side } from './town-layout';
+import { aurelionPlan } from './aurelion-plan';
 
 const DATA = join(process.cwd(), 'src/data');
-const HERE = join(process.cwd(), 'tools/world-gen');
 const read = (f: string) => JSON.parse(readFileSync(join(DATA, f), 'utf8'));
 const write = (f: string, v: unknown) => writeFileSync(join(DATA, f), JSON.stringify(v, null, 1) + '\n');
 type J = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -384,7 +384,7 @@ function buildField(s: MapSpec): Built {
   }
   spawn.default = Object.values(spawn)[0];
   const trees = s.trees ?? ['tree_oak'];
-  trees.forEach((t, i) => paint.push({ op: 'scatter', kind: t, density: i === 0 ? 0.035 : 0.012, seed: hash(s.id) + 10 + i }));
+  trees.forEach((t, i) => paint.push({ op: 'scatter', kind: t, density: i === 0 ? 0.018 : 0.006, seed: hash(s.id) + 10 + i }));
   for (const d of s.tileset === 'volcano' || s.tileset === 'desert' ? ['pebbles'] : s.tileset === 'snow' ? ['pebbles', 'tuft'] : ['flowers', 'tuft']) paint.push({ op: 'scatter', kind: `deco:${d}`, density: 0.05, seed: hash(s.id + d) });
   // Monster areas on a 3×3 grid over the whole field; each species lives in three of them.
   // About 7× the monsters of the old 58×44 field, so density stays the same on a 7.5× larger map.
@@ -446,7 +446,7 @@ function buildDungeon(s: MapSpec): Built {
     paint.push({ op: 'clear', x: xs[hc] - 3, y: ys[hr] - 3, w: 7, h: 7 });
   }
   const deco = s.tileset === 'dg_catacomb' || s.tileset === 'dg_crypt' ? ['gravestone', 'ruin_pillar'] : s.tileset === 'dg_tower' || s.tileset === 'dg_tomb' ? ['ruin_pillar', 'obelisk'] : ['rock', 'rock_big'];
-  deco.forEach((k, i) => paint.push({ op: 'scatter', kind: k, density: 0.012, seed: hash(s.id) + i, area: { x: 3, y: 3, w: W - 6, h: H - 6 } }));
+  deco.forEach((k, i) => paint.push({ op: 'scatter', kind: k, density: 0.006, seed: hash(s.id) + i, area: { x: 3, y: 3, w: W - 6, h: H - 6 } }));
   paint.push({ op: 'scatter', kind: 'deco:pebbles', density: 0.05, seed: hash(s.id) + 9 });
   const rooms = Array.from({ length: ROWS }, (_, ry) => Array.from({ length: COLS }, (__, rx) => [rx, ry])).flat()
     .filter(([rx, ry]) => !inHall(rx, ry)).map(([rx, ry]) => [3 + rx * rw, 3 + ry * rh]);
@@ -964,23 +964,16 @@ export async function main() {
     m.npcs.push({ npcId: `${town}_trader`, x: tx + o.x, y: ty + o.y, facing: 'down' }, { npcId: `${town}_market`, x: mx + o.x, y: my + o.y, facing: 'down' });
   }
 
-  // The Royal Capital follows its supplied concept plan (aurelion-concept.json, 120×80): palace, canals,
-  // harbour, guild quarter, farm and training ground, with painted landmarks, bridges, city walls and gates.
-  // It keeps the town's own NPCs, portals and spawn names.
-  function applyAurelionConcept(m: J) {
-    const c = JSON.parse(readFileSync(join(HERE, 'aurelion-concept.json'), 'utf8'));
-    const ids = (l: J[]) => l.map((n) => n.npcId).sort().join();
-    if (ids(c.npcs) !== ids(m.npcs)) throw new Error('aurelion concept: NPC list differs from the town\'s NPCs');
-    for (const k of Object.keys(m.spawnPoints)) if (!c.spawnPoints[k]) throw new Error(`aurelion concept: spawn ${k} missing`);
-    Object.assign(m, { width: c.width, height: c.height, base: c.base, border: c.border, paint: c.paint, spawnPoints: c.spawnPoints, npcs: c.npcs, scenery: c.scenery });
-    m.portals = m.portals.map((p: J) => {
-      const cp = c.portals.find((q: J) => q.id === p.id);
-      if (!cp) throw new Error(`aurelion concept: portal ${p.id} missing`);
-      return { ...p, x: cp.x, y: cp.y, w: cp.w, h: cp.h };
-    });
-    const fountain = c.objects.find((o: J) => o.id === 'aurelion_fountain');
-    m.objects = m.objects.map((o: J) => (o.id === 'aurelion_fountain' ? { ...o, kind: fountain.kind, x: fountain.x, y: fountain.y } : o));
-    m.areas = c.areas.map((a: J) => ({ id: a.id, name: a.name, rect: a.rect }));
+  // The Royal Capital has its own hand-drawn plan (aurelion-plan.ts); it keeps the town's NPCs, portals and spawn names.
+  function applyAurelionPlan(m: J) {
+    const c = aurelionPlan();
+    const missing = m.npcs.filter((n: J) => !c.npcs[n.npcId]).map((n: J) => n.npcId);
+    if (missing.length) throw new Error(`aurelion plan: no place for ${missing.join(', ')}`);
+    for (const k of Object.keys(m.spawnPoints)) if (!(k in c.spawnPoints)) throw new Error(`aurelion plan: spawn ${k} missing`);
+    Object.assign(m, { width: c.width, height: c.height, paint: c.paint, spawnPoints: c.spawnPoints, scenery: c.scenery, areas: c.areas });
+    m.npcs = m.npcs.map((n: J) => ({ ...n, ...c.npcs[n.npcId], facing: 'down' }));
+    m.portals = m.portals.map((p: J) => ({ ...p, ...c.portals[p.id] }));
+    m.objects = m.objects.map((o: J) => (o.id === 'aurelion_fountain' ? { ...o, kind: 'capital_fountain', ...c.fountain } : o));
     delete m.origin;
   }
 
@@ -988,27 +981,28 @@ export async function main() {
   // Each town gets its own street plan (no two alike) chosen to suit it, with random details
   // from the town's seed; then every NPC is placed by what it does (see town-layout.ts).
   const TOWN_DESIGN: Record<string, { plan: Plan; road: string; trees: string[]; density: number; wall?: string; plaza: string; houses: number }> = {
-    willowbrook: { plan: 'river', road: 'dirt', trees: ['tree_oak', 'bush'], density: 0.022, plaza: 'Fountain Plaza', houses: 12 },
-    fernhollow: { plan: 'ring', road: 'dirt', trees: ['tree_pine', 'tree_dark', 'bush'], density: 0.04, plaza: 'Village Green', houses: 11 },
-    arcanthe: { plan: 'star', road: 'path_stone', trees: ['tree_pine', 'obelisk'], density: 0.012, plaza: 'Star Court', houses: 12 },
-    sandara: { plan: 'quarters', road: 'path_stone', trees: [], density: 0, wall: 'ruin_wall', plaza: 'Bazaar Square', houses: 14 },
-    tidewatch: { plan: 'harbor', road: 'path_stone', trees: ['tree_oak', 'bush'], density: 0.016, plaza: 'Harbor Promenade', houses: 12 },
-    frostholm: { plan: 'diagonal', road: 'path_stone', trees: ['tree_pine', 'rock'], density: 0.03, plaza: 'Hearth Square', houses: 12 },
+    willowbrook: { plan: 'river', road: 'dirt', trees: ['tree_oak', 'bush'], density: 0.011, plaza: 'Fountain Plaza', houses: 6 },
+    fernhollow: { plan: 'ring', road: 'dirt', trees: ['tree_pine', 'tree_dark', 'bush'], density: 0.02, plaza: 'Village Green', houses: 5 },
+    arcanthe: { plan: 'star', road: 'path_stone', trees: ['tree_pine', 'obelisk'], density: 0.006, plaza: 'Star Court', houses: 6 },
+    sandara: { plan: 'quarters', road: 'path_stone', trees: [], density: 0, wall: 'ruin_wall', plaza: 'Bazaar Square', houses: 7 },
+    tidewatch: { plan: 'harbor', road: 'path_stone', trees: ['tree_oak', 'bush'], density: 0.008, plaza: 'Harbor Promenade', houses: 6 },
+    frostholm: { plan: 'diagonal', road: 'path_stone', trees: ['tree_pine', 'rock'], density: 0.015, plaza: 'Hearth Square', houses: 6 },
   };
   const SIGN: Record<string, string> = { inn: 'Inn', smithy: 'Smithy', shop: 'Tools', guild: 'Guild Hall', market: 'Market Hall', courier: 'Courier', stable: 'Stable' };
   const WB_SIGN: Record<string, string> = { inn: 'Sleeping Willow Inn', smithy: 'Ironhand Smithy', shop: "Pip's Tools", guild: "Adventurer's Guild", market: "Moss's Market" };
   const npcById = new Map(npcs.map((n: J) => [n.id, n]));
   for (const id of TOWN_IDS()) {
     const m = id === 'willowbrook' ? hand.willowbrook : built.find((b) => b.map.id === id)!.map;
-    if (id === 'aurelion') { applyAurelionConcept(m); continue; }
+    if (id === 'aurelion') { applyAurelionPlan(m); continue; }
     const td = TOWN_DESIGN[id];
     if (!td) throw new Error(`no town design for ${id}`);
     const roles: [string, string][] = m.npcs.map((n: J) => [n.npcId, npcRole(n.npcId, npcById.get(n.npcId)?.title ?? '')]);
     const needed = new Set(roles.map(([, role]) => role));
     const buildings = [
-      { role: 'inn', style: 'inn', w: 8, h: 6 }, { role: 'guild', style: 'guild', w: 10, h: 6 }, { role: 'smithy', style: 'smithy', w: 8, h: 5 },
-      { role: 'shop', style: 'shop', w: 7, h: 5 }, { role: 'market', style: 'shop', w: 9, h: 5 }, { role: 'courier', style: 'house', w: 6, h: 5 },
-      ...(needed.has('stable') ? [{ role: 'stable', style: 'house', w: 7, h: 5 }] : []),
+      // Every painted facade is drawn at one true-to-life scale: 8 tiles wide, doors about a person's height.
+      { role: 'inn', style: 'inn', w: 8, h: 6 }, { role: 'guild', style: 'guild', w: 8, h: 6 }, { role: 'smithy', style: 'smithy', w: 8, h: 6 },
+      { role: 'shop', style: 'shop', w: 8, h: 5 }, { role: 'market', style: 'shop', w: 8, h: 5 }, { role: 'courier', style: 'house', w: 8, h: 5 },
+      ...(needed.has('stable') ? [{ role: 'stable', style: 'house', w: 8, h: 5 }] : []),
     ].map((b) => ({ ...b, sign: (id === 'willowbrook' ? WB_SIGN[b.role] : undefined) ?? SIGN[b.role] }));
     const W = m.width, H = m.height;
     const exits = m.portals.map((p: J) => {
@@ -1030,6 +1024,11 @@ export async function main() {
     m.areas = [{ id: 'plaza', name: td.plaza, rect: L.plaza }];
     delete m.origin;
   }
+
+  // Not too many props in the open: hand-made fields keep at most this scatter density per kind.
+  // (Whispering Forest stays a thick wood: the Grukk fight is balanced around its trees.)
+  for (const [id, cap] of [['sunny_meadow', 0.018], ['whispering_forest', 0.035]] as const)
+    for (const op of hand[id].paint) if (op.op === 'scatter' && !op.kind.startsWith('deco:')) op.density = Math.min(op.density, cap);
 
   // Hand-made maps: widened once (later runs see the new size and leave them).
   for (const [id, [W2, H2]] of Object.entries(HAND_SIZE)) {

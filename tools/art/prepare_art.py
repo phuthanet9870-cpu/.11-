@@ -32,9 +32,11 @@ for theme in sorted(os.listdir(arch)):
         if name.endswith('.png'):
             save(Image.open(os.path.join(arch, theme, name)), os.path.join(out, 'arch', theme, name[:-4] + '.webp'))
 
+# Royal Capital landmarks used by its dry-land plan (the harbour, canal and farm pieces are not used).
+AURELION = {'cathedral', 'grand-palace', 'royal-statue', 'stall-blue', 'stall-gold', 'stall-red', 'training-dummy'}
 objs = os.path.join(src, 'Veyloria-Aurelion-Objects', 'objects')
 for name in sorted(os.listdir(objs)):
-    if name.endswith('.png'):
+    if name[:-4] in AURELION and name.endswith('.png'):
         save(Image.open(os.path.join(objs, name)), os.path.join(out, 'aurelion', name[:-4] + '.webp'), max_w=1000)
 
 total = sum(os.path.getsize(os.path.join(d, f)) for d, _, fs in os.walk(out) for f in fs)

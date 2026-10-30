@@ -3,7 +3,7 @@
 A 2D fantasy MMORPG with a top-down 3/4 view. It's built with TypeScript, Phaser 3 (WebGL), HTML/CSS UI and Vite.
 
 > **Status: Phase 1 (Playable Game Foundation): done and tested in single-player development mode.**
-> Maps use painted art packs (`public/art`): seamless ground textures and props for each of the 21 tilesets, buildings in 7 architecture themes, and the Royal Capital's landmarks (palace, cathedral, harbour, bridges, city walls and gates). `tools/art/prepare_art.py` converts the source packs to WebP. Characters, monsters, icons and audio are still **procedural**, and maps fall back to procedural drawing until their art has loaded.
+> Maps use painted art packs (`public/art`): seamless ground textures and props for each of the 21 tilesets, buildings in 7 architecture themes, and the Royal Capital's landmarks (palace, cathedral, statues, market stalls, city wall and gate). Props are drawn at true-to-life heights next to a character, and every facade at one scale (doors about a person's height). `tools/art/prepare_art.py` converts the source packs to WebP. Characters, monsters, icons and audio are still **procedural**, and maps fall back to procedural drawing until their art has loaded.
 > Online play (accounts, server, party, guild, trading) is planned for Phase 3 and isn't built yet.
 
 ## ภาพรวม (Thai summary)

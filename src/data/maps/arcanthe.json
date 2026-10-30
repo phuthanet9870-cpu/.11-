@@ -251,44 +251,6 @@
    "tile": "path_stone",
    "points": [
     [
-     62,
-     34
-    ],
-    [
-     62,
-     35
-    ],
-    [
-     62,
-     36
-    ],
-    [
-     62,
-     37
-    ]
-   ],
-   "width": 1
-  },
-  {
-   "op": "path",
-   "tile": "path_stone",
-   "points": [
-    [
-     44,
-     63
-    ],
-    [
-     44,
-     64
-    ]
-   ],
-   "width": 1
-  },
-  {
-   "op": "path",
-   "tile": "path_stone",
-   "points": [
-    [
      46,
      31
     ],
@@ -321,133 +283,14 @@
    "points": [
     [
      61,
-     59
+     35
     ],
     [
      61,
-     60
-    ],
-    [
-     61,
-     61
-    ],
-    [
-     61,
-     62
-    ]
-   ],
-   "width": 1
-  },
-  {
-   "op": "path",
-   "tile": "path_stone",
-   "points": [
-    [
-     28,
-     53
-    ],
-    [
-     28,
-     54
-    ],
-    [
-     28,
-     55
-    ],
-    [
-     28,
-     56
-    ],
-    [
-     28,
-     57
-    ]
-   ],
-   "width": 1
-  },
-  {
-   "op": "path",
-   "tile": "path_stone",
-   "points": [
-    [
-     70,
-     47
-    ],
-    [
-     70,
-     48
-    ],
-    [
-     70,
-     49
-    ],
-    [
-     70,
-     50
-    ],
-    [
-     70,
-     51
-    ]
-   ],
-   "width": 1
-  },
-  {
-   "op": "path",
-   "tile": "path_stone",
-   "points": [
-    [
-     64,
-     15
-    ],
-    [
-     64,
-     16
-    ],
-    [
-     64,
-     17
-    ],
-    [
-     64,
-     18
-    ]
-   ],
-   "width": 1
-  },
-  {
-   "op": "path",
-   "tile": "path_stone",
-   "points": [
-    [
-     31,
-     15
-    ],
-    [
-     31,
-     16
-    ],
-    [
-     31,
-     17
-    ],
-    [
-     31,
-     18
-    ]
-   ],
-   "width": 1
-  },
-  {
-   "op": "path",
-   "tile": "path_stone",
-   "points": [
-    [
-     7,
      36
     ],
     [
-     7,
+     61,
      37
     ]
    ],
@@ -458,6 +301,160 @@
    "tile": "path_stone",
    "points": [
     [
+     44,
+     62
+    ],
+    [
+     44,
+     63
+    ],
+    [
+     44,
+     64
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     31,
+     50
+    ],
+    [
+     31,
+     51
+    ],
+    [
+     31,
+     52
+    ],
+    [
+     31,
+     53
+    ],
+    [
+     31,
+     54
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     62,
+     59
+    ],
+    [
+     62,
+     60
+    ],
+    [
+     62,
+     61
+    ],
+    [
+     62,
+     62
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     55,
+     14
+    ],
+    [
+     55,
+     15
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     79,
+     23
+    ],
+    [
+     79,
+     24
+    ],
+    [
+     79,
+     25
+    ],
+    [
+     79,
+     26
+    ],
+    [
+     79,
+     27
+    ],
+    [
+     79,
+     28
+    ],
+    [
+     79,
+     29
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     73,
+     44
+    ],
+    [
+     74,
+     44
+    ],
+    [
+     75,
+     44
+    ],
+    [
+     76,
+     44
+    ],
+    [
+     77,
+     44
+    ],
+    [
+     78,
+     44
+    ],
+    [
+     79,
+     44
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
      75,
      15
     ],
@@ -470,40 +467,40 @@
      17
     ],
     [
-     75,
+     74,
+     17
+    ],
+    [
+     74,
      18
     ],
     [
-     75,
+     74,
      19
     ],
     [
-     75,
+     74,
      20
     ],
     [
-     75,
+     74,
      21
     ],
     [
-     75,
+     74,
      22
     ],
     [
-     75,
+     74,
      23
     ],
     [
-     75,
+     74,
      24
     ],
     [
-     75,
+     74,
      25
-    ],
-    [
-     75,
-     26
     ]
    ],
    "width": 1
@@ -512,68 +509,57 @@
    "op": "path",
    "tile": "path_stone",
    "points": [
-    [
-     86,
-     28
-    ],
-    [
-     86,
-     29
-    ],
-    [
-     86,
-     30
-    ],
-    [
-     86,
-     31
-    ],
-    [
-     85,
-     31
-    ],
-    [
-     84,
-     31
-    ],
-    [
-     83,
-     31
-    ],
-    [
-     82,
-     31
-    ]
-   ],
-   "width": 1
-  },
-  {
-   "op": "path",
-   "tile": "path_stone",
-   "points": [
-    [
-     85,
-     51
-    ],
-    [
-     84,
-     51
-    ],
-    [
-     83,
-     51
-    ],
-    [
-     82,
-     51
-    ],
-    [
-     81,
-     51
-    ],
     [
      80,
-     51
+     68
+    ],
+    [
+     79,
+     68
+    ],
+    [
+     78,
+     68
+    ],
+    [
+     78,
+     67
+    ],
+    [
+     78,
+     66
+    ],
+    [
+     78,
+     65
+    ],
+    [
+     78,
+     64
+    ],
+    [
+     78,
+     63
+    ],
+    [
+     78,
+     62
+    ],
+    [
+     78,
+     61
+    ],
+    [
+     78,
+     60
+    ],
+    [
+     78,
+     59
+    ],
+    [
+     78,
+     58
     ]
    ],
    "width": 1
@@ -613,158 +599,6 @@
     [
      78,
      61
-    ],
-    [
-     78,
-     60
-    ],
-    [
-     78,
-     59
-    ],
-    [
-     78,
-     58
-    ]
-   ],
-   "width": 1
-  },
-  {
-   "op": "path",
-   "tile": "path_stone",
-   "points": [
-    [
-     22,
-     21
-    ],
-    [
-     22,
-     22
-    ],
-    [
-     22,
-     23
-    ],
-    [
-     22,
-     24
-    ],
-    [
-     22,
-     25
-    ]
-   ],
-   "width": 1
-  },
-  {
-   "op": "path",
-   "tile": "path_stone",
-   "points": [
-    [
-     55,
-     13
-    ],
-    [
-     55,
-     14
-    ],
-    [
-     55,
-     15
-    ]
-   ],
-   "width": 1
-  },
-  {
-   "op": "path",
-   "tile": "path_stone",
-   "points": [
-    [
-     20,
-     69
-    ],
-    [
-     21,
-     69
-    ],
-    [
-     22,
-     69
-    ],
-    [
-     23,
-     69
-    ],
-    [
-     23,
-     68
-    ],
-    [
-     23,
-     67
-    ],
-    [
-     23,
-     66
-    ],
-    [
-     23,
-     65
-    ],
-    [
-     23,
-     64
-    ],
-    [
-     23,
-     63
-    ],
-    [
-     23,
-     62
-    ]
-   ],
-   "width": 1
-  },
-  {
-   "op": "path",
-   "tile": "path_stone",
-   "points": [
-    [
-     15,
-     62
-    ],
-    [
-     16,
-     62
-    ],
-    [
-     17,
-     62
-    ],
-    [
-     18,
-     62
-    ],
-    [
-     19,
-     62
-    ],
-    [
-     20,
-     62
-    ],
-    [
-     21,
-     62
-    ],
-    [
-     22,
-     62
-    ],
-    [
-     23,
-     62
     ]
    ],
    "width": 1
@@ -790,39 +624,39 @@
   {
    "op": "building",
    "style": "guild",
-   "x": 57,
-   "y": 28,
-   "w": 10,
+   "x": 42,
+   "y": 25,
+   "w": 8,
    "h": 6,
-   "door": 5,
+   "door": 4,
    "sign": "Guild Hall"
   },
   {
    "op": "building",
    "style": "smithy",
-   "x": 40,
-   "y": 58,
+   "x": 57,
+   "y": 29,
    "w": 8,
-   "h": 5,
+   "h": 6,
    "door": 4,
    "sign": "Smithy"
   },
   {
    "op": "building",
    "style": "shop",
-   "x": 43,
-   "y": 26,
-   "w": 7,
+   "x": 40,
+   "y": 57,
+   "w": 8,
    "h": 5,
-   "door": 3,
+   "door": 4,
    "sign": "Tools"
   },
   {
    "op": "building",
    "style": "shop",
-   "x": 57,
-   "y": 54,
-   "w": 9,
+   "x": 27,
+   "y": 45,
+   "w": 8,
    "h": 5,
    "door": 4,
    "sign": "Market Hall"
@@ -830,120 +664,66 @@
   {
    "op": "building",
    "style": "house",
-   "x": 25,
-   "y": 48,
-   "w": 6,
+   "x": 58,
+   "y": 54,
+   "w": 8,
    "h": 5,
-   "door": 3,
+   "door": 4,
    "sign": "Courier"
   },
   {
    "op": "building",
    "style": "house",
-   "x": 67,
-   "y": 42,
-   "w": 6,
-   "h": 5,
-   "door": 3
-  },
-  {
-   "op": "building",
-   "style": "house",
-   "x": 62,
-   "y": 11,
-   "w": 5,
-   "h": 4,
-   "door": 2
-  },
-  {
-   "op": "building",
-   "style": "house",
-   "x": 28,
-   "y": 10,
-   "w": 7,
-   "h": 5,
-   "door": 3
-  },
-  {
-   "op": "building",
-   "style": "house",
-   "x": 4,
-   "y": 31,
-   "w": 6,
-   "h": 5,
-   "door": 3
-  },
-  {
-   "op": "building",
-   "style": "house",
-   "x": 72,
-   "y": 10,
-   "w": 7,
-   "h": 5,
-   "door": 3
-  },
-  {
-   "op": "building",
-   "style": "house",
-   "x": 83,
-   "y": 24,
-   "w": 6,
-   "h": 4,
-   "door": 3
-  },
-  {
-   "op": "building",
-   "style": "house",
-   "x": 83,
-   "y": 46,
-   "w": 5,
-   "h": 5,
-   "door": 2
-  },
-  {
-   "op": "building",
-   "style": "house",
-   "x": 82,
-   "y": 57,
-   "w": 7,
-   "h": 4,
-   "door": 3
-  },
-  {
-   "op": "building",
-   "style": "house",
-   "x": 20,
-   "y": 16,
-   "w": 5,
-   "h": 5,
-   "door": 2
-  },
-  {
-   "op": "building",
-   "style": "house",
-   "x": 52,
+   "x": 51,
    "y": 9,
-   "w": 7,
-   "h": 4,
-   "door": 3
+   "w": 8,
+   "h": 5,
+   "door": 4
   },
   {
    "op": "building",
    "style": "house",
-   "x": 17,
-   "y": 65,
-   "w": 7,
-   "h": 4,
-   "door": 3
+   "x": 75,
+   "y": 18,
+   "w": 8,
+   "h": 5,
+   "door": 4
   },
   {
    "op": "building",
    "style": "house",
-   "x": 12,
-   "y": 58,
-   "w": 7,
-   "h": 4,
-   "door": 3
+   "x": 69,
+   "y": 39,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 71,
+   "y": 10,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 76,
+   "y": 63,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 81,
+   "y": 56,
+   "w": 8,
+   "h": 5,
+   "door": 4
   },
   {
    "op": "object",
@@ -979,98 +759,68 @@
   {
    "op": "object",
    "kind": "planter",
-   "x": 40,
-   "y": 35
-  },
-  {
-   "op": "object",
-   "kind": "planter",
-   "x": 44,
+   "x": 42,
    "y": 48
   },
   {
    "op": "object",
    "kind": "planter",
-   "x": 49,
-   "y": 33
-  },
-  {
-   "op": "object",
-   "kind": "planter",
-   "x": 45,
+   "x": 48,
    "y": 34
   },
   {
    "op": "object",
-   "kind": "anvil",
-   "x": 46,
-   "y": 64
-  },
-  {
-   "op": "object",
-   "kind": "barrel",
+   "kind": "planter",
    "x": 47,
-   "y": 64
-  },
-  {
-   "op": "object",
-   "kind": "crate",
-   "x": 50,
-   "y": 30
-  },
-  {
-   "op": "object",
-   "kind": "barrel",
-   "x": 42,
-   "y": 31
-  },
-  {
-   "op": "object",
-   "kind": "crate",
-   "x": 65,
-   "y": 59
-  },
-  {
-   "op": "object",
-   "kind": "crate",
-   "x": 63,
-   "y": 60
-  },
-  {
-   "op": "object",
-   "kind": "barrel",
-   "x": 60,
-   "y": 60
-  },
-  {
-   "op": "object",
-   "kind": "barrel",
-   "x": 28,
-   "y": 37
+   "y": 47
   },
   {
    "op": "object",
    "kind": "planter",
-   "x": 80,
-   "y": 62
+   "x": 52,
+   "y": 35
+  },
+  {
+   "op": "object",
+   "kind": "anvil",
+   "x": 64,
+   "y": 35
+  },
+  {
+   "op": "object",
+   "kind": "crate",
+   "x": 30,
+   "y": 51
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 30,
+   "y": 52
   },
   {
    "op": "object",
    "kind": "planter",
-   "x": 87,
-   "y": 62
+   "x": 81,
+   "y": 49
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 88,
+   "y": 49
   },
   {
    "op": "object",
    "kind": "bush",
-   "x": 80,
-   "y": 67
+   "x": 81,
+   "y": 54
   },
   {
    "op": "object",
    "kind": "bush",
-   "x": 87,
-   "y": 67
+   "x": 88,
+   "y": 54
   },
   {
    "op": "object",
@@ -1094,8 +844,8 @@
    "op": "scatter",
    "kind": "deco:flowers",
    "area": {
-    "x": 80,
-    "y": 62,
+    "x": 81,
+    "y": 49,
     "w": 8,
     "h": 6
    },
@@ -1105,13 +855,13 @@
   {
    "op": "scatter",
    "kind": "tree_pine",
-   "density": 0.012,
+   "density": 0.006,
    "seed": 3761048132
   },
   {
    "op": "scatter",
    "kind": "obelisk",
-   "density": 0.004,
+   "density": 0.002,
    "seed": 3761048133
   },
   {
@@ -1180,74 +930,74 @@
  "npcs": [
   {
    "npcId": "arcanthe_innkeeper",
-   "x": 26,
+   "x": 28,
    "y": 38,
    "facing": "down"
   },
   {
    "npcId": "arcanthe_smith",
-   "x": 45,
-   "y": 65,
+   "x": 60,
+   "y": 37,
    "facing": "down"
   },
   {
    "npcId": "arcanthe_merchant",
    "x": 45,
-   "y": 33,
+   "y": 64,
    "facing": "down"
   },
   {
    "npcId": "arcanthe_courier",
-   "x": 29,
-   "y": 55,
+   "x": 61,
+   "y": 61,
    "facing": "down"
   },
   {
    "npcId": "arcanthe_enchanter",
-   "x": 43,
-   "y": 65,
+   "x": 62,
+   "y": 37,
    "facing": "down"
   },
   {
    "npcId": "guild_mage",
-   "x": 63,
-   "y": 36,
-   "facing": "down"
-  },
-  {
-   "npcId": "arcanthe_astrologer",
-   "x": 50,
-   "y": 43,
-   "facing": "down"
-  },
-  {
-   "npcId": "guild_sorcerer",
-   "x": 61,
-   "y": 36,
-   "facing": "down"
-  },
-  {
-   "npcId": "guild_sage",
-   "x": 64,
-   "y": 38,
-   "facing": "down"
-  },
-  {
-   "npcId": "arcanthe_jobmaster",
-   "x": 61,
-   "y": 38,
-   "facing": "down"
-  },
-  {
-   "npcId": "arcanthe_trader",
    "x": 47,
    "y": 33,
    "facing": "down"
   },
   {
+   "npcId": "arcanthe_astrologer",
+   "x": 42,
+   "y": 39,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_sorcerer",
+   "x": 45,
+   "y": 33,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_sage",
+   "x": 48,
+   "y": 35,
+   "facing": "down"
+  },
+  {
+   "npcId": "arcanthe_jobmaster",
+   "x": 44,
+   "y": 35,
+   "facing": "down"
+  },
+  {
+   "npcId": "arcanthe_trader",
+   "x": 43,
+   "y": 64,
+   "facing": "down"
+  },
+  {
    "npcId": "arcanthe_market",
-   "x": 62,
-   "y": 61,
+   "x": 32,
+   "y": 52,
    "facing": "down"
   }
  ],

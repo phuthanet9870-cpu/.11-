@@ -242,7 +242,7 @@ export class GameScene extends Phaser.Scene {
       const img = this.add.image(b.x * TILE - 4, (b.y + b.h) * TILE + 4, tex.buildings[i]).setOrigin(0, 1).setDepth((b.y + b.h) * TILE - 2);
       this.track(img);
     });
-    // Scenery: bridges lie on the ground; walls, gates and castles sort by their base like buildings.
+    // Scenery: walls, gates and castles sort by their base like buildings.
     for (const sc of map.def.scenery ?? []) {
       const sprite = scenerySprite(sc, map.def.tileset);
       if (!sprite) continue;

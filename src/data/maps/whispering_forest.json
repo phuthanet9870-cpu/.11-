@@ -392,13 +392,13 @@
   {
    "op": "scatter",
    "kind": "tree_dark",
-   "density": 0.11,
+   "density": 0.035,
    "seed": 41
   },
   {
    "op": "scatter",
    "kind": "tree_pine",
-   "density": 0.05,
+   "density": 0.035,
    "seed": 42
   },
   {

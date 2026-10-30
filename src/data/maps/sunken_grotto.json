@@ -599,7 +599,7 @@
   {
    "op": "scatter",
    "kind": "rock",
-   "density": 0.012,
+   "density": 0.006,
    "seed": 3494801545,
    "area": {
     "x": 3,
@@ -611,7 +611,7 @@
   {
    "op": "scatter",
    "kind": "rock_big",
-   "density": 0.012,
+   "density": 0.006,
    "seed": 3494801546,
    "area": {
     "x": 3,

@@ -103,19 +103,19 @@
   {
    "op": "scatter",
    "kind": "tree_pine",
-   "density": 0.035,
+   "density": 0.018,
    "seed": 3108594097
   },
   {
    "op": "scatter",
    "kind": "tree_dark",
-   "density": 0.012,
+   "density": 0.006,
    "seed": 3108594098
   },
   {
    "op": "scatter",
    "kind": "bush",
-   "density": 0.012,
+   "density": 0.006,
    "seed": 3108594099
   },
   {

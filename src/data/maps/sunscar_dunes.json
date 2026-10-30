@@ -66,13 +66,13 @@
   {
    "op": "scatter",
    "kind": "rock",
-   "density": 0.035,
+   "density": 0.018,
    "seed": 3339745514
   },
   {
    "op": "scatter",
    "kind": "rock_big",
-   "density": 0.012,
+   "density": 0.006,
    "seed": 3339745515
   },
   {

@@ -15,10 +15,6 @@ export const GROUND_BLOCK = 256;
 export const PROP_CELL = 128;
 export const ARCH_PARTS = ['house', 'inn', 'shop', 'smithy', 'guild', 'castle', 'gate', 'wall'] as const;
 export type ArchPart = (typeof ARCH_PARTS)[number];
-export const AURELION_OBJECTS = [
-  'bridge-ew', 'bridge-ns', 'cathedral', 'farmhouse', 'galleon', 'grand-palace', 'lighthouse', 'monster-cave', 'rowboat',
-  'royal-statue', 'stall-blue', 'stall-gold', 'stall-red', 'trading-ship', 'training-dummy', 'windmill', 'wooden-dock',
-] as const;
 
 /** Architecture theme of a tileset (south-facing facades; never rotated or mirrored). */
 export function architectureTheme(tileset: string): string {

@@ -1,4 +1,4 @@
-// Large painted map pieces (MapDef.scenery): bridges, city walls and gates, castles.
+// Large painted map pieces (MapDef.scenery): city walls, gates and castles.
 import type { CompiledMap } from '../../core/mapCompiler';
 import type { SceneryDef } from '../../core/types';
 import { LANDMARK_STYLE } from './mapPainter';
@@ -8,9 +8,6 @@ import { architectureTheme, extraSprite } from './themeArt';
 export function sceneryPath(s: SceneryDef, tileset: string): string | null {
   const theme = architectureTheme(tileset);
   switch (s.kind) {
-    case 'bridge_ew': return 'aurelion/bridge-ew';
-    case 'bridge_ns': return 'aurelion/bridge-ns';
-    case 'dock': return 'aurelion/wooden-dock';
     case 'city_wall': return `arch/${theme}/wall`;
     case 'city_gate': return `arch/${theme}/gate`;
     case 'castle': return `arch/${theme}/castle`;

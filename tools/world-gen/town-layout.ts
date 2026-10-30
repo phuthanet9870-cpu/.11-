@@ -331,7 +331,7 @@ export function layoutTown(d: TownDesign): TownLayout {
   for (const b of d.buildings) if (!build(b, true)) throw new Error(`${d.id}: no room for the ${b.role} building`);
   let houses = 0;
   for (let k = 0; k < d.houses * 3 && houses < d.houses; k++) {
-    if (build({ style: 'house', w: ri(5, 7), h: ri(4, 5) }, false)) houses++;
+    if (build({ style: 'house', w: 8, h: 5 }, false)) houses++;
   }
 
   // ---------------------------------------------------------------- objects
@@ -367,7 +367,7 @@ export function layoutTown(d: TownDesign): TownLayout {
     if (p) putObject('planter', p[0], p[1], 1, 1);
   }
   // Work clutter by the smithy and the shops.
-  const clutter: Record<string, string[]> = { smithy: ['anvil', 'barrel'], shop: ['crate', 'barrel'], market: ['crate', 'crate', 'barrel'], stable: ['haystack', 'haystack'], inn: ['barrel'] };
+  const clutter: Record<string, string[]> = { smithy: ['anvil'], market: ['crate', 'barrel'], stable: ['haystack'] };
   for (const [role, kinds] of Object.entries(clutter)) {
     const dr = doors[role];
     if (!dr) continue;

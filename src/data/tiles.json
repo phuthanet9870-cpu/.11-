@@ -10,7 +10,6 @@
     { "id": "ruin_floor", "layer": "ground", "walkable": true, "draw": "ruin_floor" },
     { "id": "sand", "layer": "ground", "walkable": true, "draw": "sand" },
     { "id": "water", "layer": "ground", "walkable": false, "draw": "water" },
-    { "id": "wood_plank", "layer": "ground", "walkable": true, "draw": "wood_plank" },
     { "id": "thorn_ground", "layer": "ground", "walkable": true, "draw": "thorn_ground" },
 
     { "id": "flowers", "layer": "deco", "walkable": true, "draw": "flowers" },

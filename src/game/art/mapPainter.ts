@@ -75,15 +75,6 @@ function drawGround(ctx: CanvasRenderingContext2D, id: string, ox: number, oy: n
       for (let i = 0; i < 4; i++) { const x = ox + Math.floor(r() * 24), y = oy + Math.floor(r() * 30); px(ctx, x, y, 6, 1, pal.water2); }
       break;
     }
-    case 'wood_plank': {
-      px(ctx, ox, oy, T, T, '#6a4a2c');
-      for (let y = 0; y < T; y += 8) {
-        px(ctx, ox, oy + y, T, 7, r() > 0.5 ? '#9a6c3e' : '#8e6236');
-        px(ctx, ox, oy + y, T, 1, '#b48450');
-        px(ctx, ox + ((y * 5 + Math.floor(r() * 8)) % 24) + 4, oy + y + 3, 1, 1, '#4a3220');
-      }
-      break;
-    }
     case 'thorn_ground': {
       px(ctx, ox, oy, T, T, pal.thorn1 ?? pal.dirt2);
       speckle(ctx, ox, oy, r, [shade(pal.thorn1 ?? pal.dirt2, -0.15), pal.thorn2 ?? g3], 24, 2);
@@ -228,23 +219,22 @@ export function paintAboveLayer(map: CompiledMap, pal: Palette, region?: Region)
 // ------------------------------------------------------------------ objects
 /** Object sprite from the tileset's props sheet, at its painted size and bottom-aligned; null when there is no art. */
 function artObject(kind: ObjectKindDef, tileset: string): HTMLCanvasElement | null {
+  let src: HTMLImageElement | null, box: { x: number; y: number; w: number; h: number } | null;
   if (kind.art) {
-    const sprite = extraSprite(kind.art);
-    if (!sprite) return null;
-    // Whole sprite scaled into the kind's box (the source images have an 8px transparent margin).
-    const { canvas, ctx } = makeCanvas(kind.spriteW, kind.spriteH);
-    const s = Math.min(kind.spriteW / (sprite.width - 16), kind.spriteH / (sprite.height - 16));
-    const w = Math.round((sprite.width - 16) * s), h = Math.round((sprite.height - 16) * s);
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(sprite, 8, 8, sprite.width - 16, sprite.height - 16, Math.round((kind.spriteW - w) / 2), kind.spriteH - h, w, h);
-    return canvas;
+    src = extraSprite(kind.art);
+    box = src && { x: 8, y: 8, w: src.width - 16, h: src.height - 16 }; // the source images have an 8px transparent margin
+  } else {
+    src = propSheet(tileset);
+    const index = PROP_ORDER.indexOf(kind.draw);
+    box = src && index >= 0 && kind.draw !== 'glint' ? propBounds(src, index) : null;
   }
-  const sheet = propSheet(tileset), index = PROP_ORDER.indexOf(kind.draw);
-  if (!sheet || index < 0 || kind.draw === 'glint') return null;
-  const b = propBounds(sheet, index);
-  if (!b) return null;
-  const { canvas, ctx } = makeCanvas(Math.max(kind.spriteW, b.w), Math.max(kind.spriteH, b.h));
-  ctx.drawImage(sheet, b.x, b.y, b.w, b.h, Math.round((canvas.width - b.w) / 2), canvas.height - b.h, b.w, b.h);
+  if (!src || !box) return null;
+  // True-to-life height (artH); otherwise the painted size.
+  const s = kind.artH ? kind.artH / box.h : 1;
+  const w = Math.max(1, Math.round(box.w * s)), h = Math.max(1, Math.round(box.h * s));
+  const { canvas, ctx } = makeCanvas(Math.max(kind.spriteW, w), Math.max(kind.spriteH, h));
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(src, box.x, box.y, box.w, box.h, Math.round((canvas.width - w) / 2), canvas.height - h, w, h);
   return canvas;
 }
 
@@ -421,7 +411,7 @@ const ARCH_STYLE: Record<string, ArchPart> = {
 };
 /** Royal Capital landmarks with their own painted sprites. */
 export const LANDMARK_STYLE: Record<string, string> = {
-  aurelion_palace: 'aurelion/grand-palace', aurelion_cathedral: 'aurelion/cathedral', aurelion_farmhouse: 'aurelion/farmhouse',
+  aurelion_palace: 'aurelion/grand-palace', aurelion_cathedral: 'aurelion/cathedral',
   aurelion_stall_red: 'aurelion/stall-red', aurelion_stall_gold: 'aurelion/stall-gold', aurelion_stall_blue: 'aurelion/stall-blue',
 };
 
