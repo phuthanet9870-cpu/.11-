@@ -5,6 +5,7 @@ import type { CompiledMap, PlacedBuilding } from '../../core/mapCompiler';
 import { TILE } from '../../core/mapCompiler';
 import type { ObjectKindDef } from '../../core/types';
 import { ellipse, makeCanvas, noise, px, shade } from './canvas';
+import { archSprite, extraSprite, GROUND_BLOCK, GROUND_ORDER, groundSheet, PROP_ORDER, propBounds, propSheet, type ArchPart } from './themeArt';
 
 export type Palette = Record<string, string>;
 const T = TILE;
@@ -72,6 +73,15 @@ function drawGround(ctx: CanvasRenderingContext2D, id: string, ox: number, oy: n
     case 'water': {
       px(ctx, ox, oy, T, T, pal.water1);
       for (let i = 0; i < 4; i++) { const x = ox + Math.floor(r() * 24), y = oy + Math.floor(r() * 30); px(ctx, x, y, 6, 1, pal.water2); }
+      break;
+    }
+    case 'wood_plank': {
+      px(ctx, ox, oy, T, T, '#6a4a2c');
+      for (let y = 0; y < T; y += 8) {
+        px(ctx, ox, oy + y, T, 7, r() > 0.5 ? '#9a6c3e' : '#8e6236');
+        px(ctx, ox, oy + y, T, 1, '#b48450');
+        px(ctx, ox + ((y * 5 + Math.floor(r() * 8)) % 24) + 4, oy + y + 3, 1, 1, '#4a3220');
+      }
       break;
     }
     case 'thorn_ground': {
@@ -166,8 +176,12 @@ export function regionCanvas(map: CompiledMap, region?: Region) {
 /** Ground + decoration composed into one image (Ground & Ground Decoration layers). */
 export function paintGroundLayer(map: CompiledMap, pal: Palette, region?: Region): HTMLCanvasElement {
   const { canvas, ctx, x0, y0, x1, y1 } = regionCanvas(map, region);
+  const sheet = groundSheet(map.def.tileset);
   for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
-    drawGround(ctx, map.ground[y * map.width + x], x * T, y * T, pal, cellSeed(x, y));
+    const id = map.ground[y * map.width + x], block = sheet ? GROUND_ORDER.indexOf(id) : -1;
+    // Painted ground: each block is a seamless 256px texture, sampled at the tile's world position.
+    if (sheet && block >= 0) ctx.drawImage(sheet, (x * T) % GROUND_BLOCK, block * GROUND_BLOCK + (y * T) % GROUND_BLOCK, T, T, x * T, y * T, T, T);
+    else drawGround(ctx, id, x * T, y * T, pal, cellSeed(x, y));
   }
   // Soft transitions: darken water edges, add path edge pebbles.
   for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
@@ -212,7 +226,31 @@ export function paintAboveLayer(map: CompiledMap, pal: Palette, region?: Region)
 }
 
 // ------------------------------------------------------------------ objects
-export function paintObject(kind: ObjectKindDef, pal: Palette, seed: number): HTMLCanvasElement {
+/** Object sprite from the tileset's props sheet, at its painted size and bottom-aligned; null when there is no art. */
+function artObject(kind: ObjectKindDef, tileset: string): HTMLCanvasElement | null {
+  if (kind.art) {
+    const sprite = extraSprite(kind.art);
+    if (!sprite) return null;
+    // Whole sprite scaled into the kind's box (the source images have an 8px transparent margin).
+    const { canvas, ctx } = makeCanvas(kind.spriteW, kind.spriteH);
+    const s = Math.min(kind.spriteW / (sprite.width - 16), kind.spriteH / (sprite.height - 16));
+    const w = Math.round((sprite.width - 16) * s), h = Math.round((sprite.height - 16) * s);
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(sprite, 8, 8, sprite.width - 16, sprite.height - 16, Math.round((kind.spriteW - w) / 2), kind.spriteH - h, w, h);
+    return canvas;
+  }
+  const sheet = propSheet(tileset), index = PROP_ORDER.indexOf(kind.draw);
+  if (!sheet || index < 0 || kind.draw === 'glint') return null;
+  const b = propBounds(sheet, index);
+  if (!b) return null;
+  const { canvas, ctx } = makeCanvas(Math.max(kind.spriteW, b.w), Math.max(kind.spriteH, b.h));
+  ctx.drawImage(sheet, b.x, b.y, b.w, b.h, Math.round((canvas.width - b.w) / 2), canvas.height - b.h, b.w, b.h);
+  return canvas;
+}
+
+export function paintObject(kind: ObjectKindDef, pal: Palette, seed: number, tileset?: string): HTMLCanvasElement {
+  const art = tileset ? artObject(kind, tileset) : null;
+  if (art) return art;
   const w = kind.spriteW, h = kind.spriteH;
   const { canvas, ctx } = makeCanvas(w, h);
   const r = noise(seed);
@@ -353,6 +391,10 @@ export function paintObject(kind: ObjectKindDef, pal: Palette, seed: number): HT
       px(ctx, cx - 13, base - 14, 26, 14, '#8a5a3a'); px(ctx, cx - 13, base - 14, 26, 2, '#a8744a');
       for (let i = 0; i < 5; i++) { const x = cx - 10 + i * 5; px(ctx, x, base - 20, 1, 6, pal.leaf1); px(ctx, x - 1, base - 22, 3, 2, [pal.flower1, pal.flower2, pal.flower3][i % 3]); }
       break;
+    case 'art':
+      // Painted sprite still loading: just its footprint shadow.
+      shadow(w / 2 - 4, 5);
+      break;
     case 'glint':
       ellipse(ctx, cx, cy(h), 3, 3, '#ffffff'); px(ctx, cx - 8, cy(h), 16, 1, '#ffffffaa'); px(ctx, cx, cy(h) - 8, 1, 16, '#ffffffaa');
       break;
@@ -373,7 +415,42 @@ const ROOF: Record<string, { roof: string; wall: string; trim: string }> = {
   house: { roof: '#9a6a3a', wall: '#e8dcc0', trim: '#6a4a2a' },
 };
 
-export function paintBuilding(b: PlacedBuilding): HTMLCanvasElement {
+const ARCH_STYLE: Record<string, ArchPart> = {
+  inn: 'inn', smithy: 'smithy', shop: 'shop', guild: 'guild', house: 'house',
+  aurelion_residence: 'house', knight_guild: 'guild', ranger_guild: 'guild', mage_guild: 'guild', merchant_guild: 'guild',
+};
+/** Royal Capital landmarks with their own painted sprites. */
+export const LANDMARK_STYLE: Record<string, string> = {
+  aurelion_palace: 'aurelion/grand-palace', aurelion_cathedral: 'aurelion/cathedral', aurelion_farmhouse: 'aurelion/farmhouse',
+  aurelion_stall_red: 'aurelion/stall-red', aurelion_stall_gold: 'aurelion/stall-gold', aurelion_stall_blue: 'aurelion/stall-blue',
+};
+
+/** Building from the theme's architecture sprite, scaled to the footprint width; sign board on the facade. */
+function artBuilding(b: PlacedBuilding, tileset: string): HTMLCanvasElement | null {
+  const sprite = LANDMARK_STYLE[b.style] ? extraSprite(LANDMARK_STYLE[b.style]) : archSprite(tileset, ARCH_STYLE[b.style] ?? 'house');
+  if (!sprite) return null;
+  const w = b.w * T + 8, h = Math.round(sprite.height * w / sprite.width);
+  const { canvas, ctx } = makeCanvas(w, h);
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(sprite, 0, 0, w, h);
+  if (b.sign) signBoard(ctx, b.sign, 4, w - 8, Math.round(h * 0.5));
+  return canvas;
+}
+
+function signBoard(ctx: CanvasRenderingContext2D, text: string, ox: number, w: number, sy: number) {
+  ctx.font = 'bold 9px monospace';
+  const tw = Math.min(w - 8, ctx.measureText(text).width + 10);
+  const sx = ox + (w - tw) / 2;
+  px(ctx, sx, sy, tw, 12, '#5a3a1e'); px(ctx, sx + 1, sy + 1, tw - 2, 10, '#c8a26b');
+  ctx.fillStyle = '#3a2412';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, sx + 5, sy + 6.5, tw - 10);
+}
+
+export function paintBuilding(b: PlacedBuilding, tileset?: string): HTMLCanvasElement {
+  const art = tileset ? artBuilding(b, tileset) : null;
+  if (art) return art;
   const style = ROOF[b.style] ?? ROOF.house;
   const w = b.w * T, wallH = 2 * T, roofExtra = 18;
   const h = b.h * T + roofExtra;
@@ -422,14 +499,6 @@ export function paintBuilding(b: PlacedBuilding): HTMLCanvasElement {
   }
   if (b.style === 'inn') { px(ctx, ox + 8, ry - 14, 10, 20, '#7a4a2a'); }
   // Sign board
-  if (b.sign) {
-    ctx.font = 'bold 9px monospace';
-    const tw = Math.min(w - 8, ctx.measureText(b.sign).width + 10);
-    const sx = ox + (w - tw) / 2, sy = wy + 2;
-    px(ctx, sx, sy, tw, 12, '#5a3a1e'); px(ctx, sx + 1, sy + 1, tw - 2, 10, '#c8a26b');
-    ctx.fillStyle = '#3a2412';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(b.sign, sx + 5, sy + 6.5, tw - 10);
-  }
+  if (b.sign) signBoard(ctx, b.sign, ox, w, wy + 2);
   return canvas;
 }

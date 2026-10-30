@@ -22,5 +22,14 @@
   { "id": "obelisk", "footprint": { "w": 1, "h": 1 }, "blocks": true, "draw": "obelisk", "spriteW": 36, "spriteH": 96 },
   { "id": "thorn_throne", "footprint": { "w": 3, "h": 1 }, "blocks": true, "draw": "thorn_throne", "spriteW": 96, "spriteH": 88 },
   { "id": "planter", "footprint": { "w": 1, "h": 1 }, "blocks": true, "draw": "planter", "spriteW": 32, "spriteH": 28 },
-  { "id": "glint", "footprint": { "w": 1, "h": 1 }, "blocks": false, "draw": "glint", "spriteW": 24, "spriteH": 24 }
+  { "id": "glint", "footprint": { "w": 1, "h": 1 }, "blocks": false, "draw": "glint", "spriteW": 24, "spriteH": 24 },
+  {"id": "capital_fountain", "footprint": {"w": 3, "h": 2}, "blocks": true, "draw": "fountain", "spriteW": 112, "spriteH": 96},
+  {"id": "capital_windmill", "footprint": {"w": 3, "h": 2}, "blocks": true, "draw": "art", "art": "aurelion/windmill", "spriteW": 112, "spriteH": 138},
+  {"id": "capital_statue", "footprint": {"w": 2, "h": 1}, "blocks": true, "draw": "art", "art": "aurelion/royal-statue", "spriteW": 56, "spriteH": 108},
+  {"id": "capital_ship", "footprint": {"w": 2, "h": 3}, "blocks": true, "draw": "art", "art": "aurelion/trading-ship", "spriteW": 80, "spriteH": 152},
+  {"id": "capital_galleon", "footprint": {"w": 3, "h": 3}, "blocks": true, "draw": "art", "art": "aurelion/galleon", "spriteW": 112, "spriteH": 170},
+  {"id": "capital_rowboat", "footprint": {"w": 2, "h": 1}, "blocks": true, "draw": "art", "art": "aurelion/rowboat", "spriteW": 80, "spriteH": 64},
+  {"id": "capital_lighthouse", "footprint": {"w": 2, "h": 2}, "blocks": true, "draw": "art", "art": "aurelion/lighthouse", "spriteW": 88, "spriteH": 144},
+  {"id": "capital_cave", "footprint": {"w": 4, "h": 2}, "blocks": true, "draw": "art", "art": "aurelion/monster-cave", "spriteW": 139, "spriteH": 112},
+  {"id": "capital_training_dummy", "footprint": {"w": 1, "h": 1}, "blocks": true, "draw": "art", "art": "aurelion/training-dummy", "spriteW": 40, "spriteH": 48}
 ]

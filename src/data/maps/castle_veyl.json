@@ -38,6 +38,15 @@
    "h": 1
   },
   {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 18,
+   "y": 3,
+   "w": 5,
+   "h": 3
+  },
+  {
    "op": "object",
    "kind": "ruin_pillar",
    "x": 10,
@@ -46,13 +55,13 @@
   {
    "op": "object",
    "kind": "ruin_pillar",
-   "x": 16,
+   "x": 15,
    "y": 6
   },
   {
    "op": "object",
    "kind": "ruin_pillar",
-   "x": 24,
+   "x": 25,
    "y": 6
   },
   {
@@ -84,6 +93,64 @@
  "monsterSpawns": [],
  "objects": [],
  "areas": [],
+ "scenery": [
+  {
+   "kind": "castle",
+   "x": 17,
+   "y": -0.5,
+   "w": 6,
+   "h": 7
+  },
+  {
+   "kind": "city_wall",
+   "x": 6,
+   "y": 12.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_wall",
+   "x": 10,
+   "y": 12.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_wall",
+   "x": 14,
+   "y": 12.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_wall",
+   "x": 22,
+   "y": 12.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_wall",
+   "x": 26,
+   "y": 12.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_wall",
+   "x": 30,
+   "y": 12.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_gate",
+   "x": 17.25,
+   "y": 10.6,
+   "w": 5.5,
+   "h": 4.6
+  }
+ ],
  "description": "The guild-war castle. During the war, guilds fight each other and strike the Emperium; the guild that breaks it holds the castle.",
  "generated": true
 }

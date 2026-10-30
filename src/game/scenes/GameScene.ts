@@ -6,6 +6,8 @@ import type { World, WorldEvent, MonsterActor, AnimState } from '../../core/worl
 import { TILE } from '../../core/mapCompiler';
 import type { Direction } from '../../core/types';
 import { npcQuestMarker } from '../../core/quests';
+import { loadThemeArt, themeArtReady } from '../art/themeArt';
+import { mapArtPaths, scenerySprite } from '../art/scenery';
 import {
   CHUNK_TILES, ensureCharacterTexture, ensureFxTextures, ensureItemTexture, ensureMapChunk, ensureMapTextures, ensureMonsterTexture, ensureTombstoneTexture,
   releaseMapChunk, type ChunkLayers,
@@ -203,6 +205,13 @@ export class GameScene extends Phaser.Scene {
     const w = this.world, map = w.map, data = w.data;
     this.builtMapId = map.def.id;
     this.builtMap = map;
+    // Painted theme art loads on demand; the map is drawn procedurally meanwhile and rebuilt once it arrives.
+    const extra = mapArtPaths(map, (k) => data.objectKinds.get(k)?.art);
+    if (!themeArtReady(map.def.tileset, extra)) {
+      void loadThemeArt(map.def.tileset, extra).then(() => {
+        if (this.sys.isActive() && this.world.map === map) this.buildMap();
+      });
+    }
     const tex = ensureMapTextures(this, data, map);
     const W = map.width * TILE, H = map.height * TILE;
 
@@ -233,6 +242,15 @@ export class GameScene extends Phaser.Scene {
       const img = this.add.image(b.x * TILE - 4, (b.y + b.h) * TILE + 4, tex.buildings[i]).setOrigin(0, 1).setDepth((b.y + b.h) * TILE - 2);
       this.track(img);
     });
+    // Scenery: bridges lie on the ground; walls, gates and castles sort by their base like buildings.
+    for (const sc of map.def.scenery ?? []) {
+      const sprite = scenerySprite(sc, map.def.tileset);
+      if (!sprite) continue;
+      const key = `scn_${sprite.src}`;
+      if (!this.textures.exists(key)) this.textures.addImage(key, sprite);
+      const img = this.add.image(sc.x * TILE, (sc.y + sc.h) * TILE, key).setOrigin(0, 1).setDisplaySize(sc.w * TILE, sc.h * TILE);
+      this.track(img.setDepth(sc.depth ?? (sc.y + sc.h) * TILE - 2));
+    }
 
     // Portals
     for (const p of map.def.portals) {

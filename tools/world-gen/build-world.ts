@@ -11,6 +11,7 @@ import { join } from 'node:path';
 import { layoutTown, npcRole, type Plan, type Side } from './town-layout';
 
 const DATA = join(process.cwd(), 'src/data');
+const HERE = join(process.cwd(), 'tools/world-gen');
 const read = (f: string) => JSON.parse(readFileSync(join(DATA, f), 'utf8'));
 const write = (f: string, v: unknown) => writeFileSync(join(DATA, f), JSON.stringify(v, null, 1) + '\n');
 type J = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -858,15 +859,21 @@ export async function main() {
     ['castle_veyl', 'Castle Veyl', 'dg_tomb', 40, 30, 'The guild-war castle. During the war, guilds fight each other and strike the Emperium; the guild that breaks it holds the castle.'],
   ] as const) {
     const paint: J[] = [];
+    const scenery: J[] = [];
     if (id === 'castle_veyl') {
       paint.push({ op: 'rect', tile: 'ruin_wall', layer: 'wall', x: 6, y: 14, w: 12, h: 1 }, { op: 'rect', tile: 'ruin_wall', layer: 'wall', x: 22, y: 14, w: 12, h: 1 });
-      for (const x of [10, 16, 24, 30]) paint.push({ op: 'object', kind: 'ruin_pillar', x, y: 6 });
+      // The keep stands behind the Emperium (tile 20, 8); its base blocks like a wall.
+      paint.push({ op: 'rect', tile: 'ruin_wall', layer: 'wall', x: 18, y: 3, w: 5, h: 3 });
+      for (const x of [10, 15, 25, 30]) paint.push({ op: 'object', kind: 'ruin_pillar', x, y: 6 });
+      scenery.push({ kind: 'castle', x: 17, y: -0.5, w: 6, h: 7 });
+      for (const x of [6, 10, 14, 22, 26, 30]) scenery.push({ kind: 'city_wall', x, y: 12.9, w: 4, h: 2.1 });
+      scenery.push({ kind: 'city_gate', x: 17.25, y: 10.6, w: 5.5, h: 4.6 });
     } else for (const [x, y] of [[8, 7], [27, 7], [8, 20], [27, 20]]) paint.push({ op: 'object', kind: 'ruin_pillar', x, y });
     const map = {
       id, name, region: REG.cap, type: 'arena', width: W, height: H, tileset, base: 'ruin_floor', border: { kind: 'ruin_wall', thickness: 2 }, bgm: 'boss_battle', ambient: 'cave', weather: [],
       worldMapPos: { x: 0.5, y: id === 'castle_veyl' ? 0.4 : 0.44 }, paint, spawnPoints: { default: { x: Math.floor(W / 2), y: H - 4 } },
       portals: [{ id: 'exit', x: Math.floor(W / 2) - 1, y: H - 2, w: 3, h: 1, targetMap: 'aurelion', targetSpawn: 'default', label: 'Aurelion' }],
-      npcs: [], monsterSpawns: [], objects: [], areas: [], description: desc, generated: true,
+      npcs: [], monsterSpawns: [], objects: [], areas: [], ...(scenery.length ? { scenery } : {}), description: desc, generated: true,
     };
     built.push({ map, npcs: [], shops: [] });
   }
@@ -957,12 +964,31 @@ export async function main() {
     m.npcs.push({ npcId: `${town}_trader`, x: tx + o.x, y: ty + o.y, facing: 'down' }, { npcId: `${town}_market`, x: mx + o.x, y: my + o.y, facing: 'down' });
   }
 
+  // The Royal Capital follows its supplied concept plan (aurelion-concept.json, 120×80): palace, canals,
+  // harbour, guild quarter, farm and training ground, with painted landmarks, bridges, city walls and gates.
+  // It keeps the town's own NPCs, portals and spawn names.
+  function applyAurelionConcept(m: J) {
+    const c = JSON.parse(readFileSync(join(HERE, 'aurelion-concept.json'), 'utf8'));
+    const ids = (l: J[]) => l.map((n) => n.npcId).sort().join();
+    if (ids(c.npcs) !== ids(m.npcs)) throw new Error('aurelion concept: NPC list differs from the town\'s NPCs');
+    for (const k of Object.keys(m.spawnPoints)) if (!c.spawnPoints[k]) throw new Error(`aurelion concept: spawn ${k} missing`);
+    Object.assign(m, { width: c.width, height: c.height, base: c.base, border: c.border, paint: c.paint, spawnPoints: c.spawnPoints, npcs: c.npcs, scenery: c.scenery });
+    m.portals = m.portals.map((p: J) => {
+      const cp = c.portals.find((q: J) => q.id === p.id);
+      if (!cp) throw new Error(`aurelion concept: portal ${p.id} missing`);
+      return { ...p, x: cp.x, y: cp.y, w: cp.w, h: cp.h };
+    });
+    const fountain = c.objects.find((o: J) => o.id === 'aurelion_fountain');
+    m.objects = m.objects.map((o: J) => (o.id === 'aurelion_fountain' ? { ...o, kind: fountain.kind, x: fountain.x, y: fountain.y } : o));
+    m.areas = c.areas.map((a: J) => ({ id: a.id, name: a.name, rect: a.rect }));
+    delete m.origin;
+  }
+
   // ---------------------------------------------------------------- town layouts
   // Each town gets its own street plan (no two alike) chosen to suit it, with random details
   // from the town's seed; then every NPC is placed by what it does (see town-layout.ts).
   const TOWN_DESIGN: Record<string, { plan: Plan; road: string; trees: string[]; density: number; wall?: string; plaza: string; houses: number }> = {
     willowbrook: { plan: 'river', road: 'dirt', trees: ['tree_oak', 'bush'], density: 0.022, plaza: 'Fountain Plaza', houses: 12 },
-    aurelion: { plan: 'grid', road: 'path_stone', trees: ['tree_oak'], density: 0.01, plaza: 'Royal Square', houses: 16 },
     fernhollow: { plan: 'ring', road: 'dirt', trees: ['tree_pine', 'tree_dark', 'bush'], density: 0.04, plaza: 'Village Green', houses: 11 },
     arcanthe: { plan: 'star', road: 'path_stone', trees: ['tree_pine', 'obelisk'], density: 0.012, plaza: 'Star Court', houses: 12 },
     sandara: { plan: 'quarters', road: 'path_stone', trees: [], density: 0, wall: 'ruin_wall', plaza: 'Bazaar Square', houses: 14 },
@@ -974,6 +1000,7 @@ export async function main() {
   const npcById = new Map(npcs.map((n: J) => [n.id, n]));
   for (const id of TOWN_IDS()) {
     const m = id === 'willowbrook' ? hand.willowbrook : built.find((b) => b.map.id === id)!.map;
+    if (id === 'aurelion') { applyAurelionConcept(m); continue; }
     const td = TOWN_DESIGN[id];
     if (!td) throw new Error(`no town design for ${id}`);
     const roles: [string, string][] = m.npcs.map((n: J) => [n.npcId, npcRole(n.npcId, npcById.get(n.npcId)?.title ?? '')]);

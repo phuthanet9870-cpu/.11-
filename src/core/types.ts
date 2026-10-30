@@ -434,7 +434,12 @@ export interface MapDef {
   bossSpawn?: { bossId: string; x: number; y: number; respawnSeconds: number };
   objects: MapObjectDef[];
   areas: { id: string; name: string; rect: Rect }[];
+  /** Large painted pieces drawn over the map (bridges, city walls and gates, castles); tile units, may be fractional.
+   * Purely visual: what blocks the player comes from the paint ops underneath. */
+  scenery?: SceneryDef[];
 }
+
+export interface SceneryDef { kind: string; x: number; y: number; w: number; h: number; depth?: number; opening?: number }
 
 export interface TileDef {
   id: string;
@@ -455,6 +460,8 @@ export interface ObjectKindDef {
   footprint: { w: number; h: number };
   blocks: boolean;
   draw: string;
+  /** Painted sprite (path under public/art, without extension), scaled into spriteW×spriteH. */
+  art?: string;
   spriteW: number;
   spriteH: number;
 }

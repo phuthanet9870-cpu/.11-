@@ -3,7 +3,7 @@
 A 2D fantasy MMORPG with a top-down 3/4 view. It's built with TypeScript, Phaser 3 (WebGL), HTML/CSS UI and Vite.
 
 > **Status: Phase 1 (Playable Game Foundation): done and tested in single-player development mode.**
-> All art and audio are **procedural**: the game draws every sprite, tile, icon and sound itself. There are no image or sprite-sheet files.
+> Maps use painted art packs (`public/art`): seamless ground textures and props for each of the 21 tilesets, buildings in 7 architecture themes, and the Royal Capital's landmarks (palace, cathedral, harbour, bridges, city walls and gates). `tools/art/prepare_art.py` converts the source packs to WebP. Characters, monsters, icons and audio are still **procedural**, and maps fall back to procedural drawing until their art has loaded.
 > Online play (accounts, server, party, guild, trading) is planned for Phase 3 and isn't built yet.
 
 ## ภาพรวม (Thai summary)
@@ -223,4 +223,4 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 Second jobs and their skill trees, gear tiers for the Lv 40–85 regions with bot balance passes, and better procedural art for monsters and classes. All of it plugs into the existing data files and `World` APIs. Phase 3 then moves `World` onto a Node.js (Colyseus) server with PostgreSQL/Redis for authoritative online play.
 
 ## Credits & licensing
-All code, data, procedural art and synthesized audio in this repository are original. The game is inspired by classic MMORPGs, but it doesn't use any characters, art, maps or sounds from other games.
+All code, data, art and synthesized audio in this repository are original. The map art packs in `public/art` were supplied for this project. The game is inspired by classic MMORPGs, but it doesn't use any characters, art, maps or sounds from other games.

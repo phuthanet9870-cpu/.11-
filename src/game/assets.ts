@@ -1,5 +1,5 @@
-// Texture registry. Every sprite, map layer and icon the game uses is drawn
-// procedurally at runtime (./art); there are no image files.
+// Texture registry. Characters, monsters and icons are drawn procedurally at runtime (./art);
+// map ground, objects and buildings use the painted theme art (./art/themeArt) once it has loaded.
 import Phaser from 'phaser';
 import type { GameData } from '../core/data';
 import type { CompiledMap } from '../core/mapCompiler';
@@ -11,6 +11,7 @@ import { CHAR_DIRECTIONS, CHAR_FRAME_H, CHAR_FRAME_W, CHAR_SHEET_COLS, MON_SHEET
 import { hashString } from '../core/rng';
 import { makeCanvas, ellipse } from './art/canvas';
 import { itemIconCanvas } from './art/icons';
+import { artTag } from './art/themeArt';
 import type { ItemDef } from '../core/types';
 
 function addCanvasSheet(scene: Phaser.Scene, key: string, canvas: HTMLCanvasElement, fw: number, fh: number, cols: number, rows: number) {
@@ -50,21 +51,22 @@ export function ensureMapTextures(scene: Phaser.Scene, data: GameData, map: Comp
     if (!scene.textures.exists(key)) scene.textures.addCanvas(key, make());
     return key;
   };
+  const ts = map.def.tileset, tag = artTag(ts);
   const objects = new Map<string, string>();
   for (const o of map.objects) {
     const kind = data.objectKinds.get(o.kind)!;
-    const variant = kind.id.startsWith('tree') ? (o.x * 7 + o.y * 13) % 3 : 0;
-    const key = add(`obj_${map.def.tileset}_${o.kind}_${variant}`, () => paintObject(kind, pal, 1000 + variant * 77 + hashString(o.kind)));
+    const variant = kind.id.startsWith('tree') && tag === 'p' ? (o.x * 7 + o.y * 13) % 3 : 0;
+    const key = add(`obj_${ts}_${tag}_${o.kind}_${variant}`, () => paintObject(kind, pal, 1000 + variant * 77 + hashString(o.kind), ts));
     objects.set(o.uid, key);
   }
-  const buildings = map.buildings.map((b, i) => add(`map_${id}_bld${i}`, () => paintBuilding(b)));
+  const buildings = map.buildings.map((b, i) => add(`map_${id}_${tag}_bld${i}`, () => paintBuilding(b, ts)));
   return { objects, buildings };
 }
 
 /** Map layers are drawn in square chunks of this many tiles. */
 export const CHUNK_TILES = 16;
 export type ChunkLayers = { ground: string; walls: string | null; above: string | null };
-export const chunkKey = (map: CompiledMap, layer: string, cx: number, cy: number) => `mc_${map.def.id}_${layer}_${cx}_${cy}`;
+export const chunkKey = (map: CompiledMap, layer: string, cx: number, cy: number) => `mc_${map.def.id}_${artTag(map.def.tileset)}_${layer}_${cx}_${cy}`;
 
 /** Paints one chunk (ground, and walls / above-player only when the chunk has any). Returns texture keys. */
 export function ensureMapChunk(scene: Phaser.Scene, data: GameData, map: CompiledMap, cx: number, cy: number): ChunkLayers {
@@ -122,10 +124,10 @@ export function ensureFxTextures(scene: Phaser.Scene) {
 
 /** Gravestone texture for MVP tombstones. */
 export function ensureTombstoneTexture(scene: Phaser.Scene, data: GameData, tileset: string): string {
-  const key = 'obj_mvp_tombstone';
+  const key = `obj_mvp_tombstone_${tileset}_${artTag(tileset)}`;
   if (!scene.textures.exists(key)) {
     const kind = data.objectKinds.get('gravestone')!;
-    scene.textures.addCanvas(key, paintObject(kind, data.tilesets.get(tileset)!.palette, 4242));
+    scene.textures.addCanvas(key, paintObject(kind, data.tilesets.get(tileset)!.palette, 4242, tileset));
   }
   return key;
 }
