@@ -73,3 +73,10 @@
 .st-field > label small { display: block; color: #6f6656; font-size: 11px; }
 .st-field textarea { min-height: 54px; }
 .st-field input:not([type=checkbox]), .st-field select { width: 100%; max-width: 420px; }
+.st-swatches { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-top: 6px; }
+.st-swatch { padding: 2px; background: #0f0c16; border: 2px solid #2c2538; border-radius: 5px; cursor: pointer; line-height: 0; color: #ffd98a; font-size: 18px; }
+.st-swatch canvas { width: 100%; height: auto; image-rendering: pixelated; border-radius: 2px; }
+.st-swatch:hover { border-color: #6a5a8a; }
+.st-swatch.on { border-color: #ffd34d; }
+.st-swatch.reset { line-height: 1; display: flex; align-items: center; justify-content: center; }
+.st-swatch-h { grid-column: 1 / -1; color: #b8ad98; font-size: 11px; margin-top: 4px; }

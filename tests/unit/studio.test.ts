@@ -71,4 +71,21 @@ describe('Studio layer over the game data', () => {
     expect(data.items.get('red_potion')!.name).not.toBe('Studio Potion');
     expect(validateGameData(d as never)).toEqual([]);
   });
+
+  it('ground can use any tileset texture: rules follow the base tile, the validator checks both parts', () => {
+    const def = copy('aurelion');
+    paintCell(def, 'ground', 50, 60, 'water@coast');
+    paintCell(def, 'ground', 51, 60, 'sand@desert');
+    def.paint.push({ op: 'path', tile: 'path_stone@snow', width: 2, points: [[10, 70], [20, 70]] });
+    const cm = compileMap(data, def);
+    expect(cm.ground[60 * cm.width + 50]).toBe('water@coast');
+    expect(cm.collision[60 * cm.width + 50]).toBe(1);
+    expect(cm.collision[60 * cm.width + 51]).toBe(0);
+    expect(cm.ground[70 * cm.width + 15]).toBe('path_stone@snow');
+    const d = { ...data, maps: new Map(data.maps) };
+    d.maps.set('aurelion', def);
+    expect(validateGameData(d as never).filter((p) => p.includes('aurelion'))).toEqual([]);
+    paintCell(def, 'ground', 52, 60, 'sand@nowhere');
+    expect(validateGameData(d as never).join()).toMatch(/sand@nowhere/);
+  });
 });

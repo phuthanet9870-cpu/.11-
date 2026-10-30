@@ -6,7 +6,7 @@ import type { MapDef, PaintOp } from '../core/types';
 import { generateCharacterSheet } from '../game/art/characterSprite';
 import { paintBuilding, paintGroundLayer, paintObject, paintWallLayer, LANDMARK_STYLE } from '../game/art/mapPainter';
 import { mapArtPaths, scenerySprite } from '../game/art/scenery';
-import { loadThemeArt } from '../game/art/themeArt';
+import { GROUND_ORDER, groundSheet, loadArt, loadThemeArt } from '../game/art/themeArt';
 import { CHAR_FRAME_H, CHAR_FRAME_W } from '../game/art/spriteMeta';
 import { h, setChildren } from '../ui/dom';
 import { clone, editText, helpBar, row, type StudioCtx } from './context';
@@ -16,7 +16,7 @@ import { View } from './view';
 
 /** Things whose size can be dragged from the corner handle. */
 const RESIZABLE = new Set(['building', 'portal', 'scenery', 'mobs', 'area']);
-type Tool = 'select' | 'object' | 'building' | 'ground' | 'wall' | 'deco';
+type Tool = 'select' | 'object' | 'building' | 'ground' | 'path' | 'wall' | 'deco';
 const T = TILE, CH = 16;
 const BUILDING_STYLES = ['house', 'inn', 'shop', 'smithy', 'guild', 'knight_guild', 'ranger_guild', 'mage_guild', 'merchant_guild', 'aurelion_residence', ...Object.keys(LANDMARK_STYLE)];
 const SCENERY = ['city_wall', 'city_gate', 'castle'];
@@ -51,6 +51,11 @@ export class MapEditor {
   private toolBtns = new Map<Tool, HTMLButtonElement>();
   private pick = { object: 'tree_oak', building: 'house', ground: 'grass', wall: 'thicket', deco: 'flowers', brush: 1, shape: 'square' as 'square' | 'round' | 'rect' | 'ellipse' };
   /** Rectangle / ellipse area being dragged out with a paint tool (filled on release). */
+  /** Points of the road being drawn with the path tool (cells). */
+  private pathPts: [number, number][] | null = null;
+  private pathWidth = 3;
+  /** Texture tileset shown in the palette ('' = all). */
+  private paletteSet = '';
   private area: { x0: number; y0: number; x1: number; y1: number; before: string } | null = null;
 
   constructor(private st: StudioCtx, private mapId: string, private onChange: () => void) {
@@ -68,7 +73,7 @@ export class MapEditor {
       h('div', { class: 'st-main' },
         h('div', { class: 'st-bar' },
           tb('select', '🖐 เลือก/ย้าย', 'V'), tb('object', '🌳 วางวัตถุ', 'O'), tb('building', '🏠 วางอาคาร', 'B'),
-          tb('ground', '🟩 ทาพื้น', 'G'), tb('wall', '🧱 ทากำแพง', 'W'), tb('deco', '🌼 ทาของตกแต่ง', 'D'),
+          tb('ground', '🟩 ทาพื้น', 'G'), tb('path', '🛤 วาดทางเดิน', 'P'), tb('wall', '🧱 ทากำแพง', 'W'), tb('deco', '🌼 ทาของตกแต่ง', 'D'),
           h('span', { class: 'st-spacer' }), toggle('grid', '# กริด'), toggle('collision', '⛔ จุดเดินไม่ได้'), toggle('zones', '▭ โซนมอนสเตอร์')),
         h('div', { class: 'st-bar' },
           h('button', { class: 'st-btn', title: 'Ctrl+Z', onclick: () => this.doUndo() }, '↶ ย้อน'), h('button', { class: 'st-btn', title: 'Ctrl+Y', onclick: () => this.doRedo() }, '↷ ทำซ้ำ'),
@@ -129,7 +134,12 @@ export class MapEditor {
     if ((k === 'delete' || k === 'backspace') && this.selection.length) { e.preventDefault(); this.deleteSel(); return; }
     if (k === 'escape') { this.selection = []; this.renderProps(); this.view.redraw(); return; }
     if ((e.ctrlKey || e.metaKey) && k === 'a') { e.preventDefault(); this.selection = entities(this.st.data, this.def).filter((x) => x.type !== 'mobs' && x.type !== 'area'); this.renderProps(); this.view.redraw(); return; }
-    const tools: Record<string, Tool> = { v: 'select', o: 'object', b: 'building', g: 'ground', w: 'wall', d: 'deco' };
+    if (this.pathPts) {
+      if (k === 'enter') { e.preventDefault(); this.finishPath(); return; }
+      if (k === 'escape') { this.pathPts = null; this.view.redraw(); return; }
+      if (k === 'backspace') { e.preventDefault(); this.pathPts.pop(); if (!this.pathPts.length) this.pathPts = null; this.view.redraw(); return; }
+    }
+    const tools: Record<string, Tool> = { v: 'select', o: 'object', b: 'building', g: 'ground', p: 'path', w: 'wall', d: 'deco' };
     if (tools[k] && !e.ctrlKey && !e.metaKey) this.setTool(tools[k]);
     if (this.selection.length && k.startsWith('arrow')) {
       e.preventDefault();
@@ -315,6 +325,16 @@ export class MapEditor {
       c.fillStyle = '#7fd6ff22'; c.fillRect(bx, by, Math.abs(this.box.x1 - this.box.x0), Math.abs(this.box.y1 - this.box.y0));
       c.strokeStyle = '#7fd6ff'; c.lineWidth = lw; c.setLineDash([5 * lw, 3 * lw]); c.strokeRect(bx, by, Math.abs(this.box.x1 - this.box.x0), Math.abs(this.box.y1 - this.box.y0)); c.setLineDash([]);
     }
+    if (this.pathPts?.length) {
+      const pts = [...this.pathPts, ...(this.hover ? [this.hover] : [])];
+      c.save();
+      c.lineCap = 'round'; c.lineJoin = 'round';
+      c.strokeStyle = '#ffd34d55'; c.lineWidth = this.pathWidth * T;
+      c.beginPath(); pts.forEach(([px, py], i) => (i ? c.lineTo((px + 0.5) * T, (py + 0.5) * T) : c.moveTo((px + 0.5) * T, (py + 0.5) * T))); c.stroke();
+      c.strokeStyle = '#ffd34d'; c.lineWidth = 2 * lw; c.stroke();
+      c.fillStyle = '#ffd34d'; for (const [px, py] of this.pathPts) { c.beginPath(); c.arc((px + 0.5) * T, (py + 0.5) * T, 5 * lw, 0, 7); c.fill(); }
+      c.restore();
+    }
     if (this.area) {
       const a = this.area, x0 = Math.min(a.x0, a.x1), y0 = Math.min(a.y0, a.y1), w = (Math.abs(a.x1 - a.x0) + 1) * T, hh = (Math.abs(a.y1 - a.y0) + 1) * T;
       c.strokeStyle = '#ffd34d'; c.fillStyle = '#ffd34d33'; c.lineWidth = 2 * lw;
@@ -322,7 +342,7 @@ export class MapEditor {
       if (this.pick.shape === 'ellipse') c.ellipse(x0 * T + w / 2, y0 * T + hh / 2, w / 2, hh / 2, 0, 0, Math.PI * 2); else c.rect(x0 * T, y0 * T, w, hh);
       c.fill(); c.stroke();
     }
-    if (this.hover && this.tool !== 'select' && !this.area) {
+    if (this.hover && this.tool !== 'select' && this.tool !== 'path' && !this.area) {
       const [hx, hy] = this.hover;
       const b = ['ground', 'wall', 'deco'].includes(this.tool) ? this.pick.brush : 1;
       const o = Math.floor((b - 1) / 2);
@@ -369,6 +389,10 @@ export class MapEditor {
           };
         }
         this.renderProps(); this.view.redraw();
+      } else if (this.tool === 'path') {
+        const last = this.pathPts?.[this.pathPts.length - 1];
+        if (!last || last[0] !== x || last[1] !== y) (this.pathPts ??= []).push([x, y]);
+        this.view.redraw();
       } else if (this.tool === 'object') {
         this.mutate(() => this.def.paint.push({ op: 'object', kind: this.pick.object, x, y }));
       } else if (this.tool === 'building') {
@@ -436,7 +460,49 @@ export class MapEditor {
         this.pushUndo(a.before); this.chunks.clear(); void this.recompile();
       }
     });
+    // Double-click ends the road being drawn.
+    cv.addEventListener('dblclick', () => { if (this.tool === 'path' && this.pathPts) this.finishPath(); });
     cv.addEventListener('pointerleave', () => { this.hover = null; this.view.redraw(); });
+  }
+
+  /** Turns the clicked points into a road (a path op) of the chosen texture and width. */
+  private finishPath() {
+    const pts = this.pathPts;
+    this.pathPts = null;
+    if (!pts || pts.length < 2) { this.view.redraw(); return; }
+    const tile = this.pick.ground === '(ลบ)' ? this.def.base : this.pick.ground, w = this.pathWidth, o = Math.floor((w - 1) / 2);
+    this.mutate(() => this.def.paint.push({ op: 'path', tile, width: w, points: pts.map(([x, y]) => [x - o, y - o] as [number, number]) }), true);
+  }
+
+  /** Every ground texture of every tileset as swatches; picking one sets the ground / road texture. */
+  private texturePalette(): HTMLElement {
+    const d = this.st.data;
+    const sets = [...d.tilesets.keys()];
+    const ground = [...d.tiles.values()].filter((t) => t.layer === 'ground').map((t) => t.id);
+    const grid = h('div', { class: 'st-swatches' });
+    const value = (base: string, ts: string) => (ts === this.def.tileset ? base : `${base}@${ts}`);
+    const shown = this.paletteSet ? [this.paletteSet] : [this.def.tileset, ...sets.filter((t) => t !== this.def.tileset)];
+    const filter = h('select', { onchange: (e: Event) => { this.paletteSet = (e.target as HTMLSelectElement).value; this.renderSide(); } },
+      h('option', { value: '' }, `ทุกชุด (${sets.length} × ${ground.length} = ${sets.length * ground.length} แบบ)`),
+      ...sets.map((t) => h('option', { value: t, selected: t === this.paletteSet }, t === this.def.tileset ? `${t} (ชุดของแมพนี้)` : t)));
+    const reset = h('button', { class: `st-swatch reset${this.pick.ground === '(ลบ)' ? ' on' : ''}`, title: 'คืนเป็นพื้นฐานของแมพ (ลบที่ทาไว้)', onclick: () => { this.pick.ground = '(ลบ)'; this.renderSide(); } }, '↺');
+    grid.appendChild(reset);
+    const draw: (() => void)[] = [];
+    for (const ts of shown) {
+      grid.appendChild(h('div', { class: 'st-swatch-h' }, ts));
+      for (const base of ground) {
+        const id = value(base, ts);
+        const cv = h('canvas', { width: 32, height: 32 }) as HTMLCanvasElement;
+        draw.push(() => {
+          const sheet = groundSheet(ts), b = GROUND_ORDER.indexOf(base), c = cv.getContext('2d')!;
+          if (sheet && b >= 0) c.drawImage(sheet, 0, b * 256, 64, 64, 0, 0, 32, 32);
+          else { c.fillStyle = '#444'; c.fillRect(0, 0, 32, 32); }
+        });
+        grid.appendChild(h('button', { class: `st-swatch${this.pick.ground === id ? ' on' : ''}`, title: `${base} · ${ts}`, dataset: { tex: id }, onclick: () => { this.pick.ground = id; this.renderSide(); } }, cv));
+      }
+    }
+    void loadArt(shown.map((t) => `tiles/${t}`)).then(() => draw.forEach((f) => f()));
+    return h('div', {}, row('ชุดภาพ', filter), grid);
   }
 
   private paintAt(x: number, y: number) {
@@ -477,7 +543,11 @@ export class MapEditor {
       parts.push(h('div', { class: 'st-muted' }, 'คลิกบนแมพเพื่อวาง'), list);
     }
     if (this.tool === 'building') parts.push(h('div', { class: 'st-muted' }, 'คลิกบนแมพเพื่อวาง (ประตูหันลงล่าง)'), row('แบบ', sel(BUILDING_STYLES, this.pick.building, (v) => { this.pick.building = v; })));
-    if (this.tool === 'ground') parts.push(row('พื้น', sel(tiles('ground'), this.pick.ground, (v) => { this.pick.ground = v; })), brush, h('div', { class: 'st-muted' }, 'ลากเพื่อทาพื้น'));
+    if (this.tool === 'ground') parts.push(brush, h('div', { class: 'st-muted' }, `ลากเพื่อทาพื้น · ตอนนี้: ${this.pick.ground === '(ลบ)' ? 'คืนพื้นฐาน' : this.pick.ground}`), this.texturePalette());
+    if (this.tool === 'path') parts.push(
+      h('div', { class: 'st-muted' }, 'คลิกทีละจุดตามแนวทางเดิน · ดับเบิลคลิกหรือ Enter = จบเส้น · Backspace = ลบจุดล่าสุด · Esc = ยกเลิก · ทางเดินตัดผ่านพุ่มไม้/กำแพงในแมพได้'),
+      row('ความกว้าง', sel(['1', '2', '3', '4', '5', '6', '8'], String(this.pathWidth), (v) => { this.pathWidth = +v; })),
+      h('div', { class: 'st-muted' }, `พื้นของทาง: ${this.pick.ground === '(ลบ)' ? this.def.base : this.pick.ground}`), this.texturePalette());
     if (this.tool === 'wall') parts.push(row('กำแพง', sel([...tiles('wall'), '(ลบ)'], this.pick.wall, (v) => { this.pick.wall = v; })), brush, h('div', { class: 'st-muted' }, 'กำแพงกันการเดิน · (ลบ) เอากำแพงออก'));
     if (this.tool === 'deco') parts.push(row('ตกแต่ง', sel([...tiles('deco'), '(ลบ)'], this.pick.deco, (v) => { this.pick.deco = v; })), brush);
     parts.push(h('div', { class: 'st-h' }, 'รายการบนแมพ'));

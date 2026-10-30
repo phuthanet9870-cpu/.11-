@@ -25,6 +25,7 @@ import tilesetsJson from '../data/tilesets.json';
 import objectsJson from '../data/objects.json';
 import { MAP_FILES } from '../data/maps';
 import { STUDIO_DATA, STUDIO_MAPS, STUDIO_OBJECTS, STUDIO_TILESETS } from '../data/studio';
+import { groundBase } from './mapCompiler';
 import type {
   BossDef, DropTable, Element, ItemDef, JobClassDef, MapDef, MonsterDef, NpcDef,
   ComboDef, InstanceDef, ObjectKindDef, PetDef, QuestDef, RecipeDef, ShopDef, SkillDef, StatusDef, StatusId, TileDef, TilesetDef,
@@ -194,7 +195,9 @@ export function validateGameData(d: GameData): string[] {
         need(d.objectKinds.has(op.kind), `map ${m.id}: object kind ${op.kind}`);
       }
       if (op.op === 'scatter' && op.kind.startsWith('deco:')) need(d.tiles.has(op.kind.slice(5)), `map ${m.id}: deco ${op.kind}`);
-      if ((op.op === 'rect' || op.op === 'path' || op.op === 'blob') && !d.tiles.has(op.tile)) errors.push(`map ${m.id}: tile ${op.tile}`);
+      const known = (t: string) => d.tiles.has(groundBase(t)) && (!t.includes('@') || d.tilesets.has(t.slice(t.indexOf('@') + 1)));
+      if ((op.op === 'rect' || op.op === 'path' || op.op === 'blob') && !known(op.tile)) errors.push(`map ${m.id}: tile ${op.tile}`);
+      if (op.op === 'tiles') for (const [, , t] of op.cells) if (t != null && !known(t)) { errors.push(`map ${m.id}: tile ${t}`); break; }
     }
     for (const o of m.objects) {
       if (o.interact?.giveItem) need(d.items.has(o.interact.giveItem.itemId), `map ${m.id}: object ${o.id} item`);

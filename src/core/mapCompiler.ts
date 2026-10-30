@@ -38,6 +38,12 @@ export interface CompiledMap {
   reachable: Uint8Array;
 }
 
+/** Ground ids may name another tileset's texture: `sand@desert` is sand drawn with the desert sheet.
+ * Rules (walkable, where trees grow) only look at the part before '@'. */
+export const groundBase = (id: string) => { const i = id.indexOf('@'); return i < 0 ? id : id.slice(0, i); };
+/** Tileset whose ground sheet draws this id. */
+export const groundTileset = (id: string, mapTileset: string) => { const i = id.indexOf('@'); return i < 0 ? mapTileset : id.slice(i + 1); };
+
 const NATURAL_GROUND = new Set(['grass', 'grass_dark', 'forest_floor']);
 const NO_DECO_GROUND = new Set(['dirt', 'path_stone', 'ruin_floor', 'water', 'sand', 'soil']);
 
@@ -187,15 +193,15 @@ export function compileMap(data: GameData, def: MapDef): CompiledMap {
             const i = idx(x, y);
             if (wall[i] || objectAt[i] >= 0 || buildingCell[i]) continue;
             if (isDeco) {
-              const g = data.tiles.get(ground[i]);
-              if (!g?.walkable || NO_DECO_GROUND.has(ground[i]) || deco[i]) continue;
+              const g = data.tiles.get(groundBase(ground[i]));
+              if (!g?.walkable || NO_DECO_GROUND.has(groundBase(ground[i])) || deco[i]) continue;
               deco[i] = decoTile;
             } else {
               let fits = true;
               for (let yy = y; yy < y + k!.footprint.h && fits; yy++) for (let xx = x; xx < x + k!.footprint.w; xx++) {
                 if (!inside(xx, yy)) { fits = false; break; }
                 const j = idx(xx, yy);
-                if (reserved[j] || wall[j] || objectAt[j] >= 0 || buildingCell[j] || !NATURAL_GROUND.has(ground[j])) { fits = false; break; }
+                if (reserved[j] || wall[j] || objectAt[j] >= 0 || buildingCell[j] || !NATURAL_GROUND.has(groundBase(ground[j]))) { fits = false; break; }
               }
               if (fits) placeObject(op.kind, x, y);
             }
@@ -209,7 +215,7 @@ export function compileMap(data: GameData, def: MapDef): CompiledMap {
   // Collision grid.
   const collision = new Uint8Array(N);
   for (let i = 0; i < N; i++) {
-    const g = data.tiles.get(ground[i]);
+    const g = data.tiles.get(groundBase(ground[i]));
     const w = wall[i] ? data.tiles.get(wall[i]!) : null;
     if (!g?.walkable || (w && !w.walkable) || buildingCell[i]) collision[i] = 1;
     const o = objectAt[i] >= 0 ? objects[objectAt[i]] : null;

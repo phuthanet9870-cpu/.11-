@@ -2,7 +2,7 @@
 // layer images (ground+decoration, walls, above-player) plus individual object
 // and building sprites, coloured by the map's tileset palette.
 import type { CompiledMap, PlacedBuilding } from '../../core/mapCompiler';
-import { TILE } from '../../core/mapCompiler';
+import { groundBase, groundTileset, TILE } from '../../core/mapCompiler';
 import type { ObjectKindDef } from '../../core/types';
 import { ellipse, makeCanvas, noise, px, shade } from './canvas';
 import { archSprite, extraSprite, GROUND_BLOCK, GROUND_ORDER, groundSheet, PROP_ORDER, propBounds, propSheet, type ArchPart } from './themeArt';
@@ -167,17 +167,17 @@ export function regionCanvas(map: CompiledMap, region?: Region) {
 /** Ground + decoration composed into one image (Ground & Ground Decoration layers). */
 export function paintGroundLayer(map: CompiledMap, pal: Palette, region?: Region): HTMLCanvasElement {
   const { canvas, ctx, x0, y0, x1, y1 } = regionCanvas(map, region);
-  const sheet = groundSheet(map.def.tileset);
   for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
-    const id = map.ground[y * map.width + x], block = sheet ? GROUND_ORDER.indexOf(id) : -1;
+    const raw = map.ground[y * map.width + x], id = groundBase(raw), sheet = groundSheet(groundTileset(raw, map.def.tileset));
+    const block = sheet ? GROUND_ORDER.indexOf(id) : -1;
     // Painted ground: each block is a seamless 256px texture, sampled at the tile's world position.
     if (sheet && block >= 0) ctx.drawImage(sheet, (x * T) % GROUND_BLOCK, block * GROUND_BLOCK + (y * T) % GROUND_BLOCK, T, T, x * T, y * T, T, T);
     else drawGround(ctx, id, x * T, y * T, pal, cellSeed(x, y));
   }
   // Soft transitions: darken water edges, add path edge pebbles.
   for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
-    const id = map.ground[y * map.width + x];
-    const nb = (dx: number, dy: number) => map.ground[(y + dy) * map.width + (x + dx)];
+    const id = groundBase(map.ground[y * map.width + x]);
+    const nb = (dx: number, dy: number) => { const g = map.ground[(y + dy) * map.width + (x + dx)]; return g && groundBase(g); };
     if (id === 'water') {
       if (nb(0, -1) && nb(0, -1) !== 'water') { px(ctx, x * T, y * T, T, 4, shade(pal.water1, -0.25)); px(ctx, x * T, y * T + 4, T, 1, pal.water2); }
       if (nb(-1, 0) && nb(-1, 0) !== 'water') px(ctx, x * T, y * T, 2, T, shade(pal.water1, 0.25));
