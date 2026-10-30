@@ -35,7 +35,7 @@ async function player(name) {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 720 } });
   const page = await ctx.newPage();
   page.on('pageerror', (e) => errors.push(`${name}: ${e.message}`));
-  await page.goto(`http://localhost:${PORT}/`);
+  await page.goto(`http://localhost:${PORT}/#game`);
   await page.click('#btn-play'); await page.waitForSelector('.slots');
   await page.click('.slot.empty'); await page.fill('#char-name', name); await page.click('#btn-create');
   await page.waitForSelector('#hud', { timeout: 20000 }); await page.waitForTimeout(800);

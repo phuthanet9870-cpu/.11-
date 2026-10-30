@@ -2,7 +2,7 @@
 // Builds are served with `vite preview`; the test drives the real UI and
 // reads state through the window.__veyloria debug hook.
 import { spawn } from 'node:child_process';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -15,7 +15,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '../..');
 const shots = join(root, 'tests/e2e/screenshots');
 mkdirSync(shots, { recursive: true });
 const PORT = Number(process.env.E2E_PORT ?? 4173);
-const URL = `http://localhost:${PORT}/`;
+const URL = `http://localhost:${PORT}/#game`;
 
 const results = [];
 function check(name, ok, detail = '') {
@@ -564,6 +564,53 @@ try {
   await sleep(200);
   const gone = await page.evaluate(() => !window.__veyloria.save.characters.some((c) => c?.name === 'E2E Hero'));
   check('character deletion requires typing the name, then deletes', stillThere && gone);
+
+  // Studio: launcher, edit a map, an image and an object kind, export a pack, then the game uses the edits.
+  {
+    const ctx2 = await browser.newContext({ viewport: { width: 1440, height: 860 }, acceptDownloads: true });
+    const sp = await ctx2.newPage();
+    sp.on('pageerror', (e) => errors.push(`studio pageerror: ${e.message}`));
+    sp.on('dialog', (d) => d.accept());
+    await sp.goto(URL.replace('#game', ''));
+    await sp.waitForSelector('#launcher');
+    check('launcher offers the game and the studio', await sp.isVisible('#launch-game') && await sp.isVisible('#launch-studio'));
+    await sp.click('#launch-studio');
+    await sp.waitForSelector('#studio .st-canvas');
+    await sp.waitForTimeout(3000);
+    const cv = await sp.locator('.st-canvas').first().boundingBox();
+    await sp.mouse.click(cv.x + cv.width / 2, cv.y + cv.height / 2);
+    await sp.waitForTimeout(200);
+    const title = await sp.textContent('.st-side.right .st-h');
+    const x0 = +(await sp.inputValue('.st-side.right input[type=number] >> nth=0'));
+    for (let i = 0; i < 3; i++) await sp.keyboard.press('ArrowRight');
+    await sp.waitForTimeout(200);
+    const x1 = +(await sp.inputValue('.st-side.right input[type=number] >> nth=0'));
+    check('studio map editor: click selects, arrow keys move', !!title && x1 === x0 + 3, `${title} ${x0} → ${x1}`);
+    await sp.click('#map-save');
+    await sp.waitForTimeout(500);
+    await sp.click('[data-tab=images]');
+    await sp.waitForTimeout(1500);
+    const ic = await sp.locator('.st-canvas').first().boundingBox();
+    for (let i = 0; i < 5; i++) await sp.mouse.click(ic.x + ic.width / 2 + i * 6, ic.y + 40);
+    await sp.click('#img-save');
+    await sp.waitForTimeout(500);
+    await sp.click('[data-tab=objects]');
+    await sp.waitForTimeout(800);
+    await sp.fill('.st-scroll input[type=number] >> nth=2', '100');
+    await sp.press('.st-scroll input[type=number] >> nth=2', 'Enter');
+    await sp.waitForTimeout(300);
+    await sp.click('#objects-save');
+    await sp.waitForTimeout(500);
+    await sp.click('[data-tab=pack]');
+    const [dl] = await Promise.all([sp.waitForEvent('download'), sp.click('button:has-text("ส่งออกแพ็ก")')]);
+    const pack = JSON.parse(readFileSync(await dl.path(), 'utf8'));
+    check('studio exports a pack with the edited map, image and objects', pack.format === 'veyloria-studio-pack' && !!pack.maps.aurelion && !!pack.images['props/willowbrook'] && pack.objects?.find((o) => o.id === 'tree_oak')?.artH === 100);
+    await sp.click('#studio-play');
+    await sp.waitForFunction(() => window.__veyloria?.data, null, { timeout: 30000 });
+    const g = await sp.evaluate(() => ({ layer: window.__studioLayer, oak: window.__veyloria.data.objectKinds.get('tree_oak').artH }));
+    check('the game uses the studio edits (map, image, objects)', g.layer.maps.includes('aurelion') && g.layer.images.includes('props/willowbrook') && g.oak === 100, JSON.stringify(g));
+    await ctx2.close();
+  }
 
   check('no uncaught page errors', errors.length === 0, errors.slice(0, 5).join(' | '));
 } catch (err) {

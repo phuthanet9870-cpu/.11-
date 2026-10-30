@@ -24,6 +24,7 @@ import tilesJson from '../data/tiles.json';
 import tilesetsJson from '../data/tilesets.json';
 import objectsJson from '../data/objects.json';
 import { MAP_FILES } from '../data/maps';
+import { STUDIO_MAPS, STUDIO_OBJECTS, STUDIO_TILESETS } from '../data/studio';
 import type {
   BossDef, DropTable, Element, ItemDef, JobClassDef, MapDef, MonsterDef, NpcDef,
   ComboDef, InstanceDef, ObjectKindDef, PetDef, QuestDef, RecipeDef, ShopDef, SkillDef, StatusDef, StatusId, TileDef, TilesetDef,
@@ -94,9 +95,12 @@ export function loadGameData(): GameData {
     quests: byId(questsJson as QuestDef[]),
     tiles: byId(tilesJson.tiles as TileDef[]),
     tilesets: byId(tilesetsJson as unknown as TilesetDef[]),
-    objectKinds: byId(objectsJson as ObjectKindDef[]),
+    objectKinds: byId((STUDIO_OBJECTS ?? objectsJson) as ObjectKindDef[]),
     maps: byId(MAP_FILES as unknown as MapDef[]),
   };
+  // Studio layer (committed edits) over the generated data.
+  for (const t of STUDIO_TILESETS) cached.tilesets.set(t.id, t);
+  for (const m of STUDIO_MAPS) cached.maps.set(m.id, m);
   return cached;
 }
 

@@ -55,6 +55,7 @@ export function titleScreen(onPlay: () => void, onSettings: () => void, onLang: 
       h('div', { class: 'title-menu' },
         h('button', { class: 'btn primary', id: 'btn-play', onclick: () => { audio.unlock(); audio.play('ui_click'); onPlay(); } }, 'Start Adventure'),
         h('button', { class: 'btn', onclick: () => { audio.unlock(); onSettings(); } }, 'Settings'),
+        h('button', { class: 'btn', id: 'btn-studio', onclick: () => { location.hash = '#studio'; location.reload(); } }, 'Studio'),
       ),
       h('div', { class: 'mode-note' },
         'Phase 1 build — single-player development mode. Progress is saved in this browser. ',

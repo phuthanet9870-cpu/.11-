@@ -106,6 +106,20 @@ Ground-target skills (Arrow Rain, Wind Trap, Fire Wall, Thunderstorm, Meteor) la
 | Windows: status, inventory, equipment, skill tree, quest journal, world map, pet (P), homunculus (H), pushcart (V), runes (N), social / online (G), database with refine simulator / forge calculator / option odds / combos / pets / element chart (B), settings (volume, toggles, key rebinding) | ✅ | `src/ui/windows.ts` |
 | Audio: BGM per map, boss music, ambience, SFX; Master/Music/SFX/Ambient volume | ✅ (procedural) | `src/game/audio/audio.ts` |
 
+## Veyloria Studio (editor)
+
+Opening the game shows a launcher: **▶ เข้าเกม** (play) or **🛠 เข้า Studio** (edit). `#game` / `#studio` at the end of the URL skips it, and the title screen has a Studio button.
+
+| Tab | What you can do |
+|---|---|
+| 🗺 Maps | The map drawn with the game's painters. Select and drag (or arrow-key) objects, buildings, NPCs, portals, spawn points, city walls/gates/castles, monster zones and named areas; delete, duplicate, edit any field (or the whole map as JSON); place objects and buildings; paint ground, walls and decoration by hand; show collision; reachability check; undo/redo; new maps. Scattered trees and rocks become ordinary objects when a map is opened, so each one can be moved. |
+| 🌳 Objects | Every object kind: footprint, blocking, true-to-life height (compared with a character), image, fallback drawing; new kinds from an imported picture or a blank image; duplicate, delete (blocked while a map uses it). |
+| 🎨 Tilesets | Palette colours of each tileset; jump to its ground and props sheets. |
+| 🖼 Images | Pixel editor for every art image (ground sheets, props sheets, architecture, landmarks, custom images): pencil, eraser, fill, colour picker, selection (a click on a sheet selects the whole cell), import a picture into the whole image or the selection, download PNG, revert. |
+| 📦 Pack | Export everything you edited as one `.json` pack, import a pack, clear all edits. |
+
+Edits are saved in this browser (IndexedDB) and the game in the same browser uses them right away. To put them into the project: `python3 tools/studio/apply_pack.py <pack.json>` writes images to `public/art` and maps/objects/tilesets to `src/data/studio`, which is laid over the generated data, so `npm run world:build` does not overwrite it. The online server only sees edits that were applied to the project this way.
+
 ## Online play (optional)
 
 ```

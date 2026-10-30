@@ -164,6 +164,17 @@ export function compileMap(data: GameData, def: MapDef): CompiledMap {
         reserveRect(op);
         break;
       }
+      case 'tiles': {
+        for (const [x, y, tile] of op.cells) {
+          if (!inside(x, y)) continue;
+          const i = idx(x, y);
+          if (op.layer === 'ground') ground[i] = tile ?? def.base;
+          else if (op.layer === 'deco') deco[i] = tile;
+          else wall[i] = tile;
+          reserved[i] = 1;
+        }
+        break;
+      }
       case 'scatter': {
         const rng = new Rng(op.seed);
         const area = op.area ?? { x: t, y: t, w: W - 2 * t, h: H - 2 * t };

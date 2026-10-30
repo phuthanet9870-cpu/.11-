@@ -29,6 +29,15 @@ export function architectureTheme(tileset: string): string {
 
 const images = new Map<string, HTMLImageElement | null>();
 const pending = new Map<string, Promise<void>>();
+/** Studio edits: image path → object URL used instead of art/<path>.webp. */
+const overrides = new Map<string, string>();
+
+/** Replaces (or with null restores) one image; it is loaded again the next time a map needs it. */
+export function setArtOverride(path: string, url: string | null) {
+  if (url) overrides.set(path, url); else overrides.delete(path);
+  images.delete(path);
+  pending.delete(path);
+}
 
 function load(path: string): Promise<void> {
   if (images.has(path)) return Promise.resolve();
@@ -39,7 +48,7 @@ function load(path: string): Promise<void> {
       const img = new Image();
       img.onload = () => { images.set(path, img); resolve(); };
       img.onerror = () => { images.set(path, null); resolve(); };
-      img.src = `art/${path}.webp`;
+      img.src = overrides.get(path) ?? `art/${path}.webp`;
     });
     pending.set(path, p);
   }
@@ -47,6 +56,10 @@ function load(path: string): Promise<void> {
 }
 
 const img = (path: string) => images.get(path) ?? null;
+/** Loads any set of images (for tools that need them up front). */
+export const loadArt = (paths: string[]) => Promise.all(paths.map(load)).then(() => undefined);
+/** URL the game loads for an image (Studio edit or the shipped file). */
+export const artUrl = (path: string) => overrides.get(path) ?? `art/${path}.webp`;
 const tilesetPaths = (tileset: string) => {
   const theme = architectureTheme(tileset);
   return [`tiles/${tileset}`, `props/${tileset}`, ...ARCH_PARTS.map((p) => `arch/${theme}/${p}`)];
