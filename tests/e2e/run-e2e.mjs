@@ -575,6 +575,9 @@ try {
     await sp.waitForSelector('#launcher');
     check('launcher offers the game and the studio', await sp.isVisible('#launch-game') && await sp.isVisible('#launch-studio'));
     await sp.click('#launch-studio');
+    await sp.waitForSelector('#studio [data-home]');
+    check('studio opens on a home page with a card for every section', (await sp.locator('[data-home]').count()) >= 10);
+    await sp.click('[data-tab=maps]');
     await sp.waitForSelector('#studio .st-canvas');
     await sp.waitForTimeout(3000);
     const cv = await sp.locator('.st-canvas').first().boundingBox();
@@ -586,7 +589,37 @@ try {
     await sp.waitForTimeout(200);
     const x1 = +(await sp.inputValue('.st-side.right input[type=number] >> nth=0'));
     check('studio map editor: click selects, arrow keys move', !!title && x1 === x0 + 3, `${title} ${x0} → ${x1}`);
+    // Box-select several things and delete them at once.
+    const count = async () => +(/(\d+) วัตถุ/.exec(await sp.textContent('.st-bar .st-muted'))?.[1] ?? -1);
+    const n0 = await count();
+    await sp.keyboard.press('Escape');
+    await sp.mouse.move(cv.x + 30, cv.y + cv.height * 0.15); await sp.mouse.down();
+    await sp.mouse.move(cv.x + cv.width * 0.3, cv.y + cv.height * 0.45, { steps: 10 }); await sp.mouse.up();
+    await sp.waitForTimeout(200);
+    const boxed = /เลือกอยู่ (\d+)/.exec(await sp.textContent('.st-side.right .st-h'))?.[1];
+    await sp.locator('.st-side.right .st-row:has-text("วัตถุ") button').first().click();
+    const objs = +(/เลือกอยู่ (\d+)/.exec(await sp.textContent('.st-side.right .st-h'))?.[1] ?? 1);
+    await sp.click('#map-delete-selected');
+    await sp.waitForTimeout(400);
+    const n1 = await count();
+    check('studio map: a dragged box selects several things and one click deletes them all', +boxed > 1 && n1 === n0 - objs && objs > 1, `boxed ${boxed}, objects ${n0} → ${n1}`);
     await sp.click('#map-save');
+    await sp.waitForTimeout(500);
+    // Sprite sheet: draw on a monster and save.
+    await sp.click('[data-tab=sprites]');
+    await sp.waitForSelector('[data-sprite="sprites/monster/leaf_slime"]');
+    await sp.click('[data-sprite="sprites/monster/leaf_slime"]');
+    await sp.waitForTimeout(800);
+    const scv = await sp.locator('.st-canvas').first().boundingBox();
+    for (let i = 0; i < 4; i++) await sp.mouse.click(scv.x + scv.width / 2 + i * 4, scv.y + scv.height / 2);
+    await sp.click('#img-save');
+    await sp.waitForTimeout(500);
+    // Database: rename an item.
+    await sp.click('[data-tab=database]');
+    await sp.waitForSelector('#db-save');
+    await sp.fill('.st-field:has(small:text-is("name")) input', 'Studio Potion');
+    await sp.press('.st-field:has(small:text-is("name")) input', 'Enter');
+    await sp.click('#db-save');
     await sp.waitForTimeout(500);
     await sp.click('[data-tab=images]');
     await sp.waitForTimeout(1500);
@@ -607,8 +640,9 @@ try {
     check('studio exports a pack with the edited map, image and objects', pack.format === 'veyloria-studio-pack' && !!pack.maps.aurelion && !!pack.images['props/willowbrook'] && pack.objects?.find((o) => o.id === 'tree_oak')?.artH === 100);
     await sp.click('#studio-play');
     await sp.waitForFunction(() => window.__veyloria?.data, null, { timeout: 30000 });
-    const g = await sp.evaluate(() => ({ layer: window.__studioLayer, oak: window.__veyloria.data.objectKinds.get('tree_oak').artH }));
-    check('the game uses the studio edits (map, image, objects)', g.layer.maps.includes('aurelion') && g.layer.images.includes('props/willowbrook') && g.oak === 100, JSON.stringify(g));
+    const g = await sp.evaluate(() => ({ layer: window.__studioLayer, oak: window.__veyloria.data.objectKinds.get('tree_oak').artH, potion: window.__veyloria.data.items.get('red_potion').name }));
+    check('the game uses the studio edits (map, image, objects, sprite sheet, item data)',
+      g.layer.maps.includes('aurelion') && g.layer.images.includes('props/willowbrook') && g.layer.images.includes('sprites/monster/leaf_slime') && g.oak === 100 && g.potion === 'Studio Potion', JSON.stringify(g));
     await ctx2.close();
   }
 

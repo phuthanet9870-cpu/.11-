@@ -7,6 +7,8 @@ export interface StudioLayer {
   maps: Map<string, MapDef>;
   objects: ObjectKindDef[] | null;
   tilesets: Map<string, TilesetDef>;
+  /** Whole data collections (items, monsters, skills…) by name. */
+  data: Map<string, unknown[]>;
 }
 
 /** Portable form of every edit. Images are PNG data URLs keyed by art path (e.g. `props/capital`). */
@@ -17,6 +19,7 @@ export interface StudioPack {
   maps: Record<string, MapDef>;
   objects: ObjectKindDef[] | null;
   tilesets: Record<string, TilesetDef>;
+  data?: Record<string, unknown[]>;
 }
 
 const DB = 'veyloria-studio', STORE = 'kv';
@@ -52,10 +55,11 @@ export const deleteMap = (id: string) => deleteValue(`map:${id}`);
 export const saveObjects = (list: ObjectKindDef[] | null) => (list ? putValue('objects', list) : deleteValue('objects'));
 export const saveTileset = (t: TilesetDef) => putValue(`tileset:${t.id}`, t);
 export const deleteTileset = (id: string) => deleteValue(`tileset:${id}`);
+export const saveCollection = (name: string, list: unknown[] | null) => (list ? putValue(`data:${name}`, list) : deleteValue(`data:${name}`));
 
 /** Everything saved in this browser. */
 export async function readLayer(): Promise<StudioLayer> {
-  const layer: StudioLayer = { images: new Map(), maps: new Map(), objects: null, tilesets: new Map() };
+  const layer: StudioLayer = { images: new Map(), maps: new Map(), objects: null, tilesets: new Map(), data: new Map() };
   const d = await db();
   await new Promise<void>((resolve, reject) => {
     const t = d.transaction(STORE, 'readonly');
@@ -67,6 +71,7 @@ export async function readLayer(): Promise<StudioLayer> {
       if (k.startsWith('img:')) layer.images.set(k.slice(4), c.value as Blob);
       else if (k.startsWith('map:')) layer.maps.set(k.slice(4), c.value as MapDef);
       else if (k.startsWith('tileset:')) layer.tilesets.set(k.slice(8), c.value as TilesetDef);
+      else if (k.startsWith('data:')) layer.data.set(k.slice(5), c.value as unknown[]);
       else if (k === 'objects') layer.objects = c.value as ObjectKindDef[];
       c.continue();
     };
@@ -87,7 +92,7 @@ export async function exportPack(): Promise<StudioPack> {
   const l = await readLayer();
   const images: Record<string, string> = {};
   for (const [p, b] of l.images) images[p] = await blobToDataUrl(b);
-  return { format: 'veyloria-studio-pack', version: 1, images, maps: Object.fromEntries(l.maps), objects: l.objects, tilesets: Object.fromEntries(l.tilesets) };
+  return { format: 'veyloria-studio-pack', version: 1, images, maps: Object.fromEntries(l.maps), objects: l.objects, tilesets: Object.fromEntries(l.tilesets), data: Object.fromEntries(l.data) };
 }
 
 export function isPack(v: unknown): v is StudioPack {
@@ -100,4 +105,5 @@ export async function importPack(pack: StudioPack) {
   for (const m of Object.values(pack.maps)) await saveMap(m);
   for (const t of Object.values(pack.tilesets)) await saveTileset(t);
   if (pack.objects) await saveObjects(pack.objects);
+  for (const [k, list] of Object.entries(pack.data ?? {})) await saveCollection(k, list);
 }

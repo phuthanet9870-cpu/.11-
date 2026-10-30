@@ -1,6 +1,7 @@
 // Procedural item & skill icons rendered to data URLs for the HTML UI.
 import type { ItemDef, SkillDef } from '../../core/types';
 import { addOutline, ellipse, makeCanvas, px, shade } from './canvas';
+import { overrideCanvas } from './spriteOverrides';
 
 const cache = new Map<string, string>();
 
@@ -128,6 +129,8 @@ function drawItemShape(ctx: CanvasRenderingContext2D, shape: string, c: string, 
 }
 
 export function itemIconCanvas(def: ItemDef): HTMLCanvasElement {
+  const drawn = overrideCanvas(`icons/item/${def.id}`, 32, 32);
+  if (drawn) return drawn;
   const { canvas, ctx } = makeCanvas(32, 32);
   drawItemShape(ctx, def.icon.shape, def.icon.color, def.icon.accent ?? shade(def.icon.color, 0.3));
   addOutline(ctx, 0, 0, 32, 32);
@@ -147,6 +150,8 @@ export function skillIconUrl(def: SkillDef): string {
   const key = `skill:${def.id}`;
   const hit = cache.get(key);
   if (hit) return hit;
+  const drawn = overrideCanvas(`icons/skill/${def.id}`, 32, 32);
+  if (drawn) { const u = drawn.toDataURL(); cache.set(key, u); return u; }
   const { canvas, ctx } = makeCanvas(32, 32);
   const c = def.icon.color;
   const g = ctx.createLinearGradient(0, 0, 32, 32);

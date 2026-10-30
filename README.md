@@ -112,17 +112,22 @@ Ground-target skills (Arrow Rain, Wind Trap, Fire Wall, Thunderstorm, Meteor) la
 
 ## Veyloria Studio (editor)
 
-Opening the game shows a launcher: **▶ เข้าเกม** (play) or **🛠 เข้า Studio** (edit). `#game` / `#studio` at the end of the URL skips it, and the title screen has a Studio button.
+Opening the game shows a launcher: **▶ เข้าเกม** (play) or **🛠 เข้า Studio** (edit). `#game` / `#studio` at the end of the URL skips it, and the title screen has a Studio button. The Studio opens on a home page with a card for every section, three steps, and a list of shortcuts; every tab has a "💡 วิธีใช้" (how to use) strip.
 
 | Tab | What you can do |
 |---|---|
-| 🗺 Maps | The map drawn with the game's painters. Select and drag (or arrow-key) objects, buildings, NPCs, portals, spawn points, city walls/gates/castles, monster zones and named areas; delete, duplicate, edit any field (or the whole map as JSON); place objects and buildings; paint ground, walls and decoration by hand; show collision; reachability check; undo/redo; new maps. Scattered trees and rocks become ordinary objects when a map is opened, so each one can be moved. |
-| 🌳 Objects | Every object kind: footprint, blocking, true-to-life height (compared with a character), image, fallback drawing; new kinds from an imported picture or a blank image; duplicate, delete (blocked while a map uses it). |
-| 🎨 Tilesets | Palette colours of each tileset; jump to its ground and props sheets. |
-| 🖼 Images | Pixel editor for every art image (ground sheets, props sheets, architecture, landmarks, custom images): pencil, eraser, fill, colour picker, selection (a click on a sheet selects the whole cell), import a picture into the whole image or the selection, download PNG, revert. |
-| 📦 Pack | Export everything you edited as one `.json` pack, import a pack, clear all edits. |
+| 🏠 Home | Cards for every section, the three steps (choose → edit and save → ▶ play), what was edited, shortcuts. |
+| 🗺 Maps | The map drawn with the game's painters. Select and drag (or arrow-key) objects, buildings, NPCs, portals, spawn points, city walls/gates/castles, monster zones and areas. **Drag a box (or Shift+click) to select many, then delete, move or duplicate them all at once**; "select this kind across the map" (e.g. every oak). Resize buildings, portals, zones and scenery from the corner handle. Place objects and buildings; paint ground, walls and decoration with a square or round brush, or **fill a dragged rectangle or ellipse**. Edit any field or the whole map as JSON, show collision, reachability check, undo/redo, new maps. |
+| 🌳 Objects | Every object kind: footprint, blocking, true-to-life height (compared with a character), image, fallback drawing; new kinds from a picture (**crop the part you want first**) or a blank image. |
+| 🧍 Sprites & UI | Sprite sheets of every drawn system: monsters (also used by pets and homunculi), NPCs, the player character of each job, item icons, skill icons, and one UI sheet for the 16 HUD menu buttons. The starting image is what the game draws now; frame grid and a live animation preview (any move, any direction). |
+| 🖼 Scene images | Ground sheets, props sheets, architecture, landmarks, custom images. |
+| 🎨 Tileset colours | Palette of each tileset. |
+| 📚 Game data | Every data system: items, monsters, skills, jobs, NPCs, shops, quests, drop tables, pets, forging recipes, bosses, card combos, homunculi, runes, status effects, memorial dungeons. Any field, add/copy/delete entries; the game's own validator checks the whole data set before saving. |
+| 📦 Pack | Export everything as one `.json` pack, import a pack, clear all edits. |
 
-Edits are saved in this browser (IndexedDB) and the game in the same browser uses them right away. To put them into the project: `python3 tools/studio/apply_pack.py <pack.json>` writes images to `public/art` and maps/objects/tilesets to `src/data/studio`, which is laid over the generated data, so `npm run world:build` does not overwrite it. The online server only sees edits that were applied to the project this way.
+The image editor (used for sprites and scene images) has pencil, eraser, fill, colour picker, line, rectangle and ellipse (outline or filled), and selection as a rectangle, ellipse or freehand shape. **Import a picture, crop it (rectangle, ellipse or freehand), then drag, scale (corner handle, Shift = free proportions) or flip it before placing it**; copy/cut/paste (also pasting an image from the clipboard), lift a selection to move or scale it, and resize the whole image.
+
+Edits are saved in this browser (IndexedDB) and the game in the same browser uses them right away. To put them into the project: `python3 tools/studio/apply_pack.py <pack.json>` writes images and sprite sheets to `public/art` and maps, objects, tilesets and data to `src/data/studio`, which is laid over the generated data, so `npm run world:build` does not overwrite it. The online server only sees edits that were applied to the project this way.
 
 ## Online play (optional)
 

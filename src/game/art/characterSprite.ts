@@ -3,6 +3,7 @@
 // contract real artwork must follow to replace these sheets.
 import type { Appearance, Direction } from '../../core/types';
 import { addOutline, ellipse, makeCanvas, px, shade } from './canvas';
+import { overrideCanvas } from './spriteOverrides';
 import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_FRAME_H, CHAR_FRAME_W, CHAR_SHEET_COLS, type CharAnim } from './spriteMeta';
 
 export interface CharacterLook {
@@ -10,6 +11,8 @@ export interface CharacterLook {
   outfit: { primary: string; secondary: string; accent: string; style: string };
   weapon: string | null; // weapon type: dagger, sword, bow, staff, wand, spear, club...
   shield?: boolean;
+  /** Studio sheet that replaces the drawn one: `npc/<id>` or `class/<classId>`. */
+  sheet?: string;
 }
 
 const W = CHAR_FRAME_W, H = CHAR_FRAME_H;
@@ -263,6 +266,8 @@ function drawFrame(ctx: CanvasRenderingContext2D, look: CharacterLook, dir: Dire
 }
 
 export function generateCharacterSheet(look: CharacterLook): HTMLCanvasElement {
+  const drawn = look.sheet ? overrideCanvas(`sprites/${look.sheet}`, W * CHAR_SHEET_COLS, H * CHAR_DIRECTIONS.length) : null;
+  if (drawn) return drawn;
   const { canvas, ctx } = makeCanvas(W * CHAR_SHEET_COLS, H * CHAR_DIRECTIONS.length);
   const tmp = makeCanvas(W, H);
   for (const [row, dir] of CHAR_DIRECTIONS.entries()) {

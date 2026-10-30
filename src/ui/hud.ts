@@ -6,6 +6,7 @@ import { TILE } from '../core/mapCompiler';
 import type { HotbarSlot } from '../core/types';
 import { itemIconUrl, skillIconUrl } from '../game/art/icons';
 import { portraitFromSheet, generateCharacterSheet } from '../game/art/characterSprite';
+import { uiMenuIcon } from '../game/art/spriteOverrides';
 import { h, setChildren } from './dom';
 import { HOTBAR_SLOTS } from '../core/save';
 import type { App } from './app';
@@ -96,7 +97,7 @@ export class Hud {
         class: 'mbtn', id: elId, dataset: { win: id },
         title: id === 'admin' ? 'GM / Admin tools (F8 or /gm)' : id === 'auto' ? `Auto Farm / Auto Quest (${this.app.keyLabel('auto')})` : `${label} (${this.app.keyLabel(id)})`,
         onclick: () => this.app.windows.toggle(id as never),
-      }, h('span', { class: 'ico' }, icon), h('span', { class: 'lbl' }, label))));
+      }, h('span', { class: 'ico' }, uiMenuIcon(id) ? h('img', { src: uiMenuIcon(id)!, alt: '', style: 'width:28px;height:28px;image-rendering:pixelated' }) : icon), h('span', { class: 'lbl' }, label))));
     this.menuEl = menu;
     this.zoomSlider.addEventListener('input', () => this.app.setZoom(Number(this.zoomSlider.value) / 100));
     const zoomBox = h('div', { class: 'zoom-box' },

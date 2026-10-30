@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { loadGameData } from '../../src/core/data';
+import { loadGameData, validateGameData } from '../../src/core/data';
 import { compileMap } from '../../src/core/mapCompiler';
 import type { MapDef } from '../../src/core/types';
 import { applyLayer } from '../../src/studio/layer';
@@ -56,10 +56,19 @@ describe('Studio layer over the game data', () => {
     const good = copy('willowbrook'); good.name = 'Edited';
     const bad = copy('aurelion'); bad.paint.push({ op: 'object', kind: 'no_such_kind', x: 5, y: 5 });
     const objects = [...data.objectKinds.values()].map((k) => (k.id === 'rock' ? { ...k, artH: 33 } : k));
-    const r = applyLayer(d as never, { images: new Map(), maps: new Map([['willowbrook', good], ['aurelion', bad]]), objects, tilesets: new Map() });
+    const r = applyLayer(d as never, { images: new Map(), maps: new Map([['willowbrook', good], ['aurelion', bad]]), objects, tilesets: new Map(), data: new Map() });
     expect(d.maps.get('willowbrook')!.name).toBe('Edited');
     expect(d.maps.get('aurelion')).toBe(data.maps.get('aurelion'));
     expect(r.skipped.join()).toMatch(/aurelion/);
     expect(d.objectKinds.get('rock')!.artH).toBe(33);
+  });
+
+  it('replaces a whole data collection (items) and the game validator still passes', () => {
+    const d = { ...data, maps: new Map(data.maps), objectKinds: new Map(data.objectKinds), tilesets: new Map(data.tilesets), items: new Map(data.items) };
+    const items = [...data.items.values()].map((it) => (it.id === 'red_potion' ? { ...it, name: 'Studio Potion', price: 7 } : it));
+    applyLayer(d as never, { images: new Map(), maps: new Map(), objects: null, tilesets: new Map(), data: new Map([['items', items]]) });
+    expect(d.items.get('red_potion')).toMatchObject({ name: 'Studio Potion', price: 7 });
+    expect(data.items.get('red_potion')!.name).not.toBe('Studio Potion');
+    expect(validateGameData(d as never)).toEqual([]);
   });
 });

@@ -24,7 +24,7 @@ import tilesJson from '../data/tiles.json';
 import tilesetsJson from '../data/tilesets.json';
 import objectsJson from '../data/objects.json';
 import { MAP_FILES } from '../data/maps';
-import { STUDIO_MAPS, STUDIO_OBJECTS, STUDIO_TILESETS } from '../data/studio';
+import { STUDIO_DATA, STUDIO_MAPS, STUDIO_OBJECTS, STUDIO_TILESETS } from '../data/studio';
 import type {
   BossDef, DropTable, Element, ItemDef, JobClassDef, MapDef, MonsterDef, NpcDef,
   ComboDef, InstanceDef, ObjectKindDef, PetDef, QuestDef, RecipeDef, ShopDef, SkillDef, StatusDef, StatusId, TileDef, TilesetDef,
@@ -101,7 +101,19 @@ export function loadGameData(): GameData {
   // Studio layer (committed edits) over the generated data.
   for (const t of STUDIO_TILESETS) cached.tilesets.set(t.id, t);
   for (const m of STUDIO_MAPS) cached.maps.set(m.id, m);
+  for (const [k, list] of Object.entries(STUDIO_DATA)) replaceCollection(cached, k as StudioCollection, list);
   return cached;
+}
+
+/** Game data the Studio's database editor can change (each is a list of entries with an `id`). */
+export const STUDIO_COLLECTIONS = ['items', 'monsters', 'skills', 'classes', 'npcs', 'shops', 'quests', 'drops', 'pets', 'recipes', 'bosses', 'combos', 'homunculi', 'runes', 'statuses', 'instances'] as const;
+export type StudioCollection = (typeof STUDIO_COLLECTIONS)[number];
+
+/** Replaces one whole collection (all entries) of the data. */
+export function replaceCollection(d: GameData, key: StudioCollection, list: unknown[]) {
+  const m = d[key] as Map<string, unknown>;
+  m.clear();
+  for (const e of list as { id: string }[]) m.set(e.id, e);
 }
 
 /** Cross-reference validation. Returns a list of problems (empty = valid). */

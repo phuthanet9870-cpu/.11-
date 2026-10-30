@@ -8,7 +8,7 @@ import type { StudioLayer } from './store';
 export interface StudioCtx {
   data: GameData;
   /** Data as shipped with the game (before this browser's edits). */
-  shipped: { maps: Map<string, MapDef>; objects: ObjectKindDef[]; tilesets: Map<string, TilesetDef> };
+  shipped: { maps: Map<string, MapDef>; objects: ObjectKindDef[]; tilesets: Map<string, TilesetDef>; data: Map<string, unknown[]> };
   layer: StudioLayer;
   /** Bumped whenever an image changes, so editors repaint their cached sprites. */
   artVersion: number;
@@ -65,3 +65,9 @@ export function fileToImage(file: Blob): Promise<HTMLImageElement> {
 
 /** Labelled form row. */
 export const row = (label: string, ...children: (Node | string | null)[]) => h('div', { class: 'st-row' }, h('label', {}, label), ...children);
+
+/** Short "how to use" strip shown at the top of a tab; can be folded away. */
+export function helpBar(text: string) {
+  const d = h('details', { class: 'st-help', open: true }, h('summary', {}, '💡 วิธีใช้'), h('div', {}, text));
+  return d;
+}

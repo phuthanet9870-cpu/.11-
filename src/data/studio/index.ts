@@ -6,3 +6,7 @@ import type { MapDef, ObjectKindDef, TilesetDef } from '../../core/types';
 export const STUDIO_MAPS: MapDef[] = [] as unknown as MapDef[];
 export const STUDIO_OBJECTS: ObjectKindDef[] | null = null;
 export const STUDIO_TILESETS: TilesetDef[] = [];
+/** Whole collections (items, monsters, skills…) replaced by the Studio, keyed by collection name. */
+export const STUDIO_DATA: Record<string, unknown[]> = {};
+/** Sprite sheets and icons drawn in the Studio (public/art/<path>.webp), loaded before the game starts. */
+export const STUDIO_SPRITES: string[] = [];

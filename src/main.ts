@@ -3,10 +3,15 @@ import './ui/style.css';
 import './studio/studio.css';
 import { validateGameData, loadGameData } from './core/data';
 import { applyBrowserLayer } from './studio/layer';
+import { STUDIO_SPRITES } from './data/studio';
+import { decodeSprite, setSpriteOverride } from './game/art/spriteOverrides';
+import { artUrl } from './game/art/themeArt';
 
 async function startGame() {
   document.title = 'Veyloria Online';
   const data = loadGameData();
+  // Sprite sheets committed from the Studio (public/art) are decoded before anything is drawn.
+  await Promise.all(STUDIO_SPRITES.map(async (p) => setSpriteOverride(p, await decodeSprite(artUrl(p)))));
   // Edits saved in the Studio (this browser) are laid over the shipped data first.
   const layer = await applyBrowserLayer(data);
   if (layer.skipped.length) console.warn('[studio] edits skipped:', layer.skipped);

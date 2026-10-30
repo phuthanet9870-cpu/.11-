@@ -40,7 +40,7 @@ export class SpritePreview {
 export function lookForCharacter(data: GameData, c: CharacterState): CharacterLook {
   const cls = data.classes.get(c.classId)!;
   const w = c.equipment.weapon ? data.items.get(c.equipment.weapon.itemId)?.weaponType ?? null : null;
-  return { appearance: c.appearance, outfit: cls.outfit, weapon: w, shield: !!c.equipment.shield };
+  return { appearance: c.appearance, outfit: cls.outfit, weapon: w, shield: !!c.equipment.shield, sheet: `class/${c.classId}` };
 }
 
 export function titleScreen(onPlay: () => void, onSettings: () => void, onLang: (l: Lang) => void): HTMLElement {

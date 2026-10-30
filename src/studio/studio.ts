@@ -1,14 +1,17 @@
 // Veyloria Studio: edit maps, object kinds, tileset colours and every art image, saved in this
 // browser and used by the game here; export a pack to share it or apply it to the repository.
-import { loadGameData } from '../core/data';
+import { loadGameData, STUDIO_COLLECTIONS } from '../core/data';
 import type { MapDef, ObjectKindDef } from '../core/types';
 import { paintObject } from '../game/art/mapPainter';
 import { ARCH_PARTS, artUrl, loadArt, loadThemeArt, setArtOverride } from '../game/art/themeArt';
 import { h, setChildren } from '../ui/dom';
-import { clone, download, editText, fileToImage, pickFile, row, toast, type StudioCtx } from './context';
-import { ImageEditor, newCustomImage } from './imageEditor';
+import { clone, download, editText, fileToImage, helpBar, pickFile, row, toast, type StudioCtx } from './context';
+import { cropDialog, ImageEditor, newCustomImage } from './imageEditor';
 import { applyLayer } from './layer';
 import { MapEditor } from './mapEditor';
+import { spritesTab } from './spritesTab';
+import { databaseTab } from './databaseTab';
+import { decodeSprite, isSpritePath, setSpriteOverride } from '../game/art/spriteOverrides';
 import { clearAll, deleteTileset, exportPack, importPack, isPack, readLayer, saveImage, saveMap, saveObjects, saveTileset, type StudioLayer } from './store';
 
 const THEMES = ['willowbrook', 'capital', 'fernwood', 'arcane', 'desert', 'coast', 'snow'];
@@ -17,37 +20,78 @@ const DRAWS = ['tree_oak', 'tree_pine', 'tree_dark', 'bush', 'rock', 'rock_big',
 
 export async function mountStudio(parent: HTMLElement) {
   const data = loadGameData();
-  const shipped = { maps: new Map([...data.maps].map(([k, v]) => [k, clone(v)])), objects: clone([...data.objectKinds.values()]), tilesets: new Map([...data.tilesets].map(([k, v]) => [k, clone(v)])) };
+  const shipped = {
+    maps: new Map([...data.maps].map(([k, v]) => [k, clone(v)])), objects: clone([...data.objectKinds.values()]), tilesets: new Map([...data.tilesets].map(([k, v]) => [k, clone(v)])),
+    data: new Map(STUDIO_COLLECTIONS.map((c) => [c, clone([...(data[c] as Map<string, unknown>).values()])])),
+  };
   let layer: StudioLayer;
-  try { layer = await readLayer(); } catch { layer = { images: new Map(), maps: new Map(), objects: null, tilesets: new Map() }; toast('เบราว์เซอร์นี้บันทึกข้อมูลไม่ได้ (IndexedDB ถูกปิด) — แก้ได้แต่จะไม่ถูกเก็บไว้'); }
+  try { layer = await readLayer(); } catch { layer = { images: new Map(), maps: new Map(), objects: null, tilesets: new Map(), data: new Map() }; toast('เบราว์เซอร์นี้บันทึกข้อมูลไม่ได้ (IndexedDB ถูกปิด) — แก้ได้แต่จะไม่ถูกเก็บไว้'); }
+  for (const [path, blob] of layer.images) if (isSpritePath(path)) setSpriteOverride(path, await decodeSprite(blob));
   const res = applyLayer(data, layer);
   if (res.skipped.length) toast(`บางแมพที่แก้ไว้ใช้ไม่ได้: ${res.skipped.join('; ')}`);
 
-  const tabs: [string, string][] = [['maps', '🗺 แมพ'], ['objects', '🌳 วัตถุ'], ['tilesets', '🎨 Tilesets'], ['images', '🖼 ภาพ (Assets)'], ['pack', '📦 นำเข้า/ส่งออก']];
+  const tabs: [string, string][] = [['home', '🏠 หน้าแรก'], ['maps', '🗺 แมพ'], ['objects', '🌳 วัตถุ'], ['sprites', '🧍 สไปรต์ & UI'], ['images', '🖼 ภาพฉาก'], ['tilesets', '🎨 สีชุดภาพ'], ['database', '📚 ข้อมูลเกม'], ['pack', '📦 นำเข้า/ส่งออก']];
   const body = h('div', { class: 'st-body' });
   const tabBtns = new Map<string, HTMLButtonElement>();
-  let current: { destroy?: () => void } | null = null;
+  let current: { destroy?: () => void; dirty?: () => boolean } | null = null;
   const st: StudioCtx = { data, shipped, layer, artVersion: 0, toast, openTab: (t, a) => open(t, a) };
   const root = h('div', { class: 'st-root', id: 'studio' },
     h('div', { class: 'st-top' }, h('span', { class: 'st-logo' }, 'VEYLORIA STUDIO'),
       ...tabs.map(([id, label]) => { const b = h('button', { class: 'st-tab', dataset: { tab: id }, onclick: () => open(id) }, label) as HTMLButtonElement; tabBtns.set(id, b); return b; }),
       h('span', { class: 'st-spacer' }),
-      h('span', { class: 'st-muted' }, 'บันทึกในเบราว์เซอร์นี้ · เกมในเบราว์เซอร์นี้ใช้ทันที'),
-      h('button', { class: 'st-btn primary', id: 'studio-play', onclick: () => { location.hash = '#game'; location.reload(); } }, '▶ เข้าเกม')),
+      h('button', { class: 'st-btn primary', id: 'studio-play', title: 'เปิดเกมในเบราว์เซอร์นี้ เกมจะใช้ทุกอย่างที่บันทึกไว้', onclick: () => { if (current?.dirty?.() && !confirm('ยังมีสิ่งที่ยังไม่บันทึก ออกไปเข้าเกมเลย?')) return; location.hash = '#game'; location.reload(); } }, '▶ เข้าเกม')),
     body);
   parent.appendChild(root);
+  window.addEventListener('beforeunload', (e) => { if (current?.dirty?.()) e.preventDefault(); });
 
   function open(tab: string, arg?: string) {
+    if (current?.dirty?.() && !confirm('ยังมีสิ่งที่ยังไม่บันทึกในหน้านี้ ออกจากหน้านี้เลย?')) return;
     current?.destroy?.();
     current = null;
     for (const [id, b] of tabBtns) b.classList.toggle('on', id === tab);
-    if (tab === 'maps') current = mapsTab(st, body, arg);
+    if (tab === 'home') current = homeTab(st, body);
+    else if (tab === 'maps') current = mapsTab(st, body, arg);
     else if (tab === 'objects') current = objectsTab(st, body);
+    else if (tab === 'sprites') current = spritesTab(st, body, arg);
     else if (tab === 'tilesets') current = tilesetsTab(st, body);
     else if (tab === 'images') current = imagesTab(st, body, arg);
+    else if (tab === 'database') current = databaseTab(st, body, arg);
     else current = packTab(st, body);
   }
-  open('maps');
+  open('home');
+}
+
+// ---------------------------------------------------------------- home
+function homeTab(st: StudioCtx, body: HTMLElement) {
+  const l = st.layer;
+  const card = (tab: string, icon: string, title: string, text: string, arg?: string) =>
+    h('button', { class: 'st-bigcard', dataset: { home: tab }, onclick: () => st.openTab(tab, arg) }, h('span', { class: 'big' }, icon), h('b', {}, title), h('span', {}, text));
+  const edits = [`ภาพ/สไปรต์ ${l.images.size}`, `แมพ ${l.maps.size}`, `วัตถุ ${l.objects ? 'แก้แล้ว' : '—'}`, `สีชุดภาพ ${l.tilesets.size}`, `หมวดข้อมูล ${l.data.size}`];
+  setChildren(body, h('div', { class: 'st-scroll' }, h('div', { class: 'st-home' },
+    h('h2', {}, 'ยินดีต้อนรับสู่ Veyloria Studio'),
+    h('div', { class: 'st-muted' }, 'แก้ได้ทุกส่วนของเกม: แมพ วัตถุ ตัวละคร มอนสเตอร์ ไอคอน เมนู และข้อมูลทุกระบบ ทุกอย่างที่บันทึกจะถูกใช้ในเกมทันทีเมื่อกด ▶ เข้าเกม'),
+    h('div', { class: 'st-steps' },
+      h('div', { class: 'st-step' }, h('b', {}, '1'), 'เลือกสิ่งที่อยากแก้จากการ์ดด้านล่าง หรือแท็บด้านบน'),
+      h('div', { class: 'st-step' }, h('b', {}, '2'), 'แก้ไข แล้วกดปุ่มสีเขียว "บันทึก…" ของหน้านั้น (จุด • แปลว่ายังไม่บันทึก)'),
+      h('div', { class: 'st-step' }, h('b', {}, '3'), 'กด ▶ เข้าเกม มุมขวาบน เพื่อเล่นและดูผล · กลับมาแก้ต่อได้จากปุ่ม Studio ในหน้าแรกของเกม')),
+    h('div', { class: 'st-cards' },
+      card('maps', '🗺', 'แมพ', 'ย้าย/ลบ/วางวัตถุ อาคาร NPC ประตูวาร์ป จุดเกิด · ลากครอบเพื่อเลือกหลายชิ้นแล้วลบทีเดียว · ทาพื้นและกำแพง · ปรับขนาดอาคาร/โซน'),
+      card('objects', '🌳', 'วัตถุ', 'ต้นไม้ หิน บ่อน้ำ ฯลฯ: ขนาดภาพ ขนาดพื้นที่ ขวางทางหรือไม่ · สร้างวัตถุใหม่จากรูป'),
+      card('sprites', '👾', 'มอนสเตอร์ / สัตว์เลี้ยง', 'วาดหรือนำเข้าสไปรต์ชีตทุกท่า (ยืน เดิน โจมตี โดนตี ตาย) พร้อมดูแอนิเมชันสด', 'monster'),
+      card('sprites', '🧑', 'NPC และตัวละครผู้เล่น', 'ชีต 4 ทิศ × ทุกท่า ของ NPC แต่ละคน และของผู้เล่นแต่ละอาชีพ', 'npc'),
+      card('sprites', '🎒', 'ไอคอนไอเทม / สกิล', 'ไอคอน 32×32 ของไอเทมและสกิลทุกอัน', 'item'),
+      card('sprites', '🖥', 'ไอคอนเมนู UI', 'สไปรต์ชีตปุ่มเมนูทั้ง 16 ระบบ (สถานะ ไอเทม สกิล เควสต์ แผนที่ สัตว์เลี้ยง…)', 'ui'),
+      card('images', '🖼', 'ภาพฉาก', 'พื้น ชีตวัตถุ อาคาร 7 ธีม สถานที่สำคัญ · นำเข้ารูป ตัดเฉพาะส่วน ย่อ/ขยาย แล้ววาง'),
+      card('tilesets', '🎨', 'สีชุดภาพ', 'สีที่ใช้วาดกำแพง พุ่มไม้ขอบแมพ และของตกแต่งในแต่ละธีม'),
+      card('database', '📚', 'ข้อมูลเกมทุกระบบ', 'ไอเทม มอนสเตอร์ สกิล อาชีพ NPC ร้านค้า เควสต์ ดรอป สัตว์เลี้ยง บอส การ์ด รูน ดันเจี้ยน…'),
+      card('pack', '📦', 'นำเข้า / ส่งออก', 'รวมงานทั้งหมดเป็นไฟล์เดียว ย้ายไปเครื่องอื่น หรือใส่ลงโปรเจกต์')),
+    h('h2', { style: 'margin-top:18px' }, 'สิ่งที่แก้ไว้ในเบราว์เซอร์นี้'), h('div', {}, edits.join(' · ')),
+    h('h2', { style: 'margin-top:18px' }, 'ปุ่มลัด'),
+    h('div', { class: 'st-muted', style: 'line-height:1.8' },
+      'ล้อเมาส์ = ซูม · คลิกขวาลาก หรือกด Space ค้างแล้วลาก = เลื่อนมุมมอง · Ctrl+Z / Ctrl+Y = ย้อน / ทำซ้ำ · Delete = ลบที่เลือก · ลูกศร = ขยับทีละช่อง',
+      h('br', {}), 'แมพ: Shift+ลาก = ครอบเลือกหลายชิ้น · Shift+คลิก = เพิ่ม/เอาออกจากที่เลือก · Ctrl+S = บันทึกแมพ',
+      h('br', {}), 'ภาพ: Ctrl+C / Ctrl+X / Ctrl+V = คัดลอก / ตัด / วาง · Enter = วางชิ้นที่ลอยอยู่ · Esc = ยกเลิก'))));
+  return {};
 }
 
 // ---------------------------------------------------------------- maps
@@ -85,7 +129,7 @@ function mapsTab(st: StudioCtx, body: HTMLElement, mapId?: string) {
     h('div', { class: 'st-side', style: 'width:220px' }, h('div', { class: 'st-h' }, 'แมพ'), filter, h('div', { class: 'st-row' }, h('button', { class: 'st-btn', onclick: newMap }, '＋ แมพใหม่')), list),
     holder);
   openMap(mapId && st.data.maps.has(mapId) ? mapId : 'aurelion');
-  return { destroy: () => ed?.destroy() };
+  return { destroy: () => ed?.destroy(), dirty: () => ed?.isDirty() ?? false };
 }
 
 // ---------------------------------------------------------------- objects
@@ -111,6 +155,7 @@ function objectsTab(st: StudioCtx, body: HTMLElement) {
     const char = h('div', { style: 'width:14px;height:43px;background:#6ff0c0aa;border-radius:6px 6px 2px 2px;align-self:flex-end;margin-right:8px', title: 'ตัวละครสูงประมาณ 43px' });
     const used = usage(k.id);
     setChildren(form,
+      helpBar('เลือกวัตถุทางซ้าย ปรับขนาด (ความสูงภาพเทียบกับแถบสีเขียวสูงเท่าตัวละคร) แล้วกด "บันทึกวัตถุทั้งหมด" · "จากรูปภาพ" = นำเข้ารูปแล้วตัดเฉพาะส่วนที่ต้องการมาเป็นวัตถุใหม่ · วางวัตถุลงแมพได้ที่แท็บแมพ'),
       h('div', { class: 'st-row' }, h('b', {}, k.id), h('span', { class: 'st-spacer' }), h('span', { class: 'st-muted' }, 'ดูด้วยชุดภาพ'),
         h('select', { onchange: (e: Event) => { previewTs = (e.target as HTMLSelectElement).value; void render(); } }, ...[...d.tilesets.keys()].map((t) => h('option', { value: t, selected: t === previewTs }, t)))),
       h('div', { class: 'st-preview' }, char, paintObject(k, pal(), 1000, previewTs)),
@@ -155,8 +200,11 @@ function objectsTab(st: StudioCtx, body: HTMLElement) {
   async function fromImage() {
     const f = await pickFile('image/*');
     if (!f) return;
-    let img: HTMLImageElement;
-    try { img = await fileToImage(f); } catch (e) { st.toast((e as Error).message); return; }
+    let picture: HTMLImageElement;
+    try { picture = await fileToImage(f); } catch (e) { st.toast((e as Error).message); return; }
+    // Cut out just the part to use (e.g. one object from a sheet of many).
+    const img = await cropDialog(picture);
+    if (!img) return;
     const id = uniqueId(f.name.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9_]+/g, '_') || 'object');
     // The custom image has no 8px margin, unlike the supplied art; add one so the sprite is not cropped.
     const c = document.createElement('canvas'); c.width = img.width + 16; c.height = img.height + 16;
@@ -194,6 +242,7 @@ function tilesetsTab(st: StudioCtx, body: HTMLElement) {
       h('img', { src: artUrl(`tiles/${t.id}`), style: 'object-fit:cover;object-position:top' }), h('span', {}, t.name, st.layer.tilesets.has(t.id) ? h('span', { class: 'st-edited' }, ' · แก้แล้ว') : null))));
     const t = clone(d.tilesets.get(sel)!);
     setChildren(main,
+      helpBar('แต่ละชุดภาพมีภาพพื้น 10 แบบ ชีตวัตถุ 24 ช่อง และชุดสี กดปุ่มแก้ภาพเพื่อวาด/นำเข้า หรือเปลี่ยนสีแล้วกดบันทึก'),
       h('div', { class: 'st-row' }, h('b', {}, `${t.name} (${t.id})`)),
       row('ชื่อ', h('input', { value: t.name, onchange: (e: Event) => { t.name = (e.target as HTMLInputElement).value; } })),
       h('div', { class: 'st-h' }, 'ภาพของชุดนี้'),
@@ -242,17 +291,18 @@ function imagesTab(st: StudioCtx, body: HTMLElement, path?: string) {
     if (!(size[0] > 0 && size[1] > 0)) return;
     openImg(await newCustomImage(st, name, Math.min(2048, size[0]), Math.min(2048, size[1])));
   };
-  setChildren(body, h('div', { class: 'st-side' }, h('div', { class: 'st-row' }, h('button', { class: 'st-btn', onclick: newImg }, '＋ ภาพใหม่')), list), holder);
+  setChildren(body, h('div', { class: 'st-side' }, helpBar('เลือกภาพจากรายการ แล้ววาด หรือกด "นำเข้ารูป + ตัด" เพื่อเลือกรูป ตัดเฉพาะส่วน ลากวาง ย่อ/ขยาย แล้วกด Enter · เสร็จแล้วกด "บันทึกภาพ"'), h('div', { class: 'st-row' }, h('button', { class: 'st-btn', onclick: newImg }, '＋ ภาพใหม่')), list), holder);
   void loadArt([]);
   openImg(path ?? 'props/willowbrook');
-  return { destroy: () => ed?.destroy() };
+  return { destroy: () => ed?.destroy(), dirty: () => ed?.isDirty() ?? false };
 }
 
 // ---------------------------------------------------------------- pack
 function packTab(st: StudioCtx, body: HTMLElement) {
   const l = st.layer;
-  const summary = () => `ภาพ ${l.images.size} · แมพ ${l.maps.size} · วัตถุ ${l.objects ? 'แก้แล้ว' : 'เดิม'} · tilesets ${l.tilesets.size}`;
+  const summary = () => `ภาพ/สไปรต์ ${l.images.size} · แมพ ${l.maps.size} · วัตถุ ${l.objects ? 'แก้แล้ว' : 'เดิม'} · tilesets ${l.tilesets.size} · หมวดข้อมูล ${l.data.size}`;
   setChildren(body, h('div', { class: 'st-scroll', style: 'max-width:820px' },
+    helpBar('งานที่บันทึกอยู่ในเบราว์เซอร์นี้เท่านั้น ส่งออกเป็นไฟล์เก็บไว้ หรือนำไปเปิดในเครื่องอื่นด้วยปุ่มนำเข้า'),
     h('div', { class: 'st-h' }, 'สิ่งที่แก้ไว้ในเบราว์เซอร์นี้'), h('div', {}, summary()),
     h('div', { class: 'st-h' }, 'ส่งออก'),
     h('div', { class: 'st-muted' }, 'รวมทุกอย่างที่แก้ (ภาพ แมพ วัตถุ tilesets) เป็นไฟล์เดียว เอาไปเปิดในเบราว์เซอร์อื่น หรือใส่ลง repo ด้วยคำสั่งด้านล่าง'),

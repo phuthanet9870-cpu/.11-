@@ -2,6 +2,7 @@
 // mirrored at runtime for right-facing. Layout: see MON_ANIMS in spriteMeta.ts.
 import type { MonsterDef } from '../../core/types';
 import { addOutline, ellipse, makeCanvas, px, shade } from './canvas';
+import { overrideCanvas } from './spriteOverrides';
 import { MON_ANIMS, MON_SHEET_COLS, type MonAnim } from './spriteMeta';
 
 interface MPose { sx: number; sy: number; dx: number; dy: number; legs: number; open: number; tint: string | null; alpha: number; flat: number; wing: number }
@@ -231,6 +232,8 @@ const painters: Record<string, Painter> = {
 
 export function generateMonsterSheet(def: MonsterDef): HTMLCanvasElement {
   const { w, h, colors, shape } = def.art;
+  const drawn = overrideCanvas(`sprites/monster/${def.id}`, w * MON_SHEET_COLS, h);
+  if (drawn) return drawn;
   const { canvas, ctx } = makeCanvas(w * MON_SHEET_COLS, h);
   const paint = painters[shape] ?? painters.slime;
   const tmp = makeCanvas(w, h);

@@ -1566,7 +1566,7 @@ export class WindowManager {
   private showDialog(npc: NpcDef, lines: string[], opts: [string, () => void][], extra: HTMLElement | null = null, heading?: string) {
     this.closeDialog();
     const portrait = h('canvas', { width: 96, height: 96 });
-    const p = portraitFromSheet(generateCharacterSheet({ appearance: npc.appearance, outfit: npc.outfit, weapon: null }), 3);
+    const p = portraitFromSheet(generateCharacterSheet({ appearance: npc.appearance, outfit: npc.outfit, weapon: null, sheet: `npc/${npc.id}` }), 3);
     portrait.getContext('2d')!.drawImage(p, 0, 0);
     this.dialogEl = h('div', { class: 'panel dialog', id: 'npc-dialog' },
       portrait,

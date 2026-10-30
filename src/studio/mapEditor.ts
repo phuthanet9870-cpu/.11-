@@ -9,11 +9,13 @@ import { mapArtPaths, scenerySprite } from '../game/art/scenery';
 import { loadThemeArt } from '../game/art/themeArt';
 import { CHAR_FRAME_H, CHAR_FRAME_W } from '../game/art/spriteMeta';
 import { h, setChildren } from '../ui/dom';
-import { clone, editText, row, type StudioCtx } from './context';
+import { clone, editText, helpBar, row, type StudioCtx } from './context';
 import { deleteEntity, entities, entityData, freezeScatter, mapProblems, moveEntity, paintCell, type Entity } from './mapEdit';
 import { deleteMap, saveMap } from './store';
 import { View } from './view';
 
+/** Things whose size can be dragged from the corner handle. */
+const RESIZABLE = new Set(['building', 'portal', 'scenery', 'mobs', 'area']);
 type Tool = 'select' | 'object' | 'building' | 'ground' | 'wall' | 'deco';
 const T = TILE, CH = 16;
 const BUILDING_STYLES = ['house', 'inn', 'shop', 'smithy', 'guild', 'knight_guild', 'ranger_guild', 'mage_guild', 'merchant_guild', 'aurelion_residence', ...Object.keys(LANDMARK_STYLE)];
@@ -25,12 +27,18 @@ export class MapEditor {
   private cm!: CompiledMap;
   private view: View;
   private tool: Tool = 'select';
-  private sel: Entity | null = null;
+  /** Everything selected (Shift+drag a box or Shift+click to select several). */
+  private selection: Entity[] = [];
+  /** The single selected thing (null when none or several are selected). */
+  private get sel(): Entity | null { return this.selection.length === 1 ? this.selection[0] : null; }
+  private set sel(e: Entity | null) { this.selection = e ? [e] : []; }
+  private box: { x0: number; y0: number; x1: number; y1: number; add: boolean } | null = null;
+  private resizing: { e: Entity; before: string; moved: boolean } | null = null;
   private undo: string[] = [];
   private redo: string[] = [];
   private chunks = new Map<string, { g: HTMLCanvasElement; w: HTMLCanvasElement }>();
   private sprites = new Map<string, HTMLCanvasElement>();
-  private drag: { e: Entity; ox: number; oy: number; moved: boolean; before: string } | null = null;
+  private drag: { fx: number; fy: number; origins: { e: Entity; x: number; y: number }[]; quarter: boolean; moved: boolean; before: string } | null = null;
   private painting: string | null = null;
   private hover: [number, number] | null = null;
   private show = { grid: false, collision: false, zones: true };
@@ -41,7 +49,9 @@ export class MapEditor {
   private props = h('div', { class: 'st-side right' });
   private status = h('span', { class: 'st-muted' });
   private toolBtns = new Map<Tool, HTMLButtonElement>();
-  private pick = { object: 'tree_oak', building: 'house', ground: 'grass', wall: 'thicket', deco: 'flowers', brush: 1 };
+  private pick = { object: 'tree_oak', building: 'house', ground: 'grass', wall: 'thicket', deco: 'flowers', brush: 1, shape: 'square' as 'square' | 'round' | 'rect' | 'ellipse' };
+  /** Rectangle / ellipse area being dragged out with a paint tool (filled on release). */
+  private area: { x0: number; y0: number; x1: number; y1: number; before: string } | null = null;
 
   constructor(private st: StudioCtx, private mapId: string, private onChange: () => void) {
     const stage = h('div', { class: 'st-stage' });
@@ -116,14 +126,15 @@ export class MapEditor {
     if ((e.ctrlKey || e.metaKey) && k === 'z') { e.preventDefault(); this.doUndo(); return; }
     if ((e.ctrlKey || e.metaKey) && k === 'y') { e.preventDefault(); this.doRedo(); return; }
     if ((e.ctrlKey || e.metaKey) && k === 's') { e.preventDefault(); void this.save(); return; }
-    if ((k === 'delete' || k === 'backspace') && this.sel) { e.preventDefault(); this.deleteSel(); return; }
+    if ((k === 'delete' || k === 'backspace') && this.selection.length) { e.preventDefault(); this.deleteSel(); return; }
+    if (k === 'escape') { this.selection = []; this.renderProps(); this.view.redraw(); return; }
+    if ((e.ctrlKey || e.metaKey) && k === 'a') { e.preventDefault(); this.selection = entities(this.st.data, this.def).filter((x) => x.type !== 'mobs' && x.type !== 'area'); this.renderProps(); this.view.redraw(); return; }
     const tools: Record<string, Tool> = { v: 'select', o: 'object', b: 'building', g: 'ground', w: 'wall', d: 'deco' };
     if (tools[k] && !e.ctrlKey && !e.metaKey) this.setTool(tools[k]);
-    if (this.sel && k.startsWith('arrow')) {
+    if (this.selection.length && k.startsWith('arrow')) {
       e.preventDefault();
-      const d = entityData(this.def, this.sel) as { x: number; y: number };
       const [dx, dy] = k === 'arrowleft' ? [-1, 0] : k === 'arrowright' ? [1, 0] : k === 'arrowup' ? [0, -1] : [0, 1];
-      this.mutate(() => moveEntity(this.def, this.sel!, d.x + dx, d.y + dy));
+      this.mutate(() => { for (const s of this.selection) { const d = entityData(this.def, s) as { x: number; y: number }; moveEntity(this.def, s, d.x + dx, d.y + dy); } });
     }
   };
 
@@ -147,21 +158,34 @@ export class MapEditor {
   }
   private doUndo() { const s = this.undo.pop(); if (!s) return; this.redo.push(this.snapshot()); this.def = JSON.parse(s); this.afterHistory(); }
   private doRedo() { const s = this.redo.pop(); if (!s) return; this.undo.push(this.snapshot()); this.def = JSON.parse(s); this.afterHistory(); }
-  private afterHistory() { this.dirty = true; this.chunks.clear(); this.sel = null; void this.recompile(true); this.renderProps(); }
+  private afterHistory() { this.dirty = true; this.chunks.clear(); this.selection = []; void this.recompile(true); this.renderProps(); }
 
   /** Keeps the selection pointing at the same thing after the lists change. */
   private reselect() {
-    if (!this.sel) return;
+    if (!this.selection.length) return;
     const list = entities(this.st.data, this.def);
-    this.sel = list.find((e) => e.type === this.sel!.type && e.key === this.sel!.key) ?? null;
+    this.selection = this.selection.map((s) => list.find((e) => e.type === s.type && e.key === s.key)).filter((e): e is Entity => !!e);
   }
 
+  private isSelected(e: Entity) { return this.selection.some((s) => s.type === e.type && s.key === e.key); }
+
+  /** Deletes everything selected in one step (later list entries first, so indexes stay valid). */
   private deleteSel() {
-    if (!this.sel) return;
-    const s = this.sel;
-    this.sel = null;
-    this.mutate(() => deleteEntity(this.def, s));
+    if (!this.selection.length) return;
+    const group = (e: Entity) => (e.type === 'building' || e.type === 'object' ? 'paint' : e.type);
+    const all = [...this.selection].sort((a, b) => (group(a) === group(b) && typeof a.key === 'number' && typeof b.key === 'number' ? b.key - a.key : 0));
+    this.selection = [];
+    this.mutate(() => { for (const e of all) deleteEntity(this.def, e); });
+    this.renderSide();
   }
+
+  /** Selects every object of the same kind (e.g. all trees of one sort). */
+  private selectSameKind(kind: string) {
+    this.selection = entities(this.st.data, this.def).filter((e) => e.type === 'object' && (this.def.paint[e.key as number] as { kind: string }).kind === kind);
+    this.renderProps(); this.view.redraw();
+  }
+
+  isDirty() { return this.dirty; }
 
   // ---------------------------------------------------------------- drawing
   private chunk(cx: number, cy: number) {
@@ -198,7 +222,7 @@ export class MapEditor {
       const n = this.st.data.npcs.get(npcId);
       const c = document.createElement('canvas');
       c.width = CHAR_FRAME_W; c.height = CHAR_FRAME_H;
-      if (n) c.getContext('2d')!.drawImage(generateCharacterSheet({ appearance: n.appearance, outfit: n.outfit, weapon: null }), 0, 0, CHAR_FRAME_W, CHAR_FRAME_H, 0, 0, CHAR_FRAME_W, CHAR_FRAME_H);
+      if (n) c.getContext('2d')!.drawImage(generateCharacterSheet({ appearance: n.appearance, outfit: n.outfit, weapon: null, sheet: `npc/${npcId}` }), 0, 0, CHAR_FRAME_W, CHAR_FRAME_H, 0, 0, CHAR_FRAME_W, CHAR_FRAME_H);
       return c;
     });
   }
@@ -283,8 +307,22 @@ export class MapEditor {
         label(e.label, x + 3 * lw, y + 14 / v.zoom, e.type === 'mobs' ? '#ffd38a' : '#e0c8ff');
       }
     }
-    if (this.sel) { const [x, y, w, hh] = this.hitBox(this.sel); c.strokeStyle = '#ffd34d'; c.lineWidth = 3 * lw; c.strokeRect(x, y, w, hh); c.strokeStyle = '#ffd34d88'; c.strokeRect(this.sel.x * T, this.sel.y * T, this.sel.w * T, this.sel.h * T); }
-    if (this.hover && this.tool !== 'select') {
+    for (const s of this.selection) { const [x, y, w, hh] = this.hitBox(s); c.strokeStyle = '#ffd34d'; c.lineWidth = 3 * lw; c.strokeRect(x, y, w, hh); c.strokeStyle = '#ffd34d88'; c.strokeRect(s.x * T, s.y * T, s.w * T, s.h * T); }
+    const rs = this.sel && RESIZABLE.has(this.sel.type) ? this.sel : null;
+    if (rs) { const hs = 10 / v.zoom; c.fillStyle = '#ffd34d'; c.fillRect((rs.x + rs.w) * T - hs / 2, (rs.y + rs.h) * T - hs / 2, hs, hs); }
+    if (this.box) {
+      const bx = Math.min(this.box.x0, this.box.x1), by = Math.min(this.box.y0, this.box.y1);
+      c.fillStyle = '#7fd6ff22'; c.fillRect(bx, by, Math.abs(this.box.x1 - this.box.x0), Math.abs(this.box.y1 - this.box.y0));
+      c.strokeStyle = '#7fd6ff'; c.lineWidth = lw; c.setLineDash([5 * lw, 3 * lw]); c.strokeRect(bx, by, Math.abs(this.box.x1 - this.box.x0), Math.abs(this.box.y1 - this.box.y0)); c.setLineDash([]);
+    }
+    if (this.area) {
+      const a = this.area, x0 = Math.min(a.x0, a.x1), y0 = Math.min(a.y0, a.y1), w = (Math.abs(a.x1 - a.x0) + 1) * T, hh = (Math.abs(a.y1 - a.y0) + 1) * T;
+      c.strokeStyle = '#ffd34d'; c.fillStyle = '#ffd34d33'; c.lineWidth = 2 * lw;
+      c.beginPath();
+      if (this.pick.shape === 'ellipse') c.ellipse(x0 * T + w / 2, y0 * T + hh / 2, w / 2, hh / 2, 0, 0, Math.PI * 2); else c.rect(x0 * T, y0 * T, w, hh);
+      c.fill(); c.stroke();
+    }
+    if (this.hover && this.tool !== 'select' && !this.area) {
       const [hx, hy] = this.hover;
       const b = ['ground', 'wall', 'deco'].includes(this.tool) ? this.pick.brush : 1;
       const o = Math.floor((b - 1) / 2);
@@ -310,9 +348,26 @@ export class MapEditor {
         // Small things first (NPCs, spawns, portals, objects), then buildings, then big zones.
         const order = ['npc', 'spawn', 'boss', 'portal', 'object', 'scenery', 'building', 'mobs', 'area'];
         list.sort((a, b) => order.indexOf(a.type) - order.indexOf(b.type));
+        // Resize handle of a single selected building, portal, zone or scenery piece.
+        const rs = this.sel && RESIZABLE.has(this.sel.type) ? this.sel : null;
+        if (rs && Math.abs(wx - (rs.x + rs.w) * T) < 10 / this.view.zoom && Math.abs(wy - (rs.y + rs.h) * T) < 10 / this.view.zoom) {
+          this.resizing = { e: rs, before: this.snapshot(), moved: false };
+          return;
+        }
         const hit = list.find((en) => { const [bx, by, bw, bh] = this.hitBox(en); return wx >= bx && wy >= by && wx < bx + bw && wy < by + bh && (this.show.zones || (en.type !== 'mobs' && en.type !== 'area')); }) ?? null;
-        this.sel = hit;
-        if (hit) { const d = entityData(this.def, hit) as { x: number; y: number }; this.drag = { e: hit, ox: fx - d.x, oy: fy - d.y, moved: false, before: this.snapshot() }; }
+        if (!hit) {
+          // Empty spot: drag a box to select everything inside it (Shift adds to the selection).
+          this.box = { x0: wx, y0: wy, x1: wx, y1: wy, add: e.shiftKey };
+          if (!e.shiftKey) this.selection = [];
+        } else if (e.shiftKey) {
+          this.selection = this.isSelected(hit) ? this.selection.filter((s) => !(s.type === hit.type && s.key === hit.key)) : [...this.selection, hit];
+        } else {
+          if (!this.isSelected(hit)) this.selection = [hit];
+          this.drag = {
+            fx, fy, quarter: this.selection.length === 1 && hit.type === 'scenery', moved: false, before: this.snapshot(),
+            origins: this.selection.map((s) => { const d = entityData(this.def, s) as { x: number; y: number }; return { e: s, x: d.x, y: d.y }; }),
+          };
+        }
         this.renderProps(); this.view.redraw();
       } else if (this.tool === 'object') {
         this.mutate(() => this.def.paint.push({ op: 'object', kind: this.pick.object, x, y }));
@@ -320,8 +375,8 @@ export class MapEditor {
         const style = this.pick.building, big = style === 'aurelion_palace' ? [36, 12] : style === 'aurelion_cathedral' ? [13, 10] : style.startsWith('aurelion_stall') ? [4, 3] : [8, 5];
         this.mutate(() => this.def.paint.push({ op: 'building', style, x, y, w: big[0], h: big[1], door: Math.floor(big[0] / 2) }));
       } else {
-        this.painting = this.snapshot();
-        this.paintAt(x, y);
+        if (this.pick.shape === 'rect' || this.pick.shape === 'ellipse') this.area = { x0: x, y0: y, x1: x, y1: y, before: this.snapshot() };
+        else { this.painting = this.snapshot(); this.paintAt(x, y); }
       }
     });
     cv.addEventListener('pointermove', (e) => {
@@ -329,17 +384,57 @@ export class MapEditor {
       const [fx, fy] = cell(e), x = Math.floor(fx), y = Math.floor(fy);
       this.hover = [x, y];
       if (this.drag && !this.view.isPanning) {
-        const snap = this.drag.e.type === 'scenery' ? (v: number) => Math.round(v * 4) / 4 : Math.round;
-        const nx = snap(fx - this.drag.ox), ny = snap(fy - this.drag.oy);
-        const d = entityData(this.def, this.drag.e) as { x: number; y: number };
-        if (nx !== d.x || ny !== d.y) { moveEntity(this.def, this.drag.e, nx, ny); this.drag.moved = true; this.reselect(); }
-      } else if (this.painting) this.paintAt(x, y);
+        const snap = this.drag.quarter ? (v: number) => Math.round(v * 4) / 4 : Math.round;
+        const dx = snap(fx - this.drag.fx), dy = snap(fy - this.drag.fy);
+        for (const o of this.drag.origins) {
+          const d = entityData(this.def, o.e) as { x: number; y: number };
+          if (d.x !== o.x + dx || d.y !== o.y + dy) { moveEntity(this.def, o.e, o.x + dx, o.y + dy); this.drag.moved = true; }
+        }
+        if (this.drag.moved) this.reselect();
+      } else if (this.resizing) {
+        const r = this.resizing, d = (r.e.type === 'mobs' || r.e.type === 'area' ? entityData(this.def, r.e) : entityData(this.def, r.e)) as { x: number; y: number; w: number; h: number; door?: number };
+        const snap = r.e.type === 'scenery' ? (v: number) => Math.max(0.5, Math.round(v * 4) / 4) : (v: number) => Math.max(1, Math.round(v));
+        const nw = snap(fx - d.x), nh = snap(fy - d.y);
+        if (nw !== d.w || nh !== d.h) {
+          d.w = nw; d.h = nh;
+          if (r.e.type === 'building' && d.door != null) d.door = Math.min(d.door, nw - 1);
+          r.moved = true; this.sprites.clear(); this.reselect();
+        }
+      } else if (this.box) {
+        const [wx, wy] = this.view.toWorld(e.offsetX, e.offsetY);
+        this.box.x1 = wx; this.box.y1 = wy;
+      } else if (this.area) { this.area.x1 = x; this.area.y1 = y; }
+      else if (this.painting) this.paintAt(x, y);
       this.view.redraw();
     });
     cv.addEventListener('pointerup', () => {
       if (this.drag?.moved) { this.pushUndo(this.drag.before); void this.recompile(); this.renderProps(); }
       this.drag = null;
+      if (this.resizing?.moved) { this.pushUndo(this.resizing.before); void this.recompile(); this.renderProps(); }
+      this.resizing = null;
+      if (this.box) {
+        const b = this.box, x0 = Math.min(b.x0, b.x1) / T, y0 = Math.min(b.y0, b.y1) / T, x1 = Math.max(b.x0, b.x1) / T, y1 = Math.max(b.y0, b.y1) / T;
+        this.box = null;
+        if (x1 - x0 > 0.2 || y1 - y0 > 0.2) {
+          // Small things are picked when the box touches them; zones and areas only when wholly inside.
+          const inside = entities(this.st.data, this.def).filter((en) => (en.type === 'mobs' || en.type === 'area')
+            ? this.show.zones && en.x >= x0 && en.y >= y0 && en.x + en.w <= x1 && en.y + en.h <= y1
+            : en.x < x1 && en.x + en.w > x0 && en.y < y1 && en.y + en.h > y0);
+          this.selection = [...(b.add ? this.selection : []), ...inside.filter((en) => !b.add || !this.isSelected(en))];
+        }
+        this.renderProps(); this.view.redraw();
+      }
       if (this.painting) { this.pushUndo(this.painting); this.painting = null; void this.recompile(); }
+      if (this.area) {
+        const a = this.area, layer = this.tool as 'ground' | 'wall' | 'deco';
+        const tile = this.pick[layer] === '(ลบ)' ? null : this.pick[layer];
+        const x0 = Math.min(a.x0, a.x1), x1 = Math.max(a.x0, a.x1), y0 = Math.min(a.y0, a.y1), y1 = Math.max(a.y0, a.y1);
+        const cx = (x0 + x1 + 1) / 2, cy = (y0 + y1 + 1) / 2, rx = (x1 - x0 + 1) / 2, ry = (y1 - y0 + 1) / 2;
+        for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++)
+          if (this.pick.shape === 'rect' || ((x + 0.5 - cx) / rx) ** 2 + ((y + 0.5 - cy) / ry) ** 2 <= 1) paintCell(this.def, layer, x, y, tile);
+        this.area = null;
+        this.pushUndo(a.before); this.chunks.clear(); void this.recompile();
+      }
     });
     cv.addEventListener('pointerleave', () => { this.hover = null; this.view.redraw(); });
   }
@@ -347,8 +442,9 @@ export class MapEditor {
   private paintAt(x: number, y: number) {
     const layer = this.tool as 'ground' | 'wall' | 'deco';
     const tile = this.pick[layer] === '(ลบ)' ? null : this.pick[layer];
-    const b = this.pick.brush, o = Math.floor((b - 1) / 2);
+    const b = this.pick.brush, o = Math.floor((b - 1) / 2), round = this.pick.shape === 'round' && b > 2;
     for (let yy = y - o; yy < y - o + b; yy++) for (let xx = x - o; xx < x - o + b; xx++) {
+      if (round && ((xx - x + o - (b - 1) / 2) ** 2 + (yy - y + o - (b - 1) / 2) ** 2) > (b / 2) ** 2) continue;
       paintCell(this.def, layer, xx, yy, tile);
       if (xx < 0 || yy < 0 || xx >= this.cm.width || yy >= this.cm.height) continue;
       const i = yy * this.cm.width + xx;
@@ -365,9 +461,12 @@ export class MapEditor {
     const sel = (opts: string[], value: string, on: (v: string) => void) => h('select', { onchange: (e: Event) => on((e.target as HTMLSelectElement).value) },
       ...opts.map((o) => h('option', { value: o, selected: o === value }, o)));
     const tiles = (layer: string) => [...d.tiles.values()].filter((t) => t.layer === layer).map((t) => t.id);
-    const brush = row('ขนาดแปรง', sel(['1', '2', '3', '5', '8'], String(this.pick.brush), (v) => { this.pick.brush = +v; }));
-    const parts: (Node | null)[] = [h('div', { class: 'st-h' }, 'เครื่องมือ')];
-    if (this.tool === 'select') parts.push(h('div', { class: 'st-muted' }, 'คลิกเพื่อเลือก ลากเพื่อย้าย ปุ่มลูกศรขยับทีละช่อง Delete ลบ · ลากด้วยปุ่มขวา/กลาง หรือกด Space ค้างเพื่อเลื่อนมุมมอง ล้อเมาส์ซูม'));
+    const shapes: Record<string, string> = { square: '■ แปรงสี่เหลี่ยม', round: '● แปรงกลม', rect: '▭ ลากเป็นสี่เหลี่ยม', ellipse: '◯ ลากเป็นวงรี' };
+    const brush = h('div', {},
+      row('รูปทรง', h('select', { onchange: (e: Event) => { this.pick.shape = (e.target as HTMLSelectElement).value as never; } }, ...Object.entries(shapes).map(([v, l]) => h('option', { value: v, selected: v === this.pick.shape }, l)))),
+      row('ขนาดแปรง', sel(['1', '2', '3', '5', '8', '12', '16'], String(this.pick.brush), (v) => { this.pick.brush = +v; })));
+    const parts: (Node | null)[] = [helpBar('1) เลือกเครื่องมือด้านบน 2) คลิก/ลากบนแมพ 3) กด "บันทึกแมพ" สีเขียว · เลือกหลายชิ้น: ลากกรอบบนที่ว่าง (หรือ Shift+คลิก) แล้วกด Delete เพื่อลบทีเดียว · ล้อเมาส์ซูม คลิกขวาลากเลื่อนมุมมอง'), h('div', { class: 'st-h' }, 'เครื่องมือ')];
+    if (this.tool === 'select') parts.push(h('div', { class: 'st-muted' }, 'คลิกเพื่อเลือก ลากเพื่อย้าย · ลากกรอบบนที่ว่างเพื่อเลือกหลายชิ้น · Shift+คลิกเพิ่ม/เอาออก · Ctrl+A เลือกทั้งหมด · ลูกศรขยับ · Delete ลบ · จุดเหลืองมุมขวาล่าง = ปรับขนาด'));
     if (this.tool === 'object') {
       const list = h('div', { class: 'st-list' });
       for (const k of d.objectKinds.values()) {
@@ -391,6 +490,21 @@ export class MapEditor {
 
   private renderProps() {
     const d = this.st.data;
+    if (this.selection.length > 1) {
+      const counts = new Map<string, number>();
+      for (const e of this.selection) counts.set(e.type, (counts.get(e.type) ?? 0) + 1);
+      const names: Record<string, string> = { building: 'อาคาร', object: 'วัตถุ', npc: 'NPC', portal: 'ประตูวาร์ป', spawn: 'จุดเกิด', scenery: 'ฉาก', boss: 'บอส', mobs: 'โซนมอนสเตอร์', area: 'พื้นที่' };
+      setChildren(this.props,
+        h('div', { class: 'st-h' }, `เลือกอยู่ ${this.selection.length} ชิ้น`),
+        h('div', { class: 'st-muted' }, 'ลากชิ้นใดก็ได้เพื่อย้ายทั้งหมด · ปุ่มลูกศรขยับทั้งหมด · Delete ลบทั้งหมด · Esc ยกเลิกการเลือก'),
+        ...[...counts].map(([t, n]) => h('div', { class: 'st-row' }, `${names[t] ?? t} ×${n}`,
+          h('button', { class: 'st-btn', title: 'เหลือเฉพาะชนิดนี้ในที่เลือก', onclick: () => { this.selection = this.selection.filter((e) => e.type === t); this.renderProps(); this.view.redraw(); } }, 'เลือกเฉพาะชนิดนี้'))),
+        h('div', { class: 'st-row' },
+          h('button', { class: 'st-btn danger', id: 'map-delete-selected', onclick: () => this.deleteSel() }, `🗑 ลบทั้งหมด (${this.selection.length})`),
+          h('button', { class: 'st-btn', onclick: () => this.duplicateAll() }, '⧉ ทำสำเนาทั้งหมด')),
+        h('div', { class: 'st-row' }, h('button', { class: 'st-btn', onclick: () => { this.selection = []; this.renderProps(); this.view.redraw(); } }, '← ยกเลิกการเลือก')));
+      return;
+    }
     if (!this.sel) {
       const def = this.def;
       const set = (k: keyof MapDef, v: unknown, ground = false) => this.mutate(() => { (def as unknown as Record<string, unknown>)[k] = v; }, ground);
@@ -425,6 +539,8 @@ export class MapEditor {
       h('div', { class: 'st-h' }, `${titles[e.type]} · ${e.label}`),
       ...fields.map(([k, v]) => row(k, input(k, v))),
       e.type === 'spawn' ? h('div', { class: 'st-muted' }, `ชื่อจุดเกิด: ${e.key}`) : null,
+      RESIZABLE.has(e.type) ? h('div', { class: 'st-muted' }, 'ปรับขนาด: ลากจุดสีเหลืองมุมขวาล่าง หรือแก้ w / h') : null,
+      e.type === 'object' ? h('div', { class: 'st-muted' }, 'ขนาดวัตถุเป็นของทั้งชนิด: ปรับได้ที่แท็บ 🌳 วัตถุ (ความสูงภาพ / พื้นที่)') : null,
       h('div', { class: 'st-row' },
         h('button', { class: 'st-btn', onclick: async () => {
           const t = await editText(`แก้ ${titles[e.type]} (JSON)`, JSON.stringify(rec, null, 2));
@@ -432,8 +548,22 @@ export class MapEditor {
           try { const v = JSON.parse(t); this.mutate(() => { for (const k of Object.keys(rec as object)) delete (rec as Record<string, unknown>)[k]; Object.assign(rec as object, v); this.sprites.clear(); }); } catch (err) { this.st.toast(`JSON ไม่ถูกต้อง: ${(err as Error).message}`); }
         } }, '{ } JSON'),
         h('button', { class: 'st-btn', onclick: () => this.duplicate() }, '⧉ ทำสำเนา'),
+        e.type === 'object' ? h('button', { class: 'st-btn', title: 'เลือกวัตถุชนิดนี้ทุกชิ้นบนแมพ (เช่นลบต้นไม้ชนิดนี้ทั้งหมดทีเดียว)', onclick: () => this.selectSameKind((rec as { kind: string }).kind) }, '◎ เลือกชนิดนี้ทั้งแมพ') : null,
         h('button', { class: 'st-btn danger', onclick: () => this.deleteSel() }, '🗑 ลบ')),
       h('div', { class: 'st-row' }, h('button', { class: 'st-btn', onclick: () => { this.sel = null; this.renderProps(); this.view.redraw(); } }, '← ตั้งค่าแมพ')));
+  }
+
+  /** Copies everything selected one tile to the right (NPCs and spawn points are skipped: they must stay unique). */
+  private duplicateAll() {
+    const sel = [...this.selection];
+    this.mutate(() => {
+      for (const e of sel) {
+        const k = e.key as number;
+        if (e.type === 'building' || e.type === 'object') { const op = clone(this.def.paint[k]) as { x: number; id?: string }; op.x += 1; delete op.id; this.def.paint.push(op as PaintOp); }
+        else if (e.type === 'scenery') { const sc = clone(this.def.scenery![k]); sc.x += 1; this.def.scenery!.push(sc); }
+        else if (e.type === 'mobs') { const m = clone(this.def.monsterSpawns[k]); m.area.x += 1; this.def.monsterSpawns.push(m); }
+      }
+    });
   }
 
   private duplicate() {

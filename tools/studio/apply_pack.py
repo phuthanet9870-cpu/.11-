@@ -6,6 +6,8 @@ Usage: python3 tools/studio/apply_pack.py <pack.json>
 - Maps        -> src/data/studio/maps/<id>.json
 - Object kinds -> src/data/studio/objects.json (the full list)
 - Tilesets    -> src/data/studio/tilesets.json (merged by id)
+- Data        -> src/data/studio/data/<collection>.json (items, monsters, skills, … — whole lists)
+- Sprite sheets and icons (sprites/, icons/, ui/) are listed in index.ts so the game loads them first
 then src/data/studio/index.ts is regenerated. The game lays src/data/studio over the generated
 data when it loads, so `npm run world:build` never overwrites these edits.
 """
@@ -20,6 +22,8 @@ from PIL import Image
 ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', '..'))
 STUDIO = os.path.join(ROOT, 'src', 'data', 'studio')
 SAFE = re.compile(r'^[a-z0-9_\-]+(/[a-z0-9_\-]+)*$')
+COLLECTIONS = {'items', 'monsters', 'skills', 'classes', 'npcs', 'shops', 'quests', 'drops', 'pets', 'recipes', 'bosses', 'combos', 'homunculi', 'runes', 'statuses', 'instances'}
+SPRITE_DIRS = ('sprites', 'icons', 'ui')
 
 
 def main(path):
@@ -60,13 +64,33 @@ def main(path):
             f.write('\n')
         print('tilesets', ', '.join(pack['tilesets']))
 
+    for name, items in (pack.get('data') or {}).items():
+        if name not in COLLECTIONS:
+            sys.exit(f'unknown data collection: {name}')
+        os.makedirs(os.path.join(STUDIO, 'data'), exist_ok=True)
+        with open(os.path.join(STUDIO, 'data', name + '.json'), 'w', encoding='utf-8') as f:
+            json.dump(items, f, ensure_ascii=False, indent=1)
+            f.write('\n')
+        print('data  ', name, len(items))
+
     write_index()
+
+
+def sprite_paths():
+    art = os.path.join(ROOT, 'public', 'art')
+    out = []
+    for d in SPRITE_DIRS:
+        for base, _, files in os.walk(os.path.join(art, d)):
+            out += [os.path.relpath(os.path.join(base, f), art).replace(os.sep, '/')[:-5] for f in files if f.endswith('.webp')]
+    return sorted(out)
 
 
 def write_index():
     maps = sorted(f[:-5] for f in os.listdir(os.path.join(STUDIO, 'maps')) if f.endswith('.json'))
     has_obj = os.path.exists(os.path.join(STUDIO, 'objects.json'))
     has_ts = os.path.exists(os.path.join(STUDIO, 'tilesets.json'))
+    ddir = os.path.join(STUDIO, 'data')
+    colls = sorted(f[:-5] for f in os.listdir(ddir) if f.endswith('.json')) if os.path.isdir(ddir) else []
     lines = [
         '// Studio layer: edits made in the Veyloria Studio and applied to the repository with',
         '// tools/studio/apply_pack.py. They are laid over the generated data when it loads, so',
@@ -78,11 +102,16 @@ def write_index():
         lines.append("import objects from './objects.json';")
     if has_ts:
         lines.append("import tilesets from './tilesets.json';")
+    lines += [f"import d_{c} from './data/{c}.json';" for c in colls]
     lines += [
         '',
         f"export const STUDIO_MAPS: MapDef[] = [{', '.join(f'm{i}' for i in range(len(maps)))}] as unknown as MapDef[];",
         f"export const STUDIO_OBJECTS: ObjectKindDef[] | null = {'objects as unknown as ObjectKindDef[]' if has_obj else 'null'};",
         f"export const STUDIO_TILESETS: TilesetDef[] = {'tilesets as unknown as TilesetDef[]' if has_ts else '[]'};",
+        '/** Whole collections (items, monsters, skills…) replaced by the Studio, keyed by collection name. */',
+        f"export const STUDIO_DATA: Record<string, unknown[]> = {{{', '.join(f'{c}: d_{c} as unknown[]' for c in colls)}}};",
+        '/** Sprite sheets and icons drawn in the Studio (public/art/<path>.webp), loaded before the game starts. */',
+        f"export const STUDIO_SPRITES: string[] = {json.dumps(sprite_paths())};",
     ]
     with open(os.path.join(STUDIO, 'index.ts'), 'w', encoding='utf-8') as f:
         f.write('\n'.join(lines) + '\n')

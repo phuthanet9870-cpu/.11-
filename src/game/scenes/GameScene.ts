@@ -268,7 +268,7 @@ export class GameScene extends Phaser.Scene {
 
     // NPCs
     for (const n of w.npcs) {
-      const look: CharacterLook = { appearance: n.def.appearance, outfit: n.def.outfit, weapon: null };
+      const look: CharacterLook = { appearance: n.def.appearance, outfit: n.def.outfit, weapon: null, sheet: `npc/${n.def.id}` };
       const key = ensureCharacterTexture(this, look);
       const s = this.track(this.add.sprite(n.x, n.y, key, frameIndex(n.dir, 'idle', 0)).setOrigin(CHAR_PIVOT.x, CHAR_PIVOT.y));
       s.setDepth(n.y);
@@ -355,7 +355,7 @@ export class GameScene extends Phaser.Scene {
     const lookId = JSON.stringify([c.classId, c.appearance, weapon, !!c.equipment.shield]);
     if (lookId === this.playerLookKey && this.playerRig) return;
     this.playerLookKey = lookId;
-    const look: CharacterLook = { appearance: c.appearance, outfit: cls.outfit, weapon, shield: !!c.equipment.shield };
+    const look: CharacterLook = { appearance: c.appearance, outfit: cls.outfit, weapon, shield: !!c.equipment.shield, sheet: `class/${c.classId}` };
     this.playerRig = proceduralCharRig(ensureCharacterTexture(this, look));
     if (this.player?.active) this.player.setOrigin(this.playerRig.originX, this.playerRig.originY);
   }
