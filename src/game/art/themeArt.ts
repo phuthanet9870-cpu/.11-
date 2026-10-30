@@ -31,6 +31,10 @@ const images = new Map<string, HTMLImageElement | null>();
 const pending = new Map<string, Promise<void>>();
 /** Studio edits: image path → object URL used instead of art/<path>.webp. */
 const overrides = new Map<string, string>();
+/** The single-file build (opened straight from disk) carries every image as a data URL, since
+ * a page opened from file:// may not draw image files from disk onto a canvas. */
+const embedded = (globalThis as { __VEYLORIA_ART?: Record<string, string> }).__VEYLORIA_ART;
+const fileUrl = (path: string) => overrides.get(path) ?? embedded?.[path] ?? `art/${path}.webp`;
 
 /** Replaces (or with null restores) one image; it is loaded again the next time a map needs it. */
 export function setArtOverride(path: string, url: string | null) {
@@ -48,7 +52,7 @@ function load(path: string): Promise<void> {
       const img = new Image();
       img.onload = () => { images.set(path, img); resolve(); };
       img.onerror = () => { images.set(path, null); resolve(); };
-      img.src = overrides.get(path) ?? `art/${path}.webp`;
+      img.src = fileUrl(path);
     });
     pending.set(path, p);
   }
@@ -59,7 +63,7 @@ const img = (path: string) => images.get(path) ?? null;
 /** Loads any set of images (for tools that need them up front). */
 export const loadArt = (paths: string[]) => Promise.all(paths.map(load)).then(() => undefined);
 /** URL the game loads for an image (Studio edit or the shipped file). */
-export const artUrl = (path: string) => overrides.get(path) ?? `art/${path}.webp`;
+export const artUrl = fileUrl;
 const tilesetPaths = (tileset: string) => {
   const theme = architectureTheme(tileset);
   return [`tiles/${tileset}`, `props/${tileset}`, ...ARCH_PARTS.map((p) => `arch/${theme}/${p}`)];

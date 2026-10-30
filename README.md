@@ -57,6 +57,10 @@ npm run test:e2e         # builds, then drives the real game in Chromium (Playwr
 ```
 `test:e2e` uses Playwright's Chromium. If it isn't installed: `npx playwright install chromium`.
 
+### Opening the game from a file
+
+The normal build (`dist/`) must be served over http (`npm run preview`, or any web server): browsers block its module scripts and canvas use of image files when `index.html` is opened straight from disk, and the page stays black. For a copy that opens with a double-click, run `npm run build:portable`: it writes `dist-portable/Veyloria.html` (about 12 MB), one file with the code, styles and every image inside.
+
 ## Controls
 | Action | Mouse | Keyboard (rebindable in Settings) |
 |---|---|---|
