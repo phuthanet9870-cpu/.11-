@@ -392,6 +392,8 @@ export function main() {
       attackIntervalPct: iv, equipLevel: 20, ...rest, mods: { patk: atk, ...(mods ?? {}) }, soldIn: ['aurelion', 'sandara', 'tidewatch', 'fernhollow', 'arcanthe'], jobgen: true });
   }
 
+  // Every job draws its own costume (src/game/art/costumes.ts).
+  for (const c of classes as J[]) c.outfit = { ...c.outfit, costume: c.id };
   write('classes.json', classes);
   write('skills.json', skills);
   write('items.json', items);

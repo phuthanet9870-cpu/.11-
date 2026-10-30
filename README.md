@@ -110,6 +110,10 @@ Ground-target skills (Arrow Rain, Wind Trap, Fire Wall, Thunderstorm, Meteor) la
 | Windows: status, inventory, equipment, skill tree, quest journal, world map, pet (P), homunculus (H), pushcart (V), runes (N), social / online (G), database with refine simulator / forge calculator / option odds / combos / pets / element chart (B), settings (volume, toggles, key rebinding) | ✅ | `src/ui/windows.ts` |
 | Audio: BGM per map, boss music, ambience, SFX; Master/Music/SFX/Ambient volume | ✅ (procedural) | `src/game/audio/audio.ts` |
 
+## Character art (jobs)
+
+Every one of the 38 jobs has its own costume, drawn in a chibi style inspired by classic 2D MMORPGs (big head, short body, three-tone shading, dark outline) — original designs, not copied from any game. Each job line has its outfit and headgear (Knight plate and cape, Dragoon horned helm and wing pauldrons, Templar tabard with a cross, Ranger feathered cap, Beastmaster animal hood, Minstrel beret and frock coat, Mage hooded robe, Sorcerer wide hat, Sage scholar cap, Cleric robe and beads, Bishop mitre, Ascetic gi and headband, Rogue bandana and mask, Shadowblade hooded suit and scarf, Outlaw tricorn and coat, Merchant cap and bag, Artisan goggles and apron, Alchemist lab coat and glasses). High (transcendent) jobs add gold trim and capes; third jobs go further (crown, long capes). Hair style and colour, eyes, skin and body chosen at character creation stay on top of the costume. Costumes are in `src/game/art/costumes.ts` (`costume` in each class outfit) and drawn by `src/game/art/costumeDraw.ts`; NPCs without a job get the nearest look from their outfit style. Every job's sheet can be viewed, edited and downloaded in Studio → 🧍 Sprites → player characters.
+
 ## Veyloria Studio (editor)
 
 Opening the game shows a launcher: **▶ เข้าเกม** (play) or **🛠 เข้า Studio** (edit). `#game` / `#studio` at the end of the URL skips it, and the title screen has a Studio button. The Studio opens on a home page with a card for every section, three steps, and a list of shortcuts; every tab has a "💡 วิธีใช้" (how to use) strip.

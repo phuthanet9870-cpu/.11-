@@ -4,11 +4,13 @@
 import type { Appearance, Direction } from '../../core/types';
 import { addOutline, ellipse, makeCanvas, px, shade } from './canvas';
 import { overrideCanvas } from './spriteOverrides';
+import { costumeFor } from './costumes';
+import { drawCapeBack, drawCapeFront, drawCostumeBody, drawHeadgear, drawMask } from './costumeDraw';
 import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_FRAME_H, CHAR_FRAME_W, CHAR_SHEET_COLS, type CharAnim } from './spriteMeta';
 
 export interface CharacterLook {
   appearance: Appearance;
-  outfit: { primary: string; secondary: string; accent: string; style: string };
+  outfit: { primary: string; secondary: string; accent: string; style: string; costume?: string };
   weapon: string | null; // weapon type: dagger, sword, bow, staff, wand, spear, club...
   shield?: boolean;
   /** Studio sheet that replaces the drawn one: `npc/<id>` or `class/<classId>`. */
@@ -16,6 +18,8 @@ export interface CharacterLook {
 }
 
 const W = CHAR_FRAME_W, H = CHAR_FRAME_H;
+/** Headgear that covers the crown of the head. */
+const COVERING = new Set(['hood', 'beast_hood', 'wide_hat', 'mitre', 'horn_helm', 'mortar', 'tricorn', 'cap', 'feather_cap', 'beret']);
 const CX = 24, FEET = 60;
 
 interface Pose {
@@ -89,137 +93,97 @@ function drawWeapon(ctx: CanvasRenderingContext2D, type: string | null, x: numbe
   ctx.restore();
 }
 
-function drawHairBack(ctx: CanvasRenderingContext2D, a: Appearance, hx: number, hy: number, dir: Direction) {
-  const c = a.hairColor, d = shade(c, -0.25);
-  if (a.hairStyle === 'long') {
-    px(ctx, hx - 10, hy - 2, 20, 18, d);
-    if (dir === 'up') px(ctx, hx - 10, hy - 2, 20, 20, c);
+/** Filled polygon on whole pixels (scanline), so hair keeps hard pixel-art edges. */
+function poly(ctx: CanvasRenderingContext2D, pts: [number, number][], color: string) {
+  ctx.fillStyle = color;
+  const ys = pts.map((p) => p[1]);
+  for (let y = Math.floor(Math.min(...ys)); y <= Math.ceil(Math.max(...ys)); y++) {
+    const xs: number[] = [];
+    for (let i = 0; i < pts.length; i++) {
+      const [x1, y1] = pts[i], [x2, y2] = pts[(i + 1) % pts.length];
+      if ((y + 0.5 >= Math.min(y1, y2)) && (y + 0.5 < Math.max(y1, y2))) xs.push(x1 + ((y + 0.5 - y1) * (x2 - x1)) / (y2 - y1));
+    }
+    xs.sort((m, n) => m - n);
+    for (let i = 0; i + 1 < xs.length; i += 2) ctx.fillRect(Math.round(xs[i]), y, Math.max(1, Math.round(xs[i + 1]) - Math.round(xs[i])), 1);
   }
-  if (a.hairStyle === 'ponytail') {
-    const side = dir === 'left' ? 9 : dir === 'right' ? -11 : -2;
-    if (dir === 'up' || dir === 'left' || dir === 'right') { px(ctx, hx + side, hy - 4, 4, 16, d); px(ctx, hx + side + 1, hy - 3, 2, 14, c); }
-    else px(ctx, hx - 2, hy - 13, 4, 4, d);
+}
+const at = (hx: number, hy: number, pts: [number, number][]) => pts.map(([x, y]) => [hx + x, hy + y] as [number, number]);
+const mirror = (pts: [number, number][]) => pts.map(([x, y]) => [-x, y] as [number, number]);
+
+/** Hair that hangs behind the head and shoulders. */
+function drawHairBack(ctx: CanvasRenderingContext2D, a: Appearance, hx: number, hy: number, dir: Direction) {
+  const c = a.hairColor, d = shade(c, -0.22), s = a.hairStyle;
+  if (dir === 'down') {
+    if (s === 'long') { poly(ctx, at(hx, hy, [[-11, -4], [-12, 10], [-11, 21], [-7, 25], [7, 25], [11, 21], [12, 10], [11, -4]]), d); for (let x = -8; x <= 6; x += 4) px(ctx, hx + x, hy + 12, 1, 11, shade(d, -0.15)); }
+    if (s === 'bob') poly(ctx, at(hx, hy, [[-11, -4], [-12, 7], [-9, 11], [9, 11], [12, 7], [11, -4]]), d);
+    if (s === 'ponytail') poly(ctx, at(hx, hy, [[8, -8], [14, -3], [14, 9], [11, 15], [9, 6]]), d);
+  } else if (dir === 'up') {
+    if (s === 'long') poly(ctx, at(hx, hy, [[-11, 0], [-12, 12], [-10, 22], [-6, 26], [6, 26], [10, 22], [12, 12], [11, 0]]), c);
+    if (s === 'ponytail') poly(ctx, at(hx, hy, [[-3, -6], [3, -6], [4, 8], [2, 16], [-2, 16], [-4, 8]]), d);
+  } else {
+    if (s === 'long') { poly(ctx, at(hx, hy, [[1, -6], [11, -4], [13, 10], [11, 21], [7, 25], [3, 20], [3, 6]]), d); px(ctx, hx + 8, hy + 10, 1, 12, shade(d, -0.15)); }
+    if (s === 'bob') poly(ctx, at(hx, hy, [[1, -6], [11, -4], [12, 7], [8, 11], [2, 10]]), d);
+    if (s === 'ponytail') poly(ctx, at(hx, hy, [[8, -9], [16, -5], [16, 7], [12, 14], [10, 5]]), d);
   }
 }
 
-function drawHead(ctx: CanvasRenderingContext2D, a: Appearance, hx: number, hy: number, dir: Direction) {
-  const skin = a.skinTone, hair = a.hairColor, hairD = shade(hair, -0.25), hairL = shade(hair, 0.25);
-  drawHairBack(ctx, a, hx, hy, dir);
-  // Face/skull
-  ellipse(ctx, hx, hy, 9, 9, skin);
-  if (dir !== 'up') {
-    // Ears
-    if (dir === 'down') { px(ctx, hx - 10, hy, 2, 3, shade(skin, -0.1)); px(ctx, hx + 8, hy, 2, 3, shade(skin, -0.1)); }
-  }
-  // Hair cap
-  ellipse(ctx, hx, hy - 4, 10, 7, hair);
-  px(ctx, hx - 10, hy - 4, 20, 3, hair);
+/** Spiky hair: tufts fanning out from the crown. */
+function spikes(ctx: CanvasRenderingContext2D, hx: number, hy: number, c: string, dir: Direction) {
+  const tips: [number, number][] = dir === 'down' || dir === 'up'
+    ? [[-12, -9], [-8, -14], [-2, -16], [4, -15], [9, -12], [12, -7]]
+    : [[-10, -12], [-4, -16], [3, -15], [9, -12], [12, -7], [13, -1]];
+  for (const [tx, ty] of tips) { const bx = tx * 0.35; poly(ctx, at(hx, hy, [[bx - 4, -5], [tx, ty], [bx + 4, -5]]), c); }
+}
+
+/** `covered`: a hat or hood sits on top, so spiky tufts stay hidden under it. */
+function drawHead(ctx: CanvasRenderingContext2D, a: Appearance, hx: number, hy: number, dir: Direction, covered = false) {
+  const skin = a.skinTone, hair = a.hairColor, hairD = shade(hair, -0.25), hairL = shade(hair, 0.3);
   const style = a.hairStyle;
+  // (Hair hanging behind the body is drawn before the body: see drawFrame.)
+  // Face
+  ellipse(ctx, hx, hy, 9, 9, skin);
+  px(ctx, hx - 6, hy + 8, 12, 1, shade(skin, -0.12));
   if (dir === 'up') {
-    ellipse(ctx, hx, hy - 1, 10, 9, hair);
-    px(ctx, hx - 3, hy - 9, 3, 2, hairL);
-    if (style === 'spiky') for (let i = -8; i <= 6; i += 4) px(ctx, hx + i, hy - 12, 3, 3, hair);
+    ellipse(ctx, hx, hy - 1, 10, 10, hair);
+    if (style === 'spiky' && !covered) spikes(ctx, hx, hy, hair, dir);
+    if (style === 'long') poly(ctx, at(hx, hy, [[-10, 2], [-11, 12], [-8, 22], [8, 22], [11, 12], [10, 2]]), hair);
+    if (style === 'bob') poly(ctx, at(hx, hy, [[-11, 0], [-11, 9], [-8, 11], [8, 11], [11, 9], [11, 0]]), hair);
+    px(ctx, hx - 5, hy - 8, 6, 2, hairL); px(ctx, hx - 1, hy + 2, 1, 7, hairD);
     return;
   }
   if (dir === 'down') {
-    // Bangs
-    for (let i = -9; i <= 6; i += 3) px(ctx, hx + i, hy - 3, 3, 3 + ((i + 9) % 2), hair);
-    px(ctx, hx - 10, hy - 3, 2, 9, hair); px(ctx, hx + 8, hy - 3, 2, 9, hair);
-    if (style === 'bob' || style === 'long') { px(ctx, hx - 11, hy - 2, 3, 12, hair); px(ctx, hx + 8, hy - 2, 3, 12, hair); }
-    if (style === 'spiky') for (let i = -9; i <= 7; i += 4) { px(ctx, hx + i, hy - 13, 3, 3, hair); px(ctx, hx + i + 1, hy - 15, 1, 2, hair); }
-    px(ctx, hx - 4, hy - 9, 4, 1, hairL);
-    // Eyes (anime style)
+    if (style === 'spiky' && !covered) spikes(ctx, hx, hy, hair, dir);
+    ellipse(ctx, hx, hy - 4, 10, 7, hair);
+    // Fringe: points falling over the forehead.
+    for (let i = 0, x = -10; x < 10; x += 4, i++) poly(ctx, at(hx, hy, [[x, -5], [x + 4, -5], [x + 2 + (i % 2 ? -1 : 1), i % 2 ? 0 : 2]]), hair);
+    // Side locks by style.
+    const lock: [number, number][] = style === 'long' ? [[-11, -4], [-12, 12], [-9, 15], [-8, 1]] : style === 'bob' ? [[-11, -4], [-12, 7], [-9, 10], [-7, 9], [-8, 0]] : [[-11, -4], [-11, 4], [-8, 2]];
+    poly(ctx, at(hx, hy, lock), hair); poly(ctx, at(hx, hy, mirror(lock)), hair);
+    px(ctx, hx - 6, hy - 9, 6, 1, hairL); px(ctx, hx - 7, hy - 8, 3, 1, hairL); px(ctx, hx + 6, hy - 7, 2, 2, hairD);
+    // Eyes (large, anime style), mouth, blush.
     const eye = a.eyeColor;
     for (const ex of [hx - 6, hx + 2]) {
       px(ctx, ex, hy + 1, 4, 5, '#1c1622');
       px(ctx, ex, hy + 2, 4, 3, eye);
       px(ctx, ex + 1, hy + 4, 2, 1, shade(eye, 0.35));
       px(ctx, ex + 2, hy + 2, 1, 1, '#ffffff');
-      px(ctx, ex, hy, 4, 1, '#1c1622');
+      px(ctx, ex - 1, hy, 6, 1, '#1c1622');
     }
-    px(ctx, hx - 1, hy + 7, 2, 1, shade(skin, -0.3)); // mouth
-    px(ctx, hx - 8, hy + 5, 2, 1, '#f0a0a0'); px(ctx, hx + 6, hy + 5, 2, 1, '#f0a0a0'); // blush
+    px(ctx, hx - 1, hy + 7, 2, 1, shade(skin, -0.35));
+    px(ctx, hx - 8, hy + 5, 2, 1, '#f0a0a0'); px(ctx, hx + 6, hy + 5, 2, 1, '#f0a0a0');
   } else {
     // Side view (drawn facing left; the right view is mirrored).
-    px(ctx, hx - 1, hy - 3, 11, 12, hair);
-    if (style === 'bob' || style === 'long') px(ctx, hx + 1, hy - 2, 9, 14, hair);
-    for (let i = -9; i <= -1; i += 3) px(ctx, hx + i, hy - 3, 3, 3, hair);
-    if (style === 'spiky') for (let i = -6; i <= 8; i += 4) px(ctx, hx + i, hy - 13, 3, 3, hair);
-    px(ctx, hx - 9, hy + 2, 1, 2, shade(skin, -0.05)); // nose tip
+    if (style === 'spiky' && !covered) spikes(ctx, hx, hy, hair, dir);
+    ellipse(ctx, hx + 1, hy - 4, 10, 7, hair);
+    px(ctx, hx - 1, hy - 4, 11, 10, hair);
+    poly(ctx, at(hx, hy, [[2, 4], [10, 2], [9, 9], [4, 8]]), hairD);
+    for (let i = 0, x = -10; x < -1; x += 3, i++) poly(ctx, at(hx, hy, [[x, -5], [x + 3, -5], [x + 1, i % 2 ? 0 : 2]]), hair);
+    px(ctx, hx - 4, hy - 9, 6, 1, hairL);
+    px(ctx, hx - 9, hy + 2, 1, 2, shade(skin, -0.05));
     const eye = a.eyeColor;
-    px(ctx, hx - 7, hy + 1, 3, 5, '#1c1622'); px(ctx, hx - 7, hy + 2, 3, 3, eye); px(ctx, hx - 6, hy + 2, 1, 1, '#ffffff');
-    px(ctx, hx - 7, hy + 7, 2, 1, shade(skin, -0.3));
-    px(ctx, hx + 1, hy, 2, 3, shade(skin, -0.1)); // ear
-    px(ctx, hx, hy - 9, 4, 1, hairD);
-  }
-}
-
-function drawBody(ctx: CanvasRenderingContext2D, look: CharacterLook, dir: Direction, p: Pose, by: number) {
-  const { outfit, appearance } = look;
-  const skin = appearance.skinTone;
-  const slim = appearance.body === 'b';
-  const sw = slim ? 13 : 15; // shoulder width
-  const top = by + 32, waist = by + 44;
-  const prim = outfit.primary, sec = outfit.secondary, acc = outfit.accent;
-  const legColor = outfit.style === 'robe' ? prim : shade(sec, -0.35);
-  const boot = '#4a3424';
-  // Legs
-  const legY = by + 46;
-  if (outfit.style !== 'robe') {
-    px(ctx, CX - 5, legY - p.legL, 4, 12, legColor); px(ctx, CX + 1, legY - p.legR, 4, 12, legColor);
-    px(ctx, CX - 6, legY + 9 - p.legL, 5, 3, boot); px(ctx, CX + 1, legY + 9 - p.legR, 5, 3, boot);
-  } else {
-    px(ctx, CX - 6, legY + 10 - p.legL, 5, 2, boot); px(ctx, CX + 1, legY + 10 - p.legR, 5, 2, boot);
-  }
-  // Torso by style
-  const x0 = CX - Math.floor(sw / 2);
-  switch (outfit.style) {
-    case 'robe':
-      px(ctx, x0 - 1, top, sw + 2, 26 - Math.max(p.legL, p.legR), prim);
-      px(ctx, x0 - 2, top + 16, sw + 4, 10 - Math.max(p.legL, p.legR), shade(prim, -0.15));
-      if (dir === 'down') { px(ctx, CX - 1, top, 2, 24, acc); px(ctx, x0, top, sw, 2, acc); }
-      px(ctx, x0, top + 9, sw, 2, sec);
-      break;
-    case 'plate':
-      px(ctx, x0, top, sw, 13, prim);
-      px(ctx, x0 - 2, top - 1, 5, 5, sec); px(ctx, x0 + sw - 3, top - 1, 5, 5, sec);
-      if (dir === 'down') { px(ctx, CX - 3, top + 3, 6, 6, shade(prim, 0.2)); px(ctx, CX - 1, top + 4, 2, 4, acc); }
-      px(ctx, x0, top + 12, sw, 2, acc);
-      px(ctx, x0 + 1, top + 14, sw - 2, 3, shade(prim, -0.2));
-      break;
-    case 'hood':
-      px(ctx, x0, top, sw, 15, prim);
-      px(ctx, x0 - 1, top + 2, sw + 2, 13, shade(prim, -0.12));
-      if (dir === 'down') { px(ctx, CX - 3, top, 6, 13, sec); px(ctx, CX - 1, top + 1, 2, 2, acc); }
-      px(ctx, x0, top + 11, sw, 2, '#5a3a1e');
-      break;
-    case 'apron':
-      px(ctx, x0, top, sw, 15, sec);
-      if (dir !== 'up') px(ctx, x0 + 2, top + 3, sw - 4, 14, prim);
-      px(ctx, x0, top + 9, sw, 1, shade(prim, -0.3));
-      break;
-    case 'coat':
-      px(ctx, x0, top, sw, 17, prim);
-      if (dir === 'down') { px(ctx, CX - 2, top, 4, 12, sec); px(ctx, CX - 3, top + 4, 1, 1, acc); px(ctx, CX - 3, top + 8, 1, 1, acc); }
-      px(ctx, x0, top + 10, sw, 2, shade(prim, -0.3));
-      break;
-    default: // tunic
-      px(ctx, x0, top, sw, 15, prim);
-      px(ctx, x0, top + 9, sw, 2, sec);
-      if (dir === 'down') px(ctx, CX - 2, top, 4, 3, acc);
-  }
-  void waist;
-  // Arms
-  const armColor = outfit.style === 'plate' ? sec : prim;
-  if (p.armsUp) {
-    px(ctx, x0 - 3, top - 8, 3, 10, armColor); px(ctx, x0 + sw, top - 8, 3, 10, armColor);
-    px(ctx, x0 - 3, top - 10, 3, 3, skin); px(ctx, x0 + sw, top - 10, 3, 3, skin);
-  } else if (dir === 'left' || dir === 'right') {
-    px(ctx, CX - 2 - p.armL, top + 1, 4, 11, shade(armColor, -0.1));
-    px(ctx, CX - 2 - p.armL, top + 11, 4, 3, skin);
-  } else {
-    px(ctx, x0 - 3, top + 1 + Math.max(0, p.armL), 3, 11, armColor); px(ctx, x0 + sw, top + 1 + Math.max(0, p.armR), 3, 11, armColor);
-    px(ctx, x0 - 3, top + 11 + Math.max(0, p.armL), 3, 3, skin); px(ctx, x0 + sw, top + 11 + Math.max(0, p.armR), 3, 3, skin);
+    px(ctx, hx - 7, hy + 1, 3, 5, '#1c1622'); px(ctx, hx - 7, hy + 2, 3, 3, eye); px(ctx, hx - 6, hy + 2, 1, 1, '#ffffff'); px(ctx, hx - 8, hy, 4, 1, '#1c1622');
+    px(ctx, hx - 7, hy + 7, 2, 1, shade(skin, -0.35));
+    px(ctx, hx + 1, hy + 1, 2, 3, shade(skin, -0.12));
   }
 }
 
@@ -249,8 +213,17 @@ function drawFrame(ctx: CanvasRenderingContext2D, look: CharacterLook, dir: Dire
   const isBow = look.weapon === 'bow' || look.weapon === 'crossbow';
   if (dir === 'up') drawWeapon(ctx, look.weapon, handX, handY, isBow ? Math.PI : wAngle, look.outfit.accent);
   if (dir === 'up' && look.shield) drawShield(ctx, 'down', by, look.outfit.accent);
-  drawBody(ctx, look, dir, p, by);
-  drawHead(ctx, look.appearance, CX, by + 21, dir);
+  // Job costume (cape behind, body, head, mask and headgear on top).
+  const costume = costumeFor(look.outfit.costume, look.outfit.style);
+  const pal = { prim: look.outfit.primary, sec: look.outfit.secondary, acc: look.outfit.accent, skin: look.appearance.skinTone, slim: look.appearance.body === 'b' };
+  drawCapeBack(ctx, costume, pal, dir, by);
+  // Hoods keep long hair tucked in.
+  if (dir !== 'up' && costume.head !== 'hood' && costume.head !== 'beast_hood') drawHairBack(ctx, look.appearance, CX, by + 21, dir);
+  drawCostumeBody(ctx, costume, pal, dir, by, p);
+  drawHead(ctx, look.appearance, CX, by + 21, dir, COVERING.has(costume.head));
+  drawMask(ctx, costume, pal, dir, CX, by + 21);
+  drawHeadgear(ctx, costume, pal, dir, CX, by + 21);
+  drawCapeFront(ctx, costume, pal, dir, by);
   if (dir === 'down' && look.shield) drawShield(ctx, dir, by, look.outfit.accent);
   if (dir !== 'up') {
     if (p.armsUp) drawWeapon(ctx, look.weapon, dir === 'down' ? CX + 9 : CX - 7, by + 22, -0.1, look.outfit.accent);

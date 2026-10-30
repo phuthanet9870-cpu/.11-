@@ -21,7 +21,8 @@
       "primary": "#c8a26b",
       "secondary": "#7a5634",
       "accent": "#e8dcc0",
-      "style": "tunic"
+      "style": "tunic",
+      "costume": "novice"
     },
     "jobBonus": ".sav.d.l.",
     "weightBonus": 0
@@ -62,7 +63,8 @@
       "primary": "#4a6fa5",
       "secondary": "#b8c4d6",
       "accent": "#e2c14f",
-      "style": "plate"
+      "style": "plate",
+      "costume": "knight"
     },
     "jobBonus": "..s.v..d.s..a.v..s..d.v..s.s..v..d.s..a.v..s.d...",
     "weightBonus": 800
@@ -101,7 +103,8 @@
       "primary": "#3f7a45",
       "secondary": "#8b6b3e",
       "accent": "#d9c27a",
-      "style": "hood"
+      "style": "hood",
+      "costume": "ranger"
     },
     "jobBonus": "..d.a..d.l..d.a..s..d.a..d.d..a..d.l..d.a..s.d...",
     "weightBonus": 600
@@ -141,7 +144,8 @@
       "primary": "#5b3d8f",
       "secondary": "#2b2347",
       "accent": "#7fd6ff",
-      "style": "robe"
+      "style": "robe",
+      "costume": "mage"
     },
     "jobBonus": "..i.d..i.a..i.d..v..i.d..i.i..d..i.a..i.d..v.i...",
     "weightBonus": 200
@@ -170,7 +174,8 @@
       "primary": "#f0ead8",
       "secondary": "#8a6a2a",
       "accent": "#ffd860",
-      "style": "robe"
+      "style": "robe",
+      "costume": "cleric"
     },
     "skills": [
       "holy_light",
@@ -210,7 +215,8 @@
       "primary": "#3a3442",
       "secondary": "#7a2a2a",
       "accent": "#c8b070",
-      "style": "coat"
+      "style": "coat",
+      "costume": "rogue"
     },
     "skills": [
       "twin_fang",
@@ -252,7 +258,8 @@
       "primary": "#8a5a2a",
       "secondary": "#e8d8b0",
       "accent": "#ffcc33",
-      "style": "apron"
+      "style": "apron",
+      "costume": "merchant"
     },
     "skills": [
       "pack_mule",
@@ -303,7 +310,8 @@
       "primary": "#2f5a8f",
       "secondary": "#c8d4e6",
       "accent": "#e2c14f",
-      "style": "plate"
+      "style": "plate",
+      "costume": "dragoon"
     },
     "jobBonus": ".s.v.d.s.a.s.v.s.d.a.v.ss.v.d.s.a.s.v.s.d.a.v.s..",
     "weightBonus": 900,
@@ -350,7 +358,8 @@
       "primary": "#e8e0c8",
       "secondary": "#8a2a2a",
       "accent": "#ffd34d",
-      "style": "plate"
+      "style": "plate",
+      "costume": "templar"
     },
     "jobBonus": ".v.s.i.v.d.v.s.v.i.s.v.vs.i.v.d.v.s.v.i.s.v.v.s..",
     "weightBonus": 800,
@@ -395,7 +404,8 @@
       "primary": "#4f6a2f",
       "secondary": "#7a5a2e",
       "accent": "#e0c070",
-      "style": "hood"
+      "style": "hood",
+      "costume": "beastmaster"
     },
     "jobBonus": ".d.a.l.d.s.d.a.d.l.a.d.da.l.d.s.d.a.d.l.a.d.d.a..",
     "weightBonus": 700,
@@ -440,7 +450,8 @@
       "primary": "#8a3a6a",
       "secondary": "#e8c8a0",
       "accent": "#ffd34d",
-      "style": "coat"
+      "style": "coat",
+      "costume": "minstrel"
     },
     "jobBonus": ".d.i.a.v.d.i.d.v.a.i.d.di.v.a.d.i.d.v.a.i.d.d.i..",
     "weightBonus": 650,
@@ -485,7 +496,8 @@
       "primary": "#3a2a7f",
       "secondary": "#1e1a3a",
       "accent": "#ff7a3a",
-      "style": "robe"
+      "style": "robe",
+      "costume": "sorcerer"
     },
     "jobBonus": ".i.d.i.a.i.d.i.v.i.d.i.id.i.a.i.d.i.v.i.d.i.i.d..",
     "weightBonus": 300,
@@ -531,7 +543,8 @@
       "primary": "#2a6a5a",
       "secondary": "#e8dcc0",
       "accent": "#7fd6ff",
-      "style": "robe"
+      "style": "robe",
+      "costume": "sage"
     },
     "jobBonus": ".i.d.a.v.i.d.i.v.a.d.i.id.v.a.i.d.i.v.a.d.i.i.d..",
     "weightBonus": 350,
@@ -577,7 +590,8 @@
       "primary": "#f4f0e0",
       "secondary": "#7a5a2a",
       "accent": "#ffd860",
-      "style": "robe"
+      "style": "robe",
+      "costume": "bishop"
     },
     "jobBonus": ".i.v.d.i.l.i.v.i.d.v.i.iv.d.i.l.i.v.i.d.v.i.i.v..",
     "weightBonus": 500,
@@ -621,7 +635,8 @@
       "primary": "#c86a2a",
       "secondary": "#5a3a1e",
       "accent": "#ffd860",
-      "style": "tunic"
+      "style": "tunic",
+      "costume": "ascetic"
     },
     "jobBonus": ".s.a.v.d.s.a.s.d.v.a.s.sa.d.v.s.a.s.d.v.a.s.s.a..",
     "weightBonus": 600,
@@ -666,7 +681,8 @@
       "primary": "#2a2a3a",
       "secondary": "#7a1a2a",
       "accent": "#c0c0d8",
-      "style": "coat"
+      "style": "coat",
+      "costume": "shadowblade"
     },
     "jobBonus": ".a.s.d.a.l.a.s.a.d.s.a.as.d.a.l.a.s.a.d.s.a.a.s..",
     "weightBonus": 500,
@@ -711,7 +727,8 @@
       "primary": "#5a3a2a",
       "secondary": "#2a4a3a",
       "accent": "#ffd34d",
-      "style": "coat"
+      "style": "coat",
+      "costume": "outlaw"
     },
     "jobBonus": ".d.a.s.l.d.a.d.l.s.a.d.da.l.s.d.a.d.l.s.a.d.d.a..",
     "weightBonus": 600,
@@ -758,7 +775,8 @@
       "primary": "#6a4a2a",
       "secondary": "#c8a26b",
       "accent": "#ff8a3a",
-      "style": "apron"
+      "style": "apron",
+      "costume": "artisan"
     },
     "jobBonus": ".s.d.v.s.l.s.d.s.v.d.s.sd.v.s.l.s.d.s.v.d.s.s.d..",
     "weightBonus": 1000,
@@ -804,7 +822,8 @@
       "primary": "#3a6a3a",
       "secondary": "#e8e0c8",
       "accent": "#7fff7a",
-      "style": "apron"
+      "style": "apron",
+      "costume": "alchemist"
     },
     "jobBonus": ".d.i.v.l.d.i.d.l.v.i.d.di.l.v.d.i.d.l.v.i.d.d.i..",
     "weightBonus": 900,
@@ -834,7 +853,8 @@
       "primary": "#c8a26b",
       "secondary": "#7a5634",
       "accent": "#e8dcc0",
-      "style": "tunic"
+      "style": "tunic",
+      "costume": "high_novice"
     },
     "jobBonus": ".sav.d.l.",
     "weightBonus": 0,
@@ -869,7 +889,8 @@
       "primary": "#4a6fa5",
       "secondary": "#b8c4d6",
       "accent": "#e2c14f",
-      "style": "plate"
+      "style": "plate",
+      "costume": "high_knight"
     },
     "jobBonus": "..s.v..d.s..a.v..s..d.v..s.s..v..d.s..a.v..s.d...",
     "weightBonus": 800,
@@ -902,7 +923,8 @@
       "primary": "#3f7a45",
       "secondary": "#8b6b3e",
       "accent": "#d9c27a",
-      "style": "hood"
+      "style": "hood",
+      "costume": "high_ranger"
     },
     "jobBonus": "..d.a..d.l..d.a..s..d.a..d.d..a..d.l..d.a..s.d...",
     "weightBonus": 600,
@@ -935,7 +957,8 @@
       "primary": "#5b3d8f",
       "secondary": "#2b2347",
       "accent": "#7fd6ff",
-      "style": "robe"
+      "style": "robe",
+      "costume": "high_mage"
     },
     "jobBonus": "..i.d..i.a..i.d..v..i.d..i.i..d..i.a..i.d..v.i...",
     "weightBonus": 200,
@@ -967,7 +990,8 @@
       "primary": "#f0ead8",
       "secondary": "#8a6a2a",
       "accent": "#ffd860",
-      "style": "robe"
+      "style": "robe",
+      "costume": "high_cleric"
     },
     "skills": [],
     "jobBonus": "..i.v..d.i..l.v..i..d.v..i.i..v..d.i..l.v..i.d...",
@@ -1000,7 +1024,8 @@
       "primary": "#3a3442",
       "secondary": "#7a2a2a",
       "accent": "#c8b070",
-      "style": "coat"
+      "style": "coat",
+      "costume": "high_rogue"
     },
     "skills": [],
     "jobBonus": "..a.s..d.a..l.a..s..a.d..s.a..a..s.d..a.l..a.s...",
@@ -1035,7 +1060,8 @@
       "primary": "#8a5a2a",
       "secondary": "#e8d8b0",
       "accent": "#ffcc33",
-      "style": "apron"
+      "style": "apron",
+      "costume": "high_merchant"
     },
     "skills": [],
     "jobBonus": "..s.v..d.s..l.v..s..d.v..s.s..v..d.s..l.v..s.d...",
@@ -1075,7 +1101,8 @@
       "primary": "#2f5a8f",
       "secondary": "#c8d4e6",
       "accent": "#e2c14f",
-      "style": "plate"
+      "style": "plate",
+      "costume": "dragon_lord"
     },
     "jobBonus": ".s.v..d.s.a.s..v.s.d.a.v..s.s.v.d..s.a.s.v..s.d.a.v.s..s.v.d.s..a.s..",
     "weightBonus": 900,
@@ -1114,7 +1141,8 @@
       "primary": "#e8e0c8",
       "secondary": "#8a2a2a",
       "accent": "#ffd34d",
-      "style": "plate"
+      "style": "plate",
+      "costume": "high_templar"
     },
     "jobBonus": ".v.s..i.v.d.v..s.v.i.s.v..v.s.i.v..d.v.s.v..i.s.v.v.s..i.v.d.v..s.v..",
     "weightBonus": 800,
@@ -1151,7 +1179,8 @@
       "primary": "#4f6a2f",
       "secondary": "#7a5a2e",
       "accent": "#e0c070",
-      "style": "hood"
+      "style": "hood",
+      "costume": "wildlord"
     },
     "jobBonus": ".d.a..l.d.s.d..a.d.l.a.d..d.a.l.d..s.d.a.d..l.a.d.d.a..l.d.s.d..a.d..",
     "weightBonus": 700,
@@ -1188,7 +1217,8 @@
       "primary": "#8a3a6a",
       "secondary": "#e8c8a0",
       "accent": "#ffd34d",
-      "style": "coat"
+      "style": "coat",
+      "costume": "maestro"
     },
     "jobBonus": ".d.i..a.v.d.i..d.v.a.i.d..d.i.v.a..d.i.d.v..a.i.d.d.i..a.v.d.i..d.a..",
     "weightBonus": 650,
@@ -1225,7 +1255,8 @@
       "primary": "#3a2a7f",
       "secondary": "#1e1a3a",
       "accent": "#ff7a3a",
-      "style": "robe"
+      "style": "robe",
+      "costume": "archsorcerer"
     },
     "jobBonus": ".i.d..i.a.i.d..i.v.i.d.i..i.d.i.a..i.d.i.v..i.d.i.i.d..i.a.i.d..i.v..",
     "weightBonus": 300,
@@ -1263,7 +1294,8 @@
       "primary": "#2a6a5a",
       "secondary": "#e8dcc0",
       "accent": "#7fd6ff",
-      "style": "robe"
+      "style": "robe",
+      "costume": "archsage"
     },
     "jobBonus": ".i.d..a.v.i.d..i.v.a.d.i..i.d.v.a..i.d.i.v..a.d.i.i.d..a.v.i.d..i.a..",
     "weightBonus": 350,
@@ -1301,7 +1333,8 @@
       "primary": "#f4f0e0",
       "secondary": "#7a5a2a",
       "accent": "#ffd860",
-      "style": "robe"
+      "style": "robe",
+      "costume": "archbishop"
     },
     "jobBonus": ".i.v..d.i.l.i..v.i.d.v.i..i.v.d.i..l.i.v.i..d.v.i.i.v..d.i.l.i..v.i..",
     "weightBonus": 500,
@@ -1337,7 +1370,8 @@
       "primary": "#c86a2a",
       "secondary": "#5a3a1e",
       "accent": "#ffd860",
-      "style": "tunic"
+      "style": "tunic",
+      "costume": "grandmaster"
     },
     "jobBonus": ".s.a..v.d.s.a..s.d.v.a.s..s.a.d.v..s.a.s.d..v.a.s.s.a..v.d.s.a..s.v..",
     "weightBonus": 600,
@@ -1374,7 +1408,8 @@
       "primary": "#2a2a3a",
       "secondary": "#7a1a2a",
       "accent": "#c0c0d8",
-      "style": "coat"
+      "style": "coat",
+      "costume": "shadow_reaper"
     },
     "jobBonus": ".a.s..d.a.l.a..s.a.d.s.a..a.s.d.a..l.a.s.a..d.s.a.a.s..d.a.l.a..s.a..",
     "weightBonus": 500,
@@ -1411,7 +1446,8 @@
       "primary": "#5a3a2a",
       "secondary": "#2a4a3a",
       "accent": "#ffd34d",
-      "style": "coat"
+      "style": "coat",
+      "costume": "phantom_outlaw"
     },
     "jobBonus": ".d.a..s.l.d.a..d.l.s.a.d..d.a.l.s..d.a.d.l..s.a.d.d.a..s.l.d.a..d.s..",
     "weightBonus": 600,
@@ -1450,7 +1486,8 @@
       "primary": "#6a4a2a",
       "secondary": "#c8a26b",
       "accent": "#ff8a3a",
-      "style": "apron"
+      "style": "apron",
+      "costume": "mastersmith"
     },
     "jobBonus": ".s.d..v.s.l.s..d.s.v.d.s..s.d.v.s..l.s.d.s..v.d.s.s.d..v.s.l.s..d.s..",
     "weightBonus": 1000,
@@ -1488,7 +1525,8 @@
       "primary": "#3a6a3a",
       "secondary": "#e8e0c8",
       "accent": "#7fff7a",
-      "style": "apron"
+      "style": "apron",
+      "costume": "grand_alchemist"
     },
     "jobBonus": ".d.i..v.l.d.i..d.l.v.i.d..d.i.l.v..d.i.d.l..v.i.d.d.i..v.l.d.i..d.v..",
     "weightBonus": 900,

@@ -80,6 +80,7 @@ try {
   await ev(a, async () => {
     const w = window.__veyloria.world;
     for (let ok = 0; ok < 10;) { await new Promise((r) => setTimeout(r, 100)); ok = w.partyShareWith === 1 ? ok + 1 : 0; }
+    w.timedBonuses = false; // the daily EXP +50% hours would change the numbers
     const m = w.spawnMonsterAt('leaf_slime', w.player.x + 40, w.player.y); m.damageBy.player = 1; w.killMonster(m);
   });
   await W(b, () => window.__shared !== undefined);

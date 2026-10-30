@@ -86,7 +86,7 @@ export interface JobClassDef {
   weightBonus?: number;
   /** Where this job's guild master stands (generated second jobs). */
   guildMaster?: { town: string; name: string; title: string };
-  outfit: { primary: string; secondary: string; accent: string; style: string };
+  outfit: { primary: string; secondary: string; accent: string; style: string; costume?: string };
 }
 
 // ---------------------------------------------------------------- skills
@@ -476,7 +476,7 @@ export interface NpcDef {
   name: string;
   title: string;
   appearance: Appearance;
-  outfit: { primary: string; secondary: string; accent: string; style: string };
+  outfit: { primary: string; secondary: string; accent: string; style: string; costume?: string };
   greeting: string[];
   services: NpcService[];
 }
