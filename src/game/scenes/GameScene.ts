@@ -9,7 +9,7 @@ import { npcQuestMarker } from '../../core/quests';
 import { loadThemeArt, themeArtReady } from '../art/themeArt';
 import { mapArtPaths, scenerySprite } from '../art/scenery';
 import {
-  CHUNK_TILES, ensureCharacterTexture, ensureFxTextures, ensureItemTexture, ensureMapChunk, ensureMapTextures, ensureMonsterTexture, ensureTombstoneTexture,
+  CHUNK_TILES, characterTextureLayout, ensureCharacterTexture, ensureFxTextures, ensureItemTexture, ensureMapChunk, ensureMapTextures, ensureMonsterTexture, ensureTombstoneTexture,
   releaseMapChunk, type ChunkLayers,
 } from '../assets';
 import { useShadowStyle, type CharacterLook } from '../art/characterSprite';
@@ -787,7 +787,8 @@ const procClips = <A extends string>(key: string, anims: Record<A, { start: numb
     return [name, { key, cols, rows, directions: CHAR_DIRECTIONS, ...m }];
   })) as Record<string, Clip>;
 function proceduralCharRig(key: string): Rig {
-  return { clips: procClips(key, CHAR_ANIMS, CHAR_SHEET_COLS, CHAR_DIRECTIONS.length), originX: CHAR_PIVOT.x, originY: CHAR_PIVOT.y };
+  const layout = characterTextureLayout(key);
+  return { clips: procClips(key, layout.anims, layout.cols, CHAR_DIRECTIONS.length), originX: CHAR_PIVOT.x, originY: CHAR_PIVOT.y };
 }
 function proceduralMonRig(key: string): Rig {
   return { clips: procClips(key, MON_ANIMS, MON_SHEET_COLS, 1), originX: 0.5, originY: 1 };

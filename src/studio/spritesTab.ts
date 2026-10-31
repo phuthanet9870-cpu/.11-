@@ -40,7 +40,7 @@ export function uiTemplate(): HTMLCanvasElement {
 
 function entries(st: StudioCtx, kind: Kind): Entry[] {
   const d = st.data;
-  const charOpts = (look: CharacterLook): ImageEditorOptions => ({ template: () => generateCharacterSheet(look), grid: { w: CHAR_FRAME_W, h: CHAR_FRAME_H }, fixedSize: true });
+  const charOpts = (look: CharacterLook): ImageEditorOptions => ({ template: () => generateCharacterSheet(look, { classicLayout: true }), grid: { w: CHAR_FRAME_W, h: CHAR_FRAME_H }, fixedSize: true });
   const charNote = `ชีต ${CHAR_FRAME_W * CHAR_SHEET_COLS}×${CHAR_FRAME_H * CHAR_DIRECTIONS.length}: ช่องละ ${CHAR_FRAME_W}×${CHAR_FRAME_H} · แถว = ทิศ (ลง ซ้าย ขวา ขึ้น) · คอลัมน์ = ${Object.entries(CHAR_ANIMS).map(([a, m]) => `${a} ${m.count}`).join(', ')} เฟรม`;
   switch (kind) {
     case 'monster': return [...d.monsters.values()].map((m: MonsterDef) => ({

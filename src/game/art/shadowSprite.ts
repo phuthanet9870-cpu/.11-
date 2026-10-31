@@ -3,7 +3,8 @@
 // silhouette; transcendent jobs add glowing trim, third jobs add an aura and a signature piece.
 // Drawn into the same 48x64 frames and animations as the classic chibi sheets (spriteMeta.ts).
 import type { Direction } from '../../core/types';
-import { ellipse, poly, px, shade } from './canvas';
+import { addOutline, ellipse, makeCanvas, poly, px, shade } from './canvas';
+import { CHAR_DIRECTIONS, CHAR_FRAME_H, CHAR_FRAME_W, type CharAnim } from './spriteMeta';
 
 type HeadKind = 'bare' | 'sprout' | 'hood' | 'pointed_hood' | 'ears_hood' | 'horn_hood' | 'helm' | 'horn_helm' | 'great_helm'
   | 'witch_hat' | 'wide_hat' | 'tricorn' | 'mitre' | 'cap' | 'goggles' | 'bandana' | 'topknot' | 'circlet' | 'flame_crown' | 'antlers';
@@ -83,12 +84,6 @@ export function shadowDesign(classId: string): ShadowDesign {
 }
 
 
-/** Pose subset the shadow renderer uses (same values as the classic renderer's poses). */
-export interface ShadowPose {
-  bob: number; legL: number; legR: number; armL: number; armR: number;
-  weaponAngle: number; weaponRaise: number; castGlow: number; armsUp: boolean;
-}
-
 const K0 = '#0b0b12', K1 = '#171723', K2 = '#262638', K3 = '#34344a';
 const CX = 24, FEET = 60;
 
@@ -108,7 +103,7 @@ function glowDot(ctx: CanvasRenderingContext2D, x: number, y: number, w: number,
 }
 
 // ------------------------------------------------------------------ weapons
-function drawShadowWeapon(ctx: CanvasRenderingContext2D, type: string | null, x: number, y: number, angle: number, glow: string) {
+function drawShadowWeapon(ctx: CanvasRenderingContext2D, type: string | null, x: number, y: number, angle: number, glow: string, draw = 0, nocked = false) {
   if (!type) return;
   const g = glow, gl = shade(glow, 0.4);
   ctx.save();
@@ -131,13 +126,16 @@ function drawShadowWeapon(ctx: CanvasRenderingContext2D, type: string | null, x:
       ctx.globalAlpha = 0.4; ellipse(ctx, 1, -22, 4, 4, g); ctx.globalAlpha = 1; ellipse(ctx, 1, -22, 2, 2, gl);
       break;
     case 'wand': px(ctx, 0, -4, 2, 14, K1); ctx.globalAlpha = 0.4; ellipse(ctx, 1, -6, 3, 3, g); ctx.globalAlpha = 1; px(ctx, 0, -7, 2, 2, gl); break;
-    case 'bow': case 'crossbow':
+    case 'bow': case 'crossbow': {
+      // Belly toward local +x (the shot direction); the string is pulled back toward -x.
       ctx.strokeStyle = K0; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.arc(-6, 4, 12, -1.1, 1.1); ctx.stroke();
-      ctx.strokeStyle = g; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(-6 + 12 * Math.cos(-1.1), 4 + 12 * Math.sin(-1.1)); ctx.lineTo(-6 + 12 * Math.cos(1.1), 4 + 12 * Math.sin(1.1)); ctx.stroke();
-      if (type === 'crossbow') px(ctx, -8, 3, 14, 2, K1);
+      const tx = -6 + 12 * Math.cos(1.1), ty = 12 * Math.sin(1.1), pull = tx - 7 * draw;
+      line(ctx, tx, 4 - ty, pull, 4, 1, g); line(ctx, pull, 4, tx, 4 + ty, 1, g);
+      if (type === 'crossbow') px(ctx, -10, 3, 16, 2, K1);
+      if (nocked) { px(ctx, Math.round(pull), 4, 15, 1, K2); px(ctx, Math.round(pull) + 14, 3, 2, 3, gl); }
       break;
+    }
     case 'instrument': ellipse(ctx, 1, 8, 5, 6, K0); px(ctx, 0, -6, 2, 10, K1); px(ctx, -1, 7, 4, 2, g); px(ctx, 1, -6, 1, 13, shade(g, -0.3)); break;
     case 'book': px(ctx, -4, 2, 9, 7, K1); px(ctx, 0, 2, 1, 7, K0); px(ctx, -3, 4, 2, 1, g); px(ctx, 2, 4, 2, 1, g); px(ctx, -3, 6, 2, 1, g); break;
     case 'knuckle': ctx.globalAlpha = 0.45; ellipse(ctx, 1, 2, 4, 4, g); ctx.globalAlpha = 1; px(ctx, -1, 0, 4, 4, K0); px(ctx, 0, 1, 2, 1, gl); break;
@@ -256,69 +254,195 @@ function drawShadowHead(ctx: CanvasRenderingContext2D, d: ShadowDesign, hx: numb
   }
 }
 
-// ------------------------------------------------------------------ body
-/** Draws one frame facing left/down/up (right is mirrored by the sheet builder). */
-export function drawShadowFrame(ctx: CanvasRenderingContext2D, d: ShadowDesign, weapon: string | null, shield: boolean, dir: Direction, p: ShadowPose) {
-  const by = p.bob, g = d.glow, side = dir === 'left', back = dir === 'up';
-  const sway = (p.armL - p.armR) / 2; // walk cycle: 2, 0, -2, 0
-  const phase = Math.round(sway / 2) + (p.bob ? 1 : 0);
-  const hx = CX, hy = by + 17;
-  const sh = by + 25, hip = by + 41;
-  const handX = dir === 'down' ? CX + 9 : back ? CX - 9 : CX - 6;
-  const handY = by + 40 - p.weaponRaise;
-  const wAngle = side ? p.weaponAngle + 0.2 : -p.weaponAngle;
-  const isBow = weapon === 'bow' || weapon === 'crossbow';
 
-  // Aura at the feet (third jobs).
+// ------------------------------------------------------------------ poses
+/** How a weapon attacks: sweeping slash, thrust, bow shot, spell bolt or fists. */
+export type AttackStyle = 'slash' | 'thrust' | 'shoot' | 'magic' | 'punch';
+export function attackStyle(weapon: string | null): AttackStyle {
+  switch (weapon) {
+    case 'spear': case 'katar': return 'thrust';
+    case 'bow': case 'crossbow': return 'shoot';
+    case 'staff': case 'wand': case 'book': case 'instrument': return 'magic';
+    case 'knuckle': case null: return 'punch';
+    default: return 'slash';
+  }
+}
+
+export interface ShadowPose {
+  bob: number;
+  /** Foot lift (front/back views). */
+  legL: number; legR: number;
+  /** Side-view stride, -1..1 (front leg forward). */
+  stride: number;
+  /** Off-hand swing (+ = down/forward) and punch reach 0..1. */
+  armL: number; offReach: number;
+  /** Both arms raised (casting), 0..1. */
+  armsUp: number;
+  /** Weapon hand offset: [forward, up] in px. */
+  hand: [number, number];
+  /** Weapon angle (side-view convention: 0 = pointing down, PI/2 = forward, PI = up). */
+  a: number;
+  /** Body shift toward the facing direction. */
+  lean: number;
+  /** Cloth flutter step and how far cloth trails behind. */
+  wind: number; sway: number;
+  trail?: [number, number, number];
+  bowDraw?: number; nocked?: boolean; arrow?: number;
+  charge?: number; bolt?: number;
+  thrustFx?: number;
+  impact?: 'hand' | 'off' | 'tip';
+  cast?: number;
+}
+
+const P0: ShadowPose = { bob: 0, legL: 0, legR: 0, stride: 0, armL: 0, offReach: 0, armsUp: 0, hand: [0, 0], a: 0.3, lean: 0, wind: 0, sway: 0 };
+
+/** Key pose index 0..5 for frame f of n (fewer frames sample the key poses). */
+const key6 = (f: number, n: number) => (n >= 6 ? Math.min(5, Math.floor((f * 6) / n)) : Math.round((f * 5) / Math.max(1, n - 1)));
+
+export function shadowPose(anim: CharAnim, f: number, n: number, weapon: string | null): ShadowPose {
+  const t = f / n, k = key6(f, n);
+  switch (anim) {
+    case 'idle': {
+      const q = Math.floor(t * 4);
+      return { ...P0, bob: q >= 2 ? 1 : 0, wind: q, sway: [0, 1, 1, 0][q], hand: [0, q >= 2 ? -1 : 0] };
+    }
+    case 'walk': {
+      const s = Math.sin(t * Math.PI * 2), c = Math.cos(t * Math.PI * 2);
+      return { ...P0, legL: Math.max(0, s) * 3, legR: Math.max(0, -s) * 3, stride: s, armL: -s * 3, hand: [s * 2, 0], bob: Math.abs(c) < 0.5 ? -1 : 0, wind: f % 4, sway: 2 + Math.round(Math.abs(s)) };
+    }
+    case 'attack': {
+      const lean = { slash: [0, -1, 2, 3, 2, 1], thrust: [0, -1, 4, 4, 2, 0], shoot: [0, 0, -1, -2, -1, 0], magic: [0, 0, -1, 2, 1, 0], punch: [0, 2, 0, 3, 2, 0] };
+      const st = attackStyle(weapon), base = { ...P0, lean: lean[st][k], wind: k % 4, sway: 1 + (k >= 2 && k <= 4 ? 1 : 0) };
+      switch (st) {
+        case 'slash': {
+          const a = [-1.2, -2.5, -3.9, -5.0, -5.4, -5.0][k];
+          const hand: [number, number][] = [[1, 2], [3, 7], [-2, 6], [-5, 0], [-4, -2], [-1, 0]];
+          const trail: ([number, number, number] | undefined)[] = [undefined, undefined, [-2.5, -3.9, 1], [-3.4, -5.0, 1], [-4.4, -5.4, 0.45], undefined];
+          return { ...base, a, hand: hand[k], trail: trail[k], armL: k >= 3 ? 2 : -1 };
+        }
+        case 'thrust': {
+          const hand: [number, number][] = [[0, 1], [-4, 1], [7, 1], [8, 1], [3, 1], [0, 1]];
+          return { ...base, a: k === 0 ? 1.2 : 1.55, hand: hand[k], thrustFx: k === 2 ? 1 : k === 3 ? 0.5 : 0, impact: k === 3 ? 'tip' : undefined };
+        }
+        case 'shoot':
+          return { ...base, hand: [0, [4, 5, 5, 5, 4, 2][k]], bowDraw: [0.2, 0.7, 1, 0, 0, 0][k], nocked: k <= 2, arrow: k === 3 ? 4 : k === 4 ? 14 : undefined };
+        case 'magic': {
+          const hand: [number, number][] = [[0, 2], [1, 8], [1, 9], [-4, 6], [-3, 4], [0, 1]];
+          return { ...base, a: [-1.0, -2.6, -2.6, 1.9, 1.6, 0.8][k], hand: hand[k], charge: k === 1 ? 1 : k === 2 ? 2 : 0, bolt: k === 3 ? 5 : k === 4 ? 14 : undefined };
+        }
+        case 'punch': {
+          const hand: [number, number][] = [[0, 8], [-1, 8], [0, 8], [9, 7], [8, 7], [2, 6]];
+          return { ...base, hand: hand[k], offReach: [0, 1, 0.3, 0, 0, 0][k], impact: k === 1 ? 'off' : k === 3 ? 'hand' : undefined };
+        }
+      }
+      return base;
+    }
+    case 'cast': return { ...P0, armsUp: 1, a: -1.4, cast: t, wind: f % 4, sway: -1, bob: f % 2 ? -1 : 0 };
+    case 'hit': { const h = Math.min(2, Math.round((f * 2) / Math.max(1, n - 1))); return { ...P0, lean: [-3, -2, -1][h], bob: [0, 1, 0][h], armL: 3, a: 0.7, hand: [-1, -1], sway: -1 }; }
+    case 'death': {
+      const j = Math.min(2, k);
+      return { ...P0, lean: [-2, -1, 0][j], bob: [0, 4, 7][j], armL: [2, 4, 5][j], a: [0.8, 1.4, 1.6][j], hand: [0, [-1, -3, -5][j]], sway: -1 };
+    }
+  }
+}
+
+// ------------------------------------------------------------------ body
+const WEAPON_LEN: Record<string, number> = { dagger: 11, katar: 12, sword: 20, twohand_sword: 26, axe: 20, club: 14, spear: 29, staff: 22, wand: 7 };
+
+/** Where a point at `len` along a weapon held at canvas angle `th` ends up. */
+const tipOf = (hx: number, hy: number, th: number, len: number): [number, number] => [hx - Math.sin(th) * len, hy + Math.cos(th) * len];
+
+function spark(fx: CanvasRenderingContext2D, x: number, y: number, g: string) {
+  const c = shade(g, 0.5);
+  px(fx, x - 4, y, 9, 1, c); px(fx, x, y - 4, 1, 9, c);
+  px(fx, x - 2, y - 2, 1, 1, g); px(fx, x + 2, y - 2, 1, 1, g); px(fx, x - 2, y + 2, 1, 1, g); px(fx, x + 2, y + 2, 1, 1, g);
+  fx.globalAlpha = 0.3; ellipse(fx, x, y, 4, 4, g); fx.globalAlpha = 1;
+}
+
+/**
+ * Draws one frame facing left/down/up (right is mirrored by the sheet builder). The body goes on
+ * `ctx` (it gets the outline); glows, trails and projectiles go on `fx`, which is laid on top.
+ */
+export function drawShadowFrame(ctx: CanvasRenderingContext2D, fx: CanvasRenderingContext2D, d: ShadowDesign, weapon: string | null, shield: boolean, dir: Direction, p: ShadowPose) {
+  const g = d.glow, side = dir === 'left', back = dir === 'up';
+  const ox = side ? -p.lean : 0, oy = dir === 'down' ? Math.round(p.lean * 0.6) : back ? -Math.round(p.lean * 0.6) : 0;
+  ctx.save(); fx.save(); ctx.translate(ox, oy); fx.translate(ox, oy);
+  const by = p.bob, sway = p.sway, phase = [0, 1, 1, 0][((p.wind % 4) + 4) % 4];
+  const hx = CX, hy = by + 17, sh = by + 25, hip = by + 41;
+  const [fwd, up] = p.hand;
+  const handX = dir === 'down' ? CX + 9 : back ? CX - 9 : CX - 6 - fwd;
+  const handY = by + 40 - up + (dir === 'down' ? Math.round(fwd * 0.4) : back ? -Math.round(fwd * 0.4) : 0);
+  const isBow = weapon === 'bow' || weapon === 'crossbow';
+  const th = isBow ? (side ? Math.PI : back ? -Math.PI / 2 : Math.PI / 2) : side ? p.a : -p.a;
+
+  // Shadow on the ground, aura of third jobs.
   if (d.aura) {
-    ctx.globalAlpha = 0.15; ellipse(ctx, CX, FEET - 1, 13, 4, g); ctx.globalAlpha = 1;
-    for (const [x, y] of [[-10, -8], [9, -14], [-6, -22], [11, -4]] as [number, number][]) px(ctx, CX + x, FEET + y - (phase & 1), 1, 1, shade(g, 0.3));
-  } else ellipse(ctx, CX, FEET, 10, 3, 'rgba(0,0,0,0.3)');
+    fx.globalAlpha = 0.18; ellipse(fx, CX - ox, FEET - 1 - oy, 13, 4, g); fx.globalAlpha = 1;
+    for (const [x, y] of [[-10, -8], [9, -14], [-6, -22], [11, -4]] as [number, number][]) px(fx, CX + x - ox, FEET + y - ((p.wind + x) & 3) - oy, 1, 1, shade(g, 0.3));
+  } else ellipse(ctx, CX - ox, FEET - oy, 10, 3, 'rgba(0,0,0,0.3)');
+
+  // Spell circle under the feet while casting.
+  if (p.cast !== undefined) {
+    const cy = FEET - 1 - oy, rot = p.cast * Math.PI * 2;
+    fx.strokeStyle = g; fx.lineWidth = 1; fx.globalAlpha = 0.75;
+    fx.beginPath(); fx.ellipse(CX + 0.5, cy + 0.5, 16, 5, 0, 0, Math.PI * 2); fx.stroke();
+    fx.globalAlpha = 0.4; fx.beginPath(); fx.ellipse(CX + 0.5, cy + 0.5, 11, 3.5, 0, 0, Math.PI * 2); fx.stroke();
+    fx.globalAlpha = 1;
+    for (let i = 0; i < 6; i++) { const a = rot / 3 + (i / 6) * Math.PI * 2; px(fx, Math.round(CX + Math.cos(a) * 16), Math.round(cy + Math.sin(a) * 5), 1, 1, shade(g, 0.5)); }
+    for (let i = 0; i < 4; i++) {
+      const u = (p.cast + i / 4) % 1;
+      fx.globalAlpha = 1 - u; px(fx, CX + [-12, -5, 6, 12][i], Math.round(cy - 3 - u * 30), 1, 2, shade(g, 0.3)); fx.globalAlpha = 1;
+    }
+  }
 
   // Behind the body: wings, cape, scarf tails, bag, weapon held at the back.
   if (d.wings) {
+    const flap = p.cast !== undefined ? 2 : phase;
     for (const s of side ? [1] : [-1, 1]) {
       const wx = side ? CX + 3 : CX + s * 4;
-      poly(ctx, [[wx, sh + 1], [wx + s * 10, sh - 10 - phase], [wx + s * 17, sh - 6 - phase], [wx + s * 14, sh + 2], [wx + s * 11, sh - 1], [wx + s * 9, sh + 6], [wx + s * 5, sh + 4]], K1);
-      line(ctx, wx, sh + 1, wx + s * 10, sh - 10 - phase, 1, shade(g, -0.45));
+      poly(ctx, [[wx, sh + 1], [wx + s * 10, sh - 10 - flap], [wx + s * 17, sh - 6 - flap], [wx + s * 14, sh + 2], [wx + s * 11, sh - 1], [wx + s * 9, sh + 6], [wx + s * 5, sh + 4]], K1);
+      line(ctx, wx, sh + 1, wx + s * 10, sh - 10 - flap, 1, shade(g, -0.45));
     }
   }
   const capeLen = d.cape === 'long' ? 56 : 46;
   if (d.cape && !back) {
     const pts: [number, number][] = side
-      ? [[CX - 1, sh], [CX + 5, sh], [CX + 9 + sway, by + capeLen], [CX + 4 + sway, by + capeLen + 2], [CX + 1, by + capeLen]]
-      : [[CX - 7, sh], [CX + 7, sh], [CX + 10, by + capeLen], [CX - 10, by + capeLen]];
+      ? [[CX - 1, sh], [CX + 5, sh], [CX + 8 + sway, by + capeLen - Math.max(0, sway - 1)], [CX + 4 + sway, by + capeLen + 2 - Math.max(0, sway - 1)], [CX + 1, by + capeLen]]
+      : [[CX - 7, sh], [CX + 7, sh], [CX + 10 + phase, by + capeLen], [CX - 10 + phase, by + capeLen]];
     poly(ctx, pts, K1);
-    if (d.trim) line(ctx, side ? CX + 9 + sway : CX - 10, by + capeLen, side ? CX + 1 : CX + 10, by + capeLen, 1, shade(g, -0.3));
+    if (d.trim) line(fx, side ? CX + 8 + sway : CX - 10 + phase, by + capeLen, side ? CX + 1 : CX + 10 + phase, by + capeLen, 1, shade(g, -0.3));
   }
   if (d.scarf && !back) {
-    const sx = side ? CX + 4 : CX + 5;
-    poly(ctx, [[sx, sh - 1], [sx + 9, sh + 2 + phase], [sx + 13, sh + 1 + phase], [sx + 10, sh + 5 + phase], [sx + 1, sh + 3]], K0);
-    poly(ctx, [[sx, sh], [sx + 7, sh + 8 + phase], [sx + 4, sh + 9 + phase], [sx - 1, sh + 3]], K1);
+    const sx = side ? CX + 4 : CX + 5, lift = sway - 1 + phase;
+    poly(ctx, [[sx, sh - 1], [sx + 9, sh + 2 - lift], [sx + 13, sh + 1 - lift], [sx + 10, sh + 5 - lift], [sx + 1, sh + 3]], K0);
+    poly(ctx, [[sx, sh], [sx + 7, sh + 8 - lift], [sx + 4, sh + 9 - lift], [sx - 1, sh + 3]], K1);
   }
   if (d.bag && !back) { if (side) px(ctx, CX + 3, sh + 1, 6, 9, K1); else px(ctx, CX - 9, sh + 2, 18, 8, K1); }
-  if (back) drawShadowWeapon(ctx, weapon, handX, handY, isBow ? Math.PI : wAngle, g);
+  if (back) drawShadowWeapon(ctx, weapon, handX, handY, th, g, p.bowDraw ?? 0, !!p.nocked);
 
   // Legs.
   const legW = d.body === 'armor' ? 4 : 3;
-  const legH = (lift: number) => FEET - lift * 1.5;
+  const footY = (lift: number) => FEET - oy - lift * 1.5;
   if (d.body !== 'robe') {
     if (side) {
-      const swing = (p.legL - p.legR) * 1.5;
-      px(ctx, CX - 2 + swing, hip, legW, legH(p.legR) - hip, K0); px(ctx, CX - 4 + swing, legH(p.legR) - 2, 5, 2, K0);
-      px(ctx, CX - 1 - swing, hip, legW, legH(p.legL) - hip, K1); px(ctx, CX - 3 - swing, legH(p.legL) - 2, 5, 2, K1);
+      const sw = Math.round(p.stride * 4);
+      const fb = footY(p.legL), ff = footY(p.legR);
+      px(ctx, CX - 1 + sw, hip, legW, fb - hip, K1); px(ctx, CX - 3 + sw, fb - 2, 5, 2, K1);
+      px(ctx, CX - 2 - sw, hip, legW, ff - hip, K0); px(ctx, CX - 4 - sw, ff - 2, 5, 2, K0);
     } else {
-      px(ctx, CX - 4 - (legW - 3), hip, legW, legH(p.legL) - hip, K0); px(ctx, CX - 5 - (legW - 3), legH(p.legL) - 2, legW + 1, 2, K0);
-      px(ctx, CX + 1, hip, legW, legH(p.legR) - hip, K0); px(ctx, CX + 1, legH(p.legR) - 2, legW + 1, 2, K0);
+      const fl = footY(p.legL), fr = footY(p.legR);
+      px(ctx, CX - 4 - (legW - 3), hip, legW, fl - hip, K0); px(ctx, CX - 5 - (legW - 3), fl - 2, legW + 1, 2, K0);
+      px(ctx, CX + 1, hip, legW, fr - hip, K0); px(ctx, CX + 1, fr - 2, legW + 1, 2, K0);
     }
   } else {
-    const fy = FEET - 2;
-    if (side) px(ctx, CX - 5 + sway, fy, 4, 2, K0); else { px(ctx, CX - 5, fy - p.legL, 4, 2, K0); px(ctx, CX + 1, fy - p.legR, 4, 2, K0); }
+    const fy = FEET - oy - 2;
+    if (side) { const sw = Math.round(p.stride * 4); px(ctx, CX - 4 - sw, fy - p.legR, 4, 2, K0); px(ctx, CX - 2 + sw, fy - p.legL, 4, 2, K1); }
+    else { px(ctx, CX - 5, fy - p.legL, 4, 2, K0); px(ctx, CX + 1, fy - p.legR, 4, 2, K0); }
   }
 
   // Coat tails hang behind the legs; the torso goes on top.
   if (d.body === 'coat') {
-    poly(ctx, side ? [[CX - 3, by + 36], [CX + 4, by + 36], [CX + 9 + sway, by + 52], [CX + 2 + sway, by + 51]] : [[CX - 6, by + 36], [CX + 6, by + 36], [CX + 8, by + 51], [CX + 2, by + 49], [CX - 2, by + 49], [CX - 8, by + 51]], K1);
+    poly(ctx, side ? [[CX - 3, by + 36], [CX + 4, by + 36], [CX + 7 + sway, by + 52 - Math.max(0, sway - 2)], [CX + 1 + sway, by + 51]] : [[CX - 6, by + 36], [CX + 6, by + 36], [CX + 8, by + 51], [CX + 2, by + 49], [CX - 2, by + 49], [CX - 8, by + 51]], K1);
   }
   const w = side ? 0.75 : 1;
   const torso = (pts: [number, number][], c: string) => poly(ctx, pts.map(([x, y]) => [CX + x * w, by + y] as [number, number]), c);
@@ -329,81 +453,200 @@ export function drawShadowFrame(ctx: CanvasRenderingContext2D, d: ShadowDesign, 
     case 'coat': torso([[-6, 24], [6, 24], [6, 42], [-6, 42]], K0); break;
     case 'robe': {
       const hem = Math.min(58, 58 - by);
-      const s = side ? sway : 0;
-      torso([[-6, 24], [6, 24], [10 + s, hem], [-9 + s, hem]], K0);
+      const s = side ? Math.round(sway / 2) + Math.round(p.stride) : 0;
+      const flare = p.cast !== undefined ? 2 : 0;
+      torso([[-6, 24], [6, 24], [10 + s + flare, hem], [-9 + s - flare, hem]], K0);
       if (!back) torso([[-1, 30], [1, 30], [2, hem], [-2, hem]], K1);
       break;
     }
     case 'cloak': {
-      const s = side ? sway + 2 : sway / 2;
-      const pts: [number, number][] = [[-7, 23], [7, 23], [11 + s, 50]];
-      for (let x = 11; x > -11; x -= 4) pts.push([x - 2 + s, 54 + ((x / 4) & 1) * 2], [x - 4 + s, 50]);
-      pts.push([-11 + s, 50]);
+      const s = side ? sway + 1 : (phase - 0.5);
+      const flare = p.cast !== undefined ? 2 : 0;
+      const pts: [number, number][] = [[-7, 23], [7, 23], [11 + s + flare, 50]];
+      for (let x = 11; x > -11; x -= 4) pts.push([x - 2 + s, 54 + (((x / 4) + p.wind) & 1) * 2], [x - 4 + s, 50]);
+      pts.push([-11 + s - flare, 50]);
       torso(pts, K0);
       if (!back) torso([[-1, 26], [1, 26], [1, 50], [-1, 50]], K1);
       break;
     }
   }
-  // Rim light on the lit (left/top) edge of the torso.
   px(ctx, CX - 6 * w, by + 25, 1, 8, K2);
-  if (d.trim) px(ctx, CX - 5 * w, by + 41, 10 * w, 1, shade(g, -0.25));
-  if (d.pauldrons && !(side && back)) {
-    for (const s of side ? [0] : [-1, 1]) { ellipse(ctx, CX + s * 8, by + 26, 4, 3, K1); px(ctx, CX + s * 8 - 3, by + 24, 4, 1, K3); }
-  }
-  if (d.beads && !back) for (let i = -3; i <= 3; i++) px(ctx, CX + i * 2 * w, by + 26 + Math.abs(i) * -0.5 + 3, 1, 1, i % 2 ? g : shade(g, -0.3));
+  if (d.trim) px(fx, CX - 5 * w, by + 41, 10 * w, 1, shade(g, -0.25));
+  if (d.pauldrons) for (const s of side ? [0] : [-1, 1]) { ellipse(ctx, CX + s * 8, by + 26, 4, 3, K1); px(ctx, CX + s * 8 - 3, by + 24, 4, 1, K3); }
+  if (d.beads && !back) for (let i = -3; i <= 3; i++) px(fx, CX + i * 2 * w, by + 29 - Math.abs(i) * 0.5, 1, 1, i % 2 ? g : shade(g, -0.3));
   if (d.emblem && !back) {
     const ex = side ? CX - 2 : CX, ey = by + 31;
     switch (d.emblem) {
-      case 'cross': px(ctx, ex - 1, ey - 2, 1, 6, g); px(ctx, ex - 3, ey, 5, 1, g); break;
-      case 'gem': glowDot(ctx, ex - 1, ey, 2, 2, g); break;
-      case 'flame': poly(ctx, [[ex - 2, ey + 3], [ex, ey - 3 + phase], [ex + 2, ey + 3]], g); break;
-      case 'note': px(ctx, ex, ey - 2, 1, 5, g); px(ctx, ex - 2, ey + 2, 3, 2, g); px(ctx, ex + 1, ey - 2, 2, 1, g); break;
-      case 'flask': px(ctx, ex - 1, ey - 2, 2, 2, K2); ellipse(ctx, ex, ey + 2, 2, 2, g); break;
+      case 'cross': px(fx, ex - 1, ey - 2, 1, 6, g); px(fx, ex - 3, ey, 5, 1, g); break;
+      case 'gem': glowDot(fx, ex - 1, ey, 2, 2, g); break;
+      case 'flame': poly(fx, [[ex - 2, ey + 3], [ex, ey - 3 + phase], [ex + 2, ey + 3]], g); break;
+      case 'note': px(fx, ex, ey - 2, 1, 5, g); px(fx, ex - 2, ey + 2, 3, 2, g); px(fx, ex + 1, ey - 2, 2, 1, g); break;
+      case 'flask': px(fx, ex - 1, ey - 2, 2, 2, K2); ellipse(fx, ex, ey + 2, 2, 2, g); break;
     }
   }
   if (d.cape && back) {
-    const pts: [number, number][] = [[CX - 8, sh - 1], [CX + 8, sh - 1], [CX + 10 + sway / 2, by + capeLen], [CX - 10 + sway / 2, by + capeLen]];
-    poly(ctx, pts, K1); px(ctx, CX - 8, sh - 1, 16, 1, K3);
-    if (d.trim) line(ctx, CX - 10, by + capeLen, CX + 10, by + capeLen, 1, shade(g, -0.3));
+    poly(ctx, [[CX - 8, sh - 1], [CX + 8, sh - 1], [CX + 10 + phase, by + capeLen], [CX - 10 + phase, by + capeLen]], K1); px(ctx, CX - 8, sh - 1, 16, 1, K3);
+    if (d.trim) line(fx, CX - 10 + phase, by + capeLen, CX + 10 + phase, by + capeLen, 1, shade(g, -0.3));
   }
   if (d.bag && back) px(ctx, CX - 7, sh + 1, 14, 11, K1);
 
   // Arms: thin and dark; the weapon hand follows the pose.
   const aw = d.body === 'armor' ? 3 : 2;
+  const fist = (x: number, y: number) => px(ctx, Math.round(x) - 1, Math.round(y) - 1, 3, 3, K0);
+  let offX = CX - 9, offY = by + 39 + p.armL;
   if (p.armsUp) {
-    const ax = side ? [CX - 2] : [CX - 6, CX + 6];
-    for (const x of ax) line(ctx, x, by + 27, x + (x < CX ? -3 : 3), by + 18, aw, K1);
+    const lift = Math.round(p.armsUp * 9);
+    for (const x of side ? [CX - 2] : [CX - 6, CX + 6]) line(ctx, x, by + 27, x + (x < CX ? -3 : 3), by + 27 - lift, aw, K1);
   } else if (side) {
+    if (p.offReach) { offX = CX - 4 - 11 * p.offReach; offY = by + 31; line(ctx, CX - 1, by + 27, offX, offY, aw, K0); fist(offX, offY); }
     line(ctx, CX, by + 27, handX, handY, aw, K1);
+    if (!weapon) fist(handX, handY);
   } else {
-    line(ctx, CX - 7, by + 27, CX - 9, by + 39 + p.armL, aw, K1);
+    if (p.offReach) { offX = CX - 7; offY = by + 33 + (back ? -2 : 4) * p.offReach; }
+    line(ctx, CX - 7, by + 27, offX, offY, aw, K1);
     line(ctx, CX + 7, by + 27, handX, handY, aw, K1);
+    if (!weapon) { fist(handX, handY); if (p.offReach) fist(offX, offY); }
   }
 
   drawShadowHead(ctx, d, hx, hy, dir, phase);
 
-  if (d.halo) { ctx.strokeStyle = g; ctx.lineWidth = 1; ctx.beginPath(); ctx.ellipse(hx + 0.5, hy - 12.5 + (phase & 1), 6, 2, 0, 0, Math.PI * 2); ctx.stroke(); }
+  if (d.halo) { fx.strokeStyle = g; fx.lineWidth = 1; fx.beginPath(); fx.ellipse(hx + 0.5, hy - 12.5 + (phase & 1), 6, 2, 0, 0, Math.PI * 2); fx.stroke(); }
   if (shield && !back) {
     const sx = dir === 'down' ? CX - 14 : CX - 9, sy = by + 32;
     poly(ctx, [[sx, sy], [sx + 8, sy], [sx + 8, sy + 7], [sx + 4, sy + 11], [sx, sy + 7]], K1);
-    px(ctx, sx + 3, sy + 3, 2, 3, g);
+    px(fx, sx + 3, sy + 3, 2, 3, g);
   }
-  if (!back) {
-    if (p.armsUp) drawShadowWeapon(ctx, weapon, dir === 'down' ? CX + 9 : CX - 5, by + 20, -0.1, g);
-    else drawShadowWeapon(ctx, weapon, handX, handY, isBow ? (side ? 0 : -Math.PI / 2) : wAngle, g);
+  const wx = p.armsUp ? (dir === 'down' ? CX + 9 : CX - 5) : handX, wy = p.armsUp ? by + 18 : handY;
+  if (!back) drawShadowWeapon(ctx, weapon, wx, wy, p.armsUp ? -0.1 : th, g, p.bowDraw ?? 0, !!p.nocked);
+
+  // Effects: swing trail, thrust lines, arrow, spell bolt, impact sparks.
+  const len = WEAPON_LEN[weapon ?? ''] ?? 14;
+  if (p.trail && weapon) {
+    const [a0, a1, str] = p.trail;
+    for (let i = 0; i <= 14; i++) {
+      const a = a0 + ((a1 - a0) * i) / 14, cth = side ? a : -a, fade = (i / 14) * str;
+      for (const r of [len - 3, len - 1, len + 1]) {
+        const [x, y] = tipOf(handX, handY, cth, r);
+        fx.globalAlpha = Math.min(1, fade * (r === len - 1 ? 1 : 0.55));
+        px(fx, Math.round(x), Math.round(y), 1, 1, r === len - 1 ? shade(g, 0.55) : g);
+      }
+    }
+    fx.globalAlpha = 1;
+  }
+  if (p.thrustFx) {
+    fx.globalAlpha = p.thrustFx;
+    for (const o of [-3, 0, 3]) {
+      if (side) px(fx, handX + 6, handY + o, 7 - Math.abs(o), 1, shade(g, 0.3));
+      else px(fx, handX + o, dir === 'down' ? handY - 9 : handY + 3, 1, 6 - Math.abs(o), shade(g, 0.3));
+    }
+    fx.globalAlpha = 1;
+  }
+  const tipPoint = (): [number, number] => {
+    if (weapon === 'staff' || weapon === 'wand') { const r = weapon === 'staff' ? 22 : 6; return tipOf(wx, wy, th + Math.PI, r); }
+    return tipOf(wx, wy, th, len);
+  };
+  if (p.charge) {
+    const [tx, ty] = tipPoint();
+    fx.globalAlpha = 0.25; ellipse(fx, Math.round(tx), Math.round(ty), 3 + p.charge * 2, 3 + p.charge * 2, g); fx.globalAlpha = 1;
+    ellipse(fx, Math.round(tx), Math.round(ty), p.charge, p.charge, shade(g, 0.6));
+  }
+  if (p.bolt !== undefined) {
+    const [tx, ty] = tipPoint();
+    const [bx, by2] = side ? [tx - p.bolt, ty] : back ? [tx, ty - p.bolt] : [tx, Math.min(FEET - oy, ty + p.bolt * 0.6)];
+    const fade = p.bolt > 10 ? 0.6 : 1;
+    fx.globalAlpha = 0.3 * fade; ellipse(fx, Math.round(bx), Math.round(by2), 4, 4, g);
+    fx.globalAlpha = fade; ellipse(fx, Math.round(bx), Math.round(by2), 2, 2, shade(g, 0.6));
+    for (let i = 1; i <= 3; i++) { fx.globalAlpha = fade * (1 - i / 4); px(fx, Math.round(side ? bx + i * 3 : bx), Math.round(side ? by2 : back ? by2 + i * 3 : by2 - i * 2), 1, 1, g); }
+    fx.globalAlpha = 1;
+    if (weapon === 'instrument') { px(fx, Math.round(bx) - 3, Math.round(by2) - 6, 1, 4, g); px(fx, Math.round(bx) - 5, Math.round(by2) - 3, 2, 2, g); }
+  }
+  if (p.arrow !== undefined) {
+    const fade = p.arrow > 10 ? 0.55 : 1;
+    fx.globalAlpha = fade;
+    if (side) { const x = handX - 12 - p.arrow; px(fx, x, handY + 4, 9, 1, K3); px(fx, x - 1, handY + 3, 2, 3, shade(g, 0.5)); px(fx, x + 9, handY + 4, 6, 1, g); }
+    else if (back) { const y = handY - 12 - p.arrow; px(fx, handX - 1, y, 1, 9, K3); px(fx, handX - 2, y - 1, 3, 2, shade(g, 0.5)); }
+    else { const y = Math.min(FEET - 4 - oy, handY + 10 + p.arrow * 0.5); px(fx, handX + 1, y - 6, 1, 7, K3); px(fx, handX, y, 3, 2, shade(g, 0.5)); }
+    fx.globalAlpha = 1;
+  }
+  if (p.impact) {
+    const at: [number, number] = p.impact === 'off' ? (side ? [offX - 3, offY] : [offX, offY + 3]) : p.impact === 'hand' ? (side ? [handX - 4, handY] : [handX, handY + 3]) : tipPoint();
+    spark(fx, Math.round(at[0]), Math.round(at[1]), g);
   }
   if (d.orbs) {
     for (let i = 0; i < d.orbs; i++) {
-      const a = (i / d.orbs) * Math.PI * 2 + phase * 0.6 + (p.castGlow ? 0.8 : 0);
-      const ox = CX + Math.cos(a) * 14, oy = by + 30 + Math.sin(a) * 6 - 4;
+      const a = (i / d.orbs) * Math.PI * 2 + p.wind * (Math.PI / 8) + (p.cast !== undefined ? p.cast * Math.PI * 2 : 0);
       if (back && Math.sin(a) > 0) continue;
-      glowDot(ctx, Math.round(ox), Math.round(oy), 2, 2, g);
+      glowDot(fx, Math.round(CX + Math.cos(a) * 14), Math.round(by + 26 + Math.sin(a) * 6), 2, 2, g);
     }
   }
-  if (p.castGlow) {
-    // A spell orb gathering above the raised hands.
-    const r = 1 + Math.floor(p.castGlow / 2);
-    ctx.globalAlpha = 0.15; ellipse(ctx, CX, by + 5, r + 3, r + 3, g); ctx.globalAlpha = 1;
-    ellipse(ctx, CX, by + 5, r, r, shade(g, 0.4));
+  if (p.cast !== undefined) {
+    const r = 2 + Math.round(Math.sin(p.cast * Math.PI * 2) + 1);
+    fx.globalAlpha = 0.2; ellipse(fx, CX, by + 6, r + 3, r + 3, g); fx.globalAlpha = 1;
+    ellipse(fx, CX, by + 6, r, r, shade(g, 0.45));
+    // Eyes flare while channelling.
+    if (!back) { fx.globalAlpha = 0.5; px(fx, CX - 5, hy, 10, 2, shade(g, 0.4)); fx.globalAlpha = 1; }
   }
+  ctx.restore(); fx.restore();
+}
+
+// ------------------------------------------------------------------ sheet
+const W = CHAR_FRAME_W, H = CHAR_FRAME_H;
+type AnimTable = Record<CharAnim, { start: number; count: number }>;
+
+function dissolve(ctx: CanvasRenderingContext2D, amount: number) {
+  const img = ctx.getImageData(0, 0, W, H), dt = img.data;
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    if (((x * 7 + y * 13) % 10) / 10 < amount) dt[(y * W + x) * 4 + 3] = 0;
+  }
+  ctx.putImageData(img, 0, 0);
+}
+
+function renderFrame(d: ShadowDesign, weapon: string | null, shield: boolean, dir: Direction, anim: CharAnim, f: number, n: number): HTMLCanvasElement {
+  const body = makeCanvas(W, H), fx = makeCanvas(W, H);
+  const k = key6(f, n);
+  if (anim === 'death' && k >= 3) {
+    // Collapse, then melt into a pool of shadow with two fading eyes.
+    const fallen = makeCanvas(W, H), junk = makeCanvas(W, H);
+    drawShadowFrame(fallen.ctx, junk.ctx, d, null, false, dir, shadowPose('death', 2, 3, weapon));
+    addOutline(fallen.ctx, 0, 0, W, H, '#05050a');
+    const c = body.ctx;
+    if (k < 5) {
+      const ang = k === 3 ? 1.0 : 1.5;
+      c.save(); c.translate(CX, FEET); c.rotate(dir === 'left' ? -ang : ang); c.translate(-CX, -FEET + 2); c.drawImage(fallen.canvas, 0, 0); c.restore();
+      if (k === 4) { dissolve(c, 0.45); c.globalCompositeOperation = 'source-over'; }
+    }
+    const pool = k === 5 ? 1 : k === 4 ? 0.6 : 0.25;
+    ellipse(c, CX, FEET - 1, Math.round(6 + 7 * pool), 2 + Math.round(pool), K0);
+    if (k === 5) { ellipse(c, CX - 5, FEET - 2, 3, 2, K1); ellipse(c, CX + 4, FEET - 2, 4, 2, K0); }
+    for (const [x, y, r] of [[-6, 10, 2], [3, 16, 3], [8, 7, 2], [-1, 22, 2]] as [number, number, number][]) {
+      const rise = (k - 3) * 6;
+      fx.ctx.globalAlpha = 0.35 - (k - 3) * 0.08; ellipse(fx.ctx, CX + x, FEET - y - rise, r, r, K2); fx.ctx.globalAlpha = 1;
+    }
+    if (k === 5 && dir !== 'up') { fx.ctx.globalAlpha = 0.7; px(fx.ctx, CX - 3, FEET - 3, 2, 1, d.glow); px(fx.ctx, CX + 2, FEET - 3, 2, 1, d.glow); fx.ctx.globalAlpha = 1; }
+  } else {
+    drawShadowFrame(body.ctx, fx.ctx, d, weapon, shield, dir, shadowPose(anim, f, n, weapon));
+  }
+  addOutline(body.ctx, 0, 0, W, H, '#05050a');
+  const tint = (color: string) => { body.ctx.globalCompositeOperation = 'source-atop'; body.ctx.fillStyle = color; body.ctx.fillRect(0, 0, W, H); body.ctx.globalCompositeOperation = 'source-over'; };
+  if (anim === 'hit') { const h = Math.min(2, Math.round((f * 2) / Math.max(1, n - 1))); if (h === 0) tint('rgba(255,255,255,0.55)'); else if (h === 1) tint('rgba(255,40,60,0.35)'); }
+  if (anim === 'death' && k === 0) tint('rgba(255,255,255,0.4)');
+  body.ctx.drawImage(fx.canvas, 0, 0);
+  return body.canvas;
+}
+
+/** Full sheet in the given layout (frame counts can differ from the classic sheet). */
+export function buildShadowSheet(d: ShadowDesign, weapon: string | null, shield: boolean, anims: AnimTable, cols: number): HTMLCanvasElement {
+  const { canvas, ctx } = makeCanvas(W * cols, H * CHAR_DIRECTIONS.length);
+  for (const [row, dir] of CHAR_DIRECTIONS.entries()) {
+    const drawDir: Direction = dir === 'right' ? 'left' : dir;
+    for (const [anim, meta] of Object.entries(anims) as [CharAnim, { start: number; count: number }][]) {
+      for (let f = 0; f < meta.count; f++) {
+        const fr = renderFrame(d, weapon, shield, drawDir, anim, f, meta.count);
+        const dx = (meta.start + f) * W, dy = row * H;
+        if (dir === 'right') { ctx.save(); ctx.translate(dx + W, dy); ctx.scale(-1, 1); ctx.drawImage(fr, 0, 0); ctx.restore(); }
+        else ctx.drawImage(fr, dx, dy);
+      }
+    }
+  }
+  return canvas;
 }

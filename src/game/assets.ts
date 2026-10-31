@@ -4,10 +4,10 @@ import Phaser from 'phaser';
 import type { GameData } from '../core/data';
 import type { CompiledMap } from '../core/mapCompiler';
 import type { MonsterDef } from '../core/types';
-import { generateCharacterSheet, type CharacterLook } from './art/characterSprite';
+import { characterLayout, generateCharacterSheet, type CharacterLook } from './art/characterSprite';
 import { generateMonsterSheet } from './art/monsterSprite';
 import { paintAboveLayer, paintBuilding, paintGroundLayer, paintObject, paintWallLayer } from './art/mapPainter';
-import { CHAR_DIRECTIONS, CHAR_FRAME_H, CHAR_FRAME_W, CHAR_SHEET_COLS, MON_SHEET_COLS } from './art/spriteMeta';
+import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_FRAME_H, CHAR_FRAME_W, CHAR_SHEET_COLS, MON_SHEET_COLS, type CharLayout } from './art/spriteMeta';
 import { hashString } from '../core/rng';
 import { makeCanvas, ellipse } from './art/canvas';
 import { itemIconCanvas } from './art/icons';
@@ -28,11 +28,17 @@ export function lookKey(look: CharacterLook): string {
 /** Character sheet (player or NPC). */
 export function ensureCharacterTexture(scene: Phaser.Scene, look: CharacterLook): string {
   const key = lookKey(look);
-  if (!scene.textures.exists(key)) {
-    addCanvasSheet(scene, key, generateCharacterSheet(look), CHAR_FRAME_W, CHAR_FRAME_H, CHAR_SHEET_COLS, CHAR_DIRECTIONS.length);
+  if (!scene.textures.exists(key) || !layouts.has(key)) {
+    const layout = characterLayout(look);
+    addCanvasSheet(scene, key, generateCharacterSheet(look), CHAR_FRAME_W, CHAR_FRAME_H, layout.cols, CHAR_DIRECTIONS.length);
+    layouts.set(key, layout);
   }
   return key;
 }
+
+const layouts = new Map<string, CharLayout>();
+/** Frame layout of a character texture made by ensureCharacterTexture. */
+export const characterTextureLayout = (key: string): CharLayout => layouts.get(key) ?? { anims: CHAR_ANIMS, cols: CHAR_SHEET_COLS };
 
 export function ensureMonsterTexture(scene: Phaser.Scene, def: MonsterDef): string {
   const key = `mon_${def.id}`;

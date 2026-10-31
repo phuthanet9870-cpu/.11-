@@ -2,7 +2,7 @@
 import type { GameData } from '../core/data';
 import { EYE_COLORS, HAIR_COLORS, HAIR_STYLES, SKIN_TONES, validateName } from '../core/character';
 import type { Appearance, CharacterState, Direction, SaveFile } from '../core/types';
-import { generateCharacterSheet, useShadowStyle, type CharacterLook } from '../game/art/characterSprite';
+import { characterLayout, generateCharacterSheet, useShadowStyle, type CharacterLook } from '../game/art/characterSprite';
 import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_FRAME_H, CHAR_FRAME_W, CHAR_SHEET_COLS, type CharAnim } from '../game/art/spriteMeta';
 import { audio } from '../game/audio/audio';
 import { getLang, LANGS, type Lang } from './i18n';
@@ -22,17 +22,17 @@ export class SpritePreview {
     const loop = () => { this.draw(); this.raf = requestAnimationFrame(loop); };
     this.raf = requestAnimationFrame(loop);
   }
-  setLook(look: CharacterLook) { this.sheet = generateCharacterSheet(look); }
+  private layout = { anims: CHAR_ANIMS, cols: CHAR_SHEET_COLS };
+  setLook(look: CharacterLook) { this.sheet = generateCharacterSheet(look); this.layout = characterLayout(look); }
   private draw() {
     if (!this.canvas.isConnected) { cancelAnimationFrame(this.raf); return; }
     const ctx = this.canvas.getContext('2d')!;
     ctx.imageSmoothingEnabled = false;
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     if (!this.sheet) return;
-    const meta = CHAR_ANIMS[this.anim];
+    const meta = this.layout.anims[this.anim];
     const f = Math.floor(performance.now() / meta.frameMs) % meta.count;
     const col = meta.start + f, row = CHAR_DIRECTIONS.indexOf(this.dir);
-    void CHAR_SHEET_COLS;
     ctx.drawImage(this.sheet, col * CHAR_FRAME_W, row * CHAR_FRAME_H, CHAR_FRAME_W, CHAR_FRAME_H, 0, 0, this.canvas.width, this.canvas.height);
   }
 }
