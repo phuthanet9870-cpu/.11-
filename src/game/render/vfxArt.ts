@@ -14,7 +14,12 @@ export function glow(c: CanvasRenderingContext2D, x: number, y: number, r: numbe
   g.addColorStop(0, `rgba(${color},${a})`); g.addColorStop(0.45, `rgba(${color},${a * 0.45})`); g.addColorStop(1, `rgba(${color},0)`);
   c.fillStyle = g; c.fillRect(x - r, y - r, r * 2, r * 2);
 }
-export function dot(c: CanvasRenderingContext2D, x: number, y: number, s: number, col: string) { c.fillStyle = col; c.fillRect(Math.round(x - s / 2), Math.round(y - s / 2), Math.max(1, Math.round(s)), Math.max(1, Math.round(s))); }
+/** Round mote with a faint halo. */
+export function dot(c: CanvasRenderingContext2D, x: number, y: number, s: number, col: string) {
+  const r = Math.max(0.6, s / 2);
+  c.fillStyle = col; c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill();
+  if (r >= 1) { c.globalAlpha *= 0.25; c.beginPath(); c.arc(x, y, r * 2.2, 0, TAU); c.fill(); c.globalAlpha /= 0.25; }
+}
 export function arcBand(c: CanvasRenderingContext2D, cx: number, cy: number, r: number, a0: number, a1: number, width: number, col: string, sy = 1) {
   c.save(); c.translate(cx, cy); c.scale(1, sy);
   c.beginPath(); c.arc(0, 0, r + width / 2, a0, a1); c.arc(0, 0, Math.max(0, r - width / 2), a1, a0, true); c.closePath();
