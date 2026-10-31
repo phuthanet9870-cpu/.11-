@@ -600,3 +600,20 @@ export function drawSignatureSheet(sig: Signature, primary: string, glyph: strin
 }
 
 export const MOTIF_NAMES = Object.keys(MOTIFS) as Motif[];
+
+/** One frame of a signature, unpolished, on a SIG_W x SIG_H canvas (used for skill icons). */
+export function drawSignatureFrame(sig: Signature, primary: string, glyph: string, seed: number, t: number): HTMLCanvasElement {
+  const cv = document.createElement('canvas'); cv.width = SIG_W; cv.height = SIG_H;
+  const c = cv.getContext('2d')!; c.lineCap = 'round'; c.lineJoin = 'round';
+  const pale = (hex: string) => { const n = parseInt(hex.slice(1, 7), 16); return Math.min((n >> 16) & 255, (n >> 8) & 255, n & 255) > 215; };
+  const A = colour(pale(primary) ? '#a8d8ff' : primary), B = colour(pale(primary) && pale(sig.c2) ? '#ffd860' : sig.c2);
+  MOTIFS[sig.m](c, t, Math.round(t * (SIG_FRAMES - 1)), SIG_W, SIG_H, sig.n, sig.v, A, B, glyph, seed);
+  return cv;
+}
+
+/** Signature for skills that have none (passives): a motif picked from the skill id. */
+export function fallbackSignature(id: string): Signature {
+  let h = 2166136261; for (let i = 0; i < id.length; i++) h = Math.imul(h ^ id.charCodeAt(i), 16777619); h >>>= 0;
+  const calm: Motif[] = ['sigil', 'runes', 'lattice', 'sun', 'moon', 'cross', 'shield', 'hourglass', 'heart', 'eye', 'crown', 'clock', 'spiral', 'petals', 'wings', 'seal', 'serpent', 'waves'];
+  return { m: calm[h % calm.length], n: 3 + ((h >> 5) % 5), v: (h >> 9) % 3, c2: '#ffffff' };
+}

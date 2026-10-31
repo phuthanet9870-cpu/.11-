@@ -110,6 +110,12 @@ Ground-target skills (Arrow Rain, Wind Trap, Fire Wall, Thunderstorm, Meteor) la
 | Windows: status, inventory, equipment, skill tree, quest journal, world map, pet (P), homunculus (H), pushcart (V), runes (N), social / online (G), database with refine simulator / forge calculator / option odds / combos / pets / element chart (B), settings (volume, toggles, key rebinding) | ✅ | `src/ui/windows.ts` |
 | Audio: BGM per map, boss music, ambience, SFX; Master/Music/SFX/Ambient volume | ✅ (procedural) | `src/game/audio/audio.ts` |
 
+## Item and skill icons
+
+- **Items (404):** 32×32 pixel art drawn by `src/game/art/iconArt.ts`: a five-tone ramp per colour (cool shadows, warm highlights), hard outline and rim light. Weapons are drawn by weapon type (sword, two-handed sword, dagger, katar, knuckle, axe, spear, club, bow, crossbow, wand, staff, instrument, book) and everything else by icon shape (armour, robe, shirt, hat, helm, mask, shield, cape, boots, ring, amulet, crown, potion, flask, fruit, coin, wing, blob, horn, fang, powder, pelt, bone, mushroom, ore, gem, leaf). Each shape has four variants picked from the item id, plus two id-placed glints, so no two items look the same (checked in the browser: 0 duplicates). Rarity adds sparkles (uncommon 1, rare 2, epic/legendary 3); weapon level adds gold pips. **Cards** show their monster's own sprite in the picture frame.
+- **Skills (173):** a framed badge — gold with corner studs for ultimates, teal for buffs, steel for actives, slate for passives — around a still of the skill's own signature effect (passives get a calm motif picked from their id), zoomed to fill the badge. 0 duplicates.
+- Icons drawn in Studio → Sprites still replace the generated ones.
+
 ## Training Grounds and Shadow Arena
 
 - **Drillmaster Brann** stands in Aurelion (next to the Arena Master) and warps for free to the **Training Grounds** and the **Shadow Arena** (both maps also have him for the way back).
