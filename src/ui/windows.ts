@@ -1252,7 +1252,7 @@ export class WindowManager {
     let filters: [string, string][] = [];
     if (st.tab === 'monsters') {
       filters = [['', 'All races'], ...[...new Set([...d.monsters.values()].map((m) => m.race))].sort().map((r): [string, string] => [r, r])];
-      rows = [...d.monsters.values()].filter((m) => (!st.filter || m.race === st.filter) && m.name.toLowerCase().includes(q))
+      rows = [...d.monsters.values()].filter((m) => !m.hidden && (!st.filter || m.race === st.filter) && m.name.toLowerCase().includes(q))
         .sort((a, b) => a.level - b.level).map((m) => ({ id: m.id, label: `${m.name}`, sub: `Lv ${m.level} · ${m.element} ${m.elementLevel ?? 1} · ${m.size}${m.aiType === 'boss' ? ' · MVP' : m.elite ? ' · Elite' : ''}${m.looter ? ' · Looter' : ''}` }));
     } else {
       const cards = st.tab === 'cards';
@@ -1458,6 +1458,15 @@ export class WindowManager {
       if (s.type === 'enchant') opts.push(['Enchant equipment', () => { this.closeDialog(); this.enchantDialog(); }]);
       if (s.type === 'forge') opts.push(['Forge a weapon', () => { this.closeDialog(); this.forgeDialog(); }]);
       if (s.type === 'warp') opts.push(['Warp service', () => this.warpDialog(npc, s.destinations)]);
+      if (s.type === 'shadowArena') opts.push(['Summon shadow fighters', () => {
+        const pick: [string, () => void][] = Array.from({ length: s.maxCount }, (_, i) => [`${i + 1} × ${i ? 'shadows' : 'shadow'}`, () => {
+          this.closeDialog();
+          const r = w.startShadowDuel(i + 1);
+          if (!r.ok) this.app.hud?.toast(r.error, true);
+        }]);
+        pick.push(['Never mind', () => this.openNpcDialog(npc.id)]);
+        this.showDialog(npc, ['How many shadow fighters?', 'Each one takes a random job, copies your own strength and uses its job skills. No rewards — this is practice.'], pick, null, 'Shadow Arena');
+      }]);
       if (s.type === 'runeReset') opts.push([`Reset the constellations (${s.cost.toLocaleString()} Luma)`, () => { this.closeDialog(); this.confirmAction('Reset runes', 'Clear every star and get all rune points back?', 'Reset', () => w.resetRunesCmd()); }]);
       if (s.type === 'stable') opts.push([w.char.flags.mountOwned ? 'You already own a war-drake' : `Buy a war-drake (${s.cost} Luma)`, () => { this.closeDialog(); w.rentMount(); }]);
       if (s.type === 'cart') opts.push([w.char.cart ? 'You already have a pushcart' : `Rent a pushcart (${s.cost} Luma)`, () => { this.closeDialog(); w.rentCart(); }]);

@@ -882,6 +882,35 @@ export async function main() {
     ['The Proving Grounds and Castle Veyl are for online play: other players can fight you there. Castle Veyl opens for the guild war every evening, 20:00–21:00 server time.']));
   built.find((b) => b.map.id === 'aurelion')!.map.npcs.push({ npcId: 'aurelion_arena', x: 26, y: 32, facing: 'down' });
 
+  // ---------------------------------------------------------------- training grounds and the shadow arena
+  // Training dummies never fight back or die; the shadow arena summons fighters copied from the player.
+  {
+    const trainMap = (id: string, name: string, W: number, H: number, desc: string, paint: J[], npcsAt: J[], monsterSpawns: J[]) => ({
+      id, name, region: REG.cap, type: 'arena', width: W, height: H, tileset: 'dg_catacomb', base: 'ruin_floor', border: { kind: 'ruin_wall', thickness: 2 },
+      bgm: 'town_capital', ambient: 'village', weather: [], worldMapPos: { x: 0.52, y: 0.46 }, paint,
+      spawnPoints: { default: { x: Math.floor(W / 2), y: H - 4 } },
+      portals: [{ id: 'exit', x: Math.floor(W / 2) - 1, y: H - 2, w: 3, h: 1, targetMap: 'aurelion', targetSpawn: 'default', label: 'Aurelion' }],
+      npcs: npcsAt, monsterSpawns, objects: [], areas: [], description: desc, generated: true,
+    });
+    const dummyRows: J[] = [];
+    for (let i = 0; i < 6; i++) dummyRows.push({ monsterId: 'training_dummy', count: 1, area: { x: 6 + i * 5, y: 8, w: 2, h: 1 } });
+    for (let i = 0; i < 6; i++) dummyRows.push({ monsterId: 'training_dummy', count: 1, area: { x: 6 + i * 5, y: 14, w: 2, h: 1 } });
+    built.push({ map: trainMap('training_grounds', 'Training Grounds', 36, 26,
+      'Training dummies that never fight back. Hit them to test your damage: the totals and damage per second show in the chat when you stop.',
+      [{ op: 'rect', tile: 'sand', x: 3, y: 5, w: 30, h: 12 }, ...[[3, 3], [32, 3], [3, 20], [32, 20]].map(([x, y]) => ({ op: 'object', kind: 'barrel', x, y }))],
+      [{ npcId: 'training_master', x: 15, y: 21, facing: 'down' }, { npcId: 'shadow_arena_master', x: 21, y: 21, facing: 'down' }], dummyRows), npcs: [], shops: [] });
+    built.push({ map: trainMap('shadow_arena', 'Shadow Arena', 30, 24,
+      'Shadow fighters of random jobs, copied from your own strength, fight you here and use their job skills. Talk to the Shadow Keeper to summon them.',
+      [{ op: 'rect', tile: 'sand', x: 3, y: 3, w: 24, h: 16 }, ...[[4, 4], [25, 4], [4, 17], [25, 17]].map(([x, y]) => ({ op: 'object', kind: 'ruin_pillar', x, y }))],
+      [{ npcId: 'shadow_arena_master', x: 12, y: 20, facing: 'down' }, { npcId: 'training_master', x: 17, y: 20, facing: 'down' }], []), npcs: [], shops: [] });
+    const toTraining = [{ mapId: 'aurelion', spawn: 'default', cost: 0 }, { mapId: 'training_grounds', spawn: 'default', cost: 0 }, { mapId: 'shadow_arena', spawn: 'default', cost: 0 }];
+    npcs.push(npc('training_master', 'Drillmaster Brann', 'Training Grounds & Shadow Arena', 9091, 'plate', [{ type: 'warp', destinations: toTraining }],
+      ['The Training Grounds have dummies that never hit back — test your damage there. The Shadow Arena summons fighters as strong as you are.']));
+    npcs.push(npc('shadow_arena_master', 'Shadow Keeper Nyx', 'Shadow Arena', 9092, 'robe', [{ type: 'shadowArena', maxCount: 5 }],
+      ['Choose how many shadows to face. Each takes a random job and copies your strength — and they use their skills.']));
+    built.find((b) => b.map.id === 'aurelion')!.map.npcs.push({ npcId: 'training_master', x: 30, y: 32, facing: 'down' });
+  }
+
   // ---------------------------------------------------------------- memorial dungeons (timed instances)
   const INSTANCES = [
     { id: 'endless_spire', name: 'Endless Spire', town: 'aurelion', npc: ['spire_warden', 'Warden Isolde', 'Keeper of the Endless Spire', [30, 32]], tileset: 'dg_tower', minLevel: 20,
@@ -1050,6 +1079,14 @@ export async function main() {
   }
 
   // Write data, then compile + check every map with the real data loader rules.
+  // Training dummy and the shadow-fighter template (the arena fills in stats from the player).
+  drops.push({ id: 'no_drops', luma: [0, 0], entries: [], generated: true });
+  monsters.push({ id: 'training_dummy', name: 'Training Dummy', level: 1, element: 'neutral', race: 'formless', size: 'medium', maxHp: 1000000, attack: 0, defense: 0, magicDefense: 0, exp: 0, jobExp: 0,
+    attackRange: 0, attackIntervalMs: 99999, moveSpeed: 0, aiType: 'passive', aiFlags: ['dummy'], respawnSeconds: 1, dropTableId: 'no_drops', collisionRadius: 14, elementLevel: 1, hidden: true,
+    art: { shape: 'dummy', w: 40, h: 56, colors: ['#a07a4a', '#6a4a2a', '#e8d8b0'] }, generated: true });
+  monsters.push({ id: 'shadow_fighter', name: 'Shadow Fighter', level: 1, element: 'shadow', race: 'demihuman', size: 'medium', maxHp: 100, attack: 10, defense: 0, magicDefense: 0, exp: 0, jobExp: 0,
+    attackRange: 40, attackIntervalMs: 1200, moveSpeed: 110, aiType: 'aggressive', aggroRange: 900, leashRange: 2000, respawnSeconds: 0, dropTableId: 'no_drops', collisionRadius: 12, elementLevel: 1, hidden: true,
+    art: { shape: 'shadow_class', w: 48, h: 64, colors: ['#1a1a24', '#7fd6ff', '#ffffff'] }, generated: true });
   write('monsters.json', monsters); write('items.json', items); write('drops.json', drops); write('shops.json', shops);
   write('npcs.json', npcs); write('bosses.json', bosses); write('tilesets.json', tilesets); write('audio.json', audio);
   for (const m of allMaps) writeFileSync(join(DATA, 'maps', `${m.id}.json`), JSON.stringify(m, null, 1) + '\n');

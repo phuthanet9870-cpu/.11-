@@ -134,6 +134,8 @@ export interface MonsterActor extends ActorBase {
   /** Part of a world-event raid. */
   eventRaid?: 'leader' | 'raider';
   mugged?: boolean;
+  /** Shadow fighter of the Shadow Arena: its job, the skills it can use and when it may use one next. */
+  shadow?: { classId: string; skills: string[]; nextSkillAt: number };
   /** Items a looter monster picked up; dropped when it dies. */
   loot?: { itemId: string; qty: number; options?: { key: string; value: number }[] }[];
 }
@@ -162,7 +164,7 @@ export interface Telegraph {
 
 export type WorldEvent =
   | { type: 'damage'; targetId: string; amount: number; crit: boolean; miss: boolean; kind: 'physical' | 'magic' | 'heal' | 'mp' | 'dot'; element?: Element }
-  | { type: 'fx'; fx: string; x: number; y: number; radius?: number; targetId?: string; /** offset from the target, for effects that follow it */ offsetY?: number; /** a player skill: drawn with its own effect recipe */ skillId?: string }
+  | { type: 'fx'; fx: string; x: number; y: number; radius?: number; targetId?: string; /** offset from the target, for effects that follow it */ offsetY?: number; /** a skill: drawn with its own effect recipe */ skillId?: string; /** caster position when it is not the player (shadow fighters) */ fromX?: number; fromY?: number }
   | { type: 'projectile'; fromX: number; fromY: number; toX: number; toY: number; durationMs: number; fx: string; color?: string; skillId?: string }
   | { type: 'levelUp'; kind: 'base' | 'job'; level: number }
   | { type: 'achievement'; id: string }
@@ -480,6 +482,8 @@ export class World {
     this.auto.update();
     this.updatePlayer(dt);
     for (const m of this.monsters.values()) this.updateMonster(m, dt);
+    this.updateTraining();
+    this.updateShadowDuel();
     this.updateZones();
     this.updatePending();
     this.updateGroundItems();
@@ -1321,6 +1325,7 @@ export class World {
   // ---------------------------------------------------------------- damage
   damageMonster(m: MonsterActor, amount: number, kind: 'physical' | 'magic' | 'dot', element: Element, crit: boolean, _fromZone: boolean, silentAggro = false, fromHomun = false) {
     if (m.dead) return;
+    if (m.def.aiFlags?.includes('dummy')) { this.hitDummy(m, amount, crit, kind, element); return; }
     if (this.gm.oneHitKill && !fromHomun && kind !== 'dot') amount = Math.max(amount, m.hp);
     m.hp = Math.max(0, m.hp - amount);
     // The owner gets the kill credit for homunculus damage (as in RO); the homunculus also draws threat.
@@ -1333,6 +1338,115 @@ export class World {
     if (this.time - m.animAt > 250) this.setAnim(m, 'hit');
     this.player.lastCombatAt = this.time;
     if (!silentAggro || m.state !== 'return') this.aggroMonster(m, amount);
+  }
+
+  // ---------------------------------------------------------------- training dummies
+  /** Running totals while the player hits training dummies (reported when they stop). */
+  training: { startedAt: number; lastAt: number; total: number; hits: number; crits: number; best: number } | null = null;
+
+  private hitDummy(m: MonsterActor, amount: number, crit: boolean, kind: 'physical' | 'magic' | 'dot', element: Element) {
+    this.emit({ type: 'damage', targetId: m.id, amount, crit, miss: false, kind: kind === 'dot' ? 'dot' : kind, element });
+    m.hp = Math.max(1, m.hp - amount);
+    if (this.time - m.animAt > 250) this.setAnim(m, 'hit');
+    const t = this.training ??= { startedAt: this.time, lastAt: this.time, total: 0, hits: 0, crits: 0, best: 0 };
+    t.lastAt = this.time; t.total += amount; t.hits++; if (crit) t.crits++; t.best = Math.max(t.best, amount);
+  }
+
+  /** Training report once the player has stopped hitting dummies for 3 seconds; dummies heal back up. */
+  private updateTraining() {
+    const t = this.training;
+    if (!t || this.time - t.lastAt < 3000) return;
+    const secs = Math.max(1, (t.lastAt - t.startedAt) / 1000);
+    this.message(`Training: ${t.total.toLocaleString()} damage in ${secs.toFixed(1)}s — ${Math.round(t.total / secs).toLocaleString()} DPS · ${t.hits} hits, ${t.crits} crits, best hit ${t.best.toLocaleString()}.`, 'quest');
+    this.training = null;
+    for (const m of this.monsters.values()) if (m.def.aiFlags?.includes('dummy')) m.hp = m.maxHp;
+  }
+
+  // ---------------------------------------------------------------- shadow arena
+  /** The current Shadow Arena fight (ids of the summoned fighters). */
+  shadowDuel: { ids: string[]; startedAt: number } | null = null;
+
+  /** Summons `count` shadow fighters of random jobs with the player's own strength. */
+  startShadowDuel(count: number): OpResult {
+    let max = 0;
+    if (!this.nearService((s) => s.type === 'shadowArena' && (max = s.maxCount) > 0)) return this.err('Talk to the Shadow Keeper first.');
+    const n = Math.max(1, Math.min(max, Math.floor(count)));
+    if (this.map.def.id !== 'shadow_arena' && this.data.maps.has('shadow_arena')) this.enterMap('shadow_arena', 'default');
+    for (const m of [...this.monsters.values()]) if (m.shadow) this.monsters.delete(m.id);
+    const base = this.data.monsters.get('shadow_fighter');
+    if (!base) return this.err('The shadow fighter template is missing.');
+    const jobs = [...this.data.classes.values()].filter((c) => c.tier > 0 || !/novice/.test(c.id));
+    const st = this.stats, cx = this.map.width * TILE / 2, cy = this.map.height * TILE / 2 - 2 * TILE;
+    const ids: string[] = [];
+    for (let i = 0; i < n; i++) {
+      const cls = this.rng.pick(jobs);
+      const line = classLineage(this.data, cls.id);
+      const skills = [...this.data.skills.values()].filter((sk) => line.includes(sk.classId) && sk.kind !== 'passive' && sk.effects.some((e) => e.type === 'damage') && sk.targeting !== 'passive').map((sk) => sk.id);
+      const ranged = (cls.weaponTypes ?? []).some((w) => w === 'bow' || w === 'crossbow') && !(cls.weaponTypes ?? []).includes('sword');
+      const caster = (cls.weaponTypes ?? []).some((w) => w === 'staff' || w === 'wand') && !(cls.weaponTypes ?? []).includes('sword');
+      const def: MonsterDef = {
+        ...base, name: `Shadow ${cls.name}`, level: this.char.baseLevel,
+        maxHp: Math.round(st.maxHp), attack: Math.round(st.patk), magicAttack: Math.round(st.matk), defense: Math.round(st.pdef), magicDefense: Math.round(st.mdef),
+        hit: Math.round(st.hit), flee: Math.round(st.flee), attackIntervalMs: Math.max(450, Math.round(st.attackIntervalMs)), moveSpeed: Math.round(Math.max(80, st.moveSpeed * 0.9)),
+        attackRange: ranged || caster ? 190 : 40, aiType: caster ? 'magic' : ranged ? 'ranged' : 'aggressive',
+        projectile: ranged || caster ? { element: caster ? 'shadow' : 'neutral', color: cls.outfit.accent } : undefined,
+        art: { ...base.art, colors: [cls.id, cls.outfit.accent, '#ffffff'] },
+      };
+      const a = (i / n) * Math.PI * 2 - Math.PI / 2, r = n === 1 ? 0 : 3 * TILE;
+      const m = this.makeMonster(def, cx + Math.cos(a) * r, cy + Math.sin(a) * r * 0.6, -1);
+      m.summoned = true;
+      m.shadow = { classId: cls.id, skills, nextSkillAt: this.time + 2500 + this.rng.range(0, 2000) };
+      m.targetId = 'player'; m.state = 'chase'; m.threat.player = 1;
+      this.monsters.set(m.id, m);
+      ids.push(m.id);
+      this.emit({ type: 'fx', fx: 'spawn', x: m.x, y: m.y });
+    }
+    this.shadowDuel = { ids, startedAt: this.time };
+    this.message(`${n} shadow fighter${n > 1 ? 's' : ''} rise: ${ids.map((id) => this.monsters.get(id)!.def.name).join(', ')}. They copy your strength and use their job skills.`, 'quest');
+    return { ok: true };
+  }
+
+  private updateShadowDuel() {
+    const d = this.shadowDuel;
+    if (!d) return;
+    if (this.map.def.id !== 'shadow_arena' && ![...this.monsters.values()].some((m) => m.shadow)) { this.shadowDuel = null; return; }
+    const alive = d.ids.filter((id) => { const m = this.monsters.get(id); return m && !m.dead; });
+    if (alive.length) return;
+    const secs = Math.round((this.time - d.startedAt) / 1000);
+    this.message(`Victory! You defeated ${d.ids.length} shadow fighter${d.ids.length > 1 ? 's' : ''} in ${secs}s. Talk to the Shadow Keeper for another round.`, 'quest');
+    this.emit({ type: 'fx', fx: 'quest_complete', x: this.player.x, y: this.player.y });
+    this.shadowDuel = null;
+  }
+
+  /** A shadow fighter uses one of its job's damage skills on the player (true when it did). */
+  private shadowSkill(m: MonsterActor, d: number): boolean {
+    const sh = m.shadow;
+    if (!sh || !sh.skills.length || this.time < sh.nextSkillAt) return false;
+    const sk = this.data.skills.get(this.rng.pick(sh.skills));
+    const dmg = sk?.effects.find((e) => e.type === 'damage') as Extract<SkillEffect, { type: 'damage' }> | undefined;
+    if (!sk || !dmg) return false;
+    const reach = sk.targeting === 'self' ? (dmg.radius ?? 90) : Math.max(70, sk.range || 200);
+    if (d > reach) return false;
+    sh.nextSkillAt = this.time + Math.max(2500, sk.cooldownMs * 1.5) + this.rng.range(0, 1500);
+    const lvl = Math.min(sk.maxLevel, 5), p = this.player;
+    const opts: AttackOptions = { kind: dmg.kind, multiplier: dmg.multiplier + dmg.perLevel * (lvl - 1), element: !dmg.element || dmg.element === 'weapon' ? 'neutral' : dmg.element, ignoreDefPct: dmg.ignoreDefPct, alwaysHit: dmg.alwaysHit };
+    m.move = null; m.dir = dirFromVector(p.x - m.x, p.y - m.y, m.dir);
+    this.setAnim(m, 'attack'); m.animAt = this.time; m.attackReadyAt = this.time + m.def.attackIntervalMs;
+    const onSelf = sk.targeting === 'self';
+    this.emit({ type: 'fx', fx: sk.fx, x: onSelf ? m.x : p.x, y: onSelf ? m.y : p.y, radius: dmg.radius, skillId: sk.id, fromX: m.x, fromY: m.y });
+    this.emit({ type: 'sound', key: `skill_${sk.fx}` });
+    const hits = Math.max(1, dmg.hits ?? 1);
+    this.schedule(260, () => {
+      if (m.dead || p.dead) return;
+      if (onSelf && dist(m.x, m.y, p.x, p.y) > reach + 20) return;
+      for (let i = 0; i < hits; i++) {
+        const res = resolveAttack(this.data, this.rng, this.monsterProfile(m), this.playerProfile(), opts);
+        if (!res.hit) { this.emit({ type: 'damage', targetId: 'player', amount: 0, crit: false, miss: true, kind: dmg.kind }); continue; }
+        this.damagePlayer(Math.max(1, Math.round(res.damage / hits)), dmg.kind, opts.element, null, res.crit);
+        if (p.dead) return;
+      }
+    });
+    return true;
   }
 
   private aggroMonster(m: MonsterActor, threat: number) {
@@ -1644,6 +1758,7 @@ export class World {
     }
     this.tickStatuses(m);
     if (m.dead) return;
+    if (m.def.aiFlags?.includes('dummy')) { m.kb = null; if (m.anim !== 'hit' || this.time - m.animAt > 300) this.setAnim(m, 'idle'); return; }
     if (this.applyKnockback(m, dt)) return;
     if (this.hasStatusFlag(m, 'preventsAction')) { if (m.boss?.casting) this.cancelBossCast(m); return; }
     const cannotMove = this.hasStatusFlag(m, 'preventsMove');
@@ -1700,6 +1815,7 @@ export class World {
         const d = dist(m.x, m.y, p.x, p.y);
         const range = m.def.attackRange + p.halfW + m.halfW;
         if (m.boss && this.tryBossSkill(m, d)) break;
+        if (m.shadow && this.shadowSkill(m, d)) break;
         if (d > range) {
           m.state = 'chase';
           if (!cannotMove) this.moveToward(m, p.x, p.y, speed, dt, range - 6);

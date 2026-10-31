@@ -2514,6 +2514,78 @@
   "generated": true
  },
  {
+  "id": "training_master",
+  "name": "Drillmaster Brann",
+  "title": "Training Grounds & Shadow Arena",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#2a2a3a",
+   "accent": "#c8ccd8",
+   "style": "plate"
+  },
+  "greeting": [
+   "The Training Grounds have dummies that never hit back — test your damage there. The Shadow Arena summons fighters as strong as you are."
+  ],
+  "services": [
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "training_grounds",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "shadow_arena",
+      "spawn": "default",
+      "cost": 0
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "shadow_arena_master",
+  "name": "Shadow Keeper Nyx",
+  "title": "Shadow Arena",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#a35d30",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "robe"
+  },
+  "greeting": [
+   "Choose how many shadows to face. Each takes a random job and copies your strength — and they use their skills."
+  ],
+  "services": [
+   {
+    "type": "shadowArena",
+    "maxCount": 5
+   }
+  ],
+  "generated": true
+ },
+ {
   "id": "spire_warden",
   "name": "Warden Isolde",
   "title": "Keeper of the Endless Spire",

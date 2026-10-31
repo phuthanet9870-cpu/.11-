@@ -12,12 +12,13 @@ import { CHAR_FRAME_H, CHAR_FRAME_W } from '../game/art/spriteMeta';
 import { h, setChildren } from '../ui/dom';
 import { clone, editText, helpBar, row, type StudioCtx } from './context';
 import { deleteEntity, entities, entityData, freezeScatter, mapProblems, moveEntity, paintCell, type Entity } from './mapEdit';
-import { deleteMap, saveMap } from './store';
+import { deleteMap, saveCollection, saveMap } from './store';
+import { replaceCollection } from '../core/data';
 import { View } from './view';
 
 /** Things whose size can be dragged from the corner handle. */
 const RESIZABLE = new Set(['building', 'portal', 'scenery', 'mobs', 'area']);
-type Tool = 'select' | 'object' | 'building' | 'ground' | 'path' | 'wall' | 'deco';
+type Tool = 'select' | 'object' | 'building' | 'npc' | 'ground' | 'path' | 'wall' | 'deco';
 const T = TILE, CH = 16;
 const BUILDING_STYLES = ['house', 'inn', 'shop', 'smithy', 'guild', 'knight_guild', 'ranger_guild', 'mage_guild', 'merchant_guild', 'aurelion_residence', ...Object.keys(LANDMARK_STYLE)];
 const SCENERY = ['city_wall', 'city_gate', 'castle'];
@@ -50,7 +51,8 @@ export class MapEditor {
   private props = h('div', { class: 'st-side right' });
   private status = h('span', { class: 'st-muted' });
   private toolBtns = new Map<Tool, HTMLButtonElement>();
-  private pick = { object: 'tree_oak', building: 'house', ground: 'grass', wall: 'thicket', deco: 'flowers', brush: 1, shape: 'square' as 'square' | 'round' | 'rect' | 'ellipse' };
+  private npcSearch = '';
+  private pick = { npc: '', object: 'tree_oak', building: 'house', ground: 'grass', wall: 'thicket', deco: 'flowers', brush: 1, shape: 'square' as 'square' | 'round' | 'rect' | 'ellipse' };
   /** Rectangle / ellipse area being dragged out with a paint tool (filled on release). */
   /** Points of the road being drawn with the path tool (cells). */
   private pathPts: [number, number][] | null = null;
@@ -82,7 +84,7 @@ export class MapEditor {
     this.root = h('div', { class: 'st-body' }, this.side,
       h('div', { class: 'st-main' },
         h('div', { class: 'st-bar' },
-          tb('select', '🖐 เลือก/ย้าย', 'V'), tb('object', '🌳 วางวัตถุ', 'O'), tb('building', '🏠 วางอาคาร', 'B'),
+          tb('select', '🖐 เลือก/ย้าย', 'V'), tb('object', '🌳 วางวัตถุ', 'O'), tb('building', '🏠 วางอาคาร', 'B'), tb('npc', '🧑 วาง NPC', 'N'),
           tb('ground', '🟩 ทาพื้น', 'G'), tb('path', '🛤 วาดทางเดิน', 'P'), tb('wall', '🧱 ทากำแพง', 'W'), tb('deco', '🌼 ทาของตกแต่ง', 'D'),
           h('span', { class: 'st-spacer' }), toggle('grid', '# กริด'), toggle('collision', '⛔ จุดเดินไม่ได้'), toggle('zones', '▭ โซนมอนสเตอร์')),
         h('div', { class: 'st-bar' },
@@ -149,7 +151,7 @@ export class MapEditor {
       if (k === 'escape') { this.pathPts = null; this.view.redraw(); return; }
       if (k === 'backspace') { e.preventDefault(); this.pathPts.pop(); if (!this.pathPts.length) this.pathPts = null; this.view.redraw(); return; }
     }
-    const tools: Record<string, Tool> = { v: 'select', o: 'object', b: 'building', g: 'ground', p: 'path', w: 'wall', d: 'deco' };
+    const tools: Record<string, Tool> = { v: 'select', o: 'object', b: 'building', n: 'npc', g: 'ground', p: 'path', w: 'wall', d: 'deco' };
     if (tools[k] && !e.ctrlKey && !e.metaKey) this.setTool(tools[k]);
     if (this.selection.length && k.startsWith('arrow')) {
       e.preventDefault();
@@ -407,6 +409,8 @@ export class MapEditor {
         this.mutate(() => this.def.paint.push({ op: 'object', kind: this.pick.object, x, y }));
         const art = this.st.data.objectKinds.get(this.pick.object)?.art;
         if (art) void loadArt([art]).then(() => { this.sprites.delete(`o:${this.pick.object}`); this.view.redraw(); });
+      } else if (this.tool === 'npc') {
+        this.placeNpc(x, y);
       } else if (this.tool === 'building') {
         const style = this.pick.building, big = style === 'aurelion_palace' ? [36, 12] : style === 'aurelion_cathedral' ? [13, 10] : style.startsWith('aurelion_stall') ? [4, 3] : [8, 5];
         this.mutate(() => this.def.paint.push({ op: 'building', style, x, y, w: big[0], h: big[1], door: Math.floor(big[0] / 2) }));
@@ -577,6 +581,7 @@ export class MapEditor {
       fill();
       parts.push(h('div', { class: 'st-muted' }, `คลิกบนแมพเพื่อวาง · ตอนนี้: ${this.pick.object}`), row('กลุ่ม', group), search, list);
     }
+    if (this.tool === 'npc') parts.push(...this.npcPalette());
     if (this.tool === 'building') parts.push(h('div', { class: 'st-muted' }, 'คลิกบนแมพเพื่อวาง (ประตูหันลงล่าง)'), row('แบบ', sel(BUILDING_STYLES, this.pick.building, (v) => { this.pick.building = v; })));
     if (this.tool === 'ground') parts.push(brush, h('div', { class: 'st-muted' }, `ลากเพื่อทาพื้น · ตอนนี้: ${this.pick.ground === '(ลบ)' ? 'คืนพื้นฐาน' : this.pick.ground}`), this.texturePalette());
     if (this.tool === 'path') parts.push(
@@ -674,6 +679,12 @@ export class MapEditor {
   private duplicate() {
     const e = this.sel;
     if (!e) return;
+    if (e.type === 'npc') {
+      // An NPC is copied into a new NPC (own id) standing next to the original.
+      const src = this.def.npcs[e.key as number];
+      void this.duplicateNpc(src.npcId).then(() => { this.mutate(() => this.def.npcs.push({ npcId: this.pick.npc, x: src.x + 1, y: src.y, facing: src.facing })); });
+      return;
+    }
     this.mutate(() => {
       const k = e.key as number;
       if (e.type === 'building' || e.type === 'object') { const op = clone(this.def.paint[k]) as { x: number; id?: string }; op.x += 1; delete op.id; this.def.paint.push(op as PaintOp); }
@@ -681,8 +692,75 @@ export class MapEditor {
       else if (e.type === 'portal') { const p = clone(this.def.portals[k]); p.x += 1; p.id = `${p.id}_copy`; this.def.portals.push(p); }
       else if (e.type === 'mobs') { const m = clone(this.def.monsterSpawns[k]); m.area.x += 1; this.def.monsterSpawns.push(m); }
       else if (e.type === 'area') { const a = clone(this.def.areas[k]); a.rect.x += 1; a.id = `${a.id}_copy`; this.def.areas.push(a); }
-      else this.st.toast('สิ่งนี้ทำสำเนาไม่ได้ (NPC และจุดเกิดต้องไม่ซ้ำ)');
+      else this.st.toast('จุดเกิดทำสำเนาไม่ได้ (ชื่อต้องไม่ซ้ำ)');
     });
+  }
+
+  // ---------------------------------------------------------------- NPC placement
+  /** Maps each NPC stands on (to show where it can be copied from). */
+  private npcMaps(): Map<string, string[]> {
+    const out = new Map<string, string[]>();
+    for (const m of this.st.data.maps.values()) for (const n of (m.id === this.def.id ? this.def : m).npcs) out.set(n.npcId, [...(out.get(n.npcId) ?? []), m.id]);
+    return out;
+  }
+
+  /** Puts the chosen NPC on a cell; an NPC already on this map moves there instead (each NPC appears once per map). */
+  private placeNpc(x: number, y: number) {
+    const id = this.pick.npc;
+    if (!id || !this.st.data.npcs.has(id)) { this.st.toast('เลือก NPC จากรายการด้านซ้ายก่อน'); return; }
+    const here = this.def.npcs.find((n) => n.npcId === id);
+    this.mutate(() => { if (here) { here.x = x; here.y = y; } else this.def.npcs.push({ npcId: id, x, y, facing: 'down' }); });
+    if (here) this.st.toast(`${id} อยู่บนแมพนี้แล้ว — ย้ายไปตำแหน่งใหม่ (ถ้าอยากได้อีกตัว กด "คัดลอกเป็น NPC ใหม่")`);
+    this.renderSide();
+  }
+
+  /** Copies an NPC into a new one (own id, same look, dialogue and services) that can be edited separately. */
+  private async duplicateNpc(id: string) {
+    const d = this.st.data, src = d.npcs.get(id);
+    if (!src) return;
+    let n = 2;
+    while (d.npcs.has(`${id}_${n}`)) n++;
+    const copy = { ...clone(src), id: `${id}_${n}`, name: `${src.name} ${n}` } as typeof src & { generated?: boolean };
+    delete copy.generated;
+    const list = [...d.npcs.values()].map((x) => clone(x));
+    list.push(copy);
+    await saveCollection('npcs', list);
+    this.st.layer.data.set('npcs', clone(list));
+    replaceCollection(d, 'npcs', clone(list));
+    this.pick.npc = copy.id;
+    this.st.toast(`คัดลอกเป็น ${copy.id} แล้ว — คลิกบนแมพเพื่อวาง · แก้ชื่อ บทพูด และบริการได้ที่แท็บฐานข้อมูล → NPC`);
+    this.renderSide();
+  }
+
+  private npcPalette(): (Node | null)[] {
+    const d = this.st.data, where = this.npcMaps();
+    if (!this.pick.npc || !d.npcs.has(this.pick.npc)) this.pick.npc = [...d.npcs.keys()].sort()[0] ?? '';
+    const list = h('div', { class: 'st-list' });
+    const search = h('input', { placeholder: 'ค้นหา NPC… (ชื่อ, id, แมพ)', value: this.npcSearch }) as HTMLInputElement;
+    const fill = () => {
+      const q = search.value.toLowerCase();
+      const all = [...d.npcs.values()].filter((n) => !q || n.id.toLowerCase().includes(q) || n.name.toLowerCase().includes(q) || (where.get(n.id) ?? []).some((m) => m.includes(q)))
+        .sort((a, b) => a.name.localeCompare(b.name));
+      setChildren(list, ...all.slice(0, 150).map((n) => {
+        const maps = where.get(n.id) ?? [];
+        const onThis = maps.includes(this.def.id);
+        return h('button', { class: `st-item${n.id === this.pick.npc ? ' on' : ''}`, title: `${n.id}
+${n.title ?? ''}
+อยู่บนแมพ: ${maps.join(', ') || '— ยังไม่อยู่บนแมพใด'}`, dataset: { npc: n.id },
+          onclick: () => { this.pick.npc = n.id; this.renderSide(); } },
+        this.npcSprite(n.id), `${n.name}${onThis ? ' ✓' : maps.length ? ` · ${maps[0]}${maps.length > 1 ? ` +${maps.length - 1}` : ''}` : ' · ใหม่'}`);
+      }), all.length > 150 ? h('div', { class: 'st-muted' }, `แสดง 150 จาก ${all.length} — พิมพ์ค้นหาเพื่อหาที่เหลือ`) : null);
+    };
+    search.oninput = () => { this.npcSearch = search.value; fill(); };
+    fill();
+    const cur = d.npcs.get(this.pick.npc);
+    return [
+      h('div', { class: 'st-muted' }, 'เลือก NPC แล้วคลิกบนแมพเพื่อวาง · NPC จากแมพอื่นวางซ้ำที่นี่ได้เลย (ใช้ข้อมูลเดียวกัน) · ✓ = อยู่บนแมพนี้แล้ว (คลิกจะย้ายแทน)'),
+      cur ? h('div', { class: 'st-row' }, h('b', {}, `ตอนนี้: ${cur.name}`),
+        h('button', { class: 'st-btn', onclick: () => void this.duplicateNpc(cur.id) }, '⧉ คัดลอกเป็น NPC ใหม่'),
+        h('button', { class: 'st-btn', onclick: () => this.st.openTab('database', 'npcs') }, '✎ แก้ข้อมูล NPC')) : null,
+      search, list,
+    ];
   }
 
   private addMenu() {

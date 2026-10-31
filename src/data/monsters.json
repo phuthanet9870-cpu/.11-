@@ -3222,5 +3222,78 @@
   "elite": true,
   "looter": false,
   "elementLevel": 4
+ },
+ {
+  "id": "training_dummy",
+  "name": "Training Dummy",
+  "level": 1,
+  "element": "neutral",
+  "race": "formless",
+  "size": "medium",
+  "maxHp": 1000000,
+  "attack": 0,
+  "defense": 0,
+  "magicDefense": 0,
+  "exp": 0,
+  "jobExp": 0,
+  "attackRange": 0,
+  "attackIntervalMs": 99999,
+  "moveSpeed": 0,
+  "aiType": "passive",
+  "aiFlags": [
+   "dummy"
+  ],
+  "respawnSeconds": 1,
+  "dropTableId": "no_drops",
+  "collisionRadius": 14,
+  "elementLevel": 1,
+  "hidden": true,
+  "art": {
+   "shape": "dummy",
+   "w": 40,
+   "h": 56,
+   "colors": [
+    "#a07a4a",
+    "#6a4a2a",
+    "#e8d8b0"
+   ]
+  },
+  "generated": true
+ },
+ {
+  "id": "shadow_fighter",
+  "name": "Shadow Fighter",
+  "level": 1,
+  "element": "shadow",
+  "race": "demihuman",
+  "size": "medium",
+  "maxHp": 100,
+  "attack": 10,
+  "defense": 0,
+  "magicDefense": 0,
+  "exp": 0,
+  "jobExp": 0,
+  "attackRange": 40,
+  "attackIntervalMs": 1200,
+  "moveSpeed": 110,
+  "aiType": "aggressive",
+  "aggroRange": 900,
+  "leashRange": 2000,
+  "respawnSeconds": 0,
+  "dropTableId": "no_drops",
+  "collisionRadius": 12,
+  "elementLevel": 1,
+  "hidden": true,
+  "art": {
+   "shape": "shadow_class",
+   "w": 48,
+   "h": 64,
+   "colors": [
+    "#1a1a24",
+    "#7fd6ff",
+    "#ffffff"
+   ]
+  },
+  "generated": true
  }
 ]

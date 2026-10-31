@@ -314,6 +314,8 @@ export interface MonsterDef {
   bossId?: string;
   art: { shape: string; w: number; h: number; colors: string[]; scale?: number };
   collisionRadius: number;
+  /** Not listed in the monster database (training dummy, shadow-fighter template). */
+  hidden?: boolean;
 }
 
 export interface DropEntry { itemId: string; chance: number; min?: number; max?: number }
@@ -504,7 +506,9 @@ export type NpcService =
   | { type: 'warp'; destinations: { mapId: string; spawn: string; cost: number }[] }
   | { type: 'resetStats'; cost: number }
   | { type: 'resetSkills'; cost: number }
-  | { type: 'save' };
+  | { type: 'save' }
+  /** Shadow Arena: summon 1..maxCount shadow fighters of random jobs, as strong as the player. */
+  | { type: 'shadowArena'; maxCount: number };
 
 export interface ShopDef { id: string; name: string; items: string[]; /** Market Trader stock: prices move every hour. */ market?: boolean; /** `items` is a pool; the shop shows a random pick from every tier, re-rolled every 2 hours. */ rotating?: boolean }
 

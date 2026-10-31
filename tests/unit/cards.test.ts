@@ -8,6 +8,7 @@ import { data, newChar } from '../helpers/fixtures';
 describe('monster cards', () => {
   it('every monster has exactly one card and drops it at the configured (0.01%) rate', () => {
     for (const m of data.monsters.values()) {
+      if (m.hidden) continue; // training dummy and the shadow-fighter template
       const cards = [...data.items.values()].filter((i) => i.card?.monsterId === m.id);
       expect(cards).toHaveLength(1);
       const entry = data.drops.get(m.dropTableId)!.entries.find((e) => e.itemId === cards[0].id);

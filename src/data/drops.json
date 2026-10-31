@@ -6522,5 +6522,14 @@
    }
   ],
   "generated": true
+ },
+ {
+  "id": "no_drops",
+  "luma": [
+   0,
+   0
+  ],
+  "entries": [],
+  "generated": true
  }
 ]

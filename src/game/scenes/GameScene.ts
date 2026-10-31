@@ -486,7 +486,7 @@ export class GameScene extends Phaser.Scene {
         if (!this.combatFxOn) break;
         if (e.skillId) {
           const sk = w.data.skills.get(e.skillId);
-          if (sk && playSkillVfx(this, sk, { x: w.player.x, y: w.player.y }, { x: e.x, y: e.y }, e.radius)) { playFx(this, e.fx, e.x, e.y, e.radius); break; }
+          if (sk && playSkillVfx(this, sk, e.fromX !== undefined ? { x: e.fromX, y: e.fromY ?? 0 } : { x: w.player.x, y: w.player.y }, { x: e.x, y: e.y }, e.radius)) { playFx(this, e.fx, e.x, e.y, e.radius); break; }
         }
         playFxSheets(this, e.fx, e.x, e.y);
         // Effects that carry an offset are attached to their target and move with it.
@@ -553,7 +553,7 @@ export class GameScene extends Phaser.Scene {
     for (const [id, m] of w.monsters) {
       let v = this.monViews.get(id);
       if (!v) {
-        const rig = proceduralMonRig(ensureMonsterTexture(this, m.def));
+        const rig = m.def.art.shape === 'shadow_class' ? this.shadowFighterRig(m.def.art.colors[0]) : proceduralMonRig(ensureMonsterTexture(this, m.def));
         const sprite = this.track(this.add.sprite(m.x, m.y, rig.clips.idle.key, 0).setOrigin(rig.originX, rig.originY));
         if (m.boss) sprite.setScale(1.15);
         const name = this.track(this.add.text(m.x, m.y + 4, `${m.def.name}  Lv.${m.def.level}`, labelStyle(m.boss ? '#ff8a7a' : '#ffffff')).setOrigin(0.5, 0).setDepth(1e5 + 2).setResolution(2));
@@ -572,7 +572,7 @@ export class GameScene extends Phaser.Scene {
       }
       if (!s.visible || s.alpha < 1) { s.setVisible(true).setAlpha(1); }
       s.setPosition(Math.round(m.x), Math.round(m.y) + (v.rig.originY < 1 ? 1 : 3)).setDepth(m.y);
-      const clip = v.rig.clips[toMonAnim(m.anim)] ?? v.rig.clips.idle;
+      const clip = v.rig.clips[v.rig.clips.cast ? toCharAnim(m.anim) : toMonAnim(m.anim)] ?? v.rig.clips.idle;
       const fr = clipFrame(clip, m.dir, this.clipStep(clip, m.animAt));
       s.setTexture(clip.key, fr.frame).setFlipX(fr.flipX);
       const frozen = m.statuses.some((st) => st.id === 'freeze');
@@ -586,6 +586,15 @@ export class GameScene extends Phaser.Scene {
     for (const [id, v] of this.monViews) {
       if (!w.monsters.has(id)) { v.sprite.destroy(); v.name.destroy(); this.monViews.delete(id); }
     }
+  }
+
+  /** Shadow fighters are drawn with the shadow-style sheet of their job. */
+  private shadowFighterRig(classId: string): Rig {
+    const cls = this.world.data.classes.get(classId) ?? [...this.world.data.classes.values()][0];
+    const wt = cls.weaponTypes ?? [];
+    const weapon = wt.find((x) => x !== 'dagger' && x !== 'club') ?? wt[0] ?? null;
+    const look: CharacterLook = { appearance: { body: 'a', hairStyle: 'short', hairColor: '#222230', eyeColor: cls.outfit.accent, skinTone: '#202028' } as CharacterLook['appearance'], outfit: cls.outfit, weapon, sheet: `class/${cls.id}`, shadow: true };
+    return proceduralCharRig(ensureCharacterTexture(this, look));
   }
 
   /** The Alchemist's homunculus: its borrowed monster body, name and a small HP bar. */

@@ -1,0 +1,213 @@
+{
+ "id": "training_grounds",
+ "name": "Training Grounds",
+ "region": "Aurelion — Royal Capital",
+ "type": "arena",
+ "width": 36,
+ "height": 26,
+ "tileset": "dg_catacomb",
+ "base": "ruin_floor",
+ "border": {
+  "kind": "ruin_wall",
+  "thickness": 2
+ },
+ "bgm": "town_capital",
+ "ambient": "village",
+ "weather": [],
+ "worldMapPos": {
+  "x": 0.52,
+  "y": 0.46
+ },
+ "paint": [
+  {
+   "op": "rect",
+   "tile": "sand",
+   "x": 3,
+   "y": 5,
+   "w": 30,
+   "h": 12
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 3,
+   "y": 3
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 32,
+   "y": 3
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 3,
+   "y": 20
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 32,
+   "y": 20
+  }
+ ],
+ "spawnPoints": {
+  "default": {
+   "x": 18,
+   "y": 22
+  }
+ },
+ "portals": [
+  {
+   "id": "exit",
+   "x": 17,
+   "y": 24,
+   "w": 3,
+   "h": 1,
+   "targetMap": "aurelion",
+   "targetSpawn": "default",
+   "label": "Royal Capital Aurelion"
+  }
+ ],
+ "npcs": [
+  {
+   "npcId": "training_master",
+   "x": 15,
+   "y": 21,
+   "facing": "down"
+  },
+  {
+   "npcId": "shadow_arena_master",
+   "x": 21,
+   "y": 21,
+   "facing": "down"
+  }
+ ],
+ "monsterSpawns": [
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 6,
+    "y": 8,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 11,
+    "y": 8,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 16,
+    "y": 8,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 21,
+    "y": 8,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 26,
+    "y": 8,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 31,
+    "y": 8,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 6,
+    "y": 14,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 11,
+    "y": 14,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 16,
+    "y": 14,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 21,
+    "y": 14,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 26,
+    "y": 14,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 31,
+    "y": 14,
+    "w": 2,
+    "h": 1
+   }
+  }
+ ],
+ "objects": [],
+ "areas": [],
+ "description": "Training dummies that never fight back. Hit them to test your damage: the totals and damage per second show in the chat when you stop.",
+ "generated": true
+}

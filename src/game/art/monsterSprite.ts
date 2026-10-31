@@ -27,6 +27,23 @@ function eyes(ctx: CanvasRenderingContext2D, x: number, y: number, gap: number, 
 }
 
 const painters: Record<string, Painter> = {
+  // Straw training dummy on a wooden post: wobbles when hit, never falls.
+  dummy(ctx, w, h, c, p) {
+    const cx = w / 2 + p.dx * 0.5, base = h - 4, lean = p.tint ? -2 : p.open ? 2 : 0;
+    px(ctx, cx - 2, base - 22, 4, 22, c[1]); px(ctx, cx - 7, base - 3, 14, 3, shade(c[1], -0.2));
+    px(ctx, cx - 1, base - 22, 1, 20, shade(c[1], 0.2));
+    // Straw body bound with rope.
+    ellipse(ctx, cx + lean, base - 30, 9, 11, c[0]);
+    for (const y of [-36, -30, -24]) px(ctx, cx - 9 + lean, base + y, 18, 1, shade(c[0], -0.25));
+    for (let i = 0; i < 5; i++) px(ctx, cx - 6 + i * 3 + lean, base - 40, 1, 3, c[2]);
+    px(ctx, cx - 14 + lean, base - 33, 28, 3, c[1]);
+    for (const s of [-1, 1]) for (let i = 0; i < 3; i++) px(ctx, cx + lean + s * (15 + i), base - 34 + i, 1, 2, c[2]);
+    // Sack head with a painted target.
+    ellipse(ctx, cx + lean * 1.5, base - 46, 7, 7, c[2]);
+    ellipse(ctx, cx + lean * 1.5, base - 46, 4, 4, '#c83a2a'); ellipse(ctx, cx + lean * 1.5, base - 46, 2, 2, c[2]);
+    px(ctx, cx - 1 + lean * 1.5, base - 47, 2, 2, '#c83a2a');
+    ellipse(ctx, cx + lean, base - 28, 4, 4, '#c83a2a'); ellipse(ctx, cx + lean, base - 28, 2, 2, c[2]);
+  },
   slime(ctx, w, h, c, p) {
     const cx = w / 2 + p.dx, base = h - 4;
     const rx = 15 * p.sx, ry = 12 * p.sy;
