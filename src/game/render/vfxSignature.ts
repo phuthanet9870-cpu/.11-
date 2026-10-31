@@ -547,7 +547,7 @@ export function polishFrame(frame: HTMLCanvasElement, res: number, t: number, A:
   const c = out.getContext('2d')!;
   // Bloom: two blurred copies added under the sharp drawing.
   c.globalCompositeOperation = 'lighter';
-  for (const [blur, alpha] of [[10 * res, 0.55], [3 * res, 0.7]] as [number, number][]) { c.filter = `blur(${blur}px)`; c.globalAlpha = alpha; c.drawImage(frame, 0, 0); }
+  for (const [blur, alpha] of [[8 * res, 0.35], [3 * res, 0.4]] as [number, number][]) { c.filter = `blur(${blur}px)`; c.globalAlpha = alpha; c.drawImage(frame, 0, 0); }
   c.filter = 'none'; c.globalAlpha = 1; c.globalCompositeOperation = 'source-over';
   c.drawImage(frame, 0, 0);
   // Glints on the brightest solid pixels.
@@ -585,7 +585,9 @@ export function drawSignatureSheet(sig: Signature, primary: string, glyph: strin
   const canvas = document.createElement('canvas');
   canvas.width = SIG_W * SIG_FRAMES * res; canvas.height = SIG_H * res;
   const out = canvas.getContext('2d')!;
-  const A = colour(primary), B = colour(sig.c2);
+  // Pure white skills would read as flat white pixels: give them a pale tint with a warm accent.
+  const pale = (hex: string) => { const n = parseInt(hex.slice(1, 7), 16); return Math.min((n >> 16) & 255, (n >> 8) & 255, n & 255) > 215; };
+  const A = colour(pale(primary) ? '#a8d8ff' : primary), B = colour(pale(primary) && pale(sig.c2) ? '#ffd860' : sig.c2);
   const frame = document.createElement('canvas'); frame.width = SIG_W * res; frame.height = SIG_H * res;
   const c = frame.getContext('2d', { willReadFrequently: true })!;
   for (let f = 0; f < SIG_FRAMES; f++) {
