@@ -168,7 +168,13 @@ export function regionCanvas(map: CompiledMap, region?: Region) {
 export function paintGroundLayer(map: CompiledMap, pal: Palette, region?: Region): HTMLCanvasElement {
   const { canvas, ctx, x0, y0, x1, y1 } = regionCanvas(map, region);
   for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
-    const raw = map.ground[y * map.width + x], id = groundBase(raw), sheet = groundSheet(groundTileset(raw, map.def.tileset));
+    const raw = map.ground[y * map.width + x], id = groundBase(raw), ts = groundTileset(raw, map.def.tileset);
+    // PixelLab tiles (`grass@pl:<set>:<n>`): cell n of the set's 32px strip, drawn as it is.
+    if (ts.startsWith('pl:')) {
+      const [, set, n] = ts.split(':'), strip = extraSprite(`pl/tile/${set}`);
+      if (strip) { ctx.drawImage(strip, (+n || 0) * T, 0, T, T, x * T, y * T, T, T); continue; }
+    }
+    const sheet = groundSheet(ts);
     const block = sheet ? GROUND_ORDER.indexOf(id) : -1;
     // Painted ground: each block is a seamless 256px texture, sampled at the tile's world position.
     if (sheet && block >= 0) ctx.drawImage(sheet, (x * T) % GROUND_BLOCK, block * GROUND_BLOCK + (y * T) % GROUND_BLOCK, T, T, x * T, y * T, T, T);
@@ -222,7 +228,9 @@ function artObject(kind: ObjectKindDef, tileset: string): HTMLCanvasElement | nu
   let src: HTMLImageElement | null, box: { x: number; y: number; w: number; h: number } | null;
   if (kind.art) {
     src = extraSprite(kind.art);
-    box = src && { x: 8, y: 8, w: src.width - 16, h: src.height - 16 }; // the source images have an 8px transparent margin
+    // The supplied art and Studio images have an 8px transparent margin; PixelLab images (pl/) have none.
+    const m = kind.art.startsWith('pl/') ? 0 : 8;
+    box = src && { x: m, y: m, w: src.width - 2 * m, h: src.height - 2 * m };
   } else {
     src = propSheet(tileset);
     const index = PROP_ORDER.indexOf(kind.draw);

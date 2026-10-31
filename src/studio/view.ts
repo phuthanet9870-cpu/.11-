@@ -52,6 +52,7 @@ export class View {
 
   /** Centres the view on a world rectangle, zoomed to fit. */
   fit(w: number, h: number, maxZoom = 4) {
+    this.resize(); // measure now: the observer may not have reported the real size yet
     const cw = this.canvas.width || 800, ch = this.canvas.height || 600;
     this.zoom = Math.min(maxZoom, cw / w, ch / h) * 0.95;
     this.x = w / 2 - cw / 2 / this.zoom; this.y = h / 2 - ch / 2 / this.zoom;
@@ -62,6 +63,7 @@ export class View {
 
   private resize() {
     const r = this.host.getBoundingClientRect();
+    if (r.width < 2 || r.height < 2) return;
     this.canvas.width = Math.max(1, Math.floor(r.width)); this.canvas.height = Math.max(1, Math.floor(r.height));
     this.redraw();
   }

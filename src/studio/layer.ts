@@ -1,6 +1,6 @@
 // Lays the Studio edits saved in this browser over the game data and art.
 import { compileMap } from '../core/mapCompiler';
-import { replaceCollection, STUDIO_COLLECTIONS, type GameData, type StudioCollection } from '../core/data';
+import { pixellabObjectKinds, replaceCollection, STUDIO_COLLECTIONS, type GameData, type StudioCollection } from '../core/data';
 import { decodeSprite, isSpritePath, setSpriteOverride } from '../game/art/spriteOverrides';
 import { setArtOverride } from '../game/art/themeArt';
 import { readLayer, type StudioLayer } from './store';
@@ -23,6 +23,8 @@ export function applyLayer(data: GameData, layer: StudioLayer): { applied: numbe
   if (layer.objects) {
     data.objectKinds.clear();
     for (const k of layer.objects) data.objectKinds.set(k.id, k);
+    // Object lists saved before the PixelLab library existed still get its objects.
+    for (const k of pixellabObjectKinds()) if (!data.objectKinds.has(k.id)) data.objectKinds.set(k.id, k);
     applied++;
   }
   for (const t of layer.tilesets.values()) if (data.tilesets.has(t.id)) { data.tilesets.set(t.id, t); applied++; }

@@ -27,6 +27,10 @@ export function mapArtPaths(map: CompiledMap, artOf: (kind: string) => string | 
   for (const o of map.objects) { const a = artOf(o.kind); if (a) out.add(a); }
   for (const s of map.def.scenery ?? []) { const p = sceneryPath(s, map.def.tileset); if (p) out.add(p); }
   // Ground painted with other tilesets' textures (`sand@desert`) needs those sheets too.
-  for (const g of new Set(map.ground)) if (g.includes('@')) out.add(`tiles/${g.slice(g.indexOf('@') + 1)}`);
+  for (const g of new Set(map.ground)) {
+    if (!g.includes('@')) continue;
+    const ts = g.slice(g.indexOf('@') + 1);
+    out.add(ts.startsWith('pl:') ? `pl/tile/${ts.split(':')[1]}` : `tiles/${ts}`);
+  }
   return [...out];
 }

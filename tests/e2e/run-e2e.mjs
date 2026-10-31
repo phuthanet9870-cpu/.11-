@@ -581,7 +581,7 @@ try {
     await sp.waitForSelector('#studio .st-canvas');
     await sp.waitForTimeout(3000);
     const cv = await sp.locator('.st-canvas').first().boundingBox();
-    await sp.mouse.click(cv.x + cv.width / 2, cv.y + cv.height / 2);
+    await sp.click('.st-side .st-item:has-text("Royal Inn")');
     await sp.waitForTimeout(200);
     const title = await sp.textContent('.st-side.right .st-h');
     const x0 = +(await sp.inputValue('.st-side.right input[type=number] >> nth=0'));
@@ -593,8 +593,9 @@ try {
     const count = async () => +(/(\d+) วัตถุ/.exec(await sp.textContent('.st-bar .st-muted'))?.[1] ?? -1);
     const n0 = await count();
     await sp.keyboard.press('Escape');
-    await sp.mouse.move(cv.x + 30, cv.y + cv.height * 0.15); await sp.mouse.down();
-    await sp.mouse.move(cv.x + cv.width * 0.3, cv.y + cv.height * 0.45, { steps: 10 }); await sp.mouse.up();
+    // From the empty margin around the map, across the whole map.
+    await sp.mouse.move(cv.x + 3, cv.y + 3); await sp.mouse.down();
+    await sp.mouse.move(cv.x + cv.width - 3, cv.y + cv.height - 3, { steps: 10 }); await sp.mouse.up();
     await sp.waitForTimeout(200);
     const boxed = /เลือกอยู่ (\d+)/.exec(await sp.textContent('.st-side.right .st-h'))?.[1];
     await sp.locator('.st-side.right .st-row:has-text("วัตถุ") button').first().click();

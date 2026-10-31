@@ -114,6 +114,17 @@ Ground-target skills (Arrow Rain, Wind Trap, Fire Wall, Thunderstorm, Meteor) la
 
 Every one of the 38 jobs has its own costume, drawn in a chibi style inspired by classic 2D MMORPGs (big head, short body, three-tone shading, dark outline) — original designs, not copied from any game. Each job line has its outfit and headgear (Knight plate and cape, Dragoon horned helm and wing pauldrons, Templar tabard with a cross, Ranger feathered cap, Beastmaster animal hood, Minstrel beret and frock coat, Mage hooded robe, Sorcerer wide hat, Sage scholar cap, Cleric robe and beads, Bishop mitre, Ascetic gi and headband, Rogue bandana and mask, Shadowblade hooded suit and scarf, Outlaw tricorn and coat, Merchant cap and bag, Artisan goggles and apron, Alchemist lab coat and glasses). High (transcendent) jobs add gold trim and capes; third jobs go further (crown, long capes). Hair style and colour, eyes, skin and body chosen at character creation stay on top of the costume. Costumes are in `src/game/art/costumes.ts` (`costume` in each class outfit) and drawn by `src/game/art/costumeDraw.ts`; NPCs without a job get the nearest look from their outfit style. Every job's sheet can be viewed, edited and downloaded in Studio → 🧍 Sprites → player characters.
 
+## PixelLab library
+
+Everything made in the project's PixelLab account is in the game: 525 objects (buildings, trees, rocks, props, item and skill icons…), 12 characters, 45 ground tile sets (28 tile sets and 17 two-terrain transition sets, 720 tiles) and a UI panel. `tools/pixellab/fetch.sh` downloads them by id (`tools/pixellab/ids.txt`; needs network access to `api.pixellab.ai` and `backblaze.pixellab.ai`) and `tools/pixellab/build_library.py` converts them into `public/art/pl/` (lossless WebP) and `src/data/pixellab/library.json`:
+
+- **Objects** become object kinds `pl_<name>` at their own pixel size (big pieces block, small ones don't); solid white/grey backdrops of 46 of them were made transparent.
+- **Characters** become game character sheets (4 directions: idle, walk, attack, cast, hit, death) and monster sheets.
+- **Tiles** are ground textures `<walk type>@pl:<set>:<n>` in the ground and path tools.
+- **UI panel** can frame every game window.
+
+Studio → 📥 PixelLab library browses all of it with one-click uses: place on a map, item / skill / menu icon, NPC / job / monster sprite, paint ground, window frame. Not imported: the 325 Creator-gallery images (their download host `s3.eu-central-003.backblazeb2.com` is not reachable from the build environment) and the map "Island Map" (terrain only, no exported image).
+
 ## Veyloria Studio (editor)
 
 Opening the game shows a launcher: **▶ เข้าเกม** (play) or **🛠 เข้า Studio** (edit). `#game` / `#studio` at the end of the URL skips it, and the title screen has a Studio button. The Studio opens on a home page with a card for every section, three steps, and a list of shortcuts; every tab has a "💡 วิธีใช้" (how to use) strip.

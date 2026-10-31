@@ -57,3 +57,21 @@ export async function decodeSprite(src: Blob | string): Promise<Img | null> {
     return await new Promise<Img | null>((res) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = src; });
   } catch { return null; }
 }
+
+/** Window frame drawn in the Studio (`ui/window`, e.g. a PixelLab UI panel): a 9-slice border image
+ * for every game window. Returns false when there is none. */
+export function applyWindowSkin(doc: Document = document): boolean {
+  const img = sheets.get('ui/window');
+  doc.getElementById('ui-window-skin')?.remove();
+  if (!img) return false;
+  const c = doc.createElement('canvas');
+  c.width = img.width; c.height = img.height;
+  c.getContext('2d')!.drawImage(img, 0, 0);
+  const slice = Math.max(8, Math.round(Math.min(img.width, img.height) / 7));
+  const style = doc.createElement('style');
+  style.id = 'ui-window-skin';
+  style.textContent = `.win { border: ${Math.round(slice / 2)}px solid transparent !important; border-image: url(${c.toDataURL()}) ${slice} fill / ${Math.round(slice / 2)}px stretch; background: none !important; box-shadow: 0 6px 24px rgba(0,0,0,.6); }
+.win .wtitle { background: rgba(20, 12, 8, .35) !important; border-bottom: none !important; }`;
+  doc.head.appendChild(style);
+  return true;
+}

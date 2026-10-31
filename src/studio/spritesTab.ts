@@ -28,7 +28,7 @@ function canvasFromUrl(url: string, w: number, hgt: number): Promise<HTMLCanvasE
   });
 }
 
-function uiTemplate(): HTMLCanvasElement {
+export function uiTemplate(): HTMLCanvasElement {
   const c = document.createElement('canvas');
   c.width = UI_CELL * UI_MENU_COLS; c.height = UI_CELL * 2;
   const ctx = c.getContext('2d')!;

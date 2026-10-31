@@ -1,3 +1,4 @@
+import { existsSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { loadGameData, validateGameData } from '../../src/core/data';
 import { compileMap } from '../../src/core/mapCompiler';
@@ -87,5 +88,21 @@ describe('Studio layer over the game data', () => {
     expect(validateGameData(d as never).filter((p) => p.includes('aurelion'))).toEqual([]);
     paintCell(def, 'ground', 52, 60, 'sand@nowhere');
     expect(validateGameData(d as never).join()).toMatch(/sand@nowhere/);
+  });
+
+  it('every PixelLab object is a placeable kind and PixelLab tiles are valid ground', () => {
+    const lib = JSON.parse(readFileSync('src/data/pixellab/library.json', 'utf8'));
+    expect(lib.objects.length).toBeGreaterThan(500);
+    for (const o of lib.objects) expect(data.objectKinds.get(`pl_${o.slug}`)?.art, o.slug).toBe(o.art);
+    const def = copy('aurelion');
+    const tile = lib.tiles[0];
+    def.paint.push({ op: 'object', kind: `pl_${lib.objects[0].slug}`, x: 20, y: 70 });
+    paintCell(def, 'ground', 30, 60, `${tile.base}@pl:${tile.slug}:3`);
+    const cm = compileMap(data, def);
+    expect(cm.ground[60 * cm.width + 30]).toBe(`${tile.base}@pl:${tile.slug}:3`);
+    const d = { ...data, maps: new Map(data.maps) };
+    d.maps.set('aurelion', def);
+    expect(validateGameData(d as never).filter((p) => p.includes('aurelion'))).toEqual([]);
+    for (const f of [...lib.objects.map((o: { art: string }) => o.art), ...lib.tiles.map((t: { art: string }) => t.art)]) expect(existsSync(`public/art/${f}.webp`), f).toBe(true);
   });
 });

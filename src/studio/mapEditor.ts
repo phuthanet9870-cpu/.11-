@@ -6,7 +6,8 @@ import type { MapDef, PaintOp } from '../core/types';
 import { generateCharacterSheet } from '../game/art/characterSprite';
 import { paintBuilding, paintGroundLayer, paintObject, paintWallLayer, LANDMARK_STYLE } from '../game/art/mapPainter';
 import { mapArtPaths, scenerySprite } from '../game/art/scenery';
-import { GROUND_ORDER, groundSheet, loadArt, loadThemeArt } from '../game/art/themeArt';
+import { artUrl, extraSprite, GROUND_ORDER, groundSheet, loadArt, loadThemeArt } from '../game/art/themeArt';
+import PL_LIB from '../data/pixellab/library.json';
 import { CHAR_FRAME_H, CHAR_FRAME_W } from '../game/art/spriteMeta';
 import { h, setChildren } from '../ui/dom';
 import { clone, editText, helpBar, row, type StudioCtx } from './context';
@@ -56,6 +57,15 @@ export class MapEditor {
   private pathWidth = 3;
   /** Texture tileset shown in the palette ('' = all). */
   private paletteSet = '';
+  private objSearch = '';
+  private objGroup: 'game' | 'pl' | 'all' = 'game';
+
+  /** Opened from the PixelLab library: `place:<object kind>` or `ground:<tile set slug>`. */
+  preset(cmd: string) {
+    const [what, val] = [cmd.slice(0, cmd.indexOf(':')), cmd.slice(cmd.indexOf(':') + 1)];
+    if (what === 'place') { this.pick.object = val; this.objGroup = val.startsWith('pl_') ? 'pl' : 'game'; this.objSearch = val.replace(/^pl_/, ''); this.setTool('object'); }
+    if (what === 'ground') { const t = PL_LIB.tiles.find((x) => x.slug === val); this.paletteSet = `pl:${val}`; if (t) this.pick.ground = `${t.base}@pl:${val}:0`; this.setTool('ground'); }
+  }
   private area: { x0: number; y0: number; x1: number; y1: number; before: string } | null = null;
 
   constructor(private st: StudioCtx, private mapId: string, private onChange: () => void) {
@@ -395,6 +405,8 @@ export class MapEditor {
         this.view.redraw();
       } else if (this.tool === 'object') {
         this.mutate(() => this.def.paint.push({ op: 'object', kind: this.pick.object, x, y }));
+        const art = this.st.data.objectKinds.get(this.pick.object)?.art;
+        if (art) void loadArt([art]).then(() => { this.sprites.delete(`o:${this.pick.object}`); this.view.redraw(); });
       } else if (this.tool === 'building') {
         const style = this.pick.building, big = style === 'aurelion_palace' ? [36, 12] : style === 'aurelion_cathedral' ? [13, 10] : style.startsWith('aurelion_stall') ? [4, 3] : [8, 5];
         this.mutate(() => this.def.paint.push({ op: 'building', style, x, y, w: big[0], h: big[1], door: Math.floor(big[0] / 2) }));
@@ -481,14 +493,28 @@ export class MapEditor {
     const ground = [...d.tiles.values()].filter((t) => t.layer === 'ground').map((t) => t.id);
     const grid = h('div', { class: 'st-swatches' });
     const value = (base: string, ts: string) => (ts === this.def.tileset ? base : `${base}@${ts}`);
-    const shown = this.paletteSet ? [this.paletteSet] : [this.def.tileset, ...sets.filter((t) => t !== this.def.tileset)];
+    const plSets = PL_LIB.tiles;
+    const shown = this.paletteSet === 'pl:*' ? plSets.map((t) => `pl:${t.slug}`) : this.paletteSet ? [this.paletteSet] : [this.def.tileset, ...sets.filter((t) => t !== this.def.tileset)];
     const filter = h('select', { onchange: (e: Event) => { this.paletteSet = (e.target as HTMLSelectElement).value; this.renderSide(); } },
-      h('option', { value: '' }, `ทุกชุด (${sets.length} × ${ground.length} = ${sets.length * ground.length} แบบ)`),
-      ...sets.map((t) => h('option', { value: t, selected: t === this.paletteSet }, t === this.def.tileset ? `${t} (ชุดของแมพนี้)` : t)));
+      h('option', { value: '' }, `ทุกชุดของเกม (${sets.length} × ${ground.length} = ${sets.length * ground.length} แบบ)`),
+      ...sets.map((t) => h('option', { value: t, selected: t === this.paletteSet }, t === this.def.tileset ? `${t} (ชุดของแมพนี้)` : t)),
+      h('option', { value: 'pl:*', selected: this.paletteSet === 'pl:*' }, `PixelLab ทั้งหมด (${plSets.length} ชุด, ${plSets.reduce((a, t) => a + t.count, 0)} แบบ)`),
+      ...plSets.map((t) => h('option', { value: `pl:${t.slug}`, selected: this.paletteSet === `pl:${t.slug}` }, `PixelLab · ${t.name.slice(0, 48)}`)));
     const reset = h('button', { class: `st-swatch reset${this.pick.ground === '(ลบ)' ? ' on' : ''}`, title: 'คืนเป็นพื้นฐานของแมพ (ลบที่ทาไว้)', onclick: () => { this.pick.ground = '(ลบ)'; this.renderSide(); } }, '↺');
     grid.appendChild(reset);
     const draw: (() => void)[] = [];
-    for (const ts of shown) {
+    for (const ts of shown.filter((t) => t.startsWith('pl:'))) {
+      const set = plSets.find((t) => `pl:${t.slug}` === ts);
+      if (!set) continue;
+      grid.appendChild(h('div', { class: 'st-swatch-h', title: set.name }, `PixelLab · ${set.name.slice(0, 40)} (เดินได้แบบ ${set.base})`));
+      for (let n = 0; n < set.count; n++) {
+        const id = `${set.base}@${ts}:${n}`;
+        const cv = h('canvas', { width: 32, height: 32 }) as HTMLCanvasElement;
+        draw.push(() => { const strip = extraSprite(set.art); if (strip) cv.getContext('2d')!.drawImage(strip, n * 32, 0, 32, 32, 0, 0, 32, 32); });
+        grid.appendChild(h('button', { class: `st-swatch${this.pick.ground === id ? ' on' : ''}`, title: `${set.name} #${n + 1}`, dataset: { tex: id }, onclick: () => { this.pick.ground = id; this.renderSide(); } }, cv));
+      }
+    }
+    for (const ts of shown.filter((t) => !t.startsWith('pl:'))) {
       grid.appendChild(h('div', { class: 'st-swatch-h' }, ts));
       for (const base of ground) {
         const id = value(base, ts);
@@ -501,7 +527,7 @@ export class MapEditor {
         grid.appendChild(h('button', { class: `st-swatch${this.pick.ground === id ? ' on' : ''}`, title: `${base} · ${ts}`, dataset: { tex: id }, onclick: () => { this.pick.ground = id; this.renderSide(); } }, cv));
       }
     }
-    void loadArt(shown.map((t) => `tiles/${t}`)).then(() => draw.forEach((f) => f()));
+    void loadArt(shown.map((t) => (t.startsWith('pl:') ? `pl/tile/${t.slice(3)}` : `tiles/${t}`))).then(() => draw.forEach((f) => f()));
     return h('div', {}, row('ชุดภาพ', filter), grid);
   }
 
@@ -535,12 +561,21 @@ export class MapEditor {
     if (this.tool === 'select') parts.push(h('div', { class: 'st-muted' }, 'คลิกเพื่อเลือก ลากเพื่อย้าย · ลากกรอบบนที่ว่างเพื่อเลือกหลายชิ้น · Shift+คลิกเพิ่ม/เอาออก · Ctrl+A เลือกทั้งหมด · ลูกศรขยับ · Delete ลบ · จุดเหลืองมุมขวาล่าง = ปรับขนาด'));
     if (this.tool === 'object') {
       const list = h('div', { class: 'st-list' });
-      for (const k of d.objectKinds.values()) {
-        const pal = d.tilesets.get(this.def.tileset)!.palette;
-        const cv = paintObject(k, pal, 1000, this.def.tileset);
-        list.appendChild(h('button', { class: `st-item${k.id === this.pick.object ? ' on' : ''}`, onclick: () => { this.pick.object = k.id; this.renderSide(); } }, cv, k.id));
-      }
-      parts.push(h('div', { class: 'st-muted' }, 'คลิกบนแมพเพื่อวาง'), list);
+      const search = h('input', { placeholder: 'ค้นหาวัตถุ… (เช่น tree, house, rock)', value: this.objSearch }) as HTMLInputElement;
+      const group = h('select', {}, h('option', { value: 'game' }, 'วัตถุของเกม'), h('option', { value: 'pl' }, 'PixelLab'), h('option', { value: 'all' }, 'ทั้งหมด')) as HTMLSelectElement;
+      group.value = this.objGroup;
+      const pal = d.tilesets.get(this.def.tileset)!.palette;
+      const fill = () => {
+        const q = search.value.toLowerCase();
+        const kinds = [...d.objectKinds.values()].filter((k) => (this.objGroup === 'all' || (this.objGroup === 'pl') === k.id.startsWith('pl_')) && (!q || k.id.toLowerCase().includes(q)));
+        setChildren(list, ...kinds.slice(0, 120).map((k) => h('button', { class: `st-item${k.id === this.pick.object ? ' on' : ''}`, title: k.id, dataset: { kind: k.id }, onclick: () => { this.pick.object = k.id; this.renderSide(); } },
+          k.art?.startsWith('pl/') ? h('img', { src: artUrl(k.art), loading: 'lazy' }) : paintObject(k, pal, 1000, this.def.tileset), k.id.replace(/^pl_/, ''))),
+          kinds.length > 120 ? h('div', { class: 'st-muted' }, `แสดง 120 จาก ${kinds.length} — พิมพ์ค้นหาเพื่อหาที่เหลือ`) : null);
+      };
+      search.oninput = () => { this.objSearch = search.value; fill(); };
+      group.onchange = () => { this.objGroup = group.value as never; fill(); };
+      fill();
+      parts.push(h('div', { class: 'st-muted' }, `คลิกบนแมพเพื่อวาง · ตอนนี้: ${this.pick.object}`), row('กลุ่ม', group), search, list);
     }
     if (this.tool === 'building') parts.push(h('div', { class: 'st-muted' }, 'คลิกบนแมพเพื่อวาง (ประตูหันลงล่าง)'), row('แบบ', sel(BUILDING_STYLES, this.pick.building, (v) => { this.pick.building = v; })));
     if (this.tool === 'ground') parts.push(brush, h('div', { class: 'st-muted' }, `ลากเพื่อทาพื้น · ตอนนี้: ${this.pick.ground === '(ลบ)' ? 'คืนพื้นฐาน' : this.pick.ground}`), this.texturePalette());

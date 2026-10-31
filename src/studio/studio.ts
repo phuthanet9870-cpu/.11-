@@ -11,6 +11,7 @@ import { applyLayer } from './layer';
 import { MapEditor } from './mapEditor';
 import { spritesTab } from './spritesTab';
 import { databaseTab } from './databaseTab';
+import { libraryTab } from './libraryTab';
 import { decodeSprite, isSpritePath, setSpriteOverride } from '../game/art/spriteOverrides';
 import { clearAll, deleteTileset, exportPack, importPack, isPack, readLayer, saveImage, saveMap, saveObjects, saveTileset, type StudioLayer } from './store';
 
@@ -30,7 +31,7 @@ export async function mountStudio(parent: HTMLElement) {
   const res = applyLayer(data, layer);
   if (res.skipped.length) toast(`บางแมพที่แก้ไว้ใช้ไม่ได้: ${res.skipped.join('; ')}`);
 
-  const tabs: [string, string][] = [['home', '🏠 หน้าแรก'], ['maps', '🗺 แมพ'], ['objects', '🌳 วัตถุ'], ['sprites', '🧍 สไปรต์ & UI'], ['images', '🖼 ภาพฉาก'], ['tilesets', '🎨 สีชุดภาพ'], ['database', '📚 ข้อมูลเกม'], ['pack', '📦 นำเข้า/ส่งออก']];
+  const tabs: [string, string][] = [['home', '🏠 หน้าแรก'], ['maps', '🗺 แมพ'], ['objects', '🌳 วัตถุ'], ['sprites', '🧍 สไปรต์ & UI'], ['images', '🖼 ภาพฉาก'], ['tilesets', '🎨 สีชุดภาพ'], ['database', '📚 ข้อมูลเกม'], ['library', '📥 คลัง PixelLab'], ['pack', '📦 นำเข้า/ส่งออก']];
   const body = h('div', { class: 'st-body' });
   const tabBtns = new Map<string, HTMLButtonElement>();
   let current: { destroy?: () => void; dirty?: () => boolean } | null = null;
@@ -51,11 +52,12 @@ export async function mountStudio(parent: HTMLElement) {
     for (const [id, b] of tabBtns) b.classList.toggle('on', id === tab);
     if (tab === 'home') current = homeTab(st, body);
     else if (tab === 'maps') current = mapsTab(st, body, arg);
-    else if (tab === 'objects') current = objectsTab(st, body);
+    else if (tab === 'objects') current = objectsTab(st, body, arg);
     else if (tab === 'sprites') current = spritesTab(st, body, arg);
     else if (tab === 'tilesets') current = tilesetsTab(st, body);
     else if (tab === 'images') current = imagesTab(st, body, arg);
     else if (tab === 'database') current = databaseTab(st, body, arg);
+    else if (tab === 'library') current = libraryTab(st, body, arg);
     else current = packTab(st, body);
   }
   open('home');
@@ -84,6 +86,7 @@ function homeTab(st: StudioCtx, body: HTMLElement) {
       card('images', '🖼', 'ภาพฉาก', 'พื้น ชีตวัตถุ อาคาร 7 ธีม สถานที่สำคัญ · นำเข้ารูป ตัดเฉพาะส่วน ย่อ/ขยาย แล้ววาง'),
       card('tilesets', '🎨', 'สีชุดภาพ', 'สีที่ใช้วาดกำแพง พุ่มไม้ขอบแมพ และของตกแต่งในแต่ละธีม'),
       card('database', '📚', 'ข้อมูลเกมทุกระบบ', 'ไอเทม มอนสเตอร์ สกิล อาชีพ NPC ร้านค้า เควสต์ ดรอป สัตว์เลี้ยง บอส การ์ด รูน ดันเจี้ยน…'),
+      card('library', '📥', 'คลัง PixelLab', 'ของทั้งหมดจากบัญชี PixelLab: วัตถุ 525 ชิ้น ตัวละคร 12 ตัว พื้น 45 ชุด และแผง UI — วางในแมพ หรือใช้เป็นไอคอน NPC มอนสเตอร์ กรอบหน้าต่าง'),
       card('pack', '📦', 'นำเข้า / ส่งออก', 'รวมงานทั้งหมดเป็นไฟล์เดียว ย้ายไปเครื่องอื่น หรือใส่ลงโปรเจกต์')),
     h('h2', { style: 'margin-top:18px' }, 'สิ่งที่แก้ไว้ในเบราว์เซอร์นี้'), h('div', {}, edits.join(' · ')),
     h('h2', { style: 'margin-top:18px' }, 'ปุ่มลัด'),
@@ -95,6 +98,7 @@ function homeTab(st: StudioCtx, body: HTMLElement) {
 }
 
 // ---------------------------------------------------------------- maps
+let lastMap = 'aurelion';
 function mapsTab(st: StudioCtx, body: HTMLElement, mapId?: string) {
   const list = h('div', { class: 'st-list' });
   const filter = h('input', { placeholder: 'ค้นหาแมพ…', oninput: () => renderList() }) as HTMLInputElement;
@@ -106,6 +110,7 @@ function mapsTab(st: StudioCtx, body: HTMLElement, mapId?: string) {
     .map((m) => h('button', { class: `st-item${ed?.id === m.id ? ' on' : ''}`, dataset: { map: m.id }, onclick: () => openMap(m.id) },
       h('span', {}, m.name, h('br', {}), h('span', { class: 'st-muted' }, `${m.id} · ${m.type}`), st.layer.maps.has(m.id) ? h('span', { class: 'st-edited' }, ' · แก้แล้ว') : null))));
   const openMap = (id: string) => {
+    lastMap = id;
     ed?.destroy();
     ed = new MapEditor(st, id, renderList);
     setChildren(holder, ed.root);
@@ -128,15 +133,18 @@ function mapsTab(st: StudioCtx, body: HTMLElement, mapId?: string) {
   setChildren(body,
     h('div', { class: 'st-side', style: 'width:220px' }, h('div', { class: 'st-h' }, 'แมพ'), filter, h('div', { class: 'st-row' }, h('button', { class: 'st-btn', onclick: newMap }, '＋ แมพใหม่')), list),
     holder);
-  openMap(mapId && st.data.maps.has(mapId) ? mapId : 'aurelion');
+  // `place:<kind>` / `ground:<set>` come from the PixelLab library: open the last map with that tool ready.
+  const preset = mapId && /^(place|ground):/.test(mapId) ? mapId : null;
+  openMap(!preset && mapId && st.data.maps.has(mapId) ? mapId : lastMap);
+  if (preset) (ed as MapEditor | null)?.preset(preset);
   return { destroy: () => ed?.destroy(), dirty: () => ed?.isDirty() ?? false };
 }
 
 // ---------------------------------------------------------------- objects
-function objectsTab(st: StudioCtx, body: HTMLElement) {
+function objectsTab(st: StudioCtx, body: HTMLElement, preselect?: string) {
   const d = st.data;
   let kinds: ObjectKindDef[] = clone([...d.objectKinds.values()]);
-  let selId = kinds[0]?.id;
+  let selId = preselect && kinds.some((k) => k.id === preselect) ? preselect : kinds[0]?.id;
   let previewTs = 'willowbrook';
   let dirty = false;
   const list = h('div', { class: 'st-list' });

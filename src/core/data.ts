@@ -25,6 +25,7 @@ import tilesetsJson from '../data/tilesets.json';
 import objectsJson from '../data/objects.json';
 import { MAP_FILES } from '../data/maps';
 import { STUDIO_DATA, STUDIO_MAPS, STUDIO_OBJECTS, STUDIO_TILESETS } from '../data/studio';
+import plLibrary from '../data/pixellab/library.json';
 import { groundBase } from './mapCompiler';
 import type {
   BossDef, DropTable, Element, ItemDef, JobClassDef, MapDef, MonsterDef, NpcDef,
@@ -96,7 +97,7 @@ export function loadGameData(): GameData {
     quests: byId(questsJson as QuestDef[]),
     tiles: byId(tilesJson.tiles as TileDef[]),
     tilesets: byId(tilesetsJson as unknown as TilesetDef[]),
-    objectKinds: byId((STUDIO_OBJECTS ?? objectsJson) as ObjectKindDef[]),
+    objectKinds: byId((STUDIO_OBJECTS ?? [...objectsJson, ...pixellabObjectKinds()]) as ObjectKindDef[]),
     maps: byId(MAP_FILES as unknown as MapDef[]),
   };
   // Studio layer (committed edits) over the generated data.
@@ -105,6 +106,16 @@ export function loadGameData(): GameData {
   for (const [k, list] of Object.entries(STUDIO_DATA)) replaceCollection(cached, k as StudioCollection, list);
   return cached;
 }
+
+/** Every PixelLab object (src/data/pixellab/library.json) as a placeable object kind `pl_<slug>`,
+ * drawn at its own pixel size. Big pieces block; small ground clutter and icons do not. */
+export function pixellabObjectKinds(): ObjectKindDef[] {
+  return plLibrary.objects.map((o) => ({
+    id: `pl_${o.slug}`, footprint: { w: Math.max(1, Math.round((o.w * 0.6) / 32)), h: 1 }, blocks: o.h >= 48,
+    draw: 'art', art: o.art, artH: o.h, spriteW: o.w, spriteH: o.h,
+  }));
+}
+const PL_TILE_SETS = new Set(plLibrary.tiles.map((t) => t.slug));
 
 /** Game data the Studio's database editor can change (each is a list of entries with an `id`). */
 export const STUDIO_COLLECTIONS = ['items', 'monsters', 'skills', 'classes', 'npcs', 'shops', 'quests', 'drops', 'pets', 'recipes', 'bosses', 'combos', 'homunculi', 'runes', 'statuses', 'instances'] as const;
@@ -195,7 +206,11 @@ export function validateGameData(d: GameData): string[] {
         need(d.objectKinds.has(op.kind), `map ${m.id}: object kind ${op.kind}`);
       }
       if (op.op === 'scatter' && op.kind.startsWith('deco:')) need(d.tiles.has(op.kind.slice(5)), `map ${m.id}: deco ${op.kind}`);
-      const known = (t: string) => d.tiles.has(groundBase(t)) && (!t.includes('@') || d.tilesets.has(t.slice(t.indexOf('@') + 1)));
+      const known = (t: string) => {
+        if (!d.tiles.has(groundBase(t))) return false;
+        const ts = t.includes('@') ? t.slice(t.indexOf('@') + 1) : '';
+        return !ts || d.tilesets.has(ts) || (ts.startsWith('pl:') && PL_TILE_SETS.has(ts.split(':')[1]));
+      };
       if ((op.op === 'rect' || op.op === 'path' || op.op === 'blob') && !known(op.tile)) errors.push(`map ${m.id}: tile ${op.tile}`);
       if (op.op === 'tiles') for (const [, , t] of op.cells) if (t != null && !known(t)) { errors.push(`map ${m.id}: tile ${t}`); break; }
     }

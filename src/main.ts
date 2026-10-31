@@ -4,7 +4,7 @@ import './studio/studio.css';
 import { validateGameData, loadGameData } from './core/data';
 import { applyBrowserLayer } from './studio/layer';
 import { STUDIO_SPRITES } from './data/studio';
-import { decodeSprite, setSpriteOverride } from './game/art/spriteOverrides';
+import { applyWindowSkin, decodeSprite, setSpriteOverride } from './game/art/spriteOverrides';
 import { artUrl } from './game/art/themeArt';
 
 async function startGame() {
@@ -17,6 +17,7 @@ async function startGame() {
   if (layer.skipped.length) console.warn('[studio] edits skipped:', layer.skipped);
   const problems = validateGameData(data);
   if (problems.length) console.error('[data] validation problems:', problems);
+  applyWindowSkin();
   const { App } = await import('./ui/app');
   const app = new App();
   window.addEventListener('error', (e) => console.error('[veyloria] uncaught', e.error ?? e.message));
