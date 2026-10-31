@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import type { SkillDef } from '../../core/types';
 import { VFX_SHEETS } from './vfxArt';
 import { skillVfx, type VfxStep } from './vfxRecipes';
+import { drawSignatureSheet, GROUND_MOTIFS, SIG_FPS, SIG_FRAMES, SIG_H, SIG_W, SIGNATURES } from './vfxSignature';
 
 export { skillVfx, SKILL_VFX_IDS } from './vfxRecipes';
 
@@ -274,11 +275,35 @@ function runSteps(scene: Phaser.Scene, list: VfxStep[], from: { x: number; y: nu
   }
 }
 
+const hashId = (s: string) => { let h = 2166136261; for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619); return h >>> 0; };
+
+/** Plays the skill's own signature animation (vfxSignature.ts) at a point. */
+export function playSignature(scene: Phaser.Scene, skill: { id: string; icon?: { color?: string; glyph?: string } }, x: number, y: number, delay = 0): boolean {
+  const sig = SIGNATURES[skill.id];
+  if (!sig) return false;
+  const key = `vxs_${skill.id}`;
+  if (!scene.textures.exists(key)) {
+    const col = skill.icon?.color && /^#[0-9a-f]{6}$/i.test(skill.icon.color) ? skill.icon.color : '#ffffff';
+    const tex = scene.textures.addCanvas(key, drawSignatureSheet(sig, col, skill.icon?.glyph ?? '', hashId(skill.id)))!;
+    for (let f = 0; f < SIG_FRAMES; f++) tex.add(f, 0, f * SIG_W, 0, SIG_W, SIG_H);
+  }
+  if (!scene.anims.exists(key)) scene.anims.create({ key, frames: Array.from({ length: SIG_FRAMES }, (_, f) => ({ key, frame: f })), frameRate: SIG_FPS, repeat: 0 });
+  scene.time.delayedCall(delay, () => {
+    if (!scene.sys.isActive()) return;
+    const ground = GROUND_MOTIFS.has(sig.m);
+    const spr = scene.add.sprite(x, ground ? y + 4 : y - 26, key, 0).setBlendMode(Phaser.BlendModes.ADD).setDepth(y + 2003);
+    if (ground) spr.setOrigin(0.5, 0.95);
+    spr.play(key);
+    spr.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => spr.destroy());
+  });
+  return true;
+}
+
 /**
  * Plays a skill: cast effects on the caster, projectiles to the target, then the hit effects.
  * `color` is the skill's icon colour; `radius` its area (px) when it has one.
  */
-export function playSkillVfx(scene: Phaser.Scene, skill: Pick<SkillDef, 'id' | 'fx' | 'kind' | 'targeting'> & { icon?: { color?: string } }, from: { x: number; y: number }, to: { x: number; y: number }, radius = 0): boolean {
+export function playSkillVfx(scene: Phaser.Scene, skill: Pick<SkillDef, 'id' | 'fx' | 'kind' | 'targeting'> & { icon?: { color?: string; glyph?: string } }, from: { x: number; y: number }, to: { x: number; y: number }, radius = 0): boolean {
   const v = skillVfx(skill);
   if (!v) return false;
   const color = skill.icon?.color ?? '#ffffff';
@@ -309,6 +334,8 @@ export function playSkillVfx(scene: Phaser.Scene, skill: Pick<SkillDef, 'id' | '
     }
   }
   runSteps(scene, v.hit, from, to, r, color, travel);
+  const onSelf = skill.targeting === 'self';
+  playSignature(scene, skill, onSelf ? from.x : to.x, onSelf ? from.y : to.y, onSelf ? 60 : travel + 40);
   if (v.shake) scene.time.delayedCall(travel + 100, () => scene.cameras.main.shake(180 + v.shake * 60, 0.002 * v.shake));
   if (skill.kind === 'ultimate') scene.time.delayedCall(travel + 120, () => scene.cameras.main.flash(160, 255, 255, 255, false));
   return true;

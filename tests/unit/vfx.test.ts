@@ -30,3 +30,25 @@ describe('step numbers', () => {
     expect(parseStep('meteor@area*6~150^>explode')).toMatchObject({ then: 'explode', n: 6 });
   });
 });
+
+import { MOTIF_NAMES, SIGNATURES } from '../../src/game/render/vfxSignature';
+
+describe('signature effects', () => {
+  const full = (skills as unknown as { skills?: unknown[] }).skills ?? (skills as unknown[]);
+  const active = (full as { id: string; kind: string; icon: { color: string } }[]).filter((s) => s.kind !== 'passive');
+  it('every active skill has its own signature, and no two are the same', () => {
+    const seen = new Map<string, string>();
+    for (const s of active) {
+      const sig = SIGNATURES[s.id];
+      expect(sig, s.id).toBeDefined();
+      expect(MOTIF_NAMES, s.id).toContain(sig.m);
+      const key = `${sig.m}|${sig.n}|${sig.v}|${sig.c2}|${s.icon.color}`;
+      expect(seen.get(key), `${s.id} looks like ${seen.get(key)}`).toBeUndefined();
+      seen.set(key, s.id);
+    }
+    expect(Object.keys(SIGNATURES).length).toBe(active.length);
+  });
+  it('uses many different motifs', () => {
+    expect(new Set(Object.values(SIGNATURES).map((s) => s.m)).size).toBeGreaterThanOrEqual(35);
+  });
+});

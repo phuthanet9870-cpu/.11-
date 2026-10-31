@@ -4,28 +4,28 @@
 
 export interface VfxSheet { w: number; h: number; frames: number; fps: number; loop?: boolean; tinted: boolean; draw: (c: CanvasRenderingContext2D, t: number, f: number, w: number, h: number) => void }
 
-const TAU = Math.PI * 2;
-const rnd = (seed: number) => { let s = seed >>> 0 || 1; return () => { s ^= s << 13; s >>>= 0; s ^= s >>> 17; s ^= s << 5; s >>>= 0; return s / 4294967296; }; };
-const ease = (t: number) => 1 - (1 - t) * (1 - t);
+export const TAU = Math.PI * 2;
+export const rnd = (seed: number) => { let s = seed >>> 0 || 1; return () => { s ^= s << 13; s >>>= 0; s ^= s >>> 17; s ^= s << 5; s >>>= 0; return s / 4294967296; }; };
+export const ease = (t: number) => 1 - (1 - t) * (1 - t);
 
-function glow(c: CanvasRenderingContext2D, x: number, y: number, r: number, a: number, color = '255,255,255') {
+export function glow(c: CanvasRenderingContext2D, x: number, y: number, r: number, a: number, color = '255,255,255') {
   if (r <= 0 || a <= 0) return;
   const g = c.createRadialGradient(x, y, 0, x, y, r);
   g.addColorStop(0, `rgba(${color},${a})`); g.addColorStop(0.45, `rgba(${color},${a * 0.45})`); g.addColorStop(1, `rgba(${color},0)`);
   c.fillStyle = g; c.fillRect(x - r, y - r, r * 2, r * 2);
 }
-function dot(c: CanvasRenderingContext2D, x: number, y: number, s: number, col: string) { c.fillStyle = col; c.fillRect(Math.round(x - s / 2), Math.round(y - s / 2), Math.max(1, Math.round(s)), Math.max(1, Math.round(s))); }
-function arcBand(c: CanvasRenderingContext2D, cx: number, cy: number, r: number, a0: number, a1: number, width: number, col: string, sy = 1) {
+export function dot(c: CanvasRenderingContext2D, x: number, y: number, s: number, col: string) { c.fillStyle = col; c.fillRect(Math.round(x - s / 2), Math.round(y - s / 2), Math.max(1, Math.round(s)), Math.max(1, Math.round(s))); }
+export function arcBand(c: CanvasRenderingContext2D, cx: number, cy: number, r: number, a0: number, a1: number, width: number, col: string, sy = 1) {
   c.save(); c.translate(cx, cy); c.scale(1, sy);
   c.beginPath(); c.arc(0, 0, r + width / 2, a0, a1); c.arc(0, 0, Math.max(0, r - width / 2), a1, a0, true); c.closePath();
   c.fillStyle = col; c.fill(); c.restore();
 }
-function star(c: CanvasRenderingContext2D, x: number, y: number, rOut: number, rIn: number, n: number, rot: number, col: string) {
+export function star(c: CanvasRenderingContext2D, x: number, y: number, rOut: number, rIn: number, n: number, rot: number, col: string) {
   c.beginPath();
   for (let i = 0; i < n * 2; i++) { const r = i % 2 ? rIn : rOut, a = rot + (i / (n * 2)) * TAU; c.lineTo(x + Math.cos(a) * r, y + Math.sin(a) * r); }
   c.closePath(); c.fillStyle = col; c.fill();
 }
-function bolt(c: CanvasRenderingContext2D, x0: number, y0: number, x1: number, y1: number, seed: number, width: number, col: string) {
+export function bolt(c: CanvasRenderingContext2D, x0: number, y0: number, x1: number, y1: number, seed: number, width: number, col: string) {
   const r = rnd(seed); c.strokeStyle = col; c.lineWidth = width; c.lineJoin = 'miter';
   c.beginPath(); c.moveTo(x0, y0);
   const n = 7;
