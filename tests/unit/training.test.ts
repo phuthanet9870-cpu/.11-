@@ -69,11 +69,46 @@ describe('training grounds and shadow arena', () => {
     expect(c.baseExp).toBe(exp);
   });
 
-  it('the count is limited by the Shadow Keeper (1–5) and needs the keeper nearby', () => {
+  it('the count is limited by the Shadow Keeper (1–10) and needs the keeper nearby', () => {
     const { w } = at('shadow_arena', 'shadow_arena_master');
     w.startShadowDuel(99);
-    expect([...w.monsters.values()].filter((m) => m.shadow).length).toBe(5);
+    expect([...w.monsters.values()].filter((m) => m.shadow).length).toBe(10);
     const far = at('aurelion', 'aurelion_smith');
     expect(far.w.startShadowDuel(1).ok).toBe(false);
+  });
+
+  it('arena modes: chosen and random jobs, difficulty scaling, hired allies fight the enemy', () => {
+    const { w, c } = at('shadow_arena', 'shadow_arena_master');
+    c.luma = 1_000_000;
+    const r = w.startArena({ size: 5, difficulty: 'easy', enemies: ['knight', null, 'mage', null, null], allies: ['cleric', null, null, null] });
+    expect(r.ok).toBe(true);
+    const enemies = [...w.monsters.values()].filter((m) => m.shadow?.team === 'enemy'), allies = [...w.monsters.values()].filter((m) => m.shadow?.team === 'ally');
+    expect(enemies.length).toBe(5); expect(allies.length).toBe(4);
+    expect(enemies[0].shadow!.classId).toBe('knight'); expect(enemies[2].shadow!.classId).toBe('mage'); expect(allies[0].shadow!.classId).toBe('cleric');
+    expect(enemies[0].def.maxHp).toBe(Math.round(w.stats.maxHp * 0.6));
+    expect(allies[0].def.maxHp).toBe(Math.round(w.stats.maxHp));
+    expect(c.luma).toBe(1_000_000 - 4 * w.arenaHireCost());
+    // The player cannot hurt allies; allies and enemies fight each other.
+    const ally = allies[0], hp = ally.hp;
+    w.damageMonster(ally, 999999, 'physical', 'neutral', false, false);
+    expect(ally.hp).toBe(hp);
+    w.char.hp = 1e9; w.player.hp = 1e9;
+    const enemyHp0 = enemies.reduce((s, m) => s + m.hp, 0);
+    for (let i = 0; i < 60; i++) { run(w, 250); w.char.hp = 1e9; w.player.hp = 1e9; }
+    const enemyHp1 = enemies.reduce((s, m) => s + (m.dead ? 0 : m.hp), 0);
+    expect(enemyHp1).toBeLessThan(enemyHp0);
+  });
+
+  it('hiring needs Luma; size caps the allies; victory when every enemy falls', () => {
+    const { w, c } = at('shadow_arena', 'shadow_arena_master');
+    c.luma = 0;
+    expect(w.startArena({ size: 3, difficulty: 'normal', enemies: [], allies: [null] }).ok).toBe(false);
+    expect(w.startArena({ size: 1, difficulty: 'normal', enemies: [], allies: [null, null] }).ok).toBe(true);
+    expect([...w.monsters.values()].filter((m) => m.shadow?.team === 'ally').length).toBe(0);
+    const events: string[] = [];
+    w.onEvent((e) => { if (e.type === 'arenaResult') events.push(e.win ? 'win' : 'lose'); });
+    for (const m of [...w.monsters.values()]) if (m.shadow) { m.damageBy.player = 1; (w as unknown as { killMonster(x: typeof m): void }).killMonster(m); }
+    w.update(50);
+    expect(events).toEqual(['win']);
   });
 });

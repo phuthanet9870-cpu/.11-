@@ -903,20 +903,21 @@ export async function main() {
       [{ op: 'rect', tile: 'sand', x: 5, y: 5, w: 54, h: 31 }, ...yardDeco],
       [{ npcId: 'training_master', x: 30, y: 39, facing: 'down' }], dummyRows), npcs: [], shops: [] });
     // Shadow Arena (60×46): a big open ring for fights against several shadows.
+    // Shadow Arena (84×60): a big open ring; your team starts south, the enemy north.
     const ringDeco: J[] = [];
-    for (let i = 0; i < 12; i++) { const a = (i / 12) * Math.PI * 2; ringDeco.push({ op: 'object', kind: 'ruin_pillar', x: Math.round(30 + Math.cos(a) * 25), y: Math.round(21 + Math.sin(a) * 17) }); }
-    built.push({ map: trainMap('shadow_arena', 'Shadow Arena', 60, 46,
+    for (let i = 0; i < 16; i++) { const a = (i / 16) * Math.PI * 2; ringDeco.push({ op: 'object', kind: 'ruin_pillar', x: Math.round(42 + Math.cos(a) * 36), y: Math.round(29 + Math.sin(a) * 23) }); }
+    built.push({ map: trainMap('shadow_arena', 'Shadow Arena', 84, 60,
       'Shadow fighters of random jobs, copied from your own strength, fight you here and use their job skills. Talk to the Shadow Keeper to summon them.',
-      [{ op: 'rect', tile: 'sand', x: 7, y: 6, w: 46, h: 31 }, ...ringDeco],
-      [{ npcId: 'shadow_arena_master', x: 27, y: 41, facing: 'down' }, { npcId: 'arena_gatekeeper', x: 33, y: 41, facing: 'down' }], []), npcs: [], shops: [] });
+      [{ op: 'rect', tile: 'sand', x: 8, y: 6, w: 68, h: 46 }, ...ringDeco],
+      [{ npcId: 'shadow_arena_master', x: 39, y: 55, facing: 'down' }, { npcId: 'arena_gatekeeper', x: 45, y: 55, facing: 'down' }], []), npcs: [], shops: [] });
     npcs.push(npc('training_master', 'Drillmaster Brann', 'Training Grounds', 9091, 'plate',
       [{ type: 'warp', destinations: [{ mapId: 'aurelion', spawn: 'default', cost: 0 }, { mapId: 'training_grounds', spawn: 'default', cost: 0 }] }],
       ['The Training Grounds have dummies that never hit back — test your damage there.']));
     npcs.push(npc('arena_gatekeeper', 'Gatekeeper Varr', 'Shadow Arena', 9093, 'plate',
       [{ type: 'warp', destinations: [{ mapId: 'aurelion', spawn: 'default', cost: 0 }, { mapId: 'shadow_arena', spawn: 'default', cost: 0 }] }],
       ['Beyond this gate lies the Shadow Arena. The Shadow Keeper inside summons fighters as strong as you are.']));
-    npcs.push(npc('shadow_arena_master', 'Shadow Keeper Nyx', 'Shadow Arena', 9092, 'robe', [{ type: 'shadowArena', maxCount: 5 }],
-      ['Choose how many shadows to face. Each takes a random job and copies your strength — and they use their skills.']));
+    npcs.push(npc('shadow_arena_master', 'Shadow Keeper Nyx', 'Shadow Arena', 9092, 'robe', [{ type: 'shadowArena', maxCount: 10 }],
+      ['Pick a mode — 1v1, 3v3, 5v5 or 10v10 — the enemy jobs and the difficulty. You may hire shadows for your own team, or go in alone.']));
     built.find((b) => b.map.id === 'aurelion')!.map.npcs.push({ npcId: 'arena_gatekeeper', x: 32, y: 32, facing: 'down' });
     built.find((b) => b.map.id === 'aurelion')!.map.npcs.push({ npcId: 'training_master', x: 30, y: 32, facing: 'down' });
   }

@@ -10,6 +10,7 @@ import { ACHIEVEMENTS, BONUS_HOURS, DAILY_REWARDS, dailyStatus, titleOf, type Ac
 import { h, setChildren, RARITY_COLOR } from './dom';
 import { isTouchDevice } from './touch';
 import { getLang, LANGS, type Lang } from './i18n';
+import { ARENA_DIFFICULTY, type ArenaDifficulty } from '../core/world';
 import { itemIconUrl, skillIconUrl } from '../game/art/icons';
 import { generateCharacterSheet, portraitFromSheet } from '../game/art/characterSprite';
 import { lookForCharacter, SpritePreview } from './screens';
@@ -38,7 +39,7 @@ import { canForge, CRUMB_ATK, ELEMENT_STONES, forgeChance, STAR_CRUMB } from '..
 import { ENCHANT_COST, MAX_OPTIONS, optionLabel, REROLL_COST } from '../core/options';
 
 type DbTab = 'monsters' | 'items' | 'cards' | 'refine' | 'forge' | 'options' | 'combos' | 'pets' | 'elements';
-export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet' | 'homun' | 'cart' | 'runes' | 'social' | 'auto' | 'trader' | 'market' | 'achievements' | 'daily' | 'brew';
+export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet' | 'homun' | 'cart' | 'runes' | 'social' | 'auto' | 'trader' | 'market' | 'achievements' | 'daily' | 'brew' | 'arena';
 
 interface WinState { el: HTMLElement; body: HTMLElement; render: () => void; open: boolean }
 
@@ -107,6 +108,7 @@ export class WindowManager {
     this.define('market', 'Market Hall', 280, 50, () => this.renderMarket());
     this.define('achievements', 'Achievements & Titles', 260, 60, () => this.renderAchievements());
     this.define('daily', 'Daily Rewards', 320, 120, () => this.renderDaily());
+    this.define('arena', 'Shadow Arena', 300, 8, () => this.renderArena());
     this.define('brew', 'Brewing', 300, 80, () => this.renderBrew());
   }
 
@@ -996,6 +998,83 @@ export class WindowManager {
       h('div', { class: 'tlist', id: 'brew-list' }, rows)));
   }
 
+  // ---------------------------------------------------------------- shadow arena board
+  private arenaSel = { size: 3, diff: 'normal' as ArenaDifficulty, enemies: Array<string>(10).fill(''), allies: Array<string>(9).fill(''), hired: 0 };
+  private arenaPortraits = new Map<string, string>();
+
+  /** Front-facing shadow portrait of a job (data URL), or a "?" card for a random pick. */
+  private arenaPortrait(classId: string): string {
+    const hit = this.arenaPortraits.get(classId);
+    if (hit) return hit;
+    const cv = document.createElement('canvas'); cv.width = 48; cv.height = 56;
+    const c = cv.getContext('2d')!;
+    if (!classId) {
+      c.fillStyle = '#2a2236'; c.fillRect(0, 0, 48, 56);
+      c.fillStyle = '#8a7aa8'; c.font = 'bold 30px Georgia, serif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('?', 24, 30);
+    } else {
+      const cls = this.app.world!.data.classes.get(classId)!;
+      const wt = cls.weaponTypes ?? [];
+      const sheet = generateCharacterSheet({ appearance: { body: 'a', hairStyle: 'short', hairColor: '#222', eyeColor: '#fff', skinTone: '#222' } as never, outfit: cls.outfit, weapon: wt.find((x) => x !== 'dagger' && x !== 'club') ?? wt[0] ?? null, sheet: `class/${classId}`, shadow: true });
+      c.drawImage(sheet, 0, 4, 48, 56, 0, 0, 48, 56);
+    }
+    const url = cv.toDataURL();
+    this.arenaPortraits.set(classId, url);
+    return url;
+  }
+
+  private renderArena() {
+    const w = this.app.world!, d = w.data, a = this.arenaSel, body = this.wins.get('arena')!.body;
+    const jobs = w.arenaJobs();
+    const fee = w.arenaHireCost();
+    a.hired = Math.min(a.hired, a.size - 1);
+    const DIFF: [ArenaDifficulty, string, string][] = [['easy', 'Easy', 'diff-easy'], ['normal', 'Normal', 'diff-normal'], ['hard', 'Hard', 'diff-hard'], ['hardest', 'Hardest', 'diff-hardest']];
+    const jobSelect = (value: string, on: (v: string) => void) => {
+      const sel = h('select', { class: 'arena-job' }, h('option', { value: '' }, '🎲 Random'), ...jobs.map((id) => h('option', { value: id }, d.classes.get(id)!.name))) as HTMLSelectElement;
+      sel.value = value;
+      sel.addEventListener('change', () => { on(sel.value); this.renderArena(); });
+      return sel;
+    };
+    const slot = (job: string, team: 'enemy' | 'ally', on?: (v: string) => void, label?: string) =>
+      h('div', { class: `arena-slot ${team}` }, h('img', { src: this.arenaPortrait(job) }),
+        h('div', { class: 'arena-slot-info' }, h('div', { class: 'arena-slot-name' }, label ?? (job ? d.classes.get(job)!.name : 'Random job')), on ? jobSelect(job, on) : h('div', { class: 'muted small' }, 'Leader')));
+    const enemySlots = Array.from({ length: a.size }, (_, i) => slot(a.enemies[i], 'enemy', (v) => { a.enemies[i] = v; }));
+    const meUrl = portraitFromSheet(generateCharacterSheet(lookForCharacter(d, w.char)), 1).toDataURL();
+    const allySlots: Node[] = [h('div', { class: 'arena-slot ally me' }, h('img', { src: meUrl }), h('div', { class: 'arena-slot-info' }, h('div', { class: 'arena-slot-name' }, w.char.name), h('div', { class: 'muted small' }, `You · ${d.classes.get(w.char.classId)!.name}`)))];
+    for (let i = 0; i < a.hired; i++) allySlots.push(slot(a.allies[i], 'ally', (v) => { a.allies[i] = v; }));
+    const total = a.hired * fee, short = w.char.luma < total;
+    const stepper = h('div', { class: 'arena-hire' },
+      h('button', { class: 'btn small', disabled: a.hired <= 0, onclick: () => { a.hired--; this.renderArena(); } }, '−'),
+      h('span', {}, `Hire ${a.hired} / ${a.size - 1}`),
+      h('button', { class: 'btn small', disabled: a.hired >= a.size - 1, onclick: () => { a.hired++; this.renderArena(); } }, '+'),
+      h('button', { class: 'btn small', onclick: () => { a.hired = a.size - 1; this.renderArena(); } }, 'Full team'),
+      h('button', { class: 'btn small', onclick: () => { a.hired = 0; this.renderArena(); } }, 'Go alone'));
+    setChildren(body, h('div', { class: 'arena-board' },
+      h('div', { class: 'arena-hero' },
+        h('div', {}, h('div', { class: 'arena-title' }, '⚔ Shadow Arena'),
+          h('div', { class: 'muted small' }, 'Shadows copy your own strength, take the jobs you choose (or random ones) and use their job skills.')),
+        h('div', { class: 'arena-foot' },
+          h('div', {}, h('b', {}, `${a.size} vs ${a.size} · ${ARENA_DIFFICULTY[a.diff].label}`), h('div', { class: `small ${short ? 'bad' : 'muted'}` }, a.hired ? `Hire ${a.hired}: ${total.toLocaleString()} Luma (you have ${w.char.luma.toLocaleString()})` : 'No hired shadows — you fight with your own hands.')),
+        h('button', { class: 'btn primary arena-start', disabled: short, onclick: () => {
+          const r = w.startArena({ size: a.size, difficulty: a.diff, enemies: a.enemies.slice(0, a.size).map((x) => x || null), allies: a.allies.slice(0, a.hired).map((x) => x || null) });
+          if (r.ok) this.close('arena'); else this.app.hud?.toast(r.error, true);
+        } }, '⚔ Enter the arena'))),
+      h('div', { class: 'arena-label' }, 'Mode'),
+      h('div', { class: 'arena-modes' }, ...[1, 3, 5, 10].map((n) => h('button', { class: `arena-mode${a.size === n ? ' on' : ''}`, onclick: () => { a.size = n; this.renderArena(); } },
+        h('b', {}, `${n} vs ${n}`), h('span', { class: 'arena-dots' }, '●'.repeat(Math.min(n, 5)) + (n > 5 ? '+' : ''))))),
+      h('div', { class: 'arena-label' }, 'Difficulty'),
+      h('div', { class: 'arena-diffs' }, ...DIFF.map(([id, label, cls]) => h('button', { class: `arena-diff ${cls}${a.diff === id ? ' on' : ''}`, onclick: () => { a.diff = id; this.renderArena(); } },
+        h('b', {}, label), h('span', {}, `${Math.round(ARENA_DIFFICULTY[id].stat * 100)}% of you`)))),
+      h('div', { class: 'arena-teams' },
+        h('div', { class: 'arena-team enemy' },
+          h('div', { class: 'arena-team-head' }, h('span', {}, `Enemy team · ${a.size}`), h('button', { class: 'btn small', onclick: () => { a.enemies.fill(''); this.renderArena(); } }, '🎲 All random')),
+          h('div', { class: 'arena-slots' }, ...enemySlots)),
+        h('div', { class: 'arena-vs' }, 'VS'),
+        h('div', { class: 'arena-team ally' },
+          h('div', { class: 'arena-team-head' }, h('span', {}, `Your team · ${1 + a.hired}`), h('span', { class: 'muted small' }, `${fee.toLocaleString()} Luma / shadow`)),
+          a.size > 1 ? stepper : h('div', { class: 'muted small' }, '1 vs 1 is always a duel.'),
+          h('div', { class: 'arena-slots' }, ...allySlots)))));
+  }
+
   private renderDaily() {
     const w = this.app.world!, d = w.data, c = w.char, body = this.wins.get('daily')!.body, now = w.now();
     const st = dailyStatus(c, now);
@@ -1458,15 +1537,7 @@ export class WindowManager {
       if (s.type === 'enchant') opts.push(['Enchant equipment', () => { this.closeDialog(); this.enchantDialog(); }]);
       if (s.type === 'forge') opts.push(['Forge a weapon', () => { this.closeDialog(); this.forgeDialog(); }]);
       if (s.type === 'warp') opts.push(['Warp service', () => this.warpDialog(npc, s.destinations)]);
-      if (s.type === 'shadowArena') opts.push(['Summon shadow fighters', () => {
-        const pick: [string, () => void][] = Array.from({ length: s.maxCount }, (_, i) => [`${i + 1} × ${i ? 'shadows' : 'shadow'}`, () => {
-          this.closeDialog();
-          const r = w.startShadowDuel(i + 1);
-          if (!r.ok) this.app.hud?.toast(r.error, true);
-        }]);
-        pick.push(['Never mind', () => this.openNpcDialog(npc.id)]);
-        this.showDialog(npc, ['How many shadow fighters?', 'Each one takes a random job, copies your own strength and uses its job skills. No rewards — this is practice.'], pick, null, 'Shadow Arena');
-      }]);
+      if (s.type === 'shadowArena') opts.push(['Open the arena board (mode, jobs, difficulty, team)', () => { this.closeDialog(); this.open('arena'); }]);
       if (s.type === 'runeReset') opts.push([`Reset the constellations (${s.cost.toLocaleString()} Luma)`, () => { this.closeDialog(); this.confirmAction('Reset runes', 'Clear every star and get all rune points back?', 'Reset', () => w.resetRunesCmd()); }]);
       if (s.type === 'stable') opts.push([w.char.flags.mountOwned ? 'You already own a war-drake' : `Buy a war-drake (${s.cost} Luma)`, () => { this.closeDialog(); w.rentMount(); }]);
       if (s.type === 'cart') opts.push([w.char.cart ? 'You already have a pushcart' : `Rent a pushcart (${s.cost} Luma)`, () => { this.closeDialog(); w.rentCart(); }]);

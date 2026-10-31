@@ -21,7 +21,7 @@ import { audio } from '../audio/audio';
 import type { GameHost } from '../host';
 import { titleOf } from '../../core/achievements';
 
-interface MonView { sprite: Phaser.GameObjects.Sprite; name: Phaser.GameObjects.Text; deadAt: number; rig: Rig }
+interface MonView { sprite: Phaser.GameObjects.Sprite; name: Phaser.GameObjects.Text; deadAt: number; rig: Rig; bar?: Phaser.GameObjects.Graphics }
 interface NpcView { sprite: Phaser.GameObjects.Sprite; name: Phaser.GameObjects.Text; marker: Phaser.GameObjects.Text }
 
 const ZOOM = 1.5;
@@ -376,7 +376,7 @@ export class GameScene extends Phaser.Scene {
     let best: { id: string; depth: number } | null = null;
     for (const [id, v] of this.monViews) {
       const m = this.world.monsters.get(id);
-      if (!m || m.dead) continue;
+      if (!m || m.dead || this.world.isAlly(m)) continue;
       const b = v.sprite.getBounds();
       Phaser.Geom.Rectangle.Inflate(b, 6, 6);
       if (b.contains(wx, wy) && (!best || v.sprite.depth > best.depth)) best = { id, depth: v.sprite.depth };
@@ -557,7 +557,8 @@ export class GameScene extends Phaser.Scene {
         const sprite = this.track(this.add.sprite(m.x, m.y, rig.clips.idle.key, 0).setOrigin(rig.originX, rig.originY));
         if (m.boss) sprite.setScale(1.15);
         const name = this.track(this.add.text(m.x, m.y + 4, `${m.def.name}  Lv.${m.def.level}`, labelStyle(m.boss ? '#ff8a7a' : '#ffffff')).setOrigin(0.5, 0).setDepth(1e5 + 2).setResolution(2));
-        v = { sprite, name, deadAt: 0, rig };
+        v = { sprite, name, deadAt: 0, rig, bar: m.shadow ? this.track(this.add.graphics().setDepth(1e5 + 1)) : undefined };
+        if (m.shadow) name.setText(m.def.name).setColor(m.shadow.team === 'ally' ? '#8affb0' : '#ff9a9a');
         this.monViews.set(id, v);
       }
       const s = v.sprite;
@@ -567,6 +568,7 @@ export class GameScene extends Phaser.Scene {
         s.setTexture(v.rig.clips.death.key, fr.frame).setFlipX(fr.flipX);
         s.setAlpha(Math.max(0, 1 - since / 1400));
         v.name.setVisible(false);
+        v.bar?.clear();
         s.setVisible(since < 1400);
         continue;
       }
@@ -580,11 +582,18 @@ export class GameScene extends Phaser.Scene {
       s.setTint(tint);
       const target = w.currentTarget?.id === id;
       const hover = this.hovered.kind === 'monster' && this.hovered.id === id;
-      v.name.setVisible(target || hover || !!m.boss).setPosition(Math.round(m.x), Math.round(m.y) + 6);
-      v.name.setColor(target ? '#ffd34d' : m.boss ? '#ff8a7a' : '#ffffff');
+      if (m.shadow) {
+        // Arena shadows: name and HP bar always shown, coloured by team.
+        const ally = m.shadow.team === 'ally';
+        v.name.setVisible(true).setPosition(Math.round(m.x), Math.round(m.y) + 6).setColor(target ? '#ffd34d' : ally ? '#8affb0' : '#ff9a9a');
+        v.bar!.clear().fillStyle(0x1c1622, 1).fillRect(m.x - 17, m.y - 70, 34, 5).fillStyle(ally ? 0x5fe08a : 0xff5a5a, 1).fillRect(m.x - 16, m.y - 69, Math.round(32 * Math.max(0, m.hp / m.maxHp)), 3);
+      } else {
+        v.name.setVisible(target || hover || !!m.boss).setPosition(Math.round(m.x), Math.round(m.y) + 6);
+        v.name.setColor(target ? '#ffd34d' : m.boss ? '#ff8a7a' : '#ffffff');
+      }
     }
     for (const [id, v] of this.monViews) {
-      if (!w.monsters.has(id)) { v.sprite.destroy(); v.name.destroy(); this.monViews.delete(id); }
+      if (!w.monsters.has(id)) { v.sprite.destroy(); v.name.destroy(); v.bar?.destroy(); this.monViews.delete(id); }
     }
   }
 

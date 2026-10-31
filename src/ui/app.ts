@@ -281,6 +281,7 @@ export class App implements GameHost {
         case 'achievement': { const a = achievementDef(e.id); if (a) hud.banner('Achievement unlocked!', `${a.name} — title «${a.title}»`); this.windowsDirty = true; break; }
         case 'levelUp': hud.banner(e.kind === 'base' ? `Level ${e.level}!` : `Job Level ${e.level}!`, e.kind === 'base' ? 'Stat points gained — open Status (C)' : 'Skill point gained — open Skills (K)'); this.windowsDirty = true; break;
         case 'bossIntro': hud.banner(e.name, e.title, 'boss'); hud.log(e.text, 'combat'); break;
+        case 'arenaResult': hud.banner(e.win ? 'VICTORY' : 'DEFEAT', `Arena ${e.mode} · ${e.difficulty} · ${e.secs}s`, e.win ? '' : 'boss'); break;
         case 'bossPhase': hud.banner(e.name, e.text, 'boss'); break;
         case 'bossEnrage': hud.banner(`${e.name} is ENRAGED!`, 'Its attacks grow faster and stronger', 'boss'); break;
         case 'bossDefeated': hud.banner('VICTORY', `${e.name} has fallen!`); break;

@@ -39,6 +39,16 @@ import type {
 import { EQUIP_SLOTS } from './types';
 
 // ------------------------------------------------------------------ runtime types
+export type ArenaDifficulty = 'easy' | 'normal' | 'hard' | 'hardest';
+/** Enemy strength (share of your stats) and how often they use skills (cooldown multiplier). */
+export const ARENA_DIFFICULTY: Record<ArenaDifficulty, { stat: number; skill: number; label: string }> = {
+  easy: { stat: 0.6, skill: 1.8, label: 'Easy' },
+  normal: { stat: 0.85, skill: 1.3, label: 'Normal' },
+  hard: { stat: 1, skill: 1, label: 'Hard' },
+  hardest: { stat: 1.3, skill: 0.7, label: 'Hardest' },
+};
+export interface ArenaSetup { size: number; difficulty: ArenaDifficulty; enemies: (string | null)[]; allies: (string | null)[] }
+
 export type AnimState = 'idle' | 'walk' | 'attack' | 'cast' | 'hit' | 'dead';
 
 export interface Buff {
@@ -135,7 +145,7 @@ export interface MonsterActor extends ActorBase {
   eventRaid?: 'leader' | 'raider';
   mugged?: boolean;
   /** Shadow fighter of the Shadow Arena: its job, the skills it can use and when it may use one next. */
-  shadow?: { classId: string; skills: string[]; nextSkillAt: number };
+  shadow?: { classId: string; skills: string[]; nextSkillAt: number; team: 'enemy' | 'ally'; skillMul: number };
   /** Items a looter monster picked up; dropped when it dies. */
   loot?: { itemId: string; qty: number; options?: { key: string; value: number }[] }[];
 }
@@ -173,6 +183,7 @@ export type WorldEvent =
   | { type: 'loot'; itemId: string; qty: number }
   | { type: 'message'; text: string; channel: 'system' | 'combat' | 'loot' | 'quest' | 'error' }
   | { type: 'bossIntro'; name: string; title: string; text: string }
+  | { type: 'arenaResult'; win: boolean; mode: string; difficulty: string; secs: number }
   | { type: 'bossPhase'; name: string; text: string }
   | { type: 'bossEnrage'; name: string }
   | { type: 'bossDefeated'; name: string }
@@ -1326,6 +1337,7 @@ export class World {
   damageMonster(m: MonsterActor, amount: number, kind: 'physical' | 'magic' | 'dot', element: Element, crit: boolean, _fromZone: boolean, silentAggro = false, fromHomun = false) {
     if (m.dead) return;
     if (m.def.aiFlags?.includes('dummy')) { this.hitDummy(m, amount, crit, kind, element); return; }
+    if (this.isAlly(m)) return;
     if (this.gm.oneHitKill && !fromHomun && kind !== 'dot') amount = Math.max(amount, m.hp);
     m.hp = Math.max(0, m.hp - amount);
     // The owner gets the kill credit for homunculus damage (as in RO); the homunculus also draws threat.
@@ -1363,63 +1375,159 @@ export class World {
   }
 
   // ---------------------------------------------------------------- shadow arena
-  /** The current Shadow Arena fight (ids of the summoned fighters). */
-  shadowDuel: { ids: string[]; startedAt: number } | null = null;
+  /** The current Shadow Arena match. */
+  shadowDuel: { ids: string[]; allies: string[]; mode: string; difficulty: ArenaDifficulty; startedAt: number } | null = null;
 
-  /** Summons `count` shadow fighters of random jobs with the player's own strength. */
+  /** Luma to hire one shadow for your own team. */
+  arenaHireCost(): number { return 100 + 15 * this.char.baseLevel; }
+
+  /** Jobs a shadow can take (every job except the Novices). */
+  arenaJobs(): string[] { return [...this.data.classes.values()].filter((c) => !/novice/.test(c.id)).map((c) => c.id); }
+
+  /** Old entry point: `count` random enemies on Hard, no allies. */
   startShadowDuel(count: number): OpResult {
+    const n = Math.max(1, Math.min(10, Math.floor(count)));
+    return this.startArena({ size: n, difficulty: 'hard', enemies: Array(n).fill(null), allies: [] });
+  }
+
+  /**
+   * Starts a Shadow Arena match: `size` enemies (each a chosen job or null = random) at a difficulty,
+   * and up to size-1 hired allies on your side (each a chosen job or random).
+   */
+  startArena(setup: ArenaSetup): OpResult {
     let max = 0;
     if (!this.nearService((s) => s.type === 'shadowArena' && (max = s.maxCount) > 0)) return this.err('Talk to the Shadow Keeper first.');
-    const n = Math.max(1, Math.min(max, Math.floor(count)));
+    const size = Math.max(1, Math.min(max, Math.floor(setup.size)));
+    const diff = ARENA_DIFFICULTY[setup.difficulty] ? setup.difficulty : 'normal';
+    const jobs = this.arenaJobs();
+    const pickJob = (id: string | null | undefined) => (id && jobs.includes(id) ? id : this.rng.pick(jobs));
+    const allies = (setup.allies ?? []).slice(0, Math.max(0, size - 1));
+    const fee = allies.length * this.arenaHireCost();
+    if (this.char.luma < fee) return this.err(`Hiring ${allies.length} shadow${allies.length > 1 ? 's' : ''} costs ${fee.toLocaleString()} Luma.`);
+    this.char.luma -= fee;
     if (this.map.def.id !== 'shadow_arena' && this.data.maps.has('shadow_arena')) this.enterMap('shadow_arena', 'default');
     for (const m of [...this.monsters.values()]) if (m.shadow) this.monsters.delete(m.id);
-    const base = this.data.monsters.get('shadow_fighter');
-    if (!base) return this.err('The shadow fighter template is missing.');
-    const jobs = [...this.data.classes.values()].filter((c) => c.tier > 0 || !/novice/.test(c.id));
-    const st = this.stats, cx = this.map.width * TILE / 2, cy = this.map.height * TILE / 2 - 2 * TILE;
-    const ids: string[] = [];
-    for (let i = 0; i < n; i++) {
-      const cls = this.rng.pick(jobs);
-      const line = classLineage(this.data, cls.id);
-      const skills = [...this.data.skills.values()].filter((sk) => line.includes(sk.classId) && sk.kind !== 'passive' && sk.effects.some((e) => e.type === 'damage') && sk.targeting !== 'passive').map((sk) => sk.id);
-      const ranged = (cls.weaponTypes ?? []).some((w) => w === 'bow' || w === 'crossbow') && !(cls.weaponTypes ?? []).includes('sword');
-      const caster = (cls.weaponTypes ?? []).some((w) => w === 'staff' || w === 'wand') && !(cls.weaponTypes ?? []).includes('sword');
-      const def: MonsterDef = {
-        ...base, name: `Shadow ${cls.name}`, level: this.char.baseLevel,
-        maxHp: Math.round(st.maxHp), attack: Math.round(st.patk), magicAttack: Math.round(st.matk), defense: Math.round(st.pdef), magicDefense: Math.round(st.mdef),
-        hit: Math.round(st.hit), flee: Math.round(st.flee), attackIntervalMs: Math.max(450, Math.round(st.attackIntervalMs)), moveSpeed: Math.round(Math.max(80, st.moveSpeed * 0.9)),
-        attackRange: ranged || caster ? 190 : 40, aiType: caster ? 'magic' : ranged ? 'ranged' : 'aggressive',
-        projectile: ranged || caster ? { element: caster ? 'shadow' : 'neutral', color: cls.outfit.accent } : undefined,
-        art: { ...base.art, colors: [cls.id, cls.outfit.accent, '#ffffff'] },
-      };
-      const a = (i / n) * Math.PI * 2 - Math.PI / 2, r = n === 1 ? 0 : 3 * TILE;
-      const m = this.makeMonster(def, cx + Math.cos(a) * r, cy + Math.sin(a) * r * 0.6, -1);
-      m.summoned = true;
-      m.shadow = { classId: cls.id, skills, nextSkillAt: this.time + 2500 + this.rng.range(0, 2000) };
-      m.targetId = 'player'; m.state = 'chase'; m.threat.player = 1;
-      this.monsters.set(m.id, m);
-      ids.push(m.id);
-      this.emit({ type: 'fx', fx: 'spawn', x: m.x, y: m.y });
-    }
-    this.shadowDuel = { ids, startedAt: this.time };
-    this.message(`${n} shadow fighter${n > 1 ? 's' : ''} rise: ${ids.map((id) => this.monsters.get(id)!.def.name).join(', ')}. They copy your strength and use their job skills.`, 'quest');
+    const W = this.map.width * TILE, H = this.map.height * TILE;
+    // You start at the south end with your team; the enemy lines up at the north end.
+    this.player.x = W / 2; this.player.y = H - 7 * TILE; this.player.move = null; this.player.intent = { type: 'none' };
+    const row = (n: number, i: number, y: number) => ({ x: W / 2 + (i - (n - 1) / 2) * 2.4 * TILE, y });
+    const ids: string[] = [], allyIds: string[] = [];
+    for (let i = 0; i < size; i++) ids.push(this.makeShadow(pickJob(setup.enemies?.[i]), 'enemy', diff, row(size, i, 9 * TILE)).id);
+    allies.forEach((job, i) => allyIds.push(this.makeShadow(pickJob(job), 'ally', 'hard', row(allies.length + 1, i < allies.length / 2 ? i : i + 1, H - 9 * TILE)).id));
+    this.shadowDuel = { ids, allies: allyIds, mode: `${size}v${size}`, difficulty: diff, startedAt: this.time };
+    const names = (list: string[]) => list.map((id) => this.monsters.get(id)!.def.name.replace(/^Shadow |^Ally /, '')).join(', ');
+    this.message(`Arena ${size}v${size} · ${ARENA_DIFFICULTY[diff].label}. Enemies: ${names(ids)}.${allyIds.length ? ` Your team: ${names(allyIds)}${fee ? ` (hired for ${fee.toLocaleString()} Luma)` : ''}.` : ' You fight alone.'}`, 'quest');
+    this.emit({ type: 'bossIntro', name: `ARENA ${size} vs ${size}`, title: ARENA_DIFFICULTY[diff].label, text: 'Defeat every enemy shadow!' });
     return { ok: true };
   }
+
+  /** One shadow fighter of a job, with the player's own strength scaled by the difficulty. */
+  private makeShadow(classId: string, team: 'enemy' | 'ally', diff: ArenaDifficulty, at: { x: number; y: number }): MonsterActor {
+    const base = this.data.monsters.get('shadow_fighter')!;
+    const cls = this.data.classes.get(classId)!;
+    const line = classLineage(this.data, cls.id);
+    const skills = [...this.data.skills.values()].filter((sk) => line.includes(sk.classId) && sk.kind !== 'passive' && sk.targeting !== 'passive' && sk.effects.some((e) => e.type === 'damage')).map((sk) => sk.id);
+    const wt = cls.weaponTypes ?? [];
+    const ranged = wt.some((w) => w === 'bow' || w === 'crossbow') && !wt.includes('sword');
+    const caster = wt.some((w) => w === 'staff' || w === 'wand') && !wt.includes('sword');
+    const st = this.stats, k = ARENA_DIFFICULTY[diff].stat;
+    const def: MonsterDef = {
+      ...base, name: `${team === 'ally' ? 'Ally' : 'Shadow'} ${cls.name}`, level: this.char.baseLevel,
+      maxHp: Math.round(st.maxHp * k), attack: Math.round(st.patk * k), magicAttack: Math.round(st.matk * k), defense: Math.round(st.pdef * k), magicDefense: Math.round(st.mdef * k),
+      hit: Math.round(st.hit * (0.85 + 0.15 * k)), flee: Math.round(st.flee * (0.85 + 0.15 * k)), attackIntervalMs: Math.max(450, Math.round(st.attackIntervalMs / Math.min(1.2, k))),
+      moveSpeed: Math.round(Math.max(80, st.moveSpeed * 0.9)), attackRange: ranged || caster ? 190 : 40, aiType: caster ? 'magic' : ranged ? 'ranged' : 'aggressive',
+      projectile: ranged || caster ? { element: caster ? 'shadow' : 'neutral', color: cls.outfit.accent } : undefined,
+      art: { ...base.art, colors: [cls.id, cls.outfit.accent, team === 'ally' ? '#7fffb0' : '#ff7a7a'] },
+    };
+    const m = this.makeMonster(def, at.x, at.y, -1);
+    m.summoned = true;
+    m.dir = team === 'ally' ? 'up' : 'down';
+    m.shadow = { classId: cls.id, skills, team, skillMul: ARENA_DIFFICULTY[diff].skill, nextSkillAt: this.time + 2500 + this.rng.range(0, 2000) };
+    m.state = 'chase';
+    this.monsters.set(m.id, m);
+    this.emit({ type: 'fx', fx: 'spawn', x: m.x, y: m.y });
+    return m;
+  }
+
+  /** Allies are on your side: you cannot hit them and your auto-targeting skips them. */
+  isAlly(m: MonsterActor): boolean { return m.shadow?.team === 'ally'; }
 
   private updateShadowDuel() {
     const d = this.shadowDuel;
     if (!d) return;
     if (this.map.def.id !== 'shadow_arena' && ![...this.monsters.values()].some((m) => m.shadow)) { this.shadowDuel = null; return; }
-    const alive = d.ids.filter((id) => { const m = this.monsters.get(id); return m && !m.dead; });
-    if (alive.length) return;
     const secs = Math.round((this.time - d.startedAt) / 1000);
-    this.message(`Victory! You defeated ${d.ids.length} shadow fighter${d.ids.length > 1 ? 's' : ''} in ${secs}s. Talk to the Shadow Keeper for another round.`, 'quest');
+    if (this.player.dead) {
+      this.message(`Defeat in the ${d.mode} arena (${ARENA_DIFFICULTY[d.difficulty].label}) after ${secs}s.`, 'error');
+      this.emit({ type: 'arenaResult', win: false, mode: d.mode, difficulty: ARENA_DIFFICULTY[d.difficulty].label, secs });
+      for (const id of [...d.ids, ...d.allies]) this.monsters.delete(id);
+      this.shadowDuel = null;
+      return;
+    }
+    if (d.ids.some((id) => { const m = this.monsters.get(id); return m && !m.dead; })) return;
+    this.message(`Victory in the ${d.mode} arena (${ARENA_DIFFICULTY[d.difficulty].label}) in ${secs}s! Talk to the Shadow Keeper for another match.`, 'quest');
+    this.emit({ type: 'arenaResult', win: true, mode: d.mode, difficulty: ARENA_DIFFICULTY[d.difficulty].label, secs });
     this.emit({ type: 'fx', fx: 'quest_complete', x: this.player.x, y: this.player.y });
+    for (const id of d.allies) { const m = this.monsters.get(id); if (m) { this.emit({ type: 'fx', fx: 'teleport', x: m.x, y: m.y }); this.monsters.delete(id); } }
     this.shadowDuel = null;
   }
 
-  /** A shadow fighter uses one of its job's damage skills on the player (true when it did). */
-  private shadowSkill(m: MonsterActor, d: number): boolean {
+  /** Who a shadow fights: allies fight enemy shadows; enemies fight you and your allies. */
+  private shadowTarget(m: MonsterActor): { x: number; y: number; halfW: number; mon: MonsterActor | null } | null {
+    let best: { x: number; y: number; halfW: number; mon: MonsterActor | null } | null = null, bd = Infinity;
+    const p = this.player;
+    if (m.shadow!.team === 'enemy' && !p.dead && !this.playerStealthed) { bd = dist(m.x, m.y, p.x, p.y) * 0.9; best = { x: p.x, y: p.y, halfW: p.halfW, mon: null }; }
+    for (const o of this.monsters.values()) {
+      if (o === m || o.dead || !o.shadow || o.shadow.team === m.shadow!.team) continue;
+      const d = dist(m.x, m.y, o.x, o.y);
+      if (d < bd) { bd = d; best = { x: o.x, y: o.y, halfW: o.halfW, mon: o }; }
+    }
+    return best;
+  }
+
+  /** Shadow AI: walk to the nearest foe, use a job skill when ready, otherwise attack. */
+  private updateShadow(m: MonsterActor, dt: number, speed: number, cannotMove: boolean) {
+    const t = this.shadowTarget(m);
+    if (!t) { m.state = 'idle'; m.move = null; return; }
+    const d = dist(m.x, m.y, t.x, t.y), range = m.def.attackRange + t.halfW + m.halfW;
+    if (this.shadowSkill(m, d, t.mon)) return;
+    if (d > range) { m.state = 'chase'; if (!cannotMove) this.moveToward(m, t.x, t.y, speed, dt, range - 6); return; }
+    m.state = 'attack'; m.move = null; m.dir = dirFromVector(t.x - m.x, t.y - m.y, m.dir);
+    if (this.time < m.attackReadyAt) return;
+    if (!t.mon) { m.targetId = 'player'; this.monsterAttack(m); return; }
+    this.shadowStrike(m, t.mon);
+  }
+
+  /** A shadow's basic attack on another shadow. */
+  private shadowStrike(a: MonsterActor, b: MonsterActor) {
+    a.attackReadyAt = this.time + a.def.attackIntervalMs;
+    this.setAnim(a, 'attack'); a.animAt = this.time;
+    const isMagic = a.def.aiType === 'magic';
+    const opts: AttackOptions = { kind: isMagic ? 'magic' : 'physical', multiplier: 1, element: a.def.projectile?.element ?? 'neutral' };
+    const resolve = () => {
+      if (a.dead || b.dead) return;
+      const res = resolveAttack(this.data, this.rng, this.monsterProfile(a), this.monsterProfile(b), opts);
+      if (!res.hit) { this.emit({ type: 'damage', targetId: b.id, amount: 0, crit: false, miss: true, kind: opts.kind }); return; }
+      this.hitShadow(b, res.damage, res.crit, opts.kind, opts.element);
+    };
+    if (a.def.projectile) {
+      const travel = (dist(a.x, a.y, b.x, b.y) / (this.data.balance.combat.projectileSpeed * 0.6)) * 1000;
+      this.emit({ type: 'projectile', fromX: a.x, fromY: a.y - 16, toX: b.x, toY: b.y - 16, durationMs: travel, fx: 'spit', color: a.def.projectile.color });
+      this.schedule(travel, resolve);
+    } else { this.emit({ type: 'fx', fx: 'slash_small', x: b.x, y: b.y - 14 }); resolve(); }
+  }
+
+  /** Damage from one shadow to another (no rewards when it falls). */
+  private hitShadow(b: MonsterActor, amount: number, crit: boolean, kind: 'physical' | 'magic', element: Element) {
+    if (b.dead) return;
+    b.hp = Math.max(0, b.hp - amount);
+    this.emit({ type: 'damage', targetId: b.id, amount, crit, miss: false, kind, element });
+    if (b.hp <= 0) { this.killMonster(b); return; }
+    if (this.time - b.animAt > 250) this.setAnim(b, 'hit');
+  }
+
+  /** A shadow uses one of its job's damage skills on its target (true when it did). */
+  private shadowSkill(m: MonsterActor, d: number, foe: MonsterActor | null): boolean {
     const sh = m.shadow;
     if (!sh || !sh.skills.length || this.time < sh.nextSkillAt) return false;
     const sk = this.data.skills.get(this.rng.pick(sh.skills));
@@ -1427,18 +1535,27 @@ export class World {
     if (!sk || !dmg) return false;
     const reach = sk.targeting === 'self' ? (dmg.radius ?? 90) : Math.max(70, sk.range || 200);
     if (d > reach) return false;
-    sh.nextSkillAt = this.time + Math.max(2500, sk.cooldownMs * 1.5) + this.rng.range(0, 1500);
-    const lvl = Math.min(sk.maxLevel, 5), p = this.player;
+    sh.nextSkillAt = this.time + (Math.max(2500, sk.cooldownMs * 1.5) + this.rng.range(0, 1500)) * sh.skillMul;
+    const lvl = Math.min(sk.maxLevel, 5), p = this.player, tx = foe ? foe.x : p.x, ty = foe ? foe.y : p.y;
     const opts: AttackOptions = { kind: dmg.kind, multiplier: dmg.multiplier + dmg.perLevel * (lvl - 1), element: !dmg.element || dmg.element === 'weapon' ? 'neutral' : dmg.element, ignoreDefPct: dmg.ignoreDefPct, alwaysHit: dmg.alwaysHit };
-    m.move = null; m.dir = dirFromVector(p.x - m.x, p.y - m.y, m.dir);
+    m.move = null; m.dir = dirFromVector(tx - m.x, ty - m.y, m.dir);
     this.setAnim(m, 'attack'); m.animAt = this.time; m.attackReadyAt = this.time + m.def.attackIntervalMs;
     const onSelf = sk.targeting === 'self';
-    this.emit({ type: 'fx', fx: sk.fx, x: onSelf ? m.x : p.x, y: onSelf ? m.y : p.y, radius: dmg.radius, skillId: sk.id, fromX: m.x, fromY: m.y });
+    this.emit({ type: 'fx', fx: sk.fx, x: onSelf ? m.x : tx, y: onSelf ? m.y : ty, radius: dmg.radius, skillId: sk.id, fromX: m.x, fromY: m.y });
     this.emit({ type: 'sound', key: `skill_${sk.fx}` });
     const hits = Math.max(1, dmg.hits ?? 1);
     this.schedule(260, () => {
-      if (m.dead || p.dead) return;
-      if (onSelf && dist(m.x, m.y, p.x, p.y) > reach + 20) return;
+      if (m.dead) return;
+      if (foe) {
+        if (foe.dead) return;
+        for (let i = 0; i < hits && !foe.dead; i++) {
+          const res = resolveAttack(this.data, this.rng, this.monsterProfile(m), this.monsterProfile(foe), opts);
+          if (!res.hit) { this.emit({ type: 'damage', targetId: foe.id, amount: 0, crit: false, miss: true, kind: dmg.kind }); continue; }
+          this.hitShadow(foe, Math.max(1, Math.round(res.damage / hits)), res.crit, dmg.kind, opts.element);
+        }
+        return;
+      }
+      if (p.dead || (onSelf && dist(m.x, m.y, p.x, p.y) > reach + 20)) return;
       for (let i = 0; i < hits; i++) {
         const res = resolveAttack(this.data, this.rng, this.monsterProfile(m), this.playerProfile(), opts);
         if (!res.hit) { this.emit({ type: 'damage', targetId: 'player', amount: 0, crit: false, miss: true, kind: dmg.kind }); continue; }
@@ -1772,7 +1889,8 @@ export class World {
     if (m.boss) this.updateBossPhase(m);
     if (m.boss?.casting) { this.updateBossCast(m); return; }
 
-    switch (m.state) {
+    if (m.shadow) this.updateShadow(m, dt, speed, cannotMove);
+    else switch (m.state) {
       case 'idle':
       case 'patrol': {
         const aggressive = ['aggressive', 'ranged', 'magic', 'elite', 'boss'].includes(m.def.aiType);
@@ -1815,7 +1933,6 @@ export class World {
         const d = dist(m.x, m.y, p.x, p.y);
         const range = m.def.attackRange + p.halfW + m.halfW;
         if (m.boss && this.tryBossSkill(m, d)) break;
-        if (m.shadow && this.shadowSkill(m, d)) break;
         if (d > range) {
           m.state = 'chase';
           if (!cannotMove) this.moveToward(m, p.x, p.y, speed, dt, range - 6);
@@ -2068,7 +2185,7 @@ export class World {
       z.nextTickAt = this.time + z.tickMs;
       const e = z.effect;
       for (const m of this.monsters.values()) {
-        if (m.dead || dist(m.x, m.y, z.x, z.y) > z.radius + m.halfW) continue;
+        if (m.dead || this.isAlly(m) || dist(m.x, m.y, z.x, z.y) > z.radius + m.halfW) continue;
         const res = resolveAttack(this.data, this.rng, this.playerProfile(), this.monsterProfile(m), {
           kind: e.kind, multiplier: e.multiplier + e.perLevel * (z.level - 1), element: e.element,
         });
@@ -2209,7 +2326,7 @@ export class World {
         case 'line': {
           const ang = Math.atan2(cy - p.y, cx - p.x);
           const x2 = p.x + Math.cos(ang) * e.length, y2 = p.y + Math.sin(ang) * e.length;
-          lineTargets = [...this.monsters.values()].filter((m) => !m.dead && distToSegment(m.x, m.y, p.x, p.y, x2, y2) <= e.width / 2 + m.halfW);
+          lineTargets = [...this.monsters.values()].filter((m) => !m.dead && !this.isAlly(m) && distToSegment(m.x, m.y, p.x, p.y, x2, y2) <= e.width / 2 + m.halfW);
           this.emit({ type: 'fx', fx: 'beam', x: p.x, y: p.y - 20, radius: e.length, targetId: `${x2},${y2}` });
           break;
         }
@@ -2335,7 +2452,7 @@ export class World {
 
   monstersInRadius(x: number, y: number, r: number): MonsterActor[] {
     const out: MonsterActor[] = [];
-    for (const m of this.monsters.values()) if (!m.dead && dist(m.x, m.y, x, y) <= r + m.halfW) out.push(m);
+    for (const m of this.monsters.values()) if (!m.dead && !this.isAlly(m) && dist(m.x, m.y, x, y) <= r + m.halfW) out.push(m);
     return out;
   }
 
@@ -2361,7 +2478,7 @@ export class World {
   attack(monsterId: string) {
     const p = this.player;
     const m = this.monsters.get(monsterId);
-    if (p.dead || !m || m.dead) return;
+    if (p.dead || !m || m.dead || this.isAlly(m)) return;
     if (p.cast) return;
     p.intent = { type: 'attack', targetId: monsterId };
   }
@@ -2405,7 +2522,7 @@ export class World {
     const p = this.player;
     let best: MonsterActor | null = null, bd = Infinity;
     for (const m of this.monsters.values()) {
-      if (m.dead) continue;
+      if (m.dead || this.isAlly(m)) continue;
       const d = dist(p.x, p.y, m.x, m.y);
       if (d < bd) { bd = d; best = m; }
     }
@@ -2563,7 +2680,7 @@ export class World {
           this.emit({ type: 'projectile', fromX: p.x, fromY: p.y - 18, toX: t.x, toY: t.y - 14, durationMs: 250, fx: 'magic_orb', color: def.icon.color });
           const base = u.damage + u.perLevel * this.char.baseLevel;
           const mul = 1 + 0.05 * (this.char.skills.potion_research ?? 0);
-          const hits = u.radius ? [...this.monsters.values()].filter((m) => !m.dead && Math.hypot(m.x - t.x, m.y - t.y) <= u.radius!) : [t];
+          const hits = u.radius ? [...this.monsters.values()].filter((m) => !m.dead && !this.isAlly(m) && Math.hypot(m.x - t.x, m.y - t.y) <= u.radius!) : [t];
           for (const m of hits) {
             const amount = Math.max(1, Math.round(base * mul * elementModifier(this.data, u.element, m.def.element, m.def.elementLevel ?? 1) * (0.9 + this.rng.next() * 0.2)));
             this.damageMonster(m, amount, 'physical', u.element, false, false);

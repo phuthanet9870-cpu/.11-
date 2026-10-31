@@ -2609,12 +2609,12 @@
    "style": "robe"
   },
   "greeting": [
-   "Choose how many shadows to face. Each takes a random job and copies your strength — and they use their skills."
+   "Pick a mode — 1v1, 3v3, 5v5 or 10v10 — the enemy jobs and the difficulty. You may hire shadows for your own team, or go in alone."
   ],
   "services": [
    {
     "type": "shadowArena",
-    "maxCount": 5
+    "maxCount": 10
    }
   ],
   "generated": true
