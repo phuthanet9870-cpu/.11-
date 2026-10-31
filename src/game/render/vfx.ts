@@ -11,43 +11,187 @@ export { skillVfx, SKILL_VFX_IDS } from './vfxRecipes';
 const GROUNDED = new Set(['pillar', 'bolt', 'tornado', 'spikes', 'rise', 'aura', 'tendrils', 'cloud', 'notes', 'flame', 'holycross']);
 const FLAT = new Set(['ring', 'circle', 'whirl']);
 
-export function ensureVfxSheets(scene: Phaser.Scene) {
-  for (const [name, sh] of Object.entries(VFX_SHEETS)) {
-    const key = `vxt_${name}`;
-    if (scene.textures.exists(key)) continue;
-    const canvas = document.createElement('canvas');
-    canvas.width = sh.w * sh.frames; canvas.height = sh.h;
-    const c = canvas.getContext('2d')!;
-    for (let f = 0; f < sh.frames; f++) {
-      c.save(); c.beginPath(); c.rect(f * sh.w, 0, sh.w, sh.h); c.clip(); c.translate(f * sh.w, 0);
-      sh.draw(c, sh.frames > 1 ? f / (sh.frames - 1) : 0, f, sh.w, sh.h);
-      c.restore();
-    }
-    const tex = scene.textures.addCanvas(key, canvas)!;
+const baseCanvas = new Map<string, HTMLCanvasElement>();
+function drawBase(name: string): HTMLCanvasElement {
+  let canvas = baseCanvas.get(name);
+  if (canvas) return canvas;
+  const sh = VFX_SHEETS[name];
+  canvas = document.createElement('canvas');
+  canvas.width = sh.w * sh.frames; canvas.height = sh.h;
+  const c = canvas.getContext('2d')!;
+  for (let f = 0; f < sh.frames; f++) {
+    c.save(); c.beginPath(); c.rect(f * sh.w, 0, sh.w, sh.h); c.clip(); c.translate(f * sh.w, 0);
+    sh.draw(c, sh.frames > 1 ? f / (sh.frames - 1) : 0, f, sh.w, sh.h);
+    c.restore();
+  }
+  baseCanvas.set(name, canvas);
+  return canvas;
+}
+
+const rgbOf = (hex: string): [number, number, number] => { const n = parseInt(hex.replace('#', '').slice(0, 6), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
+/**
+ * Recolours a white/grey sheet with a three-step ramp of the skill colour: deep shade in the dim
+ * edges, the full colour in the body and a white-hot core where the sheet is brightest and solid.
+ */
+function recolour(src: HTMLCanvasElement, hex: string): HTMLCanvasElement {
+  const out = document.createElement('canvas');
+  out.width = src.width; out.height = src.height;
+  const c = out.getContext('2d')!;
+  c.drawImage(src, 0, 0);
+  const img = c.getImageData(0, 0, out.width, out.height), d = img.data;
+  const [r, g, b] = rgbOf(hex);
+  // Pale colours still get a saturated body so they do not read as plain white.
+  const mx = Math.max(r, g, b, 1), sat = (v: number) => Math.round((v / mx) * 255 * 0.55 + v * 0.45);
+  const body: [number, number, number] = [sat(r), sat(g), sat(b)], deep: [number, number, number] = [body[0] * 0.45, body[1] * 0.45, body[2] * 0.45];
+  for (let i = 0; i < d.length; i += 4) {
+    const a = d[i + 3];
+    if (!a) continue;
+    const L = (d[i] + d[i + 1] + d[i + 2]) / 765;
+    let o: [number, number, number];
+    if (L > 0.97 && a > 150) { const k = Math.min(1, (a - 150) / 105); o = [body[0] + (255 - body[0]) * k * 0.85, body[1] + (255 - body[1]) * k * 0.85, body[2] + (255 - body[2]) * k * 0.85]; }
+    else if (L > 0.7) { const k = (L - 0.7) / 0.3; o = [deep[0] + (body[0] - deep[0]) * (0.6 + k * 0.4), deep[1] + (body[1] - deep[1]) * (0.6 + k * 0.4), deep[2] + (body[2] - deep[2]) * (0.6 + k * 0.4)]; }
+    else { const k = L / 0.7; o = [deep[0] + (body[0] - deep[0]) * k * 0.6, deep[1] + (body[1] - deep[1]) * k * 0.6, deep[2] + (body[2] - deep[2]) * k * 0.6]; }
+    d[i] = o[0]; d[i + 1] = o[1]; d[i + 2] = o[2];
+  }
+  c.putImageData(img, 0, 0);
+  return out;
+}
+
+/** Texture + animation of a sheet in a colour (made on first use and kept). Returns the anim key. */
+function sheetAnim(scene: Phaser.Scene, name: string, color?: string): string {
+  const sh = VFX_SHEETS[name];
+  const col = sh.tinted ? (color && /^#[0-9a-f]{6}$/i.test(color) ? color.toLowerCase() : '#ffffff') : '';
+  const key = `vxt_${name}${col ? `_${col.slice(1)}` : ''}`;
+  if (!scene.textures.exists(key)) {
+    const base = drawBase(name);
+    const tex = scene.textures.addCanvas(key, col ? recolour(base, col) : base)!;
     for (let f = 0; f < sh.frames; f++) tex.add(f, 0, f * sh.w, 0, sh.w, sh.h);
-    if (!scene.anims.exists(`vx_${name}`)) {
-      scene.anims.create({ key: `vx_${name}`, frames: Array.from({ length: sh.frames }, (_, f) => ({ key, frame: f })), frameRate: sh.fps, repeat: sh.loop ? -1 : 0 });
-    }
+  }
+  if (!scene.anims.exists(key)) scene.anims.create({ key, frames: Array.from({ length: sh.frames }, (_, f) => ({ key, frame: f })), frameRate: sh.fps, repeat: sh.loop ? -1 : 0 });
+  return key;
+}
+
+/** Particle textures of the effects (soft dot, four-point spark, big soft glow, shard). */
+export function ensureVfxSheets(scene: Phaser.Scene) {
+  const make = (key: string, w: number, h: number, draw: (c: CanvasRenderingContext2D) => void) => {
+    if (scene.textures.exists(key)) return;
+    const cv = document.createElement('canvas'); cv.width = w; cv.height = h; draw(cv.getContext('2d')!); scene.textures.addCanvas(key, cv);
+  };
+  const soft = (c: CanvasRenderingContext2D, r: number) => { const g = c.createRadialGradient(r, r, 0, r, r, r); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.35, 'rgba(255,255,255,0.55)'); g.addColorStop(1, 'rgba(255,255,255,0)'); c.fillStyle = g; c.fillRect(0, 0, r * 2, r * 2); };
+  make('vxp_dot', 8, 8, (c) => soft(c, 4));
+  make('vxp_glow', 64, 64, (c) => soft(c, 32));
+  make('vxp_spark', 12, 12, (c) => { c.fillStyle = '#fff'; c.fillRect(5, 0, 2, 12); c.fillRect(0, 5, 12, 2); c.fillRect(4, 4, 4, 4); });
+  make('vxp_shard', 6, 10, (c) => { c.fillStyle = '#fff'; c.beginPath(); c.moveTo(3, 0); c.lineTo(6, 5); c.lineTo(3, 10); c.lineTo(0, 5); c.closePath(); c.fill(); });
+  make('vxp_smoke', 24, 24, (c) => { const g = c.createRadialGradient(12, 12, 0, 12, 12, 12); g.addColorStop(0, 'rgba(255,255,255,0.7)'); g.addColorStop(1, 'rgba(255,255,255,0)'); c.fillStyle = g; c.fillRect(0, 0, 24, 24); });
+}
+
+const tintOf = (hex?: string) => (hex && /^#[0-9a-f]{6}$/i.test(hex) ? Phaser.Display.Color.HexStringToColor(hex).color : 0xffffff);
+const lighten = (hex: string, k: number) => { const [r, g, b] = rgbOf(hex); return ((r + (255 - r) * k) << 16) | ((g + (255 - g) * k) << 8) | (b + (255 - b) * k); };
+
+/** Particle burst: colour ramp from white-hot to the skill colour, additive. */
+function particles(scene: Phaser.Scene, x: number, y: number, color: string, o: { tex?: string; n: number; speed: [number, number]; life: number; scale?: [number, number]; gravityY?: number; angle?: [number, number]; spread?: number; depth: number; add?: boolean }) {
+  const col = /^#[0-9a-f]{6}$/i.test(color) ? color : '#ffffff';
+  const em = scene.add.particles(x, y, o.tex ?? 'vxp_dot', {
+    speed: { min: o.speed[0], max: o.speed[1] }, angle: o.angle ? { min: o.angle[0], max: o.angle[1] } : { min: 0, max: 360 },
+    lifespan: { min: o.life * 0.6, max: o.life }, scale: { start: o.scale?.[0] ?? 0.8, end: o.scale?.[1] ?? 0 }, alpha: { start: 1, end: 0 },
+    gravityY: o.gravityY ?? 0, tint: [0xffffff, lighten(col, 0.5), tintOf(col), tintOf(col)], rotate: o.tex === 'vxp_shard' ? { min: 0, max: 360 } : 0,
+    blendMode: o.add === false ? Phaser.BlendModes.NORMAL : Phaser.BlendModes.ADD, emitting: false,
+    ...(o.spread ? { emitZone: { type: 'random', source: new Phaser.Geom.Circle(0, 0, o.spread) } as never } : {}),
+  });
+  em.setDepth(o.depth);
+  em.explode(o.n);
+  scene.time.delayedCall(o.life + 120, () => em.destroy());
+}
+
+/** A soft light flash. */
+function flash(scene: Phaser.Scene, x: number, y: number, color: string, size: number, ms: number, depth: number) {
+  const g = scene.add.image(x, y, 'vxp_glow').setBlendMode(Phaser.BlendModes.ADD).setTint(lighten(/^#[0-9a-f]{6}$/i.test(color) ? color : '#ffffff', 0.3)).setScale(size / 64).setDepth(depth).setAlpha(0.9);
+  scene.tweens.add({ targets: g, alpha: 0, scale: (size * 1.4) / 64, duration: ms, ease: 'Quad.easeOut', onComplete: () => g.destroy() });
+}
+
+/** Dark mark left on the ground by explosions and strikes. */
+function scorch(scene: Phaser.Scene, x: number, y: number, size: number) {
+  const g = scene.add.ellipse(x, y, size, size * 0.45, 0x0a0806, 0.45).setDepth(y - 45);
+  scene.tweens.add({ targets: g, alpha: 0, delay: 900, duration: 1200, onComplete: () => g.destroy() });
+}
+
+/** Extra layers that make each sheet richer: particles, flashes, debris, ground marks. */
+function extras(scene: Phaser.Scene, name: string, x: number, y: number, color: string, sc: number) {
+  const d = y + 2001, n = (k: number) => Math.max(2, Math.round(k * sc));
+  switch (name) {
+    case 'slash': case 'cross': case 'claw':
+      particles(scene, x, y, color, { tex: 'vxp_spark', n: n(10), speed: [60, 180], life: 380, scale: [0.6, 0], depth: d });
+      flash(scene, x, y, color, 46 * sc, 180, d); break;
+    case 'hit': particles(scene, x, y, color, { tex: 'vxp_spark', n: n(5), speed: [50, 130], life: 260, scale: [0.45, 0], depth: d }); break;
+    case 'burst': case 'crit':
+      particles(scene, x, y, color, { tex: 'vxp_spark', n: n(name === 'crit' ? 22 : 12), speed: [90, 240], life: 420, scale: [0.7, 0], depth: d });
+      flash(scene, x, y, color, (name === 'crit' ? 110 : 70) * sc, 260, d); break;
+    case 'fist':
+      particles(scene, x, y + 14, '#c8b49a', { tex: 'vxp_smoke', n: n(8), speed: [40, 110], life: 600, scale: [1, 1.8], angle: [150, 390], depth: d - 1, add: false });
+      flash(scene, x, y, color, 90 * sc, 260, d); break;
+    case 'explode':
+      particles(scene, x, y, '#ffb040', { n: n(28), speed: [80, 260], life: 700, scale: [0.9, 0], gravityY: 160, depth: d });
+      particles(scene, x, y - 6, '#4a3c34', { tex: 'vxp_smoke', n: n(10), speed: [20, 70], life: 1100, scale: [1.2, 2.6], gravityY: -40, depth: d - 1, add: false });
+      flash(scene, x, y, '#ffa040', 160 * sc, 380, d); scorch(scene, x, y + 14 * sc, 54 * sc); break;
+    case 'bolt':
+      particles(scene, x, y, color, { tex: 'vxp_spark', n: n(16), speed: [80, 220], life: 380, scale: [0.6, 0], angle: [180, 360], depth: d });
+      flash(scene, x, y - 40, color, 150 * sc, 220, d); scorch(scene, x, y, 36 * sc); break;
+    case 'spikes':
+      particles(scene, x, y - 6, color, { tex: 'vxp_shard', n: n(14), speed: [70, 190], life: 650, scale: [1, 0.2], angle: [200, 340], gravityY: 380, depth: d });
+      particles(scene, x, y, '#9a8a78', { tex: 'vxp_smoke', n: n(6), speed: [20, 60], life: 800, scale: [1, 2], depth: d - 1, add: false }); break;
+    case 'pillar': case 'holycross':
+      particles(scene, x, y - 20, color, { n: n(18), speed: [10, 40], life: 1100, scale: [0.7, 0], gravityY: -120, spread: 18, depth: d });
+      flash(scene, x, y - 30, color, 120 * sc, 500, d); break;
+    case 'tornado':
+      particles(scene, x, y - 30, color, { n: n(24), speed: [40, 120], life: 900, scale: [0.6, 0], gravityY: -90, spread: 24, depth: d }); break;
+    case 'flame':
+      particles(scene, x, y - 10, '#ff8a2a', { n: n(16), speed: [20, 70], life: 800, scale: [0.7, 0], gravityY: -140, spread: 14, depth: d }); break;
+    case 'cloud':
+      particles(scene, x, y - 14, color, { tex: 'vxp_smoke', n: n(10), speed: [10, 40], life: 1300, scale: [0.8, 2], gravityY: -30, spread: 30, depth: d, add: false }); break;
+    case 'tendrils':
+      particles(scene, x, y - 10, color, { tex: 'vxp_smoke', n: n(10), speed: [10, 50], life: 1000, scale: [0.8, 1.8], gravityY: -60, spread: 26, depth: d, add: false });
+      particles(scene, x, y - 20, color, { n: n(10), speed: [10, 40], life: 900, scale: [0.5, 0], gravityY: -80, spread: 30, depth: d }); break;
+    case 'rise': case 'notes':
+      particles(scene, x, y - 10, color, { n: n(14), speed: [5, 25], life: 1200, scale: [0.6, 0], gravityY: -70, spread: 22, depth: d }); break;
+    case 'aura':
+      particles(scene, x, y - 16, color, { n: n(20), speed: [10, 40], life: 900, scale: [0.6, 0], gravityY: -150, spread: 20, depth: d }); break;
+    case 'shield':
+      particles(scene, x, y, color, { tex: 'vxp_spark', n: n(10), speed: [5, 20], life: 900, scale: [0.4, 0], spread: 30, depth: d }); flash(scene, x, y, color, 80 * sc, 400, d); break;
+    case 'ring':
+      particles(scene, x, y, '#b8a890', { tex: 'vxp_smoke', n: n(10), speed: [60, 140], life: 600, scale: [0.8, 1.6], depth: y - 39, add: false }); break;
+    case 'whirl':
+      particles(scene, x, y, color, { tex: 'vxp_spark', n: n(18), speed: [120, 260], life: 420, scale: [0.6, 0], depth: d }); break;
+    case 'pierce':
+      flash(scene, x, y, color, 60 * sc, 200, d); break;
+    case 'smoke':
+      particles(scene, x, y, color, { tex: 'vxp_smoke', n: n(8), speed: [20, 60], life: 900, scale: [1, 2.2], depth: d, add: false }); break;
+    case 'coins':
+      particles(scene, x, y, '#ffd34d', { tex: 'vxp_spark', n: n(12), speed: [40, 120], life: 700, scale: [0.5, 0], gravityY: 120, depth: d }); break;
+    case 'wind':
+      particles(scene, x, y, color, { n: n(12), speed: [80, 180], life: 500, scale: [0.4, 0], angle: [-20, 20], depth: d }); break;
+    case 'circle':
+      particles(scene, x, y, color, { n: n(16), speed: [5, 20], life: 1200, scale: [0.5, 0], gravityY: -60, spread: 48, depth: d }); break;
   }
 }
 
-const tintOf = (hex?: string) => (hex ? Phaser.Display.Color.HexStringToColor(hex).color : 0xffffff);
-
 /** Plays one sheet at a point; looping sheets stay `ms` and fade out. */
-export function playSheet(scene: Phaser.Scene, name: string, x: number, y: number, o: { color?: string; scale?: number; rot?: number; under?: boolean; ms?: number; delay?: number } = {}) {
+export function playSheet(scene: Phaser.Scene, name: string, x: number, y: number, o: { color?: string; scale?: number; rot?: number; under?: boolean; ms?: number; delay?: number; plain?: boolean } = {}) {
   const sh = VFX_SHEETS[name];
   if (!sh) return;
   const go = () => {
     if (!scene.sys.isActive()) return;
-    const spr = scene.add.sprite(x, y, `vxt_${name}`, 0).setBlendMode(Phaser.BlendModes.ADD).setScale(o.scale ?? 1);
-    if (sh.tinted) spr.setTint(tintOf(o.color));
+    const anim = sheetAnim(scene, name, o.color);
+    const sc = o.scale ?? 1;
+    const spr = scene.add.sprite(x, y, anim, 0).setBlendMode(Phaser.BlendModes.ADD).setScale(sc);
     if (GROUNDED.has(name)) spr.setOrigin(0.5, 0.92);
     if (o.rot !== undefined) spr.setRotation(o.rot);
     spr.setDepth(o.under ? y - 40 : y + 2000);
-    spr.play(`vx_${name}`);
+    spr.play(anim);
     if (sh.loop) {
-      scene.tweens.add({ targets: spr, alpha: 0, delay: Math.max(0, (o.ms ?? 900) - 250), duration: 250, onComplete: () => spr.destroy() });
+      if (name === 'circle') { spr.setScale(sc * 0.2); scene.tweens.add({ targets: spr, scale: sc, duration: 220, ease: 'Back.easeOut' }); }
+      scene.tweens.add({ targets: spr, alpha: 0, delay: Math.max(0, (o.ms ?? 900) - 300), duration: 300, onComplete: () => spr.destroy() });
     } else spr.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => spr.destroy());
+    if (!o.plain) extras(scene, name, x, y, o.color ?? '#ffffff', sc);
   };
   if (o.delay) scene.time.delayedCall(o.delay, go); else go();
 }
@@ -74,6 +218,36 @@ function placements(st: VfxStep, from: { x: number; y: number }, to: { x: number
   return out;
 }
 
+/** Glowing particle trail behind a moving sprite; call the returned function to stop it. */
+function trail(scene: Phaser.Scene, target: Phaser.GameObjects.Sprite, color: string, size: number, depth: number): () => void {
+  const col = /^#[0-9a-f]{6}$/i.test(color) ? color : '#ffffff';
+  const em = scene.add.particles(0, 0, 'vxp_dot', {
+    speed: { min: 0, max: 12 }, lifespan: 320, scale: { start: size, end: 0 }, alpha: { start: 0.9, end: 0 },
+    tint: [0xffffff, lighten(col, 0.4), tintOf(col)], blendMode: Phaser.BlendModes.ADD, frequency: 16, quantity: 2,
+  });
+  em.setDepth(depth); em.startFollow(target);
+  return () => { em.stop(); scene.time.delayedCall(360, () => em.destroy()); };
+}
+
+/** Casting flourish: gathering motes on the caster; ultimates also dim the screen and open a big circle. */
+function castFlourish(scene: Phaser.Scene, kind: string, at: { x: number; y: number }, color: string) {
+  const col = /^#[0-9a-f]{6}$/i.test(color) ? color : '#ffffff';
+  const em = scene.add.particles(at.x, at.y - 20, 'vxp_dot', {
+    emitZone: { type: 'edge', source: new Phaser.Geom.Circle(0, 0, kind === 'ultimate' ? 46 : 30), quantity: 18 } as never,
+    moveToX: at.x, moveToY: at.y - 20, lifespan: 360, scale: { start: 0.2, end: 0.7 }, alpha: { start: 0, end: 1 },
+    tint: [0xffffff, tintOf(col)], blendMode: Phaser.BlendModes.ADD, emitting: false,
+  });
+  em.setDepth(at.y + 2001); em.explode(kind === 'ultimate' ? 26 : 12);
+  scene.time.delayedCall(450, () => em.destroy());
+  if (kind !== 'ultimate') return;
+  const cam = scene.cameras.main;
+  const dim = scene.add.rectangle(cam.worldView.centerX, cam.worldView.centerY, cam.worldView.width + 40, cam.worldView.height + 40, 0x05040a, 0).setDepth(at.y - 60);
+  scene.tweens.add({ targets: dim, fillAlpha: 0.38, duration: 160, yoyo: true, hold: 700, onComplete: () => dim.destroy() });
+  playSheet(scene, 'circle', at.x, at.y, { color: col, scale: 1.4, under: true, ms: 1300, plain: true });
+  playSheet(scene, 'pillar', at.x, at.y, { color: col, scale: 0.7, plain: true });
+  flash(scene, at.x, at.y - 24, col, 140, 500, at.y + 2002);
+}
+
 function runSteps(scene: Phaser.Scene, list: VfxStep[], from: { x: number; y: number }, to: { x: number; y: number }, radius: number, color: string, delay: number) {
   const ang = Math.atan2(to.y - from.y, to.x - from.x);
   for (const st of list) {
@@ -84,11 +258,12 @@ function runSteps(scene: Phaser.Scene, list: VfxStep[], from: { x: number; y: nu
       if (st.fall) {
         scene.time.delayedCall(d, () => {
           if (!scene.sys.isActive()) return;
-          const spr = scene.add.sprite(pt.x - 70, pt.y - 220, `vxt_${st.s}`, 0).setBlendMode(Phaser.BlendModes.ADD).setScale(st.sc).setDepth(pt.y + 2100);
-          if (VFX_SHEETS[st.s].tinted) spr.setTint(tintOf(col));
-          spr.setRotation(Math.atan2(220, 70) - (st.s === 'meteor' ? Math.PI / 4 : 0)).play(`vx_${st.s}`);
+          const anim = sheetAnim(scene, st.s, col);
+          const spr = scene.add.sprite(pt.x - 70, pt.y - 220, anim, 0).setBlendMode(Phaser.BlendModes.ADD).setScale(st.sc).setDepth(pt.y + 2100);
+          spr.setRotation(Math.atan2(220, 70) - (st.s === 'meteor' ? Math.PI / 4 : 0)).play(anim);
+          const tr = trail(scene, spr, st.s === 'meteor' ? '#ff8a2a' : col, st.s === 'meteor' ? 1.4 : 0.6, pt.y + 2099);
           scene.tweens.add({ targets: spr, x: pt.x, y: pt.y, duration: st.s === 'meteor' ? 380 : 220, ease: 'Quad.easeIn', onComplete: () => {
-            spr.destroy();
+            spr.destroy(); tr();
             if (st.then) playSheet(scene, st.then, pt.x, pt.y + (GROUNDED.has(st.then) || FLAT.has(st.then) ? 0 : -12), { color: col, scale: st.s === 'meteor' ? 0.8 : 0.7 });
           } });
         });
@@ -108,6 +283,7 @@ export function playSkillVfx(scene: Phaser.Scene, skill: Pick<SkillDef, 'id' | '
   if (!v) return false;
   const color = skill.icon?.color ?? '#ffffff';
   const r = radius || 60;
+  if (skill.kind === 'ultimate' || skill.kind === 'buff' || v.cast.length) castFlourish(scene, skill.kind, from, color);
   runSteps(scene, v.cast, from, to, r, color, 0);
   let travel = 0;
   if (v.proj && Math.hypot(to.x - from.x, to.y - from.y) > 8) {
@@ -117,21 +293,24 @@ export function playSkillVfx(scene: Phaser.Scene, skill: Pick<SkillDef, 'id' | '
       scene.time.delayedCall(i * p.stag, () => {
         if (!scene.sys.isActive()) return;
         const sx = from.x, sy = from.y - 24, ex = to.x + (i - (p.n - 1) / 2) * 4, ey = to.y - 16;
-        const spr = scene.add.sprite(sx, sy, `vxt_${p.s}`, 0).setBlendMode(Phaser.BlendModes.ADD).setScale(p.sc).setDepth(Math.max(sy, ey) + 2000);
-        if (VFX_SHEETS[p.s].tinted) spr.setTint(tintOf(p.c ?? color));
+        const pc = p.c ?? color, anim = sheetAnim(scene, p.s, pc);
+        const spr = scene.add.sprite(sx, sy, anim, 0).setBlendMode(Phaser.BlendModes.ADD).setScale(p.sc).setDepth(Math.max(sy, ey) + 2000);
         const ang = Math.atan2(ey - sy, ex - sx);
         if (p.s === 'bird') spr.setFlipX(ex < sx); else spr.setRotation(ang);
-        spr.play(`vx_${p.s}`);
+        spr.play(anim);
+        flash(scene, sx, sy, pc, 40, 160, sy + 2001);
+        const tr = trail(scene, spr, pc, p.s === 'arrow' || p.s === 'shard' ? 0.45 : 0.8, Math.max(sy, ey) + 1999);
         const arc = p.n > 1 ? (i - (p.n - 1) / 2) * 14 : 0;
         scene.tweens.addCounter({ from: 0, to: 1, duration: travel, onUpdate: (tw) => {
           const t = tw.getValue() ?? 0;
           spr.setPosition(sx + (ex - sx) * t, sy + (ey - sy) * t - Math.sin(t * Math.PI) * arc);
-        }, onComplete: () => spr.destroy() });
+        }, onComplete: () => { spr.destroy(); tr(); flash(scene, ex, ey, pc, 56, 200, ey + 2001); } });
       });
     }
   }
   runSteps(scene, v.hit, from, to, r, color, travel);
   if (v.shake) scene.time.delayedCall(travel + 100, () => scene.cameras.main.shake(180 + v.shake * 60, 0.002 * v.shake));
+  if (skill.kind === 'ultimate') scene.time.delayedCall(travel + 120, () => scene.cameras.main.flash(160, 255, 255, 255, false));
   return true;
 }
 

@@ -35,12 +35,16 @@ function bolt(c: CanvasRenderingContext2D, x0: number, y0: number, x1: number, y
 
 export const VFX_SHEETS: Record<string, VfxSheet> = {
   // Crescent sweep.
-  slash: { w: 72, h: 72, frames: 6, fps: 30, tinted: true, draw: (c, t, _f, w, h) => {
+  slash: { w: 72, h: 72, frames: 10, fps: 40, tinted: true, draw: (c, t, _f, w, h) => {
     const a0 = -2.4, sweep = 2.8 * ease(Math.min(1, t * 1.6)), fade = t < 0.6 ? 1 : 1 - (t - 0.6) / 0.4;
     for (let i = 0; i < 8; i++) { const k = i / 8; arcBand(c, w / 2, h / 2, 26 - k * 3, a0 + sweep * k, a0 + sweep * (k + 0.13), 2 + k * 6, `rgba(255,255,255,${fade * (0.25 + k * 0.75)})`); }
     arcBand(c, w / 2, h / 2, 27, a0 + sweep * 0.85, a0 + sweep, 3, `rgba(255,255,255,${fade})`);
+    const tip = a0 + sweep;
+    glow(c, w / 2 + Math.cos(tip) * 27, h / 2 + Math.sin(tip) * 27, 9, fade * 0.9);
+    const r = rnd(5);
+    for (let i = 0; i < 9; i++) { const a = a0 + sweep * r(), rr = 22 + r() * 12; dot(c, w / 2 + Math.cos(a) * rr, h / 2 + Math.sin(a) * rr, r() < 0.3 ? 2 : 1, `rgba(255,255,255,${fade * r()})`); }
   } },
-  cross: { w: 72, h: 72, frames: 7, fps: 26, tinted: true, draw: (c, t, _f, w, h) => {
+  cross: { w: 72, h: 72, frames: 11, fps: 34, tinted: true, draw: (c, t, _f, w, h) => {
     const fade = t < 0.7 ? 1 : 1 - (t - 0.7) / 0.3;
     for (const [i, a] of [[0, 0.8], [1, -0.8]] as [number, number][]) {
       const p = Math.max(0, Math.min(1, t * 2.4 - i * 0.6)); if (!p) continue;
@@ -52,7 +56,7 @@ export const VFX_SHEETS: Record<string, VfxSheet> = {
     }
     if (t > 0.35) glow(c, w / 2, h / 2, 16 * (1 - t) + 4, 0.8 * fade);
   } },
-  claw: { w: 64, h: 64, frames: 6, fps: 26, tinted: true, draw: (c, t, _f, w, h) => {
+  claw: { w: 64, h: 64, frames: 9, fps: 34, tinted: true, draw: (c, t, _f, w, h) => {
     const fade = t < 0.6 ? 1 : 1 - (t - 0.6) / 0.4;
     for (let i = 0; i < 3; i++) {
       const p = Math.min(1, Math.max(0, t * 2.2 - i * 0.15)); if (!p) continue;
@@ -62,29 +66,29 @@ export const VFX_SHEETS: Record<string, VfxSheet> = {
       c.strokeStyle = `rgba(190,190,190,${fade * 0.5})`; c.lineWidth = 5; c.stroke();
     }
   } },
-  burst: { w: 64, h: 64, frames: 6, fps: 28, tinted: true, draw: (c, t, _f, w, h) => {
+  burst: { w: 64, h: 64, frames: 9, fps: 36, tinted: true, draw: (c, t, _f, w, h) => {
     const fade = 1 - t;
     glow(c, w / 2, h / 2, 10 + 18 * t, fade);
     star(c, w / 2, h / 2, 8 + 22 * ease(t), 3 + 4 * t, 8, t * 0.6, `rgba(255,255,255,${fade})`);
     star(c, w / 2, h / 2, 5 + 10 * ease(t), 2, 4, 0.4, `rgba(255,255,255,${Math.min(1, fade * 1.4)})`);
   } },
-  hit: { w: 32, h: 32, frames: 4, fps: 30, tinted: true, draw: (c, t, _f, w, h) => {
+  hit: { w: 32, h: 32, frames: 6, fps: 40, tinted: true, draw: (c, t, _f, w, h) => {
     const fade = 1 - t; glow(c, w / 2, h / 2, 6 + 8 * t, fade);
     star(c, w / 2, h / 2, 4 + 10 * t, 1.5, 4, 0.78, `rgba(255,255,255,${fade})`);
   } },
-  crit: { w: 80, h: 80, frames: 7, fps: 26, tinted: true, draw: (c, t, _f, w, h) => {
+  crit: { w: 80, h: 80, frames: 10, fps: 34, tinted: true, draw: (c, t, _f, w, h) => {
     const fade = 1 - t * t;
     glow(c, w / 2, h / 2, 14 + 26 * t, fade);
     star(c, w / 2, h / 2, 10 + 30 * ease(t), 4, 6, -t, `rgba(255,255,255,${fade})`);
     c.strokeStyle = `rgba(255,255,255,${fade * 0.8})`; c.lineWidth = 2;
     c.beginPath(); c.arc(w / 2, h / 2, 6 + 32 * ease(t), 0, TAU); c.stroke();
   } },
-  ring: { w: 128, h: 64, frames: 7, fps: 22, tinted: true, draw: (c, t, _f, w, h) => {
+  ring: { w: 128, h: 64, frames: 12, fps: 34, tinted: true, draw: (c, t, _f, w, h) => {
     const r = 6 + 56 * ease(t), fade = 1 - t;
     arcBand(c, w / 2, h / 2, r, 0, TAU, 6 * (1 - t) + 2, `rgba(200,200,200,${fade * 0.7})`, 0.45);
     arcBand(c, w / 2, h / 2, r, 0, TAU, 2, `rgba(255,255,255,${fade})`, 0.45);
   } },
-  pillar: { w: 56, h: 144, frames: 8, fps: 16, tinted: true, draw: (c, t, _f, w, h) => {
+  pillar: { w: 56, h: 144, frames: 14, fps: 22, tinted: true, draw: (c, t, _f, w, h) => {
     const grow = Math.min(1, t * 3), fade = t < 0.6 ? 1 : 1 - (t - 0.6) / 0.4, bw = 18 * (1 - t * 0.6);
     const top = h - 8 - (h - 12) * grow;
     const g = c.createLinearGradient(0, top, 0, h);
@@ -93,17 +97,22 @@ export const VFX_SHEETS: Record<string, VfxSheet> = {
     c.fillStyle = `rgba(255,255,255,${fade})`; c.fillRect(w / 2 - 1, top + 6, 2, h - top - 10);
     glow(c, w / 2, h - 8, 22, 0.8 * fade);
     const r = rnd(7); for (let i = 0; i < 8; i++) dot(c, w / 2 + (r() - 0.5) * 30, h - ((r() + t) % 1) * h * 0.8, 2, `rgba(255,255,255,${fade})`);
+    for (let i = 0; i < 10; i++) { const k = ((i / 10) + t * 0.8) % 1, a = k * TAU * 2 + i; dot(c, w / 2 + Math.cos(a) * (bw * 0.9 + 4), h - 10 - k * (h - top - 10), 2, `rgba(220,220,220,${fade * (1 - k)})`); }
+    arcBand(c, w / 2, h - 8, 12 + 14 * grow, 0, TAU, 2, `rgba(255,255,255,${0.8 * fade})`, 0.35);
   } },
-  bolt: { w: 64, h: 176, frames: 6, fps: 22, tinted: true, draw: (c, t, f, w, h) => {
-    const fade = f < 3 ? 1 : 1 - (f - 2) / 4;
-    if (f === 0) { bolt(c, w / 2, 0, w / 2 + 4, h * 0.6, 3, 2, 'rgba(255,255,255,0.8)'); return; }
-    bolt(c, w / 2, 0, w / 2, h - 10, 11 + (f % 2), 6, `rgba(190,190,190,${0.6 * fade})`);
-    bolt(c, w / 2, 0, w / 2, h - 10, 11 + (f % 2), 2, `rgba(255,255,255,${fade})`);
-    if (f % 2) bolt(c, w / 2, h * 0.4, w / 2 + 18, h * 0.7, 21, 1, `rgba(255,255,255,${fade})`);
-    glow(c, w / 2, h - 10, 24, fade);
-    void t;
+  bolt: { w: 64, h: 176, frames: 9, fps: 28, tinted: true, draw: (c, t, f, w, h) => {
+    // Leader stroke, main strike with forks and flicker, then fading afterglow.
+    if (t < 0.12) { bolt(c, w / 2, 0, w / 2 + 4, h * 0.55, 3, 1, 'rgba(255,255,255,0.7)'); return; }
+    const fade = t < 0.45 ? 1 : Math.max(0, 1 - (t - 0.45) / 0.55), seed = 11 + (f % 3);
+    glow(c, w / 2, h * 0.5, 40, 0.18 * fade);
+    bolt(c, w / 2, 0, w / 2, h - 10, seed, 7, `rgba(150,150,150,${0.5 * fade})`);
+    bolt(c, w / 2, 0, w / 2, h - 10, seed, 3, `rgba(210,210,210,${fade})`);
+    bolt(c, w / 2, 0, w / 2, h - 10, seed, 1, `rgba(255,255,255,${fade})`);
+    if (f % 2) { bolt(c, w / 2, h * 0.35, w / 2 + 20, h * 0.68, 21 + f, 1, `rgba(230,230,230,${fade})`); bolt(c, w / 2, h * 0.5, w / 2 - 18, h * 0.8, 31 + f, 1, `rgba(230,230,230,${fade})`); }
+    glow(c, w / 2, h - 10, 28, fade);
+    arcBand(c, w / 2, h - 10, 10 + t * 18, 0, TAU, 2, `rgba(255,255,255,${fade * 0.8})`, 0.4);
   } },
-  tornado: { w: 72, h: 112, frames: 8, fps: 18, loop: false, tinted: true, draw: (c, t, f, w, h) => {
+  tornado: { w: 72, h: 112, frames: 14, fps: 22, loop: false, tinted: true, draw: (c, t, f, w, h) => {
     const fade = t < 0.7 ? Math.min(1, t * 5) : 1 - (t - 0.7) / 0.3;
     for (let i = 0; i < 9; i++) {
       const y = h - 8 - i * 11, rx = 6 + i * 3.2, ph = f * 0.9 + i * 0.7;
@@ -111,7 +120,7 @@ export const VFX_SHEETS: Record<string, VfxSheet> = {
     }
     const r = rnd(f + 3); for (let i = 0; i < 6; i++) dot(c, w / 2 + (r() - 0.5) * 50, h - r() * h, 2, `rgba(255,255,255,${fade})`);
   } },
-  spikes: { w: 112, h: 72, frames: 7, fps: 20, tinted: true, draw: (c, t, _f, w, h) => {
+  spikes: { w: 112, h: 72, frames: 12, fps: 28, tinted: true, draw: (c, t, _f, w, h) => {
     const up = t < 0.4 ? ease(t / 0.4) : t < 0.75 ? 1 : 1 - (t - 0.75) / 0.25;
     const r = rnd(5);
     for (let i = 0; i < 7; i++) {
@@ -122,7 +131,7 @@ export const VFX_SHEETS: Record<string, VfxSheet> = {
     }
     if (t < 0.3) glow(c, w / 2, h - 8, 40, 0.5 - t);
   } },
-  circle: { w: 128, h: 64, frames: 8, fps: 14, loop: true, tinted: true, draw: (c, t, _f, w, h) => {
+  circle: { w: 128, h: 64, frames: 16, fps: 20, loop: true, tinted: true, draw: (c, t, _f, w, h) => {
     const a = t * TAU / 4;
     c.save(); c.translate(w / 2, h / 2); c.scale(1, 0.42);
     c.strokeStyle = 'rgba(255,255,255,0.9)'; c.lineWidth = 2;
@@ -133,7 +142,7 @@ export const VFX_SHEETS: Record<string, VfxSheet> = {
     c.restore();
     glow(c, w / 2, h / 2, 30, 0.35);
   } },
-  rise: { w: 64, h: 96, frames: 8, fps: 14, tinted: true, draw: (c, t, _f, w, h) => {
+  rise: { w: 64, h: 96, frames: 14, fps: 18, tinted: true, draw: (c, t, _f, w, h) => {
     const r = rnd(9), fade = t < 0.7 ? 1 : 1 - (t - 0.7) / 0.3;
     glow(c, w / 2, h - 14, 22, 0.6 * fade);
     for (let i = 0; i < 10; i++) {
@@ -142,7 +151,7 @@ export const VFX_SHEETS: Record<string, VfxSheet> = {
       else dot(c, x, y, 2, `rgba(255,255,255,${fade})`);
     }
   } },
-  aura: { w: 64, h: 96, frames: 8, fps: 16, tinted: true, draw: (c, t, f, w, h) => {
+  aura: { w: 64, h: 96, frames: 14, fps: 20, tinted: true, draw: (c, t, f, w, h) => {
     const fade = t < 0.75 ? Math.min(1, t * 4) : 1 - (t - 0.75) / 0.25, r = rnd(f * 3 + 1);
     for (let i = 0; i < 9; i++) {
       const x = w / 2 - 20 + i * 5 + (r() - 0.5) * 3, ht = 24 + r() * 34, base = h - 10;
@@ -151,7 +160,7 @@ export const VFX_SHEETS: Record<string, VfxSheet> = {
     }
     arcBand(c, w / 2, h - 10, 22, 0, TAU, 2, `rgba(255,255,255,${fade})`, 0.35);
   } },
-  shield: { w: 72, h: 80, frames: 8, fps: 16, tinted: true, draw: (c, t, f, w, h) => {
+  shield: { w: 72, h: 80, frames: 12, fps: 20, tinted: true, draw: (c, t, f, w, h) => {
     const s = Math.min(1, t * 4), fade = t < 0.7 ? 1 : 1 - (t - 0.7) / 0.3;
     c.save(); c.translate(w / 2, h / 2 + 4); c.scale(s, s);
     c.beginPath(); c.arc(0, 0, 30, 0, TAU); c.fillStyle = `rgba(200,200,200,${0.18 * fade})`; c.fill();
@@ -160,7 +169,7 @@ export const VFX_SHEETS: Record<string, VfxSheet> = {
     c.beginPath(); c.arc(-9, -11, 7, 0, TAU); c.fillStyle = `rgba(255,255,255,${0.4 * fade})`; c.fill();
     c.restore();
   } },
-  pierce: { w: 112, h: 40, frames: 5, fps: 26, tinted: true, draw: (c, t, _f, w, h) => {
+  pierce: { w: 112, h: 40, frames: 8, fps: 36, tinted: true, draw: (c, t, _f, w, h) => {
     const len = 100 * ease(Math.min(1, t * 2)), fade = 1 - t;
     c.beginPath(); c.moveTo(4, h / 2 - 7 * fade); c.lineTo(4 + len, h / 2); c.lineTo(4, h / 2 + 7 * fade); c.closePath();
     c.fillStyle = `rgba(200,200,200,${fade * 0.7})`; c.fill();
@@ -168,12 +177,12 @@ export const VFX_SHEETS: Record<string, VfxSheet> = {
     for (const o of [-12, 12]) c.fillRect(4 + len * 0.3, h / 2 + o, len * 0.5, 1);
     glow(c, 4 + len, h / 2, 12, fade);
   } },
-  whirl: { w: 120, h: 72, frames: 8, fps: 22, tinted: true, draw: (c, t, f, w, h) => {
+  whirl: { w: 120, h: 72, frames: 14, fps: 30, tinted: true, draw: (c, t, f, w, h) => {
     const fade = t < 0.75 ? 1 : 1 - (t - 0.75) / 0.25;
     for (let i = 0; i < 3; i++) { const a = f * 0.9 + (i / 3) * TAU; arcBand(c, w / 2, h / 2, 40 + i * 4, a, a + 1.6, 4, `rgba(255,255,255,${fade * (0.5 + i * 0.2)})`, 0.5); }
     arcBand(c, w / 2, h / 2, 50, 0, TAU, 1, `rgba(255,255,255,${0.4 * fade})`, 0.5);
   } },
-  tendrils: { w: 96, h: 96, frames: 8, fps: 16, tinted: true, draw: (c, t, _f, w, h) => {
+  tendrils: { w: 96, h: 96, frames: 12, fps: 20, tinted: true, draw: (c, t, _f, w, h) => {
     const up = t < 0.5 ? ease(t * 2) : 1, fade = t < 0.7 ? 1 : 1 - (t - 0.7) / 0.3, r = rnd(13);
     for (let i = 0; i < 6; i++) {
       const x = 14 + i * 13 + (r() - 0.5) * 6, ht = (34 + r() * 40) * up, k = (r() - 0.5) * 24;
@@ -183,7 +192,7 @@ export const VFX_SHEETS: Record<string, VfxSheet> = {
     }
     arcBand(c, w / 2, h - 6, 34, 0, TAU, 4, `rgba(140,140,140,${0.6 * fade})`, 0.3);
   } },
-  cloud: { w: 104, h: 72, frames: 8, fps: 12, tinted: true, draw: (c, t, _f, w, h) => {
+  cloud: { w: 104, h: 72, frames: 12, fps: 14, tinted: true, draw: (c, t, _f, w, h) => {
     const fade = t < 0.6 ? Math.min(1, t * 4) : 1 - (t - 0.6) / 0.4, r = rnd(17);
     for (let i = 0; i < 9; i++) {
       const x = 18 + r() * (w - 36), y = h - 16 - r() * 24 - t * 10, rad = 8 + r() * 10 + t * 6;
@@ -191,11 +200,11 @@ export const VFX_SHEETS: Record<string, VfxSheet> = {
     }
     for (let i = 0; i < 6; i++) { c.strokeStyle = `rgba(255,255,255,${fade})`; c.lineWidth = 1; c.beginPath(); c.arc(14 + r() * (w - 28), h - 20 - ((t + r()) % 1) * 40, 2 + r() * 2, 0, TAU); c.stroke(); }
   } },
-  smoke: { w: 64, h: 64, frames: 6, fps: 14, tinted: true, draw: (c, t, _f, w, h) => {
+  smoke: { w: 64, h: 64, frames: 10, fps: 20, tinted: true, draw: (c, t, _f, w, h) => {
     const fade = 1 - t, r = rnd(23);
     for (let i = 0; i < 7; i++) { const a = r() * TAU, d = 6 + 18 * ease(t) * (0.6 + r() * 0.4); c.beginPath(); c.arc(w / 2 + Math.cos(a) * d, h / 2 + Math.sin(a) * d * 0.6 - t * 8, 7 + t * 6, 0, TAU); c.fillStyle = `rgba(170,170,170,${0.6 * fade})`; c.fill(); }
   } },
-  wind: { w: 112, h: 56, frames: 6, fps: 20, tinted: true, draw: (c, t, _f, w, h) => {
+  wind: { w: 112, h: 56, frames: 10, fps: 28, tinted: true, draw: (c, t, _f, w, h) => {
     const fade = t < 0.6 ? 1 : 1 - (t - 0.6) / 0.4, r = rnd(31);
     for (let i = 0; i < 6; i++) {
       const y = 8 + r() * (h - 16), x0 = -30 + (w + 40) * t * (0.8 + r() * 0.4), len = 26 + r() * 30;
@@ -203,7 +212,7 @@ export const VFX_SHEETS: Record<string, VfxSheet> = {
       c.beginPath(); c.moveTo(x0, y); c.quadraticCurveTo(x0 + len * 0.6, y - 6, x0 + len, y); c.stroke();
     }
   } },
-  notes: { w: 64, h: 80, frames: 8, fps: 12, tinted: true, draw: (c, t, _f, w, h) => {
+  notes: { w: 64, h: 80, frames: 12, fps: 16, tinted: true, draw: (c, t, _f, w, h) => {
     const fade = t < 0.7 ? 1 : 1 - (t - 0.7) / 0.3, r = rnd(41);
     for (let i = 0; i < 5; i++) {
       const x = 10 + r() * (w - 20) + Math.sin(t * TAU + i) * 4, y = h - 10 - ((t * (0.7 + r() * 0.5) + r() * 0.5) % 1) * (h - 20);
@@ -228,19 +237,19 @@ export const VFX_SHEETS: Record<string, VfxSheet> = {
     c.fillStyle = 'rgba(255,255,255,0.9)'; c.fillRect(6, h / 2 - 3 - f, 4, 2); c.fillRect(6, h / 2 + 1 + f, 4, 2);
     glow(c, w - 4, h / 2, 6, 0.6);
   } },
-  holycross: { w: 56, h: 80, frames: 7, fps: 16, tinted: true, draw: (c, t, _f, w, h) => {
+  holycross: { w: 56, h: 80, frames: 11, fps: 22, tinted: true, draw: (c, t, _f, w, h) => {
     const y = -20 + Math.min(1, t * 2.5) * 40, fade = t < 0.65 ? 1 : 1 - (t - 0.65) / 0.35;
     glow(c, w / 2, y + 28, 26, 0.7 * fade);
     c.fillStyle = `rgba(220,220,220,${fade})`; c.fillRect(w / 2 - 4, y + 4, 8, 50); c.fillRect(w / 2 - 16, y + 16, 32, 8);
     c.fillStyle = `rgba(255,255,255,${fade})`; c.fillRect(w / 2 - 1, y + 6, 2, 46); c.fillRect(w / 2 - 14, y + 19, 28, 2);
   } },
-  fist: { w: 72, h: 72, frames: 6, fps: 24, tinted: true, draw: (c, t, _f, w, h) => {
+  fist: { w: 72, h: 72, frames: 9, fps: 32, tinted: true, draw: (c, t, _f, w, h) => {
     const fade = 1 - t;
     for (let i = 0; i < 3; i++) arcBand(c, w / 2, h / 2, 6 + (t * 30 + i * 8) % 34, 0, TAU, 3 - i, `rgba(255,255,255,${fade * (1 - i * 0.25)})`);
     star(c, w / 2, h / 2, 10 + 14 * t, 4, 5, 0.3, `rgba(255,255,255,${fade})`);
     glow(c, w / 2, h / 2, 26, fade * 0.7);
   } },
-  flame: { w: 48, h: 72, frames: 8, fps: 16, loop: false, tinted: false, draw: (c, t, f, w, h) => {
+  flame: { w: 48, h: 72, frames: 12, fps: 20, loop: false, tinted: false, draw: (c, t, f, w, h) => {
     const fade = t < 0.75 ? Math.min(1, t * 6) : 1 - (t - 0.75) / 0.25, r = rnd(f * 7 + 2);
     for (const [col, sc] of [['255,90,30', 1], ['255,170,50', 0.7], ['255,245,180', 0.4]] as [string, number][]) {
       for (let i = 0; i < 5; i++) {
@@ -250,7 +259,7 @@ export const VFX_SHEETS: Record<string, VfxSheet> = {
       }
     }
   } },
-  explode: { w: 104, h: 104, frames: 8, fps: 18, tinted: false, draw: (c, t, f, w, h) => {
+  explode: { w: 104, h: 104, frames: 14, fps: 24, tinted: false, draw: (c, t, f, w, h) => {
     const r = rnd(f + 51), R = 12 + 34 * ease(Math.min(1, t * 1.5)), fade = t < 0.5 ? 1 : 1 - (t - 0.5) / 0.5;
     glow(c, w / 2, h / 2, R + 14, fade, '255,150,60');
     for (const [col, k] of [['255,80,30', 1], ['255,170,60', 0.75], ['255,240,190', 0.45]] as [string, number][]) {
@@ -258,6 +267,8 @@ export const VFX_SHEETS: Record<string, VfxSheet> = {
       for (let i = 0; i <= 16; i++) { const a = (i / 16) * TAU, rr = R * k * (0.8 + r() * 0.35); c.lineTo(w / 2 + Math.cos(a) * rr, h / 2 + Math.sin(a) * rr); }
       c.closePath(); c.fillStyle = `rgba(${col},${fade * (t > 0.6 ? 0.6 : 0.95)})`; c.fill();
     }
+    arcBand(c, w / 2, h / 2, R * 1.25, 0, TAU, 2, `rgba(255,220,160,${0.8 * (1 - t)})`);
+    for (let i = 0; i < 10; i++) { const a = (i / 10) * TAU + 0.3, d0 = R * 0.9, d1 = R * 0.9 + 16 * t; c.strokeStyle = `rgba(255,230,170,${1 - t})`; c.lineWidth = 1; c.beginPath(); c.moveTo(w / 2 + Math.cos(a) * d0, h / 2 + Math.sin(a) * d0); c.lineTo(w / 2 + Math.cos(a) * d1, h / 2 + Math.sin(a) * d1); c.stroke(); }
     if (t > 0.45) for (let i = 0; i < 6; i++) { const a = r() * TAU; c.beginPath(); c.arc(w / 2 + Math.cos(a) * R * 0.8, h / 2 + Math.sin(a) * R * 0.8 - t * 10, 6 + t * 6, 0, TAU); c.fillStyle = `rgba(60,50,50,${0.5 * (1 - t)})`; c.fill(); }
   } },
   meteor: { w: 48, h: 48, frames: 4, fps: 16, loop: true, tinted: false, draw: (c, _t, f, w, h) => {
