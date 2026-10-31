@@ -2,7 +2,7 @@
 import type { GameData } from '../core/data';
 import { EYE_COLORS, HAIR_COLORS, HAIR_STYLES, SKIN_TONES, validateName } from '../core/character';
 import type { Appearance, CharacterState, Direction, SaveFile } from '../core/types';
-import { generateCharacterSheet, type CharacterLook } from '../game/art/characterSprite';
+import { generateCharacterSheet, useShadowStyle, type CharacterLook } from '../game/art/characterSprite';
 import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_FRAME_H, CHAR_FRAME_W, CHAR_SHEET_COLS, type CharAnim } from '../game/art/spriteMeta';
 import { audio } from '../game/audio/audio';
 import { getLang, LANGS, type Lang } from './i18n';
@@ -40,7 +40,7 @@ export class SpritePreview {
 export function lookForCharacter(data: GameData, c: CharacterState): CharacterLook {
   const cls = data.classes.get(c.classId)!;
   const w = c.equipment.weapon ? data.items.get(c.equipment.weapon.itemId)?.weaponType ?? null : null;
-  return { appearance: c.appearance, outfit: cls.outfit, weapon: w, shield: !!c.equipment.shield, sheet: `class/${c.classId}` };
+  return { appearance: c.appearance, outfit: cls.outfit, weapon: w, shield: !!c.equipment.shield, sheet: `class/${c.classId}`, shadow: useShadowStyle() };
 }
 
 export function titleScreen(onPlay: () => void, onSettings: () => void, onLang: (l: Lang) => void): HTMLElement {

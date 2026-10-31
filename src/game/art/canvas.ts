@@ -69,3 +69,18 @@ export function addOutline(ctx: CanvasRenderingContext2D, x0: number, y0: number
   }
   ctx.putImageData(out, x0, y0);
 }
+
+/** Filled polygon on whole pixels (scanline), so hair keeps hard pixel-art edges. */
+export function poly(ctx: CanvasRenderingContext2D, pts: [number, number][], color: string) {
+  ctx.fillStyle = color;
+  const ys = pts.map((p) => p[1]);
+  for (let y = Math.floor(Math.min(...ys)); y <= Math.ceil(Math.max(...ys)); y++) {
+    const xs: number[] = [];
+    for (let i = 0; i < pts.length; i++) {
+      const [x1, y1] = pts[i], [x2, y2] = pts[(i + 1) % pts.length];
+      if ((y + 0.5 >= Math.min(y1, y2)) && (y + 0.5 < Math.max(y1, y2))) xs.push(x1 + ((y + 0.5 - y1) * (x2 - x1)) / (y2 - y1));
+    }
+    xs.sort((m, n) => m - n);
+    for (let i = 0; i + 1 < xs.length; i += 2) ctx.fillRect(Math.round(xs[i]), y, Math.max(1, Math.round(xs[i + 1]) - Math.round(xs[i])), 1);
+  }
+}

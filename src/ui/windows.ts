@@ -683,6 +683,12 @@ export class WindowManager {
         toggle('effects', 'Visual effects (skills, hits, particles, weather) — applies on the next map'),
         toggle('cellCursor', 'Cell cursor under the mouse (Ragnarok style)'),
         toggle('showGrid', 'Show grid lines on the map'),
+        h('label', { class: 'row', style: 'margin-bottom:4px;gap:6px' }, 'Character style', (() => {
+          const sel = h('select', { id: 'set-characterStyle' }, h('option', { value: 'shadow' }, 'Shadow (black silhouette)'), h('option', { value: 'classic' }, 'Classic (job costumes)'));
+          sel.value = st.characterStyle ?? 'shadow';
+          sel.addEventListener('change', () => { st.characterStyle = sel.value as 'shadow' | 'classic'; app.applySettings(); app.refreshPlayerLook(); });
+          return sel;
+        })()),
         toggle('touchControls', 'Touch controls (joystick and buttons for phones / tablets)'),
         toggle('showCollision', 'Show collision / spawn debug overlay'),
         h('div', { class: 'gold', style: 'font-weight:bold;margin-top:8px' }, 'Key Bindings'),

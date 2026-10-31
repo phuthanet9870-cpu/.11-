@@ -2,10 +2,11 @@
 // Sheet layout and animation metadata are defined in spriteMeta.ts and are the
 // contract real artwork must follow to replace these sheets.
 import type { Appearance, Direction } from '../../core/types';
-import { addOutline, ellipse, makeCanvas, px, shade } from './canvas';
+import { addOutline, ellipse, makeCanvas, poly, px, shade } from './canvas';
 import { overrideCanvas } from './spriteOverrides';
 import { costumeFor } from './costumes';
 import { drawCapeBack, drawCapeFront, drawCostumeBody, drawHeadgear, drawMask } from './costumeDraw';
+import { drawShadowFrame, shadowDesign } from './shadowSprite';
 import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_FRAME_H, CHAR_FRAME_W, CHAR_SHEET_COLS, type CharAnim } from './spriteMeta';
 
 export interface CharacterLook {
@@ -15,7 +16,14 @@ export interface CharacterLook {
   shield?: boolean;
   /** Studio sheet that replaces the drawn one: `npc/<id>` or `class/<classId>`. */
   sheet?: string;
+  /** Player characters drawn in the "shadow" style (black silhouette, glowing eyes). */
+  shadow?: boolean;
 }
+
+let shadowStyle = true;
+/** Character style for player characters: shadow silhouettes (default) or the classic chibi look. */
+export const setCharacterStyle = (style: 'shadow' | 'classic') => { shadowStyle = style !== 'classic'; };
+export const useShadowStyle = () => shadowStyle;
 
 const W = CHAR_FRAME_W, H = CHAR_FRAME_H;
 /** Headgear that covers the crown of the head. */
@@ -93,20 +101,6 @@ function drawWeapon(ctx: CanvasRenderingContext2D, type: string | null, x: numbe
   ctx.restore();
 }
 
-/** Filled polygon on whole pixels (scanline), so hair keeps hard pixel-art edges. */
-function poly(ctx: CanvasRenderingContext2D, pts: [number, number][], color: string) {
-  ctx.fillStyle = color;
-  const ys = pts.map((p) => p[1]);
-  for (let y = Math.floor(Math.min(...ys)); y <= Math.ceil(Math.max(...ys)); y++) {
-    const xs: number[] = [];
-    for (let i = 0; i < pts.length; i++) {
-      const [x1, y1] = pts[i], [x2, y2] = pts[(i + 1) % pts.length];
-      if ((y + 0.5 >= Math.min(y1, y2)) && (y + 0.5 < Math.max(y1, y2))) xs.push(x1 + ((y + 0.5 - y1) * (x2 - x1)) / (y2 - y1));
-    }
-    xs.sort((m, n) => m - n);
-    for (let i = 0; i + 1 < xs.length; i += 2) ctx.fillRect(Math.round(xs[i]), y, Math.max(1, Math.round(xs[i + 1]) - Math.round(xs[i])), 1);
-  }
-}
 const at = (hx: number, hy: number, pts: [number, number][]) => pts.map(([x, y]) => [hx + x, hy + y] as [number, number]);
 const mirror = (pts: [number, number][]) => pts.map(([x, y]) => [-x, y] as [number, number]);
 
@@ -243,6 +237,13 @@ export function generateCharacterSheet(look: CharacterLook): HTMLCanvasElement {
   if (drawn) return drawn;
   const { canvas, ctx } = makeCanvas(W * CHAR_SHEET_COLS, H * CHAR_DIRECTIONS.length);
   const tmp = makeCanvas(W, H);
+  const classId = look.shadow && look.sheet?.startsWith('class/') ? look.sheet.slice(6) : null;
+  const design = classId ? shadowDesign(classId) : null;
+  const outline = design ? '#05050a' : undefined;
+  const frame = (c: CanvasRenderingContext2D, d: Direction, a: CharAnim, f: number) => {
+    if (design) drawShadowFrame(c, design, look.weapon, !!look.shield, d, poseFor(a, f));
+    else drawFrame(c, look, d, a, f);
+  };
   for (const [row, dir] of CHAR_DIRECTIONS.entries()) {
     for (const [anim, meta] of Object.entries(CHAR_ANIMS) as [CharAnim, typeof CHAR_ANIMS[CharAnim]][]) {
       for (let f = 0; f < meta.count; f++) {
@@ -251,8 +252,8 @@ export function generateCharacterSheet(look: CharacterLook): HTMLCanvasElement {
         if (anim === 'death') {
           // Kneel → topple → lie down, rotating the idle pose around the feet.
           const t2 = makeCanvas(W, H);
-          drawFrame(t2.ctx, look, drawDir, 'idle', 0);
-          addOutline(t2.ctx, 0, 0, W, H);
+          frame(t2.ctx, drawDir, 'idle', 0);
+          addOutline(t2.ctx, 0, 0, W, H, outline);
           tmp.ctx.save();
           tmp.ctx.translate(CX, FEET);
           tmp.ctx.rotate([0.25, 0.9, 1.5][f]);
@@ -261,8 +262,8 @@ export function generateCharacterSheet(look: CharacterLook): HTMLCanvasElement {
           tmp.ctx.drawImage(t2.canvas, 0, 0);
           tmp.ctx.restore();
         } else {
-          drawFrame(tmp.ctx, look, drawDir, anim, f);
-          addOutline(tmp.ctx, 0, 0, W, H);
+          frame(tmp.ctx, drawDir, anim, f);
+          addOutline(tmp.ctx, 0, 0, W, H, outline);
           if (anim === 'hit') {
             tmp.ctx.globalCompositeOperation = 'source-atop';
             tmp.ctx.fillStyle = 'rgba(255,60,60,0.45)';

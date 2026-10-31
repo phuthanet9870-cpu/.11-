@@ -3,7 +3,7 @@
 // Each opens in the image editor with the game's current sheet as the starting point and a live
 // animation preview; saved sheets replace the drawn ones in the game.
 import type { MonsterDef } from '../core/types';
-import { generateCharacterSheet, type CharacterLook } from '../game/art/characterSprite';
+import { generateCharacterSheet, useShadowStyle, type CharacterLook } from '../game/art/characterSprite';
 import { itemIconCanvas, skillIconUrl } from '../game/art/icons';
 import { generateMonsterSheet } from '../game/art/monsterSprite';
 import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_FRAME_H, CHAR_FRAME_W, CHAR_SHEET_COLS, MON_ANIMS, MON_SHEET_COLS } from '../game/art/spriteMeta';
@@ -50,7 +50,7 @@ function entries(st: StudioCtx, kind: Kind): Entry[] {
     }));
     case 'npc': return [...d.npcs.values()].map((n) => ({ kind, id: n.id, name: n.name, path: `sprites/npc/${n.id}`, opts: charOpts({ appearance: n.appearance, outfit: n.outfit, weapon: null, sheet: `npc/${n.id}` }), note: charNote }));
     case 'class': return [...d.classes.values()].map((c) => ({
-      kind, id: c.id, name: c.name, path: `sprites/class/${c.id}`, opts: charOpts({ appearance: APPEAR, outfit: c.outfit, weapon: c.weaponTypes?.[0] ?? null, sheet: `class/${c.id}` }),
+      kind, id: c.id, name: c.name, path: `sprites/class/${c.id}`, opts: charOpts({ appearance: APPEAR, outfit: c.outfit, weapon: c.weaponTypes?.[0] ?? null, sheet: `class/${c.id}`, shadow: useShadowStyle() }),
       note: `${charNote} · ถ้าวาดชีตนี้ ผู้เล่นอาชีพนี้จะใช้ภาพนี้แทน (ไม่ขึ้นกับทรงผม/อาวุธที่เลือก)`,
     }));
     case 'item': return [...d.items.values()].map((it) => ({ kind, id: it.id, name: it.name, path: `icons/item/${it.id}`, opts: { template: () => itemIconCanvas(it), fixedSize: true }, note: 'ไอคอน 32×32' }));

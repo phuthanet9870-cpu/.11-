@@ -12,7 +12,7 @@ import {
   CHUNK_TILES, ensureCharacterTexture, ensureFxTextures, ensureItemTexture, ensureMapChunk, ensureMapTextures, ensureMonsterTexture, ensureTombstoneTexture,
   releaseMapChunk, type ChunkLayers,
 } from '../assets';
-import type { CharacterLook } from '../art/characterSprite';
+import { useShadowStyle, type CharacterLook } from '../art/characterSprite';
 import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_PIVOT, CHAR_SHEET_COLS, MON_ANIMS, MON_SHEET_COLS, type CharAnim, type MonAnim } from '../art/spriteMeta';
 import { clipFrame, type Clip, type Rig } from '../rig';
 import { ELEMENT_FX, floatText, playFx, playProjectile } from '../render/effects';
@@ -347,15 +347,17 @@ export class GameScene extends Phaser.Scene {
     this.collisionGfx = g;
   }
 
+  refreshPlayerLook() { this.ensurePlayerTexture(); }
+
   /** Player rig: production art for classes that have it, else the procedural sheet. */
   private ensurePlayerTexture() {
     const c = this.world.char;
     const cls = this.world.data.classes.get(c.classId)!;
     const weapon = c.equipment.weapon ? this.world.data.items.get(c.equipment.weapon.itemId)?.weaponType ?? null : null;
-    const lookId = JSON.stringify([c.classId, c.appearance, weapon, !!c.equipment.shield]);
+    const lookId = JSON.stringify([c.classId, c.appearance, weapon, !!c.equipment.shield, useShadowStyle()]);
     if (lookId === this.playerLookKey && this.playerRig) return;
     this.playerLookKey = lookId;
-    const look: CharacterLook = { appearance: c.appearance, outfit: cls.outfit, weapon, shield: !!c.equipment.shield, sheet: `class/${c.classId}` };
+    const look: CharacterLook = { appearance: c.appearance, outfit: cls.outfit, weapon, shield: !!c.equipment.shield, sheet: `class/${c.classId}`, shadow: useShadowStyle() };
     this.playerRig = proceduralCharRig(ensureCharacterTexture(this, look));
     if (this.player?.active) this.player.setOrigin(this.playerRig.originX, this.playerRig.originY);
   }

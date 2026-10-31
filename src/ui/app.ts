@@ -11,6 +11,7 @@ import { runGmCommand } from '../core/gm';
 import { keyFromEvent } from './keys';
 import { setLang, type Lang } from './i18n';
 import { audio } from '../game/audio/audio';
+import { setCharacterStyle } from '../game/art/characterSprite';
 import type { GameHost } from '../game/host';
 import { BootScene } from '../game/scenes/BootScene';
 import { GameScene } from '../game/scenes/GameScene';
@@ -57,6 +58,7 @@ export class App implements GameHost {
     this.online = new Online(this);
     audio.setVolumes(this.settings.volume);
     setLang(this.settings.language ?? 'en');
+    setCharacterStyle(this.settings.characterStyle ?? 'shadow');
     this.fitToWindow();
     window.addEventListener('resize', () => this.fitToWindow());
     window.addEventListener('keydown', (e) => this.onKeyDown(e));
@@ -113,6 +115,12 @@ export class App implements GameHost {
 
   private testStorage(): boolean {
     try { localStorage.setItem('veyloria.test', '1'); localStorage.removeItem('veyloria.test'); return true; } catch { return false; }
+  }
+
+  /** Redraws the player character after the character style changed. */
+  refreshPlayerLook() {
+    const scene = this.game.scene.getScene('Game') as GameScene | null;
+    if (scene && scene.scene.isActive()) scene.refreshPlayerLook();
   }
 
   private fitToWindow() {
@@ -236,6 +244,7 @@ export class App implements GameHost {
 
   applySettings() {
     audio.setVolumes(this.settings.volume);
+    setCharacterStyle(this.settings.characterStyle ?? 'shadow');
     if (this.world) this.world.autoLoot = this.settings.autoLoot;
     const scene = this.game.scene.getScene('Game') as GameScene | null;
     if (scene && scene.scene.isActive()) { scene.setCollisionVisible(this.settings.showCollision); scene.setGridVisible(!!this.settings.showGrid); }

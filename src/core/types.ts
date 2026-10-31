@@ -628,6 +628,8 @@ export interface Settings {
   /** The bottom-right icon menu is folded away. */
   menuCollapsed?: boolean;
   wasdMovement: boolean;
+  /** Player character look: shadow silhouettes (default) or the classic chibi costumes. */
+  characterStyle?: 'shadow' | 'classic';
   /** Interface language (default English). */
   language?: 'en' | 'th';
   /** Online play: last server address and account name used. */
