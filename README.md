@@ -118,8 +118,8 @@ Ground-target skills (Arrow Rain, Wind Trap, Fire Wall, Thunderstorm, Meteor) la
 
 ## Training Grounds and Shadow Arena
 
-- **Drillmaster Brann** stands in Aurelion (next to the Arena Master) and warps for free to the **Training Grounds** and the **Shadow Arena** (both maps also have him for the way back).
-- **Training Grounds:** twelve straw training dummies that never move, never fight back and never die. Hit them with anything; when you stop for 3 seconds the chat shows the total damage, seconds, damage per second, hits, crits and best hit, and the dummies heal back up. No EXP or drops.
+- The two are separate maps with separate NPCs in Aurelion (next to the Arena Master): **Drillmaster Brann** warps for free to the **Training Grounds** (64×44) and back; **Gatekeeper Varr** warps to the **Shadow Arena** (60×46) and back.
+- **Training Grounds:** 32 straw training dummies in four rows on a wide sand yard that never move, never fight back and never die. Hit them with anything; when you stop for 3 seconds the chat shows the total damage, seconds, damage per second, hits, crits and best hit, and the dummies heal back up. No EXP or drops.
 - **Shadow Arena:** talk to **Shadow Keeper Nyx** and choose 1–5 shadow fighters. Each takes a random job (any job except Novice), is drawn in that job's shadow style and copies your current strength: Max HP, ATK, MATK, DEF, MDEF, HIT, FLEE, attack speed, move speed and level. Archers shoot and casters cast from range; every few seconds a shadow uses one of its job line's damage skills on you (with that skill's own effect). Defeating them all ends the round (no rewards — it is practice); talk to Nyx again for another round.
 - Both maps are built by `tools/world-gen/build-world.ts` (`training_dummy` and `shadow_fighter` are hidden from the monster database).
 

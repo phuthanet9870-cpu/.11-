@@ -2516,7 +2516,7 @@
  {
   "id": "training_master",
   "name": "Drillmaster Brann",
-  "title": "Training Grounds & Shadow Arena",
+  "title": "Training Grounds",
   "appearance": {
    "body": "b",
    "hairStyle": "short",
@@ -2531,7 +2531,7 @@
    "style": "plate"
   },
   "greeting": [
-   "The Training Grounds have dummies that never hit back — test your damage there. The Shadow Arena summons fighters as strong as you are."
+   "The Training Grounds have dummies that never hit back — test your damage there."
   ],
   "services": [
    {
@@ -2544,6 +2544,40 @@
      },
      {
       "mapId": "training_grounds",
+      "spawn": "default",
+      "cost": 0
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arena_gatekeeper",
+  "name": "Gatekeeper Varr",
+  "title": "Shadow Arena",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#e8d090",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "plate"
+  },
+  "greeting": [
+   "Beyond this gate lies the Shadow Arena. The Shadow Keeper inside summons fighters as strong as you are."
+  ],
+  "services": [
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "aurelion",
       "spawn": "default",
       "cost": 0
      },

@@ -12,17 +12,21 @@ function at(mapId: string, npcId: string, level = 40) {
 }
 
 describe('training grounds and shadow arena', () => {
-  it('the Drillmaster in Aurelion warps to both new maps', () => {
-    const npc = data.npcs.get('training_master')!;
-    const warp = npc.services.find((s) => s.type === 'warp') as { destinations: { mapId: string }[] };
-    expect(warp.destinations.map((d) => d.mapId)).toEqual(expect.arrayContaining(['training_grounds', 'shadow_arena']));
-    expect(data.maps.get('aurelion')!.npcs.some((n) => n.npcId === 'training_master')).toBe(true);
+  it('training and arena are separate: each has its own warp NPC in Aurelion', () => {
+    const dests = (id: string) => (data.npcs.get(id)!.services.find((s) => s.type === 'warp') as { destinations: { mapId: string }[] }).destinations.map((d) => d.mapId);
+    expect(dests('training_master')).toEqual(['aurelion', 'training_grounds']);
+    expect(dests('arena_gatekeeper')).toEqual(['aurelion', 'shadow_arena']);
+    for (const id of ['training_master', 'arena_gatekeeper']) expect(data.maps.get('aurelion')!.npcs.some((n) => n.npcId === id)).toBe(true);
+    expect(data.maps.get('training_grounds')!.npcs.map((n) => n.npcId)).toEqual(['training_master']);
+    expect(data.maps.get('shadow_arena')!.npcs.map((n) => n.npcId).sort()).toEqual(['arena_gatekeeper', 'shadow_arena_master']);
+    expect(data.maps.get('training_grounds')!.width).toBeGreaterThanOrEqual(60);
+    expect(data.maps.get('shadow_arena')!.width).toBeGreaterThanOrEqual(56);
   });
 
   it('training dummies take damage, never die, never move and report the totals', () => {
     const { w } = at('training_grounds', 'training_master');
     const dummies = [...w.monsters.values()].filter((m) => m.def.id === 'training_dummy');
-    expect(dummies.length).toBe(12);
+    expect(dummies.length).toBe(32);
     const d = dummies[0], x = d.x;
     for (let i = 0; i < 5; i++) w.damageMonster(d, 2_000_000, 'physical', 'neutral', false, false);
     expect(d.dead).toBe(false);

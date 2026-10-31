@@ -3,8 +3,8 @@
  "name": "Training Grounds",
  "region": "Aurelion — Royal Capital",
  "type": "arena",
- "width": 36,
- "height": 26,
+ "width": 64,
+ "height": 44,
  "tileset": "dg_catacomb",
  "base": "ruin_floor",
  "border": {
@@ -22,47 +22,71 @@
   {
    "op": "rect",
    "tile": "sand",
-   "x": 3,
+   "x": 5,
    "y": 5,
-   "w": 30,
-   "h": 12
+   "w": 54,
+   "h": 31
   },
   {
    "op": "object",
    "kind": "barrel",
-   "x": 3,
-   "y": 3
+   "x": 4,
+   "y": 4
   },
   {
    "op": "object",
    "kind": "barrel",
-   "x": 32,
-   "y": 3
+   "x": 59,
+   "y": 4
   },
   {
    "op": "object",
    "kind": "barrel",
+   "x": 4,
+   "y": 36
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 59,
+   "y": 36
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 20,
+   "y": 4
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 43,
+   "y": 4
+  },
+  {
+   "op": "object",
+   "kind": "ruin_pillar",
    "x": 3,
    "y": 20
   },
   {
    "op": "object",
-   "kind": "barrel",
-   "x": 32,
+   "kind": "ruin_pillar",
+   "x": 60,
    "y": 20
   }
  ],
  "spawnPoints": {
   "default": {
-   "x": 18,
-   "y": 22
+   "x": 32,
+   "y": 40
   }
  },
  "portals": [
   {
    "id": "exit",
-   "x": 17,
-   "y": 24,
+   "x": 31,
+   "y": 42,
    "w": 3,
    "h": 1,
    "targetMap": "aurelion",
@@ -73,14 +97,8 @@
  "npcs": [
   {
    "npcId": "training_master",
-   "x": 15,
-   "y": 21,
-   "facing": "down"
-  },
-  {
-   "npcId": "shadow_arena_master",
-   "x": 21,
-   "y": 21,
+   "x": 30,
+   "y": 39,
    "facing": "down"
   }
  ],
@@ -89,7 +107,7 @@
    "monsterId": "training_dummy",
    "count": 1,
    "area": {
-    "x": 6,
+    "x": 8,
     "y": 8,
     "w": 2,
     "h": 1
@@ -99,7 +117,7 @@
    "monsterId": "training_dummy",
    "count": 1,
    "area": {
-    "x": 11,
+    "x": 15,
     "y": 8,
     "w": 2,
     "h": 1
@@ -109,7 +127,7 @@
    "monsterId": "training_dummy",
    "count": 1,
    "area": {
-    "x": 16,
+    "x": 22,
     "y": 8,
     "w": 2,
     "h": 1
@@ -119,7 +137,7 @@
    "monsterId": "training_dummy",
    "count": 1,
    "area": {
-    "x": 21,
+    "x": 29,
     "y": 8,
     "w": 2,
     "h": 1
@@ -129,7 +147,7 @@
    "monsterId": "training_dummy",
    "count": 1,
    "area": {
-    "x": 26,
+    "x": 36,
     "y": 8,
     "w": 2,
     "h": 1
@@ -139,7 +157,7 @@
    "monsterId": "training_dummy",
    "count": 1,
    "area": {
-    "x": 31,
+    "x": 43,
     "y": 8,
     "w": 2,
     "h": 1
@@ -149,8 +167,8 @@
    "monsterId": "training_dummy",
    "count": 1,
    "area": {
-    "x": 6,
-    "y": 14,
+    "x": 50,
+    "y": 8,
     "w": 2,
     "h": 1
    }
@@ -159,8 +177,8 @@
    "monsterId": "training_dummy",
    "count": 1,
    "area": {
-    "x": 11,
-    "y": 14,
+    "x": 57,
+    "y": 8,
     "w": 2,
     "h": 1
    }
@@ -169,8 +187,8 @@
    "monsterId": "training_dummy",
    "count": 1,
    "area": {
-    "x": 16,
-    "y": 14,
+    "x": 8,
+    "y": 15,
     "w": 2,
     "h": 1
    }
@@ -179,8 +197,8 @@
    "monsterId": "training_dummy",
    "count": 1,
    "area": {
-    "x": 21,
-    "y": 14,
+    "x": 15,
+    "y": 15,
     "w": 2,
     "h": 1
    }
@@ -189,8 +207,8 @@
    "monsterId": "training_dummy",
    "count": 1,
    "area": {
-    "x": 26,
-    "y": 14,
+    "x": 22,
+    "y": 15,
     "w": 2,
     "h": 1
    }
@@ -199,8 +217,208 @@
    "monsterId": "training_dummy",
    "count": 1,
    "area": {
-    "x": 31,
-    "y": 14,
+    "x": 29,
+    "y": 15,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 36,
+    "y": 15,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 43,
+    "y": 15,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 50,
+    "y": 15,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 57,
+    "y": 15,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 8,
+    "y": 22,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 15,
+    "y": 22,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 22,
+    "y": 22,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 29,
+    "y": 22,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 36,
+    "y": 22,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 43,
+    "y": 22,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 50,
+    "y": 22,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 57,
+    "y": 22,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 8,
+    "y": 29,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 15,
+    "y": 29,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 22,
+    "y": 29,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 29,
+    "y": 29,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 36,
+    "y": 29,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 43,
+    "y": 29,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 50,
+    "y": 29,
+    "w": 2,
+    "h": 1
+   }
+  },
+  {
+   "monsterId": "training_dummy",
+   "count": 1,
+   "area": {
+    "x": 57,
+    "y": 29,
     "w": 2,
     "h": 1
    }

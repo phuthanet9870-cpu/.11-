@@ -689,6 +689,8 @@ const UI: Record<string, string> = {
   'Shadow Arena': 'ลานประลองเงา',
   'Choose how many shadows to face. Each takes a random job and copies your strength — and they use their skills.': 'เลือกว่าจะสู้กับเงากี่ตัว แต่ละตัวสุ่มอาชีพและลอกพลังของคุณ — และใช้สกิลได้ด้วย',
   'Training Grounds': 'ลานฝึก',
+  'The Training Grounds have dummies that never hit back — test your damage there.': 'ลานฝึกมีหุ่นฝึกที่ไม่ตอบโต้ — ทดสอบความแรงของคุณได้ที่นั่น',
+  'Beyond this gate lies the Shadow Arena. The Shadow Keeper inside summons fighters as strong as you are.': 'หลังประตูนี้คือลานประลองเงา ผู้เฝ้าเงาด้านในจะเสกนักสู้ที่แข็งแกร่งพอๆ กับคุณ',
   'Summon shadow fighters': 'เสกเงาต่อสู้',
   'Each one takes a random job, copies your own strength and uses its job skills. No rewards — this is practice.': 'แต่ละตัวสุ่มอาชีพ ลอกพลังของคุณ และใช้สกิลของอาชีพนั้น ไม่มีรางวัล — เป็นการฝึกซ้อม',
   'How many shadow fighters?': 'จะเสกเงาต่อสู้กี่ตัว?',
