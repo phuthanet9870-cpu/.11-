@@ -4,7 +4,7 @@ import { homunStats } from '../../core/homunculus';
 import Phaser from 'phaser';
 import type { World, WorldEvent, MonsterActor, AnimState } from '../../core/world';
 import { TILE } from '../../core/mapCompiler';
-import type { Direction } from '../../core/types';
+import type { Direction, SkillDef } from '../../core/types';
 import { npcQuestMarker } from '../../core/quests';
 import { loadThemeArt, themeArtReady } from '../art/themeArt';
 import { mapArtPaths, scenerySprite } from '../art/scenery';
@@ -16,6 +16,7 @@ import { useShadowStyle, type CharacterLook } from '../art/characterSprite';
 import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_PIVOT, CHAR_SHEET_COLS, MON_ANIMS, MON_SHEET_COLS, type CharAnim, type MonAnim } from '../art/spriteMeta';
 import { clipFrame, type Clip, type Rig } from '../rig';
 import { ELEMENT_FX, floatText, playFx, playProjectile } from '../render/effects';
+import { ensureVfxSheets, playFxSheets, playSkillVfx, skillVfx } from '../render/vfx';
 import { audio } from '../audio/audio';
 import type { GameHost } from '../host';
 import { titleOf } from '../../core/achievements';
@@ -96,6 +97,8 @@ export class GameScene extends Phaser.Scene {
 
   /** Visual effects (skill and hit effects, particles, weather, flashes, bobbing) — off unless turned on in Settings. */
   private get fxOn() { return this.host.settings.effects === true; }
+  /** Skill and combat effect animations (Settings, default on). */
+  private get combatFxOn() { return this.host.settings.skillEffects !== false; }
 
   init(data: { host: GameHost }) {
     this.host = data.host;
@@ -104,6 +107,7 @@ export class GameScene extends Phaser.Scene {
 
   create() {
     ensureFxTextures(this);
+    ensureVfxSheets(this);
     this.cameras.main.setZoom(this.host.settings.zoom ?? ZOOM);
     this.cameras.main.setRoundPixels(true);
     this.cameras.main.setBackgroundColor('#0c0a12');
@@ -474,12 +478,17 @@ export class GameScene extends Phaser.Scene {
           const isPlayer = e.targetId === 'player' || e.targetId === 'homun';
           const col = isPlayer ? '#ff5a5a' : e.crit ? '#ffd34d' : e.kind === 'magic' ? '#c9a6ff' : e.kind === 'dot' ? '#a9e04a' : '#ffffff';
           floatText(this, tgt.x, y, e.crit ? `${e.amount}!` : `${e.amount}`, col, e.crit ? 24 : isPlayer ? 15 : 17);
-          if (this.fxOn && !isPlayer && e.element && e.element !== 'neutral' && e.kind !== 'dot') playFx(this, ELEMENT_FX[e.element] ?? 'slash_small', tgt.x, tgt.y - 10);
+          if (this.combatFxOn && !isPlayer && e.element && e.element !== 'neutral' && e.kind !== 'dot') playFx(this, ELEMENT_FX[e.element] ?? 'slash_small', tgt.x, tgt.y - 10);
         }
         break;
       }
       case 'fx': {
-        if (!this.fxOn) break;
+        if (!this.combatFxOn) break;
+        if (e.skillId) {
+          const sk = w.data.skills.get(e.skillId);
+          if (sk && playSkillVfx(this, sk, { x: w.player.x, y: w.player.y }, { x: e.x, y: e.y }, e.radius)) { playFx(this, e.fx, e.x, e.y, e.radius); break; }
+        }
+        playFxSheets(this, e.fx, e.x, e.y);
         // Effects that carry an offset are attached to their target and move with it.
         const actor = e.offsetY === undefined ? undefined : e.targetId === 'player' ? w.player : e.targetId ? w.monsters.get(e.targetId) : undefined;
         const ox = 0, oy = e.offsetY ?? 0;
@@ -487,7 +496,7 @@ export class GameScene extends Phaser.Scene {
         playFx(this, e.fx, e.x, e.y, e.radius, { flipX: e.fx.startsWith('slash') && w.player.x > e.x, follow });
         break;
       }
-      case 'projectile': if (this.fxOn) playProjectile(this, e.fx, e.fromX, e.fromY, e.toX, e.toY, e.durationMs, e.color); break;
+      case 'projectile': if (this.combatFxOn && !(e.skillId && playSkillVfxHandles(w.data.skills.get(e.skillId)))) playProjectile(this, e.fx, e.fromX, e.fromY, e.toX, e.toY, e.durationMs, e.color); break;
       case 'sound': audio.play(e.key); break;
       case 'levelUp': if (this.fxOn) floatText(this, w.player.x, w.player.y - 90, e.kind === 'base' ? 'LEVEL UP!' : 'JOB LEVEL UP!', e.kind === 'base' ? '#ffd34d' : '#7fd6ff', 22); break;
       case 'death': {
@@ -770,6 +779,9 @@ export class GameScene extends Phaser.Scene {
 function labelStyle(color: string): Phaser.Types.GameObjects.Text.TextStyle {
   return { fontFamily: '"Trebuchet MS", Verdana, sans-serif', fontSize: '11px', color, stroke: '#1c1622', strokeThickness: 3 };
 }
+
+/** Skills with an effect recipe draw their own projectiles. */
+function playSkillVfxHandles(sk: SkillDef | undefined) { return !!sk && !!skillVfx(sk); }
 
 function toCharAnim(a: AnimState): CharAnim {
   return a === 'dead' ? 'death' : a;

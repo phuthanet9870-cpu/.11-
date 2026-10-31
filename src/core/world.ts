@@ -162,8 +162,8 @@ export interface Telegraph {
 
 export type WorldEvent =
   | { type: 'damage'; targetId: string; amount: number; crit: boolean; miss: boolean; kind: 'physical' | 'magic' | 'heal' | 'mp' | 'dot'; element?: Element }
-  | { type: 'fx'; fx: string; x: number; y: number; radius?: number; targetId?: string; /** offset from the target, for effects that follow it */ offsetY?: number }
-  | { type: 'projectile'; fromX: number; fromY: number; toX: number; toY: number; durationMs: number; fx: string; color?: string }
+  | { type: 'fx'; fx: string; x: number; y: number; radius?: number; targetId?: string; /** offset from the target, for effects that follow it */ offsetY?: number; /** a player skill: drawn with its own effect recipe */ skillId?: string }
+  | { type: 'projectile'; fromX: number; fromY: number; toX: number; toY: number; durationMs: number; fx: string; color?: string; skillId?: string }
   | { type: 'levelUp'; kind: 'base' | 'job'; level: number }
   | { type: 'achievement'; id: string }
   | { type: 'openWindow'; id: 'brew' }
@@ -2080,10 +2080,10 @@ export class World {
     const isOffensive = skill.effects.some((e) => e.type === 'damage' || e.type === 'groundZone' || e.type === 'taunt');
     if (isOffensive) this.breakStealth();
 
-    this.emit({ type: 'fx', fx: skill.fx, x: centre.x, y: centre.y, radius: skill.effects.find((e) => 'radius' in e && e.radius)?.['radius' as never], targetId: target?.id });
+    this.emit({ type: 'fx', fx: skill.fx, x: centre.x, y: centre.y, radius: skill.effects.find((e) => 'radius' in e && e.radius)?.['radius' as never], targetId: target?.id, skillId: skill.id });
     this.emit({ type: 'sound', key: `skill_${skill.fx}` });
     if (skill.targeting === 'enemy' && target && dist(p.x, p.y, target.x, target.y) > 80) {
-      this.emit({ type: 'projectile', fromX: p.x, fromY: p.y - 24, toX: target.x, toY: target.y - 14, durationMs: 180, fx: skill.fx });
+      this.emit({ type: 'projectile', fromX: p.x, fromY: p.y - 24, toX: target.x, toY: target.y - 14, durationMs: 180, fx: skill.fx, skillId: skill.id });
     }
 
     let lineTargets: MonsterActor[] | null = null;

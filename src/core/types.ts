@@ -625,6 +625,8 @@ export interface Settings {
   zoom?: number;
   /** Visual effects: skill/hit effects, particles, weather, flashes (default off). */
   effects?: boolean;
+  /** Skill and combat effect animations (default on). */
+  skillEffects?: boolean;
   /** The bottom-right icon menu is folded away. */
   menuCollapsed?: boolean;
   wasdMovement: boolean;

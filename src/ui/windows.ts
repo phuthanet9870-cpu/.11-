@@ -660,8 +660,8 @@ export class WindowManager {
       input.addEventListener('input', () => { st.volume[key] = Number(input.value) / 100; val.textContent = input.value; app.applySettings(); });
       return h('div', { class: 'range-row' }, h('span', {}, label), input, val);
     };
-    const toggle = (key: 'showDamageNumbers' | 'autoLoot' | 'showCollision' | 'wasdMovement' | 'cellCursor' | 'showGrid' | 'effects' | 'touchControls', label: string) => {
-      const cb = h('input', { type: 'checkbox', id: `set-${key}`, checked: key === 'cellCursor' ? st[key] !== false : key === 'touchControls' ? (st[key] ?? isTouchDevice()) : !!st[key] });
+    const toggle = (key: 'showDamageNumbers' | 'autoLoot' | 'showCollision' | 'wasdMovement' | 'cellCursor' | 'showGrid' | 'effects' | 'skillEffects' | 'touchControls', label: string) => {
+      const cb = h('input', { type: 'checkbox', id: `set-${key}`, checked: key === 'cellCursor' || key === 'skillEffects' ? st[key] !== false : key === 'touchControls' ? (st[key] ?? isTouchDevice()) : !!st[key] });
       cb.addEventListener('change', () => { st[key] = cb.checked; app.applySettings(); });
       return h('label', { class: 'row', style: 'margin-bottom:4px' }, cb, label);
     };
@@ -680,7 +680,8 @@ export class WindowManager {
         slider('master', 'Master'), slider('music', 'Music'), slider('sfx', 'SFX'), slider('ambient', 'Ambient'),
         h('div', { class: 'gold', style: 'font-weight:bold;margin-top:8px' }, 'Gameplay'),
         toggle('showDamageNumbers', 'Show damage numbers'), toggle('autoLoot', 'Auto-loot drops'), toggle('wasdMovement', 'WASD movement'),
-        toggle('effects', 'Visual effects (skills, hits, particles, weather) — applies on the next map'),
+        toggle('skillEffects', 'Skill and combat effects (animated VFX)'),
+        toggle('effects', 'Ambient effects (particles, weather, flashes, bobbing) — applies on the next map'),
         toggle('cellCursor', 'Cell cursor under the mouse (Ragnarok style)'),
         toggle('showGrid', 'Show grid lines on the map'),
         h('label', { class: 'row', style: 'margin-bottom:4px;gap:6px' }, 'Character style', (() => {
