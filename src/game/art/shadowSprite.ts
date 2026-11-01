@@ -399,19 +399,39 @@ const P0: ShadowPose = { bob: 0, legL: 0, legR: 0, stride: 0, armL: 0, offReach:
 /** Key pose index 0..5 for frame f of n (fewer frames sample the key poses). */
 const key6 = (f: number, n: number) => (n >= 6 ? Math.min(5, Math.floor((f * 6) / n)) : Math.round((f * 5) / Math.max(1, n - 1)));
 
+/**
+ * Combat-ready guard per weapon style (also the first and last attack key, so attacks start and end in it):
+ * blades held up and forward, spears levelled, fists raised, staves planted upright, bows low.
+ */
+function guard(weapon: string | null): Pick<ShadowPose, 'a' | 'hand' | 'offReach' | 'stride'> {
+  switch (attackStyle(weapon)) {
+    case 'slash': return { a: -3.98, hand: [2, 8], offReach: 0, stride: 0.35 };
+    case 'thrust': return { a: 1.75, hand: [2, 6], offReach: 0, stride: 0.4 };
+    case 'punch': return { a: 0.3, hand: [3, 10], offReach: 0.2, stride: 0.35 };
+    case 'magic': return { a: 0.12, hand: [5, 5], offReach: 0, stride: 0.15 };
+    case 'shoot': return { a: 0.3, hand: [1, 4], offReach: 0, stride: 0.2 };
+  }
+}
+
 export function shadowPose(anim: CharAnim, f: number, n: number, weapon: string | null): ShadowPose {
   const t = f / n, k = key6(f, n);
   switch (anim) {
     case 'idle': {
       // Slow breath (the body sinks a pixel on the out-breath), cloth drifting, a blink near the end.
-      const br = (1 - Math.cos(t * Math.PI * 2)) / 2;
-      return { ...P0, bob: br > 0.55 ? 1 : 0, wind: Math.floor(t * 4), sway: Math.round(br * 2), hand: [Math.round(br), br > 0.5 ? -1 : 0], armL: br > 0.5 ? 1 : 0, blink: n >= 6 && f === n - 2,
-        tilt: 0.025 * Math.sin(t * Math.PI * 2), head: [0, br > 0.75 ? 1 : 0], shiftX: Math.round(Math.sin(t * Math.PI * 2) * 0.7) };
+      // Combat-ready stance: guard up, feet apart, knees soft; the weapon rises and falls with the breath.
+      const br = (1 - Math.cos(t * Math.PI * 2)) / 2, gd = guard(weapon);
+      return { ...P0, ...gd, bob: br > 0.55 ? 1 : 0, wind: Math.floor(t * 4), sway: Math.round(br * 2), hand: [gd.hand[0], gd.hand[1] - Math.round(br)], a: gd.a + 0.08 * Math.sin(t * Math.PI * 2), armL: br > 0.5 ? 1 : 0, blink: n >= 6 && f === n - 2,
+        tilt: -0.03 + 0.025 * Math.sin(t * Math.PI * 2), head: [0, br > 0.75 ? 1 : 0], shiftX: Math.round(Math.sin(t * Math.PI * 2) * 0.7) };
     }
     case 'walk': {
-      const s = Math.sin(t * Math.PI * 2), c = Math.cos(t * Math.PI * 2);
-      return { ...P0, legL: Math.max(0, s) * 3, legR: Math.max(0, -s) * 3, stride: s, armL: Math.round(-s * 3), hand: [Math.round(s * 3), Math.round(Math.abs(s))], bob: Math.abs(c) < 0.5 ? -1 : 0, wind: f % 4, sway: 2 + Math.round(Math.abs(s)),
-        gait: t, tilt: -0.07 - 0.02 * Math.abs(c), head: [Math.abs(c) < 0.5 ? 0 : -1, Math.abs(c) < 0.5 ? 1 : 0], shiftX: Math.round(s) };
+      // A purposeful stride: long steps, high knees on the swing leg, the body rising on the passing
+      // pose, arms pumping; melee weapons stay up at guard and bounce with the step.
+      const s = Math.sin(t * Math.PI * 2), c = Math.cos(t * Math.PI * 2), gd = guard(weapon), st = attackStyle(weapon);
+      const held = st === 'slash' || st === 'thrust' || st === 'punch';
+      return { ...P0, legL: Math.max(0, s) * 4, legR: Math.max(0, -s) * 4, stride: s * 1.25, armL: Math.round(-s * 4),
+        a: held ? gd.a + 0.1 * c : 0.3 + s * 0.25, hand: held ? [gd.hand[0] + Math.round(s), gd.hand[1] + Math.round(Math.abs(c))] : [Math.round(s * 5), Math.round(Math.abs(s) * 2)],
+        offReach: st === 'punch' ? 0.15 : 0, bob: Math.abs(c) < 0.5 ? -1 : Math.abs(c) > 0.9 ? 1 : 0, wind: f % 4, sway: 2 + Math.round(Math.abs(s)),
+        gait: t, tilt: -0.09 - 0.03 * Math.abs(c), head: [Math.abs(c) < 0.5 ? 0 : -1, Math.abs(c) < 0.5 ? 1 : 0], shiftX: Math.round(s) };
     }
     case 'attack': {
       // More frames than key poses: ease between the six keys (wind-up slow, strike fast, settle slow).
@@ -422,7 +442,7 @@ export function shadowPose(anim: CharAnim, f: number, n: number, weapon: string 
       }
       return attackKey(weapon, k);
     }
-    case 'cast': return { ...P0, armsUp: 1, a: -1.4, cast: t, wind: f % 4, sway: -1, bob: f % 2 ? -1 : 0, tilt: 0.05 + 0.02 * Math.sin(t * Math.PI * 2), head: [0, -1] };
+    case 'cast': return { ...P0, armsUp: 1, a: -1.4, cast: t, wind: f % 4, sway: -1, bob: f % 2 ? 0 : 1, stride: 0.5, tilt: 0.06 + 0.03 * Math.sin(t * Math.PI * 2), head: [0, -1] };
     case 'hit': { const h = Math.min(2, Math.round((f * 2) / Math.max(1, n - 1))); return { ...P0, lean: [-3, -2, -1][h], bob: [0, 1, 0][h], armL: 3, a: 0.7, hand: [-1, -1], sway: -1, tilt: [0.2, 0.12, 0.04][h], head: [[-2, 1], [-1, 1], [0, 0]][h] as [number, number], stride: [-0.4, -0.3, -0.1][h] }; }
     case 'death': {
       // With three frames f is the key itself (also used to blend the keys of longer death clips).
@@ -464,14 +484,18 @@ function attackKey(weapon: string | null, k: number): ShadowPose {
       const st = attackStyle(weapon), base = { ...P0, lean: lean[st][k], wind: k % 4, sway: 1 + (k >= 2 && k <= 4 ? 1 : 0), tilt: tilt[st][k], stride: step[st][k], head: head[k] };
       switch (st) {
         case 'slash': {
-          const a = [-1.2, -2.5, -3.9, -5.0, -5.4, -5.0][k];
-          const hand: [number, number][] = [[1, 2], [3, 7], [-2, 6], [-5, 0], [-4, -2], [-1, 0]];
-          const trail: ([number, number, number] | undefined)[] = [undefined, undefined, [-2.5, -3.9, 1], [-3.4, -5.0, 1], [-4.4, -5.4, 0.45], undefined];
-          return { ...base, a, hand: hand[k], trail: trail[k], armL: k >= 3 ? 2 : -1 };
+          // Guard → blade raised high over the shoulder (step back) → over the top → cut down and forward
+          // with a lunge → follow-through low → back up to guard.
+          const a = [-3.98, -2.3, -3.4, -4.9, -5.7, -3.98][k];
+          const hand: [number, number][] = [[2, 8], [-3, 16], [3, 14], [9, 3], [7, -2], [2, 8]];
+          const trail: ([number, number, number] | undefined)[] = [undefined, undefined, [-2.3, -3.4, 0.7], [-3.0, -4.9, 1], [-4.2, -5.7, 0.5], undefined];
+          return { ...base, a, hand: hand[k], trail: trail[k], armL: [0, -2, -1, 3, 3, 0][k], stride: [0.35, -0.3, 0.2, 1.2, 1.2, 0.35][k], tilt: [-0.03, 0.14, 0.02, -0.18, -0.14, -0.03][k], lean: [0, -2, 1, 5, 4, 0][k], bob: [0, -1, 0, 1, 1, 0][k] };
         }
         case 'thrust': {
-          const hand: [number, number][] = [[0, 1], [-4, 1], [7, 1], [8, 1], [3, 1], [0, 1]];
-          return { ...base, a: k === 0 ? 1.2 : 1.55, hand: hand[k], thrustFx: k === 2 ? 1 : k === 3 ? 0.5 : 0, impact: k === 3 ? 'tip' : undefined };
+          // Guard → draw the spear back (weight back) → drive it forward with a long lunge → hold → recover.
+          const hand: [number, number][] = [[2, 6], [-7, 7], [11, 5], [12, 5], [6, 6], [2, 6]];
+          return { ...base, a: [1.75, 1.55, 1.57, 1.57, 1.65, 1.75][k], hand: hand[k], thrustFx: k === 2 ? 1 : k === 3 ? 0.5 : 0, impact: k === 3 ? 'tip' : undefined,
+            stride: [0.4, -0.5, 1.3, 1.3, 0.8, 0.4][k], tilt: [-0.03, 0.12, -0.16, -0.17, -0.08, -0.03][k], lean: [0, -3, 5, 6, 3, 0][k], bob: [0, 0, 1, 1, 0, 0][k] };
         }
         case 'shoot':
           return { ...base, hand: [0, [4, 5, 5, 5, 4, 2][k]], bowDraw: [0.2, 0.7, 1, 0, 0, 0][k], nocked: k <= 2, arrow: k === 3 ? 4 : k === 4 ? 14 : undefined };
@@ -480,8 +504,10 @@ function attackKey(weapon: string | null, k: number): ShadowPose {
           return { ...base, a: [-1.0, -2.6, -2.6, 1.9, 1.6, 0.8][k], hand: hand[k], charge: k === 1 ? 1 : k === 2 ? 2 : 0, bolt: k === 3 ? 5 : k === 4 ? 14 : undefined };
         }
         case 'punch': {
-          const hand: [number, number][] = [[0, 8], [-1, 8], [0, 8], [9, 7], [8, 7], [2, 6]];
-          return { ...base, hand: hand[k], offReach: [0, 1, 0.3, 0, 0, 0][k], impact: k === 1 ? 'off' : k === 3 ? 'hand' : undefined };
+          // Guard → jab with the lead hand → chamber → cross with the rear hand and the hips → recover to guard.
+          const hand: [number, number][] = [[3, 10], [1, 10], [-2, 10], [11, 10], [9, 9], [3, 10]];
+          return { ...base, hand: hand[k], offReach: [0.2, 1, 0.3, 0, 0.1, 0.2][k], impact: k === 1 ? 'off' : k === 3 ? 'hand' : undefined,
+            stride: [0.35, 0.6, 0.3, 1.1, 0.9, 0.35][k], tilt: [-0.03, -0.08, 0.05, -0.15, -0.1, -0.03][k] };
         }
       }
       return base;
@@ -565,24 +591,27 @@ export function drawShadowFrame(ctx: CanvasRenderingContext2D, fx: CanvasRenderi
 
   // Legs.
   const legW = d.body === 'armor' ? 4 : 3;
-  const footY = (lift: number) => FEET - oy - lift * 1.5;
   if (d.body !== 'robe' && d.body !== 'gown') {
     if (side) {
       // Two-part legs: hip → knee → foot. The knee bends forward, more while the foot is lifted;
       // during a walk the leg swinging forward lifts its foot.
       const g2 = p.gait !== undefined ? Math.cos(p.gait * Math.PI * 2) : 0;
       const leg = (fwd: number, lift: number, col: string, hipX: number) => {
-        const footX = hipX - fwd * 4.5, fy = FEET - oy - lift;
+        const footX = hipX - fwd * 5.5, fy = FEET - oy - lift;
         const kx = (hipX + footX) / 2 - (1.2 + lift * 0.9), ky = hip + (fy - hip) * 0.5 - lift * 0.4;
         line(ctx, hipX, hip, kx, ky, legW, col); line(ctx, kx, ky, footX, fy - 1, legW, col);
         px(ctx, Math.round(footX) - 3, Math.round(fy) - 2, 5, 2, col);
       };
-      leg(-p.stride, p.gait !== undefined ? Math.max(0, -g2) * 3 : p.legL * 1.5, K1, CX);
-      leg(p.stride, p.gait !== undefined ? Math.max(0, g2) * 3 : p.legR * 1.5, K0, CX - 1);
+      leg(-p.stride, p.gait !== undefined ? Math.max(0, -g2) * 4 : p.legL * 1.5, K1, CX);
+      leg(p.stride, p.gait !== undefined ? Math.max(0, g2) * 4 : p.legR * 1.5, K0, CX - 1);
     } else {
-      const fl = footY(p.legL), fr = footY(p.legR);
-      px(ctx, CX - 4 - (legW - 3), hip, legW, fl - hip, K0); px(ctx, CX - 5 - (legW - 3), fl - 2, legW + 1, 2, K0);
-      px(ctx, CX + 1, hip, legW, fr - hip, K0); px(ctx, CX + 1, fr - 2, legW + 1, 2, K0);
+      // Front/back: the stepping leg lifts its foot high with the knee pushing out a little.
+      const fl = FEET - oy - p.legL * 2.2, fr = FEET - oy - p.legR * 2.2;
+      const lx = CX - 4 - (legW - 3), rx = CX + 1;
+      px(ctx, lx, hip, legW, fl - hip, K0); px(ctx, lx - 1, fl - 2, legW + 1, 2, K0);
+      px(ctx, rx, hip, legW, fr - hip, K0); px(ctx, rx, fr - 2, legW + 1, 2, K0);
+      if (p.legL > 1) px(ctx, lx - 1, Math.round((hip + fl) / 2) - 1, 1, 3, K1);
+      if (p.legR > 1) px(ctx, rx + legW, Math.round((hip + fr) / 2) - 1, 1, 3, K1);
     }
   } else {
     const fy = FEET - oy - 2;
