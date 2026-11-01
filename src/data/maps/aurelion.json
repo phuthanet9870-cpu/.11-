@@ -595,13 +595,13 @@
   },
   {
    "npcId": "guild_knight",
-   "x": 66,
+   "x": 65,
    "y": 55,
    "facing": "down"
   },
   {
    "npcId": "guild_cleric",
-   "x": 72,
+   "x": 69,
    "y": 71,
    "facing": "down"
   },
@@ -619,37 +619,37 @@
   },
   {
    "npcId": "guild_templar",
-   "x": 70,
+   "x": 71,
    "y": 55,
    "facing": "down"
   },
   {
    "npcId": "guild_bishop",
-   "x": 74,
+   "x": 73,
    "y": 71,
    "facing": "down"
   },
   {
    "npcId": "guild_ascetic",
-   "x": 76,
+   "x": 77,
    "y": 71,
    "facing": "down"
   },
   {
    "npcId": "oracle_rebirth",
-   "x": 78,
+   "x": 81,
    "y": 71,
    "facing": "down"
   },
   {
    "npcId": "aurelion_jobmaster",
-   "x": 10,
+   "x": 3,
    "y": 55,
    "facing": "down"
   },
   {
    "npcId": "aurelion_arena",
-   "x": 12,
+   "x": 6,
    "y": 55,
    "facing": "down"
   },
@@ -661,19 +661,19 @@
   },
   {
    "npcId": "mvp_guide",
-   "x": 20,
+   "x": 21,
    "y": 55,
    "facing": "down"
   },
   {
    "npcId": "training_master",
-   "x": 16,
+   "x": 15,
    "y": 55,
    "facing": "down"
   },
   {
    "npcId": "spire_warden",
-   "x": 14,
+   "x": 9,
    "y": 55,
    "facing": "down"
   },

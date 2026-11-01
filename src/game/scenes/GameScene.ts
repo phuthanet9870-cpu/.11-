@@ -12,7 +12,8 @@ import {
   CHUNK_TILES, characterTextureLayout, ensureCharacterTexture, ensureFxTextures, ensureItemTexture, ensureMapChunk, ensureMapTextures, ensureMonsterTexture, ensureTombstoneTexture,
   releaseMapChunk, type ChunkLayers,
 } from '../assets';
-import { useShadowStyle, type CharacterLook } from '../art/characterSprite';
+import { npcLook, useShadowStyle, type CharacterLook } from '../art/characterSprite';
+import { npcRole } from '../art/npcRoles';
 import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_PIVOT, CHAR_SHEET_COLS, MON_ANIMS, MON_SHEET_COLS, type CharAnim, type MonAnim } from '../art/spriteMeta';
 import { clipFrame, type Clip, type Rig } from '../rig';
 import { ELEMENT_FX, floatText, playFx, playProjectile } from '../render/effects';
@@ -272,11 +273,14 @@ export class GameScene extends Phaser.Scene {
 
     // NPCs
     for (const n of w.npcs) {
-      const look: CharacterLook = { appearance: n.def.appearance, outfit: n.def.outfit, weapon: null, sheet: `npc/${n.def.id}` };
-      const key = ensureCharacterTexture(this, look);
-      const s = this.track(this.add.sprite(n.x, n.y, key, frameIndex(n.dir, 'idle', 0)).setOrigin(CHAR_PIVOT.x, CHAR_PIVOT.y));
+      const key = ensureCharacterTexture(this, npcLook(n.def));
+      const s = this.track(this.add.sprite(n.x, n.y, key, npcFrame(key, n.dir, 0)).setOrigin(CHAR_PIVOT.x, CHAR_PIVOT.y));
       s.setDepth(n.y);
-      const name = this.track(this.add.text(n.x, n.y + 6, n.def.name, labelStyle('#ffe9a8')).setOrigin(0.5, 0).setDepth(1e5 + 2).setResolution(2));
+      // Name with its role badge (🛒 shop, ⚒ smith, 🎓 job master…) and the role in its colour underneath.
+      const role = npcRole(n.def);
+      const roleText = role.role === 'job' && role.jobClass ? `${this.world.data.classes.get(role.jobClass)?.name ?? ''} Master` : role.role === 'townsfolk' ? (n.def.title ?? '') : role.label;
+      const name = this.track(this.add.text(n.x, n.y + 6, `${role.emoji} ${n.def.name}`, labelStyle('#ffe9a8')).setOrigin(0.5, 0).setDepth(1e5 + 2).setResolution(2));
+      if (roleText) this.track(this.add.text(n.x, n.y + 21, roleText, { ...labelStyle(role.color), fontSize: '10px' }).setOrigin(0.5, 0).setDepth(1e5 + 2).setResolution(2));
       const marker = this.track(this.add.text(n.x, n.y - 72, '', { fontFamily: 'Verdana', fontSize: '22px', fontStyle: 'bold', color: '#ffd34d', stroke: '#1c1622', strokeThickness: 5 }).setOrigin(0.5).setDepth(1e5 + 3).setResolution(2));
       if (this.fxOn) this.tweens.add({ targets: marker, y: n.y - 78, yoyo: true, repeat: -1, duration: 600, ease: 'Sine.easeInOut' });
       this.npcViews.set(n.npcId, { sprite: s, name, marker });
@@ -698,7 +702,7 @@ export class GameScene extends Phaser.Scene {
     for (const n of this.world.npcs) {
       const v = this.npcViews.get(n.npcId);
       if (!v) continue;
-      v.sprite.setFrame(frameIndex(n.dir, 'idle', Math.floor(this.time.now / 520) % 2));
+      v.sprite.setFrame(npcFrame(v.sprite.texture.key, n.dir, Math.floor(this.time.now / 330) % 4));
       if (refreshMarkers) {
         const mk = npcQuestMarker(this.world.data, this.world.char, n.npcId, this.world.now());
         v.marker.setText(mk === '…' ? '' : mk ?? '').setColor(mk === '?' ? '#7fffa0' : '#ffd34d');
@@ -814,6 +818,11 @@ function toCharAnim(a: AnimState): CharAnim {
 }
 function toMonAnim(a: AnimState): MonAnim {
   return a === 'dead' ? 'death' : a === 'cast' ? 'attack' : a;
+}
+/** Idle frame of an NPC in whatever layout its sheet has (shadow sheets have 4 idle frames). */
+function npcFrame(key: string, dir: Direction, f: number): number {
+  const l = characterTextureLayout(key);
+  return CHAR_DIRECTIONS.indexOf(dir) * l.cols + l.anims.idle.start + (f % l.anims.idle.count);
 }
 export function frameIndex(dir: Direction, anim: CharAnim, f: number): number {
   return CHAR_DIRECTIONS.indexOf(dir) * CHAR_SHEET_COLS + CHAR_ANIMS[anim].start + f;

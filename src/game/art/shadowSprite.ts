@@ -72,6 +72,33 @@ const THIRD: Record<string, [string, Partial<ShadowDesign>]> = {
   grand_alchemist: ['alchemist', { orbs: 3, cape: 'short' }],
 };
 
+/** NPC roles drawn as shadows: each role has its own silhouette, tool and glow colour. */
+const NPC_LOOK: Record<string, [ShadowDesign, string | null]> = {
+  smith: [D({ head: 'goggles', body: 'apron', eyes: 'dots', glow: '#ff9a4a', pauldrons: true }), 'club'],
+  shop: [D({ head: 'cap', body: 'apron', eyes: 'dots', glow: '#ffe27a', bag: true }), null],
+  inn: [D({ head: 'hood', body: 'robe', eyes: 'dots', glow: '#ffb0a0', emblem: 'gem' }), null],
+  courier: [D({ head: 'wide_hat', body: 'coat', eyes: 'dots', glow: '#7fd6ff', scarf: true, bag: true }), 'staff'],
+  warp: [D({ head: 'pointed_hood', body: 'robe', eyes: 'dots', glow: '#7fd6ff', orbs: 2 }), 'staff'],
+  market: [D({ head: 'tricorn', body: 'coat', eyes: 'dots', glow: '#ffd34d', emblem: 'gem', trim: true }), null],
+  trader: [D({ head: 'tricorn', body: 'apron', eyes: 'dots', glow: '#ffd34d', bag: true }), null],
+  storage: [D({ head: 'cap', body: 'coat', eyes: 'dots', glow: '#c8a26b', bag: true }), null],
+  enchant: [D({ head: 'circlet', body: 'robe', eyes: 'slit', glow: '#c9a6ff', cape: 'long', orbs: 3 }), 'wand'],
+  stable: [D({ head: 'horn_helm', body: 'armor', eyes: 'visor', glow: '#c8a060', cape: 'short' }), 'spear'],
+  dungeon: [D({ head: 'great_helm', body: 'armor', eyes: 'cross', glow: '#ff8a7a', cape: 'long', pauldrons: true }), 'sword'],
+  arena: [D({ head: 'helm', body: 'armor', eyes: 'visor', glow: '#ff8a8a', cape: 'long', pauldrons: true }), 'twohand_sword'],
+  mvp: [D({ head: 'horn_hood', body: 'cloak', eyes: 'slit', glow: '#ff5a5a', cape: 'long', aura: true }), 'spear'],
+  reset: [D({ head: 'mitre', body: 'robe', eyes: 'dots', glow: '#9fe8ff', halo: true }), 'book'],
+  runes: [D({ head: 'witch_hat', body: 'robe', eyes: 'dots', glow: '#c9a6ff', orbs: 4 }), 'staff'],
+  townsfolk: [D({ head: 'bare', body: 'slim', eyes: 'dots', glow: '#e8e4d8', scarf: true }), null],
+};
+
+/** Shadow look of an NPC: job masters look like the job they teach, everyone else like their trade. */
+export function npcShadowLook(role: string, jobClass?: string): { design: ShadowDesign; weapon: string | null } {
+  if (role === 'job' && jobClass) return { design: { ...shadowDesign(jobClass), trim: true }, weapon: null };
+  const [design, weapon] = NPC_LOOK[role] ?? NPC_LOOK.townsfolk;
+  return { design, weapon };
+}
+
 /** Shadow design of a job; unknown ids fall back to the novice silhouette. */
 export function shadowDesign(classId: string): ShadowDesign {
   const third = THIRD[classId];

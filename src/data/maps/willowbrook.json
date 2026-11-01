@@ -1036,6 +1036,12 @@
    "facing": "down"
   },
   {
+   "npcId": "mvp_guide",
+   "x": 53,
+   "y": 37,
+   "facing": "down"
+  },
+  {
    "npcId": "willowbrook_courier",
    "x": 59,
    "y": 22,
@@ -1049,8 +1055,8 @@
   },
   {
    "npcId": "mvp_guide",
-   "x": 53,
-   "y": 33,
+   "x": 59,
+   "y": 38,
    "facing": "down"
   },
   {

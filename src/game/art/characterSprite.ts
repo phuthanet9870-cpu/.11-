@@ -1,12 +1,13 @@
 // Procedural anime-chibi character sprite sheets (placeholder art).
 // Sheet layout and animation metadata are defined in spriteMeta.ts and are the
 // contract real artwork must follow to replace these sheets.
-import type { Appearance, Direction } from '../../core/types';
+import type { Appearance, Direction, NpcDef } from '../../core/types';
+import { npcRole } from './npcRoles';
 import { addOutline, ellipse, makeCanvas, poly, px, shade } from './canvas';
 import { overrideCanvas, spriteOverride } from './spriteOverrides';
 import { costumeFor } from './costumes';
 import { drawCapeBack, drawCapeFront, drawCostumeBody, drawHeadgear, drawMask } from './costumeDraw';
-import { buildShadowSheet, shadowDesign } from './shadowSprite';
+import { buildShadowSheet, npcShadowLook, shadowDesign } from './shadowSprite';
 import { CHAR_ANIMS, CHAR_DIRECTIONS, CHAR_FRAME_H, CHAR_FRAME_W, CHAR_SHEET_COLS, SHADOW_ANIMS, SHADOW_SHEET_COLS, type CharAnim, type CharLayout } from './spriteMeta';
 
 export interface CharacterLook {
@@ -18,12 +19,20 @@ export interface CharacterLook {
   sheet?: string;
   /** Player characters drawn in the "shadow" style (black silhouette, glowing eyes). */
   shadow?: boolean;
+  /** NPCs drawn in the shadow style look like their role (shop, smith, job master…). */
+  npcRole?: { role: string; jobClass?: string };
 }
 
 let shadowStyle = true;
 /** Character style for player characters: shadow silhouettes (default) or the classic chibi look. */
 export const setCharacterStyle = (style: 'shadow' | 'classic') => { shadowStyle = style !== 'classic'; };
 export const useShadowStyle = () => shadowStyle;
+
+/** How an NPC is drawn: in the shadow style its look follows its role (see npcRoles.ts). */
+export function npcLook(def: NpcDef): CharacterLook {
+  const r = npcRole(def);
+  return { appearance: def.appearance, outfit: def.outfit, weapon: null, sheet: `npc/${def.id}`, shadow: shadowStyle, npcRole: { role: r.role, jobClass: r.jobClass } };
+}
 
 const W = CHAR_FRAME_W, H = CHAR_FRAME_H;
 /** Headgear that covers the crown of the head. */
@@ -234,8 +243,10 @@ function drawFrame(ctx: CanvasRenderingContext2D, look: CharacterLook, dir: Dire
 
 /** Shadow design of a look, when it is drawn in the shadow style (no Studio sheet replaces it). */
 function shadowOf(look: CharacterLook) {
-  if (!look.shadow || !look.sheet?.startsWith('class/') || spriteOverride(`sprites/${look.sheet}`)) return null;
-  return shadowDesign(look.sheet.slice(6));
+  if (!look.shadow || !look.sheet || spriteOverride(`sprites/${look.sheet}`)) return null;
+  if (look.sheet.startsWith('class/')) return shadowDesign(look.sheet.slice(6));
+  if (look.sheet.startsWith('npc/') && look.npcRole) return npcShadowLook(look.npcRole.role, look.npcRole.jobClass).design;
+  return null;
 }
 
 /** Frame layout of the sheet generateCharacterSheet makes for a look. */
@@ -248,7 +259,10 @@ export function generateCharacterSheet(look: CharacterLook, opts: { classicLayou
   const drawn = look.sheet ? overrideCanvas(`sprites/${look.sheet}`, W * CHAR_SHEET_COLS, H * CHAR_DIRECTIONS.length) : null;
   if (drawn) return drawn;
   const design = shadowOf(look);
-  if (design) return opts.classicLayout ? buildShadowSheet(design, look.weapon, !!look.shield, CHAR_ANIMS, CHAR_SHEET_COLS) : buildShadowSheet(design, look.weapon, !!look.shield, SHADOW_ANIMS, SHADOW_SHEET_COLS);
+  if (design) {
+    const weapon = look.npcRole ? npcShadowLook(look.npcRole.role, look.npcRole.jobClass).weapon : look.weapon;
+    return opts.classicLayout ? buildShadowSheet(design, weapon, !!look.shield, CHAR_ANIMS, CHAR_SHEET_COLS) : buildShadowSheet(design, weapon, !!look.shield, SHADOW_ANIMS, SHADOW_SHEET_COLS);
+  }
   const { canvas, ctx } = makeCanvas(W * CHAR_SHEET_COLS, H * CHAR_DIRECTIONS.length);
   const tmp = makeCanvas(W, H);
   for (const [row, dir] of CHAR_DIRECTIONS.entries()) {

@@ -3,7 +3,7 @@
 // decoration by hand; edit any field; check reachability and save to this browser.
 import { compileMap, TILE, type CompiledMap } from '../core/mapCompiler';
 import type { MapDef, PaintOp } from '../core/types';
-import { generateCharacterSheet } from '../game/art/characterSprite';
+import { generateCharacterSheet, npcLook } from '../game/art/characterSprite';
 import { paintBuilding, paintGroundLayer, paintObject, paintWallLayer, LANDMARK_STYLE } from '../game/art/mapPainter';
 import { mapArtPaths, scenerySprite } from '../game/art/scenery';
 import { artUrl, extraSprite, GROUND_ORDER, groundSheet, loadArt, loadThemeArt } from '../game/art/themeArt';
@@ -244,7 +244,7 @@ export class MapEditor {
       const n = this.st.data.npcs.get(npcId);
       const c = document.createElement('canvas');
       c.width = CHAR_FRAME_W; c.height = CHAR_FRAME_H;
-      if (n) c.getContext('2d')!.drawImage(generateCharacterSheet({ appearance: n.appearance, outfit: n.outfit, weapon: null, sheet: `npc/${npcId}` }), 0, 0, CHAR_FRAME_W, CHAR_FRAME_H, 0, 0, CHAR_FRAME_W, CHAR_FRAME_H);
+      if (n) c.getContext('2d')!.drawImage(generateCharacterSheet(npcLook(n)), 0, 0, CHAR_FRAME_W, CHAR_FRAME_H, 0, 0, CHAR_FRAME_W, CHAR_FRAME_H);
       return c;
     });
   }

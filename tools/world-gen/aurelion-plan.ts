@@ -67,12 +67,12 @@ export function aurelionPlan() {
   // NPCs stand on the street in front of their building.
   const front = (b: B, dx: number) => ({ x: doorX(b) + dx, y: b.y + b.h + 1 });
   const at: Record<string, { x: number; y: number }> = {
-    aurelion_jobmaster: front(guild, -2), aurelion_arena: front(guild, 0), spire_warden: front(guild, 2), training_master: front(guild, 4), arena_gatekeeper: front(guild, 6), mvp_guide: front(guild, 8),
+    aurelion_jobmaster: front(guild, -9), aurelion_arena: front(guild, -6), spire_warden: front(guild, -3), training_master: front(guild, 3), arena_gatekeeper: front(guild, 6), mvp_guide: front(guild, 9),
     aurelion_smith: front(smithy, 1), aurelion_merchant: front(shop, 1),
-    guild_knight: front(knights, -2), guild_dragoon: front(knights, 0), guild_templar: front(knights, 2),
+    guild_knight: front(knights, -3), guild_dragoon: front(knights, 0), guild_templar: front(knights, 3),
     aurelion_stable: front(stable, 1),
     aurelion_innkeeper: front(inn, 1), aurelion_courier: front(courier, 1),
-    guild_cleric: front(cathedral, -3), guild_bishop: front(cathedral, -1), guild_ascetic: front(cathedral, 1), oracle_rebirth: front(cathedral, 3),
+    guild_cleric: front(cathedral, -6), guild_bishop: front(cathedral, -2), guild_ascetic: front(cathedral, 2), oracle_rebirth: front(cathedral, 6),
     aurelion_trader: { x: 40, y: 64 }, aurelion_market: { x: 57, y: 64 },
   };
   const portals: Record<string, { x: number; y: number; w: number; h: number }> = {

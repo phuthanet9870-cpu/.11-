@@ -13,7 +13,7 @@ import { getLang, LANGS, type Lang } from './i18n';
 import { ARENA_DIFFICULTY, type ArenaDifficulty } from '../core/world';
 import { mapThumbnail } from './mapThumb';
 import { itemIconUrl, monsterIconUrl, skillIconUrl } from '../game/art/icons';
-import { generateCharacterSheet, portraitFromSheet, useShadowStyle } from '../game/art/characterSprite';
+import { generateCharacterSheet, npcLook, portraitFromSheet, useShadowStyle } from '../game/art/characterSprite';
 import { lookForCharacter, SpritePreview } from './screens';
 import { getDragData, setDragData } from './hud';
 import { canRebirth, classLineage, skillCheck } from '../core/character';
@@ -1863,7 +1863,7 @@ export class WindowManager {
   private showDialog(npc: NpcDef, lines: string[], opts: [string, () => void][], extra: HTMLElement | null = null, heading?: string) {
     this.closeDialog();
     const portrait = h('canvas', { width: 96, height: 96 });
-    const p = portraitFromSheet(generateCharacterSheet({ appearance: npc.appearance, outfit: npc.outfit, weapon: null, sheet: `npc/${npc.id}` }), 3);
+    const p = portraitFromSheet(generateCharacterSheet(npcLook(npc)), 3);
     portrait.getContext('2d')!.drawImage(p, 0, 0);
     this.dialogEl = h('div', { class: 'panel dialog', id: 'npc-dialog' },
       portrait,
