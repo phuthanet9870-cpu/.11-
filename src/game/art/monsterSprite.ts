@@ -95,6 +95,9 @@ export function monsterEyeColor(def: Pick<MonsterDef, 'id' | 'art'>): string {
 }
 
 interface Pal { k0: string; k1: string; k2: string; k3: string; g: string; gl: string; g2: string; e: string; el: string }
+/** The monster's glow colour (markings, rim light, its effects). */
+export const monsterGlowColor = (def: MonsterDef): string => palette(def).g;
+
 function palette(def: MonsterDef): Pal {
   const c = def.art.colors.length ? def.art.colors : ['#808080'];
   const tint = toRgb(c[0]);

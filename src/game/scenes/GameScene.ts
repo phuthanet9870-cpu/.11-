@@ -19,6 +19,9 @@ import { clipFrame, type Clip, type Rig } from '../rig';
 import { ELEMENT_FX, floatText, playFx, playProjectile } from '../render/effects';
 import { ensureVfxSheets, playFxSheets, playSkillVfx, skillVfx } from '../render/vfx';
 import { audio } from '../audio/audio';
+import { deathBurst, dustPuff, hitSparks, swingArc } from '../render/juice';
+import { attackStyle, shadowDesign } from '../art/shadowSprite';
+import { monsterGlowColor } from '../art/monsterSprite';
 import type { GameHost } from '../host';
 import { titleOf } from '../../core/achievements';
 
@@ -365,6 +368,7 @@ export class GameScene extends Phaser.Scene {
     const cls = this.world.data.classes.get(c.classId)!;
     const weapon = c.equipment.weapon ? this.world.data.items.get(c.equipment.weapon.itemId)?.weaponType ?? null : null;
     const lookId = JSON.stringify([c.classId, c.appearance, weapon, !!c.equipment.shield, useShadowStyle()]);
+    this.playerWeapon = weapon; this.playerGlow = shadowDesign(c.classId).glow;
     if (lookId === this.playerLookKey && this.playerRig) return;
     this.playerLookKey = lookId;
     const look: CharacterLook = { appearance: c.appearance, outfit: cls.outfit, weapon, shield: !!c.equipment.shield, sheet: `class/${c.classId}`, shadow: useShadowStyle() };
@@ -475,7 +479,7 @@ export class GameScene extends Phaser.Scene {
     const show = this.host.settings.showDamageNumbers;
     switch (e.type) {
       case 'damage': {
-        if (!e.miss && e.kind !== 'heal' && e.kind !== 'mp') this.kick(e.targetId, e.crit ? 1.4 : e.kind === 'dot' ? 0.4 : 1);
+        if (!e.miss && e.kind !== 'heal' && e.kind !== 'mp') this.kick(e.targetId, e.crit ? 1.4 : e.kind === 'dot' ? 0.4 : 1, e.crit, e.kind === 'dot');
         if (!show) break;
         const tgt = e.targetId === 'player' ? w.player : e.targetId === 'homun' ? w.homunActor : e.targetId.startsWith('remote:') ? w.remotes.get(e.targetId.slice(7)) : w.monsters.get(e.targetId);
         if (!tgt) break;
@@ -519,6 +523,8 @@ export class GameScene extends Phaser.Scene {
       case 'death': {
         const v = this.monViews.get(e.id);
         if (v) v.deadAt = this.time.now;
+        const dm = w.monsters.get(e.id);
+        if (dm && !dm.shadow) deathBurst(this, dm.x, dm.y - dm.def.art.h * 0.35, monsterGlowColor(dm.def), !!dm.boss);
         break;
       }
       case 'bossIntro': if (this.fxOn) this.cameras.main.flash(400, 80, 20, 80); audio.playMusic('boss_battle'); break;
@@ -551,13 +557,22 @@ export class GameScene extends Phaser.Scene {
     const fr = clipFrame(clip, p.dir, this.clipStep(clip, p.animAt));
     this.player.setTexture(clip.key, fr.frame).setFlipX(fr.flipX);
     this.motion(this.player, p);
+    // A swing arc at the moment of the strike (bows and spells have their own projectiles).
+    if (p.anim === 'attack' && p.animAt !== this.lastSwingAt) {
+      this.lastSwingAt = p.animAt;
+      const st = attackStyle(this.playerWeapon), dir = p.dir;
+      if (st === 'slash' || st === 'thrust' || st === 'punch') {
+        const big = this.playerWeapon === 'twohand_sword' || this.playerWeapon === 'axe' || this.playerWeapon === 'spear';
+        this.time.delayedCall(st === 'punch' ? 90 : 120, () => { const q = this.world.player; swingArc(this, q.x, q.y - 30, dir, st, this.playerGlow, big); });
+      }
+    }
     this.player.setAlpha(this.world.playerStealthed ? 0.45 : 1);
     const nameLabel = `${this.world.char.name}${titleOf(this.world.char) ? `\n« ${titleOf(this.world.char)} »` : ''}`;
     if (this.playerName.text !== nameLabel) this.playerName.setText(nameLabel);
     this.playerName.setPosition(Math.round(p.x), Math.round(p.y) + 6);
     if (p.moving) {
       this.stepTimer -= delta;
-      if (this.stepTimer <= 0) { audio.play('footstep'); this.stepTimer = 330; }
+      if (this.stepTimer <= 0) { audio.play('footstep'); this.stepTimer = 330; if (!riding) dustPuff(this, p.x, p.y); }
     }
   }
 
@@ -598,7 +613,7 @@ export class GameScene extends Phaser.Scene {
       if (!m.statuses.some((st) => st.id === 'freeze' || st.id === 'stun')) this.motion(s, m);
       const frozen = m.statuses.some((st) => st.id === 'freeze');
       const tint = frozen ? 0x9ad8ff : m.statuses.some((st) => st.id === 'poison') ? 0xb8ff9a : m.statuses.some((st) => st.id === 'burn') ? 0xffb08a : m.boss?.enraged ? 0xff8a8a : 0xffffff;
-      s.setTint(tint);
+      if (!this.flashing(s)) s.setTint(tint);
       const target = w.currentTarget?.id === id;
       const hover = this.hovered.kind === 'monster' && this.hovered.id === id;
       if (m.shadow) {
@@ -621,12 +636,19 @@ export class GameScene extends Phaser.Scene {
   // leaning into the move, a springy squash when hit, starting or stopping, a lunge on attacks and a
   // slow breathing sway. Rotation and scale pivot on the feet (the sprites' origin).
   private frameDelta = 16;
-  private motionState = new WeakMap<Phaser.GameObjects.Sprite, { base: number; lx: number; ly: number; lean: number; sq: number; sv: number; kx: number; ky: number; animAt: number; lungeAt: number; moving: boolean; ph: number; flipAt: number }>();
+  private lastSwingAt = -1;
+  private playerWeapon: string | null = null;
+  private playerGlow = '#7fd6ff';
+  private motionState = new WeakMap<Phaser.GameObjects.Sprite, { base: number; lx: number; ly: number; lean: number; sq: number; sv: number; kx: number; ky: number; animAt: number; lungeAt: number; moving: boolean; ph: number; flipAt: number; freezeUntil: number; flashUntil: number; key: string; frame: string | number }>();
 
   private motion(spr: Phaser.GameObjects.Sprite, a: { x: number; y: number; dir?: Direction; anim?: string; animAt?: number }) {
     const dt = this.frameDelta, now = this.time.now;
     let st = this.motionState.get(spr);
-    if (!st) { st = { base: spr.scaleX, lx: a.x, ly: a.y, lean: 0, sq: 0, sv: 0, kx: 0, ky: 0, animAt: a.animAt ?? 0, lungeAt: -1e9, moving: false, ph: Math.random() * 6.28, flipAt: 0 }; this.motionState.set(spr, st); }
+    if (!st) { st = { base: spr.scaleX, lx: a.x, ly: a.y, lean: 0, sq: 0, sv: 0, kx: 0, ky: 0, animAt: a.animAt ?? 0, lungeAt: -1e9, moving: false, ph: Math.random() * 6.28, flipAt: 0, freezeUntil: 0, flashUntil: 0, key: spr.texture.key, frame: spr.frame.name }; this.motionState.set(spr, st); }
+    // Hit-stop: keep the frame from before the hit and shiver a pixel.
+    if (st.freezeUntil > now) { spr.setTexture(st.key, st.frame); spr.x += (Math.floor(now / 30) % 2 ? 1 : -1); }
+    else { st.key = spr.texture.key; st.frame = spr.frame.name; }
+    if (st.flashUntil > now) spr.setTintFill(0xffffff); else if (spr.tintFill && spr === this.player) spr.clearTint();
     const vx = (a.x - st.lx) / Math.max(1, dt), vy = (a.y - st.ly) / Math.max(1, dt);
     st.lx = a.x; st.ly = a.y;
     const moving = Math.hypot(vx, vy) > 0.02 && Math.hypot(vx, vy) < 2;
@@ -663,7 +685,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   /** Being hit: knocked back a few pixels (away from the player, or backwards for the player) and squashed. */
-  private kick(targetId: string, power: number) {
+  private kick(targetId: string, power: number, crit = false, dot = false) {
     const w = this.world;
     const spr = targetId === 'player' ? this.player : this.monViews.get(targetId)?.sprite;
     const st = spr && this.motionState.get(spr);
@@ -674,6 +696,20 @@ export class GameScene extends Phaser.Scene {
     else { const p = w.player; dx = p.dir === 'left' ? 1 : p.dir === 'right' ? -1 : 0; dy = p.dir === 'up' ? 1 : p.dir === 'down' ? -1 : 0; }
     st.kx += dx * 5 * power; st.ky += dy * 3 * power;
     st.sv += 0.006 * power;
+    if (dot) return;
+    // Hit-stop: the target holds its frame for a moment and flashes white; sparks fly; crits shake the view.
+    const now = this.time.now;
+    st.freezeUntil = now + (crit ? 110 : 60); st.flashUntil = now + 70;
+    const h = m ? m.def.art.h * (m.boss ? 1.15 : 1) : 64;
+    hitSparks(this, spr.x, spr.y - h * 0.45, m ? this.playerGlow : '#ff5a5a', crit);
+    if (crit && m && this.host.settings.effects !== false) this.cameras.main.shake(110, 0.004);
+  }
+
+  /** White flash while a hit lands (true while flashing). */
+  private flashing(spr: Phaser.GameObjects.Sprite): boolean {
+    const st = this.motionState.get(spr);
+    if (st && st.flashUntil > this.time.now) { spr.setTintFill(0xffffff); return true; }
+    return false;
   }
 
   /** Glow companions of shadow-style sprites (eyes, neon trims, glowing markings), drawn additively. */
@@ -688,7 +724,7 @@ export class GameScene extends Phaser.Scene {
       if (!gk) { g?.setVisible(false); continue; }
       if (!g) { g = this.add.image(o.x, o.y, gk, o.frame.name).setBlendMode(Phaser.BlendModes.ADD); this.glows.set(o, g); }
       g.setTexture(gk, o.frame.name).setPosition(o.x, o.y).setOrigin(o.originX, o.originY).setScale(o.scaleX, o.scaleY)
-        .setFlipX(o.flipX).setAlpha(o.alpha).setVisible(o.visible).setRotation(o.rotation).setDepth(1e5 - 0.8 + o.depth * 1e-7);
+        .setFlipX(o.flipX).setAlpha(o.alpha * (0.82 + 0.18 * Math.sin(this.time.now / 520 + (o.texture.key.length % 7)))).setVisible(o.visible).setRotation(o.rotation).setDepth(1e5 - 0.8 + o.depth * 1e-7);
     }
     for (const [o, g] of this.glows) if (!o.active || !o.scene) { g.destroy(); this.glows.delete(o); }
   }
