@@ -277,32 +277,37 @@
   {
    "op": "scatter",
    "kind": "tree_oak",
-   "density": 0.018,
-   "seed": 21
+   "density": 0.0081,
+   "seed": 21,
+   "baseDensity": 0.018
   },
   {
    "op": "scatter",
    "kind": "rock",
-   "density": 0.01,
-   "seed": 22
+   "density": 0.0045,
+   "seed": 22,
+   "baseDensity": 0.01
   },
   {
    "op": "scatter",
    "kind": "bush",
-   "density": 0.015,
-   "seed": 23
+   "density": 0.00675,
+   "seed": 23,
+   "baseDensity": 0.015
   },
   {
    "op": "scatter",
    "kind": "deco:flowers",
-   "density": 0.12,
-   "seed": 24
+   "density": 0.06,
+   "seed": 24,
+   "baseDensity": 0.12
   },
   {
    "op": "scatter",
    "kind": "deco:tuft",
-   "density": 0.1,
-   "seed": 25
+   "density": 0.05,
+   "seed": 25,
+   "baseDensity": 0.1
   },
   {
    "op": "path",

@@ -599,32 +599,35 @@
   {
    "op": "scatter",
    "kind": "ruin_pillar",
-   "density": 0.006,
+   "density": 0.0027,
    "seed": 1842141855,
    "area": {
     "x": 3,
     "y": 3,
     "w": 114,
     "h": 90
-   }
+   },
+   "baseDensity": 0.006
   },
   {
    "op": "scatter",
    "kind": "obelisk",
-   "density": 0.006,
+   "density": 0.0027,
    "seed": 1842141856,
    "area": {
     "x": 3,
     "y": 3,
     "w": 114,
     "h": 90
-   }
+   },
+   "baseDensity": 0.006
   },
   {
    "op": "scatter",
    "kind": "deco:pebbles",
-   "density": 0.05,
-   "seed": 1842141864
+   "density": 0.025,
+   "seed": 1842141864,
+   "baseDensity": 0.05
   }
  ],
  "portals": [

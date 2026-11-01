@@ -444,6 +444,7 @@ export class GameScene extends Phaser.Scene {
 
   // ---------------------------------------------------------------- frame
   update(_time: number, delta: number) {
+    this.frameDelta = Math.min(50, delta);
     const w = this.world;
     if (!this.host.paused) w.update(delta);
     const events = w.drainEvents();
@@ -474,6 +475,7 @@ export class GameScene extends Phaser.Scene {
     const show = this.host.settings.showDamageNumbers;
     switch (e.type) {
       case 'damage': {
+        if (!e.miss && e.kind !== 'heal' && e.kind !== 'mp') this.kick(e.targetId, e.crit ? 1.4 : e.kind === 'dot' ? 0.4 : 1);
         if (!show) break;
         const tgt = e.targetId === 'player' ? w.player : e.targetId === 'homun' ? w.homunActor : e.targetId.startsWith('remote:') ? w.remotes.get(e.targetId.slice(7)) : w.monsters.get(e.targetId);
         if (!tgt) break;
@@ -548,6 +550,7 @@ export class GameScene extends Phaser.Scene {
     const clip = this.playerRig.clips[toCharAnim(p.anim)] ?? this.playerRig.clips.idle;
     const fr = clipFrame(clip, p.dir, this.clipStep(clip, p.animAt));
     this.player.setTexture(clip.key, fr.frame).setFlipX(fr.flipX);
+    this.motion(this.player, p);
     this.player.setAlpha(this.world.playerStealthed ? 0.45 : 1);
     const nameLabel = `${this.world.char.name}${titleOf(this.world.char) ? `\n« ${titleOf(this.world.char)} »` : ''}`;
     if (this.playerName.text !== nameLabel) this.playerName.setText(nameLabel);
@@ -592,6 +595,7 @@ export class GameScene extends Phaser.Scene {
       const clip = v.rig.clips[v.rig.clips.cast ? toCharAnim(m.anim) : toMonAnim(m.anim)] ?? v.rig.clips.idle;
       const fr = clipFrame(clip, m.dir, this.clipStep(clip, m.animAt));
       s.setTexture(clip.key, fr.frame).setFlipX(fr.flipX);
+      if (!m.statuses.some((st) => st.id === 'freeze' || st.id === 'stun')) this.motion(s, m);
       const frozen = m.statuses.some((st) => st.id === 'freeze');
       const tint = frozen ? 0x9ad8ff : m.statuses.some((st) => st.id === 'poison') ? 0xb8ff9a : m.statuses.some((st) => st.id === 'burn') ? 0xffb08a : m.boss?.enraged ? 0xff8a8a : 0xffffff;
       s.setTint(tint);
@@ -612,6 +616,66 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
+  // ---------------------------------------------------------------- motion layer
+  // Smooth movement on top of the sprite frames, every rendered frame (not stepped like the sheet):
+  // leaning into the move, a springy squash when hit, starting or stopping, a lunge on attacks and a
+  // slow breathing sway. Rotation and scale pivot on the feet (the sprites' origin).
+  private frameDelta = 16;
+  private motionState = new WeakMap<Phaser.GameObjects.Sprite, { base: number; lx: number; ly: number; lean: number; sq: number; sv: number; kx: number; ky: number; animAt: number; lungeAt: number; moving: boolean; ph: number; flipAt: number }>();
+
+  private motion(spr: Phaser.GameObjects.Sprite, a: { x: number; y: number; dir?: Direction; anim?: string; animAt?: number }) {
+    const dt = this.frameDelta, now = this.time.now;
+    let st = this.motionState.get(spr);
+    if (!st) { st = { base: spr.scaleX, lx: a.x, ly: a.y, lean: 0, sq: 0, sv: 0, kx: 0, ky: 0, animAt: a.animAt ?? 0, lungeAt: -1e9, moving: false, ph: Math.random() * 6.28, flipAt: 0 }; this.motionState.set(spr, st); }
+    const vx = (a.x - st.lx) / Math.max(1, dt), vy = (a.y - st.ly) / Math.max(1, dt);
+    st.lx = a.x; st.ly = a.y;
+    const moving = Math.hypot(vx, vy) > 0.02 && Math.hypot(vx, vy) < 2;
+    // Lean into horizontal movement (eased); walking up or down rocks a little side to side.
+    const target = Math.max(-0.09, Math.min(0.09, vx * 0.55)) + (moving && Math.abs(vx) < 0.02 ? 0.02 * Math.sin(now / 95) : 0);
+    st.lean += (target - st.lean) * Math.min(1, dt * 0.012);
+    // Springy squash: starting/stopping, attacking or being hit.
+    // (A start or stop only counts after 120 ms, so uneven wandering speeds do not keep triggering it.)
+    if (moving === st.moving) st.flipAt = now;
+    else if (now - st.flipAt > 120) { st.sv += moving ? -0.003 : 0.004; st.moving = moving; st.flipAt = now; }
+    if (a.animAt !== undefined && a.animAt !== st.animAt) {
+      st.animAt = a.animAt;
+      if (a.anim === 'attack' || a.anim === 'cast') { st.lungeAt = now; st.sv -= 0.003; }
+    }
+    // Damped spring (about 210 ms period, slightly under-damped), stepped in 4 ms slices to stay stable.
+    for (let left = dt; left > 0; left -= 4) {
+      const h = Math.min(4, left);
+      st.sv += (-0.0009 * st.sq - 0.045 * st.sv) * h;
+      st.sq += st.sv * h;
+    }
+    st.sq = Math.max(-0.35, Math.min(0.35, st.sq));
+    // Lunge toward the facing direction and back, 320 ms.
+    const lt = (now - st.lungeAt) / 320;
+    const lunge = lt >= 0 && lt < 1 ? Math.sin(Math.PI * lt) * (1 - lt * 0.4) * 6 : 0;
+    const dir = a.dir ?? 'down';
+    const ldx = dir === 'left' ? -lunge : dir === 'right' ? lunge : 0, ldy = dir === 'up' ? -lunge * 0.6 : dir === 'down' ? lunge * 0.6 : 0;
+    // Knockback eases back to zero.
+    const decay = Math.pow(0.86, dt / 16);
+    st.kx *= decay; st.ky *= decay;
+    const breathe = st.moving ? 0 : 0.012 * Math.sin(now / 650 + st.ph);
+    spr.x += ldx + st.kx; spr.y += ldy + st.ky;
+    spr.setRotation(st.lean);
+    spr.setScale(st.base * (1 + st.sq * 0.3 - breathe * 0.5), st.base * (1 - st.sq * 0.28 + breathe));
+  }
+
+  /** Being hit: knocked back a few pixels (away from the player, or backwards for the player) and squashed. */
+  private kick(targetId: string, power: number) {
+    const w = this.world;
+    const spr = targetId === 'player' ? this.player : this.monViews.get(targetId)?.sprite;
+    const st = spr && this.motionState.get(spr);
+    if (!spr || !st) return;
+    const m = targetId === 'player' ? null : w.monsters.get(targetId);
+    let dx = 0, dy = 0;
+    if (m) { const d = Math.hypot(m.x - w.player.x, m.y - w.player.y) || 1; dx = (m.x - w.player.x) / d; dy = (m.y - w.player.y) / d; }
+    else { const p = w.player; dx = p.dir === 'left' ? 1 : p.dir === 'right' ? -1 : 0; dy = p.dir === 'up' ? 1 : p.dir === 'down' ? -1 : 0; }
+    st.kx += dx * 5 * power; st.ky += dy * 3 * power;
+    st.sv += 0.006 * power;
+  }
+
   /** Glow companions of shadow-style sprites (eyes, neon trims, glowing markings), drawn additively. */
   private glows = new Map<Phaser.GameObjects.Sprite, Phaser.GameObjects.Image>();
   private syncGlowLayer() {
@@ -624,7 +688,7 @@ export class GameScene extends Phaser.Scene {
       if (!gk) { g?.setVisible(false); continue; }
       if (!g) { g = this.add.image(o.x, o.y, gk, o.frame.name).setBlendMode(Phaser.BlendModes.ADD); this.glows.set(o, g); }
       g.setTexture(gk, o.frame.name).setPosition(o.x, o.y).setOrigin(o.originX, o.originY).setScale(o.scaleX, o.scaleY)
-        .setFlipX(o.flipX).setAlpha(o.alpha).setVisible(o.visible).setDepth(1e5 - 0.8 + o.depth * 1e-7);
+        .setFlipX(o.flipX).setAlpha(o.alpha).setVisible(o.visible).setRotation(o.rotation).setDepth(1e5 - 0.8 + o.depth * 1e-7);
     }
     for (const [o, g] of this.glows) if (!o.active || !o.scene) { g.destroy(); this.glows.delete(o); }
   }
@@ -660,6 +724,7 @@ export class GameScene extends Phaser.Scene {
     const clip = (a.anim === 'attack' && w.time - a.animAt < 400 ? v.rig.clips.attack : a.moving ? v.rig.clips.walk : undefined) ?? v.rig.clips.idle;
     const fr = clipFrame(clip, a.dir, this.clipStep(clip, a.anim === 'attack' ? a.animAt : 0));
     v.sprite.setTexture(clip.key, fr.frame).setFlipX(fr.flipX);
+    this.motion(v.sprite, a);
     const top = Math.round(a.y) - 34;
     v.name.setText(`${h.name} Lv ${h.level}`).setPosition(Math.round(a.x), top);
     const max = homunStats(w.data, h).maxHp;
@@ -687,6 +752,7 @@ export class GameScene extends Phaser.Scene {
     const clip = (a.moving ? v.rig.clips.walk : undefined) ?? v.rig.clips.idle;
     const fr = clipFrame(clip, a.dir, this.clipStep(clip, 0));
     v.sprite.setTexture(clip.key, fr.frame).setFlipX(fr.flipX);
+    this.motion(v.sprite, a);
     // Name above the pet so it never covers the player's name below the player.
     const top = Math.round(a.y) - 26;
     v.name.setText(pet.name).setOrigin(0.5, 1).setPosition(Math.round(a.x), top);

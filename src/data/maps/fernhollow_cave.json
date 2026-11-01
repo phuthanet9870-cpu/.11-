@@ -599,32 +599,35 @@
   {
    "op": "scatter",
    "kind": "rock",
-   "density": 0.006,
+   "density": 0.0027,
    "seed": 1023227509,
    "area": {
     "x": 3,
     "y": 3,
     "w": 114,
     "h": 90
-   }
+   },
+   "baseDensity": 0.006
   },
   {
    "op": "scatter",
    "kind": "rock_big",
-   "density": 0.006,
+   "density": 0.0027,
    "seed": 1023227510,
    "area": {
     "x": 3,
     "y": 3,
     "w": 114,
     "h": 90
-   }
+   },
+   "baseDensity": 0.006
   },
   {
    "op": "scatter",
    "kind": "deco:pebbles",
-   "density": 0.05,
-   "seed": 1023227518
+   "density": 0.025,
+   "seed": 1023227518,
+   "baseDensity": 0.05
   }
  ],
  "portals": [

@@ -60,8 +60,9 @@
   {
    "op": "scatter",
    "kind": "deco:pebbles",
-   "density": 0.05,
-   "seed": 4267170903
+   "density": 0.025,
+   "seed": 4267170903,
+   "baseDensity": 0.05
   }
  ],
  "spawnPoints": {

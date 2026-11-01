@@ -386,7 +386,7 @@ export type PaintOp =
   | { op: 'object'; kind: string; x: number; y: number; id?: string }
   | { op: 'fence'; x: number; y: number; length: number; dir: 'h' | 'v' }
   | { op: 'clear'; x: number; y: number; w: number; h: number }
-  | { op: 'scatter'; kind: string; area?: Rect; density: number; seed: number }
+  | { op: 'scatter'; kind: string; area?: Rect; density: number; seed: number; /** Design density before the map-wide prop reduction (world-gen). */ baseDensity?: number }
   | { op: 'blob'; tile: string; cx: number; cy: number; rx: number; ry: number; layer?: 'ground' | 'wall'; seed?: number }
   /** Single cells painted by hand (Studio brush). A null tile clears the cell (ground goes back to the map's base). */
   | { op: 'tiles'; layer: 'ground' | 'deco' | 'wall'; cells: [number, number, string | null][] };

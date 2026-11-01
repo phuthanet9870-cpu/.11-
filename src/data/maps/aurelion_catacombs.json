@@ -636,32 +636,35 @@
   {
    "op": "scatter",
    "kind": "gravestone",
-   "density": 0.006,
+   "density": 0.0027,
    "seed": 3489345596,
    "area": {
     "x": 3,
     "y": 3,
     "w": 114,
     "h": 90
-   }
+   },
+   "baseDensity": 0.006
   },
   {
    "op": "scatter",
    "kind": "ruin_pillar",
-   "density": 0.006,
+   "density": 0.0027,
    "seed": 3489345597,
    "area": {
     "x": 3,
     "y": 3,
     "w": 114,
     "h": 90
-   }
+   },
+   "baseDensity": 0.006
   },
   {
    "op": "scatter",
    "kind": "deco:pebbles",
-   "density": 0.05,
-   "seed": 3489345605
+   "density": 0.025,
+   "seed": 3489345605,
+   "baseDensity": 0.05
   }
  ],
  "portals": [

@@ -103,26 +103,30 @@
   {
    "op": "scatter",
    "kind": "tree_dark",
-   "density": 0.018,
-   "seed": 1293583424
+   "density": 0.0081,
+   "seed": 1293583424,
+   "baseDensity": 0.018
   },
   {
    "op": "scatter",
    "kind": "stump",
-   "density": 0.006,
-   "seed": 1293583425
+   "density": 0.0027,
+   "seed": 1293583425,
+   "baseDensity": 0.006
   },
   {
    "op": "scatter",
    "kind": "deco:flowers",
-   "density": 0.05,
-   "seed": 3950413778
+   "density": 0.025,
+   "seed": 3950413778,
+   "baseDensity": 0.05
   },
   {
    "op": "scatter",
    "kind": "deco:tuft",
-   "density": 0.05,
-   "seed": 2331792331
+   "density": 0.025,
+   "seed": 2331792331,
+   "baseDensity": 0.05
   },
   {
    "op": "object",

@@ -102,32 +102,37 @@
   {
    "op": "scatter",
    "kind": "ruin_pillar",
-   "density": 0.018,
-   "seed": 3005110374
+   "density": 0.0081,
+   "seed": 3005110374,
+   "baseDensity": 0.018
   },
   {
    "op": "scatter",
    "kind": "gravestone",
-   "density": 0.006,
-   "seed": 3005110375
+   "density": 0.0027,
+   "seed": 3005110375,
+   "baseDensity": 0.006
   },
   {
    "op": "scatter",
    "kind": "tree_dark",
-   "density": 0.006,
-   "seed": 3005110376
+   "density": 0.0027,
+   "seed": 3005110376,
+   "baseDensity": 0.006
   },
   {
    "op": "scatter",
    "kind": "deco:flowers",
-   "density": 0.05,
-   "seed": 145104368
+   "density": 0.025,
+   "seed": 145104368,
+   "baseDensity": 0.05
   },
   {
    "op": "scatter",
    "kind": "deco:tuft",
-   "density": 0.05,
-   "seed": 2284579221
+   "density": 0.025,
+   "seed": 2284579221,
+   "baseDensity": 0.05
   },
   {
    "op": "object",
