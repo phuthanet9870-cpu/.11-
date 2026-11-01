@@ -1,0 +1,927 @@
+{
+ "id": "fallen_citadel",
+ "name": "Fallen Citadel",
+ "region": "Abyssal Frontier",
+ "type": "dungeon",
+ "levelRange": [
+  108,
+  116
+ ],
+ "width": 120,
+ "height": 96,
+ "tileset": "dg_crypt",
+ "base": "ruin_floor",
+ "border": {
+  "kind": "ruin_wall",
+  "thickness": 2
+ },
+ "bgm": "dungeon_dark",
+ "ambient": "cave",
+ "weather": [],
+ "worldMapPos": {
+  "x": 0.98,
+  "y": 0.25
+ },
+ "paint": [
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 2,
+   "w": 1,
+   "h": 18
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 23,
+   "w": 1,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 25,
+   "w": 1,
+   "h": 3
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 31,
+   "w": 1,
+   "h": 17
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 48,
+   "w": 1,
+   "h": 3
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 54,
+   "w": 1,
+   "h": 17
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 71,
+   "w": 1,
+   "h": 12
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 86,
+   "w": 1,
+   "h": 8
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 2,
+   "w": 1,
+   "h": 12
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 17,
+   "w": 1,
+   "h": 8
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 25,
+   "w": 1,
+   "h": 7
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 35,
+   "w": 1,
+   "h": 13
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 48,
+   "w": 1,
+   "h": 16
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 67,
+   "w": 1,
+   "h": 4
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 71,
+   "w": 1,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 76,
+   "w": 1,
+   "h": 18
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 2,
+   "w": 1,
+   "h": 9
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 14,
+   "w": 1,
+   "h": 11
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 25,
+   "w": 1,
+   "h": 11
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 39,
+   "w": 1,
+   "h": 9
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 48,
+   "w": 1,
+   "h": 8
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 59,
+   "w": 1,
+   "h": 12
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 71,
+   "w": 1,
+   "h": 17
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 91,
+   "w": 1,
+   "h": 3
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 2,
+   "w": 1,
+   "h": 6
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 11,
+   "w": 1,
+   "h": 14
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 25,
+   "w": 1,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 30,
+   "w": 1,
+   "h": 18
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 48,
+   "w": 1,
+   "h": 14
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 65,
+   "w": 1,
+   "h": 6
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 71,
+   "w": 1,
+   "h": 14
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 88,
+   "w": 1,
+   "h": 6
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 3,
+   "y": 25,
+   "w": 2,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 8,
+   "y": 25,
+   "w": 17,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 26,
+   "y": 25,
+   "w": 17,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 46,
+   "y": 25,
+   "w": 2,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 49,
+   "y": 25,
+   "w": 6,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 58,
+   "y": 25,
+   "w": 13,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 72,
+   "y": 25,
+   "w": 14,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 89,
+   "y": 25,
+   "w": 5,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 95,
+   "y": 25,
+   "w": 16,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 114,
+   "y": 25,
+   "w": 4,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 3,
+   "y": 48,
+   "w": 15,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 21,
+   "y": 48,
+   "w": 4,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 26,
+   "y": 48,
+   "w": 6,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 35,
+   "y": 48,
+   "w": 13,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 49,
+   "y": 48,
+   "w": 14,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 66,
+   "y": 48,
+   "w": 5,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 72,
+   "y": 48,
+   "w": 3,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 78,
+   "y": 48,
+   "w": 16,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 95,
+   "y": 48,
+   "w": 5,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 103,
+   "y": 48,
+   "w": 15,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 3,
+   "y": 71,
+   "w": 4,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 10,
+   "y": 71,
+   "w": 15,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 26,
+   "y": 71,
+   "w": 4,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 33,
+   "y": 71,
+   "w": 15,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 49,
+   "y": 71,
+   "w": 9,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 61,
+   "y": 71,
+   "w": 10,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 72,
+   "y": 71,
+   "w": 3,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 78,
+   "y": 71,
+   "w": 16,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 95,
+   "y": 71,
+   "w": 4,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 102,
+   "y": 71,
+   "w": 16,
+   "h": 1
+  },
+  {
+   "op": "path",
+   "tile": "ruin_floor",
+   "points": [
+    [
+     59,
+     3
+    ],
+    [
+     60,
+     48
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "ruin_floor",
+   "points": [
+    [
+     59,
+     92
+    ],
+    [
+     60,
+     48
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "scatter",
+   "kind": "gravestone",
+   "density": 0.006,
+   "seed": 3952711156,
+   "area": {
+    "x": 3,
+    "y": 3,
+    "w": 114,
+    "h": 90
+   }
+  },
+  {
+   "op": "scatter",
+   "kind": "ruin_pillar",
+   "density": 0.006,
+   "seed": 3952711157,
+   "area": {
+    "x": 3,
+    "y": 3,
+    "w": 114,
+    "h": 90
+   }
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:pebbles",
+   "density": 0.05,
+   "seed": 3952711165
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_blighted_mire",
+   "x": 58,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "targetMap": "blighted_mire",
+   "targetSpawn": "from_fallen_citadel",
+   "label": "Blighted Mire"
+  },
+  {
+   "id": "to_void_rift",
+   "x": 58,
+   "y": 94,
+   "w": 4,
+   "h": 2,
+   "targetMap": "void_rift",
+   "targetSpawn": "from_fallen_citadel",
+   "label": "Void Rift"
+  }
+ ],
+ "spawnPoints": {
+  "from_blighted_mire": {
+   "x": 60,
+   "y": 4
+  },
+  "from_void_rift": {
+   "x": 60,
+   "y": 91
+  },
+  "default": {
+   "x": 60,
+   "y": 4
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "fallen_paladin",
+   "count": 9,
+   "area": {
+    "x": 26,
+    "y": 3,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "fallen_paladin",
+   "count": 9,
+   "area": {
+    "x": 95,
+    "y": 3,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "fallen_paladin",
+   "count": 9,
+   "area": {
+    "x": 49,
+    "y": 26,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "fallen_paladin",
+   "count": 9,
+   "area": {
+    "x": 3,
+    "y": 49,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "fallen_paladin",
+   "count": 9,
+   "area": {
+    "x": 72,
+    "y": 49,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "fallen_paladin",
+   "count": 9,
+   "area": {
+    "x": 26,
+    "y": 72,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "death_bat",
+   "count": 8,
+   "area": {
+    "x": 72,
+    "y": 26,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "death_bat",
+   "count": 8,
+   "area": {
+    "x": 26,
+    "y": 49,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "death_bat",
+   "count": 8,
+   "area": {
+    "x": 95,
+    "y": 49,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "death_bat",
+   "count": 8,
+   "area": {
+    "x": 49,
+    "y": 72,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "death_bat",
+   "count": 8,
+   "area": {
+    "x": 3,
+    "y": 3,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "death_bat",
+   "count": 8,
+   "area": {
+    "x": 72,
+    "y": 3,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "wraith_lord",
+   "count": 6,
+   "area": {
+    "x": 3,
+    "y": 72,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "wraith_lord",
+   "count": 6,
+   "area": {
+    "x": 72,
+    "y": 72,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "wraith_lord",
+   "count": 6,
+   "area": {
+    "x": 26,
+    "y": 3,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "wraith_lord",
+   "count": 6,
+   "area": {
+    "x": 95,
+    "y": 3,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "wraith_lord",
+   "count": 6,
+   "area": {
+    "x": 49,
+    "y": 26,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "wraith_lord",
+   "count": 6,
+   "area": {
+    "x": 3,
+    "y": 49,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "bone_dragon",
+   "count": 4,
+   "area": {
+    "x": 49,
+    "y": 3,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "bone_dragon",
+   "count": 4,
+   "area": {
+    "x": 3,
+    "y": 26,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "bone_dragon",
+   "count": 4,
+   "area": {
+    "x": 72,
+    "y": 26,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "bone_dragon",
+   "count": 4,
+   "area": {
+    "x": 26,
+    "y": 49,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "bone_dragon",
+   "count": 4,
+   "area": {
+    "x": 95,
+    "y": 49,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "bone_dragon",
+   "count": 4,
+   "area": {
+    "x": 49,
+    "y": 72,
+    "w": 20,
+    "h": 20
+   }
+  }
+ ],
+ "objects": [],
+ "areas": [],
+ "generated": true
+}

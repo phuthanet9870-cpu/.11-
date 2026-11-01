@@ -15,7 +15,7 @@ describe('skill VFX recipes', () => {
   });
   it('recipes only name existing skills', () => {
     const ids = new Set(list.map((s) => s.id));
-    for (const id of SKILL_VFX_IDS) expect(ids.has(id), id).toBe(true);
+    for (const id of SKILL_VFX_IDS) if (!id.startsWith('boss:')) expect(ids.has(id), id).toBe(true);
   });
   it('parses step modifiers', () => {
     expect(parseStep('arrow@area*14~40^>hit')).toMatchObject({ s: 'arrow', at: 'area', n: 14, stag: 40, fall: true, then: 'hit' });
@@ -46,7 +46,12 @@ describe('signature effects', () => {
       expect(seen.get(key), `${s.id} looks like ${seen.get(key)}`).toBeUndefined();
       seen.set(key, s.id);
     }
-    expect(Object.keys(SIGNATURES).length).toBe(active.length);
+    expect(Object.keys(SIGNATURES).filter((k) => !k.startsWith('boss:')).length).toBe(active.length);
+    // MVP boss skills: one signature each, none the same as another boss skill or any player skill.
+    const bossKeys = Object.keys(SIGNATURES).filter((k) => k.startsWith('boss:'));
+    expect(bossKeys.length).toBe(30);
+    const shapes = new Set(Object.values(SIGNATURES).map((g) => `${g.m}|${g.n}|${g.v}`));
+    expect(shapes.size).toBe(Object.keys(SIGNATURES).length);
   });
   it('uses many different motifs', () => {
     expect(new Set(Object.values(SIGNATURES).map((s) => s.m)).size).toBeGreaterThanOrEqual(35);

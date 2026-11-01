@@ -1010,9 +1010,15 @@
    "facing": "down"
   },
   {
-   "npcId": "crypt_keeper",
+   "npcId": "mvp_guide",
    "x": 42,
    "y": 35,
+   "facing": "down"
+  },
+  {
+   "npcId": "crypt_keeper",
+   "x": 48,
+   "y": 38,
    "facing": "down"
   },
   {

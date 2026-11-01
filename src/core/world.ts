@@ -33,7 +33,7 @@ import { Rng } from './rng';
 import { bonusNow, checkAchievements, claimDaily, setTitle } from './achievements';
 import { brew, BREW_BOWL, canBrew } from './brewing';
 import type {
-  BossDef, BossSkillDef, CharacterState, DerivedStats, Direction, Element, EquipSlot, MonsterDef,
+  BossDef, BossSkillDef, CharacterState, DerivedStats, Direction, Element, EquipSlot, MapDef, MonsterDef,
   NpcDef, SkillDef, SkillEffect, StatKey, StatModifiers, StatusId,
 } from './types';
 import { EQUIP_SLOTS } from './types';
@@ -495,6 +495,7 @@ export class World {
     for (const m of this.monsters.values()) this.updateMonster(m, dt);
     this.updateTraining();
     this.updateShadowDuel();
+    this.updateMvp();
     this.updateZones();
     this.updatePending();
     this.updateGroundItems();
@@ -1374,6 +1375,54 @@ export class World {
     for (const m of this.monsters.values()) if (m.def.aiFlags?.includes('dummy')) m.hp = m.maxHp;
   }
 
+  // ---------------------------------------------------------------- MVP sanctum
+  /** Every MVP boss of the sanctum maps with when it appears next (real-time ms) or that it is out now. */
+  mvpTimers(): { bossId: string; monsterId: string; name: string; level: number; mapId: string; mapName: string; alive: boolean; nextAt: number; lastKilledAt: number }[] {
+    const out: ReturnType<World['mvpTimers']> = [];
+    for (const map of this.data.maps.values()) {
+      if (!map.mvp) continue;
+      for (const id of map.mvp.bossIds) {
+        const b = this.data.bosses.get(id), mon = b && this.data.monsters.get(b.monsterId);
+        if (!b || !mon) continue;
+        const alive = this.map.def.id === map.id && [...this.monsters.values()].some((m) => m.boss?.def.id === id && !m.dead);
+        out.push({ bossId: id, monsterId: mon.id, name: mon.name, level: mon.level, mapId: map.id, mapName: map.name, alive, nextAt: this.mvpNextAt(id, map.mvp), lastKilledAt: Number(this.char.flags[`mvpKilled_${id}`] ?? 0) });
+      }
+    }
+    return out;
+  }
+
+  /** When an MVP boss appears next; the first time, a random moment within the next few minutes. */
+  private mvpNextAt(id: string, mvp: NonNullable<MapDef['mvp']>): number {
+    const key = `mvpNext_${id}`;
+    if (this.char.flags[key] === undefined) this.char.flags[key] = this.now() + Math.round(this.rng.next() * Math.min(5, mvp.respawnMin[0]) * 60000);
+    return Number(this.char.flags[key]);
+  }
+
+  private mvpCheckAt = 0;
+  /** In an MVP sanctum, bosses whose time has come appear at a random free altar. */
+  private updateMvp() {
+    const mvp = this.map.def.mvp;
+    if (!mvp || this.time < this.mvpCheckAt) return;
+    this.mvpCheckAt = this.time + 1000;
+    const now = this.now();
+    for (const id of mvp.bossIds) {
+      if ([...this.monsters.values()].some((m) => m.boss?.def.id === id)) continue;
+      if (now < this.mvpNextAt(id, mvp)) continue;
+      const bossDef = this.data.bosses.get(id), def = bossDef && this.data.monsters.get(bossDef.monsterId);
+      if (!bossDef || !def) continue;
+      const taken = [...this.monsters.values()].filter((m) => m.boss && !m.dead);
+      const free = mvp.altars.filter((a) => !taken.some((m) => dist(m.x, m.y, a.x * TILE, a.y * TILE) < 6 * TILE));
+      const alt = this.rng.pick(free.length ? free : mvp.altars);
+      const m = this.makeMonster(def, alt.x * TILE + TILE / 2, alt.y * TILE + TILE / 2, -1);
+      m.boss = { def: bossDef, phase: 0, engagedAt: 0, enraged: false, skillReadyAt: {}, casting: null, introShown: false, minions: [] };
+      this.monsters.set(m.id, m);
+      delete this.tombstones[id];
+      this.emit({ type: 'fx', fx: 'boss_entrance', x: m.x, y: m.y });
+      this.message(`MVP ${def.name} (Lv ${def.level}) has appeared in ${this.map.def.name}!`, 'quest');
+      this.emit({ type: 'bossIntro', name: `MVP ${def.name}`, title: bossDef.title, text: `${def.name} appears at an altar of the sanctum!` });
+    }
+  }
+
   // ---------------------------------------------------------------- shadow arena
   /** The current Shadow Arena match. */
   shadowDuel: { ids: string[]; allies: string[]; mode: string; difficulty: ArenaDifficulty; startedAt: number } | null = null;
@@ -1714,6 +1763,16 @@ export class World {
         this.message(`MVP! ${this.char.name} is the MVP of ${m.def.name}! +${exp} MVP EXP.`, 'quest');
         this.emit({ type: 'mvp', name: m.def.name, killer: this.char.name, exp, items: got });
         this.emit({ type: 'fx', fx: 'level_up', x: this.player.x, y: this.player.y, targetId: 'player', offsetY: 0 });
+      }
+      if (this.map.def.mvp) {
+        // MVP sanctum: the next appearance of this boss comes after a random wait (real time).
+        const [lo, hi] = this.map.def.mvp.respawnMin;
+        this.char.flags[`mvpNext_${b.def.id}`] = this.now() + Math.round((lo + this.rng.next() * (hi - lo)) * 60000);
+        this.char.flags[`mvpKilled_${b.def.id}`] = this.now();
+        this.tombstones[b.def.id] = { mapId: this.map.def.id, x: m.x, y: m.y, boss: m.def.name, killer: isMvp ? this.char.name : 'unknown', killedAt: this.now(), respawnAt: this.time + lo * 60000 };
+        this.schedule(3000, () => this.monsters.delete(m.id));
+        this.telegraphs = [];
+        return;
       }
       this.bossRespawnAt[b.def.id] = this.time + respawnSec * 1000;
       this.tombstones[b.def.id] = { mapId: this.map.def.id, x: m.x, y: m.y, boss: m.def.name, killer: isMvp ? this.char.name : 'unknown', killedAt: this.now(), respawnAt: this.time + respawnSec * 1000 };
@@ -2127,7 +2186,7 @@ export class World {
       this.damagePlayer(res.damage, 'physical', s.element ?? 'neutral', null, false);
       if (s.status && !p.dead) this.applyStatus(p, s.status.status, s.status.chance, s.status.durationMs);
     };
-    this.emit({ type: 'fx', fx: s.fx, x: c.x, y: c.y, radius: s.radius });
+    this.emit({ type: 'fx', fx: s.fx, x: c.x, y: c.y, radius: s.radius, skillId: `boss:${s.id}`, fromX: m.x, fromY: m.y });
     this.emit({ type: 'sound', key: 'boss_slam' });
     switch (s.kind) {
       case 'circle':

@@ -60,6 +60,17 @@ export const SIGNATURES: Record<string, Signature> = Object.fromEntries(Object.e
   assumptio: 'wings 3 0 #ffffff', tiger_cannon: 'beast 1 2 #ffffff', root_of_mountain: 'roots 4 3 #c8a060',
   meteor_assault: 'shards 8 3 #ff3b30', enchant_deadly_poison: 'skull 1 2 #4aff4a', full_strip: 'chains 4 1 #ffffff', shadow_bounce: 'moon 4 3 #ffffff',
   maximum_power: 'crown 3 0 #ffd34d', cart_termination: 'wheel 10 2 #ffd34d', full_chemical_protection: 'shield 4 2 #9fe8ff', elixir_rain: 'drops 12 3 #7aff9a',
+  // MVP boss skills
+  'boss:judgement_ray': 'cross 10 3 #ffd860', 'boss:halo_burst': 'crown 4 1 #fff6c0', 'boss:wings_of_dawn': 'wings 4 0 #ffd860',
+  'boss:glacier_smash': 'shards 10 0 #ffffff', 'boss:whiteout': 'vortex 10 0 #e0f6ff', 'boss:ice_prison': 'lattice 10 2 #bdf0ff',
+  'boss:meteor_rain': 'sun 18 1 #ffd34d', 'boss:dragon_dive': 'beast 2 1 #ffd34d', 'boss:magma_eruption': 'roots 9 1 #ff6a2e',
+  'boss:venom_barrage': 'drops 16 2 #c8ff4a', 'boss:royal_swarm': 'vortex 6 1 #c8ff4a', 'boss:toxic_nova': 'petals 10 0 #c8ff4a',
+  'boss:dark_cleave': 'blades 10 2 #7fffd0', 'boss:soul_chains': 'chains 8 1 #7fffd0', 'boss:doom_charge': 'swords 5 1 #7fffd0',
+  'boss:thunder_strike': 'cage 5 1 #fff27a', 'boss:cyclone': 'spiral 6 1 #fff27a', 'boss:storm_ring': 'cage 10 2 #fff27a',
+  'boss:tidal_crush': 'waves 7 1 #5affd8', 'boss:ink_cloud': 'moon 5 1 #5affd8', 'boss:maelstrom': 'vortex 12 1 #5affd8',
+  'boss:void_collapse': 'vortex 7 2 #ff5aff', 'boss:shadow_legion': 'skull 3 2 #ff5aff', 'boss:oblivion_ring': 'sigil 9 2 #ff5aff',
+  'boss:chaos_breath': 'beast 3 1 #ff3a3a', 'boss:rift_dive': 'shards 12 3 #ff3a3a', 'boss:apocalypse': 'sun 20 3 #ff3a3a',
+  'boss:death_nova': 'skull 1 1 #7aff8a', 'boss:bone_spear_storm': 'swords 7 2 #e8e0c8', 'boss:raise_the_fallen': 'runes 8 2 #7aff8a',
 }).map(([k, v]) => [k, S(v)]));
 
 // ------------------------------------------------------------------ drawing

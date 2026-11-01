@@ -182,6 +182,62 @@
   "generated": true
  },
  {
+  "id": "combo_astral_wastes",
+  "name": "Astral Wastes Set",
+  "parts": [
+   "card_nebula_slime",
+   "card_void_bat",
+   "card_astral_golem"
+  ],
+  "mods": {
+   "pdef": 6,
+   "mdef": 6
+  },
+  "generated": true
+ },
+ {
+  "id": "combo_frozen_abyss",
+  "name": "Frozen Abyss Set",
+  "parts": [
+   "card_rime_wolf",
+   "card_glacial_drake",
+   "card_rime_wraith"
+  ],
+  "mods": {
+   "maxHpPct": 8,
+   "patk": 10
+  },
+  "generated": true
+ },
+ {
+  "id": "combo_cinder_throne",
+  "name": "Cinder Throne Set",
+  "parts": [
+   "card_cinder_drake",
+   "card_hellfire_scorpion",
+   "card_obsidian_golem"
+  ],
+  "mods": {
+   "hit": 12,
+   "aspdPct": 5
+  },
+  "generated": true
+ },
+ {
+  "id": "combo_blighted_mire",
+  "name": "Blighted Mire Set",
+  "parts": [
+   "card_plague_spore",
+   "card_rot_crab",
+   "card_mire_hornet"
+  ],
+  "mods": {
+   "pdef": 6,
+   "mdef": 6
+  },
+  "generated": true
+ },
+ {
   "id": "set_shadow",
   "name": "Alley Shadow Set",
   "parts": [

@@ -186,6 +186,41 @@ const RECIPES: Record<string, Raw> = {
   elixir_rain: { c: 'circle@self_=1400; rise@area*5~80' },
 };
 
+/** MVP boss skills (ids `boss:<skill id>`): each has its own recipe and signature too. */
+const BOSS_RECIPES: Record<string, Raw> = {
+  judgement_ray: { h: 'pillar@targetx1.4; holycross@target+150x1.2; burst@target+200', k: 2 },
+  halo_burst: { c: 'ring@selfx1.6; holycross@self; rise@area*6~60', k: 1 },
+  wings_of_dawn: { h: 'ring@targetx2; pillar@area*6~80; burst@area*6~80', k: 2 },
+  glacier_smash: { h: 'spikes@targetx1.5; burst@target+80x1.2', k: 2 },
+  whiteout: { h: 'tornado@area*5~100; ring@targetx2', k: 1 },
+  ice_prison: { c: 'spikes@area*8~40x0.8; ring@selfx1.5', k: 1 },
+  meteor_rain: { h: 'meteor@area*8~110^>explode', k: 3 },
+  dragon_dive: { h: 'explode@targetx1.2; ring@target', k: 2 },
+  magma_eruption: { h: 'flame@area*10~60; explode@area*4~120x0.8', k: 3 },
+  venom_barrage: { h: 'cloud@targetx1.4; orb@area*6~60^>hit', k: 1 },
+  royal_swarm: { c: 'cloud@self; claw@area*4~80' },
+  toxic_nova: { c: 'cloud@area*6~60; ring@selfx1.6', k: 1 },
+  dark_cleave: { h: 'cross@targetx1.6; tendrils@target', k: 2 },
+  soul_chains: { c: 'tendrils@area*5~60; ring@self', k: 1 },
+  doom_charge: { c: 'smoke@self', h: 'slash@targetx1.4; crit@target+80', k: 2 },
+  thunder_strike: { h: 'bolt@targetx1.3; bolt@target+120', k: 2 },
+  cyclone: { c: 'tornado@selfx1.5; wind@area*4~80', k: 1 },
+  storm_ring: { h: 'bolt@area*10~60; ring@targetx2', k: 3 },
+  tidal_crush: { h: 'spikes@targetx1.4#5affd8; burst@target', k: 2 },
+  ink_cloud: { c: 'smoke@area*6~50x1.2#2a2a3a; cloud@self#3a3a5a' },
+  maelstrom: { h: 'tornado@area*4~100; ring@targetx2', k: 2 },
+  void_collapse: { h: 'tendrils@targetx1.5; burst@target+150', k: 2 },
+  shadow_legion: { c: 'tendrils@area*4~80; smoke@self' },
+  oblivion_ring: { h: 'ring@targetx2; tendrils@area*8~50', k: 3 },
+  chaos_breath: { h: 'explode@targetx1.3; flame@area*5~60', k: 2 },
+  rift_dive: { c: 'smoke@self', h: 'crit@targetx1.3; ring@target', k: 2 },
+  apocalypse: { h: 'meteor@area*12~90^>explode; ring@target+600x2', k: 4 },
+  death_nova: { c: 'tendrils@area*8~40; ring@selfx2', k: 2 },
+  bone_spear_storm: { h: 'spikes@area*6~50#e8e0c8; burst@target', k: 2 },
+  raise_the_fallen: { c: 'circle@self_=1500; tendrils@area*3~120' },
+};
+for (const [id, r] of Object.entries(BOSS_RECIPES)) RECIPES[`boss:${id}`] = r;
+
 /** Recipes for skills without one of their own (new skills), by their effect category. */
 const BY_FX: Record<string, Raw> = {
   heal: { c: 'rise@self; circle@self_=800' }, holy: { h: 'holycross@target; burst@target' }, arcane: { p: 'orb', h: 'burst@target' },

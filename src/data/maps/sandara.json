@@ -1047,6 +1047,12 @@
    "facing": "down"
   },
   {
+   "npcId": "mvp_guide",
+   "x": 49,
+   "y": 37,
+   "facing": "down"
+  },
+  {
    "npcId": "sandara_trader",
    "x": 47,
    "y": 29,

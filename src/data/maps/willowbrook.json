@@ -1048,14 +1048,20 @@
    "facing": "down"
   },
   {
+   "npcId": "mvp_guide",
+   "x": 53,
+   "y": 33,
+   "facing": "down"
+  },
+  {
    "npcId": "willowbrook_trader",
-   "x": 49,
+   "x": 51,
    "y": 15,
    "facing": "down"
   },
   {
    "npcId": "willowbrook_market",
-   "x": 51,
+   "x": 49,
    "y": 15,
    "facing": "down"
   }

@@ -601,6 +601,21 @@
    "tile": "ruin_floor",
    "points": [
     [
+     59,
+     3
+    ],
+    [
+     60,
+     48
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "ruin_floor",
+   "points": [
+    [
      25,
      3
     ],
@@ -674,12 +689,26 @@
    "targetMap": "ravenhold_ruins",
    "targetSpawn": "from_ravenhold_crypt",
    "label": "Ravenhold Castle Ruins"
+  },
+  {
+   "id": "to_astral_wastes",
+   "x": 58,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "targetMap": "astral_wastes",
+   "targetSpawn": "from_ravenhold_crypt",
+   "label": "Astral Wastes"
   }
  ],
  "spawnPoints": {
   "from_ravenhold_ruins": {
    "x": 60,
    "y": 91
+  },
+  "from_astral_wastes": {
+   "x": 60,
+   "y": 4
   },
   "default": {
    "x": 60,

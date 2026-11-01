@@ -855,6 +855,12 @@
    "facing": "down"
   },
   {
+   "npcId": "mvp_guide",
+   "x": 48,
+   "y": 35,
+   "facing": "down"
+  },
+  {
    "npcId": "fernhollow_trader",
    "x": 56,
    "y": 52,
@@ -862,7 +868,7 @@
   },
   {
    "npcId": "fernhollow_market",
-   "x": 44,
+   "x": 46,
    "y": 33,
    "facing": "down"
   }

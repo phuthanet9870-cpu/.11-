@@ -135,6 +135,31 @@ const MONSTERS: MonSpec[] = [
   M('banshee', 'Banshee', 72, 'ghost', ['#c8c8d8', '#3a2a4a', '#ff5a7a'], 'ghost', 'undead', 'magic', { projectile: '#ff8ab0' }),
   M('grave_knight', 'Grave Knight', 76, 'skeleton', ['#4a4a5a', '#1e1e28', '#7fd6ff'], 'undead', 'undead', 'aggressive', { size: 'medium' }),
   M('lich_spirit', 'Lich Spirit', 79, 'ghost', ['#8a7aaa', '#1a1028', '#a9e04a'], 'undead', 'undead', 'magic', { projectile: '#a9e04a' }),
+  // Abyssal Frontier (Lv 86–120)
+  M('nebula_slime', 'Nebula Slime', 86, 'slime', ['#6a4ab8', '#3a2a7a', '#ffd0ff'], 'ghost', 'formless', 'aggressive'),
+  M('void_bat', 'Void Bat', 87, 'bat', ['#2a1a4a', '#120a24', '#c06aff'], 'shadow', 'beast'),
+  M('astral_golem', 'Astral Golem', 89, 'golem', ['#4a5a9a', '#2a3a6a', '#fff27a'], 'holy', 'formless', 'aggressive', { size: 'large' }),
+  M('starlight_wisp', 'Starlight Wisp', 91, 'ghost', ['#e8f0ff', '#2a3a6a', '#ffe27a'], 'holy', 'formless', 'magic', { projectile: '#fff6c0' }),
+  M('rime_wolf', 'Rime Wolf', 93, 'wolf', ['#d8ecff', '#7aa8d0', '#3a6ab8'], 'water', 'beast'),
+  M('glacial_drake', 'Glacial Drake', 95, 'drake', ['#9ad8ff', '#3a7ab0', '#ffffff'], 'water', 'dragon', 'aggressive', { size: 'medium', status: ['freeze', 0.1, 2000] }),
+  M('rime_wraith', 'Rime Wraith', 97, 'ghost', ['#c8ecff', '#1a3a5a', '#7fd6ff'], 'water', 'undead', 'magic', { projectile: '#bdf0ff' }),
+  M('frost_titan', 'Frost Titan', 99, 'golem', ['#bfe4f8', '#5a8ab0', '#ffffff'], 'water', 'formless', 'aggressive', { size: 'large', status: ['freeze', 0.12, 2200] }),
+  M('cinder_drake', 'Cinder Drake', 100, 'drake', ['#3a2a2a', '#1a1010', '#ff6a2e'], 'fire', 'dragon', 'aggressive', { size: 'medium', status: ['burn', 0.15, 5000] }),
+  M('hellfire_scorpion', 'Hellfire Scorpion', 101, 'scorpion', ['#a82a1a', '#4a0e08', '#ffd34d'], 'fire', 'insect', 'aggressive', { status: ['burn', 0.15, 5000] }),
+  M('obsidian_golem', 'Obsidian Golem', 103, 'golem', ['#2a2a32', '#121218', '#ff8a2e'], 'fire', 'formless', 'aggressive', { size: 'large' }),
+  M('pyre_spirit', 'Pyre Spirit', 104, 'ghost', ['#ffb03a', '#5a1a0a', '#fff08a'], 'fire', 'formless', 'magic', { projectile: '#ff8a2e' }),
+  M('plague_spore', 'Plague Spore', 105, 'spore', ['#5a6a2a', '#c8ff4a', '#f0ffd0'], 'poison', 'plant', 'magic', { projectile: '#c8ff4a' }),
+  M('rot_crab', 'Rot Crab', 106, 'crab', ['#4a3a2a', '#2a1e14', '#a9e04a'], 'poison', 'fish', 'aggressive', { size: 'medium', status: ['poison', 0.15, 7000] }),
+  M('mire_hornet', 'Mire Hornet', 107, 'wasp', ['#6a7a2a', '#1e2410', '#e0ffd0'], 'poison', 'insect', 'aggressive', { status: ['poison', 0.2, 7000] }),
+  M('venom_drake', 'Venom Drake', 109, 'drake', ['#4a8a3a', '#1e3a14', '#e0ff6a'], 'poison', 'dragon', 'magic', { size: 'medium', projectile: '#a9e04a' }),
+  M('fallen_paladin', 'Fallen Paladin', 109, 'skeleton', ['#c8c0a0', '#3a3242', '#ffd34d'], 'shadow', 'undead', 'aggressive', { size: 'medium', status: ['curse', 0.1, 6000] }),
+  M('death_bat', 'Death Bat', 110, 'bat', ['#1a1a1e', '#08080a', '#ff3a4a'], 'undead', 'undead'),
+  M('wraith_lord', 'Wraith Lord', 112, 'ghost', ['#7a6a9a', '#120a1e', '#ff5a7a'], 'undead', 'undead', 'magic', { projectile: '#ff8ab0' }),
+  M('bone_dragon', 'Bone Dragon', 114, 'drake', ['#e8e0c8', '#4a4040', '#7fd6ff'], 'undead', 'dragon', 'aggressive', { size: 'large', status: ['curse', 0.1, 6000] }),
+  M('void_slime', 'Void Slime', 115, 'slime', ['#1a1030', '#0a0614', '#c06aff'], 'ghost', 'formless', 'aggressive'),
+  M('void_walker', 'Void Walker', 117, 'ghost', ['#3a2a5a', '#0a0414', '#c06aff'], 'shadow', 'demon', 'magic', { projectile: '#c06aff' }),
+  M('chaos_golem', 'Chaos Golem', 118, 'golem', ['#4a1a3a', '#1a0814', '#ff3a8a'], 'shadow', 'formless', 'aggressive', { size: 'large', status: ['stun', 0.08, 1500] }),
+  M('abyss_drake', 'Abyss Drake', 120, 'drake', ['#2a1a4a', '#0e0820', '#ff5aff'], 'shadow', 'dragon', 'aggressive', { size: 'large', status: ['curse', 0.12, 6000] }),
 ];
 
 const BOSSES = [
@@ -143,6 +168,43 @@ const BOSSES = [
   { id: 'sun_king', monster: M('sun_king_boss', 'Sun-King Ankhar', 50, 'skeleton', ['#f2e2b0', '#c8a03a', '#3ad8a8'], 'undead', 'undead', 'boss', { size: 'large' }), scale: 2.2, title: 'Eternal Ruler of the Royal Tomb', element: 'undead', minion: 'tomb_mummy', status: 'curse', fx: 'holy', map: 'kings_tomb' },
   { id: 'pyrewyrm', monster: M('pyrewyrm_boss', 'Pyrewyrm', 74, 'drake', ['#e83a1a', '#7a1a0e', '#ffd34d'], 'fire', 'dragon', 'boss', { size: 'large' }), scale: 2.4, title: 'Heart of the Volcano', element: 'fire', minion: 'fire_drake', status: 'burn', fx: 'fire', map: 'magma_core' },
   { id: 'dread_lord', monster: M('dread_lord_boss', 'Dread Lord Morvane', 85, 'skeleton', ['#3a3a4a', '#12121a', '#c83a4a'], 'shadow', 'undead', 'boss', { size: 'large' }), scale: 2.5, title: 'Fallen King of Ravenhold', element: 'shadow', minion: 'cursed_knight', status: 'curse', fx: 'shadow', map: 'ravenhold_crypt' },
+];
+
+// MVP bosses of the MVP Sanctum (Lv 110–150): three signature skills each and a unique item.
+interface MvpSkill { id: string; name: string; kind: 'circle' | 'self_circle' | 'ring' | 'charge' | 'summon'; radius?: number; mul?: number; status?: [string, number, number]; summon?: string; cd: number; fx: string }
+interface MvpSpec { id: string; monster: MonSpec; scale: number; title: string; element: string; skills: MvpSkill[]; item: J }
+const SK = (id: string, name: string, kind: MvpSkill['kind'], cd: number, fx: string, extra: Partial<MvpSkill> = {}): MvpSkill => ({ id, name, kind, cd, fx, ...extra });
+const MVPS: MvpSpec[] = [
+  { id: 'seraph_lumina', monster: M('seraph_lumina_boss', 'Seraph Lumina', 110, 'ghost', ['#fff6d8', '#c8a03a', '#7fd6ff'], 'holy', 'demihuman', 'boss', { size: 'large' }), scale: 2.3, title: 'Wings of the Last Dawn', element: 'holy',
+    skills: [SK('judgement_ray', 'Judgement Ray', 'circle', 6500, 'holy', { radius: 100, mul: 1.8 }), SK('halo_burst', 'Halo Burst', 'self_circle', 11000, 'holy', { radius: 170, mul: 1.3, status: ['stun', 0.5, 1500] }), SK('wings_of_dawn', 'Wings of Dawn', 'ring', 14000, 'holy', { radius: 240, mul: 1.5 })],
+    item: { id: 'dawnwing_halo', name: 'Dawnwing Halo', slot: 'headgear', icon: { shape: 'crown', color: '#fff6c0', accent: '#7fd6ff' }, mods: { int: 8, dex: 6, mdef: 25, maxMpPct: 15, castTimePct: -10 }, description: 'A halo shed by Seraph Lumina. Spells come quicker under its light.' } },
+  { id: 'frost_colossus', monster: M('frost_colossus_boss', 'Frost Colossus Ymir', 115, 'golem', ['#d8f0ff', '#5a8ab0', '#ffffff'], 'water', 'formless', 'boss', { size: 'large' }), scale: 2.5, title: 'The Glacier That Walks', element: 'water',
+    skills: [SK('glacier_smash', 'Glacier Smash', 'circle', 6500, 'ice', { radius: 110, mul: 1.9, status: ['freeze', 0.4, 2500] }), SK('whiteout', 'Whiteout', 'ring', 13000, 'ice', { radius: 230, mul: 1.4, status: ['slow', 0.6, 4000] }), SK('ice_prison', 'Ice Prison', 'self_circle', 11000, 'ice', { radius: 160, mul: 1.2, status: ['freeze', 0.6, 3000] })],
+    item: { id: 'ymir_heart', name: 'Heart of Ymir', slot: 'armor', icon: { shape: 'armor', color: '#bdf0ff', accent: '#ffffff' }, mods: { pdef: 140, maxHpPct: 18, vit: 8, elementResistPct: { water: 30 } }, description: 'Plate carved from the Colossus\'s frozen core.' } },
+  { id: 'inferno_wyrm', monster: M('inferno_wyrm_boss', 'Inferno Wyrm Vulcanor', 120, 'drake', ['#ff5a1a', '#5a0e04', '#fff08a'], 'fire', 'dragon', 'boss', { size: 'large' }), scale: 2.6, title: 'Lord of the Burning Sky', element: 'fire',
+    skills: [SK('meteor_rain', 'Meteor Rain', 'circle', 7000, 'meteor', { radius: 120, mul: 2.0, status: ['burn', 0.6, 5000] }), SK('dragon_dive', 'Dragon Dive', 'charge', 9000, 'fire', { radius: 60, mul: 1.7 }), SK('magma_eruption', 'Magma Eruption', 'ring', 14000, 'fire', { radius: 240, mul: 1.6, status: ['burn', 0.5, 5000] })],
+    item: { id: 'vulcanor_fang', name: 'Vulcanor Fang', slot: 'weapon', weaponType: 'twohand_sword', attackKind: 'melee', attackRange: 62, element: 'fire', twoHanded: true, weaponLevel: 4, icon: { shape: 'sword', color: '#ff6a2e', accent: '#ffd34d' }, mods: { patk: 260, str: 10, critDmg: 25 }, description: 'A great blade from the Wyrm\'s fang. It burns what it cuts.' } },
+  { id: 'plague_queen', monster: M('plague_queen_boss', 'Plague Queen Vespera', 123, 'wasp', ['#8aa83a', '#1e2410', '#ff3a8a'], 'poison', 'insect', 'boss', { size: 'large' }), scale: 2.4, title: 'Mother of the Blighted Swarm', element: 'poison',
+    skills: [SK('venom_barrage', 'Venom Barrage', 'circle', 6000, 'poison', { radius: 100, mul: 1.7, status: ['poison', 0.7, 8000] }), SK('royal_swarm', 'Royal Swarm', 'summon', 24000, 'shout', { summon: 'mire_hornet' }), SK('toxic_nova', 'Toxic Nova', 'self_circle', 11000, 'poison', { radius: 180, mul: 1.4, status: ['poison', 0.8, 9000] })],
+    item: { id: 'vespera_wings', name: 'Vespera\'s Gossamer', slot: 'garment', icon: { shape: 'cape', color: '#a8d83a', accent: '#ff3a8a' }, mods: { flee: 30, agi: 8, elementResistPct: { poison: 40 }, moveSpeedPct: 8 }, description: 'Shimmering wings of the Plague Queen.' } },
+  { id: 'death_knight', monster: M('death_knight_boss', 'Death Knight Malgrave', 127, 'skeleton', ['#3a3a4a', '#0e0e14', '#7fffd0'], 'shadow', 'undead', 'boss', { size: 'large' }), scale: 2.5, title: 'Oathbreaker of the Fallen Citadel', element: 'shadow',
+    skills: [SK('dark_cleave', 'Dark Cleave', 'circle', 6000, 'shadow', { radius: 110, mul: 2.0 }), SK('soul_chains', 'Soul Chains', 'self_circle', 11000, 'shadow', { radius: 170, mul: 1.2, status: ['stun', 0.6, 2000] }), SK('doom_charge', 'Doom Charge', 'charge', 9000, 'dash', { radius: 60, mul: 1.8, status: ['curse', 0.5, 6000] })],
+    item: { id: 'malgrave_oath', name: 'Malgrave\'s Oathblade', slot: 'weapon', weaponType: 'sword', attackKind: 'melee', attackRange: 58, element: 'shadow', weaponLevel: 4, icon: { shape: 'sword', color: '#3a3a4a', accent: '#7fffd0' }, mods: { patk: 210, str: 8, hpDrainPct: 4 }, description: 'The cursed sword of the Death Knight. It drinks life.' } },
+  { id: 'storm_titan', monster: M('storm_titan_boss', 'Storm Titan Thrall', 130, 'golem', ['#7a8ab8', '#2a3a6a', '#fff27a'], 'wind', 'formless', 'boss', { size: 'large' }), scale: 2.6, title: 'Thunder Given Form', element: 'wind',
+    skills: [SK('thunder_strike', 'Thunder Strike', 'circle', 6500, 'lightning', { radius: 100, mul: 1.9, status: ['stun', 0.5, 1500] }), SK('cyclone', 'Cyclone', 'self_circle', 10000, 'wind', { radius: 180, mul: 1.4 }), SK('storm_ring', 'Storm Ring', 'ring', 13000, 'lightning', { radius: 240, mul: 1.6 })],
+    item: { id: 'thrall_core', name: 'Thunder Core', slot: 'accessory', icon: { shape: 'amulet', color: '#fff27a', accent: '#7a8ab8' }, mods: { aspdPct: 12, dex: 8, hit: 25, elementDamagePct: { wind: 20 } }, description: 'The crackling heart of the Storm Titan.' } },
+  { id: 'abyssal_kraken', monster: M('abyssal_kraken_boss', 'Abyssal Kraken Charybd', 134, 'crab', ['#2a4a7a', '#0a1428', '#5affd8'], 'water', 'fish', 'boss', { size: 'large' }), scale: 2.6, title: 'Terror of the Deep Trench', element: 'water',
+    skills: [SK('tidal_crush', 'Tidal Crush', 'circle', 6500, 'ice', { radius: 115, mul: 1.9 }), SK('ink_cloud', 'Ink Cloud', 'self_circle', 11000, 'shadow', { radius: 180, mul: 1.1, status: ['blind', 0.7, 5000] }), SK('maelstrom', 'Maelstrom', 'ring', 14000, 'wind', { radius: 250, mul: 1.6, status: ['slow', 0.6, 4000] })],
+    item: { id: 'charybd_shell', name: 'Charybd Shell', slot: 'shield', icon: { shape: 'shield', color: '#2a4a7a', accent: '#5affd8' }, mods: { pdef: 60, mdef: 30, maxHpPct: 12, raceResistPct: { fish: 30, dragon: 15 } }, description: 'A shield made from the Kraken\'s armoured shell.' } },
+  { id: 'void_emperor', monster: M('void_emperor_boss', 'Void Emperor Nihil', 138, 'ghost', ['#3a1a6a', '#08040e', '#ff5aff'], 'shadow', 'demon', 'boss', { size: 'large' }), scale: 2.6, title: 'He Who Unmakes', element: 'shadow',
+    skills: [SK('void_collapse', 'Void Collapse', 'circle', 6500, 'arcane', { radius: 115, mul: 2.0 }), SK('shadow_legion', 'Shadow Legion', 'summon', 24000, 'shadow', { summon: 'void_walker' }), SK('oblivion_ring', 'Oblivion Ring', 'ring', 13000, 'shadow', { radius: 240, mul: 1.6, status: ['curse', 0.6, 6000] })],
+    item: { id: 'nihil_scepter', name: 'Scepter of Nihil', slot: 'weapon', weaponType: 'staff', attackKind: 'magic', attackRange: 200, element: 'shadow', twoHanded: true, weaponLevel: 4, icon: { shape: 'staff', color: '#c06aff', accent: '#ff5aff' }, mods: { matk: 280, int: 12, castTimePct: -12 }, description: 'The Void Emperor\'s staff. Light bends around it.' } },
+  { id: 'chaos_dragon', monster: M('chaos_dragon_boss', 'Chaos Dragon Ragnoth', 144, 'drake', ['#4a0a2a', '#120408', '#ff3a3a'], 'shadow', 'dragon', 'boss', { size: 'large' }), scale: 2.8, title: 'End of All Ages', element: 'shadow',
+    skills: [SK('chaos_breath', 'Chaos Breath', 'circle', 6500, 'fire', { radius: 125, mul: 2.1, status: ['burn', 0.5, 5000] }), SK('rift_dive', 'Rift Dive', 'charge', 9000, 'shadow', { radius: 65, mul: 1.9 }), SK('apocalypse', 'Apocalypse', 'ring', 15000, 'meteor', { radius: 260, mul: 1.8 })],
+    item: { id: 'ragnoth_scale', name: 'Ragnoth Scale Mantle', slot: 'garment', icon: { shape: 'cape', color: '#6a0a2a', accent: '#ff3a3a' }, mods: { pdef: 40, mdef: 40, maxHpPct: 15, raceResistPct: { dragon: 30 }, patkPct: 6 }, description: 'A mantle of Chaos Dragon scales, warm as embers.' } },
+  { id: 'eternal_lich', monster: M('eternal_lich_boss', 'Eternal Lich Azrath', 150, 'ghost', ['#7aff8a', '#0a1a0e', '#e8e0c8'], 'undead', 'undead', 'boss', { size: 'large' }), scale: 2.7, title: 'The Undying King', element: 'undead',
+    skills: [SK('death_nova', 'Death Nova', 'self_circle', 10000, 'shadow', { radius: 190, mul: 1.6, status: ['curse', 0.7, 7000] }), SK('bone_spear_storm', 'Bone Spear Storm', 'circle', 6500, 'slam', { radius: 120, mul: 2.1 }), SK('raise_the_fallen', 'Raise the Fallen', 'summon', 22000, 'spawn', { summon: 'fallen_paladin' })],
+    item: { id: 'azrath_crown', name: 'Crown of Azrath', slot: 'headgear', icon: { shape: 'crown', color: '#7aff8a', accent: '#e8e0c8' }, mods: { int: 10, matk: 60, mdef: 30, maxMpPct: 20, raceDamagePct: { undead: 15 } }, description: 'The crown of the Eternal Lich. It whispers forbidden words.' } },
 ];
 
 const PART: Record<Shape, [string, string]> = {
@@ -184,6 +246,7 @@ interface MapSpec {
 const REG = {
   wb: 'Willowbrook Region', cap: 'Aurelion — Royal Capital', fern: 'Fernhollow Woods', arc: 'Arcanthe — City of Magic',
   des: 'Sandara Desert', coast: 'Tidewatch Coast', snow: 'Frostpeak Mountains', fire: 'Emberfall Volcano', ruin: 'Ravenhold Ruins',
+  abyss: 'Abyssal Frontier',
 };
 const NEW_MAPS: MapSpec[] = [
   { id: 'clover_hills', name: 'Clover Hills', region: REG.wb, type: 'field', tileset: 'clover', lv: [5, 12], bgm: 'field_meadow', ambient: 'meadow', weather: ['sunny'], pos: [0.3, 0.73], exits: { N: 'sunny_meadow', E: 'aurelion_fields_south' }, monsters: [['clover_slime', 10], ['horn_rabbit', 8], ['dusk_bat', 6]], trees: ['tree_oak', 'bush'] },
@@ -212,7 +275,14 @@ const NEW_MAPS: MapSpec[] = [
   { id: 'magma_core', name: 'Magma Core', region: REG.fire, type: 'dungeon', tileset: 'dg_magma', lv: [62, 74], bgm: 'dungeon_dark', ambient: 'volcano', weather: [], pos: [0.27, 0.2], exits: { W: 'cinder_wastes' }, monsters: [['magma_golem', 8], ['flame_drake', 8]], boss: 'pyrewyrm' },
   { id: 'shadowmere_marsh', name: 'Shadowmere Marsh', region: REG.ruin, type: 'field', tileset: 'swamp', lv: [60, 70], bgm: 'field_swamp', ambient: 'swamp', weather: ['fog', 'rain'], pos: [0.9, 0.7], exits: { W: 'mirage_oasis', N: 'ravenhold_ruins' }, monsters: [['bog_slime', 9], ['marsh_spore', 8], ['mire_crab', 7]], trees: ['tree_dark', 'stump'] },
   { id: 'ravenhold_ruins', name: 'Ravenhold Castle Ruins', region: REG.ruin, type: 'field', tileset: 'ruins', lv: [66, 76], bgm: 'dungeon_dark', ambient: 'forest', weather: ['fog'], pos: [0.9, 0.5], exits: { S: 'shadowmere_marsh', N: 'ravenhold_crypt' }, monsters: [['raven_bat', 8], ['cursed_knight', 8], ['banshee', 6]], trees: ['ruin_pillar', 'gravestone', 'tree_dark'] },
-  { id: 'ravenhold_crypt', name: 'Ravenhold Crypt', region: REG.ruin, type: 'dungeon', tileset: 'dg_crypt', lv: [72, 85], bgm: 'dungeon_dark', ambient: 'cave', weather: [], pos: [0.9, 0.3], exits: { S: 'ravenhold_ruins' }, monsters: [['grave_knight', 9], ['lich_spirit', 8], ['banshee', 4]], boss: 'dread_lord' },
+  { id: 'ravenhold_crypt', name: 'Ravenhold Crypt', region: REG.ruin, type: 'dungeon', tileset: 'dg_crypt', lv: [72, 85], bgm: 'dungeon_dark', ambient: 'cave', weather: [], pos: [0.9, 0.3], exits: { S: 'ravenhold_ruins', N: 'astral_wastes' }, monsters: [['grave_knight', 9], ['lich_spirit', 8], ['banshee', 4]], boss: 'dread_lord' },
+  // Abyssal Frontier: beyond the Ravenhold Crypt, monsters Lv 86–120 on the existing tile sets and objects.
+  { id: 'astral_wastes', name: 'Astral Wastes', region: REG.abyss, type: 'field', tileset: 'arcane', lv: [86, 94], bgm: 'field_plains', ambient: 'meadow', weather: ['sunny'], pos: [0.86, 0.18], exits: { S: 'ravenhold_crypt', N: 'frozen_abyss' }, monsters: [['nebula_slime', 9], ['void_bat', 8], ['astral_golem', 6], ['starlight_wisp', 6]], trees: ['obelisk', 'tree_pine', 'rock'] },
+  { id: 'frozen_abyss', name: 'Frozen Abyss', region: REG.abyss, type: 'field', tileset: 'snow', lv: [92, 100], bgm: 'field_snow', ambient: 'snow', weather: ['snow'], pos: [0.8, 0.07], exits: { S: 'astral_wastes', E: 'cinder_throne' }, monsters: [['rime_wolf', 9], ['glacial_drake', 6], ['rime_wraith', 7], ['frost_titan', 5]], trees: ['tree_pine', 'rock'] },
+  { id: 'cinder_throne', name: 'Cinder Throne', region: REG.abyss, type: 'field', tileset: 'volcano', lv: [98, 106], bgm: 'field_volcano', ambient: 'volcano', weather: ['ash'], pos: [0.92, 0.07], exits: { W: 'frozen_abyss', E: 'blighted_mire' }, monsters: [['cinder_drake', 7], ['hellfire_scorpion', 8], ['obsidian_golem', 5], ['pyre_spirit', 7]], trees: ['rock', 'rock_big'] },
+  { id: 'blighted_mire', name: 'Blighted Mire', region: REG.abyss, type: 'field', tileset: 'swamp', lv: [104, 112], bgm: 'field_swamp', ambient: 'swamp', weather: ['fog', 'rain'], pos: [0.98, 0.14], exits: { W: 'cinder_throne', S: 'fallen_citadel' }, monsters: [['plague_spore', 8], ['rot_crab', 8], ['mire_hornet', 8], ['venom_drake', 5]], trees: ['tree_dark', 'stump'] },
+  { id: 'fallen_citadel', name: 'Fallen Citadel', region: REG.abyss, type: 'dungeon', tileset: 'dg_crypt', lv: [108, 116], bgm: 'dungeon_dark', ambient: 'cave', weather: [], pos: [0.98, 0.25], exits: { N: 'blighted_mire', S: 'void_rift' }, monsters: [['fallen_paladin', 9], ['death_bat', 8], ['wraith_lord', 6], ['bone_dragon', 4]] },
+  { id: 'void_rift', name: 'Void Rift', region: REG.abyss, type: 'dungeon', tileset: 'dg_tower', lv: [114, 120], bgm: 'dungeon_dark', ambient: 'cave', weather: [], pos: [0.98, 0.36], exits: { N: 'fallen_citadel' }, monsters: [['void_slime', 8], ['void_walker', 8], ['chaos_golem', 5], ['abyss_drake', 4]] },
 ];
 // New links on the hand-made Phase 1 maps.
 const LINKS: Record<string, Partial<Record<Exit, string>>> = { sunny_meadow: { S: 'clover_hills' } };
@@ -425,12 +495,17 @@ function buildDungeon(s: MapSpec): Built {
       if (x1 > gap + 3) paint.push({ op: 'rect', tile: 'ruin_wall', layer: 'wall', x: gap + 3, y, w: x1 - gap - 3, h: 1 });
     }
   }
+  // The first exit is the entrance; dungeons deeper in a chain also have an exit onward.
   const [e, target] = Object.entries(s.exits)[0] as [Exit, string];
   const g = edge(e, W, H);
-  portals.push({ id: `to_${target}`, ...g.portal, targetMap: target, targetSpawn: `from_${s.id}`, label: '' });
-  spawn[`from_${target}`] = g.spawn; spawn.default = g.spawn;
-  // Keep the corridor from the entrance free of wall lines.
-  paint.push({ op: 'path', tile: 'ruin_floor', points: [g.inner, [Math.floor(W / 2), Math.floor(H / 2)]], width: 3 });
+  for (const [ex, tg] of Object.entries(s.exits) as [Exit, string][]) {
+    const eg = edge(ex, W, H);
+    portals.push({ id: `to_${tg}`, ...eg.portal, targetMap: tg, targetSpawn: `from_${s.id}`, label: '' });
+    spawn[`from_${tg}`] = eg.spawn;
+    // Keep the corridor from each doorway free of wall lines.
+    paint.push({ op: 'path', tile: 'ruin_floor', points: [eg.inner, [Math.floor(W / 2), Math.floor(H / 2)]], width: 3 });
+  }
+  spawn.default = g.spawn;
   // The room farthest from the entrance and its three neighbours (toward the middle) become one
   // big boss hall: the two inner wall lines are knocked out and no normal monsters spawn there.
   const grid = Array.from({ length: ROWS }, (_, ry) => Array.from({ length: COLS }, (__, rx) => [rx, ry])).flat();
@@ -503,9 +578,9 @@ export async function main() {
   for (const k of Object.keys(audio.ambient)) if (audio.ambient[k].generated) delete audio.ambient[k];
 
   // Monsters + their material + drop table.
-  const specs = [...MONSTERS, ...BOSSES.map((b) => b.monster)];
+  const specs = [...MONSTERS, ...BOSSES.map((b) => b.monster), ...MVPS.map((b) => b.monster)];
   for (const s of specs) {
-    const b = BOSSES.find((x) => x.monster.id === s.id);
+    const b = BOSSES.find((x) => x.monster.id === s.id) ?? MVPS.find((x) => x.monster.id === s.id);
     const def = monsterDef(s, b?.scale ?? 1);
     if (b) def.bossId = b.id;
     monsters.push(def);
@@ -689,6 +764,28 @@ export async function main() {
 
   const grukk = bosses.find((b: J) => b.id === 'grukk');
   for (const b of BOSSES) bosses.push(bossDef(b, grukk));
+  // MVP bosses: their three skills, a unique item and the usual MVP rewards (their card drops like every card).
+  for (const b of MVPS) {
+    const n = b.monster.name;
+    bosses.push({
+      id: b.id, monsterId: b.monster.id, title: b.title, intro: `${n} descends upon the sanctum!`,
+      phases: [
+        { hpPct: 100, name: 'Phase I', atkMul: 1, speedMul: 1, message: `${n} attacks!` },
+        { hpPct: 60, name: 'Phase II', atkMul: 1.2, speedMul: 1.1, message: `${n} grows furious!` },
+        { hpPct: 25, name: 'Phase III', atkMul: 1.4, speedMul: 1.2, message: `${n} unleashes everything!` },
+      ],
+      enrage: grukk.enrage,
+      skills: b.skills.map((k) => ({ id: k.id, name: k.name, kind: k.kind, telegraphMs: k.kind === 'summon' ? 1000 : k.kind === 'ring' ? 1700 : 1300,
+        ...(k.radius ? { radius: k.radius } : {}), ...(k.mul ? { multiplier: k.mul, element: b.element } : {}),
+        ...(k.status ? { status: { status: k.status[0], chance: k.status[1], durationMs: k.status[2] } } : {}),
+        ...(k.summon ? { summon: { monsterId: k.summon, count: 2 } } : {}), cooldownMs: k.cd, minPhase: 0, fx: k.fx })),
+      contributionRewards: { minDamagePct: 10, items: [{ itemId: 'enriched_starsteel', qty: 2 }, { itemId: 'enriched_moonstone', qty: 2 }], luma: 2000 + b.monster.lv * 80 },
+      mvp: { expPct: 60, items: [{ itemId: b.item.id, chance: 0.12 }, { itemId: 'stellar_shard', chance: 0.6 }, { itemId: 'lunar_shard', chance: 0.6 }, { itemId: 'sage_stone', chance: 0.15 }, { itemId: 'card_album', chance: 0.25 }, { itemId: 'enriched_starsteel', chance: 0.5 }, { itemId: 'enriched_moonstone', chance: 0.5 }] },
+      generated: true,
+    });
+    items.push({ type: 'equipment', rarity: 'legendary', weight: 60, price: 50000, stackable: false, maxStack: 1, equipLevel: Math.min(99, b.monster.lv - 20), cardSlots: 1, ...b.item,
+      description: `${b.item.description} MVP item of ${n}.`, generated: true });
+  }
   tilesets.push(...TILESETS.map((t) => ({ ...t, generated: true })));
   for (const [k, v] of Object.entries(TRACKS)) audio.tracks[k] = { ...v, generated: true };
   for (const [k, v] of Object.entries(AMBIENT)) audio.ambient[k] = { ...v, generated: true };
@@ -919,6 +1016,39 @@ export async function main() {
     npcs.push(npc('shadow_arena_master', 'Shadow Keeper Nyx', 'Shadow Arena', 9092, 'robe', [{ type: 'shadowArena', maxCount: 10 }],
       ['Pick a mode — 1v1, 3v3, 5v5 or 10v10 — the enemy jobs and the difficulty. You may hire shadows for your own team, or go in alone.']));
     built.find((b) => b.map.id === 'aurelion')!.map.npcs.push({ npcId: 'arena_gatekeeper', x: 32, y: 32, facing: 'down' });
+  }
+
+  // ---------------------------------------------------------------- MVP Sanctum
+  // One big hall where the ten MVP bosses take turns appearing at random altars.
+  {
+    const W = 96, H = 76, cx = 48, cy = 36;
+    const altars: J[] = [], paint: J[] = [{ op: 'rect', tile: 'sand', x: 10, y: 8, w: 76, h: 56 }];
+    for (let i = 0; i < 10; i++) {
+      const a = (i / 10) * Math.PI * 2 - Math.PI / 2, ox = Math.round(cx + Math.cos(a) * 34), oy = Math.round(cy + Math.sin(a) * 24);
+      paint.push({ op: 'object', kind: 'obelisk', x: ox, y: oy });
+      altars.push({ x: Math.round(cx + Math.cos(a) * 29), y: Math.round(cy + Math.sin(a) * 20) });
+    }
+    for (const [x, y] of [[cx - 3, cy - 2], [cx + 3, cy - 2], [cx - 3, cy + 3], [cx + 3, cy + 3]]) paint.push({ op: 'object', kind: 'ruin_pillar', x, y });
+    built.push({ map: {
+      id: 'mvp_sanctum', name: 'MVP Sanctum', region: REG.cap, type: 'boss', width: W, height: H, tileset: 'dg_tomb', base: 'ruin_floor', border: { kind: 'ruin_wall', thickness: 2 },
+      bgm: 'boss_battle', ambient: 'cave', weather: [], worldMapPos: { x: 0.5, y: 0.6 }, paint,
+      spawnPoints: { default: { x: cx, y: H - 6 } },
+      portals: [{ id: 'exit', x: cx - 1, y: H - 2, w: 3, h: 1, targetMap: 'aurelion', targetSpawn: 'default', label: 'Aurelion' }],
+      npcs: [{ npcId: 'mvp_keeper', x: cx + 3, y: H - 6, facing: 'down' }], monsterSpawns: [], objects: [], areas: [],
+      mvp: { bossIds: MVPS.map((b) => b.id), altars, respawnMin: [30, 60] },
+      description: 'Ten MVP bosses (Lv 110–150) take turns appearing at the altars. Each returns 30–60 minutes after it falls; see the MVP timers in the menu.', generated: true,
+    }, npcs: [], shops: [] });
+    const TOWNS = ['willowbrook', 'aurelion', 'fernhollow', 'arcanthe', 'sandara', 'tidewatch', 'frostholm'];
+    npcs.push(npc('mvp_guide', 'MVP Herald Orin', 'Warp to the MVP Sanctum', 9201, 'plate', [{ type: 'warp', destinations: [{ mapId: 'mvp_sanctum', spawn: 'default', cost: 0 }] }],
+      ['Ten great bosses take turns in the MVP Sanctum. Check the MVP timers in the menu to see who is out, then I can send you there.']));
+    npcs.push(npc('mvp_keeper', 'Sanctum Keeper Ilsa', 'Way home from the MVP Sanctum', 9202, 'robe', [{ type: 'warp', destinations: TOWNS.map((id) => ({ mapId: id, spawn: 'default', cost: 0 })) }],
+      ['Back to town? I can send you to any of them.']));
+    for (const id of TOWNS) {
+      const m = id === 'willowbrook' ? hand.willowbrook ?? null : built.find((b) => b.map.id === id)?.map;
+      if (!m) continue;
+      const c = m.npcs.find((n: J) => n.npcId === `${id}_courier`);
+      m.npcs.push({ npcId: 'mvp_guide', x: (c?.x ?? m.spawnPoints.default.x) + 2, y: c?.y ?? m.spawnPoints.default.y + 2, facing: 'down' });
+    }
     built.find((b) => b.map.id === 'aurelion')!.map.npcs.push({ npcId: 'training_master', x: 30, y: 32, facing: 'down' });
   }
 

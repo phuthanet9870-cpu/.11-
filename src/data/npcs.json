@@ -2620,6 +2620,104 @@
   "generated": true
  },
  {
+  "id": "mvp_guide",
+  "name": "MVP Herald Orin",
+  "title": "Warp to the MVP Sanctum",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#e8d090",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "plate"
+  },
+  "greeting": [
+   "Ten great bosses take turns in the MVP Sanctum. Check the MVP timers in the menu to see who is out, then I can send you there."
+  ],
+  "services": [
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "mvp_sanctum",
+      "spawn": "default",
+      "cost": 0
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "mvp_keeper",
+  "name": "Sanctum Keeper Ilsa",
+  "title": "Way home from the MVP Sanctum",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#a35d30",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#e8dcc0",
+   "accent": "#c8ccd8",
+   "style": "robe"
+  },
+  "greeting": [
+   "Back to town? I can send you to any of them."
+  ],
+  "services": [
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "willowbrook",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "fernhollow",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "arcanthe",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "sandara",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "tidewatch",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "frostholm",
+      "spawn": "default",
+      "cost": 0
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
   "id": "spire_warden",
   "name": "Warden Isolde",
   "title": "Keeper of the Endless Spire",

@@ -989,6 +989,12 @@
    "facing": "down"
   },
   {
+   "npcId": "mvp_guide",
+   "x": 45,
+   "y": 41,
+   "facing": "down"
+  },
+  {
    "npcId": "arcanthe_trader",
    "x": 43,
    "y": 64,

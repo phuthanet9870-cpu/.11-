@@ -8,11 +8,17 @@ describe('game data', () => {
     expect(validateGameData(data)).toEqual([]);
   });
 
-  it('meets content targets (30 maps, RO-style regions)', () => {
+  it('meets content targets (36 world maps, RO-style regions)', () => {
     expect([...data.maps.keys()]).toEqual(expect.arrayContaining(['willowbrook', 'sunny_meadow', 'whispering_forest', 'aurelion', 'sandara', 'ravenhold_crypt']));
-    const world = [...data.maps.values()].filter((m) => m.type !== 'instance' && m.type !== 'arena');
-    expect(world.length).toBe(30);
-    expect(new Set(world.map((m) => m.region)).size).toBeGreaterThanOrEqual(9);
+    const world = [...data.maps.values()].filter((m) => m.type !== 'instance' && m.type !== 'arena' && !m.mvp);
+    expect(world.length).toBe(36);
+    expect(new Set(world.map((m) => m.region)).size).toBeGreaterThanOrEqual(10);
+    // Monsters reach Lv 120; ten MVP bosses up to Lv 150 share the MVP Sanctum.
+    expect(Math.max(...[...data.monsters.values()].filter((m) => m.aiType !== 'boss' && !m.hidden && !m.elite).map((m) => m.level))).toBe(120);
+    const sanctum = [...data.maps.values()].find((m) => m.mvp)!;
+    expect(sanctum.mvp!.bossIds.length).toBe(10);
+    expect(Math.max(...sanctum.mvp!.bossIds.map((id) => data.monsters.get(data.bosses.get(id)!.monsterId)!.level))).toBe(150);
+    for (const id of sanctum.mvp!.bossIds) expect(data.bosses.get(id)!.skills.length).toBe(3);
     expect([...data.maps.values()].filter((m) => m.type === 'town').length).toBe(7);
     expect(['knight', 'ranger', 'mage'].every((c) => data.classes.has(c))).toBe(true);
     const normal = [...data.monsters.values()].filter((m) => m.aiType !== 'boss');

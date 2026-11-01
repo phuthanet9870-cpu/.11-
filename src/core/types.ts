@@ -436,6 +436,8 @@ export interface MapDef {
   npcs: { npcId: string; x: number; y: number; facing?: Direction }[];
   monsterSpawns: MonsterSpawnDef[];
   bossSpawn?: { bossId: string; x: number; y: number; respawnSeconds: number };
+  /** MVP sanctum: these bosses take turns appearing at random altars; respawn after a random wait (minutes). */
+  mvp?: { bossIds: string[]; altars: { x: number; y: number }[]; respawnMin: [number, number] };
   objects: MapObjectDef[];
   areas: { id: string; name: string; rect: Rect }[];
   /** Large painted pieces drawn over the map (city walls and gates, castles); tile units, may be fractional.

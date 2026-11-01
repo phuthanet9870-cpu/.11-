@@ -660,6 +660,12 @@
    "facing": "down"
   },
   {
+   "npcId": "mvp_guide",
+   "x": 20,
+   "y": 55,
+   "facing": "down"
+  },
+  {
    "npcId": "training_master",
    "x": 16,
    "y": 55,

@@ -484,6 +484,14 @@ export class GameScene extends Phaser.Scene {
       }
       case 'fx': {
         if (!this.combatFxOn) break;
+        if (e.skillId?.startsWith('boss:')) {
+          // MVP boss skills: their own recipe and signature, coloured by the skill's element.
+          const bs = [...w.data.bosses.values()].flatMap((b) => b.skills).find((k) => `boss:${k.id}` === e.skillId);
+          const ELEM: Record<string, string> = { fire: '#ff6a2e', water: '#7fd6ff', wind: '#fff27a', earth: '#c8a060', holy: '#ffe27a', shadow: '#c06aff', ghost: '#b8a8ff', poison: '#a9e04a', undead: '#7aff8a', neutral: '#ffffff' };
+          const pseudo = { id: e.skillId, fx: e.fx, kind: 'active' as const, targeting: (bs?.kind === 'self_circle' || bs?.kind === 'summon' ? 'self' : 'enemy') as 'self' | 'enemy', icon: { color: ELEM[bs?.element ?? 'neutral'] ?? '#ffffff', glyph: (bs?.name ?? '').split(' ').map((x) => x[0]).join('').slice(0, 2) } };
+          const from = { x: e.fromX ?? e.x, y: e.fromY ?? e.y };
+          if (playSkillVfx(this, pseudo as never, from, { x: e.x, y: e.y }, e.radius)) { playFx(this, e.fx, e.x, e.y, e.radius); break; }
+        }
         if (e.skillId) {
           const sk = w.data.skills.get(e.skillId);
           if (sk && playSkillVfx(this, sk, e.fromX !== undefined ? { x: e.fromX, y: e.fromY ?? 0 } : { x: w.player.x, y: w.player.y }, { x: e.x, y: e.y }, e.radius)) { playFx(this, e.fx, e.x, e.y, e.radius); break; }

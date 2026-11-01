@@ -85,7 +85,7 @@
  "npcs": [],
  "monsterSpawns": [
   {
-   "monsterId": "lich_spirit",
+   "monsterId": "void_bat",
    "count": 4,
    "area": {
     "x": 4,
@@ -95,7 +95,7 @@
    }
   },
   {
-   "monsterId": "elite_banshee",
+   "monsterId": "elite_starlight_wisp",
    "count": 1,
    "area": {
     "x": 15,

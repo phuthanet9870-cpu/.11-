@@ -933,5 +933,1298 @@
    ]
   },
   "generated": true
+ },
+ {
+  "id": "seraph_lumina",
+  "monsterId": "seraph_lumina_boss",
+  "title": "Wings of the Last Dawn",
+  "intro": "Seraph Lumina descends upon the sanctum!",
+  "phases": [
+   {
+    "hpPct": 100,
+    "name": "Phase I",
+    "atkMul": 1,
+    "speedMul": 1,
+    "message": "Seraph Lumina attacks!"
+   },
+   {
+    "hpPct": 60,
+    "name": "Phase II",
+    "atkMul": 1.2,
+    "speedMul": 1.1,
+    "message": "Seraph Lumina grows furious!"
+   },
+   {
+    "hpPct": 25,
+    "name": "Phase III",
+    "atkMul": 1.4,
+    "speedMul": 1.2,
+    "message": "Seraph Lumina unleashes everything!"
+   }
+  ],
+  "enrage": {
+   "afterMs": 240000,
+   "hpPct": 12,
+   "atkMul": 1.5,
+   "aspdMul": 1.4
+  },
+  "skills": [
+   {
+    "id": "judgement_ray",
+    "name": "Judgement Ray",
+    "kind": "circle",
+    "telegraphMs": 1300,
+    "radius": 100,
+    "multiplier": 1.8,
+    "element": "holy",
+    "cooldownMs": 6500,
+    "minPhase": 0,
+    "fx": "holy"
+   },
+   {
+    "id": "halo_burst",
+    "name": "Halo Burst",
+    "kind": "self_circle",
+    "telegraphMs": 1300,
+    "radius": 170,
+    "multiplier": 1.3,
+    "element": "holy",
+    "status": {
+     "status": "stun",
+     "chance": 0.5,
+     "durationMs": 1500
+    },
+    "cooldownMs": 11000,
+    "minPhase": 0,
+    "fx": "holy"
+   },
+   {
+    "id": "wings_of_dawn",
+    "name": "Wings of Dawn",
+    "kind": "ring",
+    "telegraphMs": 1700,
+    "radius": 240,
+    "multiplier": 1.5,
+    "element": "holy",
+    "cooldownMs": 14000,
+    "minPhase": 0,
+    "fx": "holy"
+   }
+  ],
+  "contributionRewards": {
+   "minDamagePct": 10,
+   "items": [
+    {
+     "itemId": "enriched_starsteel",
+     "qty": 2
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "qty": 2
+    }
+   ],
+   "luma": 10800
+  },
+  "mvp": {
+   "expPct": 60,
+   "items": [
+    {
+     "itemId": "dawnwing_halo",
+     "chance": 0.12
+    },
+    {
+     "itemId": "stellar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "lunar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "sage_stone",
+     "chance": 0.15
+    },
+    {
+     "itemId": "card_album",
+     "chance": 0.25
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "chance": 0.5
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "chance": 0.5
+    }
+   ]
+  },
+  "generated": true
+ },
+ {
+  "id": "frost_colossus",
+  "monsterId": "frost_colossus_boss",
+  "title": "The Glacier That Walks",
+  "intro": "Frost Colossus Ymir descends upon the sanctum!",
+  "phases": [
+   {
+    "hpPct": 100,
+    "name": "Phase I",
+    "atkMul": 1,
+    "speedMul": 1,
+    "message": "Frost Colossus Ymir attacks!"
+   },
+   {
+    "hpPct": 60,
+    "name": "Phase II",
+    "atkMul": 1.2,
+    "speedMul": 1.1,
+    "message": "Frost Colossus Ymir grows furious!"
+   },
+   {
+    "hpPct": 25,
+    "name": "Phase III",
+    "atkMul": 1.4,
+    "speedMul": 1.2,
+    "message": "Frost Colossus Ymir unleashes everything!"
+   }
+  ],
+  "enrage": {
+   "afterMs": 240000,
+   "hpPct": 12,
+   "atkMul": 1.5,
+   "aspdMul": 1.4
+  },
+  "skills": [
+   {
+    "id": "glacier_smash",
+    "name": "Glacier Smash",
+    "kind": "circle",
+    "telegraphMs": 1300,
+    "radius": 110,
+    "multiplier": 1.9,
+    "element": "water",
+    "status": {
+     "status": "freeze",
+     "chance": 0.4,
+     "durationMs": 2500
+    },
+    "cooldownMs": 6500,
+    "minPhase": 0,
+    "fx": "ice"
+   },
+   {
+    "id": "whiteout",
+    "name": "Whiteout",
+    "kind": "ring",
+    "telegraphMs": 1700,
+    "radius": 230,
+    "multiplier": 1.4,
+    "element": "water",
+    "status": {
+     "status": "slow",
+     "chance": 0.6,
+     "durationMs": 4000
+    },
+    "cooldownMs": 13000,
+    "minPhase": 0,
+    "fx": "ice"
+   },
+   {
+    "id": "ice_prison",
+    "name": "Ice Prison",
+    "kind": "self_circle",
+    "telegraphMs": 1300,
+    "radius": 160,
+    "multiplier": 1.2,
+    "element": "water",
+    "status": {
+     "status": "freeze",
+     "chance": 0.6,
+     "durationMs": 3000
+    },
+    "cooldownMs": 11000,
+    "minPhase": 0,
+    "fx": "ice"
+   }
+  ],
+  "contributionRewards": {
+   "minDamagePct": 10,
+   "items": [
+    {
+     "itemId": "enriched_starsteel",
+     "qty": 2
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "qty": 2
+    }
+   ],
+   "luma": 11200
+  },
+  "mvp": {
+   "expPct": 60,
+   "items": [
+    {
+     "itemId": "ymir_heart",
+     "chance": 0.12
+    },
+    {
+     "itemId": "stellar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "lunar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "sage_stone",
+     "chance": 0.15
+    },
+    {
+     "itemId": "card_album",
+     "chance": 0.25
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "chance": 0.5
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "chance": 0.5
+    }
+   ]
+  },
+  "generated": true
+ },
+ {
+  "id": "inferno_wyrm",
+  "monsterId": "inferno_wyrm_boss",
+  "title": "Lord of the Burning Sky",
+  "intro": "Inferno Wyrm Vulcanor descends upon the sanctum!",
+  "phases": [
+   {
+    "hpPct": 100,
+    "name": "Phase I",
+    "atkMul": 1,
+    "speedMul": 1,
+    "message": "Inferno Wyrm Vulcanor attacks!"
+   },
+   {
+    "hpPct": 60,
+    "name": "Phase II",
+    "atkMul": 1.2,
+    "speedMul": 1.1,
+    "message": "Inferno Wyrm Vulcanor grows furious!"
+   },
+   {
+    "hpPct": 25,
+    "name": "Phase III",
+    "atkMul": 1.4,
+    "speedMul": 1.2,
+    "message": "Inferno Wyrm Vulcanor unleashes everything!"
+   }
+  ],
+  "enrage": {
+   "afterMs": 240000,
+   "hpPct": 12,
+   "atkMul": 1.5,
+   "aspdMul": 1.4
+  },
+  "skills": [
+   {
+    "id": "meteor_rain",
+    "name": "Meteor Rain",
+    "kind": "circle",
+    "telegraphMs": 1300,
+    "radius": 120,
+    "multiplier": 2,
+    "element": "fire",
+    "status": {
+     "status": "burn",
+     "chance": 0.6,
+     "durationMs": 5000
+    },
+    "cooldownMs": 7000,
+    "minPhase": 0,
+    "fx": "meteor"
+   },
+   {
+    "id": "dragon_dive",
+    "name": "Dragon Dive",
+    "kind": "charge",
+    "telegraphMs": 1300,
+    "radius": 60,
+    "multiplier": 1.7,
+    "element": "fire",
+    "cooldownMs": 9000,
+    "minPhase": 0,
+    "fx": "fire"
+   },
+   {
+    "id": "magma_eruption",
+    "name": "Magma Eruption",
+    "kind": "ring",
+    "telegraphMs": 1700,
+    "radius": 240,
+    "multiplier": 1.6,
+    "element": "fire",
+    "status": {
+     "status": "burn",
+     "chance": 0.5,
+     "durationMs": 5000
+    },
+    "cooldownMs": 14000,
+    "minPhase": 0,
+    "fx": "fire"
+   }
+  ],
+  "contributionRewards": {
+   "minDamagePct": 10,
+   "items": [
+    {
+     "itemId": "enriched_starsteel",
+     "qty": 2
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "qty": 2
+    }
+   ],
+   "luma": 11600
+  },
+  "mvp": {
+   "expPct": 60,
+   "items": [
+    {
+     "itemId": "vulcanor_fang",
+     "chance": 0.12
+    },
+    {
+     "itemId": "stellar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "lunar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "sage_stone",
+     "chance": 0.15
+    },
+    {
+     "itemId": "card_album",
+     "chance": 0.25
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "chance": 0.5
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "chance": 0.5
+    }
+   ]
+  },
+  "generated": true
+ },
+ {
+  "id": "plague_queen",
+  "monsterId": "plague_queen_boss",
+  "title": "Mother of the Blighted Swarm",
+  "intro": "Plague Queen Vespera descends upon the sanctum!",
+  "phases": [
+   {
+    "hpPct": 100,
+    "name": "Phase I",
+    "atkMul": 1,
+    "speedMul": 1,
+    "message": "Plague Queen Vespera attacks!"
+   },
+   {
+    "hpPct": 60,
+    "name": "Phase II",
+    "atkMul": 1.2,
+    "speedMul": 1.1,
+    "message": "Plague Queen Vespera grows furious!"
+   },
+   {
+    "hpPct": 25,
+    "name": "Phase III",
+    "atkMul": 1.4,
+    "speedMul": 1.2,
+    "message": "Plague Queen Vespera unleashes everything!"
+   }
+  ],
+  "enrage": {
+   "afterMs": 240000,
+   "hpPct": 12,
+   "atkMul": 1.5,
+   "aspdMul": 1.4
+  },
+  "skills": [
+   {
+    "id": "venom_barrage",
+    "name": "Venom Barrage",
+    "kind": "circle",
+    "telegraphMs": 1300,
+    "radius": 100,
+    "multiplier": 1.7,
+    "element": "poison",
+    "status": {
+     "status": "poison",
+     "chance": 0.7,
+     "durationMs": 8000
+    },
+    "cooldownMs": 6000,
+    "minPhase": 0,
+    "fx": "poison"
+   },
+   {
+    "id": "royal_swarm",
+    "name": "Royal Swarm",
+    "kind": "summon",
+    "telegraphMs": 1000,
+    "summon": {
+     "monsterId": "mire_hornet",
+     "count": 2
+    },
+    "cooldownMs": 24000,
+    "minPhase": 0,
+    "fx": "shout"
+   },
+   {
+    "id": "toxic_nova",
+    "name": "Toxic Nova",
+    "kind": "self_circle",
+    "telegraphMs": 1300,
+    "radius": 180,
+    "multiplier": 1.4,
+    "element": "poison",
+    "status": {
+     "status": "poison",
+     "chance": 0.8,
+     "durationMs": 9000
+    },
+    "cooldownMs": 11000,
+    "minPhase": 0,
+    "fx": "poison"
+   }
+  ],
+  "contributionRewards": {
+   "minDamagePct": 10,
+   "items": [
+    {
+     "itemId": "enriched_starsteel",
+     "qty": 2
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "qty": 2
+    }
+   ],
+   "luma": 11840
+  },
+  "mvp": {
+   "expPct": 60,
+   "items": [
+    {
+     "itemId": "vespera_wings",
+     "chance": 0.12
+    },
+    {
+     "itemId": "stellar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "lunar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "sage_stone",
+     "chance": 0.15
+    },
+    {
+     "itemId": "card_album",
+     "chance": 0.25
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "chance": 0.5
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "chance": 0.5
+    }
+   ]
+  },
+  "generated": true
+ },
+ {
+  "id": "death_knight",
+  "monsterId": "death_knight_boss",
+  "title": "Oathbreaker of the Fallen Citadel",
+  "intro": "Death Knight Malgrave descends upon the sanctum!",
+  "phases": [
+   {
+    "hpPct": 100,
+    "name": "Phase I",
+    "atkMul": 1,
+    "speedMul": 1,
+    "message": "Death Knight Malgrave attacks!"
+   },
+   {
+    "hpPct": 60,
+    "name": "Phase II",
+    "atkMul": 1.2,
+    "speedMul": 1.1,
+    "message": "Death Knight Malgrave grows furious!"
+   },
+   {
+    "hpPct": 25,
+    "name": "Phase III",
+    "atkMul": 1.4,
+    "speedMul": 1.2,
+    "message": "Death Knight Malgrave unleashes everything!"
+   }
+  ],
+  "enrage": {
+   "afterMs": 240000,
+   "hpPct": 12,
+   "atkMul": 1.5,
+   "aspdMul": 1.4
+  },
+  "skills": [
+   {
+    "id": "dark_cleave",
+    "name": "Dark Cleave",
+    "kind": "circle",
+    "telegraphMs": 1300,
+    "radius": 110,
+    "multiplier": 2,
+    "element": "shadow",
+    "cooldownMs": 6000,
+    "minPhase": 0,
+    "fx": "shadow"
+   },
+   {
+    "id": "soul_chains",
+    "name": "Soul Chains",
+    "kind": "self_circle",
+    "telegraphMs": 1300,
+    "radius": 170,
+    "multiplier": 1.2,
+    "element": "shadow",
+    "status": {
+     "status": "stun",
+     "chance": 0.6,
+     "durationMs": 2000
+    },
+    "cooldownMs": 11000,
+    "minPhase": 0,
+    "fx": "shadow"
+   },
+   {
+    "id": "doom_charge",
+    "name": "Doom Charge",
+    "kind": "charge",
+    "telegraphMs": 1300,
+    "radius": 60,
+    "multiplier": 1.8,
+    "element": "shadow",
+    "status": {
+     "status": "curse",
+     "chance": 0.5,
+     "durationMs": 6000
+    },
+    "cooldownMs": 9000,
+    "minPhase": 0,
+    "fx": "dash"
+   }
+  ],
+  "contributionRewards": {
+   "minDamagePct": 10,
+   "items": [
+    {
+     "itemId": "enriched_starsteel",
+     "qty": 2
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "qty": 2
+    }
+   ],
+   "luma": 12160
+  },
+  "mvp": {
+   "expPct": 60,
+   "items": [
+    {
+     "itemId": "malgrave_oath",
+     "chance": 0.12
+    },
+    {
+     "itemId": "stellar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "lunar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "sage_stone",
+     "chance": 0.15
+    },
+    {
+     "itemId": "card_album",
+     "chance": 0.25
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "chance": 0.5
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "chance": 0.5
+    }
+   ]
+  },
+  "generated": true
+ },
+ {
+  "id": "storm_titan",
+  "monsterId": "storm_titan_boss",
+  "title": "Thunder Given Form",
+  "intro": "Storm Titan Thrall descends upon the sanctum!",
+  "phases": [
+   {
+    "hpPct": 100,
+    "name": "Phase I",
+    "atkMul": 1,
+    "speedMul": 1,
+    "message": "Storm Titan Thrall attacks!"
+   },
+   {
+    "hpPct": 60,
+    "name": "Phase II",
+    "atkMul": 1.2,
+    "speedMul": 1.1,
+    "message": "Storm Titan Thrall grows furious!"
+   },
+   {
+    "hpPct": 25,
+    "name": "Phase III",
+    "atkMul": 1.4,
+    "speedMul": 1.2,
+    "message": "Storm Titan Thrall unleashes everything!"
+   }
+  ],
+  "enrage": {
+   "afterMs": 240000,
+   "hpPct": 12,
+   "atkMul": 1.5,
+   "aspdMul": 1.4
+  },
+  "skills": [
+   {
+    "id": "thunder_strike",
+    "name": "Thunder Strike",
+    "kind": "circle",
+    "telegraphMs": 1300,
+    "radius": 100,
+    "multiplier": 1.9,
+    "element": "wind",
+    "status": {
+     "status": "stun",
+     "chance": 0.5,
+     "durationMs": 1500
+    },
+    "cooldownMs": 6500,
+    "minPhase": 0,
+    "fx": "lightning"
+   },
+   {
+    "id": "cyclone",
+    "name": "Cyclone",
+    "kind": "self_circle",
+    "telegraphMs": 1300,
+    "radius": 180,
+    "multiplier": 1.4,
+    "element": "wind",
+    "cooldownMs": 10000,
+    "minPhase": 0,
+    "fx": "wind"
+   },
+   {
+    "id": "storm_ring",
+    "name": "Storm Ring",
+    "kind": "ring",
+    "telegraphMs": 1700,
+    "radius": 240,
+    "multiplier": 1.6,
+    "element": "wind",
+    "cooldownMs": 13000,
+    "minPhase": 0,
+    "fx": "lightning"
+   }
+  ],
+  "contributionRewards": {
+   "minDamagePct": 10,
+   "items": [
+    {
+     "itemId": "enriched_starsteel",
+     "qty": 2
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "qty": 2
+    }
+   ],
+   "luma": 12400
+  },
+  "mvp": {
+   "expPct": 60,
+   "items": [
+    {
+     "itemId": "thrall_core",
+     "chance": 0.12
+    },
+    {
+     "itemId": "stellar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "lunar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "sage_stone",
+     "chance": 0.15
+    },
+    {
+     "itemId": "card_album",
+     "chance": 0.25
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "chance": 0.5
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "chance": 0.5
+    }
+   ]
+  },
+  "generated": true
+ },
+ {
+  "id": "abyssal_kraken",
+  "monsterId": "abyssal_kraken_boss",
+  "title": "Terror of the Deep Trench",
+  "intro": "Abyssal Kraken Charybd descends upon the sanctum!",
+  "phases": [
+   {
+    "hpPct": 100,
+    "name": "Phase I",
+    "atkMul": 1,
+    "speedMul": 1,
+    "message": "Abyssal Kraken Charybd attacks!"
+   },
+   {
+    "hpPct": 60,
+    "name": "Phase II",
+    "atkMul": 1.2,
+    "speedMul": 1.1,
+    "message": "Abyssal Kraken Charybd grows furious!"
+   },
+   {
+    "hpPct": 25,
+    "name": "Phase III",
+    "atkMul": 1.4,
+    "speedMul": 1.2,
+    "message": "Abyssal Kraken Charybd unleashes everything!"
+   }
+  ],
+  "enrage": {
+   "afterMs": 240000,
+   "hpPct": 12,
+   "atkMul": 1.5,
+   "aspdMul": 1.4
+  },
+  "skills": [
+   {
+    "id": "tidal_crush",
+    "name": "Tidal Crush",
+    "kind": "circle",
+    "telegraphMs": 1300,
+    "radius": 115,
+    "multiplier": 1.9,
+    "element": "water",
+    "cooldownMs": 6500,
+    "minPhase": 0,
+    "fx": "ice"
+   },
+   {
+    "id": "ink_cloud",
+    "name": "Ink Cloud",
+    "kind": "self_circle",
+    "telegraphMs": 1300,
+    "radius": 180,
+    "multiplier": 1.1,
+    "element": "water",
+    "status": {
+     "status": "blind",
+     "chance": 0.7,
+     "durationMs": 5000
+    },
+    "cooldownMs": 11000,
+    "minPhase": 0,
+    "fx": "shadow"
+   },
+   {
+    "id": "maelstrom",
+    "name": "Maelstrom",
+    "kind": "ring",
+    "telegraphMs": 1700,
+    "radius": 250,
+    "multiplier": 1.6,
+    "element": "water",
+    "status": {
+     "status": "slow",
+     "chance": 0.6,
+     "durationMs": 4000
+    },
+    "cooldownMs": 14000,
+    "minPhase": 0,
+    "fx": "wind"
+   }
+  ],
+  "contributionRewards": {
+   "minDamagePct": 10,
+   "items": [
+    {
+     "itemId": "enriched_starsteel",
+     "qty": 2
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "qty": 2
+    }
+   ],
+   "luma": 12720
+  },
+  "mvp": {
+   "expPct": 60,
+   "items": [
+    {
+     "itemId": "charybd_shell",
+     "chance": 0.12
+    },
+    {
+     "itemId": "stellar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "lunar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "sage_stone",
+     "chance": 0.15
+    },
+    {
+     "itemId": "card_album",
+     "chance": 0.25
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "chance": 0.5
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "chance": 0.5
+    }
+   ]
+  },
+  "generated": true
+ },
+ {
+  "id": "void_emperor",
+  "monsterId": "void_emperor_boss",
+  "title": "He Who Unmakes",
+  "intro": "Void Emperor Nihil descends upon the sanctum!",
+  "phases": [
+   {
+    "hpPct": 100,
+    "name": "Phase I",
+    "atkMul": 1,
+    "speedMul": 1,
+    "message": "Void Emperor Nihil attacks!"
+   },
+   {
+    "hpPct": 60,
+    "name": "Phase II",
+    "atkMul": 1.2,
+    "speedMul": 1.1,
+    "message": "Void Emperor Nihil grows furious!"
+   },
+   {
+    "hpPct": 25,
+    "name": "Phase III",
+    "atkMul": 1.4,
+    "speedMul": 1.2,
+    "message": "Void Emperor Nihil unleashes everything!"
+   }
+  ],
+  "enrage": {
+   "afterMs": 240000,
+   "hpPct": 12,
+   "atkMul": 1.5,
+   "aspdMul": 1.4
+  },
+  "skills": [
+   {
+    "id": "void_collapse",
+    "name": "Void Collapse",
+    "kind": "circle",
+    "telegraphMs": 1300,
+    "radius": 115,
+    "multiplier": 2,
+    "element": "shadow",
+    "cooldownMs": 6500,
+    "minPhase": 0,
+    "fx": "arcane"
+   },
+   {
+    "id": "shadow_legion",
+    "name": "Shadow Legion",
+    "kind": "summon",
+    "telegraphMs": 1000,
+    "summon": {
+     "monsterId": "void_walker",
+     "count": 2
+    },
+    "cooldownMs": 24000,
+    "minPhase": 0,
+    "fx": "shadow"
+   },
+   {
+    "id": "oblivion_ring",
+    "name": "Oblivion Ring",
+    "kind": "ring",
+    "telegraphMs": 1700,
+    "radius": 240,
+    "multiplier": 1.6,
+    "element": "shadow",
+    "status": {
+     "status": "curse",
+     "chance": 0.6,
+     "durationMs": 6000
+    },
+    "cooldownMs": 13000,
+    "minPhase": 0,
+    "fx": "shadow"
+   }
+  ],
+  "contributionRewards": {
+   "minDamagePct": 10,
+   "items": [
+    {
+     "itemId": "enriched_starsteel",
+     "qty": 2
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "qty": 2
+    }
+   ],
+   "luma": 13040
+  },
+  "mvp": {
+   "expPct": 60,
+   "items": [
+    {
+     "itemId": "nihil_scepter",
+     "chance": 0.12
+    },
+    {
+     "itemId": "stellar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "lunar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "sage_stone",
+     "chance": 0.15
+    },
+    {
+     "itemId": "card_album",
+     "chance": 0.25
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "chance": 0.5
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "chance": 0.5
+    }
+   ]
+  },
+  "generated": true
+ },
+ {
+  "id": "chaos_dragon",
+  "monsterId": "chaos_dragon_boss",
+  "title": "End of All Ages",
+  "intro": "Chaos Dragon Ragnoth descends upon the sanctum!",
+  "phases": [
+   {
+    "hpPct": 100,
+    "name": "Phase I",
+    "atkMul": 1,
+    "speedMul": 1,
+    "message": "Chaos Dragon Ragnoth attacks!"
+   },
+   {
+    "hpPct": 60,
+    "name": "Phase II",
+    "atkMul": 1.2,
+    "speedMul": 1.1,
+    "message": "Chaos Dragon Ragnoth grows furious!"
+   },
+   {
+    "hpPct": 25,
+    "name": "Phase III",
+    "atkMul": 1.4,
+    "speedMul": 1.2,
+    "message": "Chaos Dragon Ragnoth unleashes everything!"
+   }
+  ],
+  "enrage": {
+   "afterMs": 240000,
+   "hpPct": 12,
+   "atkMul": 1.5,
+   "aspdMul": 1.4
+  },
+  "skills": [
+   {
+    "id": "chaos_breath",
+    "name": "Chaos Breath",
+    "kind": "circle",
+    "telegraphMs": 1300,
+    "radius": 125,
+    "multiplier": 2.1,
+    "element": "shadow",
+    "status": {
+     "status": "burn",
+     "chance": 0.5,
+     "durationMs": 5000
+    },
+    "cooldownMs": 6500,
+    "minPhase": 0,
+    "fx": "fire"
+   },
+   {
+    "id": "rift_dive",
+    "name": "Rift Dive",
+    "kind": "charge",
+    "telegraphMs": 1300,
+    "radius": 65,
+    "multiplier": 1.9,
+    "element": "shadow",
+    "cooldownMs": 9000,
+    "minPhase": 0,
+    "fx": "shadow"
+   },
+   {
+    "id": "apocalypse",
+    "name": "Apocalypse",
+    "kind": "ring",
+    "telegraphMs": 1700,
+    "radius": 260,
+    "multiplier": 1.8,
+    "element": "shadow",
+    "cooldownMs": 15000,
+    "minPhase": 0,
+    "fx": "meteor"
+   }
+  ],
+  "contributionRewards": {
+   "minDamagePct": 10,
+   "items": [
+    {
+     "itemId": "enriched_starsteel",
+     "qty": 2
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "qty": 2
+    }
+   ],
+   "luma": 13520
+  },
+  "mvp": {
+   "expPct": 60,
+   "items": [
+    {
+     "itemId": "ragnoth_scale",
+     "chance": 0.12
+    },
+    {
+     "itemId": "stellar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "lunar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "sage_stone",
+     "chance": 0.15
+    },
+    {
+     "itemId": "card_album",
+     "chance": 0.25
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "chance": 0.5
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "chance": 0.5
+    }
+   ]
+  },
+  "generated": true
+ },
+ {
+  "id": "eternal_lich",
+  "monsterId": "eternal_lich_boss",
+  "title": "The Undying King",
+  "intro": "Eternal Lich Azrath descends upon the sanctum!",
+  "phases": [
+   {
+    "hpPct": 100,
+    "name": "Phase I",
+    "atkMul": 1,
+    "speedMul": 1,
+    "message": "Eternal Lich Azrath attacks!"
+   },
+   {
+    "hpPct": 60,
+    "name": "Phase II",
+    "atkMul": 1.2,
+    "speedMul": 1.1,
+    "message": "Eternal Lich Azrath grows furious!"
+   },
+   {
+    "hpPct": 25,
+    "name": "Phase III",
+    "atkMul": 1.4,
+    "speedMul": 1.2,
+    "message": "Eternal Lich Azrath unleashes everything!"
+   }
+  ],
+  "enrage": {
+   "afterMs": 240000,
+   "hpPct": 12,
+   "atkMul": 1.5,
+   "aspdMul": 1.4
+  },
+  "skills": [
+   {
+    "id": "death_nova",
+    "name": "Death Nova",
+    "kind": "self_circle",
+    "telegraphMs": 1300,
+    "radius": 190,
+    "multiplier": 1.6,
+    "element": "undead",
+    "status": {
+     "status": "curse",
+     "chance": 0.7,
+     "durationMs": 7000
+    },
+    "cooldownMs": 10000,
+    "minPhase": 0,
+    "fx": "shadow"
+   },
+   {
+    "id": "bone_spear_storm",
+    "name": "Bone Spear Storm",
+    "kind": "circle",
+    "telegraphMs": 1300,
+    "radius": 120,
+    "multiplier": 2.1,
+    "element": "undead",
+    "cooldownMs": 6500,
+    "minPhase": 0,
+    "fx": "slam"
+   },
+   {
+    "id": "raise_the_fallen",
+    "name": "Raise the Fallen",
+    "kind": "summon",
+    "telegraphMs": 1000,
+    "summon": {
+     "monsterId": "fallen_paladin",
+     "count": 2
+    },
+    "cooldownMs": 22000,
+    "minPhase": 0,
+    "fx": "spawn"
+   }
+  ],
+  "contributionRewards": {
+   "minDamagePct": 10,
+   "items": [
+    {
+     "itemId": "enriched_starsteel",
+     "qty": 2
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "qty": 2
+    }
+   ],
+   "luma": 14000
+  },
+  "mvp": {
+   "expPct": 60,
+   "items": [
+    {
+     "itemId": "azrath_crown",
+     "chance": 0.12
+    },
+    {
+     "itemId": "stellar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "lunar_shard",
+     "chance": 0.6
+    },
+    {
+     "itemId": "sage_stone",
+     "chance": 0.15
+    },
+    {
+     "itemId": "card_album",
+     "chance": 0.25
+    },
+    {
+     "itemId": "enriched_starsteel",
+     "chance": 0.5
+    },
+    {
+     "itemId": "enriched_moonstone",
+     "chance": 0.5
+    }
+   ]
+  },
+  "generated": true
  }
 ]

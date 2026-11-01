@@ -6418,6 +6418,414 @@
   "generated": true
  },
  {
+  "id": "nebula_slime_gel",
+  "name": "Nebula Slime Gel",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Nebula Slime. Merchants pay well for it.",
+  "weight": 1,
+  "price": 193,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "blob",
+   "color": "#6a4ab8",
+   "accent": "#ffd0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "void_bat_wing",
+  "name": "Void Bat Wing",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Void Bat. Merchants pay well for it.",
+  "weight": 1,
+  "price": 195,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "wing",
+   "color": "#2a1a4a",
+   "accent": "#c06aff"
+  },
+  "generated": true
+ },
+ {
+  "id": "astral_golem_core_stone",
+  "name": "Astral Golem Core Stone",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Astral Golem. Merchants pay well for it.",
+  "weight": 1,
+  "price": 200,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#4a5a9a",
+   "accent": "#fff27a"
+  },
+  "generated": true
+ },
+ {
+  "id": "starlight_wisp_ectoplasm",
+  "name": "Starlight Wisp Ectoplasm",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Starlight Wisp. Merchants pay well for it.",
+  "weight": 1,
+  "price": 204,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#e8f0ff",
+   "accent": "#ffe27a"
+  },
+  "generated": true
+ },
+ {
+  "id": "rime_wolf_fang",
+  "name": "Rime Wolf Fang",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Rime Wolf. Merchants pay well for it.",
+  "weight": 1,
+  "price": 209,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#d8ecff",
+   "accent": "#3a6ab8"
+  },
+  "generated": true
+ },
+ {
+  "id": "glacial_drake_scale",
+  "name": "Glacial Drake Scale",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Glacial Drake. Merchants pay well for it.",
+  "weight": 1,
+  "price": 213,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#9ad8ff",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rime_wraith_ectoplasm",
+  "name": "Rime Wraith Ectoplasm",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Rime Wraith. Merchants pay well for it.",
+  "weight": 1,
+  "price": 217,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#c8ecff",
+   "accent": "#7fd6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "frost_titan_core_stone",
+  "name": "Frost Titan Core Stone",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Frost Titan. Merchants pay well for it.",
+  "weight": 1,
+  "price": 222,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#bfe4f8",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "cinder_drake_scale",
+  "name": "Cinder Drake Scale",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Cinder Drake. Merchants pay well for it.",
+  "weight": 1,
+  "price": 224,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#3a2a2a",
+   "accent": "#ff6a2e"
+  },
+  "generated": true
+ },
+ {
+  "id": "hellfire_scorpion_venom_tail",
+  "name": "Hellfire Scorpion Venom Tail",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Hellfire Scorpion. Merchants pay well for it.",
+  "weight": 1,
+  "price": 226,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#a82a1a",
+   "accent": "#ffd34d"
+  },
+  "generated": true
+ },
+ {
+  "id": "obsidian_golem_core_stone",
+  "name": "Obsidian Golem Core Stone",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Obsidian Golem. Merchants pay well for it.",
+  "weight": 1,
+  "price": 231,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#2a2a32",
+   "accent": "#ff8a2e"
+  },
+  "generated": true
+ },
+ {
+  "id": "pyre_spirit_ectoplasm",
+  "name": "Pyre Spirit Ectoplasm",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Pyre Spirit. Merchants pay well for it.",
+  "weight": 1,
+  "price": 233,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#ffb03a",
+   "accent": "#fff08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "plague_spore_spore_dust",
+  "name": "Plague Spore Dust",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Plague Spore. Merchants pay well for it.",
+  "weight": 1,
+  "price": 235,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#5a6a2a",
+   "accent": "#f0ffd0"
+  },
+  "generated": true
+ },
+ {
+  "id": "rot_crab_shell",
+  "name": "Rot Crab Shell",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Rot Crab. Merchants pay well for it.",
+  "weight": 1,
+  "price": 237,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#4a3a2a",
+   "accent": "#a9e04a"
+  },
+  "generated": true
+ },
+ {
+  "id": "mire_hornet_stinger",
+  "name": "Mire Hornet Stinger",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Mire Hornet. Merchants pay well for it.",
+  "weight": 1,
+  "price": 239,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#6a7a2a",
+   "accent": "#e0ffd0"
+  },
+  "generated": true
+ },
+ {
+  "id": "venom_drake_scale",
+  "name": "Venom Drake Scale",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Venom Drake. Merchants pay well for it.",
+  "weight": 1,
+  "price": 244,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#4a8a3a",
+   "accent": "#e0ff6a"
+  },
+  "generated": true
+ },
+ {
+  "id": "fallen_paladin_bone_shard",
+  "name": "Fallen Paladin Bone Shard",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Fallen Paladin. Merchants pay well for it.",
+  "weight": 1,
+  "price": 244,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "bone",
+   "color": "#c8c0a0",
+   "accent": "#ffd34d"
+  },
+  "generated": true
+ },
+ {
+  "id": "death_bat_wing",
+  "name": "Death Bat Wing",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Death Bat. Merchants pay well for it.",
+  "weight": 1,
+  "price": 246,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "wing",
+   "color": "#1a1a1e",
+   "accent": "#ff3a4a"
+  },
+  "generated": true
+ },
+ {
+  "id": "wraith_lord_ectoplasm",
+  "name": "Wraith Lord Ectoplasm",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Wraith Lord. Merchants pay well for it.",
+  "weight": 1,
+  "price": 250,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#7a6a9a",
+   "accent": "#ff5a7a"
+  },
+  "generated": true
+ },
+ {
+  "id": "bone_dragon_scale",
+  "name": "Bone Dragon Scale",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Bone Dragon. Merchants pay well for it.",
+  "weight": 1,
+  "price": 255,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#e8e0c8",
+   "accent": "#7fd6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "void_slime_gel",
+  "name": "Void Slime Gel",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Void Slime. Merchants pay well for it.",
+  "weight": 1,
+  "price": 257,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "blob",
+   "color": "#1a1030",
+   "accent": "#c06aff"
+  },
+  "generated": true
+ },
+ {
+  "id": "void_walker_ectoplasm",
+  "name": "Void Walker Ectoplasm",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Void Walker. Merchants pay well for it.",
+  "weight": 1,
+  "price": 261,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#3a2a5a",
+   "accent": "#c06aff"
+  },
+  "generated": true
+ },
+ {
+  "id": "chaos_golem_core_stone",
+  "name": "Chaos Golem Core Stone",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Chaos Golem. Merchants pay well for it.",
+  "weight": 1,
+  "price": 264,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#4a1a3a",
+   "accent": "#ff3a8a"
+  },
+  "generated": true
+ },
+ {
+  "id": "abyss_drake_scale",
+  "name": "Abyss Drake Scale",
+  "type": "material",
+  "rarity": "common",
+  "description": "Dropped by Abyss Drake. Merchants pay well for it.",
+  "weight": 1,
+  "price": 268,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#2a1a4a",
+   "accent": "#ff5aff"
+  },
+  "generated": true
+ },
+ {
   "id": "bone_warden_bone_shard",
   "name": "Bone Warden Bone Shard",
   "type": "material",
@@ -6499,6 +6907,176 @@
    "shape": "bone",
    "color": "#3a3a4a",
    "accent": "#c83a4a"
+  },
+  "generated": true
+ },
+ {
+  "id": "seraph_lumina_ectoplasm",
+  "name": "Seraph Lumina Ectoplasm",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Dropped by Seraph Lumina. Merchants pay well for it.",
+  "weight": 1,
+  "price": 3304,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#fff6d8",
+   "accent": "#7fd6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "frost_colossus_core_stone",
+  "name": "Frost Colossus Ymir Core Stone",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Dropped by Frost Colossus Ymir. Merchants pay well for it.",
+  "weight": 1,
+  "price": 3454,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#d8f0ff",
+   "accent": "#ffffff"
+  },
+  "generated": true
+ },
+ {
+  "id": "inferno_wyrm_scale",
+  "name": "Inferno Wyrm Vulcanor Scale",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Dropped by Inferno Wyrm Vulcanor. Merchants pay well for it.",
+  "weight": 1,
+  "price": 3604,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#ff5a1a",
+   "accent": "#fff08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "plague_queen_stinger",
+  "name": "Plague Queen Vespera Stinger",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Dropped by Plague Queen Vespera. Merchants pay well for it.",
+  "weight": 1,
+  "price": 3694,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "fang",
+   "color": "#8aa83a",
+   "accent": "#ff3a8a"
+  },
+  "generated": true
+ },
+ {
+  "id": "death_knight_bone_shard",
+  "name": "Death Knight Malgrave Bone Shard",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Dropped by Death Knight Malgrave. Merchants pay well for it.",
+  "weight": 1,
+  "price": 3814,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "bone",
+   "color": "#3a3a4a",
+   "accent": "#7fffd0"
+  },
+  "generated": true
+ },
+ {
+  "id": "storm_titan_core_stone",
+  "name": "Storm Titan Thrall Core Stone",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Dropped by Storm Titan Thrall. Merchants pay well for it.",
+  "weight": 1,
+  "price": 3904,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "gem",
+   "color": "#7a8ab8",
+   "accent": "#fff27a"
+  },
+  "generated": true
+ },
+ {
+  "id": "abyssal_kraken_shell",
+  "name": "Abyssal Kraken Charybd Shell",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Dropped by Abyssal Kraken Charybd. Merchants pay well for it.",
+  "weight": 1,
+  "price": 4024,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#2a4a7a",
+   "accent": "#5affd8"
+  },
+  "generated": true
+ },
+ {
+  "id": "void_emperor_ectoplasm",
+  "name": "Void Emperor Nihil Ectoplasm",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Dropped by Void Emperor Nihil. Merchants pay well for it.",
+  "weight": 1,
+  "price": 4144,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#3a1a6a",
+   "accent": "#ff5aff"
+  },
+  "generated": true
+ },
+ {
+  "id": "chaos_dragon_scale",
+  "name": "Chaos Dragon Ragnoth Scale",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Dropped by Chaos Dragon Ragnoth. Merchants pay well for it.",
+  "weight": 1,
+  "price": 4324,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "pelt",
+   "color": "#4a0a2a",
+   "accent": "#ff3a3a"
+  },
+  "generated": true
+ },
+ {
+  "id": "eternal_lich_ectoplasm",
+  "name": "Eternal Lich Azrath Ectoplasm",
+  "type": "material",
+  "rarity": "rare",
+  "description": "Dropped by Eternal Lich Azrath. Merchants pay well for it.",
+  "weight": 1,
+  "price": 4504,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "dust",
+   "color": "#7aff8a",
+   "accent": "#e8e0c8"
   },
   "generated": true
  },
@@ -8212,6 +8790,649 @@
   "generated": true
  },
  {
+  "id": "card_nebula_slime",
+  "name": "Nebula Slime Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Nebula Slime. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#6a4ab8",
+   "accent": "#ffd0ff"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "formless": 25
+    }
+   },
+   "monsterId": "nebula_slime"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_void_bat",
+  "name": "Void Bat Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Void Bat. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#2a1a4a",
+   "accent": "#c06aff"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "hpDrainPct": 3
+   },
+   "monsterId": "void_bat"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_astral_golem",
+  "name": "Astral Golem Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Astral Golem. Compound it into headgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#4a5a9a",
+   "accent": "#fff27a"
+  },
+  "card": {
+   "equip": "headgear",
+   "mods": {
+    "int": 1,
+    "mdef": 3
+   },
+   "monsterId": "astral_golem"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_starlight_wisp",
+  "name": "Starlight Wisp Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Starlight Wisp. Compound it into footgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#e8f0ff",
+   "accent": "#ffe27a"
+  },
+  "card": {
+   "equip": "boots",
+   "mods": {
+    "maxMpPct": 10,
+    "mpRegen": 2
+   },
+   "monsterId": "starlight_wisp",
+   "autocast": {
+    "skillId": "holy_light",
+    "level": 3,
+    "chancePct": 5
+   }
+  },
+  "generated": true
+ },
+ {
+  "id": "card_rime_wolf",
+  "name": "Rime Wolf Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Rime Wolf. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#d8ecff",
+   "accent": "#3a6ab8"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "sizeDamagePct": {
+     "medium": 15
+    }
+   },
+   "monsterId": "rime_wolf"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_glacial_drake",
+  "name": "Glacial Drake Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Glacial Drake. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#9ad8ff",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "hit": 10
+   },
+   "monsterId": "glacial_drake"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_rime_wraith",
+  "name": "Rime Wraith Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Rime Wraith. Compound it into footgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#c8ecff",
+   "accent": "#7fd6ff"
+  },
+  "card": {
+   "equip": "boots",
+   "mods": {
+    "maxMpPct": 10,
+    "mpRegen": 2
+   },
+   "monsterId": "rime_wraith",
+   "autocast": {
+    "skillId": "ice_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
+  },
+  "generated": true
+ },
+ {
+  "id": "card_frost_titan",
+  "name": "Frost Titan Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Frost Titan. Compound it into garment with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#bfe4f8",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "garment",
+   "mods": {
+    "elementResistPct": {
+     "water": 20
+    },
+    "flee": 10
+   },
+   "monsterId": "frost_titan"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_cinder_drake",
+  "name": "Cinder Drake Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Cinder Drake. Compound it into garment with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#3a2a2a",
+   "accent": "#ff6a2e"
+  },
+  "card": {
+   "equip": "garment",
+   "mods": {
+    "elementResistPct": {
+     "fire": 20
+    },
+    "flee": 12
+   },
+   "monsterId": "cinder_drake"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_hellfire_scorpion",
+  "name": "Hellfire Scorpion Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Hellfire Scorpion. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#a82a1a",
+   "accent": "#ffd34d"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "insect": 25
+    }
+   },
+   "monsterId": "hellfire_scorpion"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_obsidian_golem",
+  "name": "Obsidian Golem Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Obsidian Golem. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#2a2a32",
+   "accent": "#ff8a2e"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "str": 2
+   },
+   "monsterId": "obsidian_golem"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_pyre_spirit",
+  "name": "Pyre Spirit Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Pyre Spirit. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#ffb03a",
+   "accent": "#fff08a"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "formless": 25
+    }
+   },
+   "monsterId": "pyre_spirit",
+   "autocast": {
+    "skillId": "fire_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
+  },
+  "generated": true
+ },
+ {
+  "id": "card_plague_spore",
+  "name": "Plague Spore Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Plague Spore. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#5a6a2a",
+   "accent": "#f0ffd0"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "sizeDamagePct": {
+     "medium": 15
+    }
+   },
+   "monsterId": "plague_spore",
+   "autocast": {
+    "skillId": "lightning_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
+  },
+  "generated": true
+ },
+ {
+  "id": "card_rot_crab",
+  "name": "Rot Crab Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Rot Crab. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#4a3a2a",
+   "accent": "#a9e04a"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "crit": 4
+   },
+   "monsterId": "rot_crab"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_mire_hornet",
+  "name": "Mire Hornet Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Mire Hornet. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#6a7a2a",
+   "accent": "#e0ffd0"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "vit": 2
+   },
+   "monsterId": "mire_hornet"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_venom_drake",
+  "name": "Venom Drake Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Venom Drake. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#4a8a3a",
+   "accent": "#e0ff6a"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "dragon": 25
+    }
+   },
+   "monsterId": "venom_drake",
+   "autocast": {
+    "skillId": "lightning_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
+  },
+  "generated": true
+ },
+ {
+  "id": "card_fallen_paladin",
+  "name": "Fallen Paladin Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Fallen Paladin. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#c8c0a0",
+   "accent": "#ffd34d"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "hit": 10
+   },
+   "monsterId": "fallen_paladin"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_death_bat",
+  "name": "Death Bat Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Death Bat. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#1a1a1e",
+   "accent": "#ff3a4a"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "hit": 10
+   },
+   "monsterId": "death_bat"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_wraith_lord",
+  "name": "Wraith Lord Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Wraith Lord. Compound it into headgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#7a6a9a",
+   "accent": "#ff5a7a"
+  },
+  "card": {
+   "equip": "headgear",
+   "mods": {
+    "int": 1,
+    "mdef": 3
+   },
+   "monsterId": "wraith_lord",
+   "autocast": {
+    "skillId": "lightning_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
+  },
+  "generated": true
+ },
+ {
+  "id": "card_bone_dragon",
+  "name": "Bone Dragon Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Bone Dragon. Compound it into headgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#e8e0c8",
+   "accent": "#7fd6ff"
+  },
+  "card": {
+   "equip": "headgear",
+   "mods": {
+    "dex": 1,
+    "hit": 5
+   },
+   "monsterId": "bone_dragon"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_void_slime",
+  "name": "Void Slime Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Void Slime. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#1a1030",
+   "accent": "#c06aff"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "formless": 25
+    }
+   },
+   "monsterId": "void_slime"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_void_walker",
+  "name": "Void Walker Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Void Walker. Compound it into garment with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#3a2a5a",
+   "accent": "#c06aff"
+  },
+  "card": {
+   "equip": "garment",
+   "mods": {
+    "elementResistPct": {
+     "shadow": 20
+    },
+    "flee": 12
+   },
+   "monsterId": "void_walker",
+   "autocast": {
+    "skillId": "lightning_bolt",
+    "level": 3,
+    "chancePct": 5
+   }
+  },
+  "generated": true
+ },
+ {
+  "id": "card_chaos_golem",
+  "name": "Chaos Golem Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Chaos Golem. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#4a1a3a",
+   "accent": "#ff3a8a"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "onHitStatusPct": {
+     "stun": 5
+    },
+    "patk": 12
+   },
+   "monsterId": "chaos_golem"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_abyss_drake",
+  "name": "Abyss Drake Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Abyss Drake. Compound it into footgear with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#2a1a4a",
+   "accent": "#ff5aff"
+  },
+  "card": {
+   "equip": "boots",
+   "mods": {
+    "maxHp": 420,
+    "maxMp": 140
+   },
+   "monsterId": "abyss_drake"
+  },
+  "generated": true
+ },
+ {
   "id": "card_bone_warden_boss",
   "name": "Bone Warden Card",
   "type": "card",
@@ -8343,11 +9564,275 @@
   "generated": true
  },
  {
+  "id": "card_seraph_lumina_boss",
+  "name": "Seraph Lumina Card",
+  "type": "card",
+  "rarity": "epic",
+  "description": "A card holding the essence of the Seraph Lumina. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#fff6d8",
+   "accent": "#7fd6ff"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patkPct": 10,
+    "raceDamagePct": {
+     "insect": 15
+    }
+   },
+   "monsterId": "seraph_lumina_boss"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_frost_colossus_boss",
+  "name": "Frost Colossus Ymir Card",
+  "type": "card",
+  "rarity": "epic",
+  "description": "A card holding the essence of the Frost Colossus Ymir. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#d8f0ff",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patkPct": 10,
+    "raceDamagePct": {
+     "dragon": 15
+    }
+   },
+   "monsterId": "frost_colossus_boss"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_inferno_wyrm_boss",
+  "name": "Inferno Wyrm Vulcanor Card",
+  "type": "card",
+  "rarity": "epic",
+  "description": "A card holding the essence of the Inferno Wyrm Vulcanor. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#ff5a1a",
+   "accent": "#fff08a"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "maxHpPct": 15,
+    "pdef": 21
+   },
+   "monsterId": "inferno_wyrm_boss"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_plague_queen_boss",
+  "name": "Plague Queen Vespera Card",
+  "type": "card",
+  "rarity": "epic",
+  "description": "A card holding the essence of the Plague Queen Vespera. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#8aa83a",
+   "accent": "#ff3a8a"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "maxHpPct": 15,
+    "pdef": 21
+   },
+   "monsterId": "plague_queen_boss"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_death_knight_boss",
+  "name": "Death Knight Malgrave Card",
+  "type": "card",
+  "rarity": "epic",
+  "description": "A card holding the essence of the Death Knight Malgrave. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#3a3a4a",
+   "accent": "#7fffd0"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patkPct": 10,
+    "raceDamagePct": {
+     "dragon": 15
+    }
+   },
+   "monsterId": "death_knight_boss"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_storm_titan_boss",
+  "name": "Storm Titan Thrall Card",
+  "type": "card",
+  "rarity": "epic",
+  "description": "A card holding the essence of the Storm Titan Thrall. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#7a8ab8",
+   "accent": "#fff27a"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patkPct": 10,
+    "raceDamagePct": {
+     "demihuman": 15
+    }
+   },
+   "monsterId": "storm_titan_boss"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_abyssal_kraken_boss",
+  "name": "Abyssal Kraken Charybd Card",
+  "type": "card",
+  "rarity": "epic",
+  "description": "A card holding the essence of the Abyssal Kraken Charybd. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#2a4a7a",
+   "accent": "#5affd8"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patkPct": 10,
+    "raceDamagePct": {
+     "beast": 15
+    }
+   },
+   "monsterId": "abyssal_kraken_boss"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_void_emperor_boss",
+  "name": "Void Emperor Nihil Card",
+  "type": "card",
+  "rarity": "epic",
+  "description": "A card holding the essence of the Void Emperor Nihil. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#3a1a6a",
+   "accent": "#ff5aff"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "maxHpPct": 15,
+    "pdef": 21
+   },
+   "monsterId": "void_emperor_boss"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_chaos_dragon_boss",
+  "name": "Chaos Dragon Ragnoth Card",
+  "type": "card",
+  "rarity": "epic",
+  "description": "A card holding the essence of the Chaos Dragon Ragnoth. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#4a0a2a",
+   "accent": "#ff3a3a"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patkPct": 10,
+    "raceDamagePct": {
+     "dragon": 15
+    }
+   },
+   "monsterId": "chaos_dragon_boss"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_eternal_lich_boss",
+  "name": "Eternal Lich Azrath Card",
+  "type": "card",
+  "rarity": "epic",
+  "description": "A card holding the essence of the Eternal Lich Azrath. Compound it into weapon with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#7aff8a",
+   "accent": "#e8e0c8"
+  },
+  "card": {
+   "equip": "weapon",
+   "mods": {
+    "patkPct": 10,
+    "raceDamagePct": {
+     "demon": 15
+    }
+   },
+   "monsterId": "eternal_lich_boss"
+  },
+  "generated": true
+ },
+ {
   "id": "card_elite_dusk_bat",
   "name": "Alpha Dusk Bat Card",
   "type": "card",
   "rarity": "rare",
-  "description": "A card holding the essence of the Alpha Dusk Bat. Compound it into footgear with a free slot.",
+  "description": "A card holding the essence of the Alpha Dusk Bat. Compound it into garment with a free slot.",
   "weight": 1,
   "price": 20,
   "stackable": true,
@@ -8358,10 +9843,12 @@
    "accent": "#ff5a5a"
   },
   "card": {
-   "equip": "boots",
+   "equip": "garment",
    "mods": {
-    "agi": 1,
-    "moveSpeedPct": 5
+    "elementResistPct": {
+     "shadow": 20
+    },
+    "flee": 2
    },
    "monsterId": "elite_dusk_bat"
   },
@@ -8372,7 +9859,7 @@
   "name": "Chieftain Road Goblin Card",
   "type": "card",
   "rarity": "rare",
-  "description": "A card holding the essence of the Chieftain Road Goblin. Compound it into garment with a free slot.",
+  "description": "A card holding the essence of the Chieftain Road Goblin. Compound it into shield with a free slot.",
   "weight": 1,
   "price": 20,
   "stackable": true,
@@ -8383,9 +9870,11 @@
    "accent": "#3a6ab8"
   },
   "card": {
-   "equip": "garment",
+   "equip": "shield",
    "mods": {
-    "flee": 11
+    "raceResistPct": {
+     "demihuman": 25
+    }
    },
    "monsterId": "elite_road_goblin"
   },
@@ -8396,7 +9885,7 @@
   "name": "Chieftain Pinewood Goblin Card",
   "type": "card",
   "rarity": "rare",
-  "description": "A card holding the essence of the Chieftain Pinewood Goblin. Compound it into garment with a free slot.",
+  "description": "A card holding the essence of the Chieftain Pinewood Goblin. Compound it into shield with a free slot.",
   "weight": 1,
   "price": 20,
   "stackable": true,
@@ -8407,12 +9896,11 @@
    "accent": "#c8a26b"
   },
   "card": {
-   "equip": "garment",
+   "equip": "shield",
    "mods": {
-    "elementResistPct": {
-     "earth": 20
-    },
-    "flee": 4
+    "raceResistPct": {
+     "demihuman": 25
+    }
    },
    "monsterId": "elite_pine_goblin"
   },
@@ -8423,7 +9911,7 @@
   "name": "Alpha Shadow Wolf Card",
   "type": "card",
   "rarity": "rare",
-  "description": "A card holding the essence of the Alpha Shadow Wolf. Compound it into weapon with a free slot.",
+  "description": "A card holding the essence of the Alpha Shadow Wolf. Compound it into accessory with a free slot.",
   "weight": 1,
   "price": 20,
   "stackable": true,
@@ -8434,11 +9922,9 @@
    "accent": "#c83a4a"
   },
   "card": {
-   "equip": "weapon",
+   "equip": "accessory",
    "mods": {
-    "raceDamagePct": {
-     "demon": 20
-    }
+    "agi": 2
    },
    "monsterId": "elite_shadow_wolf"
   },
@@ -8449,7 +9935,7 @@
   "name": "Prime Arcane Wisp Card",
   "type": "card",
   "rarity": "rare",
-  "description": "A card holding the essence of the Prime Arcane Wisp. Compound it into shield with a free slot.",
+  "description": "A card holding the essence of the Prime Arcane Wisp. Compound it into body armor with a free slot.",
   "weight": 1,
   "price": 20,
   "stackable": true,
@@ -8460,11 +9946,9 @@
    "accent": "#ffffff"
   },
   "card": {
-   "equip": "shield",
+   "equip": "armor",
    "mods": {
-    "raceResistPct": {
-     "formless": 25
-    }
+    "maxHp": 160
    },
    "monsterId": "elite_arcane_wisp"
   },
@@ -8475,7 +9959,7 @@
   "name": "Alpha Desert Wolf Card",
   "type": "card",
   "rarity": "rare",
-  "description": "A card holding the essence of the Alpha Desert Wolf. Compound it into accessory with a free slot.",
+  "description": "A card holding the essence of the Alpha Desert Wolf. Compound it into headgear with a free slot.",
   "weight": 1,
   "price": 20,
   "stackable": true,
@@ -8486,9 +9970,10 @@
    "accent": "#fff0c0"
   },
   "card": {
-   "equip": "accessory",
+   "equip": "headgear",
    "mods": {
-    "hit": 10
+    "luk": 1,
+    "crit": 3
    },
    "monsterId": "elite_desert_wolf"
   },
@@ -8499,7 +9984,7 @@
   "name": "Queen Giant Scorpion Card",
   "type": "card",
   "rarity": "rare",
-  "description": "A card holding the essence of the Queen Giant Scorpion. Compound it into footgear with a free slot.",
+  "description": "A card holding the essence of the Queen Giant Scorpion. Compound it into garment with a free slot.",
   "weight": 1,
   "price": 20,
   "stackable": true,
@@ -8510,10 +9995,12 @@
    "accent": "#ffd34d"
   },
   "card": {
-   "equip": "boots",
+   "equip": "garment",
    "mods": {
-    "maxMpPct": 10,
-    "mpRegen": 2
+    "elementResistPct": {
+     "fire": 20
+    },
+    "flee": 6
    },
    "monsterId": "elite_giant_scorpion"
   },
@@ -8524,7 +10011,7 @@
   "name": "Alpha Reef Gull Card",
   "type": "card",
   "rarity": "rare",
-  "description": "A card holding the essence of the Alpha Reef Gull. Compound it into shield with a free slot.",
+  "description": "A card holding the essence of the Alpha Reef Gull. Compound it into body armor with a free slot.",
   "weight": 1,
   "price": 20,
   "stackable": true,
@@ -8535,11 +10022,9 @@
    "accent": "#ffb03a"
   },
   "card": {
-   "equip": "shield",
+   "equip": "armor",
    "mods": {
-    "raceResistPct": {
-     "beast": 25
-    }
+    "maxHp": 160
    },
    "monsterId": "elite_reef_gull"
   },
@@ -8550,7 +10035,7 @@
   "name": "Prime Ice Golem Card",
   "type": "card",
   "rarity": "rare",
-  "description": "A card holding the essence of the Prime Ice Golem. Compound it into accessory with a free slot.",
+  "description": "A card holding the essence of the Prime Ice Golem. Compound it into headgear with a free slot.",
   "weight": 1,
   "price": 20,
   "stackable": true,
@@ -8561,9 +10046,10 @@
    "accent": "#ffffff"
   },
   "card": {
-   "equip": "accessory",
+   "equip": "headgear",
    "mods": {
-    "hit": 10
+    "luk": 1,
+    "crit": 3
    },
    "monsterId": "elite_ice_golem"
   },
@@ -8574,7 +10060,7 @@
   "name": "Elder Fire Drake Card",
   "type": "card",
   "rarity": "rare",
-  "description": "A card holding the essence of the Elder Fire Drake. Compound it into body armor with a free slot.",
+  "description": "A card holding the essence of the Elder Fire Drake. Compound it into weapon with a free slot.",
   "weight": 1,
   "price": 20,
   "stackable": true,
@@ -8585,9 +10071,12 @@
    "accent": "#ffd34d"
   },
   "card": {
-   "equip": "armor",
+   "equip": "weapon",
    "mods": {
-    "maxHp": 320
+    "onHitStatusPct": {
+     "burn": 5
+    },
+    "patk": 8
    },
    "monsterId": "elite_fire_drake"
   },
@@ -8598,7 +10087,7 @@
   "name": "Elder Mire Crab Card",
   "type": "card",
   "rarity": "rare",
-  "description": "A card holding the essence of the Elder Mire Crab. Compound it into shield with a free slot.",
+  "description": "A card holding the essence of the Elder Mire Crab. Compound it into body armor with a free slot.",
   "weight": 1,
   "price": 20,
   "stackable": true,
@@ -8609,11 +10098,9 @@
    "accent": "#c8e07a"
   },
   "card": {
-   "equip": "shield",
+   "equip": "armor",
    "mods": {
-    "raceResistPct": {
-     "fish": 25
-    }
+    "maxHp": 320
    },
    "monsterId": "elite_mire_crab"
   },
@@ -8624,7 +10111,7 @@
   "name": "Revenant Banshee Card",
   "type": "card",
   "rarity": "rare",
-  "description": "A card holding the essence of the Revenant Banshee. Compound it into footgear with a free slot.",
+  "description": "A card holding the essence of the Revenant Banshee. Compound it into garment with a free slot.",
   "weight": 1,
   "price": 20,
   "stackable": true,
@@ -8635,12 +10122,114 @@
    "accent": "#ff5a7a"
   },
   "card": {
-   "equip": "boots",
+   "equip": "garment",
    "mods": {
-    "maxMpPct": 10,
-    "mpRegen": 2
+    "elementResistPct": {
+     "ghost": 20
+    },
+    "flee": 8
    },
    "monsterId": "elite_banshee"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elite_starlight_wisp",
+  "name": "Prime Starlight Wisp Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Prime Starlight Wisp. Compound it into shield with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#e8f0ff",
+   "accent": "#ffe27a"
+  },
+  "card": {
+   "equip": "shield",
+   "mods": {
+    "raceResistPct": {
+     "formless": 25
+    }
+   },
+   "monsterId": "elite_starlight_wisp"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elite_frost_titan",
+  "name": "Prime Frost Titan Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Prime Frost Titan. Compound it into accessory with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#bfe4f8",
+   "accent": "#ffffff"
+  },
+  "card": {
+   "equip": "accessory",
+   "mods": {
+    "str": 2
+   },
+   "monsterId": "elite_frost_titan"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elite_pyre_spirit",
+  "name": "Prime Pyre Spirit Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Prime Pyre Spirit. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#ffb03a",
+   "accent": "#fff08a"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "vit": 1,
+    "maxHpPct": 10
+   },
+   "monsterId": "elite_pyre_spirit"
+  },
+  "generated": true
+ },
+ {
+  "id": "card_elite_venom_drake",
+  "name": "Elder Venom Drake Card",
+  "type": "card",
+  "rarity": "rare",
+  "description": "A card holding the essence of the Elder Venom Drake. Compound it into body armor with a free slot.",
+  "weight": 1,
+  "price": 20,
+  "stackable": true,
+  "maxStack": 999,
+  "icon": {
+   "shape": "card",
+   "color": "#4a8a3a",
+   "accent": "#e0ff6a"
+  },
+  "card": {
+   "equip": "armor",
+   "mods": {
+    "vit": 1,
+    "maxHpPct": 10
+   },
+   "monsterId": "elite_venom_drake"
   },
   "generated": true
  },
@@ -9002,6 +10591,296 @@
    "color": "#c8d4ff",
    "accent": "#ffffff"
   },
+  "generated": true
+ },
+ {
+  "type": "equipment",
+  "rarity": "legendary",
+  "weight": 60,
+  "price": 50000,
+  "stackable": false,
+  "maxStack": 1,
+  "equipLevel": 90,
+  "cardSlots": 1,
+  "id": "dawnwing_halo",
+  "name": "Dawnwing Halo",
+  "slot": "headgear",
+  "icon": {
+   "shape": "crown",
+   "color": "#fff6c0",
+   "accent": "#7fd6ff"
+  },
+  "mods": {
+   "int": 8,
+   "dex": 6,
+   "mdef": 25,
+   "maxMpPct": 15,
+   "castTimePct": -10
+  },
+  "description": "A halo shed by Seraph Lumina. Spells come quicker under its light. MVP item of Seraph Lumina.",
+  "generated": true
+ },
+ {
+  "type": "equipment",
+  "rarity": "legendary",
+  "weight": 60,
+  "price": 50000,
+  "stackable": false,
+  "maxStack": 1,
+  "equipLevel": 95,
+  "cardSlots": 1,
+  "id": "ymir_heart",
+  "name": "Heart of Ymir",
+  "slot": "armor",
+  "icon": {
+   "shape": "armor",
+   "color": "#bdf0ff",
+   "accent": "#ffffff"
+  },
+  "mods": {
+   "pdef": 140,
+   "maxHpPct": 18,
+   "vit": 8,
+   "elementResistPct": {
+    "water": 30
+   }
+  },
+  "description": "Plate carved from the Colossus's frozen core. MVP item of Frost Colossus Ymir.",
+  "generated": true
+ },
+ {
+  "type": "equipment",
+  "rarity": "legendary",
+  "weight": 60,
+  "price": 50000,
+  "stackable": false,
+  "maxStack": 1,
+  "equipLevel": 99,
+  "cardSlots": 1,
+  "id": "vulcanor_fang",
+  "name": "Vulcanor Fang",
+  "slot": "weapon",
+  "weaponType": "twohand_sword",
+  "attackKind": "melee",
+  "attackRange": 62,
+  "element": "fire",
+  "twoHanded": true,
+  "weaponLevel": 4,
+  "icon": {
+   "shape": "sword",
+   "color": "#ff6a2e",
+   "accent": "#ffd34d"
+  },
+  "mods": {
+   "patk": 260,
+   "str": 10,
+   "critDmg": 25
+  },
+  "description": "A great blade from the Wyrm's fang. It burns what it cuts. MVP item of Inferno Wyrm Vulcanor.",
+  "generated": true
+ },
+ {
+  "type": "equipment",
+  "rarity": "legendary",
+  "weight": 60,
+  "price": 50000,
+  "stackable": false,
+  "maxStack": 1,
+  "equipLevel": 99,
+  "cardSlots": 1,
+  "id": "vespera_wings",
+  "name": "Vespera's Gossamer",
+  "slot": "garment",
+  "icon": {
+   "shape": "cape",
+   "color": "#a8d83a",
+   "accent": "#ff3a8a"
+  },
+  "mods": {
+   "flee": 30,
+   "agi": 8,
+   "elementResistPct": {
+    "poison": 40
+   },
+   "moveSpeedPct": 8
+  },
+  "description": "Shimmering wings of the Plague Queen. MVP item of Plague Queen Vespera.",
+  "generated": true
+ },
+ {
+  "type": "equipment",
+  "rarity": "legendary",
+  "weight": 60,
+  "price": 50000,
+  "stackable": false,
+  "maxStack": 1,
+  "equipLevel": 99,
+  "cardSlots": 1,
+  "id": "malgrave_oath",
+  "name": "Malgrave's Oathblade",
+  "slot": "weapon",
+  "weaponType": "sword",
+  "attackKind": "melee",
+  "attackRange": 58,
+  "element": "shadow",
+  "weaponLevel": 4,
+  "icon": {
+   "shape": "sword",
+   "color": "#3a3a4a",
+   "accent": "#7fffd0"
+  },
+  "mods": {
+   "patk": 210,
+   "str": 8,
+   "hpDrainPct": 4
+  },
+  "description": "The cursed sword of the Death Knight. It drinks life. MVP item of Death Knight Malgrave.",
+  "generated": true
+ },
+ {
+  "type": "equipment",
+  "rarity": "legendary",
+  "weight": 60,
+  "price": 50000,
+  "stackable": false,
+  "maxStack": 1,
+  "equipLevel": 99,
+  "cardSlots": 1,
+  "id": "thrall_core",
+  "name": "Thunder Core",
+  "slot": "accessory",
+  "icon": {
+   "shape": "amulet",
+   "color": "#fff27a",
+   "accent": "#7a8ab8"
+  },
+  "mods": {
+   "aspdPct": 12,
+   "dex": 8,
+   "hit": 25,
+   "elementDamagePct": {
+    "wind": 20
+   }
+  },
+  "description": "The crackling heart of the Storm Titan. MVP item of Storm Titan Thrall.",
+  "generated": true
+ },
+ {
+  "type": "equipment",
+  "rarity": "legendary",
+  "weight": 60,
+  "price": 50000,
+  "stackable": false,
+  "maxStack": 1,
+  "equipLevel": 99,
+  "cardSlots": 1,
+  "id": "charybd_shell",
+  "name": "Charybd Shell",
+  "slot": "shield",
+  "icon": {
+   "shape": "shield",
+   "color": "#2a4a7a",
+   "accent": "#5affd8"
+  },
+  "mods": {
+   "pdef": 60,
+   "mdef": 30,
+   "maxHpPct": 12,
+   "raceResistPct": {
+    "fish": 30,
+    "dragon": 15
+   }
+  },
+  "description": "A shield made from the Kraken's armoured shell. MVP item of Abyssal Kraken Charybd.",
+  "generated": true
+ },
+ {
+  "type": "equipment",
+  "rarity": "legendary",
+  "weight": 60,
+  "price": 50000,
+  "stackable": false,
+  "maxStack": 1,
+  "equipLevel": 99,
+  "cardSlots": 1,
+  "id": "nihil_scepter",
+  "name": "Scepter of Nihil",
+  "slot": "weapon",
+  "weaponType": "staff",
+  "attackKind": "magic",
+  "attackRange": 200,
+  "element": "shadow",
+  "twoHanded": true,
+  "weaponLevel": 4,
+  "icon": {
+   "shape": "staff",
+   "color": "#c06aff",
+   "accent": "#ff5aff"
+  },
+  "mods": {
+   "matk": 280,
+   "int": 12,
+   "castTimePct": -12
+  },
+  "description": "The Void Emperor's staff. Light bends around it. MVP item of Void Emperor Nihil.",
+  "generated": true
+ },
+ {
+  "type": "equipment",
+  "rarity": "legendary",
+  "weight": 60,
+  "price": 50000,
+  "stackable": false,
+  "maxStack": 1,
+  "equipLevel": 99,
+  "cardSlots": 1,
+  "id": "ragnoth_scale",
+  "name": "Ragnoth Scale Mantle",
+  "slot": "garment",
+  "icon": {
+   "shape": "cape",
+   "color": "#6a0a2a",
+   "accent": "#ff3a3a"
+  },
+  "mods": {
+   "pdef": 40,
+   "mdef": 40,
+   "maxHpPct": 15,
+   "raceResistPct": {
+    "dragon": 30
+   },
+   "patkPct": 6
+  },
+  "description": "A mantle of Chaos Dragon scales, warm as embers. MVP item of Chaos Dragon Ragnoth.",
+  "generated": true
+ },
+ {
+  "type": "equipment",
+  "rarity": "legendary",
+  "weight": 60,
+  "price": 50000,
+  "stackable": false,
+  "maxStack": 1,
+  "equipLevel": 99,
+  "cardSlots": 1,
+  "id": "azrath_crown",
+  "name": "Crown of Azrath",
+  "slot": "headgear",
+  "icon": {
+   "shape": "crown",
+   "color": "#7aff8a",
+   "accent": "#e8e0c8"
+  },
+  "mods": {
+   "int": 10,
+   "matk": 60,
+   "mdef": 30,
+   "maxMpPct": 20,
+   "raceDamagePct": {
+    "undead": 15
+   }
+  },
+  "description": "The crown of the Eternal Lich. It whispers forbidden words. MVP item of Eternal Lich Azrath.",
   "generated": true
  },
  {

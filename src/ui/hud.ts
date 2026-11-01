@@ -90,7 +90,7 @@ export class Hud {
     // Icon menu (two rows), Ragnarok-style: icon + short label, hotkey in the tooltip.
     const MENU: [string, string, string, string?][] = [
       ['status', '📊', 'Status'], ['inventory', '🎒', 'Items'], ['equipment', '🛡️', 'Equip'], ['skills', '✨', 'Skills'], ['quests', '📜', 'Quests'], ['worldMap', '🗺️', 'Map'], ['social', '👥', 'Social'], ['settings', '⚙️', 'Menu'],
-      ['pet', '🐾', 'Pet'], ['homun', '🧪', 'Homun'], ['cart', '🛒', 'Cart'], ['runes', '⭐', 'Runes'], ['database', '📖', 'DB'], ['achievements', '🏆', 'Titles'], ['daily', '🎁', 'Daily'], ['admin', '👑', 'GM', 'btn-gm'],
+      ['pet', '🐾', 'Pet'], ['homun', '🧪', 'Homun'], ['cart', '🛒', 'Cart'], ['runes', '⭐', 'Runes'], ['database', '📖', 'DB'], ['achievements', '🏆', 'Titles'], ['daily', '🎁', 'Daily'], ['mvp', '☠', 'MVP'], ['admin', '👑', 'GM', 'btn-gm'],
     ];
     const menu = h('div', { class: 'panel menu-grid', id: 'menu-grid' },
       ...MENU.map(([id, icon, label, elId]) => h('button', {

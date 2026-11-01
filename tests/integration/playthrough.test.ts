@@ -109,13 +109,13 @@ describe('playthrough (Knight)', () => {
 });
 
 describe('world travel', () => {
-  it('walks through portals to every one of the 30 maps', () => {
+  it('walks through portals to every one of the 36 world maps', () => {
     const c = newChar('Wanderer');
     const w = newWorld(c, 7);
     w.godMode = true;
     const bot = new Bot(w);
     const seen = new Set<string>([w.map.def.id]);
-    for (const m of data.maps.values()) if (m.type !== 'instance' && m.type !== 'arena') { bot.travelTo(m.id); seen.add(w.map.def.id); }
-    expect(seen.size).toBe(30);
+    for (const m of data.maps.values()) if (m.type !== 'instance' && m.type !== 'arena' && !m.mvp) { bot.travelTo(m.id); seen.add(w.map.def.id); }
+    expect(seen.size).toBe(36);
   }, 300_000);
 });

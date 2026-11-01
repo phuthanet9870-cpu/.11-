@@ -1231,6 +1231,12 @@
    "facing": "down"
   },
   {
+   "npcId": "mvp_guide",
+   "x": 29,
+   "y": 45,
+   "facing": "down"
+  },
+  {
    "npcId": "tidewatch_trader",
    "x": 37,
    "y": 29,

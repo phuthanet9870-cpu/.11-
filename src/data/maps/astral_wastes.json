@@ -1,0 +1,323 @@
+{
+ "id": "astral_wastes",
+ "name": "Astral Wastes",
+ "region": "Abyssal Frontier",
+ "type": "field",
+ "levelRange": [
+  86,
+  94
+ ],
+ "width": 160,
+ "height": 120,
+ "tileset": "arcane",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "field_plains",
+ "ambient": "meadow",
+ "weather": [
+  "sunny"
+ ],
+ "worldMapPos": {
+  "x": 0.86,
+  "y": 0.18
+ },
+ "paint": [
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 39,
+   "cy": 35,
+   "rx": 9,
+   "ry": 7,
+   "seed": 3897987712
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 127,
+   "cy": 88,
+   "rx": 8,
+   "ry": 4,
+   "seed": 3897987720
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 118,
+   "cy": 36,
+   "rx": 6,
+   "ry": 5,
+   "seed": 3897987718
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 39,
+   "cy": 90,
+   "rx": 7,
+   "ry": 7,
+   "seed": 3897987714
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     79,
+     116
+    ],
+    [
+     82,
+     87
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     79,
+     3
+    ],
+    [
+     81,
+     34
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "scatter",
+   "kind": "obelisk",
+   "density": 0.018,
+   "seed": 3897987726
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_pine",
+   "density": 0.006,
+   "seed": 3897987727
+  },
+  {
+   "op": "scatter",
+   "kind": "rock",
+   "density": 0.006,
+   "seed": 3897987728
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.05,
+   "seed": 3576715112
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.05,
+   "seed": 2628364093
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 81,
+   "y": 113,
+   "id": "sign_astral_wastes"
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_ravenhold_crypt",
+   "x": 78,
+   "y": 118,
+   "w": 4,
+   "h": 2,
+   "targetMap": "ravenhold_crypt",
+   "targetSpawn": "from_astral_wastes",
+   "label": "Ravenhold Crypt"
+  },
+  {
+   "id": "to_frozen_abyss",
+   "x": 78,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "targetMap": "frozen_abyss",
+   "targetSpawn": "from_astral_wastes",
+   "label": "Frozen Abyss"
+  }
+ ],
+ "spawnPoints": {
+  "from_ravenhold_crypt": {
+   "x": 80,
+   "y": 115
+  },
+  "from_frozen_abyss": {
+   "x": 80,
+   "y": 4
+  },
+  "default": {
+   "x": 80,
+   "y": 115
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "nebula_slime",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "nebula_slime",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "nebula_slime",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "void_bat",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "void_bat",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "void_bat",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "astral_golem",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "astral_golem",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "astral_golem",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "starlight_wisp",
+   "count": 14,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "starlight_wisp",
+   "count": 14,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "starlight_wisp",
+   "count": 14,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "elite_starlight_wisp",
+   "count": 1,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  }
+ ],
+ "objects": [
+  {
+   "id": "sign_astral_wastes",
+   "kind": "signpost",
+   "x": 81,
+   "y": 113,
+   "name": "Signpost",
+   "interact": {
+    "text": "Astral Wastes (Lv.86–94).  SOUTH → Ravenhold Crypt.  NORTH → Frozen Abyss."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

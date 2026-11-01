@@ -39,7 +39,7 @@ import { canForge, CRUMB_ATK, ELEMENT_STONES, forgeChance, STAR_CRUMB } from '..
 import { ENCHANT_COST, MAX_OPTIONS, optionLabel, REROLL_COST } from '../core/options';
 
 type DbTab = 'monsters' | 'items' | 'cards' | 'refine' | 'forge' | 'options' | 'combos' | 'pets' | 'elements';
-export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet' | 'homun' | 'cart' | 'runes' | 'social' | 'auto' | 'trader' | 'market' | 'achievements' | 'daily' | 'brew' | 'arena';
+export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet' | 'homun' | 'cart' | 'runes' | 'social' | 'auto' | 'trader' | 'market' | 'achievements' | 'daily' | 'brew' | 'arena' | 'mvp';
 
 interface WinState { el: HTMLElement; body: HTMLElement; render: () => void; open: boolean }
 
@@ -112,6 +112,7 @@ export class WindowManager {
     this.define('achievements', 'Achievements & Titles', 260, 60, () => this.renderAchievements());
     this.define('daily', 'Daily Rewards', 320, 120, () => this.renderDaily());
     this.define('arena', 'Shadow Arena', 300, 8, () => this.renderArena());
+    this.define('mvp', 'MVP Timers', 420, 60, () => this.renderMvp());
     this.define('brew', 'Brewing', 300, 80, () => this.renderBrew());
   }
 
@@ -1001,6 +1002,28 @@ export class WindowManager {
       h('div', { class: 'tlist', id: 'brew-list' }, rows)));
   }
 
+  // ---------------------------------------------------------------- MVP timers
+  private mvpTick = 0;
+  private renderMvp() {
+    const w = this.app.world!, d = w.data, body = this.wins.get('mvp')!.body, now = w.now();
+    const fmt = (ms: number) => { const s = Math.max(0, Math.round(ms / 1000)), h2 = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), ss = s % 60; return `${h2 ? `${h2}:` : ''}${String(m).padStart(h2 ? 2 : 1, '0')}:${String(ss).padStart(2, '0')}`; };
+    const rows = w.mvpTimers().sort((a, b) => Number(b.alive) - Number(a.alive) || a.nextAt - b.nextAt);
+    setChildren(body, h('div', { class: 'mvp-board' },
+      h('div', { class: 'muted small' }, 'MVP bosses take turns at the altars of the MVP Sanctum. Each returns 30–60 minutes after it falls. Talk to the MVP Herald in any town to go there.'),
+      ...rows.map((r) => {
+        const mon = d.monsters.get(r.monsterId)!;
+        const due = r.nextAt <= now;
+        const status = r.alive ? h('span', { class: 'mvp-status alive' }, '● Out now') : due ? h('span', { class: 'mvp-status due' }, '◎ Appearing… (enter the sanctum)') : h('span', { class: 'mvp-status wait' }, `⏳ ${fmt(r.nextAt - now)}`);
+        return h('div', { class: `mvp-row${r.alive ? ' alive' : due ? ' due' : ''}` }, h('img', { src: monsterIconUrl(mon) }),
+          h('div', { class: 'mvp-info' }, h('b', {}, r.name), h('span', { class: 'muted small' }, `Lv ${r.level} · ${mon.element} · ${r.mapName}`),
+            r.lastKilledAt ? h('span', { class: 'muted small' }, `Last defeated ${fmt(now - r.lastKilledAt)} ago`) : null),
+          status);
+      })));
+    // Live countdown while the window is open.
+    clearTimeout(this.mvpTick);
+    this.mvpTick = window.setTimeout(() => { if (this.isOpen('mvp')) this.renderMvp(); }, 1000);
+  }
+
   // ---------------------------------------------------------------- shadow arena board
   private arenaSel = { size: 3, diff: 'normal' as ArenaDifficulty, enemies: Array<string>(10).fill(''), allies: Array<string>(9).fill(''), hired: 0 };
   private arenaPortraits = new Map<string, string>();
@@ -1391,7 +1414,8 @@ export class WindowManager {
 
   // ---------------------------------------------------------------- GM / admin
   private adminSel: Record<string, string> = {};
-  private adminTab: 'main' | 'items' | 'power' | 'world' | 'console' = 'items';
+  private adminTab: 'main' | 'items' | 'monsters' | 'power' | 'world' | 'console' = 'items';
+  private gmMons = { cat: 'all', q: '', sel: '' };
   private gmItems = { cat: 'all', q: '', rarity: '', sel: '' };
   private classIcons = new Map<string, string>();
 
@@ -1434,6 +1458,46 @@ export class WindowManager {
     if (it.type === 'consumable') return 'consumable';
     if (it.type === 'material') return 'material';
     return 'misc';
+  }
+
+  /** GM monster browser: tabs by kind, a grid of monster face icons and a detail panel with spawn. */
+  private renderGmMonsters(run: (r: { ok: boolean; message?: string; error?: string }) => void, tabs: HTMLElement) {
+    const w = this.app.world!, d = w.data, st = this.gmMons, body = this.wins.get('admin')!.body;
+    const all = [...d.monsters.values()].filter((m) => !m.hidden);
+    const kind = (m: (typeof all)[number]) => m.bossId || m.aiType === 'boss' ? 'boss' : m.elite ? 'elite' : m.level <= 30 ? 'low' : m.level <= 60 ? 'mid' : m.level <= 90 ? 'high' : 'top';
+    const CATS: [string, string, string][] = [['all', '👾', 'All'], ['low', '🌱', 'Lv 1–30'], ['mid', '⚔', 'Lv 31–60'], ['high', '🔥', 'Lv 61–90'], ['top', '💀', 'Lv 91+'], ['elite', '⭐', 'Elites'], ['boss', '👑', 'Bosses & MVP']];
+    const q = st.q.toLowerCase();
+    const list = all.filter((m) => (st.cat === 'all' || kind(m) === st.cat) && (!q || m.name.toLowerCase().includes(q) || m.id.includes(q) || m.race.includes(q) || m.element.includes(q))).sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
+    if (!st.sel || !d.monsters.has(st.sel)) st.sel = list[0]?.id ?? '';
+    const grid = h('div', { class: 'inv-grid gm-items' }, ...list.map((m) => {
+      const el = h('div', { class: `islot gm-mon${m.id === st.sel ? ' gm-sel' : ''}`, dataset: { mon: m.id }, title: `${m.name} · Lv ${m.level}` }, h('img', { src: monsterIconUrl(m) }), h('span', { class: 'q' }, String(m.level)));
+      if (kind(m) === 'boss') el.style.borderColor = '#ff8a7a'; else if (m.elite) el.style.borderColor = '#ffd34d';
+      el.addEventListener('click', () => { st.sel = m.id; this.renderAdmin(); });
+      el.addEventListener('dblclick', () => run(gm.gmSpawn(w, m.id, 1)));
+      return el;
+    }));
+    const m = d.monsters.get(st.sel);
+    const cnt = h('input', { type: 'number', value: String(this.adminSel.mcnt ?? 3), style: 'width:52px' }) as HTMLInputElement;
+    cnt.addEventListener('change', () => { this.adminSel.mcnt = cnt.value; });
+    const where = m ? [...d.maps.values()].filter((mp) => mp.monsterSpawns.some((sp) => sp.monsterId === m.id) || (m.bossId && (mp.bossSpawn?.bossId === m.bossId || mp.mvp?.bossIds.includes(m.bossId)))).map((mp) => mp.name) : [];
+    const card = m ? [...d.items.values()].find((it) => it.card?.monsterId === m.id) : undefined;
+    const detail = m ? h('div', { class: 'gm-detail' },
+      h('div', { class: 'gm-detail-head' }, h('img', { src: monsterIconUrl(m), class: 'gm-big' }),
+        h('div', {}, h('div', { style: `font-weight:bold;color:${kind(m) === 'boss' ? '#ff8a7a' : m.elite ? '#ffd34d' : 'var(--text)'}` }, m.name), h('div', { class: 'muted small' }, `Lv ${m.level} · ${m.race} · ${m.size} · ${m.element}`), h('div', { class: 'muted small' }, m.id))),
+      h('div', { class: 'small' }, `HP ${m.maxHp.toLocaleString()} · ATK ${m.attack}${m.magicAttack ? ` · MATK ${m.magicAttack}` : ''} · DEF ${m.defense}`),
+      h('div', { class: 'small' }, `EXP ${m.exp.toLocaleString()} · Job ${m.jobExp.toLocaleString()} · ${m.aiType}`),
+      h('div', { class: 'small muted', style: 'max-height:40px;overflow:auto' }, where.length ? `Found in: ${where.join(', ')}` : 'Not placed on a map.'),
+      card ? h('div', { class: 'row small' }, h('img', { src: itemIconUrl(card), style: 'width:24px;height:24px;image-rendering:pixelated' }), card.name) : null,
+      h('div', { class: 'row', style: 'margin-top:4px' }, 'Count', cnt, h('button', { class: 'btn small primary', id: 'gm-spawn-mon', onclick: () => run(gm.gmSpawn(w, m.id, Math.max(1, Number(cnt.value) || 1))) }, '👾 Spawn near me')),
+      card ? h('button', { class: 'btn small', onclick: () => run(gm.gmGiveItem(w, card.id, 1)) }, '🃏 Give its card') : null) : h('div', { class: 'muted' }, 'No monsters match.');
+    const search = h('input', { placeholder: '🔍 Search monsters (name, race, element)…', value: st.q, class: 'gm-search', id: 'gm-mon-search' }) as HTMLInputElement;
+    search.addEventListener('keydown', (e) => e.stopPropagation());
+    search.addEventListener('input', () => { st.q = search.value; this.renderAdmin(); this.refocus('#gm-mon-search'); });
+    setChildren(body, h('div', { class: 'gm-items-tab' }, tabs,
+      h('div', { class: 'gm-cats', style: 'grid-template-columns:repeat(7,1fr)' }, ...CATS.map(([id, ico, label]) => h('button', { class: `gm-cat${st.cat === id ? ' on' : ''}`, onclick: () => { st.cat = id; st.sel = ''; this.renderAdmin(); } },
+        h('span', { class: 'gm-emoji' }, ico), h('span', {}, label), h('span', { class: 'gm-count' }, String(id === 'all' ? all.length : all.filter((x) => kind(x) === id).length))))),
+      search,
+      h('div', { class: 'gm-items-body' }, h('div', { class: 'gm-grid-wrap' }, grid, h('div', { class: 'muted small' }, `${list.length} monsters · click to select · double-click spawns one`)), detail)));
   }
 
   private renderGmItems(run: (r: { ok: boolean; message?: string; error?: string }) => void, tabs: HTMLElement) {
@@ -1508,11 +1572,12 @@ export class WindowManager {
       h('div', { class: 'gold', style: 'font-weight:bold;margin-bottom:3px' }, title), ...rows.map((r) => { r.style.marginBottom = '4px'; return r; }));
     const row = (...c: (HTMLElement | string)[]) => h('div', { class: 'row' }, ...c);
     const c = w.char;
-    const tabs = h('div', { class: 'row', style: 'margin-bottom:6px;gap:4px' }, ...([['items', '🎒 Items'], ['main', '🧙 Character'], ['power', '⭐ Character+'], ['world', '🌍 World & rates'], ['console', '⌨ Console']] as const).map(([id, label]) =>
+    const tabs = h('div', { class: 'row', style: 'margin-bottom:6px;gap:4px' }, ...([['items', '🎒 Items'], ['monsters', '👾 Monsters'], ['main', '🧙 Character'], ['power', '⭐ Character+'], ['world', '🌍 World & rates'], ['console', '⌨ Console']] as const).map(([id, label]) =>
       btn(label, () => { this.adminTab = id; this.renderAdmin(); }, this.adminTab === id ? 'btn small primary' : 'btn small')));
     const note = h('div', { style: 'font-size:11px;opacity:0.75;margin-bottom:6px' }, 'Local single-player tools. Changes apply to this save only; using them marks the character as GM-edited.');
     const onOff = (label: string, on: boolean, fn: () => void) => btn(`${label}: ${on ? 'ON' : 'OFF'}`, fn, on ? 'btn small primary' : 'btn small');
     if (this.adminTab === 'items') { this.renderGmItems(run, tabs); return; }
+    if (this.adminTab === 'monsters') { this.renderGmMonsters(run, tabs); return; }
     if (this.adminTab === 'power') {
       setChildren(body, h('div', { style: 'width:400px' }, tabs, note,
         section('Levels & stats',
