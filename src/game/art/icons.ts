@@ -98,3 +98,19 @@ export function skillIconCanvas(def: SkillDef): HTMLCanvasElement {
   if (def.kind === 'passive') { ctx.fillStyle = 'rgba(20,24,36,0.18)'; ctx.fillRect(2, 2, 28, 28); }
   return canvas;
 }
+
+/** Monster icon (idle frame fitted into 32x32), as a data URL. */
+export function monsterIconUrl(def: MonsterDef): string {
+  const key = `mon:${def.id}`;
+  const hit = cache.get(key);
+  if (hit) return hit;
+  const { canvas, ctx } = makeCanvas(32, 32);
+  let sheet = portraits.get(def.id);
+  if (!sheet) { sheet = generateMonsterSheet(def); portraits.set(def.id, sheet); }
+  const k = Math.min(30 / def.art.w, 30 / def.art.h);
+  ctx.imageSmoothingEnabled = k < 1;
+  ctx.drawImage(sheet, 0, 0, def.art.w, def.art.h, 16 - (def.art.w * k) / 2, 31 - def.art.h * k, def.art.w * k, def.art.h * k);
+  const url = canvas.toDataURL();
+  cache.set(key, url);
+  return url;
+}

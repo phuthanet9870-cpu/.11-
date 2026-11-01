@@ -110,6 +110,10 @@ Ground-target skills (Arrow Rain, Wind Trap, Fire Wall, Thunderstorm, Meteor) la
 | Windows: status, inventory, equipment, skill tree, quest journal, world map, pet (P), homunculus (H), pushcart (V), runes (N), social / online (G), database with refine simulator / forge calculator / option odds / combos / pets / element chart (B), settings (volume, toggles, key rebinding) | ✅ | `src/ui/windows.ts` |
 | Audio: BGM per map, boss music, ambience, SFX; Master/Music/SFX/Ambient volume | ✅ (procedural) | `src/game/audio/audio.ts` |
 
+## GM tools
+
+The GM window (👑) opens on **🎒 Items**: nine category tabs with icons and counts (All, Weapons, Armor, Accessories, Consumables, Materials, Cards, Pet items, Misc & quest), a search box and rarity filter, and an inventory-style icon grid sorted by type and rarity. Click an item to see it (big icon, rarity, type, level, description) and give any quantity; equipment can be given refined (+N) with an element; double-click gives one. **🧙 Character** picks the job from a grid of job portraits, and maps (with type icons, searchable) and monsters (with their sprites, bosses and elites highlighted) from icon grids too; pets in **⭐ Character+** show their monster icons.
+
 ## Item and skill icons
 
 - **Items (404):** 32×32 pixel art drawn by `src/game/art/iconArt.ts`: a five-tone ramp per colour (cool shadows, warm highlights), hard outline and rim light. Weapons are drawn by weapon type (sword, two-handed sword, dagger, katar, knuckle, axe, spear, club, bow, crossbow, wand, staff, instrument, book) and everything else by icon shape (armour, robe, shirt, hat, helm, mask, shield, cape, boots, ring, amulet, crown, potion, flask, fruit, coin, wing, blob, horn, fang, powder, pelt, bone, mushroom, ore, gem, leaf). Each shape has four variants picked from the item id, plus two id-placed glints, so no two items look the same (checked in the browser: 0 duplicates). Rarity adds sparkles (uncommon 1, rare 2, epic/legendary 3); weapon level adds gold pips. **Cards** show their monster's own sprite in the picture frame.

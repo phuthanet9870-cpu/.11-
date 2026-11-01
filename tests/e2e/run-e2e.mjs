@@ -376,25 +376,29 @@ try {
   await page.click('#btn-gm');
   await page.waitForSelector('#win-admin:not(.hidden)');
   const gmBefore = await page.evaluate(() => ({ luma: window.__veyloria.world.char.luma, mons: window.__veyloria.world.monsters.size }));
+  await page.click('#win-admin button:has-text("Character") >> nth=0');
   await page.fill('#gm-luma', '777');
   await page.dispatchEvent('#gm-luma', 'change');
   await page.click('#win-admin button:has-text("Give") >> nth=0');
-  await page.selectOption('#gm-mon', 'leaf_slime');
-  await page.click('#win-admin button:has-text("Spawn near me")');
+  await page.click('#win-admin .gm-tile[data-id="leaf_slime"]');
+  await page.click('#win-admin button:has-text("near me")');
   await sleep(300);
   await page.screenshot({ path: join(shots, '16-gm-tools.png') });
   const gmMid = await page.evaluate(() => ({ luma: window.__veyloria.world.char.luma, mons: window.__veyloria.world.monsters.size, flag: window.__veyloria.world.char.flags.gmUsed }));
-  await page.selectOption('#gm-map', 'sunny_meadow');
+  await page.click('#win-admin .gm-tile[data-id="sunny_meadow"]');
   await page.click('#win-admin button:has-text("Teleport")');
   await sleep(800);
   const gmMap = await page.evaluate(() => window.__veyloria.world.map.def.id);
   check('GM window: give Luma, spawn monsters, teleport', gmMid.luma === gmBefore.luma + 777 && gmMid.mons === gmBefore.mons + 3 && gmMid.flag === true && gmMap === 'sunny_meadow',
     `luma +${gmMid.luma - gmBefore.luma}, monsters +${gmMid.mons - gmBefore.mons}, map ${gmMap}`);
   // Pets: GM gives an egg + food, hatch it from the pet window (P), feed it.
-  await page.selectOption('#gm-item', 'egg_leaf_slime');
-  await page.click('#win-admin button:has-text("Give") >> nth=2');
-  await page.selectOption('#gm-item', 'pet_dewdrop');
-  await page.click('#win-admin button:has-text("Give") >> nth=2');
+  // Item browser: category tabs and an icon grid; pick an item, then Give.
+  await page.click('#win-admin button:has-text("Items") >> nth=0');
+  await page.click('#win-admin .gm-cat:has-text("Pet items")');
+  await page.click('#win-admin .islot[data-item="egg_leaf_slime"]');
+  await page.click('#gm-give-item');
+  await page.click('#win-admin .islot[data-item="pet_dewdrop"]');
+  await page.click('#gm-give-item');
   await page.click('#win-admin .x');
   await page.keyboard.press('p');
   await page.waitForSelector('#win-pet:not(.hidden)');

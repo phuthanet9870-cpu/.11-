@@ -11,8 +11,8 @@ import { h, setChildren, RARITY_COLOR } from './dom';
 import { isTouchDevice } from './touch';
 import { getLang, LANGS, type Lang } from './i18n';
 import { ARENA_DIFFICULTY, type ArenaDifficulty } from '../core/world';
-import { itemIconUrl, skillIconUrl } from '../game/art/icons';
-import { generateCharacterSheet, portraitFromSheet } from '../game/art/characterSprite';
+import { itemIconUrl, monsterIconUrl, skillIconUrl } from '../game/art/icons';
+import { generateCharacterSheet, portraitFromSheet, useShadowStyle } from '../game/art/characterSprite';
 import { lookForCharacter, SpritePreview } from './screens';
 import { getDragData, setDragData } from './hud';
 import { canRebirth, classLineage, skillCheck } from '../core/character';
@@ -42,6 +42,9 @@ type DbTab = 'monsters' | 'items' | 'cards' | 'refine' | 'forge' | 'options' | '
 export type WindowId = 'inventory' | 'equipment' | 'status' | 'skills' | 'quests' | 'worldMap' | 'settings' | 'shop' | 'storage' | 'admin' | 'database' | 'pet' | 'homun' | 'cart' | 'runes' | 'social' | 'auto' | 'trader' | 'market' | 'achievements' | 'daily' | 'brew' | 'arena';
 
 interface WinState { el: HTMLElement; body: HTMLElement; render: () => void; open: boolean }
+
+/** Map type → icon in the GM tools. */
+const MAP_EMOJI: Record<string, string> = { town: '🏘', field: '🌿', dungeon: '🕳', boss: '☠', instance: '🏯', arena: '⚔' };
 
 const MOD_LABEL: Record<string, string> = {
   str: 'STR', agi: 'AGI', vit: 'VIT', int: 'INT', dex: 'DEX', luk: 'LUK', maxHp: 'Max HP', maxMp: 'Max MP', maxHpPct: 'Max HP %', maxMpPct: 'Max MP %',
@@ -96,7 +99,7 @@ export class WindowManager {
     this.define('settings', 'Settings', 420, 70, () => this.renderSettings());
     this.define('shop', 'Shop', 16, 90, () => this.renderShop());
     this.define('storage', 'Storage', 16, 90, () => this.renderStorage());
-    this.define('admin', 'GM / Admin Tools', 820, 70, () => this.renderAdmin());
+    this.define('admin', 'GM / Admin Tools', 250, 40, () => this.renderAdmin());
     this.define('database', 'Database', 200, 50, () => this.renderDatabase());
     this.define('pet', 'Pet', 520, 90, () => this.renderPet());
     this.define('homun', 'Homunculus', 520, 120, () => this.renderHomun());
@@ -1388,7 +1391,96 @@ export class WindowManager {
 
   // ---------------------------------------------------------------- GM / admin
   private adminSel: Record<string, string> = {};
-  private adminTab: 'main' | 'power' | 'world' | 'console' = 'main';
+  private adminTab: 'main' | 'items' | 'power' | 'world' | 'console' = 'items';
+  private gmItems = { cat: 'all', q: '', rarity: '', sel: '' };
+  private classIcons = new Map<string, string>();
+
+  /** Job portrait (front idle frame, in the current character style) as a 32x32 data URL. */
+  private classIconUrl(classId: string): string {
+    const hit = this.classIcons.get(classId);
+    if (hit) return hit;
+    const d = this.app.world!.data, cls = d.classes.get(classId)!, wt = cls.weaponTypes ?? [];
+    const sheet = generateCharacterSheet({ appearance: this.app.world!.char.appearance, outfit: cls.outfit, weapon: wt.find((x) => x !== 'dagger' && x !== 'club') ?? wt[0] ?? null, sheet: `class/${classId}`, shadow: useShadowStyle() });
+    const url = portraitFromSheet(sheet, 1).toDataURL();
+    this.classIcons.set(classId, url);
+    return url;
+  }
+
+  /** A searchable grid of icon tiles; `on` gets the picked id. */
+  private iconPicker(list: { id: string; label: string; icon?: string; emoji?: string; sub?: string; color?: string }[], selected: string, on: (id: string) => void, opts: { search?: string; onSearch?: (q: string) => void; height?: number } = {}) {
+    const q = (opts.search ?? '').toLowerCase();
+    const shown = q ? list.filter((x) => x.label.toLowerCase().includes(q) || x.id.includes(q) || (x.sub ?? '').toLowerCase().includes(q)) : list;
+    const grid = h('div', { class: 'gm-picker', style: `max-height:${opts.height ?? 150}px` }, ...shown.map((x) => {
+      const el = h('button', { class: `gm-tile${x.id === selected ? ' on' : ''}`, dataset: { id: x.id }, title: `${x.label}${x.sub ? `\n${x.sub}` : ''}`, onclick: () => on(x.id) },
+        x.icon ? h('img', { src: x.icon }) : h('span', { class: 'gm-emoji' }, x.emoji ?? '•'), h('span', { class: 'gm-tile-label' }, x.label));
+      if (x.color) el.style.borderColor = x.color;
+      return el;
+    }));
+    if (!opts.onSearch) return grid;
+    const input = h('input', { placeholder: '🔍 Search…', value: opts.search ?? '', class: 'gm-search' }) as HTMLInputElement;
+    input.addEventListener('input', () => opts.onSearch!(input.value));
+    input.addEventListener('keydown', (e) => e.stopPropagation());
+    return h('div', {}, input, grid);
+  }
+
+  /** Puts the caret back in a search box after a re-render. */
+  private refocus(sel: string) { const el = document.querySelector<HTMLInputElement>(sel); if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); } }
+
+  /** Item category of the GM browser. */
+  private gmCategory(it: ItemDef): string {
+    if (it.type === 'card') return 'card';
+    if (it.petEgg || it.petFood || it.lure || it.petAccessory) return 'pet';
+    if (it.type === 'equipment') return it.weaponType ? 'weapon' : it.slot === 'accessory' ? 'accessory' : 'armor';
+    if (it.type === 'consumable') return 'consumable';
+    if (it.type === 'material') return 'material';
+    return 'misc';
+  }
+
+  private renderGmItems(run: (r: { ok: boolean; message?: string; error?: string }) => void, tabs: HTMLElement) {
+    const w = this.app.world!, d = w.data, st = this.gmItems, body = this.wins.get('admin')!.body;
+    const CATS: [string, string, string][] = [['all', '🎒', 'All'], ['weapon', '⚔', 'Weapons'], ['armor', '🛡', 'Armor'], ['accessory', '💍', 'Accessories'], ['consumable', '🧪', 'Consumables'], ['material', '🪨', 'Materials'], ['card', '🃏', 'Cards'], ['pet', '🐾', 'Pet items'], ['misc', '📦', 'Misc & quest']];
+    const all = [...d.items.values()];
+    const count = (cat: string) => cat === 'all' ? all.length : all.filter((x) => this.gmCategory(x) === cat).length;
+    const q = st.q.toLowerCase();
+    const RANK: Record<string, number> = { common: 0, uncommon: 1, rare: 2, epic: 3, legendary: 4 };
+    const list = all.filter((x) => (st.cat === 'all' || this.gmCategory(x) === st.cat) && (!st.rarity || x.rarity === st.rarity) && (!q || x.name.toLowerCase().includes(q) || x.id.includes(q)))
+      .sort((a, b) => this.gmCategory(a).localeCompare(this.gmCategory(b)) || (a.weaponType ?? a.slot ?? '').localeCompare(b.weaponType ?? b.slot ?? '') || (RANK[a.rarity] ?? 0) - (RANK[b.rarity] ?? 0) || a.name.localeCompare(b.name));
+    if (!st.sel || !d.items.has(st.sel)) st.sel = list[0]?.id ?? '';
+    const grid = h('div', { class: 'inv-grid gm-items' }, ...list.map((it) => {
+      const el = h('div', { class: `islot${it.id === st.sel ? ' gm-sel' : ''}`, dataset: { item: it.id } }, h('img', { src: itemIconUrl(it) }));
+      el.style.borderColor = it.rarity !== 'common' ? RARITY_COLOR[it.rarity] + '99' : '';
+      el.addEventListener('click', () => { st.sel = it.id; this.renderAdmin(); });
+      el.addEventListener('dblclick', () => run(gm.gmGiveItem(w, it.id, 1)));
+      el.addEventListener('mousemove', (e) => this.showTooltip(e, this.itemTooltip(it)));
+      el.addEventListener('mouseleave', () => this.hideTooltip());
+      return el;
+    }));
+    const it = d.items.get(st.sel);
+    const qty = h('input', { type: 'number', value: String(this.adminSel.gqty ?? 1), style: 'width:60px' }) as HTMLInputElement;
+    qty.addEventListener('change', () => { this.adminSel.gqty = qty.value; });
+    const detail = it ? h('div', { class: 'gm-detail' },
+      h('div', { class: 'gm-detail-head' }, h('img', { src: itemIconUrl(it), class: 'gm-big' }),
+        h('div', {}, h('div', { style: `font-weight:bold;color:${RARITY_COLOR[it.rarity]}` }, it.name), h('div', { class: 'muted small' }, `${it.rarity} · ${it.weaponType ?? it.slot ?? it.type}${it.equipLevel ? ` · Lv ${it.equipLevel}` : ''}`), h('div', { class: 'muted small' }, it.id))),
+      h('div', { class: 'small', style: 'margin:4px 0;max-height:52px;overflow:auto' }, it.description),
+      h('div', { class: 'row' }, 'Qty', qty, h('button', { class: 'btn small primary', id: 'gm-give-item', onclick: () => run(gm.gmGiveItem(w, it.id, Math.max(1, Number(qty.value) || 1))) }, '🎁 Give'),
+        h('button', { class: 'btn small', onclick: () => run(gm.gmGiveItem(w, it.id, it.stackable ? 99 : 1)) }, it.stackable ? '×99' : '×1')),
+      it.type === 'equipment' ? (() => {
+        const ref = h('input', { type: 'number', value: String(this.adminSel.gref ?? 10), style: 'width:44px' }) as HTMLInputElement;
+        ref.addEventListener('change', () => { this.adminSel.gref = ref.value; });
+        const elem = h('select', {}, h('option', { value: '' }, 'No element'), ...['fire', 'water', 'earth', 'wind', 'holy', 'shadow', 'ghost', 'poison', 'undead'].map((e) => h('option', { value: e }, e))) as HTMLSelectElement;
+        elem.value = this.adminSel.gelem ?? ''; elem.addEventListener('change', () => { this.adminSel.gelem = elem.value; });
+        return h('div', { class: 'row', style: 'margin-top:4px' }, '+', ref, elem, h('button', { class: 'btn small', onclick: () => run(gm.gmGiveItemFull(w, it.id, { refine: Number(ref.value) || 0, element: elem.value || undefined })) }, '✨ Give refined'));
+      })() : null) : h('div', { class: 'muted' }, 'No items match.');
+    const rar = h('div', { class: 'row gm-rarity' }, ...['', 'common', 'uncommon', 'rare', 'epic', 'legendary'].map((r) => h('button', { class: `btn small${st.rarity === r ? ' primary' : ''}`, style: r ? `color:${RARITY_COLOR[r as keyof typeof RARITY_COLOR]}` : '', onclick: () => { st.rarity = r; this.renderAdmin(); } }, r ? '●' : 'Any')));
+    const search = h('input', { placeholder: '🔍 Search items…', value: st.q, class: 'gm-search', id: 'gm-item-search' }) as HTMLInputElement;
+    search.addEventListener('keydown', (e) => e.stopPropagation());
+    search.addEventListener('input', () => { st.q = search.value; this.renderAdmin(); const el = document.getElementById('gm-item-search') as HTMLInputElement | null; if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); } });
+    setChildren(body, h('div', { class: 'gm-items-tab' }, tabs,
+      h('div', { class: 'gm-cats' }, ...CATS.map(([id, ico, label]) => h('button', { class: `gm-cat${st.cat === id ? ' on' : ''}`, onclick: () => { st.cat = id; st.sel = ''; this.renderAdmin(); } }, h('span', { class: 'gm-emoji' }, ico), h('span', {}, label), h('span', { class: 'gm-count' }, String(count(id)))))),
+      h('div', { class: 'row', style: 'gap:6px' }, search, rar),
+      h('div', { class: 'gm-items-body' }, h('div', { class: 'gm-grid-wrap' }, grid, h('div', { class: 'muted small' }, `${list.length} items · click to select · double-click gives 1`)), detail)));
+  }
+
   private adminLog: string[] = [];
   private renderAdmin() {
     const app = this.app, w = app.world, body = this.wins.get('admin')!.body;
@@ -1416,10 +1508,11 @@ export class WindowManager {
       h('div', { class: 'gold', style: 'font-weight:bold;margin-bottom:3px' }, title), ...rows.map((r) => { r.style.marginBottom = '4px'; return r; }));
     const row = (...c: (HTMLElement | string)[]) => h('div', { class: 'row' }, ...c);
     const c = w.char;
-    const tabs = h('div', { class: 'row', style: 'margin-bottom:6px;gap:4px' }, ...([['main', 'Main'], ['power', 'Character+'], ['world', 'World & rates'], ['console', '@ Console']] as const).map(([id, label]) =>
+    const tabs = h('div', { class: 'row', style: 'margin-bottom:6px;gap:4px' }, ...([['items', '🎒 Items'], ['main', '🧙 Character'], ['power', '⭐ Character+'], ['world', '🌍 World & rates'], ['console', '⌨ Console']] as const).map(([id, label]) =>
       btn(label, () => { this.adminTab = id; this.renderAdmin(); }, this.adminTab === id ? 'btn small primary' : 'btn small')));
     const note = h('div', { style: 'font-size:11px;opacity:0.75;margin-bottom:6px' }, 'Local single-player tools. Changes apply to this save only; using them marks the character as GM-edited.');
     const onOff = (label: string, on: boolean, fn: () => void) => btn(`${label}: ${on ? 'ON' : 'OFF'}`, fn, on ? 'btn small primary' : 'btn small');
+    if (this.adminTab === 'items') { this.renderGmItems(run, tabs); return; }
     if (this.adminTab === 'power') {
       setChildren(body, h('div', { style: 'width:400px' }, tabs, note,
         section('Levels & stats',
@@ -1434,7 +1527,8 @@ export class WindowManager {
             btn('Give', () => run(gm.gmGiveItemFull(w, this.adminSel.item2, { refine: val('ref', 10), element: this.adminSel.elem || undefined, cards: this.adminSel.card ? [this.adminSel.card] : undefined })))),
           row(sel('slot', EQUIP_SLOTS.map((s) => [s, s])), '+', num('ref2', 10, 44), btn('Refine equipped', () => run(gm.gmRefineEquipped(w, this.adminSel.slot, val('ref2', 10)))), btn('Clear inventory', () => run(gm.gmClearInventory(w)), 'btn small danger'))),
         section('Companions & runes',
-          row(sel('pet', [...d.pets.values()].map((p) => [p.monsterId, p.name])), btn('Give pet', () => run(gm.gmPet(w, this.adminSel.pet)))),
+          this.iconPicker([...d.pets.values()].map((p) => ({ id: p.monsterId, label: p.name, icon: d.monsters.get(p.monsterId) ? monsterIconUrl(d.monsters.get(p.monsterId)!) : undefined })), this.adminSel.pet ?? '', (id) => { this.adminSel.pet = id; this.renderAdmin(); }, { height: 96 }),
+          row(btn(`🐾 Give pet${this.adminSel.pet ? `: ${[...d.pets.values()].find((p) => p.monsterId === this.adminSel.pet)?.name ?? ''}` : ''}`, () => run(gm.gmPet(w, this.adminSel.pet ?? [...d.pets.values()][0].monsterId)))),
           row(sel('homun', [...d.homunculi.values()].map((x) => [x.id, x.name])), 'Lv', num('hlv', 50, 44), btn('Create homunculus', () => run(gm.gmHomun(w, this.adminSel.homun, val('hlv', 50))))),
           row(btn('Mount + cart', () => run(gm.gmMountCart(w))), 'Rune pts +', num('rp', 10, 44), btn('Set', () => run(gm.gmRunePoints(w, val('rp', 10))))))));
       return;
@@ -1478,19 +1572,25 @@ export class WindowManager {
       log.scrollTop = log.scrollHeight;
       return;
     }
-    setChildren(body, h('div', { style: 'width:400px' }, tabs, note,
-      section('Character',
+    setChildren(body, h('div', { style: 'width:560px' }, tabs, note,
+      section('🧙 Character',
         row(`${c.name} · ${d.classes.get(c.classId)!.name} · Base Lv ${c.baseLevel} · Job Lv ${c.jobLevel} · ${c.luma} Luma`),
         row(btn('Full heal', () => run(gm.gmHeal(w))), btn(`God mode: ${w.godMode ? 'ON' : 'OFF'}`, () => run(gm.gmGodMode(w, !w.godMode)), w.godMode ? 'btn small primary' : 'btn small')),
         row('Base +', num('lvB', 1, 48), 'Job +', num('lvJ', 0, 48), btn('Level up', () => run(gm.gmAddLevels(w, val('lvB', 1), val('lvJ'))))),
         row('Luma', num('luma', 1000, 80), btn('Give', () => run(gm.gmGiveLuma(w, val('luma', 1000))))),
         row('Stat pts', num('sp', 5, 48), 'Skill pts', num('kp', 1, 48), btn('Give', () => run(gm.gmGivePoints(w, val('sp', 5), val('kp', 1))))),
-        row('Class', sel('cls', [...d.classes.values()].map((x) => [x.id, x.name])), btn('Set class', () => run(gm.gmSetClass(w, this.adminSel.cls))))),
-      section('Items',
-        row(sel('item', [...d.items.values()].sort((a, b) => a.name.localeCompare(b.name)).map((x) => [x.id, `${x.name} (${x.type})`])), num('qty', 1, 48), btn('Give', () => run(gm.gmGiveItem(w, this.adminSel.item, val('qty', 1)))))),
-      section('World',
-        row(sel('map', [...d.maps.values()].map((x) => [x.id, x.name])), btn('Teleport', () => run(gm.gmTeleport(w, this.adminSel.map)))),
-        row(sel('mon', [...d.monsters.values()].map((x) => [x.id, `${x.name} Lv.${x.level}`])), num('cnt', 3, 44), btn('Spawn near me', () => run(gm.gmSpawn(w, this.adminSel.mon, val('cnt', 3))))),
+        h('div', { class: 'small muted' }, '🧙 Job (click a portrait, then Set job)'),
+        this.iconPicker([...d.classes.values()].map((x) => ({ id: x.id, label: x.name, icon: this.classIconUrl(x.id), sub: `Tier ${x.tier}`, color: x.id === c.classId ? '#ffd34d' : undefined })), this.adminSel.cls ?? c.classId, (id) => { this.adminSel.cls = id; this.renderAdmin(); }, { height: 120 }),
+        row(btn(`Set job: ${d.classes.get(this.adminSel.cls ?? c.classId)?.name}`, () => run(gm.gmSetClass(w, this.adminSel.cls ?? c.classId)), 'btn small primary'))),
+      section('🎒 Items', row(h('span', { class: 'muted small' }, 'Every item, by category with icons:'), btn('Open the item browser', () => { this.adminTab = 'items'; this.renderAdmin(); }, 'btn small primary'))),
+      section('🌍 World',
+        h('div', { class: 'small muted' }, '🗺 Maps'),
+        this.iconPicker([...d.maps.values()].map((x) => ({ id: x.id, label: x.name, emoji: MAP_EMOJI[x.type] ?? '📍', sub: x.type })), this.adminSel.map ?? '', (id) => { this.adminSel.map = id; this.renderAdmin(); },
+          { height: 96, search: this.adminSel.mapq ?? '', onSearch: (v) => { this.adminSel.mapq = v; this.renderAdmin(); this.refocus('.gm-search'); } }),
+        row(btn(`🌀 Teleport${this.adminSel.map ? ` to ${d.maps.get(this.adminSel.map)?.name}` : ''}`, () => run(gm.gmTeleport(w, this.adminSel.map ?? 'aurelion')), 'btn small primary')),
+        h('div', { class: 'small muted' }, '👾 Monsters'),
+        this.iconPicker([...d.monsters.values()].filter((x) => !x.hidden).sort((a, b) => a.level - b.level).map((x) => ({ id: x.id, label: `${x.name}`, icon: monsterIconUrl(x), sub: `Lv ${x.level} · ${x.race} · ${x.element}`, color: x.aiType === 'boss' ? '#ff8a7a' : x.elite ? '#ffd34d' : undefined })), this.adminSel.mon ?? '', (id) => { this.adminSel.mon = id; this.renderAdmin(); }, { height: 120 }),
+        row(num('cnt', 3, 44), btn(`Spawn${this.adminSel.mon ? ` ${d.monsters.get(this.adminSel.mon)?.name}` : ''} near me`, () => run(gm.gmSpawn(w, this.adminSel.mon ?? 'leaf_slime', val('cnt', 3))))),
         row(btn('Defeat all monsters here', () => run(gm.gmKillAll(w))), btn('…incl. boss', () => run(gm.gmKillAll(w, true)), 'btn small danger'))),
       section('Quests',
         row(sel('quest', [...d.quests.values()].map((x) => [x.id, `${x.name}${c.quests[x.id] ? ` [${c.quests[x.id].status}]` : ''}`])),
