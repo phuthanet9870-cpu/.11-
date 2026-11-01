@@ -195,7 +195,7 @@ function drawShadowWeapon(ctx: CanvasRenderingContext2D, type: string | null, x:
 }
 
 // ------------------------------------------------------------------ head
-function drawShadowHead(ctx: CanvasRenderingContext2D, d: ShadowDesign, hx: number, hy: number, dir: Direction, phase: number) {
+function drawShadowHead(ctx: CanvasRenderingContext2D, d: ShadowDesign, hx: number, hy: number, dir: Direction, phase: number, blink = false) {
   const g = d.glow, side = dir === 'left', back = dir === 'up';
   const hooded = d.head === 'hood' || d.head === 'pointed_hood' || d.head === 'ears_hood' || d.head === 'horn_hood';
   const helm = d.head === 'helm' || d.head === 'horn_helm' || d.head === 'great_helm';
@@ -222,7 +222,11 @@ function drawShadowHead(ctx: CanvasRenderingContext2D, d: ShadowDesign, hx: numb
   // Eyes.
   if (!back) {
     const ey = hy + 1;
-    if (d.eyes === 'visor' || (helm && d.eyes !== 'cross')) {
+    // Blink: dots and slits close to a dim line for a frame (visors and helmets do not blink).
+    if (blink && (d.eyes === 'dots' || d.eyes === 'slit') && !helm) {
+      const dim = shade(g, -0.35);
+      if (side) px(ctx, hx - 5, ey, 3, 1, dim); else { px(ctx, hx - 4, ey, 3, 1, dim); px(ctx, hx + 1, ey, 3, 1, dim); }
+    } else if (d.eyes === 'visor' || (helm && d.eyes !== 'cross')) {
       if (side) glowDot(ctx, hx - 7, ey, 5, 1, g); else glowDot(ctx, hx - 4, ey, 9, 1, g);
     } else if (d.eyes === 'cross') {
       if (side) { glowDot(ctx, hx - 7, ey, 4, 1, g); px(ctx, hx - 6, ey - 3, 1, 7, shade(g, 0.2)); }
@@ -378,6 +382,8 @@ export interface ShadowPose {
   thrustFx?: number;
   impact?: 'hand' | 'off' | 'tip';
   cast?: number;
+  /** Eyes closed for this frame (idle blink). */
+  blink?: boolean;
 }
 
 const P0: ShadowPose = { bob: 0, legL: 0, legR: 0, stride: 0, armL: 0, offReach: 0, armsUp: 0, hand: [0, 0], a: 0.3, lean: 0, wind: 0, sway: 0 };
@@ -389,14 +395,56 @@ export function shadowPose(anim: CharAnim, f: number, n: number, weapon: string 
   const t = f / n, k = key6(f, n);
   switch (anim) {
     case 'idle': {
-      const q = Math.floor(t * 4);
-      return { ...P0, bob: q >= 2 ? 1 : 0, wind: q, sway: [0, 1, 1, 0][q], hand: [0, q >= 2 ? -1 : 0] };
+      // Slow breath (the body sinks a pixel on the out-breath), cloth drifting, a blink near the end.
+      const br = (1 - Math.cos(t * Math.PI * 2)) / 2;
+      return { ...P0, bob: br > 0.55 ? 1 : 0, wind: Math.floor(t * 4), sway: Math.round(br * 2), hand: [Math.round(br), br > 0.5 ? -1 : 0], armL: br > 0.5 ? 1 : 0, blink: n >= 6 && f === n - 2 };
     }
     case 'walk': {
       const s = Math.sin(t * Math.PI * 2), c = Math.cos(t * Math.PI * 2);
       return { ...P0, legL: Math.max(0, s) * 3, legR: Math.max(0, -s) * 3, stride: s, armL: -s * 3, hand: [s * 2, 0], bob: Math.abs(c) < 0.5 ? -1 : 0, wind: f % 4, sway: 2 + Math.round(Math.abs(s)) };
     }
     case 'attack': {
+      // More frames than key poses: ease between the six keys (wind-up slow, strike fast, settle slow).
+      if (n > 6) {
+        const u = easeKeys(f, n), k0 = Math.floor(u), k1 = Math.min(5, k0 + 1), w = u - k0;
+        const a = attackKey(weapon, k0), b = attackKey(weapon, k1);
+        return w < 0.01 ? a : lerpPose(a, b, w);
+      }
+      return attackKey(weapon, k);
+    }
+    case 'cast': return { ...P0, armsUp: 1, a: -1.4, cast: t, wind: f % 4, sway: -1, bob: f % 2 ? -1 : 0 };
+    case 'hit': { const h = Math.min(2, Math.round((f * 2) / Math.max(1, n - 1))); return { ...P0, lean: [-3, -2, -1][h], bob: [0, 1, 0][h], armL: 3, a: 0.7, hand: [-1, -1], sway: -1 }; }
+    case 'death': {
+      // With three frames f is the key itself (also used to blend the keys of longer death clips).
+      const j = n === 3 ? Math.min(2, f) : Math.min(2, k);
+      return { ...P0, lean: [-2, -1, 0][j], bob: [0, 4, 7][j], armL: [2, 4, 5][j], a: [0.8, 1.4, 1.6][j], hand: [0, [-1, -3, -5][j]], sway: -1 };
+    }
+  }
+}
+
+/** Position on the 0..5 key-pose scale for frame f of n: slow wind-up, fast strike, slow recovery. */
+function easeKeys(f: number, n: number): number {
+  const t = f / Math.max(1, n - 1);
+  const e = t < 0.35 ? 0.35 * Math.pow(t / 0.35, 1.6) : t < 0.6 ? 0.35 + (t - 0.35) * 1.8 : 0.8 + 0.2 * (1 - Math.pow(1 - (t - 0.6) / 0.4, 2));
+  return Math.min(5, e * 5);
+}
+
+/** Numeric pose fields blend; the rest (trails, projectiles, impacts) come from the nearer key. */
+function lerpPose(a: ShadowPose, b: ShadowPose, w: number): ShadowPose {
+  const L = (x: number, y: number) => x + (y - x) * w;
+  const near = w < 0.5 ? a : b;
+  return {
+    ...near,
+    bob: Math.round(L(a.bob, b.bob)), legL: L(a.legL, b.legL), legR: L(a.legR, b.legR), stride: L(a.stride, b.stride),
+    armL: Math.round(L(a.armL, b.armL)), offReach: L(a.offReach, b.offReach), armsUp: L(a.armsUp, b.armsUp),
+    hand: [Math.round(L(a.hand[0], b.hand[0])), Math.round(L(a.hand[1], b.hand[1]))], a: L(a.a, b.a), lean: Math.round(L(a.lean, b.lean)),
+    bowDraw: a.bowDraw !== undefined && b.bowDraw !== undefined ? L(a.bowDraw, b.bowDraw) : near.bowDraw,
+  };
+}
+
+function attackKey(weapon: string | null, k: number): ShadowPose {
+  {
+    {
       const lean = { slash: [0, -1, 2, 3, 2, 1], thrust: [0, -1, 4, 4, 2, 0], shoot: [0, 0, -1, -2, -1, 0], magic: [0, 0, -1, 2, 1, 0], punch: [0, 2, 0, 3, 2, 0] };
       const st = attackStyle(weapon), base = { ...P0, lean: lean[st][k], wind: k % 4, sway: 1 + (k >= 2 && k <= 4 ? 1 : 0) };
       switch (st) {
@@ -422,12 +470,6 @@ export function shadowPose(anim: CharAnim, f: number, n: number, weapon: string 
         }
       }
       return base;
-    }
-    case 'cast': return { ...P0, armsUp: 1, a: -1.4, cast: t, wind: f % 4, sway: -1, bob: f % 2 ? -1 : 0 };
-    case 'hit': { const h = Math.min(2, Math.round((f * 2) / Math.max(1, n - 1))); return { ...P0, lean: [-3, -2, -1][h], bob: [0, 1, 0][h], armL: 3, a: 0.7, hand: [-1, -1], sway: -1 }; }
-    case 'death': {
-      const j = Math.min(2, k);
-      return { ...P0, lean: [-2, -1, 0][j], bob: [0, 4, 7][j], armL: [2, 4, 5][j], a: [0.8, 1.4, 1.6][j], hand: [0, [-1, -3, -5][j]], sway: -1 };
     }
   }
 }
@@ -614,7 +656,7 @@ export function drawShadowFrame(ctx: CanvasRenderingContext2D, fx: CanvasRenderi
     if (!weapon) { fist(handX, handY); if (p.offReach) fist(offX, offY); }
   }
 
-  drawShadowHead(ctx, d, hx, hy, dir, phase);
+  drawShadowHead(ctx, d, hx, hy, dir, phase, !!p.blink);
 
   if (d.halo) { fx.strokeStyle = g; fx.lineWidth = 1; fx.beginPath(); fx.ellipse(hx + 0.5, hy - 12.5 + (phase & 1), 6, 2, 0, 0, Math.PI * 2); fx.stroke(); }
   if (shield && !back) {
@@ -702,40 +744,49 @@ type AnimTable = Record<CharAnim, { start: number; count: number }>;
 function dissolve(ctx: CanvasRenderingContext2D, amount: number) {
   const img = ctx.getImageData(0, 0, W, H), dt = img.data;
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
-    if (((x * 7 + y * 13) % 10) / 10 < amount) dt[(y * W + x) * 4 + 3] = 0;
+    if ((((Math.imul(x, 73856093) ^ Math.imul(y, 19349663)) >>> 0) % 1000) / 1000 < amount) dt[(y * W + x) * 4 + 3] = 0;
   }
   ctx.putImageData(img, 0, 0);
 }
 
 function renderFrame(d: ShadowDesign, weapon: string | null, shield: boolean, dir: Direction, anim: CharAnim, f: number, n: number): HTMLCanvasElement {
   const body = makeCanvas(W, H), fx = makeCanvas(W, H);
-  const k = key6(f, n);
-  if (anim === 'death' && k >= 3) {
-    // Collapse, then melt into a pool of shadow with two fading eyes.
+  // Death on a continuous 0..5 scale: stagger and buckle (0–2.5), topple to the ground (2.5–4),
+  // melt into a pool of shadow with two fading eyes (3.7–5).
+  const u = anim === 'death' ? (f * 5) / Math.max(1, n - 1) : 0;
+  if (anim === 'death' && u >= 2.5) {
+    const clamp = (x: number) => Math.max(0, Math.min(1, x));
     const fallen = makeCanvas(W, H), junk = makeCanvas(W, H);
     drawShadowFrame(fallen.ctx, junk.ctx, d, null, false, dir, shadowPose('death', 2, 3, weapon));
     addOutline(fallen.ctx, 0, 0, W, H, '#05050a');
-    const c = body.ctx;
-    if (k < 5) {
-      const ang = k === 3 ? 1.0 : 1.5;
+    const c = body.ctx, ang = 0.55 + clamp((u - 2.5) / 1.5) * 1.02, melt = clamp((u - 3.7) / 1.3), pool = clamp((u - 2.5) / 2.5);
+    if (melt < 0.95) {
       c.save(); c.translate(CX, FEET); c.rotate(dir === 'left' ? -ang : ang); c.translate(-CX, -FEET + 2); c.drawImage(fallen.canvas, 0, 0); c.restore();
-      if (k === 4) { dissolve(c, 0.45); c.globalCompositeOperation = 'source-over'; }
+      if (melt > 0) dissolve(c, melt * 0.8);
     }
-    const pool = k === 5 ? 1 : k === 4 ? 0.6 : 0.25;
-    ellipse(c, CX, FEET - 1, Math.round(6 + 7 * pool), 2 + Math.round(pool), K0);
-    if (k === 5) { ellipse(c, CX - 5, FEET - 2, 3, 2, K1); ellipse(c, CX + 4, FEET - 2, 4, 2, K0); }
+    ellipse(c, CX, FEET - 1, Math.round(5 + 8 * pool), 1 + Math.round(pool * 2), K0);
+    if (melt > 0.6) { ellipse(c, CX - 5, FEET - 2, 3, 2, K1); ellipse(c, CX + 4, FEET - 2, 4, 2, K0); }
+    // Wisps of shadow and a few motes of the job's glow drift up.
     for (const [x, y, r] of [[-6, 10, 2], [3, 16, 3], [8, 7, 2], [-1, 22, 2]] as [number, number, number][]) {
-      const rise = (k - 3) * 6;
-      fx.ctx.globalAlpha = 0.35 - (k - 3) * 0.08; ellipse(fx.ctx, CX + x, FEET - y - rise, r, r, K2); fx.ctx.globalAlpha = 1;
+      const rise = (u - 2.5) * 5;
+      fx.ctx.globalAlpha = Math.max(0, 0.38 - (u - 2.5) * 0.1); ellipse(fx.ctx, CX + x, FEET - y - rise, r, r, K2); fx.ctx.globalAlpha = 1;
     }
-    if (k === 5 && dir !== 'up') { fx.ctx.globalAlpha = 0.7; px(fx.ctx, CX - 3, FEET - 3, 2, 1, d.glow); px(fx.ctx, CX + 2, FEET - 3, 2, 1, d.glow); fx.ctx.globalAlpha = 1; }
+    if (melt > 0) for (const [x, y] of [[-7, 6], [5, 12], [0, 18], [9, 4], [-3, 25]] as [number, number][]) {
+      fx.ctx.globalAlpha = 0.85 * (1 - melt * 0.7); px(fx.ctx, CX + x, Math.round(FEET - y - melt * 14), 1, 2, shade(d.glow, 0.3)); fx.ctx.globalAlpha = 1;
+    }
+    if (melt > 0.6 && dir !== 'up') { fx.ctx.globalAlpha = 0.4 + 0.4 * melt; px(fx.ctx, CX - 3, FEET - 3, 2, 1, d.glow); px(fx.ctx, CX + 2, FEET - 3, 2, 1, d.glow); fx.ctx.globalAlpha = 1; }
+  } else if (anim === 'death' && n > 3) {
+    // Stagger back, knees buckle: ease between the three standing death keys.
+    const uj = Math.min(2, u * 0.8), j0 = Math.floor(uj), j1 = Math.min(2, j0 + 1);
+    const a = shadowPose('death', j0, 3, weapon), b = shadowPose('death', j1, 3, weapon);
+    drawShadowFrame(body.ctx, fx.ctx, d, weapon, shield, dir, lerpPose(a, b, uj - j0));
   } else {
     drawShadowFrame(body.ctx, fx.ctx, d, weapon, shield, dir, shadowPose(anim, f, n, weapon));
   }
   addOutline(body.ctx, 0, 0, W, H, '#05050a');
   const tint = (color: string) => { body.ctx.globalCompositeOperation = 'source-atop'; body.ctx.fillStyle = color; body.ctx.fillRect(0, 0, W, H); body.ctx.globalCompositeOperation = 'source-over'; };
   if (anim === 'hit') { const h = Math.min(2, Math.round((f * 2) / Math.max(1, n - 1))); if (h === 0) tint('rgba(255,255,255,0.55)'); else if (h === 1) tint('rgba(255,40,60,0.35)'); }
-  if (anim === 'death' && k === 0) tint('rgba(255,255,255,0.4)');
+  if (anim === 'death' && f === 0) tint('rgba(255,255,255,0.4)');
   body.ctx.drawImage(fx.canvas, 0, 0);
   return body.canvas;
 }

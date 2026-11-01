@@ -4,19 +4,59 @@
 // for right-facing. Layout: see MON_ANIMS in spriteMeta.ts.
 import type { MonsterDef } from '../../core/types';
 import { addOutline, ellipse, hexToRgb, makeCanvas, poly, px } from './canvas';
-import { overrideCanvas } from './spriteOverrides';
+import { overrideCanvas, spriteOverride } from './spriteOverrides';
 import { MON_ANIMS, MON_SHEET_COLS, type MonAnim } from './spriteMeta';
 
-interface MPose { sx: number; sy: number; dx: number; dy: number; legs: number; open: number; tint: string | null; alpha: number; flat: number; wing: number; t: number }
-const P0: MPose = { sx: 1, sy: 1, dx: 0, dy: 0, legs: 0, open: 0, tint: null, alpha: 1, flat: 0, wing: 0, t: 0 };
+interface MPose {
+  sx: number; sy: number; dx: number; dy: number; legs: number; open: number; tint: string | null; alpha: number; flat: number; wing: number; t: number;
+  /** Tilt about the feet (radians; + leans back, away from the facing side). */
+  rot: number;
+  /** Slash arc in front (0..1), impact spark, dissolve into motes (0..1). */
+  swoosh: number; spark: boolean; melt: number;
+}
+const P0: MPose = { sx: 1, sy: 1, dx: 0, dy: 0, legs: 0, open: 0, tint: null, alpha: 1, flat: 0, wing: 0, t: 0, rot: 0, swoosh: 0, spark: false, melt: 0 };
 
+/**
+ * Key poses per animation (frame counts in MON_ANIMS):
+ *  idle 6  — slow breathing (squash and stretch), a slight sway;
+ *  walk 8  — a hop per step: squash on landing, stretch in the air, leaning into the move;
+ *  attack 7 — wind-up (coil back), lunge, impact (slash arc + spark), follow-through, recover;
+ *  hit 3   — white flash and recoil, red flash, settle;
+ *  death 7 — flash and stagger, rear up, topple, collapse, dissolve into glowing motes.
+ */
 function pose(anim: MonAnim, f: number): MPose {
   switch (anim) {
-    case 'idle': return { ...P0, sy: f ? 0.94 : 1, sx: f ? 1.05 : 1, wing: f, t: f };
-    case 'walk': return { ...P0, dy: [0, -2, 0, -1][f], legs: [1, 0, -1, 0][f], sy: [1, 1.05, 1, 0.97][f], wing: f % 2, t: f };
-    case 'attack': return [{ ...P0, dx: 3, sy: 0.9, open: 0.5 }, { ...P0, dx: -6, sx: 1.1, open: 1, t: 1 }, { ...P0, dx: -2, open: 0.3, t: 2 }][f];
-    case 'hit': return { ...P0, dx: 3, tint: 'rgba(255,255,255,0.55)' };
-    case 'death': return { ...P0, flat: [0.25, 0.55, 0.85][f], alpha: [0.9, 0.7, 0.45][f], tint: 'rgba(20,0,10,0.3)', t: f };
+    case 'idle': {
+      const ph = (f / 6) * Math.PI * 2, br = (1 - Math.cos(ph)) / 2;
+      return { ...P0, sy: 1 - 0.06 * br, sx: 1 + 0.045 * br, rot: 0.025 * Math.sin(ph), wing: f % 2, t: f % 3 };
+    }
+    case 'walk': {
+      const ph = (f / 8) * Math.PI * 2, hop = Math.abs(Math.sin(ph));
+      return { ...P0, dy: -Math.round(hop * 3), legs: Math.sin(ph) * 1.6, sy: 0.92 + 0.12 * hop, sx: 1.06 - 0.08 * hop, rot: -0.07 + 0.03 * Math.cos(ph * 2), wing: f % 2, t: f % 3 };
+    }
+    case 'attack': return [
+      { ...P0, dx: 2, rot: 0.08, sy: 0.9, sx: 1.07, open: 0.2 },
+      { ...P0, dx: 3, rot: 0.13, sy: 0.84, sx: 1.1, open: 0.45, t: 1 },
+      { ...P0, dx: -4, rot: -0.1, sy: 1.05, sx: 1.1, open: 1, swoosh: 0.45, t: 1 },
+      { ...P0, dx: -6, rot: -0.14, sy: 0.97, sx: 1.12, open: 1, swoosh: 1, spark: true, t: 2 },
+      { ...P0, dx: -5, rot: -0.08, open: 0.7, swoosh: 0.4, t: 2 },
+      { ...P0, dx: -2, rot: -0.02, sy: 1.03, open: 0.3, t: 1 },
+      { ...P0, dx: -1, rot: 0.01, sy: 0.98 },
+    ][f];
+    case 'hit': return [
+      { ...P0, dx: 3, rot: 0.12, sx: 0.92, sy: 1.06, tint: 'rgba(255,255,255,0.65)' },
+      { ...P0, dx: 2, rot: 0.07, sx: 0.96, tint: 'rgba(255,50,70,0.32)' },
+      { ...P0, dx: 1, rot: 0.02 },
+    ][f];
+    case 'death': return [
+      { ...P0, dx: 2, rot: 0.1, tint: 'rgba(255,255,255,0.55)' },
+      { ...P0, dx: 3, dy: -2, rot: 0.2, sy: 1.06, tint: 'rgba(30,0,20,0.2)', t: 1 },
+      { ...P0, dx: 3, rot: 0.32, sy: 0.96, tint: 'rgba(30,0,20,0.3)', t: 2 },
+      { ...P0, dx: 3, rot: 0.36, flat: 0.35, tint: 'rgba(30,0,20,0.35)', alpha: 0.95 },
+      { ...P0, dx: 2, rot: 0.3, flat: 0.6, melt: 0.25, tint: 'rgba(30,0,20,0.35)', alpha: 0.9 },
+      { ...P0, dx: 2, rot: 0.24, flat: 0.8, melt: 0.55, alpha: 0.75 },
+      { ...P0, dx: 2, rot: 0.2, flat: 0.9, melt: 0.85, alpha: 0.55 },
+    ][f];
   }
 }
 
@@ -410,10 +450,39 @@ function rimLight(ctx: Ctx, w: number, h: number, glow: string) {
   ctx.putImageData(img, 0, 0);
 }
 
+/** Sheets drawn for the old 13-frame layout (idle 2, walk 4, attack 3, hit 1, death 3) still work:
+ *  their frames are spread over the longer clips. */
+const OLD_LAYOUT: Record<MonAnim, [number, number]> = { idle: [0, 2], walk: [2, 4], attack: [6, 3], hit: [9, 1], death: [10, 3] };
+function fromOldLayout(img: HTMLCanvasElement, w: number, h: number): HTMLCanvasElement {
+  const { canvas, ctx } = makeCanvas(w * MON_SHEET_COLS, h);
+  const sw = img.width / 13;
+  for (const [anim, meta] of Object.entries(MON_ANIMS) as [MonAnim, typeof MON_ANIMS[MonAnim]][]) {
+    const [s0, sn] = OLD_LAYOUT[anim];
+    for (let f = 0; f < meta.count; f++) ctx.drawImage(img, (s0 + Math.min(sn - 1, Math.floor((f * sn) / meta.count))) * sw, 0, sw, img.height, (meta.start + f) * w, 0, w, h);
+  }
+  return canvas;
+}
+
+/** Erases a growing share of the body's pixels (a fixed pattern, so frames follow each other). */
+function melt(ctx: Ctx, w: number, h: number, amount: number) {
+  const img = ctx.getImageData(0, 0, w, h), d = img.data;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    // Hashed noise (no stripes), the top going first.
+    const n = (((Math.imul(x, 73856093) ^ Math.imul(y, 19349663)) >>> 0) % 1000) / 1000;
+    if (n < amount * 1.35 - (y / h) * 0.35) d[(y * w + x) * 4 + 3] = 0;
+  }
+  ctx.putImageData(img, 0, 0);
+}
+
 export function generateMonsterSheet(def: MonsterDef): HTMLCanvasElement {
   const { w, h, shape } = def.art;
-  const drawn = overrideCanvas(`sprites/monster/${def.id}`, w * MON_SHEET_COLS, h);
-  if (drawn) return drawn;
+  const drawn = spriteOverride(`sprites/monster/${def.id}`);
+  if (drawn) {
+    // A sheet drawn in the Studio: in the old 13-frame layout when its shape says so, otherwise the current one.
+    const ratio = drawn.width / drawn.height;
+    const old = Math.abs(ratio - (13 * w) / h) < Math.abs(ratio - (MON_SHEET_COLS * w) / h);
+    return old ? fromOldLayout(overrideCanvas(`sprites/monster/${def.id}`, w * 13, h)!, w, h) : overrideCanvas(`sprites/monster/${def.id}`, w * MON_SHEET_COLS, h)!;
+  }
   const P = palette(def);
   const { canvas, ctx } = makeCanvas(w * MON_SHEET_COLS, h);
   const paint = painters[shape] ?? painters.slime;
@@ -421,30 +490,56 @@ export function generateMonsterSheet(def: MonsterDef): HTMLCanvasElement {
   for (const [anim, meta] of Object.entries(MON_ANIMS) as [MonAnim, typeof MON_ANIMS[MonAnim]][]) {
     for (let f = 0; f < meta.count; f++) {
       const p = pose(anim, f);
-      tmp.ctx.clearRect(0, 0, w, h);
-      tmp.ctx.save();
-      if (p.flat) {
-        tmp.ctx.translate(w / 2, h - 3);
-        tmp.ctx.scale(1 + p.flat * 0.3, 1 - p.flat * 0.7);
-        tmp.ctx.translate(-w / 2, -(h - 3));
-      }
+      const c = tmp.ctx;
+      c.clearRect(0, 0, w, h);
+      c.save();
+      // Tilt and squash about the feet.
+      c.translate(w / 2, h - 3);
+      if (p.rot) c.rotate(p.rot);
+      if (p.flat) c.scale(1 + p.flat * 0.3, 1 - p.flat * 0.7);
+      c.translate(-w / 2, -(h - 3));
       // Scaled art (bosses that reuse a regular body type): paint at 1/scale size, magnified about the feet.
       const k = def.art.scale ?? 1;
-      if (k !== 1) { tmp.ctx.translate(w / 2, h - 2); tmp.ctx.scale(k, k); tmp.ctx.translate(-w / (2 * k), -(h / k - 2 / k)); }
-      paint(tmp.ctx, k !== 1 ? Math.round(w / k) : w, k !== 1 ? Math.round(h / k) : h, P, p);
-      tmp.ctx.restore();
-      rimLight(tmp.ctx, w, h, P.g);
-      addOutline(tmp.ctx, 0, 0, w, h, '#05040a');
-      // Ground shadow under the outline pass (so it gets no outline of its own).
-      tmp.ctx.globalCompositeOperation = 'destination-over';
-      ellipse(tmp.ctx, w / 2, h - 4, Math.max(6, w * 0.3), 3, 'rgba(0,0,0,0.3)');
-      tmp.ctx.globalCompositeOperation = 'source-over';
+      if (k !== 1) { c.translate(w / 2, h - 2); c.scale(k, k); c.translate(-w / (2 * k), -(h / k - 2 / k)); }
+      paint(c, k !== 1 ? Math.round(w / k) : w, k !== 1 ? Math.round(h / k) : h, P, p);
+      c.restore();
+      rimLight(c, w, h, P.g);
+      addOutline(c, 0, 0, w, h, '#05040a');
       if (p.tint) {
-        tmp.ctx.globalCompositeOperation = 'source-atop';
-        tmp.ctx.fillStyle = p.tint;
-        tmp.ctx.fillRect(0, 0, w, h);
-        tmp.ctx.globalCompositeOperation = 'source-over';
+        c.globalCompositeOperation = 'source-atop';
+        c.fillStyle = p.tint;
+        c.fillRect(0, 0, w, h);
+        c.globalCompositeOperation = 'source-over';
       }
+      if (p.melt) {
+        melt(c, w, h, p.melt);
+        // Glowing motes rising from the body as it fades.
+        for (let i = 0; i < 9; i++) {
+          const mx = w * (0.2 + ((i * 37) % 60) / 100), my = h - 6 - ((i * 23) % 20) - p.melt * h * 0.35;
+          c.globalAlpha = 0.9 * (1 - p.melt * 0.6);
+          px(c, mx, my, i % 3 ? 1 : 2, i % 3 ? 1 : 2, i % 2 ? P.g : P.gl);
+        }
+        c.globalAlpha = 1;
+      }
+      // Slash arc in front (the sheet faces left) and a spark at the moment of impact.
+      if (p.swoosh) {
+        const r = Math.min(w, h) * 0.42, cx = w / 2 + p.dx * 0.5, cy = h * 0.55;
+        c.lineCap = 'round';
+        for (const [lw, col, al] of [[4, P.g, 0.25], [2, P.g, 0.7], [1, P.gl, 1]] as const) {
+          c.globalAlpha = al * p.swoosh; c.strokeStyle = col; c.lineWidth = lw;
+          c.beginPath(); c.arc(cx, cy, r, Math.PI * 0.62, Math.PI * (0.62 + 0.75 * p.swoosh)); c.stroke();
+        }
+        c.globalAlpha = 1;
+      }
+      if (p.spark) {
+        const sx = Math.max(3, w * 0.12), sy = h * 0.55;
+        c.globalAlpha = 0.35; ellipse(c, sx, sy, 4, 4, P.g); c.globalAlpha = 1;
+        px(c, sx - 4, sy, 9, 1, P.gl); px(c, sx, sy - 4, 1, 9, P.gl); px(c, sx - 1, sy - 1, 3, 3, '#ffffff');
+      }
+      // Ground shadow last, underneath (it shrinks as the body melts away).
+      c.globalCompositeOperation = 'destination-over';
+      ellipse(c, w / 2 + p.dx * 0.3, h - 4, Math.max(6, w * 0.3 * (1 - p.melt * 0.5) * p.sx), 3, `rgba(0,0,0,${0.3 * (1 - p.melt * 0.6)})`);
+      c.globalCompositeOperation = 'source-over';
       ctx.globalAlpha = p.alpha;
       ctx.drawImage(tmp.canvas, (meta.start + f) * w, 0);
       ctx.globalAlpha = 1;
