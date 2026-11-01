@@ -131,7 +131,7 @@ export class WindowManager {
       if ((e.target as HTMLElement).classList.contains('x')) return;
       const scale = this.app.uiScale;
       const sx = e.clientX, sy = e.clientY, ox = el.offsetLeft, oy = el.offsetTop;
-      const move = (ev: PointerEvent) => { el.style.left = `${Math.max(0, Math.min(1180, ox + (ev.clientX - sx) / scale))}px`; el.style.top = `${Math.max(0, Math.min(680, oy + (ev.clientY - sy) / scale))}px`; };
+      const move = (ev: PointerEvent) => { el.style.left = `${Math.max(0, Math.min(this.app.frameW - 100, ox + (ev.clientX - sx) / scale))}px`; el.style.top = `${Math.max(0, Math.min(this.app.frameH - 40, oy + (ev.clientY - sy) / scale))}px`; };
       const up = () => { document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', up); document.removeEventListener('pointercancel', up); };
       document.addEventListener('pointermove', move);
       document.addEventListener('pointerup', up);
@@ -147,6 +147,13 @@ export class WindowManager {
     w.el.classList.remove('hidden');
     w.el.style.zIndex = String(++this.z);
     w.render();
+    // Keep the window inside the screen (phones have a shorter frame; windows open centred there).
+    const fw = this.app.frameW, fh = this.app.frameH, el = w.el;
+    if (this.app.mobile) { el.style.left = `${Math.max(4, Math.round((fw - el.offsetWidth) / 2))}px`; el.style.top = '4px'; }
+    else {
+      if (el.offsetLeft + el.offsetWidth > fw) el.style.left = `${Math.max(0, fw - el.offsetWidth - 4)}px`;
+      if (el.offsetTop + Math.min(el.offsetHeight, 200) > fh) el.style.top = `${Math.max(0, fh - el.offsetHeight - 4)}px`;
+    }
     audio.play('ui_open');
   }
   close(id: WindowId) {
@@ -181,8 +188,8 @@ export class WindowManager {
     this.tooltip.classList.remove('hidden');
     const r = this.root.getBoundingClientRect(), s = this.app.uiScale;
     let x = (e.clientX - r.left) / s + 16, y = (e.clientY - r.top) / s + 12;
-    if (x > 1280 - 290) x -= 310;
-    if (y > 720 - 220) y -= 200;
+    if (x > this.app.frameW - 290) x -= 310;
+    if (y > this.app.frameH - 220) y = Math.max(4, y - 200);
     this.tooltip.style.left = `${x}px`; this.tooltip.style.top = `${y}px`;
   }
   hideTooltip() { this.tooltip.classList.add('hidden'); }
@@ -587,12 +594,14 @@ export class WindowManager {
               h('div', { class: 'sd' }, sk.description),
               h('div', { class: 'sd' }, timing),
               reqs.length ? h('div', { class: 'req' }, `Requires: ${reqs.join(', ')}`) : null),
-            h('button', { class: 'btn small', disabled: !chk.ok, title: chk.ok ? 'Learn / level up' : chk.error, onclick: () => w.learn(sid) }, '+'));
+            h('div', { class: 'skbtns' },
+              lvl > 0 && sk.kind !== 'passive' ? h('button', { class: 'btn small sk-hot', title: 'Put on the hotbar', onclick: () => this.app.assignHotbar(-1, { type: 'skill', id: sid }) }, '⚡') : null,
+              h('button', { class: 'btn small', disabled: !chk.ok, title: chk.ok ? 'Learn / level up' : chk.error, onclick: () => w.learn(sid) }, '+')));
         }));
     });
     setChildren(body,
       h('div', { class: 'row' }, h('span', { class: 'gold' }, `Skill Points: ${c.skillPoints}`), h('span', { class: 'spacer' }),
-        h('span', { class: 'muted', style: 'font-size:11px' }, 'Drag learned skills onto the hotbar')),
+        h('span', { class: 'muted', style: 'font-size:11px' }, 'Drag learned skills onto the hotbar, or press ⚡')),
       h('div', { style: 'width:470px' }, sections));
   }
 

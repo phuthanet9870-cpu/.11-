@@ -127,6 +127,17 @@ The GM window (👑) opens on **🎒 Items**: nine category tabs with icons and 
 - **Skills (173):** a framed badge — gold with corner studs for ultimates, teal for buffs, steel for actives, slate for passives — around a still of the skill's own signature effect (passives get a calm motif picked from their id), zoomed to fill the badge. 0 duplicates.
 - Icons drawn in Studio → Sprites still replace the generated ones.
 
+## Phones (landscape) and the Android app
+
+- **Phone layout** (touch screen with a short side ≤ 620 px; the *Touch controls* setting turns it off): the screen is laid out for landscape thumbs at a larger size instead of shrinking the desktop layout.
+  - Left thumb: a floating joystick — touch anywhere on the left part of the screen and drag.
+  - Right thumb: a big ⚔ attack button with the hotbar as a ring of 8 skill buttons around it; ⇄ swaps to the second page (slots 11–18). 🎯 next target, ✋ pick up, 💬 talk.
+  - Top bar: ☰ menu (opens all windows as a big icon grid), ✉ chat, ＋/－ zoom (pinch also zooms), AUTO and its settings.
+  - Compact status (HP/MP/EXP) and minimap; the last chat lines fade in on the left. Windows open centred and fit the screen; long-press a hotbar button to remove it (asks first); ⚡ in the skill window puts a skill on the hotbar.
+  - Holding the phone upright shows a "turn your phone sideways" screen.
+- **Android app (APK)**: `npm run build:apk` makes `dist-android/Veyloria.apk` (and copies it to `releases/`) — the one-file game in a full-screen landscape WebView (no Android Studio; it uses Ubuntu's `aapt`, `dalvik-exchange`, `zipalign`, `apksigner` and `android-sdk-platform-23`). Back closes the top window, then the menu, then leaves; the game saves when the app goes to the background. Saves stay on the phone. The download is `releases/Veyloria.apk` in the repository.
+  - The APK is signed with `android/veyloria.keystore`, which is not in the repository (signing keys stay private); the build script makes a new one if it is missing. An APK signed with a different key will not install over the old app: uninstall first. Android asks to allow installing from your browser/files app the first time.
+
 ## Training Grounds and Shadow Arena
 
 - The two are separate maps with separate NPCs in Aurelion (next to the Arena Master): **Drillmaster Brann** warps for free to the **Training Grounds** (64×44) and back; **Gatekeeper Varr** warps to the **Shadow Arena** (60×46) and back.
@@ -301,7 +312,7 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 - Name labels can overlap when a player stands right next to an NPC or monster.
 - The production JS bundle is about 1.5 MB (mostly Phaser), so Vite prints a chunk-size note.
 - Performance has only been checked with the Phase 1 entity counts (about 40 monsters per map). It hasn't been load-tested.
-- The layout targets desktop 1280×720 and scales to fit the window. Touch controls were checked in a phone-sized emulated browser (joystick, pinch zoom), not on real phones; on small screens the UI is small, and the hotbar, menu and windows are still mouse-sized.
+- The desktop layout targets 1280×720 and scales to fit the window; phones get their own landscape layout. The phone layout and controls were checked in an emulated phone browser (Chromium, 800×360 and 844×390), and the APK was built and its manifest checked, but neither was tried on a real phone or Android emulator here.
 - Trader Moss's prices are calculated in each game client (his stock is the same for everyone, from the clock): "player demand" is what *you* sold recently, not what every player sold, because characters are not stored on the server. Market Hall prices and sales are real and shared, but the server trusts the client about the item it lists (same trust model as trading).
 
 ## Next phase

@@ -96,7 +96,7 @@ export class Hud {
       ...MENU.map(([id, icon, label, elId]) => h('button', {
         class: 'mbtn', id: elId, dataset: { win: id },
         title: id === 'admin' ? 'GM / Admin tools (F8 or /gm)' : id === 'auto' ? `Auto Farm / Auto Quest (${this.app.keyLabel('auto')})` : `${label} (${this.app.keyLabel(id)})`,
-        onclick: () => this.app.windows.toggle(id as never),
+        onclick: () => { this.app.windows.toggle(id as never); if (this.app.mobile) this.setMenuCollapsed(true); },
       }, h('span', { class: 'ico' }, uiMenuIcon(id) ? h('img', { src: uiMenuIcon(id)!, alt: '', style: 'width:28px;height:28px;image-rendering:pixelated' }) : icon), h('span', { class: 'lbl' }, label))));
     this.menuEl = menu;
     this.zoomSlider.addEventListener('input', () => this.app.setZoom(Number(this.zoomSlider.value) / 100));
@@ -132,7 +132,7 @@ export class Hud {
     }
     this.buildHotbar();
     this.showZoom(this.app.settings.zoom ?? 1.5);
-    this.setMenuCollapsed(!!this.app.settings.menuCollapsed);
+    this.setMenuCollapsed(this.app.settings.menuCollapsed ?? this.app.mobile);
   }
 
   /** The icon menu folds away with the Menu button (state saved). */
@@ -237,7 +237,13 @@ export class Hud {
         h('div', { class: 'cd' }),
         h('span', { class: 'cdt' }));
       el.addEventListener('click', () => this.app.useHotbar(i));
-      el.addEventListener('contextmenu', (e) => { e.preventDefault(); if (w) { w.char.hotbar[i] = null; this.buildHotbar(); } });
+      el.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        if (!w || !w.char.hotbar[i]) return;
+        // Phones: a long press asks first, so a slot is not cleared by accident.
+        if (this.app.mobile) this.app.windows.showModal('Hotbar', 'Remove this from the hotbar?', [['Remove', () => { w.char.hotbar[i] = null; this.buildHotbar(); }], ['Cancel', () => undefined]], true);
+        else { w.char.hotbar[i] = null; this.buildHotbar(); }
+      });
       el.addEventListener('dragover', (e) => { e.preventDefault(); el.classList.add('over'); });
       el.addEventListener('dragleave', () => el.classList.remove('over'));
       el.addEventListener('drop', (e) => {

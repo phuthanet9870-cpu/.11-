@@ -2,7 +2,7 @@
   "name": "veyloria-online",
   "version": "0.1.0",
   "private": true,
-  "description": "Veyloria Online — 2D Fantasy MMORPG (Phase 1: playable single-player foundation)",
+  "description": "Veyloria Online \u2014 2D Fantasy MMORPG (Phase 1: playable single-player foundation)",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -19,7 +19,8 @@
     "server": "node scripts/run-ts.mjs ./server/main.ts",
     "typecheck:server": "tsc --noEmit -p server",
     "test:online": "npm run build && node tests/e2e/online-e2e.mjs",
-    "build:portable": "npm run build && node scripts/build-portable.mjs"
+    "build:portable": "npm run build && node scripts/build-portable.mjs",
+    "build:apk": "npm run build:portable && bash android/build-apk.sh && mkdir -p releases && cp dist-android/Veyloria.apk releases/Veyloria.apk"
   },
   "license": "UNLICENSED",
   "dependencies": {

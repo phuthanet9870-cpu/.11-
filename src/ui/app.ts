@@ -61,6 +61,16 @@ export class App implements GameHost {
     setCharacterStyle(this.settings.characterStyle ?? 'shadow');
     this.fitToWindow();
     window.addEventListener('resize', () => this.fitToWindow());
+    window.addEventListener('orientationchange', () => setTimeout(() => this.fitToWindow(), 250));
+    // Android app: the Back key closes the top window (or the menu) first; pausing saves the game.
+    const w = window as unknown as { veyloriaBack: () => boolean; veyloriaPause: () => void };
+    w.veyloriaBack = () => {
+      if (this.windows.closeTop()) return true;
+      if (this.hud && !this.settings.menuCollapsed && this.mobile) { this.hud.setMenuCollapsed(true); return true; }
+      return false;
+    };
+    w.veyloriaPause = () => { if (this.world) this.saveNow(false); };
+    document.addEventListener('visibilitychange', () => { if (document.hidden) w.veyloriaPause(); });
     window.addEventListener('keydown', (e) => this.onKeyDown(e));
     window.addEventListener('keyup', (e) => this.onKeyUp(e));
     window.addEventListener('blur', () => { this.held.clear(); this.updateMoveDir(); });
@@ -123,10 +133,30 @@ export class App implements GameHost {
     if (scene && scene.scene.isActive()) scene.refreshPlayerLook();
   }
 
-  private fitToWindow() {
+  /** Logical size of the UI frame (1280×720 on desktop; on phones it follows the screen's shape). */
+  frameW = 1280;
+  frameH = 720;
+  /** Phone layout: touch controls on and a small screen (landscape phones). */
+  get mobile(): boolean {
+    return (this.settings.touchControls ?? isTouchDevice()) && Math.min(window.innerWidth, window.innerHeight) <= 620;
+  }
+
+  fitToWindow() {
     const frame = document.getElementById('frame')!;
-    this.uiScale = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+    const mob = this.mobile, iw = window.innerWidth, ih = window.innerHeight;
+    document.body.classList.toggle('mobile', mob);
+    document.body.classList.toggle('portrait', mob && ih > iw);
+    let W = 1280, H = 720;
+    if (mob) {
+      // In game the frame is 440 units tall (big, thumb-sized controls); menus get a bit more room.
+      H = this.hud ? 440 : 600;
+      W = Math.max(Math.round(H * 1.3), Math.round(iw * H / ih));
+    }
+    this.frameW = W; this.frameH = H;
+    this.uiScale = Math.min(iw / W, ih / H);
+    frame.style.width = `${W}px`; frame.style.height = `${H}px`;
     frame.style.transform = `scale(${this.uiScale})`;
+    if (this.game?.scale && (this.game.scale.width !== W || this.game.scale.height !== H)) this.game.scale.resize(W, H);
     this.game?.scale.refresh();
   }
 
@@ -184,12 +214,14 @@ export class App implements GameHost {
     this.hud?.root.remove();
     this.hud = new Hud(this);
     this.uiRoot.insertBefore(this.hud.root, this.uiRoot.firstChild);
+    this.fitToWindow();
     this.hud.resetMinimap();
     this.game.scene.stop('Menu');
     this.game.scene.start('Game', { host: this });
     this.hud.banner(this.world.map.def.name, `Welcome, ${c.name}`);
     this.hud.log(`Welcome to Veyloria, ${c.name}! Click to move, click monsters to attack. Talk to NPCs marked with ! for quests.`, 'system');
-    this.hud.log('Keys: I inventory · E equipment · C status · K skills · Q quests · M map · O settings · 1-0 hotbar · Tab target · Z loot · F talk', 'system');
+    if (this.mobile) this.hud.log('Left thumb: move · ⚔ attack · skills around ⚔ (⇄ next page) · 🎯 target · ✋ loot · 💬 talk · ☰ menu · ✉ chat · pinch to zoom', 'system');
+    else this.hud.log('Keys: I inventory · E equipment · C status · K skills · Q quests · M map · O settings · 1-0 hotbar · Tab target · Z loot · F talk', 'system');
     this.lastAutosave = performance.now();
     this.applyTouch();
     if (dailyStatus(c, this.world.now()).canClaim) this.windows.open('daily');
@@ -219,6 +251,9 @@ export class App implements GameHost {
     this.game.scene.start('Menu');
     this.hud?.root.remove();
     this.hud = null;
+    this.touch?.root.remove();
+    this.touch = null;
+    this.fitToWindow();
     this.slot = -1;
     this.showSelect();
   }
@@ -263,6 +298,8 @@ export class App implements GameHost {
       if (on && !this.touch.root.parentElement) this.hud.root.appendChild(this.touch.root);
       if (!on) this.touch.root.remove();
     }
+    this.fitToWindow();
+    this.touch?.refresh();
   }
 
   // ---------------------------------------------------------------- GameHost

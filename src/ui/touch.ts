@@ -1,6 +1,11 @@
-// Touch controls for phones and tablets: a virtual joystick, action buttons and pinch zoom.
-// Shown on touch screens (coarse pointer) or when turned on in the settings. Tap-to-move and
-// tapping monsters/NPCs already work through the game's normal pointer input.
+// Touch controls for phones and tablets. Shown on touch screens (coarse pointer) or when turned on
+// in the settings. On phones (see App.mobile) the HUD switches to a landscape mobile layout:
+//  - a floating joystick: put a thumb anywhere on the left part of the screen and drag;
+//  - a big attack button at the bottom right with the hotbar as a ring of skill buttons around it
+//    (two pages of 8, swapped with the ⇄ button);
+//  - quick buttons: next target, pick up, talk, AUTO;
+//  - the icon menu as a drawer (☰), pinch to zoom.
+// Tap-to-move and tapping monsters/NPCs still work through the game's normal pointer input.
 
 import type { App } from './app';
 import { h } from './dom';
@@ -14,22 +19,51 @@ export function isTouchDevice(): boolean {
 export class TouchControls {
   readonly root: HTMLElement;
   private knob: HTMLElement;
-  private pad: HTMLElement;
+  private base: HTMLElement;
+  private zone: HTMLElement;
   private padId: number | null = null;
+  private origin = { x: 0, y: 0 };
+  private page = 0;
 
   constructor(private app: App) {
     this.knob = h('div', { class: 'tc-knob' });
-    this.pad = h('div', { class: 'tc-pad', id: 'tc-pad' }, this.knob);
-    const btn = (id: string, label: string, title: string, fn: () => void) =>
-      h('button', { class: 'tc-btn', id, title, onpointerdown: (e: PointerEvent) => { e.preventDefault(); e.stopPropagation(); fn(); } }, label);
+    this.base = h('div', { class: 'tc-pad', id: 'tc-pad' }, this.knob);
+    this.zone = h('div', { class: 'tc-zone', id: 'tc-zone' }, this.base);
+    const btn = (id: string, cls: string, label: string, title: string, fn: () => void) =>
+      h('button', { class: `tc-btn ${cls}`, id, title, onpointerdown: (e: PointerEvent) => { e.preventDefault(); e.stopPropagation(); (e.currentTarget as HTMLElement).classList.add('down'); fn(); },
+        onpointerup: (e: PointerEvent) => (e.currentTarget as HTMLElement).classList.remove('down'),
+        onpointerleave: (e: PointerEvent) => (e.currentTarget as HTMLElement).classList.remove('down') }, label);
     this.root = h('div', { class: 'touch-controls passthrough', id: 'touch-controls' },
-      this.pad,
+      this.zone,
       h('div', { class: 'tc-actions' },
-        btn('tc-attack', '⚔', 'Attack the nearest monster', () => this.attackNearest()),
-        btn('tc-talk', '💬', 'Talk to the nearest NPC', () => this.app.interactNearest()),
-        btn('tc-loot', '✋', 'Pick up the nearest item', () => this.app.world?.pickupNearest()),
-        btn('tc-target', '🎯', 'Next target', () => this.app.world?.targetNearestMonster())));
-    this.bindPad();
+        btn('tc-attack', 'tc-big', '⚔', 'Attack the nearest monster', () => this.attackNearest()),
+        btn('tc-target', 'tc-small', '🎯', 'Next target', () => this.app.world?.targetNearestMonster()),
+        btn('tc-loot', 'tc-small', '✋', 'Pick up the nearest item', () => this.app.world?.pickupNearest()),
+        btn('tc-talk', 'tc-small', '💬', 'Talk to the nearest NPC', () => this.app.interactNearest()),
+        btn('tc-page', 'tc-small', '⇄', 'Other hotbar page', () => this.setPage(1 - this.page))),
+      h('div', { class: 'tc-top' },
+        btn('tc-menu', 'tc-pill', '☰', 'Menu', () => this.app.hud?.setMenuCollapsed(!this.app.settings.menuCollapsed)),
+        btn('tc-chat', 'tc-pill', '✉', 'Chat', () => this.toggleChat()),
+        btn('tc-zin', 'tc-pill', '＋', 'Zoom in', () => this.app.zoomBy(1)),
+        btn('tc-zout', 'tc-pill', '－', 'Zoom out', () => this.app.zoomBy(-1))));
+    this.bindStick();
+  }
+
+  /** Re-applies the layout (after the settings or the screen size changed). */
+  refresh() {
+    document.querySelector('#hud .hotbar')?.classList.toggle('page2', this.page === 1);
+  }
+
+  private setPage(p: number) {
+    this.page = p;
+    this.refresh();
+  }
+
+  private toggleChat() {
+    const chat = document.querySelector('#hud .chat');
+    const on = !chat?.classList.contains('open');
+    chat?.classList.toggle('open', on);
+    if (on) (chat?.querySelector('input') as HTMLInputElement | null)?.focus();
   }
 
   private attackNearest() {
@@ -39,34 +73,44 @@ export class TouchControls {
     if (t) w.attack(t.id);
   }
 
-  private bindPad() {
-    const pad = this.pad;
+  /** Floating joystick: the stick appears where the thumb lands in the zone and follows its drag. */
+  private bindStick() {
+    const zone = this.zone, base = this.base;
+    const scale = () => this.app.uiScale || 1;
+    const R = 46;
+    const local = (e: PointerEvent) => { const r = zone.getBoundingClientRect(); return { x: (e.clientX - r.left) / scale(), y: (e.clientY - r.top) / scale() }; };
     const update = (e: PointerEvent) => {
-      const r = pad.getBoundingClientRect();
-      const cx = r.left + r.width / 2, cy = r.top + r.height / 2, rad = r.width / 2;
-      let dx = (e.clientX - cx) / rad, dy = (e.clientY - cy) / rad;
+      const p = local(e);
+      let dx = (p.x - this.origin.x) / R, dy = (p.y - this.origin.y) / R;
       const len = Math.hypot(dx, dy);
       if (len > 1) { dx /= len; dy /= len; }
-      this.knob.style.transform = `translate(${dx * 38}px, ${dy * 38}px)`;
-      // Small dead zone; otherwise move in the stick's direction.
-      if (len < 0.2) this.app.world?.setMoveDir(0, 0);
+      this.knob.style.transform = `translate(${dx * R}px, ${dy * R}px)`;
+      if (len < 0.18) this.app.world?.setMoveDir(0, 0);
       else this.app.world?.setMoveDir(dx, dy);
     };
-    pad.addEventListener('pointerdown', (e) => {
+    zone.addEventListener('pointerdown', (e) => {
+      if (this.padId !== null) return;
       e.preventDefault();
       this.padId = e.pointerId;
-      pad.setPointerCapture?.(e.pointerId);
+      try { zone.setPointerCapture?.(e.pointerId); } catch { /* synthetic pointer */ }
+      const p = local(e);
+      // On phones the stick floats to the thumb; on tablets it stays where it is drawn.
+      if (this.app.mobile) { this.origin = p; base.style.left = `${p.x}px`; base.style.top = `${p.y}px`; }
+      else { const r = base.getBoundingClientRect(), zr = zone.getBoundingClientRect(); this.origin = { x: (r.left + r.width / 2 - zr.left) / scale(), y: (r.top + r.height / 2 - zr.top) / scale() }; }
+      base.classList.add('active');
       update(e);
     });
-    pad.addEventListener('pointermove', (e) => { if (e.pointerId === this.padId) update(e); });
+    zone.addEventListener('pointermove', (e) => { if (e.pointerId === this.padId) update(e); });
     const release = (e: PointerEvent) => {
       if (e.pointerId !== this.padId) return;
       this.padId = null;
       this.knob.style.transform = '';
+      base.classList.remove('active');
+      if (this.app.mobile) { base.style.left = ''; base.style.top = ''; }
       this.app.world?.setMoveDir(0, 0);
     };
-    pad.addEventListener('pointerup', release);
-    pad.addEventListener('pointercancel', release);
+    zone.addEventListener('pointerup', release);
+    zone.addEventListener('pointercancel', release);
   }
 }
 

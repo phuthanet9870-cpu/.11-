@@ -292,7 +292,10 @@ img.icon, canvas.icon { image-rendering: pixelated; }
 #game, #game canvas { touch-action: none; }
 .win .wtitle { touch-action: none; }
 .touch-controls { position: absolute; inset: 0; }
-.touch-controls .tc-pad { position: absolute; left: 40px; bottom: 300px; width: 150px; height: 150px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.25); pointer-events: auto; touch-action: none; display: flex; align-items: center; justify-content: center; }
+.touch-controls .tc-zone { position: absolute; left: 40px; bottom: 300px; width: 150px; height: 150px; pointer-events: auto; touch-action: none; }
+.touch-controls .tc-pad { position: absolute; inset: 0; border-radius: 50%; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.25); pointer-events: none; display: flex; align-items: center; justify-content: center; }
+.touch-controls .tc-top, .touch-controls #tc-page { display: none; }
+.skbtns { display: flex; gap: 4px; }
 .touch-controls .tc-knob { width: 64px; height: 64px; border-radius: 50%; background: rgba(243,210,122,0.55); border: 2px solid rgba(255,255,255,0.5); pointer-events: none; }
 .touch-controls .tc-actions { position: absolute; left: 470px; bottom: 228px; display: flex; gap: 12px; pointer-events: auto; }
 .touch-controls .tc-btn { width: 64px; height: 64px; border-radius: 50%; font-size: 26px; background: rgba(20,16,28,0.7); color: #fff; border: 2px solid rgba(243,210,122,0.6); touch-action: none; }
@@ -384,3 +387,88 @@ img.icon, canvas.icon { image-rendering: pixelated; }
 .gm-maplv { font-size: 10px; color: #ffd34d; }
 
 .rune-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(138,106,58,0.4); }
+
+/* ---------------------------------------------------------------- phone layout (landscape)
+   The frame is 440 units tall on phones (see App.fitToWindow), so everything here is thumb-sized. */
+body.mobile #ui { font-size: 13px; }
+body.mobile .hud-status { left: 6px; top: 6px; width: 196px; padding: 5px 8px; gap: 2px; }
+body.mobile .hud-status .portrait { width: 34px; height: 34px; }
+body.mobile .hud-status .who { font-size: 13px; }
+body.mobile .hud-status .cls { font-size: 11px; }
+body.mobile .hud-status .lvs { font-size: 10px; }
+body.mobile .hud-status .srow { grid-template-columns: 26px 1fr; }
+body.mobile .hud-status .srow .bar { height: 10px; }
+body.mobile .hud-status .srow:nth-of-type(6) { display: none; }
+body.mobile .hud-status .foot { font-size: 11px; }
+body.mobile .buffs { left: 6px; top: 150px; width: 200px; }
+body.mobile .minimap { right: 6px; top: 6px; width: 132px; padding: 4px; }
+body.mobile .minimap canvas { width: 122px; height: 82px; }
+body.mobile .minimap .zoom-box, body.mobile .minimap .coords { display: none; }
+body.mobile .minimap .mname { font-size: 10px; margin: 2px 0 0; }
+body.mobile .tracker, body.mobile #world-clock, body.mobile .menu-toggle { display: none !important; }
+body.mobile .auto-box { left: auto; right: 146px; top: 6px; bottom: auto; gap: 4px; }
+body.mobile .auto-btn { width: 58px; height: 36px; }
+body.mobile .auto-btn small { display: none; }
+body.mobile .auto-gear { width: 30px; height: 36px; }
+body.mobile .hud-target { top: 50px; width: 250px; padding: 4px 8px; font-size: 12px; }
+body.mobile .hud-boss { top: 50px; width: 360px; z-index: 2; padding: 4px 8px; }
+body.mobile .castbar { bottom: 96px; }
+body.mobile #auto-status { bottom: 8px !important; }
+body.mobile .banner .b1 { font-size: 26px; }
+body.mobile .bonus-ind { top: auto; bottom: 8px; left: 38%; }
+/* Chat: a few faded lines on the left; ✉ opens the full chat. */
+body.mobile .chat { left: 6px; top: 172px; bottom: auto; width: 270px; height: 76px; background: none; border: none; box-shadow: none; pointer-events: none !important; opacity: 0.85; }
+body.mobile .chat .tabs, body.mobile .chat input { display: none; }
+body.mobile .chat .log { font-size: 11px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; text-shadow: 0 1px 2px #000, 0 0 3px #000; }
+body.mobile .chat.open { left: 50%; top: 50px; transform: translateX(-50%); width: 520px; height: 230px; background: rgba(12,10,18,0.92); border: 1px solid var(--border); pointer-events: auto !important; opacity: 1; z-index: 60; }
+body.mobile .chat.open .tabs { display: flex; }
+body.mobile .chat.open input { display: block; font-size: 14px; padding: 6px 8px; }
+body.mobile .chat.open .log { overflow-y: auto; display: block; font-size: 12px; }
+/* Menu drawer (☰) */
+body.mobile .menu-grid { right: auto; left: 50%; top: 50%; bottom: auto; transform: translate(-50%, -50%); grid-template-columns: repeat(6, 64px); gap: 8px; padding: 12px; z-index: 55; }
+body.mobile .menu-grid.collapsed { transform: translate(-50%, -50%) scale(0.85); }
+body.mobile .menu-grid .mbtn { width: 64px; height: 60px; }
+/* Hotbar as a ring of skill buttons around the attack button */
+body.mobile .hotbar { left: auto; right: 0; bottom: 0; transform: none; display: block; width: 300px; height: 300px; padding: 0; background: none; border: none; box-shadow: none; pointer-events: none !important; }
+body.mobile .hotbar .hslot { display: none; position: absolute; width: 50px; height: 50px; border-radius: 50%; border: 2px solid rgba(243,210,122,0.55); background: rgba(12,10,18,0.72); pointer-events: auto; }
+body.mobile .hotbar .hslot img { width: 40px; height: 40px; margin: 3px; border-radius: 50%; }
+body.mobile .hotbar .hslot .key { display: none; }
+body.mobile .hotbar .hslot .cnt { right: 8px; bottom: 4px; }
+body.mobile .hotbar .hslot .cd { border-radius: 50%; }
+body.mobile .hotbar:not(.page2) .hslot:nth-child(-n+8), body.mobile .hotbar.page2 .hslot:nth-child(n+11):nth-child(-n+18) { display: block; }
+body.mobile .hotbar:not(.page2) .hslot:nth-child(1), body.mobile .hotbar.page2 .hslot:nth-child(11) { right: 141.0px; bottom: 41.0px; }
+body.mobile .hotbar:not(.page2) .hslot:nth-child(2), body.mobile .hotbar.page2 .hslot:nth-child(12) { right: 127.6px; bottom: 91.0px; }
+body.mobile .hotbar:not(.page2) .hslot:nth-child(3), body.mobile .hotbar.page2 .hslot:nth-child(13) { right: 91.0px; bottom: 127.6px; }
+body.mobile .hotbar:not(.page2) .hslot:nth-child(4), body.mobile .hotbar.page2 .hslot:nth-child(14) { right: 41.0px; bottom: 141.0px; }
+body.mobile .hotbar:not(.page2) .hslot:nth-child(5), body.mobile .hotbar.page2 .hslot:nth-child(15) { right: 200.1px; bottom: 57.7px; }
+body.mobile .hotbar:not(.page2) .hslot:nth-child(6), body.mobile .hotbar.page2 .hslot:nth-child(16) { right: 176.7px; bottom: 125.8px; }
+body.mobile .hotbar:not(.page2) .hslot:nth-child(7), body.mobile .hotbar.page2 .hslot:nth-child(17) { right: 125.8px; bottom: 176.7px; }
+body.mobile .hotbar:not(.page2) .hslot:nth-child(8), body.mobile .hotbar.page2 .hslot:nth-child(18) { right: 57.7px; bottom: 200.1px; }
+/* Touch controls on phones */
+body.mobile .touch-controls .tc-zone { left: 0; bottom: 0; top: auto; width: 40%; height: 64%; }
+body.mobile .touch-controls .tc-pad { inset: auto; left: 110px; top: calc(100% - 110px); width: 120px; height: 120px; transform: translate(-50%, -50%); opacity: 0.45; transition: opacity .15s; }
+body.mobile .touch-controls .tc-pad.active { opacity: 1; }
+body.mobile .touch-controls .tc-knob { width: 52px; height: 52px; }
+body.mobile .touch-controls .tc-actions { left: auto; right: 0; bottom: 0; width: 320px; height: 320px; display: block; pointer-events: none; }
+body.mobile .touch-controls .tc-btn { position: absolute; pointer-events: auto; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+body.mobile .touch-controls .tc-btn.down { background: rgba(243,210,122,0.45); transform: scale(0.94); }
+body.mobile .touch-controls .tc-big { right: 20px; bottom: 20px; width: 92px; height: 92px; font-size: 40px; background: radial-gradient(circle at 40% 35%, #5a2a2a, #241018); border: 3px solid #f3d27a; }
+body.mobile .touch-controls .tc-small { width: 46px; height: 46px; font-size: 20px; }
+body.mobile .touch-controls #tc-target { right: 14px; bottom: 262px; }
+body.mobile .touch-controls #tc-page { display: flex; right: 70px; bottom: 262px; font-size: 22px; }
+body.mobile .touch-controls #tc-loot { right: 258px; bottom: 10px; }
+body.mobile .touch-controls #tc-talk { right: 258px; bottom: 64px; }
+body.mobile .touch-controls .tc-top { display: flex; position: absolute; top: 6px; right: 244px; gap: 6px; pointer-events: auto; }
+body.mobile .touch-controls .tc-pill { position: static; width: 42px; height: 36px; border-radius: 10px; font-size: 20px; }
+body.mobile .touch-controls #tc-menu { background: linear-gradient(#4a3a5e, #2e2440); }
+/* Windows fit the short screen; bigger close buttons and controls for fingers */
+body.mobile .win { max-height: 430px; max-width: calc(100% - 8px); }
+body.mobile .win .wbody { max-height: 386px; -webkit-overflow-scrolling: touch; }
+body.mobile .win .wtitle { padding: 4px 8px; }
+body.mobile .win .wtitle .x { font-size: 20px; padding: 0 10px; color: #fff; }
+body.mobile .btn { min-height: 30px; }
+body.mobile .tooltip { max-width: 300px; font-size: 12px; }
+/* Screens before the game (title, character list, creation) scroll if they do not fit */
+body.mobile #ui > .screen, body.mobile #ui > div:not(#hud):not(.win):not(.tooltip) { max-height: 100%; overflow-y: auto; }
+/* Rotate hint: the game is played in landscape */
+body.mobile.portrait::after { content: '⟳  Turn your phone sideways (landscape) to play'; position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 24px; text-align: center; background: #0c0a12; color: #f3d27a; font: bold 18px sans-serif; z-index: 9999; }
