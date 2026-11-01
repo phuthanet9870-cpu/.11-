@@ -135,6 +135,7 @@ export class App implements GameHost {
 
   /** Logical size of the UI frame (1280×720 on desktop; on phones it follows the screen's shape). */
   frameW = 1280;
+  private uiOpenShown = false;
   frameH = 720;
   /** Phone layout: touch controls on and a small screen (landscape phones). */
   get mobile(): boolean {
@@ -344,6 +345,9 @@ export class App implements GameHost {
 
   onFrame() {
     this.hud?.update();
+    // Phones: while a window, dialog or the menu is open the combat controls step aside.
+    const uiOpen = this.mobile && !!this.hud && (this.windows.anyOpen || this.settings.menuCollapsed === false);
+    if (uiOpen !== this.uiOpenShown) { this.uiOpenShown = uiOpen; document.body.classList.toggle('ui-open', uiOpen); }
     const now = performance.now();
     if (this.windowsDirty && now - this.lastWindowRefresh > 200) {
       this.windowsDirty = false;

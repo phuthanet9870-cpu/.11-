@@ -236,7 +236,8 @@ export class Hud {
         h('span', { class: 'cnt' }),
         h('div', { class: 'cd' }),
         h('span', { class: 'cdt' }));
-      el.addEventListener('click', () => this.app.useHotbar(i));
+      // An empty button on a phone opens the skill window, where ⚡ puts a skill on the hotbar.
+      el.addEventListener('click', () => { if (!s && this.app.mobile) this.app.windows.open('skills'); else this.app.useHotbar(i); });
       el.addEventListener('contextmenu', (e) => {
         e.preventDefault();
         if (!w || !w.char.hotbar[i]) return;

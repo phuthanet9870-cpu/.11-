@@ -472,3 +472,41 @@ body.mobile .tooltip { max-width: 300px; font-size: 12px; }
 body.mobile #ui > .screen, body.mobile #ui > div:not(#hud):not(.win):not(.tooltip) { max-height: 100%; overflow-y: auto; }
 /* Rotate hint: the game is played in landscape */
 body.mobile.portrait::after { content: '⟳  Turn your phone sideways (landscape) to play'; position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 24px; text-align: center; background: #0c0a12; color: #f3d27a; font: bold 18px sans-serif; z-index: 9999; }
+
+/* ---------------------------------------------------------------- phone usability */
+/* Open window / dialog / menu: dim the game, put the combat controls away; a tap on the dim area closes. */
+.touch-controls .tc-backdrop { display: none; }
+body.mobile.ui-open .touch-controls .tc-backdrop { display: block; position: absolute; inset: 0; z-index: 50; background: rgba(6,4,12,0.55); pointer-events: auto; }
+body.mobile.ui-open .touch-controls .tc-zone, body.mobile.ui-open .touch-controls .tc-actions, body.mobile.ui-open .hotbar,
+body.mobile.ui-open .chat:not(.open), body.mobile.ui-open .auto-box, body.mobile.ui-open .touch-controls #tc-chat,
+body.mobile.ui-open .touch-controls #tc-zin, body.mobile.ui-open .touch-controls #tc-zout { visibility: hidden; }
+body.mobile.ui-open .touch-controls .tc-top { z-index: 56; }
+/* Bigger text and finger-sized controls inside windows */
+body.mobile .win .wbody { font-size: 14px; }
+body.mobile .win .btn, body.mobile .dialog .btn, body.mobile .modal-back .btn { min-height: 34px; padding: 6px 12px; font-size: 14px; }
+body.mobile .win .btn.small { min-height: 30px; min-width: 30px; padding: 4px 9px; font-size: 13px; }
+body.mobile .win input[type=checkbox] { width: 20px; height: 20px; margin-right: 8px; }
+body.mobile .win label.row { min-height: 30px; align-items: center; }
+body.mobile .win select, body.mobile .win input[type=text], body.mobile .win input[type=number], body.mobile .win input:not([type]) { min-height: 32px; font-size: 14px; }
+body.mobile .win input[type=range] { height: 28px; }
+body.mobile .win .tab, body.mobile .win .tabs button { min-height: 32px; }
+body.mobile .set-wasdMovement, body.mobile .set-cellCursor, body.mobile .set-showGrid, body.mobile .set-showCollision, body.mobile .desk-only { display: none !important; }
+/* NPC dialog: options are big buttons in two columns; it sits above everything */
+body.mobile .dialog { bottom: auto; top: 50%; transform: translate(-50%, -50%); width: min(720px, calc(100% - 24px)); grid-template-columns: 80px 1fr; z-index: 3000; }
+body.mobile .dialog canvas { width: 80px; height: 80px; }
+body.mobile .dialog .dn { font-size: 17px; }
+body.mobile .dialog .dopts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+body.mobile .dialog .dopt { min-height: 44px; display: flex; align-items: center; padding: 6px 12px; font-size: 15px; border: 1px solid var(--border); background: linear-gradient(#3a2e4a, #241c30); border-radius: 8px; }
+body.mobile .dialog .dopt:active { background: rgba(243,210,122,0.3); }
+/* Item action menu: big rows */
+body.mobile .ctx-menu { min-width: 200px; font-size: 15px; }
+body.mobile .ctx-menu div { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+body.mobile .ctx-menu .ctx-main { min-height: 40px; font-size: 15px; }
+/* Confirm boxes */
+body.mobile .modal-back .panel { min-width: 340px; font-size: 15px; }
+/* Empty skill buttons show a + (tap to open the skill window) */
+body.mobile .hotbar .hslot:not(:has(img))::after { content: '+'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 22px; color: rgba(243,210,122,0.45); }
+/* Inventory / storage grids: larger cells */
+body.mobile .win .islot { width: 46px; height: 46px; }
+body.mobile .win .islot img { margin: 4px; }
+body.mobile .ctx-menu { left: 50% !important; top: 50% !important; transform: translate(-50%, -50%); }

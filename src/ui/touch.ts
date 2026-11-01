@@ -33,7 +33,10 @@ export class TouchControls {
       h('button', { class: `tc-btn ${cls}`, id, title, onpointerdown: (e: PointerEvent) => { e.preventDefault(); e.stopPropagation(); (e.currentTarget as HTMLElement).classList.add('down'); fn(); },
         onpointerup: (e: PointerEvent) => (e.currentTarget as HTMLElement).classList.remove('down'),
         onpointerleave: (e: PointerEvent) => (e.currentTarget as HTMLElement).classList.remove('down') }, label);
+    // Dim layer behind open windows on phones: a tap on it closes the top window (or the menu).
+    const backdrop = h('div', { class: 'tc-backdrop', id: 'tc-backdrop', onpointerdown: (e: PointerEvent) => { e.preventDefault(); (window as unknown as { veyloriaBack?: () => boolean }).veyloriaBack?.(); } });
     this.root = h('div', { class: 'touch-controls passthrough', id: 'touch-controls' },
+      backdrop,
       this.zone,
       h('div', { class: 'tc-actions' },
         btn('tc-attack', 'tc-big', '⚔', 'Attack the nearest monster', () => this.attackNearest()),

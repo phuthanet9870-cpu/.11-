@@ -184,6 +184,7 @@ export class WindowManager {
 
   // ---------------------------------------------------------------- tooltip / context
   showTooltip(e: MouseEvent, content: HTMLElement[]) {
+    this.bindTouchTooltip();
     setChildren(this.tooltip, content);
     this.tooltip.classList.remove('hidden');
     const r = this.root.getBoundingClientRect(), s = this.app.uiScale;
@@ -193,6 +194,13 @@ export class WindowManager {
     this.tooltip.style.left = `${x}px`; this.tooltip.style.top = `${y}px`;
   }
   hideTooltip() { this.tooltip.classList.add('hidden'); }
+  private touchTipBound = false;
+  /** Touch screens have no "mouse leaves": a tooltip closes on the next touch. */
+  private bindTouchTooltip() {
+    if (this.touchTipBound) return;
+    this.touchTipBound = true;
+    document.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') this.hideTooltip(); }, true);
+  }
 
   /** Action menu with a heading (e.g. another player's name) at the mouse. */
   openContextAt(e: MouseEvent, items: [string, () => void][], heading: string) {
@@ -688,7 +696,7 @@ export class WindowManager {
     const toggle = (key: 'showDamageNumbers' | 'autoLoot' | 'showCollision' | 'wasdMovement' | 'cellCursor' | 'showGrid' | 'effects' | 'skillEffects' | 'touchControls', label: string) => {
       const cb = h('input', { type: 'checkbox', id: `set-${key}`, checked: key === 'cellCursor' || key === 'skillEffects' ? st[key] !== false : key === 'touchControls' ? (st[key] ?? isTouchDevice()) : !!st[key] });
       cb.addEventListener('change', () => { st[key] = cb.checked; app.applySettings(); });
-      return h('label', { class: 'row', style: 'margin-bottom:4px' }, cb, label);
+      return h('label', { class: `row set-${key}`, style: 'margin-bottom:4px' }, cb, label);
     };
     const binds = Object.keys(DEFAULT_KEYBINDS).map((action) => {
       const btn = h('button', { class: `btn small${this.listening === action ? ' listening' : ''}` }, this.listening === action ? 'Press a key…' : app.keyLabel(action));
@@ -717,9 +725,10 @@ export class WindowManager {
         })()),
         toggle('touchControls', 'Touch controls (joystick and buttons for phones / tablets)'),
         toggle('showCollision', 'Show collision / spawn debug overlay'),
-        h('div', { class: 'gold', style: 'font-weight:bold;margin-top:8px' }, 'Key Bindings'),
-        h('div', { style: 'max-height:180px;overflow:auto;padding-right:6px' }, binds),
-        h('button', { class: 'btn small', style: 'margin-top:4px', onclick: () => { st.keybinds = { ...DEFAULT_KEYBINDS }; app.applySettings(); this.renderSettings(); } }, 'Reset key bindings'),
+        h('div', { class: 'desk-only' },
+          h('div', { class: 'gold', style: 'font-weight:bold;margin-top:8px' }, 'Key Bindings'),
+          h('div', { style: 'max-height:180px;overflow:auto;padding-right:6px' }, binds),
+          h('button', { class: 'btn small', style: 'margin-top:4px', onclick: () => { st.keybinds = { ...DEFAULT_KEYBINDS }; app.applySettings(); this.renderSettings(); } }, 'Reset key bindings')),
         app.world ? h('div', { class: 'row', style: 'margin-top:12px' },
           h('button', { class: 'btn primary', onclick: () => app.saveNow(true) }, 'Save Game'),
           h('button', { class: 'btn', onclick: () => app.exitToSelect() }, 'Character Select')) : null));
