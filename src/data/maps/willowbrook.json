@@ -1036,36 +1036,6 @@
    "facing": "down"
   },
   {
-   "npcId": "mvp_guide",
-   "x": 53,
-   "y": 37,
-   "facing": "down"
-  },
-  {
-   "npcId": "mvp_guide",
-   "x": 60,
-   "y": 36,
-   "facing": "down"
-  },
-  {
-   "npcId": "mvp_guide",
-   "x": 53,
-   "y": 33,
-   "facing": "down"
-  },
-  {
-   "npcId": "mvp_guide",
-   "x": 57,
-   "y": 34,
-   "facing": "down"
-  },
-  {
-   "npcId": "mvp_guide",
-   "x": 59,
-   "y": 34,
-   "facing": "down"
-  },
-  {
    "npcId": "willowbrook_courier",
    "x": 59,
    "y": 22,
@@ -1079,8 +1049,8 @@
   },
   {
    "npcId": "mvp_guide",
-   "x": 55,
-   "y": 32,
+   "x": 53,
+   "y": 33,
    "facing": "down"
   },
   {

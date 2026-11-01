@@ -9,7 +9,7 @@ import { npcQuestMarker } from '../../core/quests';
 import { loadThemeArt, themeArtReady } from '../art/themeArt';
 import { mapArtPaths, scenerySprite } from '../art/scenery';
 import {
-  CHUNK_TILES, characterTextureLayout, ensureCharacterTexture, ensureFxTextures, ensureItemTexture, ensureMapChunk, ensureMapTextures, ensureMonsterTexture, ensureTombstoneTexture,
+  CHUNK_TILES, characterTextureLayout, ensureCharacterTexture, ensureFxTextures, ensureGlowTexture, ensureItemTexture, ensureMapChunk, ensureMapTextures, ensureMonsterTexture, ensureTombstoneTexture,
   releaseMapChunk, type ChunkLayers,
 } from '../assets';
 import { npcLook, useShadowStyle, type CharacterLook } from '../art/characterSprite';
@@ -302,6 +302,8 @@ export class GameScene extends Phaser.Scene {
     };
     const [tintColor, tintAlpha] = TINT[map.def.tileset] ?? (map.def.type === 'dungeon' ? [0x000008, 0.3] : [0xffe0b0, 0.05]);
     this.track(this.add.rectangle(0, 0, W, H, tintColor, tintAlpha).setOrigin(0).setDepth(1e5 - 1));
+    // The whole world a touch darker (5%), so lights stand out; the glow layer below shines above it.
+    this.track(this.add.rectangle(0, 0, W, H, 0x05030a, 0.05).setOrigin(0).setDepth(1e5 - 1));
     if (this.fxOn) this.addWeather(map.def.weather[0]);
 
     const cam = this.cameras.main;
@@ -460,6 +462,7 @@ export class GameScene extends Phaser.Scene {
     this.syncPet();
     this.syncHomun();
     this.syncRemotes();
+    this.syncGlowLayer();
     this.drawOverlays();
     this.updateChunks();
     this.drawCellCursor();
@@ -607,6 +610,23 @@ export class GameScene extends Phaser.Scene {
     for (const [id, v] of this.monViews) {
       if (!w.monsters.has(id)) { v.sprite.destroy(); v.name.destroy(); v.bar?.destroy(); this.monViews.delete(id); }
     }
+  }
+
+  /** Glow companions of shadow-style sprites (eyes, neon trims, glowing markings), drawn additively. */
+  private glows = new Map<Phaser.GameObjects.Sprite, Phaser.GameObjects.Image>();
+  private syncGlowLayer() {
+    for (const o of this.children.list) {
+      if (!(o instanceof Phaser.GameObjects.Sprite)) continue;
+      const key = o.texture.key;
+      if (!key.startsWith('chr_') && !key.startsWith('mon_')) continue;
+      const gk = ensureGlowTexture(this, key);
+      let g = this.glows.get(o);
+      if (!gk) { g?.setVisible(false); continue; }
+      if (!g) { g = this.add.image(o.x, o.y, gk, o.frame.name).setBlendMode(Phaser.BlendModes.ADD); this.glows.set(o, g); }
+      g.setTexture(gk, o.frame.name).setPosition(o.x, o.y).setOrigin(o.originX, o.originY).setScale(o.scaleX, o.scaleY)
+        .setFlipX(o.flipX).setAlpha(o.alpha).setVisible(o.visible).setDepth(1e5 - 0.8 + o.depth * 1e-7);
+    }
+    for (const [o, g] of this.glows) if (!o.active || !o.scene) { g.destroy(); this.glows.delete(o); }
   }
 
   /** Shadow fighters are drawn with the shadow-style sheet of their job. */

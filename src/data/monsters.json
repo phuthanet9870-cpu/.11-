@@ -27,7 +27,8 @@
     "#7ccf5a",
     "#4f9a3a",
     "#e8ffd0"
-   ]
+   ],
+   "eye": "#ff7733"
   },
   "elementLevel": 1
  },
@@ -63,7 +64,8 @@
     "#f2ead8",
     "#c9b89a",
     "#efe2c0"
-   ]
+   ],
+   "eye": "#d4ff33"
   },
   "elementLevel": 1
  },
@@ -100,7 +102,8 @@
     "#d84a3a",
     "#fff0e0",
     "#f2d2b0"
-   ]
+   ],
+   "eye": "#52a8ff"
   },
   "elementLevel": 1
  },
@@ -139,7 +142,8 @@
     "#f2c12e",
     "#2b2b2b",
     "#d8f0ff"
-   ]
+   ],
+   "eye": "#33ff44"
   },
   "elementLevel": 1
  },
@@ -172,7 +176,8 @@
     "#6f9a3a",
     "#6a4a2a",
     "#c83a3a"
-   ]
+   ],
+   "eye": "#ffb31a"
   },
   "elementLevel": 1,
   "looter": true
@@ -219,7 +224,8 @@
     "#8a4fbf",
     "#a9e04a",
     "#f2e0ff"
-   ]
+   ],
+   "eye": "#33fff7"
   },
   "elementLevel": 1
  },
@@ -258,7 +264,8 @@
     "#7a6a52",
     "#4a3f32",
     "#7fd65a"
-   ]
+   ],
+   "eye": "#3355ff"
   },
   "elementLevel": 1
  },
@@ -302,7 +309,8 @@
     "#e9e4d4",
     "#5a5a6a",
     "#7fb0ff"
-   ]
+   ],
+   "eye": "#ff6852"
   },
   "elementLevel": 1
  },
@@ -345,7 +353,8 @@
     "#557a2e",
     "#4a3220",
     "#f2d23a"
-   ]
+   ],
+   "eye": "#ff3388"
   },
   "elementLevel": 3
  },
@@ -379,7 +388,8 @@
     "#5a4a6a",
     "#3a2e48",
     "#ff5a5a"
-   ]
+   ],
+   "eye": "#9352ff"
   },
   "generated": true,
   "elementLevel": 1
@@ -414,7 +424,8 @@
     "#9ad86a",
     "#5aa84a",
     "#ffffff"
-   ]
+   ],
+   "eye": "#ff1a49"
   },
   "generated": true,
   "elementLevel": 1
@@ -450,7 +461,8 @@
     "#9a8a7a",
     "#6a5e52",
     "#c8b89a"
-   ]
+   ],
+   "eye": "#ff52d3"
   },
   "generated": true,
   "elementLevel": 1
@@ -485,7 +497,8 @@
     "#a49a8a",
     "#7a7064",
     "#7fd6ff"
-   ]
+   ],
+   "eye": "#1aff7a"
   },
   "generated": true,
   "elementLevel": 1
@@ -521,7 +534,8 @@
     "#7a9a3a",
     "#5a4a3a",
     "#3a6ab8"
-   ]
+   ],
+   "eye": "#c433ff"
   },
   "generated": true,
   "looter": true,
@@ -562,7 +576,8 @@
     "#4a4a52",
     "#2a2a32",
     "#a9e04a"
-   ]
+   ],
+   "eye": "#67ff52"
   },
   "generated": true,
   "elementLevel": 2
@@ -607,7 +622,8 @@
     "#c8d4e0",
     "#2a2a3a",
     "#7fd6ff"
-   ]
+   ],
+   "eye": "#a952ff"
   },
   "generated": true,
   "elementLevel": 2
@@ -647,7 +663,8 @@
     "#d8d2bc",
     "#4a4a5a",
     "#ff5a3a"
-   ]
+   ],
+   "eye": "#333bff"
   },
   "generated": true,
   "elementLevel": 2
@@ -688,7 +705,8 @@
     "#5a8aaa",
     "#c8e8ff",
     "#e0f0ff"
-   ]
+   ],
+   "eye": "#ffff52"
   },
   "generated": true,
   "elementLevel": 1
@@ -724,7 +742,8 @@
     "#5a8a3a",
     "#3a4a2a",
     "#c8a26b"
-   ]
+   ],
+   "eye": "#ff9133"
   },
   "generated": true,
   "looter": true,
@@ -760,7 +779,8 @@
     "#8a4ab8",
     "#fff0e0",
     "#e8d0b0"
-   ]
+   ],
+   "eye": "#5292ff"
   },
   "generated": true,
   "elementLevel": 2
@@ -796,7 +816,8 @@
     "#3a3a4a",
     "#22222e",
     "#c83a4a"
-   ]
+   ],
+   "eye": "#1aff97"
   },
   "generated": true,
   "elementLevel": 2
@@ -837,7 +858,8 @@
     "#c88a2e",
     "#2b2b2b",
     "#d8f0ff"
-   ]
+   ],
+   "eye": "#ffd01a"
   },
   "generated": true,
   "elementLevel": 2
@@ -873,7 +895,8 @@
     "#6a5a4a",
     "#4a3e32",
     "#ffd34d"
-   ]
+   ],
+   "eye": "#65ff1a"
   },
   "generated": true,
   "elementLevel": 2
@@ -909,7 +932,8 @@
     "#6a7a5a",
     "#4a5a3a",
     "#a9e04a"
-   ]
+   ],
+   "eye": "#52ff53"
   },
   "generated": true,
   "elementLevel": 2
@@ -954,7 +978,8 @@
     "#f2e8b0",
     "#3a2a1a",
     "#ffb03a"
-   ]
+   ],
+   "eye": "#a0ff33"
   },
   "generated": true,
   "elementLevel": 2
@@ -989,7 +1014,8 @@
     "#7ab8f0",
     "#4a7ac8",
     "#ffffff"
-   ]
+   ],
+   "eye": "#401aff"
   },
   "generated": true,
   "elementLevel": 2
@@ -1024,7 +1050,8 @@
     "#d8d8f0",
     "#a8a8c8",
     "#c8a6ff"
-   ]
+   ],
+   "eye": "#baff33"
   },
   "generated": true,
   "elementLevel": 2
@@ -1065,7 +1092,8 @@
     "#b89af0",
     "#2a1a4a",
     "#ffffff"
-   ]
+   ],
+   "eye": "#ff52bd"
   },
   "generated": true,
   "elementLevel": 2
@@ -1101,7 +1129,8 @@
     "#a8b0c0",
     "#3a4a6a",
     "#7fd6ff"
-   ]
+   ],
+   "eye": "#527cff"
   },
   "generated": true,
   "elementLevel": 2
@@ -1137,7 +1166,8 @@
     "#6a5a9a",
     "#4a3a7a",
     "#d8c8ff"
-   ]
+   ],
+   "eye": "#ff52a7"
   },
   "generated": true,
   "elementLevel": 2
@@ -1178,7 +1208,8 @@
     "#7ab8ff",
     "#1a2a4a",
     "#ffffff"
-   ]
+   ],
+   "eye": "#ffed1a"
   },
   "generated": true,
   "elementLevel": 2
@@ -1213,7 +1244,8 @@
     "#e2c07a",
     "#b8945a",
     "#fff4d0"
-   ]
+   ],
+   "eye": "#33ff5e"
   },
   "generated": true,
   "elementLevel": 2
@@ -1254,7 +1286,8 @@
     "#c8945a",
     "#8a5a2e",
     "#e8e0c0"
-   ]
+   ],
+   "eye": "#ff7e52"
   },
   "generated": true,
   "elementLevel": 2
@@ -1290,7 +1323,8 @@
     "#c8a46a",
     "#8a6a42",
     "#fff0c0"
-   ]
+   ],
+   "eye": "#1a9eff"
   },
   "generated": true,
   "elementLevel": 2
@@ -1325,7 +1359,8 @@
     "#3aa8a8",
     "#1a7a7a",
     "#ffffff"
-   ]
+   ],
+   "eye": "#52ffea"
   },
   "generated": true,
   "looter": true,
@@ -1367,7 +1402,8 @@
     "#ffe08a",
     "#6a4a1a",
     "#ffffff"
-   ]
+   ],
+   "eye": "#33ff78"
   },
   "generated": true,
   "elementLevel": 2
@@ -1408,7 +1444,8 @@
     "#8a3a2a",
     "#5a1e14",
     "#ffd34d"
-   ]
+   ],
+   "eye": "#33d3ff"
   },
   "generated": true,
   "elementLevel": 2
@@ -1448,7 +1485,8 @@
     "#e8dcc0",
     "#8a7a5a",
     "#ffd34d"
-   ]
+   ],
+   "eye": "#4533ff"
   },
   "generated": true,
   "elementLevel": 2
@@ -1484,7 +1522,8 @@
     "#d8b43a",
     "#8a6a1a",
     "#3ad8a8"
-   ]
+   ],
+   "eye": "#1affb4"
   },
   "generated": true,
   "elementLevel": 2
@@ -1520,7 +1559,8 @@
     "#8a7a5a",
     "#5a4a32",
     "#ffd34d"
-   ]
+   ],
+   "eye": "#48ff1a"
   },
   "generated": true,
   "elementLevel": 2
@@ -1555,7 +1595,8 @@
     "#e05a3a",
     "#a83a22",
     "#ffffff"
-   ]
+   ],
+   "eye": "#1abcff"
   },
   "generated": true,
   "looter": true,
@@ -1591,7 +1632,8 @@
     "#4ad0c8",
     "#2a9a9a",
     "#ffffff"
-   ]
+   ],
+   "eye": "#52ffd4"
   },
   "generated": true,
   "elementLevel": 2
@@ -1627,7 +1669,8 @@
     "#f2f2f2",
     "#b8c4d4",
     "#ffb03a"
-   ]
+   ],
+   "eye": "#ff1a2c"
   },
   "generated": true,
   "looter": true,
@@ -1664,7 +1707,8 @@
     "#5a7ab8",
     "#3a5a8a",
     "#ffffff"
-   ]
+   ],
+   "eye": "#e8ff52"
   },
   "generated": true,
   "looter": true,
@@ -1706,7 +1750,8 @@
     "#3a8a5a",
     "#a9e04a",
     "#e0ffe0"
-   ]
+   ],
+   "eye": "#ff336d"
   },
   "generated": true,
   "elementLevel": 2
@@ -1746,7 +1791,8 @@
     "#5ab8c8",
     "#1a3a4a",
     "#ffffff"
-   ]
+   ],
+   "eye": "#ff251a"
   },
   "generated": true,
   "elementLevel": 2
@@ -1781,7 +1827,8 @@
     "#c8ecfa",
     "#7ab8e0",
     "#ffffff"
-   ]
+   ],
+   "eye": "#ff9452"
   },
   "generated": true,
   "elementLevel": 2
@@ -1817,7 +1864,8 @@
     "#eef4f8",
     "#a8b8c8",
     "#7fd6ff"
-   ]
+   ],
+   "eye": "#d2ff52"
   },
   "generated": true,
   "elementLevel": 2
@@ -1858,7 +1906,8 @@
     "#a8d8f0",
     "#6aa8d0",
     "#ffffff"
-   ]
+   ],
+   "eye": "#ff3353"
   },
   "generated": true,
   "elementLevel": 3
@@ -1894,7 +1943,8 @@
     "#8ac8e8",
     "#4a8ab0",
     "#ffffff"
-   ]
+   ],
+   "eye": "#52ff69"
   },
   "generated": true,
   "elementLevel": 3
@@ -1939,7 +1989,8 @@
     "#dff4ff",
     "#2a4a6a",
     "#7fd6ff"
-   ]
+   ],
+   "eye": "#52feff"
   },
   "generated": true,
   "elementLevel": 3
@@ -1980,7 +2031,8 @@
     "#7ab0d8",
     "#3a7ab0",
     "#e0ffff"
-   ]
+   ],
+   "eye": "#86ff33"
   },
   "generated": true,
   "elementLevel": 3
@@ -2021,7 +2073,8 @@
     "#ff7a3a",
     "#c83a1a",
     "#ffe08a"
-   ]
+   ],
+   "eye": "#ff1aba"
   },
   "generated": true,
   "elementLevel": 3
@@ -2057,7 +2110,8 @@
     "#5a4a4a",
     "#2e2222",
     "#ff6a2e"
-   ]
+   ],
+   "eye": "#5266ff"
   },
   "generated": true,
   "elementLevel": 3
@@ -2098,7 +2152,8 @@
     "#c83a2a",
     "#8a1e14",
     "#ffd34d"
-   ]
+   ],
+   "eye": "#33ff92"
   },
   "generated": true,
   "elementLevel": 3
@@ -2139,7 +2194,8 @@
     "#6a3a2a",
     "#3a1e14",
     "#ff8a2e"
-   ]
+   ],
+   "eye": "#f3ff1a"
   },
   "generated": true,
   "elementLevel": 3
@@ -2180,7 +2236,8 @@
     "#e86a2a",
     "#a83a14",
     "#fff08a"
-   ]
+   ],
+   "eye": "#6033ff"
   },
   "generated": true,
   "elementLevel": 3
@@ -2221,7 +2278,8 @@
     "#6a7a3a",
     "#4a5a2a",
     "#c8e07a"
-   ]
+   ],
+   "eye": "#ff421a"
   },
   "generated": true,
   "elementLevel": 3
@@ -2262,7 +2320,8 @@
     "#5a4a6a",
     "#a9e04a",
     "#e0d0ff"
-   ]
+   ],
+   "eye": "#d552ff"
   },
   "generated": true,
   "elementLevel": 3
@@ -2298,7 +2357,8 @@
     "#4a5a3a",
     "#2e3a22",
     "#c8e07a"
-   ]
+   ],
+   "eye": "#33b9ff"
   },
   "generated": true,
   "looter": true,
@@ -2335,7 +2395,8 @@
     "#2a2a32",
     "#16161c",
     "#c83a4a"
-   ]
+   ],
+   "eye": "#ff5291"
   },
   "generated": true,
   "elementLevel": 3
@@ -2380,7 +2441,8 @@
     "#6a6a7a",
     "#2a2a3a",
     "#c83a4a"
-   ]
+   ],
+   "eye": "#ffaa52"
   },
   "generated": true,
   "elementLevel": 3
@@ -2425,7 +2487,8 @@
     "#c8c8d8",
     "#3a2a4a",
     "#ff5a7a"
-   ]
+   ],
+   "eye": "#ff33ec"
   },
   "generated": true,
   "elementLevel": 4
@@ -2465,7 +2528,8 @@
     "#4a4a5a",
     "#1e1e28",
     "#7fd6ff"
-   ]
+   ],
+   "eye": "#1a64ff"
   },
   "generated": true,
   "elementLevel": 4
@@ -2510,7 +2574,8 @@
     "#8a7aaa",
     "#1a1028",
     "#a9e04a"
-   ]
+   ],
+   "eye": "#52ff7f"
   },
   "generated": true,
   "elementLevel": 4
@@ -2546,7 +2611,8 @@
     "#6a4ab8",
     "#3a2a7a",
     "#ffd0ff"
-   ]
+   ],
+   "eye": "#ffdf33"
   },
   "generated": true,
   "elementLevel": 4
@@ -2582,7 +2648,8 @@
     "#2a1a4a",
     "#120a24",
     "#c06aff"
-   ]
+   ],
+   "eye": "#52e7ff"
   },
   "generated": true,
   "elementLevel": 4
@@ -2618,7 +2685,8 @@
     "#4a5a9a",
     "#2a3a6a",
     "#fff27a"
-   ]
+   ],
+   "eye": "#ff1a9d"
   },
   "generated": true,
   "elementLevel": 4
@@ -2659,7 +2727,8 @@
     "#e8f0ff",
     "#2a3a6a",
     "#ffe27a"
-   ]
+   ],
+   "eye": "#6cff33"
   },
   "generated": true,
   "elementLevel": 4
@@ -2695,7 +2764,8 @@
     "#d8ecff",
     "#7aa8d0",
     "#3a6ab8"
-   ]
+   ],
+   "eye": "#5452ff"
   },
   "generated": true,
   "elementLevel": 4
@@ -2736,7 +2806,8 @@
     "#9ad8ff",
     "#3a7ab0",
     "#ffffff"
-   ]
+   ],
+   "eye": "#ff5f1a"
   },
   "generated": true,
   "elementLevel": 4
@@ -2781,7 +2852,8 @@
     "#c8ecff",
     "#1a3a5a",
     "#7fd6ff"
-   ]
+   ],
+   "eye": "#eb52ff"
   },
   "generated": true,
   "elementLevel": 4
@@ -2822,7 +2894,8 @@
     "#bfe4f8",
     "#5a8ab0",
     "#ffffff"
-   ]
+   ],
+   "eye": "#d6ff1a"
   },
   "generated": true,
   "elementLevel": 4
@@ -2863,7 +2936,8 @@
     "#3a2a2a",
     "#1a1010",
     "#ff6a2e"
-   ]
+   ],
+   "eye": "#339fff"
   },
   "generated": true,
   "elementLevel": 4
@@ -2904,7 +2978,8 @@
     "#a82a1a",
     "#4a0e08",
     "#ffd34d"
-   ]
+   ],
+   "eye": "#ff527b"
   },
   "generated": true,
   "elementLevel": 4
@@ -2940,7 +3015,8 @@
     "#2a2a32",
     "#121218",
     "#ff8a2e"
-   ]
+   ],
+   "eye": "#1aff26"
   },
   "generated": true,
   "elementLevel": 4
@@ -2981,7 +3057,8 @@
     "#ffb03a",
     "#5a1a0a",
     "#fff08a"
-   ]
+   ],
+   "eye": "#ffc052"
   },
   "generated": true,
   "elementLevel": 4
@@ -3022,7 +3099,8 @@
     "#5a6a2a",
     "#c8ff4a",
     "#f0ffd0"
-   ]
+   ],
+   "eye": "#1affef"
   },
   "generated": true,
   "elementLevel": 4
@@ -3063,7 +3141,8 @@
     "#4a3a2a",
     "#2a1e14",
     "#a9e04a"
-   ]
+   ],
+   "eye": "#ff33d2"
   },
   "generated": true,
   "looter": true,
@@ -3105,7 +3184,8 @@
     "#6a7a2a",
     "#1e2410",
     "#e0ffd0"
-   ]
+   ],
+   "eye": "#a6ff52"
   },
   "generated": true,
   "elementLevel": 4
@@ -3146,7 +3226,8 @@
     "#4a8a3a",
     "#1e3a14",
     "#e0ff6a"
-   ]
+   ],
+   "eye": "#52ff95"
   },
   "generated": true,
   "elementLevel": 4
@@ -3191,7 +3272,8 @@
     "#c8c0a0",
     "#3a3242",
     "#ffd34d"
-   ]
+   ],
+   "eye": "#ff4733"
   },
   "generated": true,
   "elementLevel": 4
@@ -3231,7 +3313,8 @@
     "#1a1a1e",
     "#08080a",
     "#ff3a4a"
-   ]
+   ],
+   "eye": "#b61aff"
   },
   "generated": true,
   "elementLevel": 4
@@ -3276,7 +3359,8 @@
     "#7a6a9a",
     "#120a1e",
     "#ff5a7a"
-   ]
+   ],
+   "eye": "#52d1ff"
   },
   "generated": true,
   "elementLevel": 4
@@ -3317,7 +3401,8 @@
     "#e8e0c8",
     "#4a4040",
     "#7fd6ff"
-   ]
+   ],
+   "eye": "#ff1a7f"
   },
   "generated": true,
   "elementLevel": 4
@@ -3353,7 +3438,8 @@
     "#1a1030",
     "#0a0614",
     "#c06aff"
-   ]
+   ],
+   "eye": "#ff7c1a"
   },
   "generated": true,
   "elementLevel": 4
@@ -3394,7 +3480,8 @@
     "#3a2a5a",
     "#0a0414",
     "#c06aff"
-   ]
+   ],
+   "eye": "#33ffc7"
   },
   "generated": true,
   "elementLevel": 4
@@ -3435,7 +3522,8 @@
     "#4a1a3a",
     "#1a0814",
     "#ff3a8a"
-   ]
+   ],
+   "eye": "#ff52fc"
   },
   "generated": true,
   "elementLevel": 4
@@ -3476,7 +3564,8 @@
     "#2a1a4a",
     "#0e0820",
     "#ff5aff"
-   ]
+   ],
+   "eye": "#b9ff1a"
   },
   "generated": true,
   "elementLevel": 4
@@ -3519,7 +3608,8 @@
     "#5a3a2a",
     "#ff3a2a"
    ],
-   "scale": 2
+   "scale": 2,
+   "eye": "#5e1aff"
   },
   "generated": true,
   "elementLevel": 3
@@ -3562,7 +3652,8 @@
     "#1a0a3a",
     "#ffe14d"
    ],
-   "scale": 2.2
+   "scale": 2.2,
+   "eye": "#1a81ff"
   },
   "generated": true,
   "elementLevel": 3
@@ -3605,7 +3696,8 @@
     "#c8a03a",
     "#3ad8a8"
    ],
-   "scale": 2.2
+   "scale": 2.2,
+   "eye": "#7b1aff"
   },
   "generated": true,
   "elementLevel": 4
@@ -3644,7 +3736,8 @@
     "#7a1a0e",
     "#ffd34d"
    ],
-   "scale": 2.4
+   "scale": 2.4,
+   "eye": "#bcff52"
   },
   "generated": true,
   "elementLevel": 4
@@ -3687,7 +3780,8 @@
     "#12121a",
     "#c83a4a"
    ],
-   "scale": 2.5
+   "scale": 2.5,
+   "eye": "#981aff"
   },
   "generated": true,
   "elementLevel": 4
@@ -3726,7 +3820,8 @@
     "#c8a03a",
     "#7fd6ff"
    ],
-   "scale": 2.3
+   "scale": 2.3,
+   "eye": "#fff933"
   },
   "generated": true,
   "elementLevel": 4
@@ -3765,7 +3860,8 @@
     "#5a8ab0",
     "#ffffff"
    ],
-   "scale": 2.5
+   "scale": 2.5,
+   "eye": "#6a52ff"
   },
   "generated": true,
   "elementLevel": 4
@@ -3804,7 +3900,8 @@
     "#5a0e04",
     "#fff08a"
    ],
-   "scale": 2.6
+   "scale": 2.6,
+   "eye": "#3385ff"
   },
   "generated": true,
   "elementLevel": 4
@@ -3843,7 +3940,8 @@
     "#1e2410",
     "#ff3a8a"
    ],
-   "scale": 2.4
+   "scale": 2.4,
+   "eye": "#ff5265"
   },
   "generated": true,
   "elementLevel": 4
@@ -3886,7 +3984,8 @@
     "#0e0e14",
     "#7fffd0"
    ],
-   "scale": 2.5
+   "scale": 2.5,
+   "eye": "#1aff43"
   },
   "generated": true,
   "elementLevel": 4
@@ -3925,7 +4024,8 @@
     "#2a3a6a",
     "#fff27a"
    ],
-   "scale": 2.6
+   "scale": 2.6,
+   "eye": "#9433ff"
   },
   "generated": true,
   "elementLevel": 4
@@ -3964,7 +4064,8 @@
     "#0a1428",
     "#5affd8"
    ],
-   "scale": 2.6
+   "scale": 2.6,
+   "eye": "#ffd652"
   },
   "generated": true,
   "elementLevel": 4
@@ -4003,7 +4104,8 @@
     "#08040e",
     "#ff5aff"
    ],
-   "scale": 2.6
+   "scale": 2.6,
+   "eye": "#1af2ff"
   },
   "generated": true,
   "elementLevel": 4
@@ -4042,7 +4144,8 @@
     "#120408",
     "#ff3a3a"
    ],
-   "scale": 2.8
+   "scale": 2.8,
+   "eye": "#ff33b8"
   },
   "generated": true,
   "elementLevel": 4
@@ -4085,7 +4188,8 @@
     "#0a1a0e",
     "#e8e0c8"
    ],
-   "scale": 2.7
+   "scale": 2.7,
+   "eye": "#90ff52"
   },
   "generated": true,
   "elementLevel": 4
@@ -4114,14 +4218,15 @@
   "collisionRadius": 12,
   "art": {
    "shape": "bat",
-   "w": 44,
-   "h": 44,
+   "w": 59,
+   "h": 59,
    "colors": [
     "#5a4a6a",
     "#3a2e48",
     "#ff5a5a"
    ],
-   "scale": 1.35
+   "scale": 1.35,
+   "eye": "#82ff1a"
   },
   "generated": true,
   "aggroRange": 220,
@@ -4154,14 +4259,15 @@
   "collisionRadius": 12,
   "art": {
    "shape": "goblin",
-   "w": 44,
-   "h": 44,
+   "w": 59,
+   "h": 59,
    "colors": [
     "#7a9a3a",
     "#5a4a3a",
     "#3a6ab8"
    ],
-   "scale": 1.35
+   "scale": 1.35,
+   "eye": "#ff1af5"
   },
   "generated": true,
   "looter": false,
@@ -4193,14 +4299,15 @@
   "collisionRadius": 12,
   "art": {
    "shape": "goblin",
-   "w": 44,
-   "h": 44,
+   "w": 59,
+   "h": 59,
    "colors": [
     "#5a8a3a",
     "#3a4a2a",
     "#c8a26b"
    ],
-   "scale": 1.35
+   "scale": 1.35,
+   "eye": "#33edff"
   },
   "generated": true,
   "looter": false,
@@ -4232,14 +4339,15 @@
   "collisionRadius": 12,
   "art": {
    "shape": "wolf",
-   "w": 44,
-   "h": 44,
+   "w": 59,
+   "h": 59,
    "colors": [
     "#3a3a4a",
     "#22222e",
     "#c83a4a"
    ],
-   "scale": 1.35
+   "scale": 1.35,
+   "eye": "#ff1ad7"
   },
   "generated": true,
   "elite": true,
@@ -4276,14 +4384,15 @@
   },
   "art": {
    "shape": "ghost",
-   "w": 44,
-   "h": 44,
+   "w": 59,
+   "h": 59,
    "colors": [
     "#b89af0",
     "#2a1a4a",
     "#ffffff"
    ],
-   "scale": 1.35
+   "scale": 1.35,
+   "eye": "#ffab33"
   },
   "generated": true,
   "elite": true,
@@ -4315,14 +4424,15 @@
   "collisionRadius": 12,
   "art": {
    "shape": "wolf",
-   "w": 44,
-   "h": 44,
+   "w": 59,
+   "h": 59,
    "colors": [
     "#c8a46a",
     "#8a6a42",
     "#fff0c0"
    ],
-   "scale": 1.35
+   "scale": 1.35,
+   "eye": "#bf52ff"
   },
   "generated": true,
   "elite": true,
@@ -4359,14 +4469,15 @@
   },
   "art": {
    "shape": "scorpion",
-   "w": 56,
-   "h": 56,
+   "w": 76,
+   "h": 76,
    "colors": [
     "#8a3a2a",
     "#5a1e14",
     "#ffd34d"
    ],
-   "scale": 1.35
+   "scale": 1.35,
+   "eye": "#f833ff"
   },
   "generated": true,
   "elite": true,
@@ -4398,14 +4509,15 @@
   "collisionRadius": 12,
   "art": {
    "shape": "bat",
-   "w": 44,
-   "h": 44,
+   "w": 59,
+   "h": 59,
    "colors": [
     "#f2f2f2",
     "#b8c4d4",
     "#ffb03a"
    ],
-   "scale": 1.35
+   "scale": 1.35,
+   "eye": "#de33ff"
   },
   "generated": true,
   "looter": false,
@@ -4442,14 +4554,15 @@
   },
   "art": {
    "shape": "golem",
-   "w": 56,
-   "h": 56,
+   "w": 76,
+   "h": 76,
    "colors": [
     "#a8d8f0",
     "#6aa8d0",
     "#ffffff"
    ],
-   "scale": 1.35
+   "scale": 1.35,
+   "eye": "#ffc533"
   },
   "generated": true,
   "elite": true,
@@ -4486,14 +4599,15 @@
   },
   "art": {
    "shape": "drake",
-   "w": 56,
-   "h": 56,
+   "w": 76,
+   "h": 76,
    "colors": [
     "#c83a2a",
     "#8a1e14",
     "#ffd34d"
    ],
-   "scale": 1.35
+   "scale": 1.35,
+   "eye": "#2aff1a"
   },
   "generated": true,
   "elite": true,
@@ -4525,14 +4639,15 @@
   "collisionRadius": 16,
   "art": {
    "shape": "crab",
-   "w": 56,
-   "h": 56,
+   "w": 76,
+   "h": 76,
    "colors": [
     "#4a5a3a",
     "#2e3a22",
     "#c8e07a"
    ],
-   "scale": 1.35
+   "scale": 1.35,
+   "eye": "#1affd2"
   },
   "generated": true,
   "looter": false,
@@ -4573,14 +4688,15 @@
   ],
   "art": {
    "shape": "ghost",
-   "w": 44,
-   "h": 44,
+   "w": 59,
+   "h": 59,
    "colors": [
     "#c8c8d8",
     "#3a2a4a",
     "#ff5a7a"
    ],
-   "scale": 1.35
+   "scale": 1.35,
+   "eye": "#ff3339"
   },
   "generated": true,
   "elite": true,
@@ -4617,14 +4733,15 @@
   },
   "art": {
    "shape": "ghost",
-   "w": 44,
-   "h": 44,
+   "w": 59,
+   "h": 59,
    "colors": [
     "#e8f0ff",
     "#2a3a6a",
     "#ffe27a"
    ],
-   "scale": 1.35
+   "scale": 1.35,
+   "eye": "#33ffac"
   },
   "generated": true,
   "elite": true,
@@ -4661,14 +4778,15 @@
   },
   "art": {
    "shape": "golem",
-   "w": 56,
-   "h": 56,
+   "w": 76,
+   "h": 76,
    "colors": [
     "#bfe4f8",
     "#5a8ab0",
     "#ffffff"
    ],
-   "scale": 1.35
+   "scale": 1.35,
+   "eye": "#7a33ff"
   },
   "generated": true,
   "elite": true,
@@ -4705,14 +4823,15 @@
   },
   "art": {
    "shape": "ghost",
-   "w": 44,
-   "h": 44,
+   "w": 59,
+   "h": 59,
    "colors": [
     "#ffb03a",
     "#5a1a0a",
     "#fff08a"
    ],
-   "scale": 1.35
+   "scale": 1.35,
+   "eye": "#1a46ff"
   },
   "generated": true,
   "elite": true,
@@ -4749,14 +4868,15 @@
   },
   "art": {
    "shape": "drake",
-   "w": 56,
-   "h": 56,
+   "w": 76,
+   "h": 76,
    "colors": [
     "#4a8a3a",
     "#1e3a14",
     "#e0ff6a"
    ],
-   "scale": 1.35
+   "scale": 1.35,
+   "eye": "#52ff33"
   },
   "generated": true,
   "elite": true,
@@ -4796,7 +4916,8 @@
     "#a07a4a",
     "#6a4a2a",
     "#e8d8b0"
-   ]
+   ],
+   "eye": "#ec1aff"
   },
   "generated": true
  },
@@ -4832,7 +4953,8 @@
     "#1a1a24",
     "#7fd6ff",
     "#ffffff"
-   ]
+   ],
+   "eye": "#52ffbe"
   },
   "generated": true
  }

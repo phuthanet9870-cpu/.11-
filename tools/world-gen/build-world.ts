@@ -567,6 +567,14 @@ function bossDef(b: typeof BOSSES[number], grukk: J): J {
   };
 }
 
+/** Bright eye colour for a hue; lightness alternates a little so near hues still differ. */
+function eyeHue(h: number, i: number): string {
+  const s = 1, l = [0.6, 0.66, 0.55][i % 3];
+  const k = (n: number) => (n + h / 30) % 12, a = s * Math.min(l, 1 - l);
+  const f = (n: number) => Math.round(255 * (l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1))))).toString(16).padStart(2, '0');
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
 // ------------------------------------------------------------------ main
 export async function main() {
   const { compileMap } = await import('../../src/core/mapCompiler');
@@ -612,7 +620,7 @@ export async function main() {
     ], generated: true });
     monsters.push({ ...base, id, name: `${ELITE_TITLE[base.race] ?? 'Elder'} ${base.name}`, level: base.level + 5, maxHp: base.maxHp * 6, attack: Math.round(base.attack * 1.5),
       defense: Math.round(base.defense * 1.3), magicDefense: Math.round(base.magicDefense * 1.3), exp: base.exp * 6, jobExp: base.jobExp * 6, aiType: 'elite', aggroRange: 220,
-      respawnSeconds: 600, dropTableId: `${id}_drops`, elite: true, looter: false, art: { ...base.art, scale: 1.35 }, generated: true });
+      respawnSeconds: 600, dropTableId: `${id}_drops`, elite: true, looter: false, art: { ...base.art, w: Math.round(base.art.w * 1.35), h: Math.round(base.art.h * 1.35), scale: 1.35 }, generated: true });
   }
 
   // Element levels 1–4 (Ragnarok-style), by level tier; bosses one level higher.
@@ -1046,6 +1054,7 @@ export async function main() {
     for (const id of TOWNS) {
       const m = id === 'willowbrook' ? hand.willowbrook ?? null : built.find((b) => b.map.id === id)?.map;
       if (!m) continue;
+      m.npcs = m.npcs.filter((n: J) => n.npcId !== 'mvp_guide');
       const c = m.npcs.find((n: J) => n.npcId === `${id}_courier`);
       m.npcs.push({ npcId: 'mvp_guide', x: (c?.x ?? m.spawnPoints.default.x) + 2, y: c?.y ?? m.spawnPoints.default.y + 2, facing: 'down' });
     }
@@ -1239,6 +1248,8 @@ export async function main() {
   monsters.push({ id: 'shadow_fighter', name: 'Shadow Fighter', level: 1, element: 'shadow', race: 'demihuman', size: 'medium', maxHp: 100, attack: 10, defense: 0, magicDefense: 0, exp: 0, jobExp: 0,
     attackRange: 40, attackIntervalMs: 1200, moveSpeed: 110, aiType: 'aggressive', aggroRange: 900, leashRange: 2000, respawnSeconds: 0, dropTableId: 'no_drops', collisionRadius: 12, elementLevel: 1, hidden: true,
     art: { shape: 'shadow_class', w: 48, h: 64, colors: ['#1a1a24', '#7fd6ff', '#ffffff'] }, generated: true });
+  // Every monster gets glowing eyes in a colour of its own (golden-angle hues, so no two match).
+  [...monsters].sort((a, b) => a.level - b.level || (a.id < b.id ? -1 : 1)).forEach((m, i) => { m.art = { ...m.art, eye: eyeHue((i * 137.508 + 20) % 360, i) }; });
   write('monsters.json', monsters); write('items.json', items); write('drops.json', drops); write('shops.json', shops);
   write('npcs.json', npcs); write('bosses.json', bosses); write('tilesets.json', tilesets); write('audio.json', audio);
   for (const m of allMaps) writeFileSync(join(DATA, 'maps', `${m.id}.json`), JSON.stringify(m, null, 1) + '\n');

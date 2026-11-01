@@ -316,7 +316,7 @@ export interface MonsterDef {
   onHitStatus?: { status: StatusId; chance: number; durationMs: number };
   statusImmune?: StatusId[];
   bossId?: string;
-  art: { shape: string; w: number; h: number; colors: string[]; scale?: number };
+  art: { shape: string; w: number; h: number; colors: string[]; scale?: number; /** Glowing eye colour (each monster has its own). */ eye?: string };
   collisionRadius: number;
   /** Not listed in the monster database (training dummy, shadow-fighter template). */
   hidden?: boolean;

@@ -143,3 +143,54 @@ export function ensureItemTexture(scene: Phaser.Scene, def: ItemDef): string {
   if (!scene.textures.exists(key)) scene.textures.addCanvas(key, itemIconCanvas(def));
   return key;
 }
+
+// ------------------------------------------------------------------ emissive glow layer
+const glowKeys = new Map<string, { src: unknown; gk: string | null }>();
+
+/** Is a pixel "light" (eyes, neon trims, glowing markings)? Bright and coloured, or near white. */
+export function isEmissive(r: number, g: number, b: number, a: number): boolean {
+  if (a < 100) return false;
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+  return mx >= 150 && ((mx - mn) / mx > 0.3 || mx > 235);
+}
+
+/**
+ * Glow sheet for a shadow-style sprite sheet: only its lights (bright, coloured pixels) with a soft
+ * halo, frame for frame. It is drawn additively above the darkening layer, so eyes and neon parts
+ * shine out. Colourful sheets (not shadow style, e.g. ones drawn in the Studio) get none.
+ */
+export function ensureGlowTexture(scene: Phaser.Scene, key: string): string | null {
+  const gk = `${key}__glow`;
+  const tex = scene.textures.get(key), src = tex.getSourceImage() as HTMLCanvasElement | HTMLImageElement;
+  const known = glowKeys.get(key);
+  if (known && known.src === src && (known.gk === null || scene.textures.exists(gk))) return known.gk;
+  const W = src.width, H = src.height;
+  const c0 = makeCanvas(W, H);
+  c0.ctx.drawImage(src as CanvasImageSource, 0, 0);
+  const img = c0.ctx.getImageData(0, 0, W, H), d = img.data;
+  let opaque = 0, lit = 0;
+  for (let i = 0; i < d.length; i += 4) {
+    if (d[i + 3] > 100) opaque++;
+    if (isEmissive(d[i], d[i + 1], d[i + 2], d[i + 3])) { lit++; d[i + 3] = 255; } else d[i + 3] = 0;
+  }
+  if (!lit || lit / Math.max(1, opaque) > 0.3) { glowKeys.set(key, { src, gk: null }); return null; }
+  c0.ctx.putImageData(img, 0, 0);
+  const out = makeCanvas(W, H), o = out.ctx;
+  o.imageSmoothingEnabled = true;
+  o.globalCompositeOperation = 'lighter';
+  const ring = (r: number, n: number) => Array.from({ length: n }, (_, i) => [Math.cos((i / n) * Math.PI * 2) * r, Math.sin((i / n) * Math.PI * 2) * r] as const);
+  const taps: [number, number, number][] = [...ring(1.5, 8).map(([x, y]) => [x, y, 0.13] as [number, number, number]), ...ring(3.2, 12).map(([x, y]) => [x, y, 0.06] as [number, number, number])];
+  const frames = tex.getFrameNames().map((n) => tex.get(n));
+  for (const f of frames.length ? frames : [{ cutX: 0, cutY: 0, cutWidth: W, cutHeight: H }]) {
+    const { cutX: x, cutY: y, cutWidth: fw, cutHeight: fh } = f;
+    o.save(); o.beginPath(); o.rect(x, y, fw, fh); o.clip();
+    for (const [ox, oy, a] of taps) { o.globalAlpha = a; o.drawImage(c0.canvas, x, y, fw, fh, x + ox, y + oy, fw, fh); }
+    o.globalAlpha = 0.55; o.drawImage(c0.canvas, x, y, fw, fh, x, y, fw, fh);
+    o.restore();
+  }
+  if (scene.textures.exists(gk)) scene.textures.remove(gk);
+  const gt = scene.textures.addCanvas(gk, out.canvas)!;
+  for (const f of frames) if (f.name !== '__BASE') gt.add(f.name, 0, f.cutX, f.cutY, f.cutWidth, f.cutHeight);
+  glowKeys.set(key, { src, gk });
+  return gk;
+}
