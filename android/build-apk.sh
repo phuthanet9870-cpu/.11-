@@ -21,7 +21,7 @@ dalvik-exchange --dex --output="$W/classes.dex" "$W/classes"
 (cd "$W" && aapt add unsigned.apk classes.dex >/dev/null)
 zipalign -f -p 4 "$W/unsigned.apk" "$W/aligned.apk"
 KS="${VEYLORIA_KEYSTORE:-$ROOT/android/veyloria.keystore}"; P="${VEYLORIA_KS_PASS:-veyloria}"
-[ -f "$KS" ] || keytool -genkeypair -keystore "$KS" -storepass "$P" -keypass "$P" -alias veyloria -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Veyloria Online" >/dev/null 2>&1
+[ -f "$KS" ] || keytool -genkeypair -keystore "$KS" -storepass "$P" -keypass "$P" -alias veyloria -keyalg RSA -keysize 2048 -sigalg SHA256withRSA -storetype PKCS12 -validity 10000 -dname "CN=Veyloria Online" >/dev/null 2>&1
 apksigner sign --ks "$KS" --ks-pass "pass:$P" --key-pass "pass:$P" --ks-key-alias veyloria --out "$OUT/Veyloria.apk" "$W/aligned.apk"
 apksigner verify "$OUT/Veyloria.apk"
 rm -rf "$W"
