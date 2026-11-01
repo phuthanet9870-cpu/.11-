@@ -385,7 +385,7 @@ try {
   await sleep(300);
   await page.screenshot({ path: join(shots, '16-gm-tools.png') });
   const gmMid = await page.evaluate(() => ({ luma: window.__veyloria.world.char.luma, mons: window.__veyloria.world.monsters.size, flag: window.__veyloria.world.char.flags.gmUsed }));
-  await page.click('#win-admin .gm-tile[data-id="sunny_meadow"]');
+  await page.click('#win-admin .gm-maptile[data-id="sunny_meadow"]');
   await page.click('#win-admin button:has-text("Teleport")');
   await sleep(800);
   const gmMap = await page.evaluate(() => window.__veyloria.world.map.def.id);

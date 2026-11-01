@@ -11,6 +11,7 @@ import { h, setChildren, RARITY_COLOR } from './dom';
 import { isTouchDevice } from './touch';
 import { getLang, LANGS, type Lang } from './i18n';
 import { ARENA_DIFFICULTY, type ArenaDifficulty } from '../core/world';
+import { mapThumbnail } from './mapThumb';
 import { itemIconUrl, monsterIconUrl, skillIconUrl } from '../game/art/icons';
 import { generateCharacterSheet, portraitFromSheet, useShadowStyle } from '../game/art/characterSprite';
 import { lookForCharacter, SpritePreview } from './screens';
@@ -1447,6 +1448,51 @@ export class WindowManager {
     return h('div', {}, input, grid);
   }
 
+  private mapThumbs = new Map<string, string>();
+  private thumbQueue: string[] = [];
+  private thumbTimer = 0;
+
+  /** Level label of a map ("Lv 86–94", "Town", "MVP bosses"...). */
+  private mapLevel(id: string): string {
+    const m = this.app.world!.data.maps.get(id)!;
+    if (m.levelRange) return `Lv ${m.levelRange[0]}–${m.levelRange[1]}`;
+    if (m.mvp) return 'MVP bosses';
+    return ({ town: 'Town', arena: 'Arena', instance: 'Dungeon floor', boss: 'Boss' } as Record<string, string>)[m.type] ?? m.type;
+  }
+
+  /** Map picker: a picture of each map (drawn in the background, a few per frame), its name and level. */
+  private mapPicker(): HTMLElement {
+    const w = this.app.world!, d = w.data, q = (this.adminSel.mapq ?? '').toLowerCase();
+    const maps = [...d.maps.values()].filter((m) => m.type !== 'instance' || !m.id.includes('_f') || m.id.endsWith('_f1'))
+      .filter((m) => !q || m.name.toLowerCase().includes(q) || m.id.includes(q) || (m.region ?? '').toLowerCase().includes(q))
+      .sort((a, b) => (a.levelRange?.[0] ?? (a.type === 'town' ? 0 : 999)) - (b.levelRange?.[0] ?? (b.type === 'town' ? 0 : 999)) || a.name.localeCompare(b.name));
+    const sel = this.adminSel.map ?? '';
+    const grid = h('div', { class: 'gm-picker gm-maps', style: 'max-height:170px' }, ...maps.map((m) => {
+      const thumb = this.mapThumbs.get(m.id);
+      return h('button', { class: `gm-maptile${m.id === sel ? ' on' : ''}`, dataset: { id: m.id }, title: `${m.name}\n${m.region ?? ''}\n${this.mapLevel(m.id)}`, onclick: () => { this.adminSel.map = m.id; this.renderAdmin(); } },
+        thumb ? h('img', { src: thumb }) : h('span', { class: 'gm-mapph' }, MAP_EMOJI[m.type] ?? '📍'),
+        h('span', { class: 'gm-mapname' }, `${MAP_EMOJI[m.type] ?? ''} ${m.name}`), h('span', { class: 'gm-maplv' }, this.mapLevel(m.id)));
+    }));
+    // Draw missing pictures a few at a time so the window opens at once.
+    this.thumbQueue = maps.map((m) => m.id).filter((id) => !this.mapThumbs.has(id));
+    clearTimeout(this.thumbTimer);
+    const work = () => {
+      for (let n = 0; n < 3 && this.thumbQueue.length; n++) {
+        const id = this.thumbQueue.shift()!;
+        try { this.mapThumbs.set(id, mapThumbnail(d, w.getCompiledMap(id), 56).toDataURL()); } catch { this.mapThumbs.set(id, ''); }
+        const btn = document.querySelector(`.gm-maps [data-id="${id}"]`);
+        const ph = btn?.querySelector('.gm-mapph');
+        if (ph && this.mapThumbs.get(id)) ph.replaceWith(h('img', { src: this.mapThumbs.get(id)! }));
+      }
+      if (this.thumbQueue.length && this.isOpen('admin')) this.thumbTimer = window.setTimeout(work, 16);
+    };
+    this.thumbTimer = window.setTimeout(work, 30);
+    const input = h('input', { placeholder: '🔍 Search maps (name, region)…', value: this.adminSel.mapq ?? '', class: 'gm-search', id: 'gm-map-search' }) as HTMLInputElement;
+    input.addEventListener('keydown', (e) => e.stopPropagation());
+    input.addEventListener('input', () => { this.adminSel.mapq = input.value; this.renderAdmin(); this.refocus('#gm-map-search'); });
+    return h('div', {}, input, grid);
+  }
+
   /** Puts the caret back in a search box after a re-render. */
   private refocus(sel: string) { const el = document.querySelector<HTMLInputElement>(sel); if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); } }
 
@@ -1650,8 +1696,7 @@ export class WindowManager {
       section('🎒 Items', row(h('span', { class: 'muted small' }, 'Every item, by category with icons:'), btn('Open the item browser', () => { this.adminTab = 'items'; this.renderAdmin(); }, 'btn small primary'))),
       section('🌍 World',
         h('div', { class: 'small muted' }, '🗺 Maps'),
-        this.iconPicker([...d.maps.values()].map((x) => ({ id: x.id, label: x.name, emoji: MAP_EMOJI[x.type] ?? '📍', sub: x.type })), this.adminSel.map ?? '', (id) => { this.adminSel.map = id; this.renderAdmin(); },
-          { height: 96, search: this.adminSel.mapq ?? '', onSearch: (v) => { this.adminSel.mapq = v; this.renderAdmin(); this.refocus('.gm-search'); } }),
+        this.mapPicker(),
         row(btn(`🌀 Teleport${this.adminSel.map ? ` to ${d.maps.get(this.adminSel.map)?.name}` : ''}`, () => run(gm.gmTeleport(w, this.adminSel.map ?? 'aurelion')), 'btn small primary')),
         h('div', { class: 'small muted' }, '👾 Monsters'),
         this.iconPicker([...d.monsters.values()].filter((x) => !x.hidden).sort((a, b) => a.level - b.level).map((x) => ({ id: x.id, label: `${x.name}`, icon: monsterIconUrl(x), sub: `Lv ${x.level} · ${x.race} · ${x.element}`, color: x.aiType === 'boss' ? '#ff8a7a' : x.elite ? '#ffd34d' : undefined })), this.adminSel.mon ?? '', (id) => { this.adminSel.mon = id; this.renderAdmin(); }, { height: 120 }),
