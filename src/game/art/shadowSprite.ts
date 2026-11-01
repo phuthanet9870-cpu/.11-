@@ -7,8 +7,12 @@ import { addOutline, ellipse, makeCanvas, poly, px, shade } from './canvas';
 import { CHAR_DIRECTIONS, CHAR_FRAME_H, CHAR_FRAME_W, type CharAnim } from './spriteMeta';
 
 type HeadKind = 'bare' | 'sprout' | 'hood' | 'pointed_hood' | 'ears_hood' | 'horn_hood' | 'helm' | 'horn_helm' | 'great_helm'
-  | 'witch_hat' | 'wide_hat' | 'tricorn' | 'mitre' | 'cap' | 'goggles' | 'bandana' | 'topknot' | 'circlet' | 'flame_crown' | 'antlers';
-type BodyKind = 'slim' | 'armor' | 'robe' | 'cloak' | 'coat' | 'apron';
+  | 'witch_hat' | 'wide_hat' | 'tricorn' | 'mitre' | 'cap' | 'goggles' | 'bandana' | 'topknot' | 'circlet' | 'flame_crown' | 'antlers'
+  // NPC-only headwear (never used by player jobs)
+  | 'top_hat' | 'turban' | 'straw_hat' | 'veil' | 'chef_hat' | 'mentor_hat' | 'kerchief' | 'bonnet';
+type BodyKind = 'slim' | 'armor' | 'robe' | 'cloak' | 'coat' | 'apron'
+  // NPC-only clothes
+  | 'gown' | 'longcoat' | 'smock';
 type Eyes = 'dots' | 'slit' | 'visor' | 'cross';
 
 export interface ShadowDesign {
@@ -74,28 +78,37 @@ const THIRD: Record<string, [string, Partial<ShadowDesign>]> = {
 
 /** NPC roles drawn as shadows: each role has its own silhouette, tool and glow colour. */
 const NPC_LOOK: Record<string, [ShadowDesign, string | null]> = {
-  smith: [D({ head: 'goggles', body: 'apron', eyes: 'dots', glow: '#ff9a4a', pauldrons: true }), 'club'],
-  shop: [D({ head: 'cap', body: 'apron', eyes: 'dots', glow: '#ffe27a', bag: true }), null],
-  inn: [D({ head: 'hood', body: 'robe', eyes: 'dots', glow: '#ffb0a0', emblem: 'gem' }), null],
-  courier: [D({ head: 'wide_hat', body: 'coat', eyes: 'dots', glow: '#7fd6ff', scarf: true, bag: true }), 'staff'],
-  warp: [D({ head: 'pointed_hood', body: 'robe', eyes: 'dots', glow: '#7fd6ff', orbs: 2 }), 'staff'],
-  market: [D({ head: 'tricorn', body: 'coat', eyes: 'dots', glow: '#ffd34d', emblem: 'gem', trim: true }), null],
-  trader: [D({ head: 'tricorn', body: 'apron', eyes: 'dots', glow: '#ffd34d', bag: true }), null],
-  storage: [D({ head: 'cap', body: 'coat', eyes: 'dots', glow: '#c8a26b', bag: true }), null],
-  enchant: [D({ head: 'circlet', body: 'robe', eyes: 'slit', glow: '#c9a6ff', cape: 'long', orbs: 3 }), 'wand'],
-  stable: [D({ head: 'horn_helm', body: 'armor', eyes: 'visor', glow: '#c8a060', cape: 'short' }), 'spear'],
-  dungeon: [D({ head: 'great_helm', body: 'armor', eyes: 'cross', glow: '#ff8a7a', cape: 'long', pauldrons: true }), 'sword'],
-  arena: [D({ head: 'helm', body: 'armor', eyes: 'visor', glow: '#ff8a8a', cape: 'long', pauldrons: true }), 'twohand_sword'],
-  mvp: [D({ head: 'horn_hood', body: 'cloak', eyes: 'slit', glow: '#ff5a5a', cape: 'long', aura: true }), 'spear'],
-  reset: [D({ head: 'mitre', body: 'robe', eyes: 'dots', glow: '#9fe8ff', halo: true }), 'book'],
-  runes: [D({ head: 'witch_hat', body: 'robe', eyes: 'dots', glow: '#c9a6ff', orbs: 4 }), 'staff'],
-  townsfolk: [D({ head: 'bare', body: 'slim', eyes: 'dots', glow: '#e8e4d8', scarf: true }), null],
+  smith: [D({ head: 'kerchief', body: 'smock', eyes: 'dots', glow: '#ff9a4a' }), 'hammer'],
+  shop: [D({ head: 'straw_hat', body: 'smock', eyes: 'dots', glow: '#ffe27a', bag: true }), 'keys'],
+  inn: [D({ head: 'chef_hat', body: 'smock', eyes: 'dots', glow: '#ffb0a0' }), 'ladle'],
+  courier: [D({ head: 'top_hat', body: 'longcoat', eyes: 'dots', glow: '#7fd6ff', bag: true }), 'scroll'],
+  warp: [D({ head: 'veil', body: 'gown', eyes: 'dots', glow: '#7fd6ff', orbs: 2 }), 'crystal'],
+  market: [D({ head: 'top_hat', body: 'longcoat', eyes: 'dots', glow: '#ffd34d', trim: true }), 'scales'],
+  trader: [D({ head: 'turban', body: 'longcoat', eyes: 'dots', glow: '#ffd34d', bag: true }), 'scales'],
+  storage: [D({ head: 'kerchief', body: 'longcoat', eyes: 'dots', glow: '#c8a26b' }), 'keys'],
+  enchant: [D({ head: 'veil', body: 'gown', eyes: 'slit', glow: '#c9a6ff', orbs: 3 }), 'crystal'],
+  stable: [D({ head: 'straw_hat', body: 'longcoat', eyes: 'dots', glow: '#c8a060' }), 'lantern'],
+  dungeon: [D({ head: 'turban', body: 'gown', eyes: 'slit', glow: '#ff8a7a', cape: 'long' }), 'lantern'],
+  arena: [D({ head: 'top_hat', body: 'longcoat', eyes: 'slit', glow: '#ff8a8a', cape: 'long' }), 'banner'],
+  mvp: [D({ head: 'veil', body: 'longcoat', eyes: 'slit', glow: '#ff5a5a', cape: 'long', aura: true }), 'bell'],
+  reset: [D({ head: 'mentor_hat', body: 'gown', eyes: 'dots', glow: '#9fe8ff' }), 'scroll'],
+  runes: [D({ head: 'turban', body: 'gown', eyes: 'dots', glow: '#c9a6ff', orbs: 4 }), 'crystal'],
+  townsfolk: [D({ head: 'bonnet', body: 'smock', eyes: 'dots', glow: '#e8e4d8' }), null],
 };
 
 /** Shadow look of an NPC: job masters look like the job they teach, everyone else like their trade. */
-export function npcShadowLook(role: string, jobClass?: string): { design: ShadowDesign; weapon: string | null } {
-  if (role === 'job' && jobClass) return { design: { ...shadowDesign(jobClass), trim: true }, weapon: null };
+export function npcShadowLook(role: string, jobClass?: string, id = ''): { design: ShadowDesign; weapon: string | null } {
+  // Job masters: a mentor's cap and long coat (not the job's own player look), glowing in the job's colour,
+  // with a banner of that colour.
+  if (role === 'job' && jobClass) return { design: D({ head: 'mentor_hat', body: 'longcoat', eyes: 'dots', glow: shadowDesign(jobClass).glow, cape: 'long', trim: true }), weapon: 'banner' };
   const [design, weapon] = NPC_LOOK[role] ?? NPC_LOOK.townsfolk;
+  if (role === 'townsfolk' && id) {
+    // Townsfolk differ from each other: hat, clothes and what they carry come from their id.
+    let hsh = 0; for (const ch of id) hsh = (hsh * 31 + ch.charCodeAt(0)) >>> 0;
+    const heads: HeadKind[] = ['bonnet', 'straw_hat', 'kerchief', 'top_hat'], bodies: BodyKind[] = ['smock', 'gown', 'longcoat'];
+    const glows = ['#e8e4d8', '#ffd8a0', '#a8e0ff', '#c8f0a8'];
+    return { design: { ...design, head: heads[hsh % 4], body: bodies[(hsh >> 3) % 3], glow: glows[(hsh >> 6) % 4], scarf: (hsh >> 9) % 2 === 0 }, weapon: [null, 'lantern', 'scroll', null][(hsh >> 11) % 4] };
+  }
   return { design, weapon };
 }
 
@@ -166,6 +179,16 @@ function drawShadowWeapon(ctx: CanvasRenderingContext2D, type: string | null, x:
     case 'instrument': ellipse(ctx, 1, 8, 5, 6, K0); px(ctx, 0, -6, 2, 10, K1); px(ctx, -1, 7, 4, 2, g); px(ctx, 1, -6, 1, 13, shade(g, -0.3)); break;
     case 'book': px(ctx, -4, 2, 9, 7, K1); px(ctx, 0, 2, 1, 7, K0); px(ctx, -3, 4, 2, 1, g); px(ctx, 2, 4, 2, 1, g); px(ctx, -3, 6, 2, 1, g); break;
     case 'knuckle': ctx.globalAlpha = 0.45; ellipse(ctx, 1, 2, 4, 4, g); ctx.globalAlpha = 1; px(ctx, -1, 0, 4, 4, K0); px(ctx, 0, 1, 2, 1, gl); break;
+    // ---- NPC-only things to hold
+    case 'lantern': line(ctx, 0, 0, 0, 5, 1, K2); px(ctx, -3, 5, 7, 8, K1); ctx.globalAlpha = 0.45; ellipse(ctx, 0, 9, 5, 5, g); ctx.globalAlpha = 1; px(ctx, -1, 7, 3, 4, gl); px(ctx, -3, 5, 7, 1, K3); break;
+    case 'scales': px(ctx, 0, -2, 1, 14, K2); px(ctx, -7, 0, 15, 1, K2); line(ctx, -6, 1, -7, 7, 1, K3); line(ctx, 6, 1, 7, 7, 1, K3); px(ctx, -10, 7, 6, 2, g); px(ctx, 5, 7, 6, 2, g); break;
+    case 'scroll': px(ctx, -2, 0, 5, 12, K2); px(ctx, -3, 0, 7, 2, K1); px(ctx, -3, 11, 7, 2, K1); px(ctx, -1, 3, 3, 1, g); px(ctx, -1, 6, 3, 1, g); break;
+    case 'keys': ctx.strokeStyle = K3; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(0, 4, 3, 0, Math.PI * 2); ctx.stroke(); for (const k of [-2, 0, 2]) { px(ctx, k, 6, 1, 6, K2); px(ctx, k, 11, 2, 1, g); } break;
+    case 'hammer': px(ctx, 0, -2, 2, 14, K1); px(ctx, -5, 10, 12, 6, K0); px(ctx, -5, 10, 12, 1, K3); px(ctx, 6, 11, 1, 4, g); break;
+    case 'ladle': px(ctx, 0, -2, 1, 13, K2); ellipse(ctx, 0, 13, 3, 2, K1); px(ctx, -1, 12, 3, 1, g); break;
+    case 'crystal': ctx.globalAlpha = 0.4; ellipse(ctx, 0, -4, 6, 6, g); ctx.globalAlpha = 1; ellipse(ctx, 0, -4, 3, 3, gl); px(ctx, -1, -6, 1, 1, '#ffffff'); break;
+    case 'banner': px(ctx, 0, -16, 2, 30, K1); poly(ctx, [[2, -16], [12, -14], [10, -10], [12, -6], [2, -6]], g); px(ctx, -1, -18, 4, 2, K3); break;
+    case 'bell': px(ctx, 0, -14, 2, 26, K1); poly(ctx, [[-4, -8], [5, -8], [3, -15], [-2, -15]], K2); px(ctx, 0, -7, 2, 2, g); break;
     default: px(ctx, -1, 0, 3, 12, K0); px(ctx, 1, 1, 1, 10, g);
   }
   ctx.restore();
@@ -276,6 +299,42 @@ function drawShadowHead(ctx: CanvasRenderingContext2D, d: ShadowDesign, hx: numb
         line(ctx, hx + s * 6, hy - 10, hx + s * 11, hy - 11, 1, K0);
         line(ctx, hx + s * 8, hy - 13, hx + s * 7, hy - 18, 1, K0);
       }
+      break;
+    // ---- NPC-only headwear
+    case 'top_hat':
+      px(ctx, hx - 8, hy - 6, 16, 2, K0); px(ctx, hx - 5, hy - 17, 10, 11, K0); px(ctx, hx - 5, hy - 9, 10, 2, shade(g, -0.2)); px(ctx, hx - 4, hy - 16, 1, 6, K2);
+      break;
+    case 'turban':
+      ellipse(ctx, hx, hy - 5, 8, 5, K1); ellipse(ctx, hx, hy - 9, 6, 3, K1);
+      for (let i = 0; i < 3; i++) px(ctx, hx - 7 + i, hy - 7 + i * 2, 14 - i * 2, 1, K2);
+      if (!back) glowDot(ctx, side ? hx - 6 : hx - 1, hy - 7, 2, 2, g);
+      poly(ctx, m([[3, -11], [6, -18], [5, -10]]), shade(g, -0.3));
+      break;
+    case 'straw_hat':
+      ellipse(ctx, hx, hy - 4, 13, 3, K1); ellipse(ctx, hx, hy - 8, 6, 4, K1); px(ctx, hx - 6, hy - 6, 12, 1, shade(g, -0.25));
+      for (let x = -12; x <= 12; x += 4) px(ctx, hx + x, hy - 4, 1, 1, K3);
+      break;
+    case 'veil':
+      ellipse(ctx, hx, hy, 8, 8, K1);
+      poly(ctx, m([[-8, 0], [8, 0], [9, 14], [-9, 14]]), K1);
+      if (!back) for (let x = -6; x <= 6; x += 3) px(ctx, hx + x, hy + 3, 1, 10, K2);
+      ellipse(ctx, hx, hy - 8, 5, 2, shade(g, -0.35));
+      break;
+    case 'chef_hat':
+      px(ctx, hx - 6, hy - 7, 12, 3, K2); ellipse(ctx, hx - 4, hy - 12, 4, 4, K2); ellipse(ctx, hx + 4, hy - 12, 4, 4, K2); ellipse(ctx, hx, hy - 15, 5, 4, K3);
+      break;
+    case 'mentor_hat':
+      // Scholar's square cap with a glowing tassel.
+      poly(ctx, m([[-11, -8], [0, -13], [11, -8], [0, -3]]), K0); px(ctx, hx - 6, hy - 7, 12, 3, K1);
+      line(ctx, hx + 6, hy - 9, hx + 9, hy - 2 + phase, 1, g); glowDot(ctx, hx + 8, hy - 2 + phase, 2, 2, g);
+      break;
+    case 'kerchief':
+      px(ctx, hx - 7, hy - 6, 14, 4, K1); poly(ctx, m([[-2, -6], [-6, -11], [-1, -8]]), K1); poly(ctx, m([[2, -6], [6, -11], [1, -8]]), K1);
+      for (let x = -6; x < 7; x += 3) px(ctx, hx + x, hy - 5, 1, 1, shade(g, -0.2));
+      break;
+    case 'bonnet':
+      ellipse(ctx, hx, hy - 3, 8, 6, K1); px(ctx, hx - 8, hy - 1, 16, 2, K2);
+      if (!back) { line(ctx, hx - 5, hy + 1, hx - 3, hy + 7, 1, shade(g, -0.2)); line(ctx, hx + 5, hy + 1, hx + 3, hy + 7, 1, shade(g, -0.2)); }
       break;
     default: break;
   }
@@ -450,7 +509,7 @@ export function drawShadowFrame(ctx: CanvasRenderingContext2D, fx: CanvasRenderi
   // Legs.
   const legW = d.body === 'armor' ? 4 : 3;
   const footY = (lift: number) => FEET - oy - lift * 1.5;
-  if (d.body !== 'robe') {
+  if (d.body !== 'robe' && d.body !== 'gown') {
     if (side) {
       const sw = Math.round(p.stride * 4);
       const fb = footY(p.legL), ff = footY(p.legR);
@@ -484,6 +543,26 @@ export function drawShadowFrame(ctx: CanvasRenderingContext2D, fx: CanvasRenderi
       const flare = p.cast !== undefined ? 2 : 0;
       torso([[-6, 24], [6, 24], [10 + s + flare, hem], [-9 + s - flare, hem]], K0);
       if (!back) torso([[-1, 30], [1, 30], [2, hem], [-2, hem]], K1);
+      break;
+    }
+    case 'gown': {
+      // Long flared gown with a frilled hem and a sash.
+      const hem = Math.min(59, 59 - by), s = side ? Math.round(sway / 2) : 0;
+      torso([[-5, 24], [5, 24], [6, 34], [12 + s, hem], [-12 + s, hem], [-6, 34]], K0);
+      for (let x = -11; x < 12; x += 3) poly(ctx, [[CX + (x + s) * w, by + hem - 2], [CX + (x + 3 + s) * w, by + hem - 2], [CX + (x + 1.5 + s) * w, by + hem + 1]], K1);
+      if (!back) px(ctx, CX - 5 * w, by + 33, 10 * w, 2, K2);
+      break;
+    }
+    case 'longcoat': {
+      // Knee-length coat: lapels, a row of glowing buttons and split tails.
+      torso([[-7, 24], [7, 24], [8, 52], [1, 50], [-1, 50], [-8, 52]], K0);
+      if (!back) { torso([[-3, 24], [0, 32], [3, 24]], K2); for (let y = 30; y < 46; y += 4) px(ctx, CX - 0.5, by + y, 1, 1, shade(d.glow, -0.1)); }
+      break;
+    }
+    case 'smock': {
+      // Short loose work smock with rolled sleeves and a pocket.
+      torso([[-6, 24], [6, 24], [9, 45], [-9, 45]], K0);
+      if (!back) { px(ctx, CX - 3 * w, by + 36, 6 * w, 4, K1); px(ctx, CX - 3 * w, by + 36, 6 * w, 1, K2); }
       break;
     }
     case 'cloak': {

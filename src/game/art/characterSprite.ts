@@ -245,7 +245,7 @@ function drawFrame(ctx: CanvasRenderingContext2D, look: CharacterLook, dir: Dire
 function shadowOf(look: CharacterLook) {
   if (!look.shadow || !look.sheet || spriteOverride(`sprites/${look.sheet}`)) return null;
   if (look.sheet.startsWith('class/')) return shadowDesign(look.sheet.slice(6));
-  if (look.sheet.startsWith('npc/') && look.npcRole) return npcShadowLook(look.npcRole.role, look.npcRole.jobClass).design;
+  if (look.sheet.startsWith('npc/') && look.npcRole) return npcShadowLook(look.npcRole.role, look.npcRole.jobClass, look.sheet.slice(4)).design;
   return null;
 }
 
@@ -260,7 +260,7 @@ export function generateCharacterSheet(look: CharacterLook, opts: { classicLayou
   if (drawn) return drawn;
   const design = shadowOf(look);
   if (design) {
-    const weapon = look.npcRole ? npcShadowLook(look.npcRole.role, look.npcRole.jobClass).weapon : look.weapon;
+    const weapon = look.npcRole ? npcShadowLook(look.npcRole.role, look.npcRole.jobClass, look.sheet!.slice(4)).weapon : look.weapon;
     return opts.classicLayout ? buildShadowSheet(design, weapon, !!look.shield, CHAR_ANIMS, CHAR_SHEET_COLS) : buildShadowSheet(design, weapon, !!look.shield, SHADOW_ANIMS, SHADOW_SHEET_COLS);
   }
   const { canvas, ctx } = makeCanvas(W * CHAR_SHEET_COLS, H * CHAR_DIRECTIONS.length);

@@ -643,31 +643,31 @@
   },
   {
    "npcId": "aurelion_jobmaster",
-   "x": 3,
+   "x": 1,
    "y": 55,
    "facing": "down"
   },
   {
    "npcId": "aurelion_arena",
-   "x": 6,
+   "x": 5,
    "y": 55,
    "facing": "down"
   },
   {
    "npcId": "arena_gatekeeper",
-   "x": 18,
+   "x": 20,
    "y": 55,
    "facing": "down"
   },
   {
    "npcId": "mvp_guide",
-   "x": 21,
+   "x": 24,
    "y": 55,
    "facing": "down"
   },
   {
    "npcId": "training_master",
-   "x": 15,
+   "x": 16,
    "y": 55,
    "facing": "down"
   },

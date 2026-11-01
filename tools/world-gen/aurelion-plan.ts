@@ -67,7 +67,7 @@ export function aurelionPlan() {
   // NPCs stand on the street in front of their building.
   const front = (b: B, dx: number) => ({ x: doorX(b) + dx, y: b.y + b.h + 1 });
   const at: Record<string, { x: number; y: number }> = {
-    aurelion_jobmaster: front(guild, -9), aurelion_arena: front(guild, -6), spire_warden: front(guild, -3), training_master: front(guild, 3), arena_gatekeeper: front(guild, 6), mvp_guide: front(guild, 9),
+    aurelion_jobmaster: front(guild, -11), aurelion_arena: front(guild, -7), spire_warden: front(guild, -3), training_master: front(guild, 4), arena_gatekeeper: front(guild, 8), mvp_guide: front(guild, 12),
     aurelion_smith: front(smithy, 1), aurelion_merchant: front(shop, 1),
     guild_knight: front(knights, -3), guild_dragoon: front(knights, 0), guild_templar: front(knights, 3),
     aurelion_stable: front(stable, 1),
