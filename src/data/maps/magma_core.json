@@ -1,0 +1,824 @@
+{
+ "id": "magma_core",
+ "name": "Magma Core",
+ "region": "Emberfall Volcano",
+ "type": "dungeon",
+ "levelRange": [
+  62,
+  74
+ ],
+ "width": 120,
+ "height": 96,
+ "tileset": "dg_magma",
+ "base": "ruin_floor",
+ "border": {
+  "kind": "ruin_wall",
+  "thickness": 2
+ },
+ "bgm": "dungeon_dark",
+ "ambient": "volcano",
+ "weather": [],
+ "worldMapPos": {
+  "x": 0.27,
+  "y": 0.2
+ },
+ "paint": [
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 2,
+   "w": 1,
+   "h": 17
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 22,
+   "w": 1,
+   "h": 3
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 25,
+   "w": 1,
+   "h": 7
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 35,
+   "w": 1,
+   "h": 13
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 48,
+   "w": 1,
+   "h": 11
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 62,
+   "w": 1,
+   "h": 9
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 71,
+   "w": 1,
+   "h": 11
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 85,
+   "w": 1,
+   "h": 9
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 2,
+   "w": 1,
+   "h": 13
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 18,
+   "w": 1,
+   "h": 7
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 25,
+   "w": 1,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 30,
+   "w": 1,
+   "h": 18
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 48,
+   "w": 1,
+   "h": 16
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 67,
+   "w": 1,
+   "h": 4
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 71,
+   "w": 1,
+   "h": 12
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 86,
+   "w": 1,
+   "h": 8
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 2,
+   "w": 1,
+   "h": 12
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 17,
+   "w": 1,
+   "h": 8
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 25,
+   "w": 1,
+   "h": 14
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 42,
+   "w": 1,
+   "h": 6
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 48,
+   "w": 1,
+   "h": 11
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 62,
+   "w": 1,
+   "h": 9
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 71,
+   "w": 1,
+   "h": 8
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 82,
+   "w": 1,
+   "h": 12
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 2,
+   "w": 1,
+   "h": 15
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 20,
+   "w": 1,
+   "h": 5
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 25,
+   "w": 1,
+   "h": 11
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 39,
+   "w": 1,
+   "h": 9
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 48,
+   "w": 1,
+   "h": 16
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 67,
+   "w": 1,
+   "h": 4
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 71,
+   "w": 1,
+   "h": 9
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 83,
+   "w": 1,
+   "h": 11
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 3,
+   "y": 25,
+   "w": 17,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 23,
+   "y": 25,
+   "w": 2,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 26,
+   "y": 25,
+   "w": 16,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 45,
+   "y": 25,
+   "w": 3,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 49,
+   "y": 25,
+   "w": 9,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 61,
+   "y": 25,
+   "w": 10,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 72,
+   "y": 25,
+   "w": 8,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 83,
+   "y": 25,
+   "w": 11,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 95,
+   "y": 25,
+   "w": 7,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 105,
+   "y": 25,
+   "w": 13,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 3,
+   "y": 48,
+   "w": 5,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 11,
+   "y": 48,
+   "w": 14,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 26,
+   "y": 48,
+   "w": 5,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 34,
+   "y": 48,
+   "w": 14,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 49,
+   "y": 48,
+   "w": 5,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 57,
+   "y": 48,
+   "w": 14,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 72,
+   "y": 48,
+   "w": 13,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 88,
+   "y": 48,
+   "w": 6,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 95,
+   "y": 48,
+   "w": 3,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 101,
+   "y": 48,
+   "w": 17,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 3,
+   "y": 71,
+   "w": 14,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 20,
+   "y": 71,
+   "w": 5,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 26,
+   "y": 71,
+   "w": 17,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 46,
+   "y": 71,
+   "w": 2,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 49,
+   "y": 71,
+   "w": 8,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 60,
+   "y": 71,
+   "w": 11,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 72,
+   "y": 71,
+   "w": 17,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 92,
+   "y": 71,
+   "w": 2,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 95,
+   "y": 71,
+   "w": 8,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 106,
+   "y": 71,
+   "w": 12,
+   "h": 1
+  },
+  {
+   "op": "path",
+   "tile": "ruin_floor",
+   "points": [
+    [
+     3,
+     47
+    ],
+    [
+     60,
+     48
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "ruin_floor",
+   "points": [
+    [
+     94,
+     49
+    ],
+    [
+     94,
+     91
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "ruin_floor",
+   "points": [
+    [
+     72,
+     71
+    ],
+    [
+     114,
+     71
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "clear",
+   "x": 91,
+   "y": 68,
+   "w": 7,
+   "h": 7
+  },
+  {
+   "op": "scatter",
+   "kind": "rock",
+   "density": 0.0027,
+   "seed": 60282888,
+   "area": {
+    "x": 3,
+    "y": 3,
+    "w": 114,
+    "h": 90
+   },
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "rock_big",
+   "density": 0.0027,
+   "seed": 60282889,
+   "area": {
+    "x": 3,
+    "y": 3,
+    "w": 114,
+    "h": 90
+   },
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:pebbles",
+   "density": 0.025,
+   "seed": 60282897,
+   "baseDensity": 0.05
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_cinder_wastes",
+   "x": 0,
+   "y": 46,
+   "w": 2,
+   "h": 4,
+   "targetMap": "cinder_wastes",
+   "targetSpawn": "from_magma_core",
+   "label": "Cinder Wastes"
+  }
+ ],
+ "spawnPoints": {
+  "from_cinder_wastes": {
+   "x": 4,
+   "y": 48
+  },
+  "default": {
+   "x": 4,
+   "y": 48
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "magma_golem",
+   "count": 8,
+   "area": {
+    "x": 26,
+    "y": 3,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "magma_golem",
+   "count": 8,
+   "area": {
+    "x": 95,
+    "y": 3,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "magma_golem",
+   "count": 8,
+   "area": {
+    "x": 49,
+    "y": 26,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "magma_golem",
+   "count": 8,
+   "area": {
+    "x": 3,
+    "y": 49,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "magma_golem",
+   "count": 8,
+   "area": {
+    "x": 3,
+    "y": 72,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "magma_golem",
+   "count": 8,
+   "area": {
+    "x": 3,
+    "y": 3,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "flame_drake",
+   "count": 8,
+   "area": {
+    "x": 72,
+    "y": 26,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "flame_drake",
+   "count": 8,
+   "area": {
+    "x": 26,
+    "y": 49,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "flame_drake",
+   "count": 8,
+   "area": {
+    "x": 26,
+    "y": 72,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "flame_drake",
+   "count": 8,
+   "area": {
+    "x": 26,
+    "y": 3,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "flame_drake",
+   "count": 8,
+   "area": {
+    "x": 95,
+    "y": 3,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "flame_drake",
+   "count": 8,
+   "area": {
+    "x": 49,
+    "y": 26,
+    "w": 20,
+    "h": 20
+   }
+  }
+ ],
+ "bossSpawn": {
+  "bossId": "pyrewyrm",
+  "x": 94,
+  "y": 71,
+  "respawnSeconds": 900
+ },
+ "objects": [],
+ "areas": [],
+ "generated": true
+}

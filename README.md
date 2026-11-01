@@ -1,0 +1,335 @@
+# VEYLORIA ONLINE: *Legends Begin With You*
+
+A 2D fantasy MMORPG with a top-down 3/4 view. It's built with TypeScript, Phaser 3 (WebGL), HTML/CSS UI and Vite.
+
+> **Status: Phase 1 (Playable Game Foundation): done and tested in single-player development mode.**
+> Maps use painted art packs (`public/art`): seamless ground textures and props for each of the 21 tilesets, buildings in 7 architecture themes, and the Royal Capital's landmarks (palace, cathedral, statues, market stalls, city wall and gate). Props are drawn at true-to-life heights next to a character, and every facade at one scale (doors about a person's height). `tools/art/prepare_art.py` converts the source packs to WebP. Characters, monsters, icons and audio are still **procedural**, and maps fall back to procedural drawing until their art has loaded.
+> Online play (accounts, server, party, guild, trading) is planned for Phase 3 and isn't built yet.
+
+## ภาพรวม (Thai summary)
+- **เปลี่ยนภาษาได้ อังกฤษ / ไทย** ที่มุมขวาบนของหน้าแรก หรือ ตั้งค่า → ภาษา ในเกม (ชื่อไอเทม มอนสเตอร์ สกิล แผนที่ คงเป็นภาษาอังกฤษ)
+- **หน้าจอแบบใหม่:** สถานะมุมซ้ายบน · มินิแมพมีแถบซูม (ล้อเมาส์ / ปุ่ม + − ก็ซูมได้) · ฮอตบาร์ 2 แถว (1–0 และ Shift+1–0) · ปุ่ม AUTO ข้างฮอตบาร์กดแล้วฟาร์มทันที, ⚙ = ตั้งค่าออโต้ · เควสออโต้อยู่ในช่องเควส · เมนูไอคอน 5 คอลัมน์ ย่อได้ด้วยปุ่ม ▼ เมนู · คลิกไอเทมแล้วมีปุ่ม "สวมใส่"
+- **ตลาดและการซื้อขาย:** **Trader Moss** (Willowbrook) เป็นพ่อค้าตลาดคนเดียวและมีกราฟที่นี่ที่เดียว รับซื้อทุกอย่างได้เงินทันที ของที่ขายสุ่มเปลี่ยนทุก 2 ชั่วโมง (อุปกรณ์ทุกระดับเลเวล + ยา) ราคาซื้อและราคาขายขึ้นลงทุก 1 ชั่วโมง (ของหายากแกว่งแรงกว่า ขายเยอะราคารับซื้อตก ซื้อเยอะราคาขายขึ้น) · เมืองอื่นมีพ่อค้าสินค้าทั่วไปราคาคงที่ · NPC **ตลาดกลาง** วางขายของให้ผู้เล่นจริงเท่านั้นที่ซื้อ (ต้องต่อเซิร์ฟเวอร์) ได้เงินแม้ออฟไลน์ · **คลิกผู้เล่นอื่น** เพื่อเทรด ชวนปาร์ตี้/กิลด์ กระซิบ
+- **ความสะดวก:** เอาเมาส์ชี้อุปกรณ์จะ **เทียบกับของที่ใส่อยู่** (ATK/DEF ▲▼) · **ความสำเร็จ 23 อย่าง** พร้อมรางวัลและ **ฉายา** ใต้ชื่อ (🏆) · **ล็อกอินรายวัน** ปฏิทิน 7 วัน (🎁) · **อีเวนต์ตามเวลา** EXP +50% ช่วง 12–13 น. และ 20–22 น., ดรอป +50% วันเสาร์-อาทิตย์ · **Alchemist ปรุงยา** (ยาแดง/ส้ม/เหลือง/เขียว/ฟ้า, ขวดไฟ, ขวดกรด) ด้วยชามปรุงยา และขวดขว้างใส่มอนสเตอร์ได้จริง · **มือถือ:** จอยสติ๊ก ปุ่มโจมตี/คุย/เก็บของ ซูมสองนิ้ว ลากหน้าต่างด้วยนิ้ว
+- **ปิดเอฟเฟกต์ภาพทั้งหมด** (เปิดคืนได้ที่ ตั้งค่า) · **ฟาร์มออโต้เลือกมอนสเตอร์ได้** เฉพาะตัวที่อยู่ในแมพนั้น · ช่องเควสหายไปเมื่อทำครบ 5 เควส
+- **แมพใหญ่ขึ้นหลายเท่า** ทุ่ง 160×120 ดันเจี้ยน 120×96 (มีห้องบอสใหญ่) เมือง 96×76 และมี **ช่องสี่เหลี่ยมตามเมาส์แบบ Ragnarok** (มุมสี่มุมสีเขียว = เดินได้, สีแดง = เดินไม่ได้) คลิกแล้วเดินไปกลางช่อง
+- **NPC เปลี่ยนอาชีพ (Job Master) มีทุกเมือง** รวมทุกการเปลี่ยนอาชีพไว้ที่เดียว: อาชีพแรก (Job Lv 10) อาชีพขั้นสอง (Job Lv 40) เกิดใหม่ (Base 99 / Job 50) อาชีพ High และอาชีพขั้นสูง แสดงเฉพาะอาชีพที่ตัวละครเปลี่ยนไปได้
+- **ระบบ GM ควบคุมได้ทุกอย่าง** หน้าต่าง GM 4 แท็บ + คำสั่ง `@` ในแชท (`@help`) และคำสั่ง GM ฝั่งเซิร์ฟเวอร์ด้วยรหัสแอดมิน
+- **โลกสไตล์ Ragnarok Online มี 30 แมพใน 9 ภูมิภาค** มีเมือง 7 เมือง ทุ่ง และดันเจี้ยน แต่ละภูมิภาคมีสี สภาพอากาศ เพลง และมอนสเตอร์ของตัวเอง (ดู [docs/WORLD.md](docs/WORLD.md))
+- **เควสมีแค่เควสฝึกสอน 5 เควส** ได้แก่ ลงทะเบียนกิลด์ → ล่า Leaf Slime → ซื้อและสวมอาวุธ → ตีบวก +1 → เก็บ Job Lv 10
+- **เปลี่ยนอาชีพที่ Guild Master** (Knight อยู่ Aurelion, Ranger อยู่ Fernhollow, Mage อยู่ Arcanthe)
+- **ระบบแบบ Ragnarok (กลไกเท่านั้น ไม่ได้ลอกชื่อหรือข้อมูลของ RO):**
+  - การ์ดมอนสเตอร์ 70 ใบ ดรอป 0.01% ใส่ลงช่องการ์ดของอุปกรณ์ได้
+  - ตารางอาวุธเทียบขนาดมอนสเตอร์
+  - โบนัสความเสียหายตามเผ่าและขนาด, Perfect Dodge
+  - น้ำหนักเกิน 90% จะตีและใช้สกิลไม่ได้
+  - ระบบ MVP พร้อมป้ายหลุมศพ
+  - อาวุธมีเลเวล 1–4 และตารางโอกาสตีบวกตามเลเวลอาวุธ
+  - ตีอาวุธ (Forging) ใส่หินธาตุและ Star Crumb ได้
+  - ออปชันสุ่มบนอุปกรณ์ และ NPC เอนแชนต์
+  - เอฟเฟกต์ติดสถานะ/ดูด HP เมื่อโจมตี
+  - หน้าต่างฐานข้อมูลมอนสเตอร์ ไอเทม และการ์ดในเกม (กด B)
+  - ดูรายละเอียดที่ [docs/RO_SYSTEMS.md](docs/RO_SYSTEMS.md)
+- **ระบบตีบวก +1 ถึง +10:** อาวุธตีได้ปลอดภัยถึง +5 และชุดเกราะถึง +4 ถ้าเกินจากนั้นแล้วตีพลาด ของจะแตก
+- ระบบที่ทำเสร็จแล้ว ได้แก่ การเดิน (คลิกเมาส์/WASD), กล้องติดตาม, Collision ที่ตรงกับภาพ, NPC/บทสนทนา, Monster AI แบบ State Machine, การต่อสู้แบบ Real-time พร้อมธาตุและ Status, EXP/เลเวล (Base และ Job), Stat Points, Inventory/Equipment, สกิลและ Hotbar, เควสต์ 17 เควสต์, ร้านค้า, คลังเก็บของ, การเซฟ/โหลดแบบมีเวอร์ชัน, เสียง และ UI ครบชุดสำหรับ Phase 1
+- ภาพและเสียงทั้งหมด **เกมวาดและสร้างเองตอนรัน** (ต้นฉบับทั้งหมด) ไม่มีไฟล์ภาพ sprite sheet หรือไฟล์ animation ในโปรเจกต์
+- ระบบออนไลน์ยังไม่ได้ทำ (อยู่ใน Phase 3)
+
+---
+
+## Quick start
+
+Requirements: **Node.js 20+** (tested with Node 22) and npm.
+
+```bash
+npm install          # install dependencies
+npm run dev          # dev server → http://localhost:5173
+npm run build        # type-check + production build into dist/
+npm run preview      # serve the production build → http://localhost:4173
+```
+
+### Tests
+```bash
+npm test                 # all unit + integration tests (Vitest)
+npm run test:unit        # unit tests only
+npm run test:integration # headless playthrough + class balance tests
+npm run test:e2e         # builds, then drives the real game in Chromium (Playwright)
+```
+`test:e2e` uses Playwright's Chromium. If it isn't installed: `npx playwright install chromium`.
+
+### Opening the game from a file
+
+The normal build (`dist/`) must be served over http (`npm run preview`, or any web server): browsers block its module scripts and canvas use of image files when `index.html` is opened straight from disk, and the page stays black. For a copy that opens with a double-click, run `npm run build:portable`: it writes `dist-portable/Veyloria.html` (about 12 MB), one file with the code, styles and every image inside.
+
+## Controls
+| Action | Mouse | Keyboard (rebindable in Settings) |
+|---|---|---|
+| Move | Left-click the ground (click the minimap to travel) | WASD / arrow keys |
+| Attack | Left-click a monster (keeps auto-attacking) | Tab = target the nearest monster |
+| Talk / interact | Left-click an NPC or object | F = nearest NPC/object |
+| Pick up loot | Left-click the item | Z = nearest item |
+| Skills / items | Click a hotbar slot | 1–0 |
+| Stop / cancel | Right-click | Esc closes windows |
+| Windows | Bottom-right buttons | I inventory · E equipment · C status · K skills · Q quests · M world map · O settings · F8 GM tools |
+| Chat | | Enter (`/help` lists commands) |
+
+Ground-target skills (Arrow Rain, Wind Trap, Fire Wall, Thunderstorm, Meteor) land on your current target. If you have no target, they land under the mouse cursor.
+
+## What's in Phase 1
+
+| Spec item | Status | Where |
+|---|---|---|
+| Game boot, loading, main menu | ✅ | `src/game/scenes/BootScene.ts`, `src/ui/screens.ts` |
+| Character creation (name, body type, hair style/colour, eye colour, skin, 4-direction rotate preview) and 3 slots with create/delete/select | ✅ | `src/ui/screens.ts`, `src/core/character.ts` |
+| Movement (click-to-move with A* pathfinding, WASD), camera follow | ✅ | `src/core/world.ts`, `src/core/pathfinding.ts` |
+| Map rendering with layers (ground, decoration, walls, objects y-sorted, above-player, collision, spawns, interaction zones, portals) | ✅ | `src/core/mapCompiler.ts`, `src/game/art/mapPainter.ts` |
+| Collision that matches the art (no walking through buildings, trees, walls or borders) | ✅ tested | `tests/unit/data.test.ts`, `tests/unit/world.test.ts` |
+| NPC interaction and dialogue, quest markers (! ?) | ✅ | `src/ui/windows.ts` |
+| Monster AI state machine (Idle → Patrol → Chase → Attack → Return → Death → Respawn); passive, aggressive, assist and magic/ranged types | ✅ | `src/core/world.ts` |
+| Combat: auto-attack, range, attack speed, hit/miss/dodge, crits, damage numbers, knockback, death and respawn, aggro, leash | ✅ | `src/core/combat.ts`, `src/core/world.ts` |
+| Element system (9 elements, editable 9×9 table) | ✅ | `src/data/elements.json` |
+| Status effects (10, each with duration, chance, immunity, stack limit and cure) | ✅ | `src/data/statusEffects.json` |
+| EXP and level (Base 1–120, Job 1–10/50), stat points, skill points, stat/skill reset | ✅ | `src/core/formulas.ts`, `src/config/balance.json` |
+| Derived stats = Base + Equipment + Passives + Buffs + Statuses (cards and runes plug in later) | ✅ | `computeDerivedStats` |
+| Inventory: 60-slot grid, stacking, weight limit, drag & drop, tooltips, sort, filter, lock, use, drop, sell, storage, binding | ✅ | `src/core/inventory.ts`, `src/ui/windows.ts` |
+| Equipment: 8 slots, class/level requirements, two-handed rules | ✅ | |
+| Jobs: Novice, 6 first jobs, 12 second jobs, rebirth (High Novice + 6 High first jobs) and 12 transcendent jobs (38 classes, 173 skills); job bonus stats, job weight, ASPD 0–190; steal, mug, double attack, endow, discount/overcharge, Luma-cost skills | ✅ | `src/data/classes.json`, `tools/world-gen/build-jobs.ts` |
+| Job change at Job Lv 10 at a guild master (Knight & Cleric: Aurelion, Ranger: Fernhollow, Mage: Arcanthe, Rogue: Sandara, Merchant: Tidewatch) | ✅ | NPC service `jobChange`, `World.changeJobAt` |
+| Tutorial quests only (5): register, hunt, buy & equip a weapon, refine +1, reach Job Lv 10; objective types include buy/equip/refine; journal, tracker, markers | ✅ | `src/data/quests.json`, `src/core/quests.ts` |
+| Refinement +1…+10 for weapons, armor and rune stones (harder every level, safe to +5, separate break roll from +6), enriched ores, forging, random options + enchanter | ✅ | `src/core/refine.ts`, `forge.ts`, `options.ts` |
+| Ragnarok-style mechanics: monster cards (0.01%, slots, compounding, combos, autocast cards, card album), 10 elements × 4 element levels, elemental converters, weapon-vs-size table, race/size bonuses, perfect dodge, 90% weight lock, MVP (top damage, MVP EXP and items, tombstone), elite mini-bosses, looter monsters, pets (taming, hunger, intimacy, Loyal bonus), memorial dungeons; RO stat-cost curve available but off (measured) | ✅ | `docs/RO_SYSTEMS.md` |
+| 30 world maps in 9 RO-style regions (7 towns, fields, 8 dungeons, 6 bosses), 104 memorial-dungeon floors (100-floor Endless Spire, Sealed Crypt), PvP arena and guild-war castle; timed raids | ✅ |
+| **Auto Farm / Auto Quest** (U or the Auto button): fights around its start point with hotbar skills, potions and looting; or follows the quest chain by itself (walks to NPCs, accepts, hunts, buys and equips, refines safely, levels, hands in). Stops on any manual click/move, death or 90% weight | ✅ | `src/core/autopilot.ts` | `docs/WORLD.md`, `tools/world-gen/build-world.ts` |
+| Companions: pets (accessories, evolution), homunculus (4 types), war-drake mount, merchant pushcart; Rune Constellation talent board | ✅ | `src/core/pets.ts`, `homunculus.ts`, `runes.ts` |
+| Online play (optional): server with accounts, chat, party with even EXP share, guild, trade, vending, PvP, guild war | ✅ (local server) | `server/`, `src/ui/online.ts` |
+| Maps: **Willowbrook Village, Sunny Meadow, Whispering Forest** | ✅ | `src/data/maps/` |
+| Monsters: 64 normal, 12 elite mini-bosses, 6 bosses | ✅ | `src/data/monsters.json` |
+| Boss: Grukk the Thornking. Intro, HP bar, 3 phases, enrage, telegraphed AoE (circle, ring, charge line), summons, threat, rare drops, contribution reward, respawn timer | ✅ | `src/data/bosses.json` |
+| Save/Load: versioned with migrations, backup, sanitizing, autosave every 30s | ✅ tested | `src/core/save.ts` |
+| HUD: HP/MP, EXP/Job EXP, hotbar with cooldowns, chat log, minimap, quest tracker, buffs, target frame, boss bar, cast bar, Luma | ✅ | `src/ui/hud.ts` |
+| Windows: status, inventory, equipment, skill tree, quest journal, world map, pet (P), homunculus (H), pushcart (V), runes (N), social / online (G), database with refine simulator / forge calculator / option odds / combos / pets / element chart (B), settings (volume, toggles, key rebinding) | ✅ | `src/ui/windows.ts` |
+| Audio: BGM per map, boss music, ambience, SFX; Master/Music/SFX/Ambient volume | ✅ (procedural) | `src/game/audio/audio.ts` |
+
+## Abyssal Frontier (Lv 86–120) and the MVP Sanctum
+
+- **Abyssal Frontier:** six new maps beyond the Ravenhold Crypt (its north door), on the existing tile sets and objects: Astral Wastes (Lv 86–94, arcane), Frozen Abyss (92–100, snow), Cinder Throne (98–106, volcano), Blighted Mire (104–112, swamp), Fallen Citadel (dungeon 108–116) and Void Rift (dungeon 114–120). 24 new monsters from Lv 86 to Lv 120 (each with its material, drop table and card), plus an elite per field.
+- **10 MVP bosses (Lv 110–150):** Seraph Lumina 110, Frost Colossus Ymir 115, Inferno Wyrm Vulcanor 120, Plague Queen Vespera 123, Death Knight Malgrave 127, Storm Titan Thrall 130, Abyssal Kraken Charybd 134, Void Emperor Nihil 138, Chaos Dragon Ragnoth 144, Eternal Lich Azrath 150. Each has **three signature skills** (30 in all — e.g. Judgement Ray, Glacier Smash, Meteor Rain, Royal Swarm, Soul Chains, Storm Ring, Maelstrom, Oblivion Ring, Apocalypse, Death Nova), each with its own effect recipe and animated signature like player skills; a **unique legendary MVP item** (12% MVP drop: Dawnwing Halo, Heart of Ymir, Vulcanor Fang, Vespera's Gossamer, Malgrave's Oathblade, Thunder Core, Charybd Shell, Scepter of Nihil, Ragnoth Scale Mantle, Crown of Azrath) and an **MVP card** (epic, same drop rate as every card).
+- **MVP Sanctum (96×76):** the ten bosses take turns appearing at ten altars. Each comes back 30–60 minutes (random) after it falls; the first appearance is within a few minutes. **MVP Herald Orin** in every town (Willowbrook, Aurelion, Fernhollow, Arcanthe, Sandara, Tidewatch, Frostholm) warps there for free; **Sanctum Keeper Ilsa** inside sends you to any town.
+- **Menu → ☠ MVP:** the MVP timers — every boss with its icon, level and element, "Out now", "Appearing…" or a live countdown to its next appearance, and when it was last defeated.
+
+## GM tools
+
+The GM window (👑) opens on **🎒 Items**: nine category tabs with icons and counts (All, Weapons, Armor, Accessories, Consumables, Materials, Cards, Pet items, Misc & quest), a search box and rarity filter, and an inventory-style icon grid sorted by type and rarity. Click an item to see it (big icon, rarity, type, level, description) and give any quantity; equipment can be given refined (+N) with an element; double-click gives one. **👾 Monsters** lists every monster as a grid of monster icons (with level), in tabs by level band, elites and bosses & MVP; select one to see its stats, maps and card, spawn any number or give its card. **🧙 Character** picks the job from a grid of job portraits, and maps (with type icons, searchable) and monsters (with their sprites, bosses and elites highlighted) from icon grids too; pets in **⭐ Character+** show their monster icons.
+
+## Item and skill icons
+
+- **Items (404):** 32×32 pixel art drawn by `src/game/art/iconArt.ts`: a five-tone ramp per colour (cool shadows, warm highlights), hard outline and rim light. Weapons are drawn by weapon type (sword, two-handed sword, dagger, katar, knuckle, axe, spear, club, bow, crossbow, wand, staff, instrument, book) and everything else by icon shape (armour, robe, shirt, hat, helm, mask, shield, cape, boots, ring, amulet, crown, potion, flask, fruit, coin, wing, blob, horn, fang, powder, pelt, bone, mushroom, ore, gem, leaf). Each shape has four variants picked from the item id, plus two id-placed glints, so no two items look the same (checked in the browser: 0 duplicates). Rarity adds sparkles (uncommon 1, rare 2, epic/legendary 3); weapon level adds gold pips. **Cards** show their monster's own sprite in the picture frame.
+- **Skills (173):** a framed badge — gold with corner studs for ultimates, teal for buffs, steel for actives, slate for passives — around a still of the skill's own signature effect (passives get a calm motif picked from their id), zoomed to fill the badge. 0 duplicates.
+- Icons drawn in Studio → Sprites still replace the generated ones.
+
+## Fewer props outside towns
+
+Trees, rocks, pillars and other scattered objects are at 45% of each map's design density, and ground decorations (flowers, grass tufts, pebbles) at 50%, on every map except towns (10,662 → 5,205 objects; towns unchanged at 551). Placed objects (pillars in memorial dungeons, altars, arena and training props) are not touched. The design density is kept as `baseDensity`, so rebuilding does not shrink maps again.
+
+## Phones (landscape) and the Android app
+
+- **Phone layout** (touch screen with a short side ≤ 620 px; the *Touch controls* setting turns it off): the screen is laid out for landscape thumbs at a larger size instead of shrinking the desktop layout.
+  - Left thumb: a floating joystick — touch anywhere on the left part of the screen and drag.
+  - Right thumb: a big ⚔ attack button with the hotbar as a ring of 8 skill buttons around it; ⇄ swaps to the second page (slots 11–18). 🎯 next target, ✋ pick up, 💬 talk.
+  - Top bar: ☰ menu (opens all windows as a big icon grid), ✉ chat, ＋/－ zoom (pinch also zooms), AUTO and its settings.
+  - Compact status (HP/MP/EXP) and minimap; the last chat lines fade in on the left. Windows open centred and fit the screen; long-press a hotbar button to remove it (asks first); ⚡ in the skill window puts a skill on the hotbar.
+  - While a window, NPC dialog or the menu is open, the game dims and the combat buttons step aside; tapping the dim area closes the top window. NPC dialog choices are big two-column buttons, item actions are big rows in the middle of the screen, and window buttons, checkboxes and fields are finger-sized. Tooltips close on the next tap. Empty skill buttons show ＋ and open the skill window. Keyboard-only settings (WASD, cell cursor, grid, key bindings) are hidden on phones.
+  - Holding the phone upright shows a "turn your phone sideways" screen.
+- **Android app (APK)**: `npm run build:apk` makes `dist-android/Veyloria.apk` (and copies it to `releases/`) — the one-file game in a full-screen landscape WebView (no Android Studio; it uses Ubuntu's `aapt`, `dalvik-exchange`, `zipalign`, `apksigner` and `android-sdk-platform-23`). Back closes the top window, then the menu, then leaves; the game saves when the app goes to the background. Saves stay on the phone. It targets Android 14 (API 34; Android 15+ refuses apps that target below API 24) and runs on Android 7+. The download is `releases/Veyloria.apk` in the repository.
+  - The APK is signed with `android/veyloria.keystore`, which is not in the repository (signing keys stay private); the build script makes a new one if it is missing. An APK signed with a different key will not install over the old app: uninstall first. Android asks to allow installing from your browser/files app the first time.
+
+## Training Grounds and Shadow Arena
+
+- The two are separate maps with separate NPCs in Aurelion (next to the Arena Master): **Drillmaster Brann** warps for free to the **Training Grounds** (64×44) and back; **Gatekeeper Varr** warps to the **Shadow Arena** (60×46) and back.
+- **Training Grounds:** 32 straw training dummies in four rows on a wide sand yard that never move, never fight back and never die. Hit them with anything; when you stop for 3 seconds the chat shows the total damage, seconds, damage per second, hits, crits and best hit, and the dummies heal back up. No EXP or drops.
+- **Shadow Arena (84×60):** talk to **Shadow Keeper Nyx** → *Open the arena board*. Pick a mode (**1v1, 3v3, 5v5, 10v10**), a difficulty (**Easy** 60% of your stats and slower skills, **Normal** 85%, **Hard** 100%, **Hardest** 130% and faster skills) and each enemy's job (or 🎲 random). You can **hire shadows for your own team** (up to mode size − 1, 100 + 15 × your base level Luma each, job chosen or random) or go in alone. Shadows copy your current Max HP, ATK, MATK, DEF, MDEF, HIT, FLEE, attack speed and move speed, are drawn in their job's shadow style with a team-coloured name and HP bar (green = yours, red = enemy), fight the nearest foe, and use their job line's damage skills with each skill's effect. Allies cannot be hit or targeted by you. Your team starts in the south, the enemy in the north. Beating every enemy is a VICTORY (allies leave); dying is a DEFEAT. Practice only — no rewards.
+- Both maps are built by `tools/world-gen/build-world.ts` (`training_dummy` and `shadow_fighter` are hidden from the monster database).
+
+**Studio → Maps → 🧑 Place NPC (N):** a searchable list of every NPC with its portrait and the maps it stands on. Pick one and click the map to place it — NPCs from other maps can be placed here too (same NPC, same data); an NPC already on this map moves to the clicked cell. **⧉ Copy as new NPC** makes an independent copy (new id, same look, dialogue and services) to edit in Database → NPCs; selecting an NPC on the map and pressing Duplicate does the same and places the copy next to it.
+
+## Refining (+10) and rune stones
+
+- **Refining** (any blacksmith, `src/core/refine.ts`): weapons, armor and rune stones all go up to **+10**. Each level is harder than the last (base 100/95/90/85/80% to +5, then 65/50/40/30/20%); higher weapon levels, armor and higher rune stones lose a little more. Weapons and armor use their ore plus Luma (enriched ores add 10%); rune stones use Luma only. **+1…+5 never break** — a failure just leaves the item as it was. **From +6** a failure rolls separately for the item to break (15% at +6, 25%, 35%, 45%, 55% at +10); if it does not break, the item stays at its level. The over-upgrade (+11…+20) is gone. The database refine simulator follows the same rules.
+- **Rune stones** (`src/core/runestones.ts`): two rune slots under the equipment. 14 kinds × 5 levels: **Siphon** (basic attacks restore MP as % of damage), **Soul Siphon** (skill hits restore MP), **Leech** (basic attacks restore HP), **Bloodrite** (skill hits restore HP), Fury (crit), Haste (attack speed), Wisdom (cooldowns), Focus (cast time), Titan (max HP), Mystic (max MP), Might (ATK %), Sorcery (MATK %), Bulwark (DEF %), Gale (move speed). Each + adds 12% of the stone's base effect (×2.2 at +10); the tooltip shows the current and next value. Any monster may drop a random stone: Lv 1 from all monsters (0.4%), Lv 2 from Lv 25+ (0.25%), Lv 3 from Lv 50+ (0.15%), Lv 4 from Lv 75+ (0.08%), Lv 5 from Lv 100+ (0.04%), times drop bonuses. Each has its own icon: a cut stone with a glowing rune in the kind's colour and gems for its level. GM → Items has a 🔷 Runes tab.
+
+## Animation
+
+- **Characters (shadow style, 41 frames per direction):** bodies are not rigid: legs have knees that bend (the swinging foot lifts during a walk), the far arm swings opposite the legs, the whole figure leans about its feet (into the walk, back on a wind-up, forward on a strike, back when hit), the head trails the body a little, attacks step the front foot forward, and front/back views shift weight side to side. Idle 8 is a combat-ready guard per weapon (blades up and forward, spears levelled, fists raised, staves planted, bows low; breath, cloth drift, a blink); the walk is a long stride with high knees and pumping arms (melee weapons stay at guard); attacks start and end in the guard — the sword is raised high over the shoulder with a step back, brought over the top and cut down in a lunge; the spear is drawn back then driven forward in a long lunge; fists jab and cross with the hips; walk 8, attack 8 (eased between six key poses: slow wind-up, fast strike, overshoot, settle — per weapon style), cast 6, hit 3 (white then red flash, recoil), death 8 (flash, stagger and knees buckling, a continuous topple to the ground, then melting into a pool of shadow with motes of the job's glow and two fading eyes).
+- **Smooth motion on top of the frames** (every rendered frame, not stepped like the sheets): characters, monsters, pets and homunculi lean into horizontal movement (eased), rock a little when walking up or down, lunge toward their facing side and spring back when they attack or cast, get knocked back a few pixels and squash with a damped spring when hit (stronger on crits), settle with a small squash when they stop, and breathe slowly when idle. Rotation and scale pivot on the feet; the glow layer follows.
+- **Combat feel** (`src/game/render/juice.ts`): melee attacks draw a sweeping crescent (slash), a long stab (thrust) or a burst ring (punch) in the job's glow colour — larger for two-handed swords, axes and spears; hits freeze the target for an instant (hit-stop) with a white flash, a shiver and sparks (crits: more sparks, bigger flash, a short camera shake); footsteps kick up dust; monsters die in a burst of shards in their glow colour with a rising soul wisp and a shock ring; the eye/neon glow layer pulses slowly.
+- **Monsters (31 frames):** idle 6 (breathing squash and stretch, sway), walk 8 (a hop per step: squash on landing, stretch in the air, leaning into the move), attack 7 (coil back, lunge, impact with a slash arc and spark in the monster's colour, follow-through, recover), hit 3 (flash and recoil), death 7 (flash, rear up, topple, collapse, dissolve top-down into glowing motes). Parts move on their own cycle: a trotting four-legged gait with lifted feet, swaying tails (wolf, scorpion), smooth wing beats (bats, wasps, drakes), rippling ghost tails, jelly wobble, scuttling crab legs, drifting spores; lunges leave a faint afterimage. Sheets drawn in the Studio in the old 13-frame layout are still read and spread over the new clips.
+- **Monster texture and volume:** every body gets a height map from the distance to its edge (rounded, bulging bodies), lit from the upper left with occlusion underneath, and a material per body type with its own relief and sheen: fur (wolves, rabbits), membrane (bats), glossy cells of scales (drakes and dragon bosses), cracked stone (golems), shiny translucent gel (slimes), banded chitin (wasps, crabs, scorpions), bone, porous spores, spongy fungus, bark (Goblin King), mist (ghosts), skin, straw. Light takes on the monster's own colour; glowing eyes and marks are left untouched. Bosses use the same materials at their larger size.
+
+## Monsters (shadow style), lights and the darker tone
+
+- Every monster (122, all 16 body types incl. bosses, elites and the training dummy) is drawn as a dark shadow tinted by its own colour, with a neon rim light, glowing markings in that colour (spots, veins, cracks, spines, cores) and glowing eyes. Each monster has its own eye colour (`art.eye`, golden-angle hues set by `npm run world:build`, all different).
+- The game world is 25% darker (an overlay above the map and sprites). Lights shine above it: for every shadow-style sheet (players, NPCs, monsters, pets) the game builds a glow sheet with only the bright, coloured pixels plus a soft halo and draws it additively on top, so eyes and neon parts glow; brighter colours give more light. Sheets that are not shadow style (e.g. drawn in the Studio) get no glow layer.
+- Elite monsters now have frames enlarged with their 1.35× scale (they were cropped before).
+
+## NPCs (shadow style)
+
+In the Shadow style every NPC is a shadow figure built from **NPC-only parts that no player job uses** (`src/game/art/npcRoles.ts`, `npcShadowLook` in `shadowSprite.ts`): eight hats (top hat, turban, straw hat, veil, chef's hat, scholar's cap, knotted kerchief, bonnet), three outfits (flared gown, long coat with glowing buttons, work smock) and nine things to hold (lantern, scales, scroll, key ring, smith's hammer, ladle, crystal ball, banner, bell). Job masters wear a scholar's cap and long coat in their job's glow colour and carry a banner; blacksmiths a kerchief, smock and hammer; shopkeepers a straw hat and keys; innkeepers a chef's hat and ladle; couriers a top hat, long coat and scroll; warpers and enchanters a veil and crystal ball; market and trader NPCs a top hat or turban with scales; dungeon keepers a turban and lantern; arena NPCs a top hat and banner; MVP heralds a veil and bell. Townsfolk mix hats, clothes and items by their id so they differ from each other. Each glows in its role's colour, and over its head the name carries a role badge (🎓 ⚒ 🛒 🛏 🌀 ⚖ 💰 📦 ✨ 🐎 🏯 ⚔ ☠ ♻ ⭐ 💬) with the role underneath ("Knight Master", "Blacksmith", "Shop", "Inn", "Courier · Storage"…). The Classic style keeps the old costumes; Studio sheets for an NPC still replace both.
+
+## Character art (jobs)
+
+Every one of the 38 jobs has its own costume, drawn in a chibi style inspired by classic 2D MMORPGs (big head, short body, three-tone shading, dark outline) — original designs, not copied from any game. Each job line has its outfit and headgear (Knight plate and cape, Dragoon horned helm and wing pauldrons, Templar tabard with a cross, Ranger feathered cap, Beastmaster animal hood, Minstrel beret and frock coat, Mage hooded robe, Sorcerer wide hat, Sage scholar cap, Cleric robe and beads, Bishop mitre, Ascetic gi and headband, Rogue bandana and mask, Shadowblade hooded suit and scarf, Outlaw tricorn and coat, Merchant cap and bag, Artisan goggles and apron, Alchemist lab coat and glasses). High (transcendent) jobs add gold trim and capes; third jobs go further (crown, long capes). Hair style and colour, eyes, skin and body chosen at character creation stay on top of the costume. Costumes are in `src/game/art/costumes.ts` (`costume` in each class outfit) and drawn by `src/game/art/costumeDraw.ts`; NPCs without a job get the nearest look from their outfit style. Every job's sheet can be viewed, edited and downloaded in Studio → 🧍 Sprites → player characters.
+
+**Shadow style (default).** Player characters are drawn as original black silhouettes with glowing eyes and a glowing accent colour per job (`src/game/art/shadowSprite.ts`): slim bodies, tattered cloaks, scarves that flutter while walking, and a silhouette per job line (Knight visor helm, Dragoon horned helm, Templar great helm with a glowing cross, Ranger pointed hood, Beastmaster eared hood, Minstrel feathered hat, Mage witch hat, Sorcerer pointed hood with embers, Sage circlet, Cleric hood, Bishop mitre, Ascetic topknot and beads, Rogue bandana and mask, Shadowblade hood, Outlaw tricorn, Merchant cap and pack, Artisan and Alchemist goggles). High jobs add glowing trim and a cape; third jobs add an aura and a signature piece (Dragon Lord wings, High Templar / Archbishop halo, Wildlord antlers, Archsorcerer flame crown, Shadow Reaper horned hood, orbiting motes). All animations (idle, walk, attack, cast, hit, death) in all four directions use the same sheet layout. Hair, skin and eye choices only show in the classic style. Settings → Character style switches between Shadow and Classic; Studio sheets saved for a job still replace either style.
+
+Shadow sheets have more frames than the classic ones (`SHADOW_ANIMS` in `spriteMeta.ts`, 33 columns): idle 4 (breathing, cloth flutter), walk 8 (full stride, arm swing, trailing cloak/scarf), attack 6, cast 6 (spell circle on the ground, rising runes, orb above the hands, eyes flaring), hit 3 (white flash, red flash, recoil) and death 6 (stagger, kneel, collapse, melt into a pool of shadow with two fading eyes). The attack depends on the weapon: swords, axes, clubs and daggers slash with a glowing arc; spears and katars thrust with speed lines and a spark; bows draw the string, loose a glowing arrow and recoil; staves, wands, books and instruments charge at the tip and fire a bolt; knuckles or bare hands throw a jab and a straight with impact sparks. Studio → Sprites still shows and saves job sheets in the classic 16-column layout.
+
+## PixelLab library
+
+Everything made in the project's PixelLab account is in the game: 525 objects (buildings, trees, rocks, props, item and skill icons…), 12 characters, 45 ground tile sets (28 tile sets and 17 two-terrain transition sets, 720 tiles) and a UI panel. `tools/pixellab/fetch.sh` downloads them by id (`tools/pixellab/ids.txt`; needs network access to `api.pixellab.ai` and `backblaze.pixellab.ai`) and `tools/pixellab/build_library.py` converts them into `public/art/pl/` (lossless WebP) and `src/data/pixellab/library.json`:
+
+- **Objects** become object kinds `pl_<name>` at their own pixel size (big pieces block, small ones don't); solid white/grey backdrops of 46 of them were made transparent.
+- **Characters** become game character sheets (4 directions: idle, walk, attack, cast, hit, death) and monster sheets.
+- **Tiles** are ground textures `<walk type>@pl:<set>:<n>` in the ground and path tools.
+- **UI panel** can frame every game window.
+
+Studio → 📥 PixelLab library browses all of it with one-click uses: place on a map, item / skill / menu icon, NPC / job / monster sprite, paint ground, window frame. Not imported: the 325 Creator-gallery images (their download host `s3.eu-central-003.backblazeb2.com` is not reachable from the build environment) and the map "Island Map" (terrain only, no exported image).
+
+## Veyloria Studio (editor)
+
+Opening the game shows a launcher: **▶ เข้าเกม** (play) or **🛠 เข้า Studio** (edit). `#game` / `#studio` at the end of the URL skips it, and the title screen has a Studio button. The Studio opens on a home page with a card for every section, three steps, and a list of shortcuts; every tab has a "💡 วิธีใช้" (how to use) strip.
+
+| Tab | What you can do |
+|---|---|
+| 🏠 Home | Cards for every section, the three steps (choose → edit and save → ▶ play), what was edited, shortcuts. |
+| 🗺 Maps | The map drawn with the game's painters. Select and drag (or arrow-key) objects, buildings, NPCs, portals, spawn points, city walls/gates/castles, monster zones and areas. **Drag a box (or Shift+click) to select many, then delete, move or duplicate them all at once**; "select this kind across the map" (e.g. every oak). Resize buildings, portals, zones and scenery from the corner handle. Place objects and buildings; paint ground, walls and decoration with a square or round brush, or **fill a dragged rectangle or ellipse**. The ground palette has **every ground texture of every tileset** (21 × 10 = 210, shown as swatches); a texture from another tileset is stored as `tile@tileset` (e.g. `sand@desert`), and walking rules follow the tile before `@`. **🛤 Draw path**: click points along a road (any texture, width 1–8), double-click or Enter to finish; roads cut through thickets and walls inside the map. Edit any field or the whole map as JSON, show collision, reachability check, undo/redo, new maps. |
+| 🌳 Objects | Every object kind: footprint, blocking, true-to-life height (compared with a character), image, fallback drawing; new kinds from a picture (**crop the part you want first**) or a blank image. |
+| 🧍 Sprites & UI | Sprite sheets of every drawn system: monsters (also used by pets and homunculi), NPCs, the player character of each job, item icons, skill icons, and one UI sheet for the 16 HUD menu buttons. The starting image is what the game draws now; frame grid and a live animation preview (any move, any direction). |
+| 🖼 Scene images | Ground sheets, props sheets, architecture, landmarks, custom images. |
+| 🎨 Tileset colours | Palette of each tileset. |
+| 📚 Game data | Every data system: items, monsters, skills, jobs, NPCs, shops, quests, drop tables, pets, forging recipes, bosses, card combos, homunculi, runes, status effects, memorial dungeons. Any field, add/copy/delete entries; the game's own validator checks the whole data set before saving. |
+| 📦 Pack | Export everything as one `.json` pack, import a pack, clear all edits. |
+
+The image editor (used for sprites and scene images) has pencil, eraser, fill, colour picker, line, rectangle and ellipse (outline or filled), and selection as a rectangle, ellipse or freehand shape. **Import a picture, crop it (rectangle, ellipse or freehand), then drag, scale (corner handle, Shift = free proportions) or flip it before placing it**; copy/cut/paste (also pasting an image from the clipboard), lift a selection to move or scale it, and resize the whole image.
+
+Edits are saved in this browser (IndexedDB) and the game in the same browser uses them right away. To put them into the project: `python3 tools/studio/apply_pack.py <pack.json>` writes images and sprite sheets to `public/art` and maps, objects, tilesets and data to `src/data/studio`, which is laid over the generated data, so `npm run world:build` does not overwrite it. The online server only sees edits that were applied to the project this way.
+
+## Online play (optional)
+
+```
+npm run server        # ws://localhost:7171 (accounts & guilds saved in ./server-data)
+npm run dev           # then in the game: Social window (G) → server ws://localhost:7171 → Create account
+```
+Chat: plain text = map, `/p` party, `/g` guild, `/gl` global, `/w name` whisper. The Arena Master in Aurelion warps to the Proving Grounds (PvP) and Castle Veyl (guild war, daily 20:00–21:00 server time; `npm run server -- --woe-always` keeps it open).
+
+## Screen layout, zoom, hotbar and Auto
+
+- **Status (top left):** name, class, Base / Job level, HP, MP, Base and Job EXP bars, Luma, and a stat/skill points badge that opens the right window.
+- **Minimap (top right)** with a zoom slider, − / + buttons and the zoom %. The mouse wheel and the `=` / `-` keys zoom too (75–250%, saved).
+- **Quest tracker** under the minimap, with the **▶ Auto Quest** button.
+- **Hotbar:** two rows of 10 — keys 1–0 and Shift+1–0 (rebindable).
+- **AUTO** beside the hotbar starts Auto Farm at once (press again to stop); **⚙** opens the auto settings only (radius, potions, skills, loot, elites).
+- **Menu (bottom right):** 16 icon buttons in 5 columns (incl. 🏆 Titles and 🎁 Daily); **▼ Menu** folds it away (remembered).
+- **Skill and combat effects are on by default; ambient effects are off.** Settings → *Skill and combat effects* turns the skill VFX, projectiles, hit sparks and level-up columns on or off; Settings → *Ambient effects* covers particles on props, weather, screen flashes and bobbing (off by default).
+- **Skill VFX.** Every active skill (144) has its own effect recipe in `src/game/render/vfxRecipes.ts`: what plays on the caster, what flies to the target (orbs, shards, arrows, falcons, meteors) and what bursts where it lands, in the skill's own colour. The recipes combine 31 animated effect sheets drawn procedurally in `src/game/render/vfxArt.ts` (slash arcs, cross slashes, claws, impact stars, crits, shockwave rings, light pillars, lightning, tornadoes, ground spikes, magic circles, healing motes, auras, shield domes, thrusts, whirlwinds, shadow tendrils, poison clouds, smoke, wind, music notes, holy crosses, fist shocks, flames, explosions, coins…). At runtime (`src/game/render/vfx.ts`) each sheet is recoloured with a three-step ramp of the skill colour (deep shade, full colour, white-hot core) and layered with particles (sparks, embers, shards, smoke, rising motes), light flashes, ground scorch marks and glowing trails behind projectiles. Casting gathers motes on the caster; ultimates also dim the screen, open a large magic circle and flash on impact. Hits, crits, level ups, job changes, teleports, status effects and boss entrances use the same sheets. Passives have no effect (they never activate).
+- **Signature effects.** On top of the recipe, every active skill plays its own animation (`src/game/render/vfxSignature.ts`): one of 38 motifs (sigil, blades, petals, star fall, spiral, crystal shards, chains, wings, beast spirits, runes, vortex, hex barrier, sound waves, fangs, sword rain, eye, potion flasks, wheel, crown/halo, fireworks, earth pillars/flames, skull, spirit hands, feathers, serpent, banner, coin, lightning cage, sun, moon, holy cross, shield, hourglass, heart, arrow volleys, seal, clock, drops) drawn with that skill's own count, variant, two colours and icon glyph — no two skills share the same one (checked by a unit test). Effects are drawn at twice their on-screen size with smooth filtering, then finished with bloom, twinkling glints on the brightest spots and orbiting motes with glowing tails.
+- **Auto Farm targets:** the ⚙ Auto settings list the monster species that live on the current map; tick the ones to farm (none ticked = all). Monsters that attack you are still fought back. Auto settings are saved with the character.
+- **Quest panel** hides once every quest is completed.
+- **Items:** click an item to get its actions, with a big **Equip** (or **Use**) button first; double-click still equips/uses.
+
+## Market, achievements, daily rewards, brewing and touch
+
+- **Trader Moss** (Willowbrook) is the only Market Trader, and the only place with price graphs. He **buys anything at once** and **sells a stock that changes every 2 hours**: 5 consumables plus 2 pieces of gear from every level tier (1–15, 16–30, … 61–75), picked at random from a pool of 171 items and the same for everyone. Both his buying and selling prices move **every hour**: rarer items swing more, selling a lot of one item lowers what he pays for it, and buying a lot raises what he charges, each for a few hours. His selling price never drops below the most he could ever pay for that item, so buying low and selling back is not possible. The window shows 24-hour graphs for both sides. Other towns have a **Goods Trader** with starter goods at fixed prices.
+- **Market Hall** (every town, online only): list up to 10 items with your own price. **Only real players buy**; the server holds the item, pays you on sale (even when you are offline, on your next login) and shows recent sale prices (last and average). Cancel returns the item.
+- **Click another player** for a menu: Trade, Invite to party, Invite to guild, Whisper, View shop (when vending).
+- **Item compare:** the tooltip of unequipped gear shows what changes against what you wear (ATK, MATK, DEF, MDEF, HIT, FLEE, CRIT, ASPD, Max HP/MP with ▲/▼); two-handed weapons count the shield coming off.
+- **Achievements & titles (🏆, 23):** kills, levels, job changes, rebirth, bosses, refine, Luma, quests, pet loyalty, cards, the Spire, play time. Each gives a one-time reward (Luma / items; to storage if the bag is full) and unlocks a title shown under your name (and to other players online).
+- **Daily rewards (🎁):** a 7-day calendar by your local date; it opens on the first login of the day; a missed day starts over at Day 1.
+- **Timed bonus events** (local clock): EXP +50% from 12:00–13:00 and 20:00–22:00 every day; drop rates +50% all Saturday and Sunday. A banner at the top shows when one is on.
+- **Alchemist brewing:** an Alchemist / Grand Alchemist with Potion Research uses a **Medicine Bowl** (opens the brewing window; one is used up per try) to brew Red, Orange, Yellow, Green and Blue Potions, Distilled Spirit, **Fire Bottles** and **Acid Bottles**. The chance grows with Potion Research, Job Level, DEX, LUK and INT; a failure loses the materials. Herbs drop from plant-like monsters; bottles and bowls are sold in Tidewatch. Anyone can **throw** Fire / Acid Bottles at the target or the nearest monster (fire splash + burn, acid + bleed; Potion Research adds 5% per level).
+- **Touch controls** (on for touch screens, toggle in Settings): virtual joystick, ⚔ attack / 💬 talk / ✋ loot / 🎯 target buttons, pinch to zoom, windows drag by finger. Tap-to-move and tapping monsters/NPCs work as clicks.
+
+## Big maps and the cell cursor
+
+Maps are several times larger than at first: fields are 160×120 tiles (Willowbrook's meadow and forest 150×110 / 150×120), dungeons 120×96 with 5×4 rooms and a boss hall made of four rooms, towns 96×76 (the old town is the centre, with a ring of houses and woods). Monster counts were raised with the area, so fields stay as crowded as before. Monsters far from the player (over 1,600 px) and idle don't patrol, as in Ragnarok where only monsters near players act; this keeps the simulation fast.
+
+The map art is painted in 16×16-tile chunks around the camera and freed when you walk away, so a big map never needs one huge texture.
+
+**Cell cursor (Ragnarok style):** four green corner brackets mark the cell under the mouse (red where you can't walk); over a monster, NPC or item the mouse pointer changes instead. Clicking the ground walks to the centre of that cell and marks it until you arrive. Settings → *Cell cursor under the mouse* turns it off; *Show grid lines on the map* draws the whole grid.
+
+## Job Master (class change in every town)
+
+Every town, Willowbrook included, has a **Job Master** next to the plaza. It handles every class change in one place, with the normal requirements: first job (Novice, Job Lv 10), second job (Job Lv 40), rebirth (second job, Base 99 / Job 50), the High first jobs and the transcendent jobs. The dialog lists only the jobs open to your current class and path. The class guild masters and the Oracle of Rebirth still work as before.
+
+## Language (English / ไทย)
+
+Pick **English** or **ภาษาไทย** at the top right of the title screen, or under **Settings → Language** in game. The choice is saved with your settings and applies at once, without reloading.
+
+How it works: the game text is written in English, and in Thai mode `src/ui/i18n.ts` translates every piece of text shown in the HTML interface through the dictionaries in `src/i18n/` (about 1,700 entries: menus, windows, tooltips, chat-log and system messages, GM tools, NPC dialogue, the tutorial quests, class and skill descriptions, item descriptions). Text with numbers or names (for example `Bought 3× Red Potion for 150 Luma.`) is matched by patterns. Floating combat text on the game canvas is translated too.
+
+What stays in English on purpose: proper names (items, monsters, skills, maps, NPCs, classes, runes), stat abbreviations (STR, ATK, HIT…), chat typed by players and the `@`/`/` command words. A unit test checks that every quest line, NPC greeting, class, skill and item description has a Thai version.
+
+## GM / admin tools
+
+Open the GM window with the **GM** button (bottom right), **F8**, or `/gm` in chat. It has four tabs:
+- **Main**: heal, god mode, add levels / Luma / points, change class, give items, teleport, spawn monsters, defeat all, fill/reset quests
+- **Character+**: set Base/Job level exactly, set one or all stats, max all skills, reset stats/skills, set Luma, rebirth now, make an item to order (refine +0–20, element, card), refine an equipped slot, clear inventory, give a pet, create a homunculus (any type/level), mount + cart, bonus rune points
+- **World & rates**: one-hit kill, no cooldown / free skills, invisible to monsters, move speed, game speed ×1–10, EXP/drop/Luma rates, warp to map x/y, respawn the boss now, clear ground items, start/end a raid, jump to any memorial-dungeon floor (Spire 1–100), reset dungeon cooldowns, complete/reset all quests, Auto Farm / Auto Quest
+- **@ Console**: RO-style text commands
+
+Text commands also work in the chat box. `@help` lists them all, e.g. `@lvl 99 50`, `@stat all 99`, `@item <id> 1 refine=15 element=fire cards=<cardId>`, `@rates 500 300 200`, `@onehit on`, `@gamespeed 3`, `@warp <mapId> 20 15`, `@dungeon endless_spire 50`, `@raid end`.
+
+Server GM (online): start the server with `npm run server -- --admin-token=YOURSECRET` (or `VEYLORIA_ADMIN_TOKEN`). In game type `@token YOURSECRET`, then `@announce text`, `@players`, `@kick name [reason]`, `@woe open|close|auto`, `@castle <guild>|none`, `@emperium`. Without a token on the server these are refused.
+
+Single-player GM tools edit the local save only, and any use sets `flags.gmUsed` on the character. The commands live in `src/core/gm.ts`. Because characters are stored in each browser (see Limitations), the server cannot edit another player's character, items or levels; server GM covers what the server owns (chat, players, guild war, castle).
+
+## Test results (this commit)
+
+| Suite | Result |
+|---|---|
+| Unit (`tests/unit`, 28 files) | **1020 / 1020 passed** (most are per-map checks for all 136 maps): market prices (hourly buy and sell prices, rarity, player demand, no buy-low/sell-high loop, Trader Moss stock re-rolled every 2 hours across every gear tier), achievements / titles / daily calendar / bonus hours, Alchemist brewing and thrown bottles, second jobs and rebirth, over-upgrade, homunculus, mount, cart, pet evolution, runes, raids, 100-floor Spire, element levels, enriched refine and fees, jobs (bonus stats, weight, ASPD, steal, haggle, coin cost, cure), pets, combos, card album, autocast, elites, looters, memorial dungeons, database calculators, plus forge, random options, refine, cards, quests, GM, data validation and per-map reachability (44 maps), formulas, combat, inventory, save/migrations, world simulation |
+| Integration: full playthrough | **passed**. A bot using only player commands finishes the 5 tutorial quests, becomes a Knight at the guild in Aurelion, switches to a spear for the Large boss (RO size rule), refines, and defeats Grukk (≈94 simulated minutes, Base Lv 24, 1 attempt). A second test walks through portals to all 30 world maps |
+| Integration: Auto Quest / Auto Farm | **passed**. Auto Quest takes a new character through all 5 tutorial quests by itself (≈11 simulated minutes, no deaths); Auto Farm got 147 kills in 10 simulated minutes and stayed within its radius; it stops when overweight |
+| Integration: class balance | **passed**. All six first jobs beat Grukk at Lv 17 on the first try at least as often as their thresholds over 24 fixed seeds (Knight ≥22, Ranger ≥12, Mage ≥17, Cleric ≥9, Rogue ≥8, Merchant ≥20); re-checked on the widened Whispering Forest. Second jobs vs Archmage Valdris in its new boss hall (12 seeds): 7–12 wins each (table in `docs/RO_SYSTEMS.md`) |
+| Integration: server | **8 / 8 passed**: accounts, presence and chat, party EXP share, trade, vending, guilds / PvP / guild war, server GM with admin token, Market Hall (list, own-buy refused, buy, seller paid, offline payout on rejoin, cancel), with real WebSocket clients |
+| Online E2E, two browsers (`npm run test:online`) | **8 / 8 checks passed** three runs in a row: presence, map chat, party EXP share, trade, vending, PvP, guild war, no page errors |
+| E2E in Chromium (`npm run test:e2e`) | **39 / 39 checks passed** (incl. the daily calendar at login, Trader Moss graph and instant sale, Market Hall offline notice, item compare tooltip, achievements and a title under the name, brewing with a Medicine Bowl, the quest panel hiding when all quests are done, zoom, the 20-slot hotbar, click-to-Equip, the AUTO button and Auto Quest from the tracker, the cell cursor, cell-centred click walking and chunked map drawing, switching to Thai and back on the title screen and in game, pet window, database tools, entering the Endless Spire, GM window, refine and guild job change): boot, create character via UI, WASD, click NPC → dialogue → accept quest, windows by hotkey, portal travel, mouse-click combat kill with EXP, save and reload persistence, shop purchase, drag & drop equip, stat allocation, job change via dialogue, learn skill, drag skill to hotbar, cast by hotkey, death → respawn, drop part of a stack via the quantity dialog, delete a character with typed-name confirmation, zero page errors |
+
+Screenshots from the e2e run are written to `tests/e2e/screenshots/` (git-ignored).
+
+
+## Project structure
+```
+src/
+  core/      game rules & simulation (no rendering): world, combat, formulas, inventory, quests, maps, save
+  data/      JSON content: classes, skills, items, monsters, bosses, drops, NPCs, shops, quests, maps, tiles, audio
+  config/    balance.json (all tunable numbers)
+  game/      Phaser scenes, procedural art, effects, audio, texture registry
+  ui/        HTML UI: app shell, screens, HUD, windows, CSS
+tests/       unit/, integration/, e2e/, helpers/ (bot & scenario builders)
+docs/        ARCHITECTURE.md, RO_SYSTEMS.md, WORLD.md
+scripts/     run-ts.mjs (runs the TypeScript server and world generator)
+tools/world-gen/      generators for maps, NPCs, items and jobs
+```
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+## Not done yet (honest list)
+- **All art and audio are generated at runtime.** The hand-made art files (Batch 001 sprite sheets, animations, VFX, tilesets) and the art tools were removed; characters, monsters, maps, icons, music and sounds are all drawn or synthesised by the game.
+- **Online play is not server-authoritative.** `npm run server` connects players (accounts, chat, party, guild, trade, vending, PvP, guild war), but each character lives in its own browser's `localStorage` and the server trusts what clients report, so it is not cheat-proof. The published web page can't reach a server on your computer; online play needs the server plus `npm run dev`/`preview` on a reachable machine. PvP and the Emperium use basic attacks only.
+- **Not built yet:** third jobs; skills against other players; server-side characters and anti-cheat.
+- All 30 maps exist. Their 64 regular monsters and 6 bosses reuse 14 procedural body types in regional colours, and the stats of the newer monsters come from a level formula. Equipment still tops out around level 20, so the Lv 40–85 regions need new gear tiers and haven't been balance-tested.
+- The world map shows the other regions as "Unexplored". They're labels, not playable areas.
+
+## Known issues
+- Balance has been tuned with bots (`tests/integration`), not human playtesters. A careless Novice can still die often around Lv 9–11 near wasps and goblins.
+- Monsters don't collide with each other, so they can overlap (classic RO-style).
+- Name labels can overlap when a player stands right next to an NPC or monster.
+- The production JS bundle is about 1.5 MB (mostly Phaser), so Vite prints a chunk-size note.
+- Performance has only been checked with the Phase 1 entity counts (about 40 monsters per map). It hasn't been load-tested.
+- The desktop layout targets 1280×720 and scales to fit the window; phones get their own landscape layout. The phone layout and controls were checked in an emulated phone browser (Chromium, 800×360 and 844×390), and the APK was built and its manifest checked, but neither was tried on a real phone or Android emulator here.
+- Trader Moss's prices are calculated in each game client (his stock is the same for everyone, from the clock): "player demand" is what *you* sold recently, not what every player sold, because characters are not stored on the server. Market Hall prices and sales are real and shared, but the server trusts the client about the item it lists (same trust model as trading).
+
+## Next phase
+Second jobs and their skill trees, gear tiers for the Lv 40–85 regions with bot balance passes, and better procedural art for monsters and classes. All of it plugs into the existing data files and `World` APIs. Phase 3 then moves `World` onto a Node.js (Colyseus) server with PostgreSQL/Redis for authoritative online play.
+
+## Credits & licensing
+All code, data, art and synthesized audio in this repository are original. The map art packs in `public/art` were supplied for this project. The game is inspired by classic MMORPGs, but it doesn't use any characters, art, maps or sounds from other games.

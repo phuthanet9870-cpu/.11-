@@ -1,7 +1,7 @@
 // Character creation, stat allocation, skill learning and job changes.
 import type { GameData } from './data';
 import { addItem, equipItem, type OpResult } from './inventory';
-import { totalStatPointsAtLevel } from './formulas';
+import { statRaiseCost, totalStatPointsAtLevel } from './formulas';
 import type { Appearance, CharacterState, SkillDef, StatKey } from './types';
 import { STAT_KEYS } from './types';
 
@@ -51,7 +51,7 @@ export function createCharacter(data: GameData, name: string, appearance: Appear
     position: { mapId: start.id, x: start.spawnPoints.default.x * 32 + 16, y: start.spawnPoints.default.y * 32 + 16 },
     savePoint: { mapId: start.id, spawn: 'default' },
     hotbar: [
-      { type: 'item', id: 'red_potion' }, null, null, null, null, null, null, null, null, null,
+      { type: 'item', id: 'red_potion' }, ...Array<null>(19).fill(null),
     ],
     stats_meta: { kills: 0, deaths: 0, playTimeMs: 0, bossKills: {} },
   };
@@ -72,10 +72,12 @@ export function createCharacter(data: GameData, name: string, appearance: Appear
 export function allocateStat(data: GameData, c: CharacterState, stat: StatKey, amount = 1): OpResult {
   if (!STAT_KEYS.includes(stat)) return fail('Unknown stat.');
   if (!Number.isInteger(amount) || amount <= 0) return fail('Invalid amount.');
-  if (c.statPoints < amount) return fail('Not enough stat points.');
   if (c.stats[stat] + amount > data.balance.levels.maxStat) return fail('Stat is at maximum.');
+  let cost = 0;
+  for (let v = c.stats[stat]; v < c.stats[stat] + amount; v++) cost += statRaiseCost(data, v);
+  if (c.statPoints < cost) return fail(`Not enough stat points (needs ${cost}).`);
   c.stats[stat] += amount;
-  c.statPoints -= amount;
+  c.statPoints -= cost;
   return ok();
 }
 
@@ -86,15 +88,8 @@ export function resetStats(data: GameData, c: CharacterState): OpResult {
 }
 
 // ------------------------------------------------------------------ skills
-export function classLineage(data: GameData, classId: string): string[] {
-  const out: string[] = [];
-  let cur = data.classes.get(classId);
-  while (cur) {
-    out.unshift(cur.id);
-    cur = cur.parent ? data.classes.get(cur.parent) : undefined;
-  }
-  return out;
-}
+export { classLineage } from './lineage';
+import { classLineage } from './lineage';
 
 export function skillCheck(data: GameData, c: CharacterState, skill: SkillDef): OpResult {
   if (!classLineage(data, c.classId).includes(skill.classId)) return fail('Your class cannot learn this skill.');
@@ -133,6 +128,41 @@ export function resetSkills(data: GameData, c: CharacterState): OpResult {
   return ok(`Skills reset. ${refund} skill points refunded.`);
 }
 
+// ------------------------------------------------------------------ rebirth
+export const REBIRTH_BASE_LEVEL = 99;
+export const REBIRTH_JOB_LEVEL = 50;
+export const REBIRTH_STAT_POINTS = 100;
+
+/**
+ * Rebirth (Ragnarok transcendence): a second job at Base Lv 99 and Job Lv 50
+ * starts over as a High Novice with 100 stat points. Skills are refunded on the
+ * new path; the high classes keep the old skill lists and end in a
+ * transcendent job of the same line with +25% HP/MP.
+ */
+export function canRebirth(data: GameData, c: CharacterState): OpResult {
+  const cls = data.classes.get(c.classId)!;
+  if (cls.tier !== 2) return fail('Only second jobs can be reborn.');
+  if (c.baseLevel < REBIRTH_BASE_LEVEL) return fail(`Requires Base Level ${REBIRTH_BASE_LEVEL}.`);
+  if (c.jobLevel < REBIRTH_JOB_LEVEL) return fail(`Requires Job Level ${REBIRTH_JOB_LEVEL}.`);
+  return ok();
+}
+
+export function rebirth(data: GameData, c: CharacterState): OpResult {
+  const chk = canRebirth(data, c);
+  if (!chk.ok) return chk;
+  c.flags.rebornFrom = c.classId;
+  c.flags.reborn = true;
+  c.classId = 'high_novice';
+  c.classHistory.push('high_novice');
+  c.baseLevel = 1; c.baseExp = 0; c.jobLevel = 1; c.jobExp = 0;
+  c.stats = { ...data.balance.levels.startingStats };
+  c.statPoints = REBIRTH_STAT_POINTS;
+  c.skills = {};
+  c.skillPoints = 0;
+  c.hotbar = c.hotbar.map((s) => (s?.type === 'skill' ? null : s));
+  return ok('You are reborn as a High Novice!');
+}
+
 // ------------------------------------------------------------------ jobs
 export function canChangeJob(data: GameData, c: CharacterState, targetClass: string): OpResult {
   const target = data.classes.get(targetClass);
@@ -141,6 +171,7 @@ export function canChangeJob(data: GameData, c: CharacterState, targetClass: str
   if (req.fromClass && req.fromClass !== c.classId) return fail(`Must be a ${data.classes.get(req.fromClass)?.name}.`);
   if (req.jobLevel && c.jobLevel < req.jobLevel) return fail(`Requires Job Level ${req.jobLevel}.`);
   if (req.baseLevel && c.baseLevel < req.baseLevel) return fail(`Requires Base Level ${req.baseLevel}.`);
+  if (req.rebornFrom && c.flags.rebornFrom !== req.rebornFrom) return fail(`Only a reborn ${data.classes.get(req.rebornFrom)?.name ?? req.rebornFrom} can take this path.`);
   return ok();
 }
 

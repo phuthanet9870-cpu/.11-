@@ -1,0 +1,291 @@
+{
+ "id": "clover_hills",
+ "name": "Clover Hills",
+ "region": "Willowbrook Region",
+ "type": "field",
+ "levelRange": [
+  5,
+  12
+ ],
+ "width": 160,
+ "height": 120,
+ "tileset": "clover",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "field_meadow",
+ "ambient": "meadow",
+ "weather": [
+  "sunny"
+ ],
+ "worldMapPos": {
+  "x": 0.3,
+  "y": 0.73
+ },
+ "paint": [
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 40,
+   "cy": 33,
+   "rx": 10,
+   "ry": 5,
+   "seed": 3890872695
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 121,
+   "cy": 88,
+   "rx": 6,
+   "ry": 4,
+   "seed": 3890872703
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 117,
+   "cy": 28,
+   "rx": 10,
+   "ry": 4,
+   "seed": 3890872701
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 44,
+   "cy": 84,
+   "rx": 8,
+   "ry": 4,
+   "seed": 3890872697
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     79,
+     3
+    ],
+    [
+     81,
+     33
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     156,
+     59
+    ],
+    [
+     118,
+     60
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_oak",
+   "density": 0.0081,
+   "seed": 3890872709,
+   "baseDensity": 0.018
+  },
+  {
+   "op": "scatter",
+   "kind": "bush",
+   "density": 0.0027,
+   "seed": 3890872710,
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.025,
+   "seed": 2798344045,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.025,
+   "seed": 2169817994,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 81,
+   "y": 2,
+   "id": "sign_clover_hills"
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_sunny_meadow",
+   "x": 78,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "targetMap": "sunny_meadow",
+   "targetSpawn": "from_clover_hills",
+   "label": "Sunny Meadow"
+  },
+  {
+   "id": "to_aurelion_fields_south",
+   "x": 158,
+   "y": 58,
+   "w": 2,
+   "h": 4,
+   "targetMap": "aurelion_fields_south",
+   "targetSpawn": "from_clover_hills",
+   "label": "Aurelion Fields South"
+  }
+ ],
+ "spawnPoints": {
+  "from_sunny_meadow": {
+   "x": 80,
+   "y": 4
+  },
+  "from_aurelion_fields_south": {
+   "x": 155,
+   "y": 60
+  },
+  "default": {
+   "x": 80,
+   "y": 4
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "clover_slime",
+   "count": 23,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "clover_slime",
+   "count": 23,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "clover_slime",
+   "count": 23,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "horn_rabbit",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "horn_rabbit",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "horn_rabbit",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "dusk_bat",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "dusk_bat",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "dusk_bat",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "elite_dusk_bat",
+   "count": 1,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  }
+ ],
+ "objects": [
+  {
+   "id": "sign_clover_hills",
+   "kind": "signpost",
+   "x": 81,
+   "y": 2,
+   "name": "Signpost",
+   "interact": {
+    "text": "Clover Hills (Lv.5–12).  NORTH → Sunny Meadow.  EAST → Aurelion Fields South."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

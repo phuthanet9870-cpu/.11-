@@ -1,0 +1,902 @@
+{
+ "id": "fernhollow",
+ "name": "Fernhollow Village",
+ "region": "Fernhollow Woods",
+ "type": "town",
+ "width": 96,
+ "height": 76,
+ "tileset": "fernwood",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "town_forest",
+ "ambient": "forest",
+ "weather": [
+  "fog"
+ ],
+ "isSavePoint": true,
+ "worldMapPos": {
+  "x": 0.46,
+  "y": 0.12
+ },
+ "paint": [
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     31,
+     23
+    ],
+    [
+     69,
+     23
+    ],
+    [
+     69,
+     51
+    ],
+    [
+     31,
+     51
+    ],
+    [
+     31,
+     23
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     50,
+     37
+    ],
+    [
+     50,
+     23
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     50,
+     37
+    ],
+    [
+     50,
+     51
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     50,
+     37
+    ],
+    [
+     31,
+     37
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     50,
+     37
+    ],
+    [
+     69,
+     37
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     69,
+     23
+    ],
+    [
+     89,
+     5
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     47,
+     71
+    ],
+    [
+     47,
+     52
+    ],
+    [
+     47,
+     52
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     91,
+     37
+    ],
+    [
+     70,
+     37
+    ],
+    [
+     70,
+     37
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     3,
+     37
+    ],
+    [
+     31,
+     37
+    ],
+    [
+     31,
+     37
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     44,
+     50
+    ],
+    [
+     44,
+     51
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     48,
+     22
+    ],
+    [
+     48,
+     23
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     58,
+     22
+    ],
+    [
+     58,
+     23
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     57,
+     50
+    ],
+    [
+     57,
+     51
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     45,
+     31
+    ],
+    [
+     45,
+     32
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     38,
+     22
+    ],
+    [
+     38,
+     23
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     66,
+     64
+    ],
+    [
+     66,
+     63
+    ],
+    [
+     66,
+     62
+    ],
+    [
+     66,
+     61
+    ],
+    [
+     66,
+     60
+    ],
+    [
+     66,
+     59
+    ],
+    [
+     66,
+     58
+    ],
+    [
+     66,
+     57
+    ],
+    [
+     66,
+     56
+    ],
+    [
+     66,
+     55
+    ],
+    [
+     66,
+     54
+    ],
+    [
+     66,
+     53
+    ],
+    [
+     66,
+     52
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     82,
+     33
+    ],
+    [
+     82,
+     34
+    ],
+    [
+     82,
+     35
+    ],
+    [
+     82,
+     36
+    ],
+    [
+     82,
+     37
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     82,
+     50
+    ],
+    [
+     82,
+     49
+    ],
+    [
+     82,
+     48
+    ],
+    [
+     82,
+     47
+    ],
+    [
+     82,
+     46
+    ],
+    [
+     82,
+     45
+    ],
+    [
+     82,
+     44
+    ],
+    [
+     82,
+     43
+    ],
+    [
+     82,
+     42
+    ],
+    [
+     82,
+     41
+    ],
+    [
+     82,
+     40
+    ],
+    [
+     82,
+     39
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     10,
+     27
+    ],
+    [
+     10,
+     28
+    ],
+    [
+     10,
+     29
+    ],
+    [
+     10,
+     30
+    ],
+    [
+     10,
+     31
+    ],
+    [
+     10,
+     32
+    ],
+    [
+     10,
+     33
+    ],
+    [
+     10,
+     34
+    ],
+    [
+     10,
+     35
+    ],
+    [
+     10,
+     36
+    ],
+    [
+     10,
+     37
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     21,
+     36
+    ],
+    [
+     21,
+     37
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "rect",
+   "tile": "dirt",
+   "x": 43,
+   "y": 32,
+   "w": 15,
+   "h": 10
+  },
+  {
+   "op": "building",
+   "style": "inn",
+   "x": 40,
+   "y": 44,
+   "w": 8,
+   "h": 6,
+   "door": 4,
+   "sign": "Inn"
+  },
+  {
+   "op": "building",
+   "style": "guild",
+   "x": 44,
+   "y": 16,
+   "w": 8,
+   "h": 6,
+   "door": 4,
+   "sign": "Guild Hall"
+  },
+  {
+   "op": "building",
+   "style": "smithy",
+   "x": 54,
+   "y": 16,
+   "w": 8,
+   "h": 6,
+   "door": 4,
+   "sign": "Smithy"
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 53,
+   "y": 45,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "Tools"
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 41,
+   "y": 26,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "Market Hall"
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 34,
+   "y": 17,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "Courier"
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 62,
+   "y": 59,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 78,
+   "y": 28,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 78,
+   "y": 45,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 6,
+   "y": 22,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 17,
+   "y": 31,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "object",
+   "kind": "fountain",
+   "x": 49,
+   "y": 35,
+   "id": "fernhollow_fountain"
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 43,
+   "y": 32
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 57,
+   "y": 32
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 43,
+   "y": 41
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 57,
+   "y": 41
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 54,
+   "y": 42
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 52,
+   "y": 30
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 49,
+   "y": 29
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 55,
+   "y": 42
+  },
+  {
+   "op": "object",
+   "kind": "anvil",
+   "x": 61,
+   "y": 22
+  },
+  {
+   "op": "object",
+   "kind": "crate",
+   "x": 48,
+   "y": 31
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 43,
+   "y": 31
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 23,
+   "y": 20
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 30,
+   "y": 20
+  },
+  {
+   "op": "object",
+   "kind": "bush",
+   "x": 23,
+   "y": 25
+  },
+  {
+   "op": "object",
+   "kind": "bush",
+   "x": 30,
+   "y": 25
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 46,
+   "y": 71
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 91,
+   "y": 36
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 3,
+   "y": 36
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "area": {
+    "x": 23,
+    "y": 20,
+    "w": 8,
+    "h": 6
+   },
+   "density": 0.35,
+   "seed": 3191470948
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_pine",
+   "density": 0.02,
+   "seed": 3191470952
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_dark",
+   "density": 0.006666666666666667,
+   "seed": 3191470953
+  },
+  {
+   "op": "scatter",
+   "kind": "bush",
+   "density": 0.006666666666666667,
+   "seed": 3191470954
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.03,
+   "seed": 3191470944
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.03,
+   "seed": 3191470946
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_mistpine_woods",
+   "x": 46,
+   "y": 74,
+   "w": 4,
+   "h": 2,
+   "targetMap": "mistpine_woods",
+   "targetSpawn": "from_fernhollow",
+   "label": "Mistpine Woods"
+  },
+  {
+   "id": "to_deepwood_hollow",
+   "x": 94,
+   "y": 36,
+   "w": 2,
+   "h": 4,
+   "targetMap": "deepwood_hollow",
+   "targetSpawn": "from_fernhollow",
+   "label": "Deepwood Hollow"
+  },
+  {
+   "id": "to_fernhollow_cave",
+   "x": 0,
+   "y": 36,
+   "w": 2,
+   "h": 4,
+   "targetMap": "fernhollow_cave",
+   "targetSpawn": "from_fernhollow",
+   "label": "Fernhollow Cave"
+  }
+ ],
+ "spawnPoints": {
+  "from_mistpine_woods": {
+   "x": 48,
+   "y": 71
+  },
+  "from_deepwood_hollow": {
+   "x": 91,
+   "y": 38
+  },
+  "from_fernhollow_cave": {
+   "x": 4,
+   "y": 38
+  },
+  "default": {
+   "x": 50,
+   "y": 38
+  }
+ },
+ "npcs": [
+  {
+   "npcId": "fernhollow_innkeeper",
+   "x": 43,
+   "y": 52,
+   "facing": "down"
+  },
+  {
+   "npcId": "fernhollow_smith",
+   "x": 59,
+   "y": 24,
+   "facing": "down"
+  },
+  {
+   "npcId": "fernhollow_merchant",
+   "x": 58,
+   "y": 52,
+   "facing": "down"
+  },
+  {
+   "npcId": "fernhollow_courier",
+   "x": 39,
+   "y": 24,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_ranger",
+   "x": 49,
+   "y": 24,
+   "facing": "down"
+  },
+  {
+   "npcId": "fernhollow_petkeeper",
+   "x": 30,
+   "y": 26,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_beastmaster",
+   "x": 47,
+   "y": 24,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_minstrel",
+   "x": 50,
+   "y": 26,
+   "facing": "down"
+  },
+  {
+   "npcId": "fernhollow_jobmaster",
+   "x": 46,
+   "y": 22,
+   "facing": "down"
+  },
+  {
+   "npcId": "mvp_guide",
+   "x": 48,
+   "y": 35,
+   "facing": "down"
+  },
+  {
+   "npcId": "fernhollow_trader",
+   "x": 56,
+   "y": 52,
+   "facing": "down"
+  },
+  {
+   "npcId": "fernhollow_market",
+   "x": 46,
+   "y": 33,
+   "facing": "down"
+  }
+ ],
+ "monsterSpawns": [],
+ "objects": [
+  {
+   "id": "fernhollow_fountain",
+   "kind": "fountain",
+   "x": 49,
+   "y": 35,
+   "name": "Village Fountain",
+   "interact": {
+    "text": "Fernhollow Village. Fernhollow Woods."
+   }
+  }
+ ],
+ "areas": [
+  {
+   "id": "plaza",
+   "name": "Village Green",
+   "rect": {
+    "x": 43,
+    "y": 32,
+    "w": 15,
+    "h": 10
+   }
+  }
+ ],
+ "generated": true
+}

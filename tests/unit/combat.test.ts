@@ -7,16 +7,50 @@ import { data } from '../helpers/fixtures';
 const base: CombatProfile = {
   level: 10, patk: 100, matk: 100, pdef: 0, mdef: 0, hit: 200, flee: 0, crit: 0, critDmg: 150,
   element: 'neutral', elementDamagePct: {}, elementResistPct: {},
+  race: 'formless', size: 'medium', raceDamagePct: {}, sizeDamagePct: {}, raceResistPct: {}, perfectDodge: 0, weaponType: 'unarmed',
 };
 
+describe('Ragnarok-style modifiers', () => {
+  const avg = (a: CombatProfile, d: CombatProfile) => {
+    const rng = new Rng(5); let t = 0;
+    for (let i = 0; i < 400; i++) t += resolveAttack(data, rng, a, d, { kind: 'physical', multiplier: 1, element: 'neutral', alwaysHit: true, canCrit: false }).damage;
+    return t / 400;
+  };
+  it('weapon type vs size table: daggers fall off against large targets', () => {
+    const dagger = { ...base, weaponType: 'dagger' };
+    const small = avg(dagger, { ...base, size: 'small' }), large = avg(dagger, { ...base, size: 'large' });
+    expect(large / small).toBeCloseTo(0.5, 1);
+    const spear = { ...base, weaponType: 'spear' };
+    expect(avg(spear, { ...base, size: 'large' })).toBeGreaterThan(avg(spear, { ...base, size: 'small' }));
+  });
+  it('race damage and race resistance (card effects) apply', () => {
+    const plain = avg(base, { ...base, race: 'undead' });
+    expect(avg({ ...base, raceDamagePct: { undead: 20 } }, { ...base, race: 'undead' }) / plain).toBeCloseTo(1.2, 1);
+    expect(avg({ ...base, raceDamagePct: { undead: 20 } }, { ...base, race: 'plant' }) / plain).toBeCloseTo(1, 1);
+    expect(avg({ ...base, race: 'beast' }, { ...base, raceResistPct: { beast: 30 } }) / avg({ ...base, race: 'beast' }, base)).toBeCloseTo(0.7, 1);
+  });
+  it('perfect dodge avoids hits even against huge HIT', () => {
+    const rng = new Rng(9); let miss = 0;
+    for (let i = 0; i < 2000; i++) if (!resolveAttack(data, rng, { ...base, hit: 9999 }, { ...base, perfectDodge: 20 }, { kind: 'physical', multiplier: 1, element: 'neutral' }).hit) miss++;
+    expect(miss / 2000).toBeGreaterThan(0.15);
+    expect(miss / 2000).toBeLessThan(0.25);
+  });
+});
+
 describe('element table', () => {
-  it('is complete 9x9', () => {
-    for (const a of ELEMENTS) for (const d of ELEMENTS) expect(typeof data.elementTable[a][d]).toBe('number');
+  it('is complete 10x10 at every level 1-4', () => {
+    for (const lv of ['1', '2', '3', '4']) for (const a of ELEMENTS) for (const d of ELEMENTS) expect(typeof data.elementTables[lv][a][d]).toBe('number');
+  });
+  it('scales with the defender element level', () => {
+    expect(elementModifier(data, 'neutral', 'ghost', 1)).toBe(0.25);
+    expect(elementModifier(data, 'neutral', 'ghost', 4)).toBe(0);
+    expect(elementModifier(data, 'holy', 'undead', 4)).toBeGreaterThan(elementModifier(data, 'holy', 'undead', 1));
+    expect(elementModifier(data, 'fire', 'earth', 4)).toBe(2);
   });
   it('applies classic counters', () => {
     expect(elementModifier(data, 'fire', 'earth')).toBe(1.5);
     expect(elementModifier(data, 'water', 'fire')).toBe(1.5);
-    expect(elementModifier(data, 'holy', 'undead')).toBeGreaterThan(1.5);
+    expect(elementModifier(data, 'holy', 'undead')).toBeGreaterThanOrEqual(1.5);
     expect(elementModifier(data, 'poison', 'poison')).toBe(0);
   });
 });

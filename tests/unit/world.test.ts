@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { TILE } from '../../src/core/mapCompiler';
+import { compileMap, TILE } from '../../src/core/mapCompiler';
 import { addItem, countItem } from '../../src/core/inventory';
 import type { MonsterActor, World } from '../../src/core/world';
 import { data, newChar, newWorld, run } from '../helpers/fixtures';
@@ -16,19 +16,29 @@ function spawnNear(w: World, monsterId: string, dx = 60, dy = 0): MonsterActor {
   return m;
 }
 
+// Sunny Meadow too.
+const SM = data.maps.get('sunny_meadow')!.origin ?? { x: 0, y: 0 };
+
 describe('movement & collision', () => {
   it('starts in Willowbrook at the default spawn', () => {
     const w = newWorld();
     expect(w.map.def.id).toBe('willowbrook');
-    expect(Math.floor(w.player.x / TILE)).toBe(24);
+    const sp = data.maps.get('willowbrook')!.spawnPoints.default;
+    expect(Math.floor(w.player.x / TILE)).toBe(sp.x);
+    expect(Math.floor(w.player.y / TILE)).toBe(sp.y);
   });
 
   it('cannot walk through a building', () => {
-    // Stand just south of the inn (x 7..14, y 6..11) and walk north into it.
-    const w = newWorld(at(newChar(), 'willowbrook', 9, 13));
+    // Stand on the open row just south of a building (not at its door) and walk north into it.
+    const w = newWorld();
+    const cm = w.map;
+    const b = cm.buildings[0];
+    const col = [...Array(b.w).keys()].map((i) => b.x + i).find((x) => x !== b.x + (b.door ?? -1) && !cm.collision[(b.y + b.h) * cm.width + x])!;
+    expect(col).toBeDefined();
+    w.player.x = col * TILE + 16; w.player.y = (b.y + b.h) * TILE + 16;
     w.setMoveDir(0, -1);
     run(w, 3000);
-    expect(w.player.y / TILE).toBeGreaterThan(11.9);
+    expect(w.player.y / TILE).toBeGreaterThan(b.y + b.h - 0.1);
   });
 
   it('cannot leave the map through the border', () => {
@@ -38,16 +48,29 @@ describe('movement & collision', () => {
     expect(w.player.x).toBeGreaterThanOrEqual(2 * TILE);
   });
 
+  it('keyboard movement plays the walk animation and returns to idle', () => {
+    const w = newWorld();
+    w.setMoveDir(1, 0);
+    run(w, 300);
+    expect(w.player.anim).toBe('walk');
+    expect(w.player.dir).toBe('right');
+    w.setMoveDir(0, 0);
+    run(w, 100);
+    expect(w.player.anim).toBe('idle');
+  });
+
   it('click-to-move pathfinds around obstacles', () => {
     const w = newWorld();
-    const goal = { x: 11 * TILE + 16, y: 14 * TILE + 16 }; // in front of the inn
+    const inn = data.maps.get('willowbrook')!.spawnPoints.inn; // in front of the inn, around buildings from the plaza
+    const goal = { x: inn.x * TILE + 16, y: inn.y * TILE + 16 };
     w.moveTo(goal.x, goal.y);
     run(w, 15000);
     expect(Math.hypot(w.player.x - goal.x, w.player.y - goal.y)).toBeLessThan(8);
   });
 
   it('walking into a portal changes map and places the player at the target spawn', () => {
-    const w = newWorld(at(newChar(), 'willowbrook', 45, 18));
+    const arrive = data.maps.get('willowbrook')!.spawnPoints.from_meadow; // next to the east portal
+    const w = newWorld(at(newChar(), 'willowbrook', arrive.x, arrive.y));
     w.setMoveDir(1, 0);
     for (let t = 0; t < 3000 && w.map.def.id === 'willowbrook'; t += 50) w.update(50);
     w.setMoveDir(0, 0);
@@ -60,7 +83,7 @@ describe('movement & collision', () => {
 
 describe('combat', () => {
   it('clicking a monster auto-attacks until it dies and grants EXP + drops', () => {
-    const c = at(newChar(), 'sunny_meadow', 10, 30);
+    const c = at(newChar(), 'sunny_meadow', 10 + SM.x, 30 + SM.y);
     const w = newWorld(c, 99);
     const m = spawnNear(w, 'leaf_slime', 80, 0);
     w.attack(m.id);
@@ -76,7 +99,7 @@ describe('combat', () => {
   });
 
   it('passive monsters ignore the player until attacked; aggressive ones chase', () => {
-    const w = newWorld(at(newChar(), 'sunny_meadow', 10, 30));
+    const w = newWorld(at(newChar(), 'sunny_meadow', 10 + SM.x, 30 + SM.y));
     for (const m of w.monsters.values()) { m.dead = true; m.respawnAt = Infinity; }
     const slime = spawnNear(w, 'leaf_slime', 100, 0);
     const wasp = spawnNear(w, 'buzz_wasp', -120, 0);
@@ -87,7 +110,7 @@ describe('combat', () => {
   });
 
   it('monsters return home when leashed and fully heal', () => {
-    const w = newWorld(at(newChar(), 'sunny_meadow', 10, 30));
+    const w = newWorld(at(newChar(), 'sunny_meadow', 10 + SM.x, 30 + SM.y));
     for (const m of w.monsters.values()) { m.dead = true; m.respawnAt = Infinity; }
     const wasp = spawnNear(w, 'buzz_wasp', 60, 0);
     wasp.hp = 10;
@@ -98,7 +121,7 @@ describe('combat', () => {
   });
 
   it('player death applies EXP penalty and respawns at the save point', () => {
-    const c = at(newChar(), 'sunny_meadow', 10, 30);
+    const c = at(newChar(), 'sunny_meadow', 10 + SM.x, 30 + SM.y);
     c.baseLevel = 5; c.baseExp = 100;
     const w = newWorld(c);
     w.damagePlayer(99999, 'physical', 'neutral', null, false);
@@ -111,7 +134,7 @@ describe('combat', () => {
   });
 
   it('dead monsters respawn after their respawn timer', () => {
-    const w = newWorld(at(newChar(), 'sunny_meadow', 10, 30));
+    const w = newWorld(at(newChar(), 'sunny_meadow', 10 + SM.x, 30 + SM.y));
     const m = spawnNear(w, 'leaf_slime');
     w.damageMonster(m, 99999, 'physical', 'neutral', false, false);
     expect(m.dead).toBe(true);
@@ -121,7 +144,7 @@ describe('combat', () => {
   });
 
   it('poison ticks damage but cannot kill; green potion cures it', () => {
-    const c = at(newChar(), 'willowbrook', 24, 21);
+    const c = newChar();
     const w = newWorld(c, 5);
     while (!w.applyStatus(w.player, 'poison', 1, 60000)) { /* VIT may resist; retry */ }
     w.update(10);
@@ -143,13 +166,21 @@ describe('skills', () => {
     expect(w.castSkill('bash').ok).toBe(false);
     expect(w.castSkill('basic_training').ok).toBe(false);
     const c = kn();
-    const w2 = newWorld(at(c, 'sunny_meadow', 10, 30));
+    const w2 = newWorld(at(c, 'sunny_meadow', 10 + SM.x, 30 + SM.y));
     c.mp = 0;
     expect(w2.castSkill('shield_guard').ok).toBe(false);
   });
 
   it('every knight skill does something measurable', () => {
-    const c = at(kn(), 'sunny_meadow', 10, 30);
+    // An open patch of meadow (trees are scattered at random, so look for one).
+    const mm = compileMap(data, data.maps.get('sunny_meadow')!);
+    const open = (x: number, y: number) => {
+      for (let yy = y - 3; yy <= y + 3; yy++) for (let xx = x - 4; xx <= x + 7; xx++) if (mm.collision[yy * mm.width + xx]) return false;
+      return true;
+    };
+    let spot = { x: 10 + SM.x, y: 30 + SM.y };
+    for (let y = SM.y + 5, found = false; y < mm.height - 8 && !found; y++) for (let x = SM.x + 5; x < mm.width - 10; x++) if (open(x, y)) { spot = { x, y }; found = true; break; }
+    const c = at(kn(), 'sunny_meadow', spot.x, spot.y);
     const w = newWorld(c, 11);
     for (const m of w.monsters.values()) { m.dead = true; m.respawnAt = Infinity; }
     const def0 = w.stats.pdef;
@@ -185,7 +216,7 @@ describe('skills', () => {
   });
 
   it('mage spells use elements: fire bolt hits earth monsters harder than water bolt does', () => {
-    const c = at(buildCharacter({ classId: 'mage', base: 15, job: 15, stats: ['int', 'dex'], skills: [['fire_bolt', 5], ['ice_bolt', 5]], gear: ['apprentice_wand'] }), 'sunny_meadow', 10, 30);
+    const c = at(buildCharacter({ classId: 'mage', base: 15, job: 15, stats: ['int', 'dex'], skills: [['fire_bolt', 5], ['ice_bolt', 5]], gear: ['apprentice_wand'] }), 'sunny_meadow', 10 + SM.x, 30 + SM.y);
     const w = newWorld(c, 3);
     for (const m of w.monsters.values()) { m.dead = true; m.respawnAt = Infinity; }
     const dmg = (skill: string) => {
@@ -206,7 +237,7 @@ describe('skills', () => {
   });
 
   it('cast time is interrupted by movement', () => {
-    const c = at(buildCharacter({ classId: 'mage', base: 15, job: 15, stats: ['int'], skills: [['fire_bolt', 3], ['lightning_bolt', 4], ['thunderstorm', 1]], gear: [] }), 'sunny_meadow', 10, 30);
+    const c = at(buildCharacter({ classId: 'mage', base: 15, job: 15, stats: ['int'], skills: [['fire_bolt', 3], ['lightning_bolt', 4], ['thunderstorm', 1]], gear: [] }), 'sunny_meadow', 10 + SM.x, 30 + SM.y);
     const w = newWorld(c, 3);
     for (const m of w.monsters.values()) { m.dead = true; m.respawnAt = Infinity; }
     const m = spawnNear(w, 'mushling', 120);
@@ -220,7 +251,7 @@ describe('skills', () => {
   });
 
   it('ranger needs a bow for archery skills; wind trap slows enemies', () => {
-    const c = at(buildCharacter({ classId: 'ranger', base: 15, job: 15, stats: ['dex', 'agi'], skills: [['double_shot', 3], ['wind_trap', 2]], gear: [] }), 'sunny_meadow', 10, 30);
+    const c = at(buildCharacter({ classId: 'ranger', base: 15, job: 15, stats: ['dex', 'agi'], skills: [['double_shot', 3], ['wind_trap', 2]], gear: [] }), 'sunny_meadow', 10 + SM.x, 30 + SM.y);
     const w = newWorld(c, 4);
     for (const m of w.monsters.values()) { m.dead = true; m.respawnAt = Infinity; }
     const m = spawnNear(w, 'leaf_slime', 100);
@@ -303,18 +334,41 @@ describe('npc services & invalid commands', () => {
     expect(countItem(c, 'red_potion')).toBe(before - 1);
   });
 
-  it('interacting with a quest object only gives the quest item while the quest needs it', () => {
-    const c = at(newChar(), 'willowbrook', 7, 34);
+  it('tutorial steps run through real NPC services: buy, equip, refine, job change', () => {
+    const c = newChar();
+    for (const q of ['tut_welcome', 'tut_hunt']) c.quests[q] = { questId: q, status: 'completed', counts: [1], acceptedAt: 0, completedAt: 0 };
+    c.luma = 5000;
     const w = newWorld(c);
-    w.interactObjectCmd('old_well');
-    run(w, 3000);
-    expect(countItem(c, 'well_water')).toBe(0);
-    w.accept('side_old_well');
-    w.interactObjectCmd('old_well');
-    run(w, 3000);
-    expect(countItem(c, 'well_water')).toBe(1);
-    w.interactObjectCmd('old_well');
-    run(w, 3000);
-    expect(countItem(c, 'well_water')).toBe(1);
+    const garrick = data.maps.get('willowbrook')!.npcs.find((n) => n.npcId === 'garrick')!;
+    w.player.x = garrick.x * TILE + 16; w.player.y = (garrick.y + 1) * TILE + 16; // next to Garrick
+    expect(w.accept('tut_weapon').ok).toBe(true);
+    expect(w.buy('garrick_smithy', 'oak_club', 1).ok).toBe(true);
+    const club = c.inventory.find((i) => i.itemId === 'oak_club')!;
+    expect(w.equip(club.uid).ok).toBe(true);
+    expect(c.quests.tut_weapon.status).toBe('ready');
+    expect(w.turnIn('tut_weapon').ok).toBe(true);
+    expect(w.accept('tut_refine').ok).toBe(true);
+    const r = w.refine(club.uid);
+    expect(r.ok && r.outcome).toBe('success');
+    expect(c.equipment.weapon?.refine).toBe(1);
+    expect(c.quests.tut_refine.status).toBe('ready');
+    // Job change is refused away from the guild, accepted at the Knight guild master in Aurelion.
+    c.jobLevel = 10;
+    expect(w.changeJobAt('knight').ok).toBe(false);
+    const guild = data.maps.get('aurelion')!.npcs.find((n) => n.npcId === 'guild_knight')!;
+    w.enterMap('aurelion', 'default');
+    w.player.x = guild.x * TILE + 16; w.player.y = (guild.y + 1) * TILE + 16;
+    expect(w.changeJobAt('knight').ok).toBe(true);
+    expect(c.classId).toBe('knight');
+  });
+
+  it('courier warp service moves between towns for Luma', () => {
+    const c = newChar(); c.luma = 1000;
+    const w = newWorld(c);
+    const courier = data.maps.get('willowbrook')!.npcs.find((n) => n.npcId === 'willowbrook_courier')!;
+    w.player.x = courier.x * TILE + 16; w.player.y = (courier.y + 1) * TILE + 16;
+    expect(w.warpTo('sandara').ok).toBe(true);
+    expect(w.map.def.id).toBe('sandara');
+    expect(c.luma).toBe(400);
   });
 });

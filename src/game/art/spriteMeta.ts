@@ -1,0 +1,43 @@
+// Layout of the procedurally drawn sprite sheets: frame size, directions and animation frames.
+import type { Direction } from '../../core/types';
+
+export const CHAR_FRAME_W = 48;
+export const CHAR_FRAME_H = 64;
+export const CHAR_SHEET_COLS = 16;
+/** Row order of the character sheet. */
+export const CHAR_DIRECTIONS: Direction[] = ['down', 'left', 'right', 'up'];
+export const CHAR_PIVOT = { x: 0.5, y: 60 / 64 };
+export const CHAR_COLLISION_BOX = { w: 18, h: 12, offsetY: 0 };
+
+export type CharAnim = 'idle' | 'walk' | 'attack' | 'cast' | 'hit' | 'death';
+export const CHAR_ANIMS: Record<CharAnim, { start: number; count: number; frameMs: number; loop: boolean }> = {
+  idle: { start: 0, count: 2, frameMs: 520, loop: true },
+  walk: { start: 2, count: 4, frameMs: 130, loop: true },
+  attack: { start: 6, count: 3, frameMs: 90, loop: false },
+  cast: { start: 9, count: 3, frameMs: 160, loop: true },
+  hit: { start: 12, count: 1, frameMs: 200, loop: false },
+  death: { start: 13, count: 3, frameMs: 220, loop: false },
+};
+
+/** Shadow-style player sheets: the same animations with more frames (own column count). */
+export const SHADOW_ANIMS: Record<CharAnim, { start: number; count: number; frameMs: number; loop: boolean }> = {
+  idle: { start: 0, count: 8, frameMs: 230, loop: true },
+  walk: { start: 8, count: 8, frameMs: 95, loop: true },
+  attack: { start: 16, count: 8, frameMs: 48, loop: false },
+  cast: { start: 24, count: 6, frameMs: 110, loop: true },
+  hit: { start: 30, count: 3, frameMs: 90, loop: false },
+  death: { start: 33, count: 8, frameMs: 150, loop: false },
+};
+export const SHADOW_SHEET_COLS = 41;
+export type CharLayout = { anims: typeof CHAR_ANIMS; cols: number };
+
+/** Monster sheets: one row (facing left; right is mirrored at runtime). */
+export type MonAnim = 'idle' | 'walk' | 'attack' | 'hit' | 'death';
+export const MON_ANIMS: Record<MonAnim, { start: number; count: number; frameMs: number; loop: boolean }> = {
+  idle: { start: 0, count: 6, frameMs: 210, loop: true },
+  walk: { start: 6, count: 8, frameMs: 95, loop: true },
+  attack: { start: 14, count: 7, frameMs: 65, loop: false },
+  hit: { start: 21, count: 3, frameMs: 80, loop: false },
+  death: { start: 24, count: 7, frameMs: 140, loop: false },
+};
+export const MON_SHEET_COLS = 31;

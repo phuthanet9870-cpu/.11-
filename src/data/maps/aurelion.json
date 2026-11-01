@@ -1,0 +1,852 @@
+{
+ "id": "aurelion",
+ "name": "Royal Capital Aurelion",
+ "region": "Aurelion — Royal Capital",
+ "type": "town",
+ "width": 100,
+ "height": 84,
+ "tileset": "capital",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "town_capital",
+ "ambient": "village",
+ "weather": [
+  "sunny"
+ ],
+ "isSavePoint": true,
+ "worldMapPos": {
+  "x": 0.46,
+  "y": 0.52
+ },
+ "paint": [
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 47,
+   "y": 41,
+   "w": 6,
+   "h": 43,
+   "layer": "ground"
+  },
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 0,
+   "y": 54,
+   "w": 100,
+   "h": 4,
+   "layer": "ground"
+  },
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 36,
+   "y": 45,
+   "w": 28,
+   "h": 21,
+   "layer": "ground"
+  },
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 22,
+   "y": 24,
+   "w": 57,
+   "h": 16,
+   "layer": "ground"
+  },
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 4,
+   "y": 70,
+   "w": 32,
+   "h": 3,
+   "layer": "ground"
+  },
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 64,
+   "y": 70,
+   "w": 32,
+   "h": 3,
+   "layer": "ground"
+  },
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 30,
+   "y": 77,
+   "w": 40,
+   "h": 2,
+   "layer": "ground"
+  },
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 6,
+   "y": 58,
+   "w": 2,
+   "h": 12,
+   "layer": "ground"
+  },
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 92,
+   "y": 58,
+   "w": 2,
+   "h": 12,
+   "layer": "ground"
+  },
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 85,
+   "y": 0,
+   "w": 3,
+   "h": 54,
+   "layer": "ground"
+  },
+  {
+   "op": "rect",
+   "tile": "dirt",
+   "x": 88,
+   "y": 32,
+   "w": 9,
+   "h": 14,
+   "layer": "ground"
+  },
+  {
+   "op": "rect",
+   "tile": "hedge",
+   "x": 21,
+   "y": 8,
+   "w": 1,
+   "h": 33,
+   "layer": "wall"
+  },
+  {
+   "op": "rect",
+   "tile": "hedge",
+   "x": 79,
+   "y": 8,
+   "w": 1,
+   "h": 33,
+   "layer": "wall"
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "x": 21,
+   "y": 40,
+   "w": 26,
+   "h": 1,
+   "layer": "wall"
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "x": 53,
+   "y": 40,
+   "w": 27,
+   "h": 1,
+   "layer": "wall"
+  },
+  {
+   "op": "building",
+   "style": "aurelion_palace",
+   "x": 32,
+   "y": 12,
+   "w": 36,
+   "h": 12,
+   "sign": "Royal Palace",
+   "door": 18
+  },
+  {
+   "op": "building",
+   "style": "guild",
+   "x": 8,
+   "y": 47,
+   "w": 8,
+   "h": 7,
+   "sign": "Adventurers' Guild",
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "smithy",
+   "x": 18,
+   "y": 48,
+   "w": 8,
+   "h": 6,
+   "sign": "Capital Smithy",
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 27,
+   "y": 48,
+   "w": 8,
+   "h": 6,
+   "sign": "Tools",
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "knight_guild",
+   "x": 64,
+   "y": 47,
+   "w": 8,
+   "h": 7,
+   "sign": "Knight Guild",
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 74,
+   "y": 48,
+   "w": 8,
+   "h": 6,
+   "sign": "Stable",
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "inn",
+   "x": 10,
+   "y": 63,
+   "w": 8,
+   "h": 7,
+   "sign": "Royal Inn",
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 21,
+   "y": 64,
+   "w": 8,
+   "h": 6,
+   "sign": "Courier",
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "aurelion_cathedral",
+   "x": 69,
+   "y": 60,
+   "w": 13,
+   "h": 10,
+   "sign": "Royal Cathedral",
+   "door": 6
+  },
+  {
+   "op": "building",
+   "style": "aurelion_residence",
+   "x": 84,
+   "y": 64,
+   "w": 8,
+   "h": 6,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "aurelion_residence",
+   "x": 38,
+   "y": 72,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "aurelion_residence",
+   "x": 55,
+   "y": 72,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "aurelion_stall_red",
+   "x": 37,
+   "y": 61,
+   "w": 4,
+   "h": 3,
+   "door": 2
+  },
+  {
+   "op": "building",
+   "style": "aurelion_stall_gold",
+   "x": 42,
+   "y": 61,
+   "w": 4,
+   "h": 3,
+   "door": 2
+  },
+  {
+   "op": "building",
+   "style": "aurelion_stall_blue",
+   "x": 54,
+   "y": 61,
+   "w": 4,
+   "h": 3,
+   "door": 2
+  },
+  {
+   "op": "building",
+   "style": "aurelion_stall_red",
+   "x": 59,
+   "y": 61,
+   "w": 4,
+   "h": 3,
+   "door": 2
+  },
+  {
+   "op": "object",
+   "kind": "capital_fountain",
+   "x": 47,
+   "y": 53,
+   "id": "aurelion_fountain"
+  },
+  {
+   "op": "object",
+   "kind": "capital_statue",
+   "x": 39,
+   "y": 29
+  },
+  {
+   "op": "object",
+   "kind": "capital_statue",
+   "x": 59,
+   "y": 29
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 36,
+   "y": 45
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 63,
+   "y": 45
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 36,
+   "y": 59
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 63,
+   "y": 59
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 46,
+   "y": 41
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 53,
+   "y": 41
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 24,
+   "y": 26
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 76,
+   "y": 26
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 30,
+   "y": 36
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 69,
+   "y": 36
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 44,
+   "y": 47
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 55,
+   "y": 47
+  },
+  {
+   "op": "object",
+   "kind": "capital_training_dummy",
+   "x": 90,
+   "y": 34
+  },
+  {
+   "op": "object",
+   "kind": "capital_training_dummy",
+   "x": 93,
+   "y": 34
+  },
+  {
+   "op": "object",
+   "kind": "capital_training_dummy",
+   "x": 96,
+   "y": 34
+  },
+  {
+   "op": "object",
+   "kind": "anvil",
+   "x": 26,
+   "y": 53
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 35,
+   "y": 53
+  },
+  {
+   "op": "object",
+   "kind": "haystack",
+   "x": 82,
+   "y": 53
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 9,
+   "y": 69
+  },
+  {
+   "op": "object",
+   "kind": "tree_oak",
+   "x": 24,
+   "y": 9
+  },
+  {
+   "op": "object",
+   "kind": "tree_oak",
+   "x": 76,
+   "y": 9
+  },
+  {
+   "op": "object",
+   "kind": "tree_oak",
+   "x": 12,
+   "y": 40
+  },
+  {
+   "op": "object",
+   "kind": "tree_oak",
+   "x": 88,
+   "y": 76
+  },
+  {
+   "op": "object",
+   "kind": "tree_oak",
+   "x": 12,
+   "y": 78
+  },
+  {
+   "op": "object",
+   "kind": "tree_oak",
+   "x": 94,
+   "y": 22
+  },
+  {
+   "op": "object",
+   "kind": "tree_oak",
+   "x": 8,
+   "y": 24
+  },
+  {
+   "op": "object",
+   "kind": "tree_oak",
+   "x": 66,
+   "y": 80
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.03,
+   "seed": 24061101
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.02,
+   "seed": 24061102
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_aurelion_fields_south",
+   "x": 47,
+   "y": 82,
+   "w": 6,
+   "h": 2,
+   "targetMap": "aurelion_fields_south",
+   "targetSpawn": "from_aurelion",
+   "label": "Aurelion Fields South"
+  },
+  {
+   "id": "to_aurelion_fields_north",
+   "x": 85,
+   "y": 0,
+   "w": 3,
+   "h": 2,
+   "targetMap": "aurelion_fields_north",
+   "targetSpawn": "from_aurelion",
+   "label": "Aurelion Fields North"
+  },
+  {
+   "id": "to_arcanthe_heath",
+   "x": 98,
+   "y": 54,
+   "w": 2,
+   "h": 4,
+   "targetMap": "arcanthe_heath",
+   "targetSpawn": "from_aurelion",
+   "label": "Arcanthe Heath"
+  },
+  {
+   "id": "to_aurelion_catacombs",
+   "x": 0,
+   "y": 54,
+   "w": 2,
+   "h": 4,
+   "targetMap": "aurelion_catacombs",
+   "targetSpawn": "from_aurelion",
+   "label": "Aurelion Catacombs"
+  }
+ ],
+ "spawnPoints": {
+  "default": {
+   "x": 50,
+   "y": 61
+  },
+  "from_aurelion_fields_south": {
+   "x": 50,
+   "y": 79
+  },
+  "from_aurelion_fields_north": {
+   "x": 86,
+   "y": 4
+  },
+  "from_arcanthe_heath": {
+   "x": 95,
+   "y": 55
+  },
+  "from_aurelion_catacombs": {
+   "x": 4,
+   "y": 55
+  }
+ },
+ "npcs": [
+  {
+   "npcId": "aurelion_innkeeper",
+   "x": 15,
+   "y": 71,
+   "facing": "down"
+  },
+  {
+   "npcId": "aurelion_smith",
+   "x": 23,
+   "y": 55,
+   "facing": "down"
+  },
+  {
+   "npcId": "aurelion_merchant",
+   "x": 32,
+   "y": 55,
+   "facing": "down"
+  },
+  {
+   "npcId": "aurelion_courier",
+   "x": 26,
+   "y": 71,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_knight",
+   "x": 65,
+   "y": 55,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_cleric",
+   "x": 69,
+   "y": 71,
+   "facing": "down"
+  },
+  {
+   "npcId": "aurelion_stable",
+   "x": 79,
+   "y": 55,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_dragoon",
+   "x": 68,
+   "y": 55,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_templar",
+   "x": 71,
+   "y": 55,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_bishop",
+   "x": 73,
+   "y": 71,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_ascetic",
+   "x": 77,
+   "y": 71,
+   "facing": "down"
+  },
+  {
+   "npcId": "oracle_rebirth",
+   "x": 81,
+   "y": 71,
+   "facing": "down"
+  },
+  {
+   "npcId": "aurelion_jobmaster",
+   "x": 1,
+   "y": 55,
+   "facing": "down"
+  },
+  {
+   "npcId": "aurelion_arena",
+   "x": 5,
+   "y": 55,
+   "facing": "down"
+  },
+  {
+   "npcId": "arena_gatekeeper",
+   "x": 20,
+   "y": 55,
+   "facing": "down"
+  },
+  {
+   "npcId": "mvp_guide",
+   "x": 24,
+   "y": 55,
+   "facing": "down"
+  },
+  {
+   "npcId": "training_master",
+   "x": 16,
+   "y": 55,
+   "facing": "down"
+  },
+  {
+   "npcId": "spire_warden",
+   "x": 9,
+   "y": 55,
+   "facing": "down"
+  },
+  {
+   "npcId": "aurelion_trader",
+   "x": 40,
+   "y": 64,
+   "facing": "down"
+  },
+  {
+   "npcId": "aurelion_market",
+   "x": 57,
+   "y": 64,
+   "facing": "down"
+  }
+ ],
+ "monsterSpawns": [],
+ "objects": [
+  {
+   "id": "aurelion_fountain",
+   "kind": "capital_fountain",
+   "x": 47,
+   "y": 53,
+   "name": "Aurelion Fountain",
+   "interact": {
+    "text": "Royal Capital Aurelion. Aurelion — Royal Capital."
+   }
+  }
+ ],
+ "areas": [
+  {
+   "id": "palace",
+   "name": "Royal Palace",
+   "rect": {
+    "x": 22,
+    "y": 6,
+    "w": 57,
+    "h": 34
+   }
+  },
+  {
+   "id": "plaza",
+   "name": "Royal Square",
+   "rect": {
+    "x": 36,
+    "y": 45,
+    "w": 28,
+    "h": 21
+   }
+  },
+  {
+   "id": "guilds",
+   "name": "Guild Row",
+   "rect": {
+    "x": 4,
+    "y": 46,
+    "w": 32,
+    "h": 8
+   }
+  },
+  {
+   "id": "cathedral",
+   "name": "Royal Cathedral",
+   "rect": {
+    "x": 66,
+    "y": 58,
+    "w": 20,
+    "h": 14
+   }
+  },
+  {
+   "id": "training",
+   "name": "Training Yard",
+   "rect": {
+    "x": 88,
+    "y": 32,
+    "w": 9,
+    "h": 14
+   }
+  }
+ ],
+ "generated": true,
+ "scenery": [
+  {
+   "kind": "city_wall",
+   "x": 21,
+   "y": 38.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_wall",
+   "x": 25,
+   "y": 38.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_wall",
+   "x": 29,
+   "y": 38.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_wall",
+   "x": 33,
+   "y": 38.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_wall",
+   "x": 37,
+   "y": 38.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_wall",
+   "x": 41,
+   "y": 38.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_wall",
+   "x": 53.5,
+   "y": 38.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_wall",
+   "x": 57.5,
+   "y": 38.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_wall",
+   "x": 61.5,
+   "y": 38.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_wall",
+   "x": 65.5,
+   "y": 38.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_wall",
+   "x": 69.5,
+   "y": 38.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_wall",
+   "x": 75,
+   "y": 38.9,
+   "w": 4,
+   "h": 2.1
+  },
+  {
+   "kind": "city_gate",
+   "x": 45.5,
+   "y": 34.4,
+   "w": 8,
+   "h": 6.7
+  }
+ ]
+}

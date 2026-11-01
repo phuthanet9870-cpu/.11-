@@ -7,8 +7,8 @@
   8,
   18
  ],
- "width": 60,
- "height": 48,
+ "width": 150,
+ "height": 120,
  "tileset": "whispering_forest",
  "base": "forest_floor",
  "border": {
@@ -23,15 +23,15 @@
   "rain"
  ],
  "worldMapPos": {
-  "x": 0.42,
-  "y": 0.45
+  "x": 0.31,
+  "y": 0.43
  },
  "paint": [
   {
    "op": "blob",
    "tile": "grass_dark",
-   "cx": 10,
-   "cy": 33,
+   "cx": 55,
+   "cy": 69,
    "rx": 7,
    "ry": 5,
    "seed": 31
@@ -41,24 +41,24 @@
    "tile": "dirt",
    "points": [
     [
-     0,
-     35
+     45,
+     71
     ],
     [
-     12,
-     35
+     57,
+     71
     ],
     [
-     18,
-     30
+     63,
+     66
     ],
     [
-     30,
-     30
+     75,
+     66
     ],
     [
-     30,
-     24
+     75,
+     60
     ]
    ],
    "width": 2
@@ -68,16 +68,16 @@
    "tile": "dirt",
    "points": [
     [
-     30,
-     24
+     75,
+     60
     ],
     [
-     24,
-     18
+     69,
+     54
     ],
     [
-     17,
-     13
+     62,
+     49
     ]
    ],
    "width": 2
@@ -87,16 +87,16 @@
    "tile": "dirt",
    "points": [
     [
-     30,
-     24
+     75,
+     60
     ],
     [
-     38,
-     18
+     83,
+     54
     ],
     [
-     46,
-     11
+     91,
+     47
     ]
    ],
    "width": 2
@@ -106,16 +106,16 @@
    "tile": "dirt",
    "points": [
     [
-     30,
-     30
+     75,
+     66
     ],
     [
-     38,
-     34
+     83,
+     70
     ],
     [
-     44,
-     37
+     89,
+     73
     ]
    ],
    "width": 2
@@ -125,12 +125,12 @@
    "tile": "dirt",
    "points": [
     [
-     34,
-     22
+     79,
+     58
     ],
     [
-     42,
-     26
+     87,
+     62
     ]
    ],
    "width": 1
@@ -138,8 +138,8 @@
   {
    "op": "blob",
    "tile": "dirt",
-   "cx": 16,
-   "cy": 12,
+   "cx": 61,
+   "cy": 48,
    "rx": 8,
    "ry": 6,
    "seed": 32
@@ -147,8 +147,8 @@
   {
    "op": "blob",
    "tile": "grass_dark",
-   "cx": 22,
-   "cy": 24,
+   "cx": 67,
+   "cy": 60,
    "rx": 6,
    "ry": 4,
    "seed": 33
@@ -156,8 +156,8 @@
   {
    "op": "blob",
    "tile": "grass_dark",
-   "cx": 45,
-   "cy": 26,
+   "cx": 90,
+   "cy": 62,
    "rx": 8,
    "ry": 5,
    "seed": 34
@@ -165,176 +165,176 @@
   {
    "op": "rect",
    "tile": "ruin_floor",
-   "x": 40,
-   "y": 4,
+   "x": 85,
+   "y": 40,
    "w": 16,
    "h": 11
   },
   {
    "op": "blob",
    "tile": "thorn_ground",
-   "cx": 47,
-   "cy": 38,
+   "cx": 92,
+   "cy": 74,
    "rx": 9,
    "ry": 6,
    "seed": 35
   },
   {
    "op": "clear",
-   "x": 4,
-   "y": 29,
+   "x": 49,
+   "y": 65,
    "w": 12,
    "h": 9
   },
   {
    "op": "clear",
-   "x": 9,
-   "y": 7,
+   "x": 54,
+   "y": 43,
    "w": 15,
    "h": 10
   },
   {
    "op": "clear",
-   "x": 17,
-   "y": 21,
+   "x": 62,
+   "y": 57,
    "w": 11,
    "h": 7
   },
   {
    "op": "clear",
-   "x": 38,
-   "y": 22,
+   "x": 83,
+   "y": 58,
    "w": 14,
    "h": 9
   },
   {
    "op": "clear",
-   "x": 40,
-   "y": 4,
+   "x": 85,
+   "y": 40,
    "w": 16,
    "h": 11
   },
   {
    "op": "clear",
-   "x": 38,
-   "y": 32,
+   "x": 83,
+   "y": 68,
    "w": 18,
    "h": 13
   },
   {
    "op": "object",
    "kind": "tent",
-   "x": 5,
-   "y": 29
+   "x": 50,
+   "y": 65
   },
   {
    "op": "object",
    "kind": "campfire",
-   "x": 11,
-   "y": 32
+   "x": 56,
+   "y": 68
   },
   {
    "op": "object",
    "kind": "crate",
-   "x": 9,
-   "y": 29
+   "x": 54,
+   "y": 65
   },
   {
    "op": "object",
    "kind": "goblin_tent",
-   "x": 11,
-   "y": 7
+   "x": 56,
+   "y": 43
   },
   {
    "op": "object",
    "kind": "goblin_tent",
-   "x": 19,
-   "y": 8
+   "x": 64,
+   "y": 44
   },
   {
    "op": "object",
    "kind": "campfire",
-   "x": 16,
-   "y": 12
+   "x": 61,
+   "y": 48
   },
   {
    "op": "object",
    "kind": "crate",
-   "x": 22,
-   "y": 13
+   "x": 67,
+   "y": 49
   },
   {
    "op": "object",
    "kind": "barrel",
-   "x": 9,
-   "y": 14
+   "x": 54,
+   "y": 50
   },
   {
    "op": "object",
    "kind": "glint",
-   "x": 20,
-   "y": 26,
+   "x": 65,
+   "y": 62,
    "id": "pendant_glint"
   },
   {
    "op": "object",
    "kind": "ruin_pillar",
-   "x": 41,
-   "y": 5
+   "x": 86,
+   "y": 41
   },
   {
    "op": "object",
    "kind": "ruin_pillar",
-   "x": 54,
-   "y": 5
+   "x": 99,
+   "y": 41
   },
   {
    "op": "object",
    "kind": "ruin_pillar",
-   "x": 41,
-   "y": 13
+   "x": 86,
+   "y": 49
   },
   {
    "op": "object",
    "kind": "ruin_pillar",
-   "x": 54,
-   "y": 13
+   "x": 99,
+   "y": 49
   },
   {
    "op": "object",
    "kind": "gravestone",
-   "x": 45,
-   "y": 6
+   "x": 90,
+   "y": 42
   },
   {
    "op": "object",
    "kind": "gravestone",
-   "x": 48,
-   "y": 6
+   "x": 93,
+   "y": 42
   },
   {
    "op": "object",
    "kind": "gravestone",
-   "x": 51,
-   "y": 6
+   "x": 96,
+   "y": 42
   },
   {
    "op": "object",
    "kind": "gravestone",
-   "x": 46,
-   "y": 9
+   "x": 91,
+   "y": 45
   },
   {
    "op": "object",
    "kind": "gravestone",
-   "x": 50,
-   "y": 9
+   "x": 95,
+   "y": 45
   },
   {
    "op": "rect",
    "tile": "ruin_wall",
-   "x": 43,
-   "y": 12,
+   "x": 88,
+   "y": 48,
    "w": 3,
    "h": 1,
    "layer": "wall"
@@ -342,8 +342,8 @@
   {
    "op": "rect",
    "tile": "ruin_wall",
-   "x": 50,
-   "y": 12,
+   "x": 95,
+   "y": 48,
    "w": 3,
    "h": 1,
    "layer": "wall"
@@ -351,75 +351,106 @@
   {
    "op": "object",
    "kind": "thorn_throne",
-   "x": 46,
-   "y": 33
+   "x": 91,
+   "y": 69
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     3,
+     71
+    ],
+    [
+     26,
+     71
+    ],
+    [
+     26,
+     71
+    ],
+    [
+     48,
+     71
+    ]
+   ],
+   "width": 3
   },
   {
    "op": "scatter",
    "kind": "deco:bramble",
    "area": {
-    "x": 38,
-    "y": 32,
+    "x": 83,
+    "y": 68,
     "w": 18,
     "h": 13
    },
-   "density": 0.12,
-   "seed": 36
+   "density": 0.06,
+   "seed": 36,
+   "baseDensity": 0.12
   },
   {
    "op": "scatter",
    "kind": "tree_dark",
-   "density": 0.11,
-   "seed": 41
+   "density": 0.01575,
+   "seed": 41,
+   "baseDensity": 0.035
   },
   {
    "op": "scatter",
    "kind": "tree_pine",
-   "density": 0.05,
-   "seed": 42
+   "density": 0.01575,
+   "seed": 42,
+   "baseDensity": 0.035
   },
   {
    "op": "scatter",
    "kind": "bush",
-   "density": 0.03,
-   "seed": 43
+   "density": 0.0135,
+   "seed": 43,
+   "baseDensity": 0.03
   },
   {
    "op": "scatter",
    "kind": "stump",
-   "density": 0.01,
-   "seed": 44
+   "density": 0.0045,
+   "seed": 44,
+   "baseDensity": 0.01
   },
   {
    "op": "scatter",
    "kind": "deco:leaves",
-   "density": 0.12,
-   "seed": 45
+   "density": 0.06,
+   "seed": 45,
+   "baseDensity": 0.12
   },
   {
    "op": "scatter",
    "kind": "deco:small_mushrooms",
-   "density": 0.04,
-   "seed": 46
+   "density": 0.02,
+   "seed": 46,
+   "baseDensity": 0.04
   },
   {
    "op": "scatter",
    "kind": "deco:small_mushrooms",
    "area": {
-    "x": 17,
-    "y": 21,
+    "x": 62,
+    "y": 57,
     "w": 11,
     "h": 7
    },
-   "density": 0.2,
-   "seed": 47
+   "density": 0.1,
+   "seed": 47,
+   "baseDensity": 0.2
   }
  ],
  "portals": [
   {
    "id": "to_meadow",
    "x": 0,
-   "y": 34,
+   "y": 70,
    "w": 2,
    "h": 4,
    "targetMap": "sunny_meadow",
@@ -430,22 +461,22 @@
  "spawnPoints": {
   "default": {
    "x": 4,
-   "y": 35
+   "y": 72
   },
   "from_meadow": {
    "x": 4,
-   "y": 35
+   "y": 72
   },
   "camp": {
-   "x": 8,
-   "y": 34
+   "x": 4,
+   "y": 72
   }
  },
  "npcs": [
   {
    "npcId": "elwin",
-   "x": 9,
-   "y": 33,
+   "x": 54,
+   "y": 69,
    "facing": "down"
   }
  ],
@@ -454,8 +485,8 @@
    "monsterId": "forest_goblin",
    "count": 7,
    "area": {
-    "x": 9,
-    "y": 7,
+    "x": 54,
+    "y": 43,
     "w": 15,
     "h": 10
    }
@@ -464,8 +495,8 @@
    "monsterId": "venom_spore",
    "count": 6,
    "area": {
-    "x": 17,
-    "y": 21,
+    "x": 62,
+    "y": 57,
     "w": 11,
     "h": 7
    }
@@ -474,8 +505,8 @@
    "monsterId": "thorn_wolf",
    "count": 6,
    "area": {
-    "x": 38,
-    "y": 22,
+    "x": 83,
+    "y": 58,
     "w": 14,
     "h": 9
    }
@@ -484,25 +515,113 @@
    "monsterId": "bone_soldier",
    "count": 6,
    "area": {
-    "x": 42,
-    "y": 5,
+    "x": 87,
+    "y": 41,
     "w": 12,
     "h": 7
    }
+  },
+  {
+   "monsterId": "forest_goblin",
+   "count": 14,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 39,
+    "h": 112
+   },
+   "ring": true
+  },
+  {
+   "monsterId": "venom_spore",
+   "count": 12,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 39,
+    "h": 112
+   },
+   "ring": true
+  },
+  {
+   "monsterId": "thorn_wolf",
+   "count": 12,
+   "area": {
+    "x": 107,
+    "y": 4,
+    "w": 39,
+    "h": 112
+   },
+   "ring": true
+  },
+  {
+   "monsterId": "bone_soldier",
+   "count": 12,
+   "area": {
+    "x": 107,
+    "y": 4,
+    "w": 39,
+    "h": 112
+   },
+   "ring": true
+  },
+  {
+   "monsterId": "forest_goblin",
+   "count": 14,
+   "area": {
+    "x": 45,
+    "y": 4,
+    "w": 60,
+    "h": 30
+   },
+   "ring": true
+  },
+  {
+   "monsterId": "venom_spore",
+   "count": 12,
+   "area": {
+    "x": 45,
+    "y": 4,
+    "w": 60,
+    "h": 30
+   },
+   "ring": true
+  },
+  {
+   "monsterId": "thorn_wolf",
+   "count": 12,
+   "area": {
+    "x": 45,
+    "y": 86,
+    "w": 60,
+    "h": 30
+   },
+   "ring": true
+  },
+  {
+   "monsterId": "bone_soldier",
+   "count": 12,
+   "area": {
+    "x": 45,
+    "y": 86,
+    "w": 60,
+    "h": 30
+   },
+   "ring": true
   }
  ],
  "bossSpawn": {
   "bossId": "grukk",
-  "x": 47,
-  "y": 38,
+  "x": 92,
+  "y": 74,
   "respawnSeconds": 300
  },
  "objects": [
   {
    "id": "pendant_glint",
    "kind": "glint",
-   "x": 20,
-   "y": 26,
+   "x": 65,
+   "y": 62,
    "name": "Something glinting",
    "interact": {
     "text": "Half-buried in the moss you find a silver pendant engraved with a falcon.",
@@ -519,8 +638,8 @@
    "id": "goblin_camp",
    "name": "Goblin Camp",
    "rect": {
-    "x": 9,
-    "y": 7,
+    "x": 54,
+    "y": 43,
     "w": 15,
     "h": 10
    }
@@ -529,8 +648,8 @@
    "id": "spore_grove",
    "name": "Spore Grove",
    "rect": {
-    "x": 17,
-    "y": 21,
+    "x": 62,
+    "y": 57,
     "w": 11,
     "h": 7
    }
@@ -539,8 +658,8 @@
    "id": "old_shrine",
    "name": "Old Shrine Ruins",
    "rect": {
-    "x": 40,
-    "y": 4,
+    "x": 85,
+    "y": 40,
     "w": 16,
     "h": 11
    }
@@ -549,11 +668,15 @@
    "id": "thorn_clearing",
    "name": "Thorn Clearing",
    "rect": {
-    "x": 38,
-    "y": 32,
+    "x": 83,
+    "y": 68,
     "w": 18,
     "h": 13
    }
   }
- ]
+ ],
+ "origin": {
+  "x": 45,
+  "y": 36
+ }
 }

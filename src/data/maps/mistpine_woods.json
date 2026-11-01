@@ -1,0 +1,299 @@
+{
+ "id": "mistpine_woods",
+ "name": "Mistpine Woods",
+ "region": "Fernhollow Woods",
+ "type": "field",
+ "levelRange": [
+  15,
+  25
+ ],
+ "width": 160,
+ "height": 120,
+ "tileset": "fernwood",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "field_forest",
+ "ambient": "forest",
+ "weather": [
+  "fog",
+  "rain"
+ ],
+ "worldMapPos": {
+  "x": 0.46,
+  "y": 0.25
+ },
+ "paint": [
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 42,
+   "cy": 33,
+   "rx": 7,
+   "ry": 4,
+   "seed": 3108594083
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 121,
+   "cy": 88,
+   "rx": 8,
+   "ry": 6,
+   "seed": 3108594091
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 117,
+   "cy": 35,
+   "rx": 6,
+   "ry": 6,
+   "seed": 3108594089
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 38,
+   "cy": 89,
+   "rx": 8,
+   "ry": 6,
+   "seed": 3108594085
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     79,
+     116
+    ],
+    [
+     77,
+     89
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     79,
+     3
+    ],
+    [
+     80,
+     29
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_pine",
+   "density": 0.0081,
+   "seed": 3108594097,
+   "baseDensity": 0.018
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_dark",
+   "density": 0.0027,
+   "seed": 3108594098,
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "bush",
+   "density": 0.0027,
+   "seed": 3108594099,
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.025,
+   "seed": 1339758057,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.025,
+   "seed": 2765616358,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 81,
+   "y": 113,
+   "id": "sign_mistpine_woods"
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_aurelion_fields_north",
+   "x": 78,
+   "y": 118,
+   "w": 4,
+   "h": 2,
+   "targetMap": "aurelion_fields_north",
+   "targetSpawn": "from_mistpine_woods",
+   "label": "Aurelion Fields North"
+  },
+  {
+   "id": "to_fernhollow",
+   "x": 78,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "targetMap": "fernhollow",
+   "targetSpawn": "from_mistpine_woods",
+   "label": "Fernhollow Village"
+  }
+ ],
+ "spawnPoints": {
+  "from_aurelion_fields_north": {
+   "x": 80,
+   "y": 115
+  },
+  "from_fernhollow": {
+   "x": 80,
+   "y": 4
+  },
+  "default": {
+   "x": 80,
+   "y": 115
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "mist_spore",
+   "count": 18,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "mist_spore",
+   "count": 18,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "mist_spore",
+   "count": 18,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "pine_goblin",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "pine_goblin",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "pine_goblin",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "venom_spore",
+   "count": 9,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "venom_spore",
+   "count": 9,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "venom_spore",
+   "count": 9,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "elite_pine_goblin",
+   "count": 1,
+   "area": {
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  }
+ ],
+ "objects": [
+  {
+   "id": "sign_mistpine_woods",
+   "kind": "signpost",
+   "x": 81,
+   "y": 113,
+   "name": "Signpost",
+   "interact": {
+    "text": "Mistpine Woods (Lv.15–25).  SOUTH → Aurelion Fields North.  NORTH → Fernhollow Village."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

@@ -1,0 +1,884 @@
+{
+ "id": "arcanthe_tower",
+ "name": "Arcanthe Tower Depths",
+ "region": "Arcanthe — City of Magic",
+ "type": "dungeon",
+ "levelRange": [
+  30,
+  44
+ ],
+ "width": 120,
+ "height": 96,
+ "tileset": "dg_tower",
+ "base": "ruin_floor",
+ "border": {
+  "kind": "ruin_wall",
+  "thickness": 2
+ },
+ "bgm": "dungeon_dark",
+ "ambient": "cave",
+ "weather": [],
+ "worldMapPos": {
+  "x": 0.67,
+  "y": 0.34
+ },
+ "paint": [
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 2,
+   "w": 1,
+   "h": 4
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 9,
+   "w": 1,
+   "h": 16
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 25,
+   "w": 1,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 30,
+   "w": 1,
+   "h": 18
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 48,
+   "w": 1,
+   "h": 14
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 65,
+   "w": 1,
+   "h": 6
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 71,
+   "w": 1,
+   "h": 7
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 25,
+   "y": 81,
+   "w": 1,
+   "h": 13
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 2,
+   "w": 1,
+   "h": 16
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 21,
+   "w": 1,
+   "h": 4
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 25,
+   "w": 1,
+   "h": 16
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 44,
+   "w": 1,
+   "h": 4
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 48,
+   "w": 1,
+   "h": 12
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 63,
+   "w": 1,
+   "h": 8
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 71,
+   "w": 1,
+   "h": 14
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 48,
+   "y": 88,
+   "w": 1,
+   "h": 6
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 2,
+   "w": 1,
+   "h": 4
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 9,
+   "w": 1,
+   "h": 16
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 25,
+   "w": 1,
+   "h": 3
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 31,
+   "w": 1,
+   "h": 17
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 48,
+   "w": 1,
+   "h": 5
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 56,
+   "w": 1,
+   "h": 15
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 71,
+   "w": 1,
+   "h": 13
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 71,
+   "y": 87,
+   "w": 1,
+   "h": 7
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 2,
+   "w": 1,
+   "h": 15
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 20,
+   "w": 1,
+   "h": 5
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 25,
+   "w": 1,
+   "h": 18
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 46,
+   "w": 1,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 48,
+   "w": 1,
+   "h": 12
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 63,
+   "w": 1,
+   "h": 8
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 71,
+   "w": 1,
+   "h": 4
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 94,
+   "y": 78,
+   "w": 1,
+   "h": 16
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 3,
+   "y": 25,
+   "w": 14,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 20,
+   "y": 25,
+   "w": 5,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 26,
+   "y": 25,
+   "w": 12,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 41,
+   "y": 25,
+   "w": 7,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 49,
+   "y": 25,
+   "w": 12,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 64,
+   "y": 25,
+   "w": 7,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 72,
+   "y": 25,
+   "w": 4,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 79,
+   "y": 25,
+   "w": 15,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 95,
+   "y": 25,
+   "w": 13,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 111,
+   "y": 25,
+   "w": 7,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 3,
+   "y": 48,
+   "w": 17,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 23,
+   "y": 48,
+   "w": 2,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 26,
+   "y": 48,
+   "w": 7,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 36,
+   "y": 48,
+   "w": 12,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 49,
+   "y": 48,
+   "w": 2,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 54,
+   "y": 48,
+   "w": 17,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 72,
+   "y": 48,
+   "w": 11,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 86,
+   "y": 48,
+   "w": 8,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 95,
+   "y": 48,
+   "w": 11,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 109,
+   "y": 48,
+   "w": 9,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 3,
+   "y": 71,
+   "w": 7,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 13,
+   "y": 71,
+   "w": 12,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 26,
+   "y": 71,
+   "w": 4,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 33,
+   "y": 71,
+   "w": 15,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 49,
+   "y": 71,
+   "w": 6,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 58,
+   "y": 71,
+   "w": 13,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 72,
+   "y": 71,
+   "w": 6,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 81,
+   "y": 71,
+   "w": 13,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 95,
+   "y": 71,
+   "w": 4,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 102,
+   "y": 71,
+   "w": 16,
+   "h": 1
+  },
+  {
+   "op": "path",
+   "tile": "ruin_floor",
+   "points": [
+    [
+     59,
+     92
+    ],
+    [
+     60,
+     48
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "ruin_floor",
+   "points": [
+    [
+     25,
+     3
+    ],
+    [
+     25,
+     45
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "ruin_floor",
+   "points": [
+    [
+     3,
+     25
+    ],
+    [
+     45,
+     25
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "clear",
+   "x": 22,
+   "y": 22,
+   "w": 7,
+   "h": 7
+  },
+  {
+   "op": "scatter",
+   "kind": "ruin_pillar",
+   "density": 0.0027,
+   "seed": 2030511425,
+   "area": {
+    "x": 3,
+    "y": 3,
+    "w": 114,
+    "h": 90
+   },
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "obelisk",
+   "density": 0.0027,
+   "seed": 2030511426,
+   "area": {
+    "x": 3,
+    "y": 3,
+    "w": 114,
+    "h": 90
+   },
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:pebbles",
+   "density": 0.025,
+   "seed": 2030511434,
+   "baseDensity": 0.05
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_arcanthe",
+   "x": 58,
+   "y": 94,
+   "w": 4,
+   "h": 2,
+   "targetMap": "arcanthe",
+   "targetSpawn": "from_arcanthe_tower",
+   "label": "Tower City Arcanthe"
+  }
+ ],
+ "spawnPoints": {
+  "from_arcanthe": {
+   "x": 60,
+   "y": 91
+  },
+  "default": {
+   "x": 60,
+   "y": 91
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "animated_armor",
+   "count": 8,
+   "area": {
+    "x": 72,
+    "y": 3,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "animated_armor",
+   "count": 8,
+   "area": {
+    "x": 72,
+    "y": 26,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "animated_armor",
+   "count": 8,
+   "area": {
+    "x": 26,
+    "y": 49,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "animated_armor",
+   "count": 8,
+   "area": {
+    "x": 95,
+    "y": 49,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "animated_armor",
+   "count": 8,
+   "area": {
+    "x": 49,
+    "y": 72,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "animated_armor",
+   "count": 8,
+   "area": {
+    "x": 49,
+    "y": 3,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "rune_golem",
+   "count": 6,
+   "area": {
+    "x": 49,
+    "y": 49,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "rune_golem",
+   "count": 6,
+   "area": {
+    "x": 3,
+    "y": 72,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "rune_golem",
+   "count": 6,
+   "area": {
+    "x": 72,
+    "y": 72,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "rune_golem",
+   "count": 6,
+   "area": {
+    "x": 72,
+    "y": 3,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "rune_golem",
+   "count": 6,
+   "area": {
+    "x": 72,
+    "y": 26,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "rune_golem",
+   "count": 6,
+   "area": {
+    "x": 26,
+    "y": 49,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "mana_wisp",
+   "count": 8,
+   "area": {
+    "x": 95,
+    "y": 72,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "mana_wisp",
+   "count": 8,
+   "area": {
+    "x": 95,
+    "y": 3,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "mana_wisp",
+   "count": 8,
+   "area": {
+    "x": 95,
+    "y": 26,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "mana_wisp",
+   "count": 8,
+   "area": {
+    "x": 49,
+    "y": 49,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "mana_wisp",
+   "count": 8,
+   "area": {
+    "x": 3,
+    "y": 72,
+    "w": 20,
+    "h": 20
+   }
+  },
+  {
+   "monsterId": "mana_wisp",
+   "count": 8,
+   "area": {
+    "x": 72,
+    "y": 72,
+    "w": 20,
+    "h": 20
+   }
+  }
+ ],
+ "bossSpawn": {
+  "bossId": "archmage_valdris",
+  "x": 25,
+  "y": 25,
+  "respawnSeconds": 900
+ },
+ "objects": [],
+ "areas": [],
+ "generated": true
+}

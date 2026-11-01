@@ -1,22 +1,8451 @@
 [
-  { "id": "leaf_slime_drops", "luma": [2, 6], "entries": [
-    { "itemId": "jelly", "chance": 0.7 }, { "itemId": "meadow_apple", "chance": 0.15 }, { "itemId": "red_potion", "chance": 0.05 }, { "itemId": "leaf_cap", "chance": 0.004 } ] },
-  { "id": "horn_rabbit_drops", "luma": [4, 10], "entries": [
-    { "itemId": "rabbit_horn", "chance": 0.6 }, { "itemId": "meadow_apple", "chance": 0.2 }, { "itemId": "red_potion", "chance": 0.06 }, { "itemId": "clover_charm", "chance": 0.003 } ] },
-  { "id": "mushling_drops", "luma": [6, 14], "entries": [
-    { "itemId": "mushling_cap", "chance": 0.6 }, { "itemId": "red_potion", "chance": 0.08 }, { "itemId": "green_potion", "chance": 0.05 }, { "itemId": "sandals", "chance": 0.01 } ] },
-  { "id": "buzz_wasp_drops", "luma": [8, 18], "entries": [
-    { "itemId": "wasp_stinger", "chance": 0.55 }, { "itemId": "green_potion", "chance": 0.08 }, { "itemId": "red_potion", "chance": 0.08 }, { "itemId": "swift_boots", "chance": 0.002 } ] },
-  { "id": "forest_goblin_drops", "luma": [12, 26], "entries": [
-    { "itemId": "goblin_fang", "chance": 0.55 }, { "itemId": "orange_potion", "chance": 0.06 }, { "itemId": "oak_club", "chance": 0.02 }, { "itemId": "goblin_mask", "chance": 0.006 }, { "itemId": "astral_shard", "chance": 0.01 } ] },
-  { "id": "venom_spore_drops", "luma": [12, 28], "entries": [
-    { "itemId": "spore_dust", "chance": 0.6 }, { "itemId": "green_potion", "chance": 0.12 }, { "itemId": "blue_potion", "chance": 0.03 }, { "itemId": "sapphire_pendant", "chance": 0.004 } ] },
-  { "id": "thorn_wolf_drops", "luma": [16, 34], "entries": [
-    { "itemId": "wolf_pelt", "chance": 0.5 }, { "itemId": "orange_potion", "chance": 0.08 }, { "itemId": "wolfhide_cloak", "chance": 0.006 }, { "itemId": "astral_shard", "chance": 0.015 } ] },
-  { "id": "bone_soldier_drops", "luma": [20, 40], "entries": [
-    { "itemId": "old_bone", "chance": 0.55 }, { "itemId": "orange_potion", "chance": 0.1 }, { "itemId": "iron_helm", "chance": 0.008 }, { "itemId": "bone_earring", "chance": 0.005 }, { "itemId": "astral_shard", "chance": 0.02 } ] },
-  { "id": "grukk_drops", "luma": [600, 900], "entries": [
-    { "itemId": "thorn_crown", "chance": 1.0 }, { "itemId": "yellow_potion", "chance": 1.0, "min": 2, "max": 4 }, { "itemId": "astral_shard", "chance": 0.8, "min": 1, "max": 3 },
-    { "itemId": "thornbane_blade", "chance": 0.25 }, { "itemId": "thornwood_longbow", "chance": 0.25 }, { "itemId": "thornheart_staff", "chance": 0.25 },
-    { "itemId": "goblin_mask", "chance": 0.3 }, { "itemId": "wolfhide_cloak", "chance": 0.2 } ] }
+ {
+  "id": "leaf_slime_drops",
+  "luma": [
+   2,
+   6
+  ],
+  "entries": [
+   {
+    "itemId": "jelly",
+    "chance": 0.7
+   },
+   {
+    "itemId": "meadow_apple",
+    "chance": 0.15
+   },
+   {
+    "itemId": "red_potion",
+    "chance": 0.05
+   },
+   {
+    "itemId": "leaf_cap",
+    "chance": 0.004
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "card_leaf_slime",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   }
+  ]
+ },
+ {
+  "id": "horn_rabbit_drops",
+  "luma": [
+   4,
+   10
+  ],
+  "entries": [
+   {
+    "itemId": "rabbit_horn",
+    "chance": 0.6
+   },
+   {
+    "itemId": "meadow_apple",
+    "chance": 0.2
+   },
+   {
+    "itemId": "red_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "clover_charm",
+    "chance": 0.003
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.08
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.06
+   },
+   {
+    "itemId": "card_horn_rabbit",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
+   }
+  ]
+ },
+ {
+  "id": "mushling_drops",
+  "luma": [
+   6,
+   14
+  ],
+  "entries": [
+   {
+    "itemId": "mushling_cap",
+    "chance": 0.6
+   },
+   {
+    "itemId": "red_potion",
+    "chance": 0.08
+   },
+   {
+    "itemId": "green_potion",
+    "chance": 0.05
+   },
+   {
+    "itemId": "sandals",
+    "chance": 0.01
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.12
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "card_mushling",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   }
+  ]
+ },
+ {
+  "id": "buzz_wasp_drops",
+  "luma": [
+   8,
+   18
+  ],
+  "entries": [
+   {
+    "itemId": "wasp_stinger",
+    "chance": 0.55
+   },
+   {
+    "itemId": "green_potion",
+    "chance": 0.08
+   },
+   {
+    "itemId": "red_potion",
+    "chance": 0.08
+   },
+   {
+    "itemId": "swift_boots",
+    "chance": 0.002
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.08
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.06
+   },
+   {
+    "itemId": "card_buzz_wasp",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
+   },
+   {
+    "itemId": "gale_stone",
+    "chance": 0.01,
+    "forge": true
+   }
+  ]
+ },
+ {
+  "id": "forest_goblin_drops",
+  "luma": [
+   12,
+   26
+  ],
+  "entries": [
+   {
+    "itemId": "goblin_fang",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "oak_club",
+    "chance": 0.02
+   },
+   {
+    "itemId": "goblin_mask",
+    "chance": 0.006
+   },
+   {
+    "itemId": "astral_shard",
+    "chance": 0.01
+   },
+   {
+    "itemId": "card_forest_goblin",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
+   }
+  ]
+ },
+ {
+  "id": "venom_spore_drops",
+  "luma": [
+   12,
+   28
+  ],
+  "entries": [
+   {
+    "itemId": "spore_dust",
+    "chance": 0.6
+   },
+   {
+    "itemId": "green_potion",
+    "chance": 0.12
+   },
+   {
+    "itemId": "blue_potion",
+    "chance": 0.03
+   },
+   {
+    "itemId": "sapphire_pendant",
+    "chance": 0.004
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.12
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "card_venom_spore",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
+   }
+  ]
+ },
+ {
+  "id": "thorn_wolf_drops",
+  "luma": [
+   16,
+   34
+  ],
+  "entries": [
+   {
+    "itemId": "wolf_pelt",
+    "chance": 0.5
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.08
+   },
+   {
+    "itemId": "wolfhide_cloak",
+    "chance": 0.006
+   },
+   {
+    "itemId": "astral_shard",
+    "chance": 0.015
+   },
+   {
+    "itemId": "card_thorn_wolf",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   }
+  ]
+ },
+ {
+  "id": "bone_soldier_drops",
+  "luma": [
+   20,
+   40
+  ],
+  "entries": [
+   {
+    "itemId": "old_bone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.1
+   },
+   {
+    "itemId": "iron_helm",
+    "chance": 0.008
+   },
+   {
+    "itemId": "bone_earring",
+    "chance": 0.005
+   },
+   {
+    "itemId": "astral_shard",
+    "chance": 0.02
+   },
+   {
+    "itemId": "card_bone_soldier",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ]
+ },
+ {
+  "id": "grukk_drops",
+  "luma": [
+   600,
+   900
+  ],
+  "entries": [
+   {
+    "itemId": "thorn_crown",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1,
+    "min": 2,
+    "max": 4
+   },
+   {
+    "itemId": "astral_shard",
+    "chance": 0.8,
+    "min": 1,
+    "max": 3
+   },
+   {
+    "itemId": "thornbane_blade",
+    "chance": 0.25
+   },
+   {
+    "itemId": "thornwood_longbow",
+    "chance": 0.25
+   },
+   {
+    "itemId": "thornheart_staff",
+    "chance": 0.25
+   },
+   {
+    "itemId": "goblin_mask",
+    "chance": 0.3
+   },
+   {
+    "itemId": "wolfhide_cloak",
+    "chance": 0.2
+   },
+   {
+    "itemId": "card_grukk_thornking",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.005,
+    "oreHint": true
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.003,
+    "oreHint": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.5,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
+   }
+  ]
+ },
+ {
+  "id": "dusk_bat_drops",
+  "luma": [
+   7,
+   17
+  ],
+  "entries": [
+   {
+    "itemId": "dusk_bat_wing",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0072
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0072
+   },
+   {
+    "itemId": "card_dusk_bat",
+    "chance": 0.0001,
+    "card": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "clover_slime_drops",
+  "luma": [
+   6,
+   14
+  ],
+  "entries": [
+   {
+    "itemId": "clover_slime_gel",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0064
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0064
+   },
+   {
+    "itemId": "card_clover_slime",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "gale_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.1
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "plains_wolf_drops",
+  "luma": [
+   9,
+   23
+  ],
+  "entries": [
+   {
+    "itemId": "plains_wolf_fang",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0088
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0088
+   },
+   {
+    "itemId": "card_plains_wolf",
+    "chance": 0.0001,
+    "card": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "pebble_golem_drops",
+  "luma": [
+   11,
+   27
+  ],
+  "entries": [
+   {
+    "itemId": "pebble_golem_core_stone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.01
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.01
+   },
+   {
+    "itemId": "card_pebble_golem",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "road_goblin_drops",
+  "luma": [
+   12,
+   30
+  ],
+  "entries": [
+   {
+    "itemId": "road_goblin_tusk",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0108
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0108
+   },
+   {
+    "itemId": "card_road_goblin",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "crypt_bat_drops",
+  "luma": [
+   15,
+   35
+  ],
+  "entries": [
+   {
+    "itemId": "crypt_bat_wing",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.012400000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.012400000000000001
+   },
+   {
+    "itemId": "card_crypt_bat",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "wailing_spirit_drops",
+  "luma": [
+   17,
+   41
+  ],
+  "entries": [
+   {
+    "itemId": "wailing_spirit_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.014
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.014
+   },
+   {
+    "itemId": "card_wailing_spirit",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_shield",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "grave_soldier_drops",
+  "luma": [
+   18,
+   44
+  ],
+  "entries": [
+   {
+    "itemId": "grave_soldier_bone_shard",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0148
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0148
+   },
+   {
+    "itemId": "card_grave_soldier",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "mist_spore_drops",
+  "luma": [
+   13,
+   31
+  ],
+  "entries": [
+   {
+    "itemId": "mist_spore_spore_dust",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.011200000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.011200000000000002
+   },
+   {
+    "itemId": "card_mist_spore",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.12
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.1
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "pine_goblin_drops",
+  "luma": [
+   15,
+   35
+  ],
+  "entries": [
+   {
+    "itemId": "pine_goblin_tusk",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.012400000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.012400000000000001
+   },
+   {
+    "itemId": "card_pine_goblin",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elder_mushling_drops",
+  "luma": [
+   16,
+   40
+  ],
+  "entries": [
+   {
+    "itemId": "elder_mushling_spore_cap",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.013600000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.013600000000000001
+   },
+   {
+    "itemId": "card_elder_mushling",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.12
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.1
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "shadow_wolf_drops",
+  "luma": [
+   19,
+   45
+  ],
+  "entries": [
+   {
+    "itemId": "shadow_wolf_fang",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0152
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0152
+   },
+   {
+    "itemId": "card_shadow_wolf",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "bramble_hornet_drops",
+  "luma": [
+   18,
+   42
+  ],
+  "entries": [
+   {
+    "itemId": "bramble_hornet_stinger",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.014400000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.014400000000000001
+   },
+   {
+    "itemId": "card_bramble_hornet",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "gale_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.08
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.06
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "cave_bat_drops",
+  "luma": [
+   18,
+   44
+  ],
+  "entries": [
+   {
+    "itemId": "cave_bat_wing",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0148
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0148
+   },
+   {
+    "itemId": "card_cave_bat",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "moss_golem_drops",
+  "luma": [
+   21,
+   49
+  ],
+  "entries": [
+   {
+    "itemId": "moss_golem_core_stone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0164
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0164
+   },
+   {
+    "itemId": "card_moss_golem",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "lantern_ghost_drops",
+  "luma": [
+   22,
+   52
+  ],
+  "entries": [
+   {
+    "itemId": "lantern_ghost_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0172
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0172
+   },
+   {
+    "itemId": "card_lantern_ghost",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "crystal_slime_drops",
+  "luma": [
+   15,
+   35
+  ],
+  "entries": [
+   {
+    "itemId": "crystal_slime_gel",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.012400000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.012400000000000001
+   },
+   {
+    "itemId": "card_crystal_slime",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.06
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "moon_hare_drops",
+  "luma": [
+   16,
+   38
+  ],
+  "entries": [
+   {
+    "itemId": "moon_hare_tuft_of_fur",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0132
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0132
+   },
+   {
+    "itemId": "card_moon_hare",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.08
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.06
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcane_wisp_drops",
+  "luma": [
+   18,
+   44
+  ],
+  "entries": [
+   {
+    "itemId": "arcane_wisp_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0148
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0148
+   },
+   {
+    "itemId": "card_arcane_wisp",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "animated_armor_drops",
+  "luma": [
+   22,
+   54
+  ],
+  "entries": [
+   {
+    "itemId": "animated_armor_bone_shard",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0176
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0176
+   },
+   {
+    "itemId": "card_animated_armor",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "rune_golem_drops",
+  "luma": [
+   25,
+   59
+  ],
+  "entries": [
+   {
+    "itemId": "rune_golem_core_stone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.019200000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.019200000000000002
+   },
+   {
+    "itemId": "card_rune_golem",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "mana_wisp_drops",
+  "luma": [
+   24,
+   56
+  ],
+  "entries": [
+   {
+    "itemId": "mana_wisp_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0184
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0184
+   },
+   {
+    "itemId": "card_mana_wisp",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_shield",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "dune_slime_drops",
+  "luma": [
+   17,
+   41
+  ],
+  "entries": [
+   {
+    "itemId": "dune_slime_gel",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.014
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.014
+   },
+   {
+    "itemId": "card_dune_slime",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.06
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sand_scorpion_drops",
+  "luma": [
+   19,
+   45
+  ],
+  "entries": [
+   {
+    "itemId": "sand_scorpion_venom_tail",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0152
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0152
+   },
+   {
+    "itemId": "card_sand_scorpion",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_shield",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "desert_wolf_drops",
+  "luma": [
+   21,
+   49
+  ],
+  "entries": [
+   {
+    "itemId": "desert_wolf_fang",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0164
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0164
+   },
+   {
+    "itemId": "card_desert_wolf",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "oasis_crab_drops",
+  "luma": [
+   21,
+   51
+  ],
+  "entries": [
+   {
+    "itemId": "oasis_crab_shell",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.016800000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.016800000000000002
+   },
+   {
+    "itemId": "card_oasis_crab",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "mirage_wisp_drops",
+  "luma": [
+   23,
+   55
+  ],
+  "entries": [
+   {
+    "itemId": "mirage_wisp_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.018000000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.018000000000000002
+   },
+   {
+    "itemId": "card_mirage_wisp",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "giant_scorpion_drops",
+  "luma": [
+   25,
+   59
+  ],
+  "entries": [
+   {
+    "itemId": "giant_scorpion_venom_tail",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.019200000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.019200000000000002
+   },
+   {
+    "itemId": "card_giant_scorpion",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tomb_mummy_drops",
+  "luma": [
+   26,
+   62
+  ],
+  "entries": [
+   {
+    "itemId": "tomb_mummy_bone_shard",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.02
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.02
+   },
+   {
+    "itemId": "card_tomb_mummy",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_shield",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_shield",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "gilded_scarab_drops",
+  "luma": [
+   27,
+   65
+  ],
+  "entries": [
+   {
+    "itemId": "gilded_scarab_venom_tail",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.020800000000000003
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.020800000000000003
+   },
+   {
+    "itemId": "card_gilded_scarab",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.08
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.06
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tomb_bat_drops",
+  "luma": [
+   25,
+   61
+  ],
+  "entries": [
+   {
+    "itemId": "tomb_bat_wing",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0196
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0196
+   },
+   {
+    "itemId": "card_tomb_bat",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "shore_crab_drops",
+  "luma": [
+   13,
+   33
+  ],
+  "entries": [
+   {
+    "itemId": "shore_crab_shell",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0116
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0116
+   },
+   {
+    "itemId": "card_shore_crab",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sea_slime_drops",
+  "luma": [
+   15,
+   35
+  ],
+  "entries": [
+   {
+    "itemId": "sea_slime_gel",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.012400000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.012400000000000001
+   },
+   {
+    "itemId": "card_sea_slime",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.06
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "reef_gull_drops",
+  "luma": [
+   16,
+   40
+  ],
+  "entries": [
+   {
+    "itemId": "reef_gull_wing",
+    "chance": 0.55
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.013600000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.013600000000000001
+   },
+   {
+    "itemId": "card_reef_gull",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "gale_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "grotto_crab_drops",
+  "luma": [
+   20,
+   48
+  ],
+  "entries": [
+   {
+    "itemId": "grotto_crab_shell",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.016
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.016
+   },
+   {
+    "itemId": "card_grotto_crab",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "kelp_spore_drops",
+  "luma": [
+   21,
+   49
+  ],
+  "entries": [
+   {
+    "itemId": "kelp_spore_spore_dust",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0164
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0164
+   },
+   {
+    "itemId": "card_kelp_spore",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.12
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "blue_herb",
+    "chance": 0.04
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "drowned_spirit_drops",
+  "luma": [
+   23,
+   55
+  ],
+  "entries": [
+   {
+    "itemId": "drowned_spirit_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.018000000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.018000000000000002
+   },
+   {
+    "itemId": "card_drowned_spirit",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_shield",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frost_slime_drops",
+  "luma": [
+   27,
+   63
+  ],
+  "entries": [
+   {
+    "itemId": "frost_slime_gel",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0204
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0204
+   },
+   {
+    "itemId": "card_frost_slime",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.06
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_shield",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "snow_wolf_drops",
+  "luma": [
+   28,
+   66
+  ],
+  "entries": [
+   {
+    "itemId": "snow_wolf_fang",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0212
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0212
+   },
+   {
+    "itemId": "card_snow_wolf",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "ice_golem_drops",
+  "luma": [
+   30,
+   72
+  ],
+  "entries": [
+   {
+    "itemId": "ice_golem_core_stone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0228
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0228
+   },
+   {
+    "itemId": "card_ice_golem",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "runed_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "ice_bat_drops",
+  "luma": [
+   31,
+   75
+  ],
+  "entries": [
+   {
+    "itemId": "ice_bat_wing",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0236
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0236
+   },
+   {
+    "itemId": "card_ice_bat",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "runed_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frost_wraith_drops",
+  "luma": [
+   34,
+   82
+  ],
+  "entries": [
+   {
+    "itemId": "frost_wraith_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0256
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0256
+   },
+   {
+    "itemId": "card_frost_wraith",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "runed_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "glacier_golem_drops",
+  "luma": [
+   36,
+   86
+  ],
+  "entries": [
+   {
+    "itemId": "glacier_golem_core_stone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0268
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0268
+   },
+   {
+    "itemId": "card_glacier_golem",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "runed_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_shield",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "ember_slime_drops",
+  "luma": [
+   36,
+   84
+  ],
+  "entries": [
+   {
+    "itemId": "ember_slime_gel",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0264
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0264
+   },
+   {
+    "itemId": "card_ember_slime",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.06
+   },
+   {
+    "itemId": "runed_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_shield",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "ash_scorpion_drops",
+  "luma": [
+   37,
+   89
+  ],
+  "entries": [
+   {
+    "itemId": "ash_scorpion_venom_tail",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0276
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0276
+   },
+   {
+    "itemId": "card_ash_scorpion",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "runed_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fire_drake_drops",
+  "luma": [
+   40,
+   94
+  ],
+  "entries": [
+   {
+    "itemId": "fire_drake_scale",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0292
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0292
+   },
+   {
+    "itemId": "card_fire_drake",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "magma_golem_drops",
+  "luma": [
+   41,
+   97
+  ],
+  "entries": [
+   {
+    "itemId": "magma_golem_core_stone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.030000000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.030000000000000002
+   },
+   {
+    "itemId": "card_magma_golem",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_shield",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "flame_drake_drops",
+  "luma": [
+   43,
+   101
+  ],
+  "entries": [
+   {
+    "itemId": "flame_drake_scale",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.031200000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.031200000000000002
+   },
+   {
+    "itemId": "card_flame_drake",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_shield",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_ring",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "bog_slime_drops",
+  "luma": [
+   38,
+   90
+  ],
+  "entries": [
+   {
+    "itemId": "bog_slime_gel",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.028
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.028
+   },
+   {
+    "itemId": "card_bog_slime",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.06
+   },
+   {
+    "itemId": "runed_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_ring",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_shield",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "marsh_spore_drops",
+  "luma": [
+   40,
+   94
+  ],
+  "entries": [
+   {
+    "itemId": "marsh_spore_spore_dust",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0292
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0292
+   },
+   {
+    "itemId": "card_marsh_spore",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.12
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "blue_herb",
+    "chance": 0.04
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "mire_crab_drops",
+  "luma": [
+   42,
+   98
+  ],
+  "entries": [
+   {
+    "itemId": "mire_crab_shell",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0304
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0304
+   },
+   {
+    "itemId": "card_mire_crab",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "starforged_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "raven_bat_drops",
+  "luma": [
+   42,
+   100
+  ],
+  "entries": [
+   {
+    "itemId": "raven_bat_wing",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0308
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0308
+   },
+   {
+    "itemId": "card_raven_bat",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "cursed_knight_drops",
+  "luma": [
+   43,
+   103
+  ],
+  "entries": [
+   {
+    "itemId": "cursed_knight_bone_shard",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0316
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0316
+   },
+   {
+    "itemId": "card_cursed_knight",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "starforged_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_shield",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_ring",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "banshee_drops",
+  "luma": [
+   45,
+   107
+  ],
+  "entries": [
+   {
+    "itemId": "banshee_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0328
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0328
+   },
+   {
+    "itemId": "card_banshee",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "starforged_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_dagger",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_bow",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_shield",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "grave_knight_drops",
+  "luma": [
+   48,
+   112
+  ],
+  "entries": [
+   {
+    "itemId": "grave_knight_bone_shard",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0344
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0344
+   },
+   {
+    "itemId": "card_grave_knight",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "mythril_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_heavy_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_ring",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "lich_spirit_drops",
+  "luma": [
+   49,
+   117
+  ],
+  "entries": [
+   {
+    "itemId": "lich_spirit_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.03560000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.03560000000000001
+   },
+   {
+    "itemId": "card_lich_spirit",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "mythril_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_axe",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_instrument",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_staff",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_light_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_light_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "nebula_slime_drops",
+  "luma": [
+   54,
+   126
+  ],
+  "entries": [
+   {
+    "itemId": "nebula_slime_gel",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.038400000000000004
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.038400000000000004
+   },
+   {
+    "itemId": "card_nebula_slime",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.06
+   },
+   {
+    "itemId": "mythril_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_wand",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_book",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_headgear",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "void_bat_drops",
+  "luma": [
+   54,
+   128
+  ],
+  "entries": [
+   {
+    "itemId": "void_bat_wing",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0388
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0388
+   },
+   {
+    "itemId": "card_void_bat",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "mythril_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_knuckle",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_heavy_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_shield",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "astral_golem_drops",
+  "luma": [
+   55,
+   131
+  ],
+  "entries": [
+   {
+    "itemId": "astral_golem_core_stone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.039599999999999996
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.039599999999999996
+   },
+   {
+    "itemId": "card_astral_golem",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "mythril_twohand_sword",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_club",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_katar",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_heavy_armor",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_light_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_light_boots",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_garment",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_boots",
+    "chance": 0.002,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "starlight_wisp_drops",
+  "luma": [
+   57,
+   133
+  ],
+  "entries": [
+   {
+    "itemId": "starlight_wisp_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_starlight_wisp",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "rime_wolf_drops",
+  "luma": [
+   58,
+   136
+  ],
+  "entries": [
+   {
+    "itemId": "rime_wolf_fang",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_rime_wolf",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "glacial_drake_drops",
+  "luma": [
+   59,
+   139
+  ],
+  "entries": [
+   {
+    "itemId": "glacial_drake_scale",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_glacial_drake",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "rime_wraith_drops",
+  "luma": [
+   60,
+   142
+  ],
+  "entries": [
+   {
+    "itemId": "rime_wraith_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_rime_wraith",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frost_titan_drops",
+  "luma": [
+   61,
+   145
+  ],
+  "entries": [
+   {
+    "itemId": "frost_titan_core_stone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_frost_titan",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "cinder_drake_drops",
+  "luma": [
+   62,
+   146
+  ],
+  "entries": [
+   {
+    "itemId": "cinder_drake_scale",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_cinder_drake",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "hellfire_scorpion_drops",
+  "luma": [
+   63,
+   147
+  ],
+  "entries": [
+   {
+    "itemId": "hellfire_scorpion_venom_tail",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_hellfire_scorpion",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "obsidian_golem_drops",
+  "luma": [
+   64,
+   150
+  ],
+  "entries": [
+   {
+    "itemId": "obsidian_golem_core_stone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_obsidian_golem",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "pyre_spirit_drops",
+  "luma": [
+   64,
+   152
+  ],
+  "entries": [
+   {
+    "itemId": "pyre_spirit_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_pyre_spirit",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "plague_spore_drops",
+  "luma": [
+   65,
+   153
+  ],
+  "entries": [
+   {
+    "itemId": "plague_spore_spore_dust",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_plague_spore",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.12
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "blue_herb",
+    "chance": 0.04
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "rot_crab_drops",
+  "luma": [
+   66,
+   154
+  ],
+  "entries": [
+   {
+    "itemId": "rot_crab_shell",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_rot_crab",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "mire_hornet_drops",
+  "luma": [
+   66,
+   156
+  ],
+  "entries": [
+   {
+    "itemId": "mire_hornet_stinger",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_mire_hornet",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.08
+   },
+   {
+    "itemId": "green_herb",
+    "chance": 0.06
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "venom_drake_drops",
+  "luma": [
+   67,
+   159
+  ],
+  "entries": [
+   {
+    "itemId": "venom_drake_scale",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_venom_drake",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fallen_paladin_drops",
+  "luma": [
+   67,
+   159
+  ],
+  "entries": [
+   {
+    "itemId": "fallen_paladin_bone_shard",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_fallen_paladin",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "death_bat_drops",
+  "luma": [
+   68,
+   160
+  ],
+  "entries": [
+   {
+    "itemId": "death_bat_wing",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_death_bat",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "wraith_lord_drops",
+  "luma": [
+   69,
+   163
+  ],
+  "entries": [
+   {
+    "itemId": "wraith_lord_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_wraith_lord",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "bone_dragon_drops",
+  "luma": [
+   70,
+   166
+  ],
+  "entries": [
+   {
+    "itemId": "bone_dragon_scale",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_bone_dragon",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "void_slime_drops",
+  "luma": [
+   71,
+   167
+  ],
+  "entries": [
+   {
+    "itemId": "void_slime_gel",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_void_slime",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "red_herb",
+    "chance": 0.1
+   },
+   {
+    "itemId": "yellow_herb",
+    "chance": 0.06
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "void_walker_drops",
+  "luma": [
+   72,
+   170
+  ],
+  "entries": [
+   {
+    "itemId": "void_walker_ectoplasm",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_void_walker",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "chaos_golem_drops",
+  "luma": [
+   73,
+   171
+  ],
+  "entries": [
+   {
+    "itemId": "chaos_golem_core_stone",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_chaos_golem",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "abyss_drake_drops",
+  "luma": [
+   74,
+   174
+  ],
+  "entries": [
+   {
+    "itemId": "abyss_drake_scale",
+    "chance": 0.55
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.06
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04
+   },
+   {
+    "itemId": "card_abyss_drake",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.001,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "bone_warden_boss_drops",
+  "luma": [
+   21,
+   51
+  ],
+  "entries": [
+   {
+    "itemId": "bone_warden_bone_shard",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "card_bone_warden_boss",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "valdris_boss_drops",
+  "luma": [
+   28,
+   68
+  ],
+  "entries": [
+   {
+    "itemId": "valdris_ectoplasm",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "card_valdris_boss",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sun_king_boss_drops",
+  "luma": [
+   32,
+   76
+  ],
+  "entries": [
+   {
+    "itemId": "sun_king_bone_shard",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "card_sun_king_boss",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "pyrewyrm_boss_drops",
+  "luma": [
+   46,
+   110
+  ],
+  "entries": [
+   {
+    "itemId": "pyrewyrm_scale",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "card_pyrewyrm_boss",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.5,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "dread_lord_boss_drops",
+  "luma": [
+   53,
+   125
+  ],
+  "entries": [
+   {
+    "itemId": "dread_lord_bone_shard",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "card_dread_lord_boss",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "seraph_lumina_boss_drops",
+  "luma": [
+   68,
+   160
+  ],
+  "entries": [
+   {
+    "itemId": "seraph_lumina_ectoplasm",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "card_seraph_lumina_boss",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frost_colossus_boss_drops",
+  "luma": [
+   71,
+   167
+  ],
+  "entries": [
+   {
+    "itemId": "frost_colossus_core_stone",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "card_frost_colossus_boss",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.5,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "inferno_wyrm_boss_drops",
+  "luma": [
+   74,
+   174
+  ],
+  "entries": [
+   {
+    "itemId": "inferno_wyrm_scale",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "card_inferno_wyrm_boss",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.5,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "plague_queen_boss_drops",
+  "luma": [
+   76,
+   178
+  ],
+  "entries": [
+   {
+    "itemId": "plague_queen_stinger",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "card_plague_queen_boss",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "death_knight_boss_drops",
+  "luma": [
+   78,
+   184
+  ],
+  "entries": [
+   {
+    "itemId": "death_knight_bone_shard",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "card_death_knight_boss",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "storm_titan_boss_drops",
+  "luma": [
+   80,
+   188
+  ],
+  "entries": [
+   {
+    "itemId": "storm_titan_core_stone",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "card_storm_titan_boss",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "gale_stone",
+    "chance": 0.5,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "abyssal_kraken_boss_drops",
+  "luma": [
+   82,
+   194
+  ],
+  "entries": [
+   {
+    "itemId": "abyssal_kraken_shell",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "card_abyssal_kraken_boss",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.5,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "void_emperor_boss_drops",
+  "luma": [
+   85,
+   199
+  ],
+  "entries": [
+   {
+    "itemId": "void_emperor_ectoplasm",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "card_void_emperor_boss",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "chaos_dragon_boss_drops",
+  "luma": [
+   88,
+   208
+  ],
+  "entries": [
+   {
+    "itemId": "chaos_dragon_scale",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "card_chaos_dragon_boss",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "eternal_lich_boss_drops",
+  "luma": [
+   92,
+   216
+  ],
+  "entries": [
+   {
+    "itemId": "eternal_lich_ectoplasm",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 1
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.5
+   },
+   {
+    "itemId": "card_eternal_lich_boss",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.5,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_dusk_bat_drops",
+  "luma": [
+   64,
+   160
+  ],
+  "entries": [
+   {
+    "itemId": "dusk_bat_wing",
+    "chance": 1
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0216
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0216
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_dusk_bat",
+    "chance": 0.0001,
+    "card": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_road_goblin_drops",
+  "luma": [
+   136,
+   340
+  ],
+  "entries": [
+   {
+    "itemId": "road_goblin_tusk",
+    "chance": 1
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0324
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0324
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_road_goblin",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_pine_goblin_drops",
+  "luma": [
+   168,
+   420
+  ],
+  "entries": [
+   {
+    "itemId": "pine_goblin_tusk",
+    "chance": 1
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.037200000000000004
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.037200000000000004
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_pine_goblin",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "terra_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_twohand_sword",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_shield",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.02,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_shadow_wolf_drops",
+  "luma": [
+   224,
+   560
+  ],
+  "entries": [
+   {
+    "itemId": "shadow_wolf_fang",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0456
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0456
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_shadow_wolf",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_dagger",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_instrument",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.02,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_arcane_wisp_drops",
+  "luma": [
+   216,
+   540
+  ],
+  "entries": [
+   {
+    "itemId": "arcane_wisp_ectoplasm",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0444
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0444
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_arcane_wisp",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.02,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_desert_wolf_drops",
+  "luma": [
+   248,
+   620
+  ],
+  "entries": [
+   {
+    "itemId": "desert_wolf_fang",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.04920000000000001
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.04920000000000001
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_desert_wolf",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_staff",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.02,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_giant_scorpion_drops",
+  "luma": [
+   304,
+   760
+  ],
+  "entries": [
+   {
+    "itemId": "giant_scorpion_venom_tail",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.057600000000000005
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.057600000000000005
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_giant_scorpion",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "sage_stone",
+    "chance": 0.01,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_sword",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_club",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_katar",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_knuckle",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_bow",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_boots",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_dagger",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_sword",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_spear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_knuckle",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_bow",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_heavy_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_garment",
+    "chance": 0.02,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_reef_gull_drops",
+  "luma": [
+   192,
+   480
+  ],
+  "entries": [
+   {
+    "itemId": "reef_gull_wing",
+    "chance": 1
+   },
+   {
+    "itemId": "orange_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0408
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0408
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_reef_gull",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "gale_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "tempered_axe",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_book",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_heavy_boots",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_light_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_robe_boots",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "tempered_ring",
+    "chance": 0.02,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_ice_golem_drops",
+  "luma": [
+   376,
+   940
+  ],
+  "entries": [
+   {
+    "itemId": "ice_golem_core_stone",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0684
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0684
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_ice_golem",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "sage_stone",
+    "chance": 0.01,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_dagger",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_instrument",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_light_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "runed_robe_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_fire_drake_drops",
+  "luma": [
+   504,
+   1260
+  ],
+  "entries": [
+   {
+    "itemId": "fire_drake_scale",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0876
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0876
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_fire_drake",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.03,
+    "oreHint": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "sage_stone",
+    "chance": 0.01,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_dagger",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_twohand_sword",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_spear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_club",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_katar",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_wand",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_boots",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_ring",
+    "chance": 0.02,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_mire_crab_drops",
+  "luma": [
+   528,
+   1320
+  ],
+  "entries": [
+   {
+    "itemId": "mire_crab_shell",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.0912
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.0912
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_mire_crab",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.03,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "sage_stone",
+    "chance": 0.01,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_axe",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_knuckle",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_instrument",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_heavy_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_light_boots",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "starforged_robe_garment",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_dagger",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_twohand_sword",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_instrument",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_book",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_heavy_armor",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_heavy_boots",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_boots",
+    "chance": 0.02,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_banshee_drops",
+  "luma": [
+   576,
+   1440
+  ],
+  "entries": [
+   {
+    "itemId": "banshee_ectoplasm",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.09840000000000002
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.09840000000000002
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_banshee",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.03,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "sage_stone",
+    "chance": 0.01,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_dagger",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_sword",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_spear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_katar",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_staff",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_book",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_light_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_headgear",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_robe_boots",
+    "chance": 0.02,
+    "oreHint": true
+   },
+   {
+    "itemId": "mythril_ring",
+    "chance": 0.02,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_starlight_wisp_drops",
+  "luma": [
+   728,
+   1820
+  ],
+  "entries": [
+   {
+    "itemId": "starlight_wisp_ectoplasm",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.12
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.12
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_starlight_wisp",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.03,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "sage_stone",
+    "chance": 0.01,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_frost_titan_drops",
+  "luma": [
+   792,
+   1980
+  ],
+  "entries": [
+   {
+    "itemId": "frost_titan_core_stone",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.12
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.12
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_frost_titan",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.03,
+    "oreHint": true
+   },
+   {
+    "itemId": "frost_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "sage_stone",
+    "chance": 0.01,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_pyre_spirit_drops",
+  "luma": [
+   832,
+   2080
+  ],
+  "entries": [
+   {
+    "itemId": "pyre_spirit_ectoplasm",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.12
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.12
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_pyre_spirit",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_moonstone",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "lunar_shard",
+    "chance": 0.03,
+    "oreHint": true
+   },
+   {
+    "itemId": "flame_stone",
+    "chance": 0.01,
+    "forge": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "sage_stone",
+    "chance": 0.01,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "elite_venom_drake_drops",
+  "luma": [
+   872,
+   2180
+  ],
+  "entries": [
+   {
+    "itemId": "venom_drake_scale",
+    "chance": 1
+   },
+   {
+    "itemId": "yellow_potion",
+    "chance": 0.18
+   },
+   {
+    "itemId": "starsteel_ore",
+    "chance": 0.12
+   },
+   {
+    "itemId": "moonstone_ore",
+    "chance": 0.12
+   },
+   {
+    "itemId": "card_album",
+    "chance": 0.02
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.05
+   },
+   {
+    "itemId": "card_elite_venom_drake",
+    "chance": 0.0001,
+    "card": true
+   },
+   {
+    "itemId": "enriched_starsteel",
+    "chance": 0.002,
+    "oreHint": true
+   },
+   {
+    "itemId": "stellar_shard",
+    "chance": 0.03,
+    "oreHint": true
+   },
+   {
+    "itemId": "star_crumb",
+    "chance": 0.005,
+    "forge": true
+   },
+   {
+    "itemId": "sage_stone",
+    "chance": 0.01,
+    "oreHint": true
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "no_drops",
+  "luma": [
+   0,
+   0
+  ],
+  "entries": [],
+  "generated": true
+ }
 ]

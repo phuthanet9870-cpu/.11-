@@ -1,0 +1,298 @@
+{
+ "id": "arcanthe_heath",
+ "name": "Arcanthe Heath",
+ "region": "Arcanthe — City of Magic",
+ "type": "field",
+ "levelRange": [
+  20,
+  30
+ ],
+ "width": 160,
+ "height": 120,
+ "tileset": "arcane",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "field_plains",
+ "ambient": "meadow",
+ "weather": [
+  "sunny"
+ ],
+ "worldMapPos": {
+  "x": 0.57,
+  "y": 0.5
+ },
+ "paint": [
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 37,
+   "cy": 27,
+   "rx": 10,
+   "ry": 7,
+   "seed": 153573278
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 120,
+   "cy": 88,
+   "rx": 10,
+   "ry": 6,
+   "seed": 153573286
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 127,
+   "cy": 35,
+   "rx": 7,
+   "ry": 7,
+   "seed": 153573284
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 41,
+   "cy": 88,
+   "rx": 10,
+   "ry": 6,
+   "seed": 153573280
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     3,
+     59
+    ],
+    [
+     40,
+     60
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     156,
+     59
+    ],
+    [
+     118,
+     57
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_pine",
+   "density": 0.0081,
+   "seed": 153573292,
+   "baseDensity": 0.018
+  },
+  {
+   "op": "scatter",
+   "kind": "obelisk",
+   "density": 0.0027,
+   "seed": 153573293,
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "rock",
+   "density": 0.0027,
+   "seed": 153573294,
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.025,
+   "seed": 1419235118,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.025,
+   "seed": 2109121127,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 5,
+   "y": 58,
+   "id": "sign_arcanthe_heath"
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_aurelion",
+   "x": 0,
+   "y": 58,
+   "w": 2,
+   "h": 4,
+   "targetMap": "aurelion",
+   "targetSpawn": "from_arcanthe_heath",
+   "label": "Royal Capital Aurelion"
+  },
+  {
+   "id": "to_arcanthe",
+   "x": 158,
+   "y": 58,
+   "w": 2,
+   "h": 4,
+   "targetMap": "arcanthe",
+   "targetSpawn": "from_arcanthe_heath",
+   "label": "Tower City Arcanthe"
+  }
+ ],
+ "spawnPoints": {
+  "from_aurelion": {
+   "x": 4,
+   "y": 60
+  },
+  "from_arcanthe": {
+   "x": 155,
+   "y": 60
+  },
+  "default": {
+   "x": 4,
+   "y": 60
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "crystal_slime",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "crystal_slime",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "crystal_slime",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "moon_hare",
+   "count": 16,
+   "area": {
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "moon_hare",
+   "count": 16,
+   "area": {
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "moon_hare",
+   "count": 16,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "arcane_wisp",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "arcane_wisp",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "arcane_wisp",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "elite_arcane_wisp",
+   "count": 1,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  }
+ ],
+ "objects": [
+  {
+   "id": "sign_arcanthe_heath",
+   "kind": "signpost",
+   "x": 5,
+   "y": 58,
+   "name": "Signpost",
+   "interact": {
+    "text": "Arcanthe Heath (Lv.20–30).  WEST → Royal Capital Aurelion.  EAST → Tower City Arcanthe."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

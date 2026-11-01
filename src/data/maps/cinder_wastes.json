@@ -1,0 +1,284 @@
+{
+ "id": "cinder_wastes",
+ "name": "Cinder Wastes",
+ "region": "Emberfall Volcano",
+ "type": "field",
+ "levelRange": [
+  55,
+  65
+ ],
+ "width": 160,
+ "height": 120,
+ "tileset": "volcano",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "field_volcano",
+ "ambient": "volcano",
+ "weather": [
+  "ash"
+ ],
+ "worldMapPos": {
+  "x": 0.2,
+  "y": 0.3
+ },
+ "paint": [
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 33,
+   "cy": 34,
+   "rx": 6,
+   "ry": 5,
+   "seed": 315109358
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 122,
+   "cy": 91,
+   "rx": 8,
+   "ry": 5,
+   "seed": 315109366
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 121,
+   "cy": 28,
+   "rx": 10,
+   "ry": 5,
+   "seed": 315109364
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 37,
+   "cy": 86,
+   "rx": 9,
+   "ry": 7,
+   "seed": 315109360
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     3,
+     59
+    ],
+    [
+     40,
+     61
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     156,
+     59
+    ],
+    [
+     120,
+     61
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "scatter",
+   "kind": "rock",
+   "density": 0.0081,
+   "seed": 315109372,
+   "baseDensity": 0.018
+  },
+  {
+   "op": "scatter",
+   "kind": "rock_big",
+   "density": 0.0027,
+   "seed": 315109373,
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:pebbles",
+   "density": 0.025,
+   "seed": 374916151,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 5,
+   "y": 58,
+   "id": "sign_cinder_wastes"
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_frostholm",
+   "x": 0,
+   "y": 58,
+   "w": 2,
+   "h": 4,
+   "targetMap": "frostholm",
+   "targetSpawn": "from_cinder_wastes",
+   "label": "Snow Town Frostholm"
+  },
+  {
+   "id": "to_magma_core",
+   "x": 158,
+   "y": 58,
+   "w": 2,
+   "h": 4,
+   "targetMap": "magma_core",
+   "targetSpawn": "from_cinder_wastes",
+   "label": "Magma Core"
+  }
+ ],
+ "spawnPoints": {
+  "from_frostholm": {
+   "x": 4,
+   "y": 60
+  },
+  "from_magma_core": {
+   "x": 155,
+   "y": 60
+  },
+  "default": {
+   "x": 4,
+   "y": 60
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "ember_slime",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "ember_slime",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "ember_slime",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "ash_scorpion",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "ash_scorpion",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "ash_scorpion",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "fire_drake",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "fire_drake",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "fire_drake",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "elite_fire_drake",
+   "count": 1,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  }
+ ],
+ "objects": [
+  {
+   "id": "sign_cinder_wastes",
+   "kind": "signpost",
+   "x": 5,
+   "y": 58,
+   "name": "Signpost",
+   "interact": {
+    "text": "Cinder Wastes (Lv.55–65).  WEST → Snow Town Frostholm.  EAST → Magma Core."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

@@ -1,144 +1,1537 @@
 [
- {
-  "id": "novice",
-  "name": "Novice",
-  "tier": 0,
-  "role": "Beginner",
-  "description": "Every legend in Veyloria begins as a Novice from Willowbrook.",
-  "maxJobLevel": 10,
-  "hpPerLevel": 8,
-  "mpPerLevel": 2,
-  "baseAttackIntervalMs": 1050,
-  "weaponTypes": [
-   "dagger",
-   "club"
-  ],
-  "skills": [
-   "basic_training",
-   "first_aid"
-  ],
-  "outfit": {
-   "primary": "#c8a26b",
-   "secondary": "#7a5634",
-   "accent": "#e8dcc0",
-   "style": "tunic"
-  }
- },
- {
-  "id": "knight",
-  "name": "Knight",
-  "tier": 1,
-  "role": "Tank / Melee DPS",
-  "parent": "novice",
-  "description": "Sworn defenders who hold the line with sword, spear and shield.",
-  "maxJobLevel": 50,
-  "hpPerLevel": 15,
-  "mpPerLevel": 3,
-  "baseAttackIntervalMs": 920,
-  "weaponTypes": [
-   "dagger",
-   "club",
-   "sword",
-   "spear",
-   "twohand_sword"
-  ],
-  "skills": [
-   "bash",
-   "provoke",
-   "shield_guard",
-   "sword_mastery",
-   "spiral_pierce",
-   "war_cry",
-   "counter_attack",
-   "blade_storm"
-  ],
-  "requirements": {
-   "jobLevel": 10,
-   "fromClass": "novice",
-   "questId": "job_knight"
+  {
+    "id": "novice",
+    "name": "Novice",
+    "tier": 0,
+    "role": "Beginner",
+    "description": "Every legend in Veyloria begins as a Novice from Willowbrook.",
+    "maxJobLevel": 10,
+    "hpPerLevel": 8,
+    "mpPerLevel": 2,
+    "baseAttackIntervalMs": 1050,
+    "weaponTypes": [
+      "dagger",
+      "club"
+    ],
+    "skills": [
+      "basic_training",
+      "first_aid"
+    ],
+    "outfit": {
+      "primary": "#c8a26b",
+      "secondary": "#7a5634",
+      "accent": "#e8dcc0",
+      "style": "tunic",
+      "costume": "novice"
+    },
+    "jobBonus": ".sav.d.l.",
+    "weightBonus": 0
   },
-  "outfit": {
-   "primary": "#4a6fa5",
-   "secondary": "#b8c4d6",
-   "accent": "#e2c14f",
-   "style": "plate"
-  }
- },
- {
-  "id": "ranger",
-  "name": "Ranger",
-  "tier": 1,
-  "role": "Ranged DPS / Trapper",
-  "parent": "novice",
-  "description": "Keen-eyed hunters of the wilds who strike from afar and lay cunning traps.",
-  "maxJobLevel": 50,
-  "hpPerLevel": 10,
-  "mpPerLevel": 4,
-  "baseAttackIntervalMs": 960,
-  "weaponTypes": [
-   "dagger",
-   "bow",
-   "crossbow"
-  ],
-  "skills": [
-   "double_shot",
-   "arrow_rain",
-   "falcon_strike",
-   "wind_trap",
-   "eagle_eye",
-   "rapid_fire",
-   "camouflage",
-   "piercing_arrow"
-  ],
-  "requirements": {
-   "jobLevel": 10,
-   "fromClass": "novice",
-   "questId": "job_ranger"
+  {
+    "id": "knight",
+    "name": "Knight",
+    "tier": 1,
+    "role": "Tank / Melee DPS",
+    "parent": "novice",
+    "description": "Sworn defenders who hold the line with sword, spear and shield.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 15,
+    "mpPerLevel": 3,
+    "baseAttackIntervalMs": 920,
+    "weaponTypes": [
+      "dagger",
+      "club",
+      "sword",
+      "spear",
+      "twohand_sword"
+    ],
+    "skills": [
+      "bash",
+      "provoke",
+      "shield_guard",
+      "sword_mastery",
+      "spiral_pierce",
+      "war_cry",
+      "counter_attack",
+      "blade_storm"
+    ],
+    "requirements": {
+      "jobLevel": 10,
+      "fromClass": "novice"
+    },
+    "outfit": {
+      "primary": "#4a6fa5",
+      "secondary": "#b8c4d6",
+      "accent": "#e2c14f",
+      "style": "plate",
+      "costume": "knight"
+    },
+    "jobBonus": "..s.v..d.s..a.v..s..d.v..s.s..v..d.s..a.v..s.d...",
+    "weightBonus": 800
   },
-  "outfit": {
-   "primary": "#3f7a45",
-   "secondary": "#8b6b3e",
-   "accent": "#d9c27a",
-   "style": "hood"
-  }
- },
- {
-  "id": "mage",
-  "name": "Mage",
-  "tier": 1,
-  "role": "Magic DPS / Area Control",
-  "parent": "novice",
-  "description": "Scholars of the Astral Runes who bend fire, frost and lightning to their will.",
-  "maxJobLevel": 50,
-  "hpPerLevel": 7,
-  "mpPerLevel": 9,
-  "baseAttackIntervalMs": 1100,
-  "weaponTypes": [
-   "dagger",
-   "wand",
-   "staff"
-  ],
-  "skills": [
-   "fire_bolt",
-   "ice_bolt",
-   "lightning_bolt",
-   "fire_wall",
-   "frost_nova",
-   "thunderstorm",
-   "meteor",
-   "mana_shield",
-   "astral_attunement"
-  ],
-  "requirements": {
-   "jobLevel": 10,
-   "fromClass": "novice",
-   "questId": "job_mage"
+  {
+    "id": "ranger",
+    "name": "Ranger",
+    "tier": 1,
+    "role": "Ranged DPS / Trapper",
+    "parent": "novice",
+    "description": "Keen-eyed hunters of the wilds who strike from afar and lay cunning traps.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 11,
+    "mpPerLevel": 4,
+    "baseAttackIntervalMs": 960,
+    "weaponTypes": [
+      "dagger",
+      "bow",
+      "crossbow"
+    ],
+    "skills": [
+      "double_shot",
+      "arrow_rain",
+      "falcon_strike",
+      "wind_trap",
+      "eagle_eye",
+      "rapid_fire",
+      "camouflage",
+      "piercing_arrow"
+    ],
+    "requirements": {
+      "jobLevel": 10,
+      "fromClass": "novice"
+    },
+    "outfit": {
+      "primary": "#3f7a45",
+      "secondary": "#8b6b3e",
+      "accent": "#d9c27a",
+      "style": "hood",
+      "costume": "ranger"
+    },
+    "jobBonus": "..d.a..d.l..d.a..s..d.a..d.d..a..d.l..d.a..s.d...",
+    "weightBonus": 600
   },
-  "outfit": {
-   "primary": "#5b3d8f",
-   "secondary": "#2b2347",
-   "accent": "#7fd6ff",
-   "style": "robe"
+  {
+    "id": "mage",
+    "name": "Mage",
+    "tier": 1,
+    "role": "Magic DPS / Area Control",
+    "parent": "novice",
+    "description": "Scholars of the Astral Runes who bend fire, frost and lightning to their will.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 7,
+    "mpPerLevel": 9,
+    "baseAttackIntervalMs": 1100,
+    "weaponTypes": [
+      "dagger",
+      "wand",
+      "staff"
+    ],
+    "skills": [
+      "fire_bolt",
+      "ice_bolt",
+      "lightning_bolt",
+      "fire_wall",
+      "frost_nova",
+      "thunderstorm",
+      "meteor",
+      "mana_shield",
+      "astral_attunement"
+    ],
+    "requirements": {
+      "jobLevel": 10,
+      "fromClass": "novice"
+    },
+    "outfit": {
+      "primary": "#5b3d8f",
+      "secondary": "#2b2347",
+      "accent": "#7fd6ff",
+      "style": "robe",
+      "costume": "mage"
+    },
+    "jobBonus": "..i.d..i.a..i.d..v..i.d..i.i..d..i.a..i.d..v.i...",
+    "weightBonus": 200
+  },
+  {
+    "id": "cleric",
+    "name": "Cleric",
+    "tier": 1,
+    "role": "Healer / Holy caster",
+    "parent": "novice",
+    "description": "Servants of the dawn who heal, bless and burn away the undead.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 13,
+    "mpPerLevel": 7,
+    "baseAttackIntervalMs": 1000,
+    "weaponTypes": [
+      "club",
+      "staff",
+      "wand"
+    ],
+    "requirements": {
+      "jobLevel": 10,
+      "fromClass": "novice"
+    },
+    "outfit": {
+      "primary": "#f0ead8",
+      "secondary": "#8a6a2a",
+      "accent": "#ffd860",
+      "style": "robe",
+      "costume": "cleric"
+    },
+    "skills": [
+      "holy_light",
+      "heal",
+      "benediction",
+      "swift_grace",
+      "aegis_hymn",
+      "purify",
+      "sacred_ward",
+      "smite_evil",
+      "sanctum_nova"
+    ],
+    "jobBonus": "..i.v..d.i..l.v..i..d.v..i.i..v..d.i..l.v..i.d...",
+    "weightBonus": 400
+  },
+  {
+    "id": "rogue",
+    "name": "Rogue",
+    "tier": 1,
+    "role": "Evasive melee / Thief",
+    "parent": "novice",
+    "description": "Quick blades from the desert alleys: dodge, poison, steal and strike from the shadows.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 11,
+    "mpPerLevel": 4,
+    "baseAttackIntervalMs": 820,
+    "weaponTypes": [
+      "dagger",
+      "sword",
+      "bow"
+    ],
+    "requirements": {
+      "jobLevel": 10,
+      "fromClass": "novice"
+    },
+    "outfit": {
+      "primary": "#3a3442",
+      "secondary": "#7a2a2a",
+      "accent": "#c8b070",
+      "style": "coat",
+      "costume": "rogue"
+    },
+    "skills": [
+      "twin_fang",
+      "evasion_instinct",
+      "pilfer",
+      "shadow_veil",
+      "venom_edge",
+      "grit_toss",
+      "knife_throw",
+      "antidote",
+      "hundred_cuts"
+    ],
+    "jobBonus": "..a.s..d.a..l.a..s..a.d..s.a..a..s.d..a.l..a.s...",
+    "weightBonus": 400
+  },
+  {
+    "id": "merchant",
+    "name": "Merchant",
+    "tier": 1,
+    "role": "Trader / Heavy hitter",
+    "parent": "novice",
+    "description": "Traders of the harbor who carry more, buy cheaper, sell dearer and hit with their purse.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 12,
+    "mpPerLevel": 4,
+    "baseAttackIntervalMs": 980,
+    "weaponTypes": [
+      "dagger",
+      "club",
+      "sword",
+      "spear",
+      "axe"
+    ],
+    "requirements": {
+      "jobLevel": 10,
+      "fromClass": "novice"
+    },
+    "outfit": {
+      "primary": "#8a5a2a",
+      "secondary": "#e8d8b0",
+      "accent": "#ffcc33",
+      "style": "apron",
+      "costume": "merchant"
+    },
+    "skills": [
+      "pack_mule",
+      "haggle",
+      "silver_tongue",
+      "coin_strike",
+      "cart_sweep",
+      "market_shout",
+      "steady_grip",
+      "golden_ruin"
+    ],
+    "jobBonus": "..s.v..d.s..l.v..s..d.v..s.s..v..d.s..l.v..s.d...",
+    "weightBonus": 800
+  },
+  {
+    "id": "dragoon",
+    "name": "Dragoon",
+    "tier": 2,
+    "role": "Mounted lancer",
+    "parent": "knight",
+    "description": "Knights who ride war-drakes and break lines with the spear.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 21,
+    "mpPerLevel": 4,
+    "baseAttackIntervalMs": 900,
+    "weaponTypes": [
+      "dagger",
+      "club",
+      "sword",
+      "spear",
+      "twohand_sword"
+    ],
+    "skills": [
+      "drake_riding",
+      "lance_mastery",
+      "impale",
+      "drake_sweep",
+      "war_banner",
+      "iron_hide",
+      "skewer_line",
+      "sky_dive"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "knight"
+    },
+    "outfit": {
+      "primary": "#2f5a8f",
+      "secondary": "#c8d4e6",
+      "accent": "#e2c14f",
+      "style": "plate",
+      "costume": "dragoon"
+    },
+    "jobBonus": ".s.v.d.s.a.s.v.s.d.a.v.ss.v.d.s.a.s.v.s.d.a.v.s..",
+    "weightBonus": 900,
+    "guildMaster": {
+      "town": "aurelion",
+      "name": "Sir Caldus",
+      "title": "Dragoon Captain"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "templar",
+    "name": "Templar",
+    "tier": 2,
+    "role": "Holy defender",
+    "parent": "knight",
+    "description": "Shield-bearing knights sworn to the dawn; holy strikes and unbreakable defence.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 22,
+    "mpPerLevel": 6,
+    "baseAttackIntervalMs": 940,
+    "weaponTypes": [
+      "dagger",
+      "club",
+      "sword",
+      "spear",
+      "twohand_sword"
+    ],
+    "skills": [
+      "faith",
+      "holy_bulwark",
+      "shield_bash",
+      "sacred_strike",
+      "devotion_aura",
+      "judgement_cross",
+      "provoking_vow",
+      "heavens_shield"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "knight"
+    },
+    "outfit": {
+      "primary": "#e8e0c8",
+      "secondary": "#8a2a2a",
+      "accent": "#ffd34d",
+      "style": "plate",
+      "costume": "templar"
+    },
+    "jobBonus": ".v.s.i.v.d.v.s.v.i.s.v.vs.i.v.d.v.s.v.i.s.v.v.s..",
+    "weightBonus": 800,
+    "guildMaster": {
+      "town": "aurelion",
+      "name": "Dame Ysolde",
+      "title": "Templar Commander"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "beastmaster",
+    "name": "Beastmaster",
+    "tier": 2,
+    "role": "Trapper / Falconer",
+    "parent": "ranger",
+    "description": "Rangers who hunt with traps and a trained falcon.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 15,
+    "mpPerLevel": 6,
+    "baseAttackIntervalMs": 920,
+    "weaponTypes": [
+      "dagger",
+      "bow",
+      "crossbow"
+    ],
+    "skills": [
+      "falcon_bond",
+      "blitz_falcon",
+      "snare_trap",
+      "blast_trap",
+      "beast_bane",
+      "keen_senses",
+      "tri_shot",
+      "falcon_storm"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "ranger"
+    },
+    "outfit": {
+      "primary": "#4f6a2f",
+      "secondary": "#7a5a2e",
+      "accent": "#e0c070",
+      "style": "hood",
+      "costume": "beastmaster"
+    },
+    "jobBonus": ".d.a.l.d.s.d.a.d.l.a.d.da.l.d.s.d.a.d.l.a.d.d.a..",
+    "weightBonus": 700,
+    "guildMaster": {
+      "town": "fernhollow",
+      "name": "Old Brannoc",
+      "title": "Beastmaster Elder"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "minstrel",
+    "name": "Minstrel",
+    "tier": 2,
+    "role": "Bard / Support",
+    "parent": "ranger",
+    "description": "Travelling musicians whose songs strengthen and whose arrows sing.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 17,
+    "mpPerLevel": 8,
+    "baseAttackIntervalMs": 920,
+    "weaponTypes": [
+      "dagger",
+      "bow",
+      "instrument"
+    ],
+    "skills": [
+      "music_lessons",
+      "song_of_haste",
+      "song_of_vigor",
+      "song_of_fortune",
+      "discord",
+      "melody_strike",
+      "lullaby_zone",
+      "grand_finale"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "ranger"
+    },
+    "outfit": {
+      "primary": "#8a3a6a",
+      "secondary": "#e8c8a0",
+      "accent": "#ffd34d",
+      "style": "coat",
+      "costume": "minstrel"
+    },
+    "jobBonus": ".d.i.a.v.d.i.d.v.a.i.d.di.v.a.d.i.d.v.a.i.d.d.i..",
+    "weightBonus": 650,
+    "guildMaster": {
+      "town": "fernhollow",
+      "name": "Lysander",
+      "title": "Master of Songs"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "sorcerer",
+    "name": "Sorcerer",
+    "tier": 2,
+    "role": "Area caster",
+    "parent": "mage",
+    "description": "Mages who master storms, quakes and walls of ice.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 11,
+    "mpPerLevel": 13,
+    "baseAttackIntervalMs": 1080,
+    "weaponTypes": [
+      "dagger",
+      "wand",
+      "staff"
+    ],
+    "skills": [
+      "arcane_focus",
+      "storm_gust",
+      "lord_of_vermilion",
+      "heavens_drive",
+      "ice_wall",
+      "sightrasher",
+      "mana_well",
+      "meteor_storm"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "mage"
+    },
+    "outfit": {
+      "primary": "#3a2a7f",
+      "secondary": "#1e1a3a",
+      "accent": "#ff7a3a",
+      "style": "robe",
+      "costume": "sorcerer"
+    },
+    "jobBonus": ".i.d.i.a.i.d.i.v.i.d.i.id.i.a.i.d.i.v.i.d.i.i.d..",
+    "weightBonus": 300,
+    "guildMaster": {
+      "town": "arcanthe",
+      "name": "Archmagus Theron",
+      "title": "Sorcerer Council"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "sage",
+    "name": "Sage",
+    "tier": 2,
+    "role": "Battle scholar",
+    "parent": "mage",
+    "description": "Scholars of every element who endow weapons and hit with the book.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 13,
+    "mpPerLevel": 11,
+    "baseAttackIntervalMs": 1000,
+    "weaponTypes": [
+      "dagger",
+      "wand",
+      "staff",
+      "book"
+    ],
+    "skills": [
+      "study",
+      "endow_fire",
+      "endow_water",
+      "endow_wind",
+      "endow_earth",
+      "double_cast",
+      "earth_spike_volley",
+      "elemental_cataclysm"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "mage"
+    },
+    "outfit": {
+      "primary": "#2a6a5a",
+      "secondary": "#e8dcc0",
+      "accent": "#7fd6ff",
+      "style": "robe",
+      "costume": "sage"
+    },
+    "jobBonus": ".i.d.a.v.i.d.i.v.a.d.i.id.v.a.i.d.i.v.a.d.i.i.d..",
+    "weightBonus": 350,
+    "guildMaster": {
+      "town": "arcanthe",
+      "name": "Scholar Imre",
+      "title": "Sage Academy Dean"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "bishop",
+    "name": "Bishop",
+    "tier": 2,
+    "role": "Healer / Exorcist",
+    "parent": "cleric",
+    "description": "High clerics: great heals, blessings and holy judgement.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 14,
+    "mpPerLevel": 11,
+    "baseAttackIntervalMs": 1000,
+    "weaponTypes": [
+      "club",
+      "staff",
+      "wand",
+      "book"
+    ],
+    "skills": [
+      "greater_heal",
+      "kyrie",
+      "holy_mastery",
+      "magnificat",
+      "lex_divina",
+      "turn_undead",
+      "sanctuary",
+      "magnus_judgement"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "cleric"
+    },
+    "outfit": {
+      "primary": "#f4f0e0",
+      "secondary": "#7a5a2a",
+      "accent": "#ffd860",
+      "style": "robe",
+      "costume": "bishop"
+    },
+    "jobBonus": ".i.v.d.i.l.i.v.i.d.v.i.iv.d.i.l.i.v.i.d.v.i.i.v..",
+    "weightBonus": 500,
+    "guildMaster": {
+      "town": "aurelion",
+      "name": "Bishop Aurenne",
+      "title": "Bishop of the Dawn"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "ascetic",
+    "name": "Ascetic",
+    "tier": 2,
+    "role": "Martial monk",
+    "parent": "cleric",
+    "description": "Clerics who left the chapel for the mountain, fighting with fists and spirit.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 18,
+    "mpPerLevel": 7,
+    "baseAttackIntervalMs": 860,
+    "weaponTypes": [
+      "club",
+      "knuckle"
+    ],
+    "skills": [
+      "iron_fist",
+      "spirit_spheres",
+      "triple_blow",
+      "chain_combo",
+      "steel_body",
+      "ki_explosion",
+      "body_relocation",
+      "asura_strike"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "cleric"
+    },
+    "outfit": {
+      "primary": "#c86a2a",
+      "secondary": "#5a3a1e",
+      "accent": "#ffd860",
+      "style": "tunic",
+      "costume": "ascetic"
+    },
+    "jobBonus": ".s.a.v.d.s.a.s.d.v.a.s.sa.d.v.s.a.s.d.v.a.s.s.a..",
+    "weightBonus": 600,
+    "guildMaster": {
+      "town": "aurelion",
+      "name": "Master Kaito",
+      "title": "Ascetic of the Peak"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "shadowblade",
+    "name": "Shadowblade",
+    "tier": 2,
+    "role": "Assassin",
+    "parent": "rogue",
+    "description": "Rogues who kill from the shadows with katars and poison.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 16,
+    "mpPerLevel": 5,
+    "baseAttackIntervalMs": 760,
+    "weaponTypes": [
+      "dagger",
+      "sword",
+      "katar"
+    ],
+    "skills": [
+      "katar_mastery",
+      "cloak_of_shadows",
+      "sonic_blade",
+      "venom_spray",
+      "enchant_poison",
+      "grimtooth",
+      "assassin_edge",
+      "soul_reap"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "rogue"
+    },
+    "outfit": {
+      "primary": "#2a2a3a",
+      "secondary": "#7a1a2a",
+      "accent": "#c0c0d8",
+      "style": "coat",
+      "costume": "shadowblade"
+    },
+    "jobBonus": ".a.s.d.a.l.a.s.a.d.s.a.as.d.a.l.a.s.a.d.s.a.a.s..",
+    "weightBonus": 500,
+    "guildMaster": {
+      "town": "sandara",
+      "name": "The Veiled One",
+      "title": "Shadowblade Guild"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "outlaw",
+    "name": "Outlaw",
+    "tier": 2,
+    "role": "Trickster / Archer",
+    "parent": "rogue",
+    "description": "Rogues who rob, strip and outsmart, with blade or bow.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 17,
+    "mpPerLevel": 5,
+    "baseAttackIntervalMs": 820,
+    "weaponTypes": [
+      "dagger",
+      "sword",
+      "bow"
+    ],
+    "skills": [
+      "snatch",
+      "rob_luma",
+      "strip_armor",
+      "backstab",
+      "tunnel_drive",
+      "vulture_eye",
+      "arrow_storm_rogue",
+      "plagiarism"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "rogue"
+    },
+    "outfit": {
+      "primary": "#5a3a2a",
+      "secondary": "#2a4a3a",
+      "accent": "#ffd34d",
+      "style": "coat",
+      "costume": "outlaw"
+    },
+    "jobBonus": ".d.a.s.l.d.a.d.l.s.a.d.da.l.s.d.a.d.l.s.a.d.d.a..",
+    "weightBonus": 600,
+    "guildMaster": {
+      "town": "sandara",
+      "name": "Jax Silverhand",
+      "title": "Outlaw Boss"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "artisan",
+    "name": "Artisan",
+    "tier": 2,
+    "role": "Blacksmith",
+    "parent": "merchant",
+    "description": "Merchants turned smiths: they forge better and fight with heavy weapons.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 20,
+    "mpPerLevel": 5,
+    "baseAttackIntervalMs": 950,
+    "weaponTypes": [
+      "dagger",
+      "club",
+      "sword",
+      "spear",
+      "axe"
+    ],
+    "skills": [
+      "smithing",
+      "adrenaline_rush",
+      "power_thrust",
+      "weapon_perfection",
+      "hammerfall",
+      "skin_tempering",
+      "cart_crash",
+      "meltdown"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "merchant"
+    },
+    "outfit": {
+      "primary": "#6a4a2a",
+      "secondary": "#c8a26b",
+      "accent": "#ff8a3a",
+      "style": "apron",
+      "costume": "artisan"
+    },
+    "jobBonus": ".s.d.v.s.l.s.d.s.v.d.s.sd.v.s.l.s.d.s.v.d.s.s.d..",
+    "weightBonus": 1000,
+    "guildMaster": {
+      "town": "tidewatch",
+      "name": "Forge-master Brenna",
+      "title": "Artisan Guild"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "alchemist",
+    "name": "Alchemist",
+    "tier": 2,
+    "role": "Potion maker / Homunculus",
+    "parent": "merchant",
+    "description": "Merchants of the laboratory: acid, fire flasks and an artificial life-form.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 17,
+    "mpPerLevel": 7,
+    "baseAttackIntervalMs": 980,
+    "weaponTypes": [
+      "dagger",
+      "club",
+      "sword",
+      "axe"
+    ],
+    "skills": [
+      "potion_research",
+      "acid_terror",
+      "demonstration",
+      "chemical_shield",
+      "aid_potion",
+      "call_homunculus",
+      "acid_rain",
+      "acid_demonstration"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "merchant"
+    },
+    "outfit": {
+      "primary": "#3a6a3a",
+      "secondary": "#e8e0c8",
+      "accent": "#7fff7a",
+      "style": "apron",
+      "costume": "alchemist"
+    },
+    "jobBonus": ".d.i.v.l.d.i.d.l.v.i.d.di.l.v.d.i.d.l.v.i.d.d.i..",
+    "weightBonus": 900,
+    "guildMaster": {
+      "town": "tidewatch",
+      "name": "Professor Quill",
+      "title": "Alchemy Guild"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "high_novice",
+    "name": "High Novice",
+    "tier": 0,
+    "role": "Beginner",
+    "description": "A reborn adventurer, starting over with the strength of a past life.",
+    "maxJobLevel": 10,
+    "hpPerLevel": 8,
+    "mpPerLevel": 2,
+    "baseAttackIntervalMs": 1050,
+    "weaponTypes": [
+      "dagger",
+      "club"
+    ],
+    "skills": [],
+    "outfit": {
+      "primary": "#c8a26b",
+      "secondary": "#7a5634",
+      "accent": "#e8dcc0",
+      "style": "tunic",
+      "costume": "high_novice"
+    },
+    "jobBonus": ".sav.d.l.",
+    "weightBonus": 0,
+    "inherits": "novice",
+    "hpMpMul": 1.25,
+    "jobgen": true
+  },
+  {
+    "id": "high_knight",
+    "name": "High Knight",
+    "tier": 1,
+    "role": "Tank / Melee DPS",
+    "parent": "high_novice",
+    "description": "A reborn Knight. Same skills, stronger body.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 15,
+    "mpPerLevel": 3,
+    "baseAttackIntervalMs": 920,
+    "weaponTypes": [
+      "dagger",
+      "club",
+      "sword",
+      "spear",
+      "twohand_sword"
+    ],
+    "skills": [],
+    "requirements": {
+      "jobLevel": 10,
+      "fromClass": "high_novice"
+    },
+    "outfit": {
+      "primary": "#4a6fa5",
+      "secondary": "#b8c4d6",
+      "accent": "#e2c14f",
+      "style": "plate",
+      "costume": "high_knight"
+    },
+    "jobBonus": "..s.v..d.s..a.v..s..d.v..s.s..v..d.s..a.v..s.d...",
+    "weightBonus": 800,
+    "inherits": "knight",
+    "hpMpMul": 1.25,
+    "jobgen": true
+  },
+  {
+    "id": "high_ranger",
+    "name": "High Ranger",
+    "tier": 1,
+    "role": "Ranged DPS / Trapper",
+    "parent": "high_novice",
+    "description": "A reborn Ranger. Same skills, stronger body.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 11,
+    "mpPerLevel": 4,
+    "baseAttackIntervalMs": 960,
+    "weaponTypes": [
+      "dagger",
+      "bow",
+      "crossbow"
+    ],
+    "skills": [],
+    "requirements": {
+      "jobLevel": 10,
+      "fromClass": "high_novice"
+    },
+    "outfit": {
+      "primary": "#3f7a45",
+      "secondary": "#8b6b3e",
+      "accent": "#d9c27a",
+      "style": "hood",
+      "costume": "high_ranger"
+    },
+    "jobBonus": "..d.a..d.l..d.a..s..d.a..d.d..a..d.l..d.a..s.d...",
+    "weightBonus": 600,
+    "inherits": "ranger",
+    "hpMpMul": 1.25,
+    "jobgen": true
+  },
+  {
+    "id": "high_mage",
+    "name": "High Mage",
+    "tier": 1,
+    "role": "Magic DPS / Area Control",
+    "parent": "high_novice",
+    "description": "A reborn Mage. Same skills, stronger body.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 7,
+    "mpPerLevel": 9,
+    "baseAttackIntervalMs": 1100,
+    "weaponTypes": [
+      "dagger",
+      "wand",
+      "staff"
+    ],
+    "skills": [],
+    "requirements": {
+      "jobLevel": 10,
+      "fromClass": "high_novice"
+    },
+    "outfit": {
+      "primary": "#5b3d8f",
+      "secondary": "#2b2347",
+      "accent": "#7fd6ff",
+      "style": "robe",
+      "costume": "high_mage"
+    },
+    "jobBonus": "..i.d..i.a..i.d..v..i.d..i.i..d..i.a..i.d..v.i...",
+    "weightBonus": 200,
+    "inherits": "mage",
+    "hpMpMul": 1.25,
+    "jobgen": true
+  },
+  {
+    "id": "high_cleric",
+    "name": "High Cleric",
+    "tier": 1,
+    "role": "Healer / Holy caster",
+    "parent": "high_novice",
+    "description": "A reborn Cleric. Same skills, stronger body.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 13,
+    "mpPerLevel": 7,
+    "baseAttackIntervalMs": 1000,
+    "weaponTypes": [
+      "club",
+      "staff",
+      "wand"
+    ],
+    "requirements": {
+      "jobLevel": 10,
+      "fromClass": "high_novice"
+    },
+    "outfit": {
+      "primary": "#f0ead8",
+      "secondary": "#8a6a2a",
+      "accent": "#ffd860",
+      "style": "robe",
+      "costume": "high_cleric"
+    },
+    "skills": [],
+    "jobBonus": "..i.v..d.i..l.v..i..d.v..i.i..v..d.i..l.v..i.d...",
+    "weightBonus": 400,
+    "inherits": "cleric",
+    "hpMpMul": 1.25,
+    "jobgen": true
+  },
+  {
+    "id": "high_rogue",
+    "name": "High Rogue",
+    "tier": 1,
+    "role": "Evasive melee / Thief",
+    "parent": "high_novice",
+    "description": "A reborn Rogue. Same skills, stronger body.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 11,
+    "mpPerLevel": 4,
+    "baseAttackIntervalMs": 820,
+    "weaponTypes": [
+      "dagger",
+      "sword",
+      "bow"
+    ],
+    "requirements": {
+      "jobLevel": 10,
+      "fromClass": "high_novice"
+    },
+    "outfit": {
+      "primary": "#3a3442",
+      "secondary": "#7a2a2a",
+      "accent": "#c8b070",
+      "style": "coat",
+      "costume": "high_rogue"
+    },
+    "skills": [],
+    "jobBonus": "..a.s..d.a..l.a..s..a.d..s.a..a..s.d..a.l..a.s...",
+    "weightBonus": 400,
+    "inherits": "rogue",
+    "hpMpMul": 1.25,
+    "jobgen": true
+  },
+  {
+    "id": "high_merchant",
+    "name": "High Merchant",
+    "tier": 1,
+    "role": "Trader / Heavy hitter",
+    "parent": "high_novice",
+    "description": "A reborn Merchant. Same skills, stronger body.",
+    "maxJobLevel": 50,
+    "hpPerLevel": 12,
+    "mpPerLevel": 4,
+    "baseAttackIntervalMs": 980,
+    "weaponTypes": [
+      "dagger",
+      "club",
+      "sword",
+      "spear",
+      "axe"
+    ],
+    "requirements": {
+      "jobLevel": 10,
+      "fromClass": "high_novice"
+    },
+    "outfit": {
+      "primary": "#8a5a2a",
+      "secondary": "#e8d8b0",
+      "accent": "#ffcc33",
+      "style": "apron",
+      "costume": "high_merchant"
+    },
+    "skills": [],
+    "jobBonus": "..s.v..d.s..l.v..s..d.v..s.s..v..d.s..l.v..s.d...",
+    "weightBonus": 800,
+    "inherits": "merchant",
+    "hpMpMul": 1.25,
+    "jobgen": true
+  },
+  {
+    "id": "dragon_lord",
+    "name": "Dragon Lord",
+    "tier": 3,
+    "role": "Mounted lancer",
+    "parent": "high_knight",
+    "description": "Reborn dragoons whose drakes have become true dragons.",
+    "maxJobLevel": 70,
+    "hpPerLevel": 23,
+    "mpPerLevel": 4,
+    "baseAttackIntervalMs": 900,
+    "weaponTypes": [
+      "dagger",
+      "club",
+      "sword",
+      "spear",
+      "twohand_sword"
+    ],
+    "skills": [
+      "dragon_fury",
+      "wyrm_spiral"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "high_knight",
+      "rebornFrom": "dragoon"
+    },
+    "outfit": {
+      "primary": "#2f5a8f",
+      "secondary": "#c8d4e6",
+      "accent": "#e2c14f",
+      "style": "plate",
+      "costume": "dragon_lord"
+    },
+    "jobBonus": ".s.v..d.s.a.s..v.s.d.a.v..s.s.v.d..s.a.s.v..s.d.a.v.s..s.v.d.s..a.s..",
+    "weightBonus": 900,
+    "jobgen": true,
+    "inherits": "dragoon",
+    "hpMpMul": 1.25
+  },
+  {
+    "id": "high_templar",
+    "name": "High Templar",
+    "tier": 3,
+    "role": "Holy defender",
+    "parent": "high_knight",
+    "description": "Reborn templars, living fortresses of faith.",
+    "maxJobLevel": 70,
+    "hpPerLevel": 24,
+    "mpPerLevel": 7,
+    "baseAttackIntervalMs": 940,
+    "weaponTypes": [
+      "dagger",
+      "club",
+      "sword",
+      "spear",
+      "twohand_sword"
+    ],
+    "skills": [
+      "martyrs_grace",
+      "divine_lance"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "high_knight",
+      "rebornFrom": "templar"
+    },
+    "outfit": {
+      "primary": "#e8e0c8",
+      "secondary": "#8a2a2a",
+      "accent": "#ffd34d",
+      "style": "plate",
+      "costume": "high_templar"
+    },
+    "jobBonus": ".v.s..i.v.d.v..s.v.i.s.v..v.s.i.v..d.v.s.v..i.s.v.v.s..i.v.d.v..s.v..",
+    "weightBonus": 800,
+    "jobgen": true,
+    "inherits": "templar",
+    "hpMpMul": 1.25
+  },
+  {
+    "id": "wildlord",
+    "name": "Wildlord",
+    "tier": 3,
+    "role": "Trapper / Falconer",
+    "parent": "high_ranger",
+    "description": "Reborn beastmasters who command the wild itself.",
+    "maxJobLevel": 70,
+    "hpPerLevel": 17,
+    "mpPerLevel": 7,
+    "baseAttackIntervalMs": 920,
+    "weaponTypes": [
+      "dagger",
+      "bow",
+      "crossbow"
+    ],
+    "skills": [
+      "wolf_pack",
+      "true_sight"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "high_ranger",
+      "rebornFrom": "beastmaster"
+    },
+    "outfit": {
+      "primary": "#4f6a2f",
+      "secondary": "#7a5a2e",
+      "accent": "#e0c070",
+      "style": "hood",
+      "costume": "wildlord"
+    },
+    "jobBonus": ".d.a..l.d.s.d..a.d.l.a.d..d.a.l.d..s.d.a.d..l.a.d.d.a..l.d.s.d..a.d..",
+    "weightBonus": 700,
+    "jobgen": true,
+    "inherits": "beastmaster",
+    "hpMpMul": 1.25
+  },
+  {
+    "id": "maestro",
+    "name": "Maestro",
+    "tier": 3,
+    "role": "Bard / Support",
+    "parent": "high_ranger",
+    "description": "Reborn minstrels whose music bends battles.",
+    "maxJobLevel": 70,
+    "hpPerLevel": 19,
+    "mpPerLevel": 9,
+    "baseAttackIntervalMs": 920,
+    "weaponTypes": [
+      "dagger",
+      "bow",
+      "instrument"
+    ],
+    "skills": [
+      "symphony",
+      "sonic_wave"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "high_ranger",
+      "rebornFrom": "minstrel"
+    },
+    "outfit": {
+      "primary": "#8a3a6a",
+      "secondary": "#e8c8a0",
+      "accent": "#ffd34d",
+      "style": "coat",
+      "costume": "maestro"
+    },
+    "jobBonus": ".d.i..a.v.d.i..d.v.a.i.d..d.i.v.a..d.i.d.v..a.i.d.d.i..a.v.d.i..d.a..",
+    "weightBonus": 650,
+    "jobgen": true,
+    "inherits": "minstrel",
+    "hpMpMul": 1.25
+  },
+  {
+    "id": "archsorcerer",
+    "name": "Archsorcerer",
+    "tier": 3,
+    "role": "Area caster",
+    "parent": "high_mage",
+    "description": "Reborn sorcerers who cast without pause.",
+    "maxJobLevel": 70,
+    "hpPerLevel": 12,
+    "mpPerLevel": 14,
+    "baseAttackIntervalMs": 1080,
+    "weaponTypes": [
+      "dagger",
+      "wand",
+      "staff"
+    ],
+    "skills": [
+      "mystic_amplify",
+      "napalm_vulcan"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "high_mage",
+      "rebornFrom": "sorcerer"
+    },
+    "outfit": {
+      "primary": "#3a2a7f",
+      "secondary": "#1e1a3a",
+      "accent": "#ff7a3a",
+      "style": "robe",
+      "costume": "archsorcerer"
+    },
+    "jobBonus": ".i.d..i.a.i.d..i.v.i.d.i..i.d.i.a..i.d.i.v..i.d.i.i.d..i.a.i.d..i.v..",
+    "weightBonus": 300,
+    "jobgen": true,
+    "inherits": "sorcerer",
+    "hpMpMul": 1.25
+  },
+  {
+    "id": "archsage",
+    "name": "Archsage",
+    "tier": 3,
+    "role": "Battle scholar",
+    "parent": "high_mage",
+    "description": "Reborn sages who rewrite the elements.",
+    "maxJobLevel": 70,
+    "hpPerLevel": 14,
+    "mpPerLevel": 12,
+    "baseAttackIntervalMs": 1000,
+    "weaponTypes": [
+      "dagger",
+      "wand",
+      "staff",
+      "book"
+    ],
+    "skills": [
+      "endow_holy",
+      "foresight"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "high_mage",
+      "rebornFrom": "sage"
+    },
+    "outfit": {
+      "primary": "#2a6a5a",
+      "secondary": "#e8dcc0",
+      "accent": "#7fd6ff",
+      "style": "robe",
+      "costume": "archsage"
+    },
+    "jobBonus": ".i.d..a.v.i.d..i.v.a.d.i..i.d.v.a..i.d.i.v..a.d.i.i.d..a.v.i.d..i.a..",
+    "weightBonus": 350,
+    "jobgen": true,
+    "inherits": "sage",
+    "hpMpMul": 1.25
+  },
+  {
+    "id": "archbishop",
+    "name": "Archbishop",
+    "tier": 3,
+    "role": "Healer / Exorcist",
+    "parent": "high_cleric",
+    "description": "Reborn bishops; their prayers are answered at once.",
+    "maxJobLevel": 70,
+    "hpPerLevel": 15,
+    "mpPerLevel": 12,
+    "baseAttackIntervalMs": 1000,
+    "weaponTypes": [
+      "club",
+      "staff",
+      "wand",
+      "book"
+    ],
+    "skills": [
+      "assumptio",
+      "meditatio"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "high_cleric",
+      "rebornFrom": "bishop"
+    },
+    "outfit": {
+      "primary": "#f4f0e0",
+      "secondary": "#7a5a2a",
+      "accent": "#ffd860",
+      "style": "robe",
+      "costume": "archbishop"
+    },
+    "jobBonus": ".i.v..d.i.l.i..v.i.d.v.i..i.v.d.i..l.i.v.i..d.v.i.i.v..d.i.l.i..v.i..",
+    "weightBonus": 500,
+    "jobgen": true,
+    "inherits": "bishop",
+    "hpMpMul": 1.25
+  },
+  {
+    "id": "grandmaster",
+    "name": "Grandmaster",
+    "tier": 3,
+    "role": "Martial monk",
+    "parent": "high_cleric",
+    "description": "Reborn ascetics whose fists split mountains.",
+    "maxJobLevel": 70,
+    "hpPerLevel": 20,
+    "mpPerLevel": 8,
+    "baseAttackIntervalMs": 860,
+    "weaponTypes": [
+      "club",
+      "knuckle"
+    ],
+    "skills": [
+      "tiger_cannon",
+      "root_of_mountain"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "high_cleric",
+      "rebornFrom": "ascetic"
+    },
+    "outfit": {
+      "primary": "#c86a2a",
+      "secondary": "#5a3a1e",
+      "accent": "#ffd860",
+      "style": "tunic",
+      "costume": "grandmaster"
+    },
+    "jobBonus": ".s.a..v.d.s.a..s.d.v.a.s..s.a.d.v..s.a.s.d..v.a.s.s.a..v.d.s.a..s.v..",
+    "weightBonus": 600,
+    "jobgen": true,
+    "inherits": "ascetic",
+    "hpMpMul": 1.25
+  },
+  {
+    "id": "shadow_reaper",
+    "name": "Shadow Reaper",
+    "tier": 3,
+    "role": "Assassin",
+    "parent": "high_rogue",
+    "description": "Reborn shadowblades; death walks behind them.",
+    "maxJobLevel": 70,
+    "hpPerLevel": 18,
+    "mpPerLevel": 6,
+    "baseAttackIntervalMs": 760,
+    "weaponTypes": [
+      "dagger",
+      "sword",
+      "katar"
+    ],
+    "skills": [
+      "meteor_assault",
+      "enchant_deadly_poison"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "high_rogue",
+      "rebornFrom": "shadowblade"
+    },
+    "outfit": {
+      "primary": "#2a2a3a",
+      "secondary": "#7a1a2a",
+      "accent": "#c0c0d8",
+      "style": "coat",
+      "costume": "shadow_reaper"
+    },
+    "jobBonus": ".a.s..d.a.l.a..s.a.d.s.a..a.s.d.a..l.a.s.a..d.s.a.a.s..d.a.l.a..s.a..",
+    "weightBonus": 500,
+    "jobgen": true,
+    "inherits": "shadowblade",
+    "hpMpMul": 1.25
+  },
+  {
+    "id": "phantom_outlaw",
+    "name": "Phantom Outlaw",
+    "tier": 3,
+    "role": "Trickster / Archer",
+    "parent": "high_rogue",
+    "description": "Reborn outlaws; nobody saw them come or go.",
+    "maxJobLevel": 70,
+    "hpPerLevel": 19,
+    "mpPerLevel": 6,
+    "baseAttackIntervalMs": 820,
+    "weaponTypes": [
+      "dagger",
+      "sword",
+      "bow"
+    ],
+    "skills": [
+      "full_strip",
+      "shadow_bounce"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "high_rogue",
+      "rebornFrom": "outlaw"
+    },
+    "outfit": {
+      "primary": "#5a3a2a",
+      "secondary": "#2a4a3a",
+      "accent": "#ffd34d",
+      "style": "coat",
+      "costume": "phantom_outlaw"
+    },
+    "jobBonus": ".d.a..s.l.d.a..d.l.s.a.d..d.a.l.s..d.a.d.l..s.a.d.d.a..s.l.d.a..d.s..",
+    "weightBonus": 600,
+    "jobgen": true,
+    "inherits": "outlaw",
+    "hpMpMul": 1.25
+  },
+  {
+    "id": "mastersmith",
+    "name": "Mastersmith",
+    "tier": 3,
+    "role": "Blacksmith",
+    "parent": "high_merchant",
+    "description": "Reborn artisans; legendary weapons leave their forges.",
+    "maxJobLevel": 70,
+    "hpPerLevel": 22,
+    "mpPerLevel": 6,
+    "baseAttackIntervalMs": 950,
+    "weaponTypes": [
+      "dagger",
+      "club",
+      "sword",
+      "spear",
+      "axe"
+    ],
+    "skills": [
+      "maximum_power",
+      "cart_termination"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "high_merchant",
+      "rebornFrom": "artisan"
+    },
+    "outfit": {
+      "primary": "#6a4a2a",
+      "secondary": "#c8a26b",
+      "accent": "#ff8a3a",
+      "style": "apron",
+      "costume": "mastersmith"
+    },
+    "jobBonus": ".s.d..v.s.l.s..d.s.v.d.s..s.d.v.s..l.s.d.s..v.d.s.s.d..v.s.l.s..d.s..",
+    "weightBonus": 1000,
+    "jobgen": true,
+    "inherits": "artisan",
+    "hpMpMul": 1.25
+  },
+  {
+    "id": "grand_alchemist",
+    "name": "Grand Alchemist",
+    "tier": 3,
+    "role": "Potion maker / Homunculus",
+    "parent": "high_merchant",
+    "description": "Reborn alchemists who brew miracles.",
+    "maxJobLevel": 70,
+    "hpPerLevel": 19,
+    "mpPerLevel": 8,
+    "baseAttackIntervalMs": 980,
+    "weaponTypes": [
+      "dagger",
+      "club",
+      "sword",
+      "axe"
+    ],
+    "skills": [
+      "full_chemical_protection",
+      "elixir_rain"
+    ],
+    "requirements": {
+      "jobLevel": 40,
+      "fromClass": "high_merchant",
+      "rebornFrom": "alchemist"
+    },
+    "outfit": {
+      "primary": "#3a6a3a",
+      "secondary": "#e8e0c8",
+      "accent": "#7fff7a",
+      "style": "apron",
+      "costume": "grand_alchemist"
+    },
+    "jobBonus": ".d.i..v.l.d.i..d.l.v.i.d..d.i.l.v..d.i.d.l..v.i.d.d.i..v.l.d.i..d.v..",
+    "weightBonus": 900,
+    "jobgen": true,
+    "inherits": "alchemist",
+    "hpMpMul": 1.25
   }
- }
 ]

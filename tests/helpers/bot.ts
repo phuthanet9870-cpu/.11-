@@ -1,7 +1,7 @@
 // A scripted player used by integration tests. It only uses the same public
 // World commands that the real UI uses (moveTo, attack, castSkill, useItem...).
 import { TILE } from '../../src/core/mapCompiler';
-import type { MonsterActor, World, WorldEvent } from '../../src/core/world';
+import { distToSegment, type MonsterActor, type Telegraph, type World, type WorldEvent } from '../../src/core/world';
 import type { StatKey } from '../../src/core/types';
 import { data } from './fixtures';
 
@@ -50,7 +50,7 @@ export class Bot {
   travelTo(mapId: string) {
     let guard = 0;
     while (this.w.map.def.id !== mapId) {
-      if (++guard > 10) throw new Error(`cannot reach ${mapId}`);
+      if (++guard > 40) throw new Error(`cannot reach ${mapId}`);
       const hop = this.nextHop(this.w.map.def.id, mapId);
       const portal = this.w.map.def.portals.find((p) => p.targetMap === hop)!;
       const from = this.w.map.def.id;
@@ -143,6 +143,11 @@ export class Bot {
         }
       }
     }
+    // Healers also heal themselves with the skill, like a player would.
+    if (hpPct < 0.6 && !this.w.player.cast && this.w.canUseSkill('heal').ok) this.w.castSkill('heal');
+    if (this.c.mp < this.w.stats.maxMp * 0.25 && this.c.inventory.some((i) => i.itemId === 'blue_potion') && (this.w.player.itemCooldowns.blue_potion ?? 0) <= this.w.time) {
+      this.w.useItemById('blue_potion');
+    }
     if (this.w.player.statuses.some((s) => s.id === 'poison' || s.id === 'curse') && this.c.inventory.some((i) => i.itemId === 'green_potion')) {
       if ((this.w.player.itemCooldowns.green_potion ?? 0) <= this.w.time) this.w.useItemById('green_potion');
     }
@@ -153,7 +158,7 @@ export class Bot {
 
   useSkills(m: MonsterActor) {
     const p = this.w.player;
-    if (p.cast) return;
+    if (p.cast || m.dead || !this.w.monsters.has(m.id)) return;
     for (const b of this.selfBuffs) {
       if (!p.buffs.some((x) => x.name === data.skills.get(b)!.name) && this.w.canUseSkill(b).ok && this.c.mp > 30) { this.w.castSkill(b); return; }
     }
@@ -221,7 +226,7 @@ export class Bot {
   mapOfMonsters(ids: string[]): string {
     const here = this.w.map.def;
     if (here.monsterSpawns.some((s) => ids.includes(s.monsterId))) return here.id;
-    for (const m of data.maps.values()) if (m.monsterSpawns.some((s) => ids.includes(s.monsterId))) return m.id;
+    for (const m of data.maps.values()) if (m.type !== 'instance' && m.type !== 'arena' && m.monsterSpawns.some((s) => ids.includes(s.monsterId))) return m.id;
     throw new Error(`no map spawns ${ids}`);
   }
 
@@ -238,4 +243,60 @@ export class Bot {
     this.talkTo(npcId);
     return this.w.buy(shopId, itemId, qty);
   }
+}
+
+export function threatened(t: Telegraph, x: number, y: number): boolean {
+  if (t.shape === 'circle') return Math.hypot(x - t.x, y - t.y) <= t.radius + 24;
+  if (t.shape === 'ring') { const d = Math.hypot(x - t.x, y - t.y); return d <= t.radius + 20 && d >= (t.innerRadius ?? 0) - 20; }
+  return distToSegment(x, y, t.x, t.y, t.x2!, t.y2!) <= (t.width ?? 60) / 2 + 24;
+}
+
+export function escapePoint(t: Telegraph, x: number, y: number): { x: number; y: number } {
+  if (t.shape === 'ring') return { x: t.x + (x - t.x) * 0.15, y: t.y + (y - t.y) * 0.15 };
+  if (t.shape === 'line') {
+    const ang = Math.atan2(t.y2! - t.y, t.x2! - t.x) + Math.PI / 2;
+    return { x: x + Math.cos(ang) * 90, y: y + Math.sin(ang) * 90 };
+  }
+  const ang = Math.atan2(y - t.y, x - t.x) || 0.5;
+  return { x: t.x + Math.cos(ang) * (t.radius + 60), y: t.y + Math.sin(ang) * (t.radius + 60) };
+}
+
+/** Fights the map boss: dodges telegraphs, kills minions first, uses skills and potions. */
+export function fightBoss(bot: Bot, maxMs = 600_000, kite = 0): boolean {
+  const w = bot.w;
+  const boss = [...w.monsters.values()].find((m) => m.boss && !m.dead);
+  if (!boss) return false;
+  w.attack(boss.id);
+  // Kiting gives up for a while when the player is cornered (no real distance gained).
+  let kiteFrom: { x: number; y: number; at: number } | null = null, noKiteUntil = 0;
+  bot.runUntil(() => {
+    if (w.player.dead || boss.dead || !w.monsters.has(boss.id)) return true;
+    bot.potionCheck();
+    const danger = w.telegraphs.find((t) => t.endsAt > w.time && threatened(t, w.player.x, w.player.y));
+    if (danger) {
+      if (w.player.intent.type !== 'move') { const e = escapePoint(danger, w.player.x, w.player.y); w.moveTo(e.x, e.y); }
+      return false;
+    }
+    const minion = [...w.monsters.values()].find((m) => m.summoned && !m.dead);
+    const target = minion ?? boss;
+    // Ranged classes step back when the boss is in melee range.
+    if (kiteFrom && w.time - kiteFrom.at > 1500) {
+      if (Math.hypot(w.player.x - kiteFrom.x, w.player.y - kiteFrom.y) < 60) { noKiteUntil = w.time + 4000; w.attack(target.id); }
+      // After a step back, stand and cast for a moment (in an open hall the boss always catches up).
+      else noKiteUntil = w.time + 2500;
+      kiteFrom = null;
+    }
+    if (kite && w.time > noKiteUntil && !w.player.cast && Math.hypot(boss.x - w.player.x, boss.y - w.player.y) < kite && w.player.intent.type !== 'move') {
+      const ang = Math.atan2(w.player.y - boss.y, w.player.x - boss.x);
+      kiteFrom ??= { x: w.player.x, y: w.player.y, at: w.time };
+      w.moveTo(w.player.x + Math.cos(ang) * 130, w.player.y + Math.sin(ang) * 130);
+      return false;
+    }
+    if (w.player.intent.type === 'move' && w.player.move) return false;
+    const it = w.player.intent;
+    if (!(it.type === 'attack' && it.targetId === target.id) && !w.player.cast) w.attack(target.id);
+    bot.useSkills(target);
+    return false;
+  }, maxMs);
+  return boss.dead;
 }
