@@ -13,8 +13,10 @@ interface MPose {
   rot: number;
   /** Slash arc in front (0..1), impact spark, dissolve into motes (0..1). */
   swoosh: number; spark: boolean; melt: number;
+  /** Cycle phase 0..1 (legs, tails, wings and wisps move with it); afterimage behind a lunge (0..1). */
+  ph: number; blur: number;
 }
-const P0: MPose = { sx: 1, sy: 1, dx: 0, dy: 0, legs: 0, open: 0, tint: null, alpha: 1, flat: 0, wing: 0, t: 0, rot: 0, swoosh: 0, spark: false, melt: 0 };
+const P0: MPose = { sx: 1, sy: 1, dx: 0, dy: 0, legs: 0, open: 0, tint: null, alpha: 1, flat: 0, wing: 0, t: 0, rot: 0, swoosh: 0, spark: false, melt: 0, ph: 0, blur: 0 };
 
 /**
  * Key poses per animation (frame counts in MON_ANIMS):
@@ -28,17 +30,17 @@ function pose(anim: MonAnim, f: number): MPose {
   switch (anim) {
     case 'idle': {
       const ph = (f / 6) * Math.PI * 2, br = (1 - Math.cos(ph)) / 2;
-      return { ...P0, sy: 1 - 0.06 * br, sx: 1 + 0.045 * br, rot: 0.025 * Math.sin(ph), wing: f % 2, t: f % 3 };
+      return { ...P0, sy: 1 - 0.06 * br, sx: 1 + 0.045 * br, rot: 0.025 * Math.sin(ph), wing: (1 - Math.cos(ph * 2)) / 2, t: f % 3, ph: f / 6, legs: 0.3 * Math.sin(ph) };
     }
     case 'walk': {
       const ph = (f / 8) * Math.PI * 2, hop = Math.abs(Math.sin(ph));
-      return { ...P0, dy: -Math.round(hop * 3), legs: Math.sin(ph) * 1.6, sy: 0.92 + 0.12 * hop, sx: 1.06 - 0.08 * hop, rot: -0.07 + 0.03 * Math.cos(ph * 2), wing: f % 2, t: f % 3 };
+      return { ...P0, dy: -Math.round(hop * 3), legs: Math.sin(ph) * 1.8, sy: 0.92 + 0.12 * hop, sx: 1.06 - 0.08 * hop, rot: -0.07 + 0.03 * Math.cos(ph * 2), wing: (1 - Math.cos(ph * 2)) / 2, t: f % 3, ph: f / 8 };
     }
     case 'attack': return [
       { ...P0, dx: 2, rot: 0.08, sy: 0.9, sx: 1.07, open: 0.2 },
-      { ...P0, dx: 3, rot: 0.13, sy: 0.84, sx: 1.1, open: 0.45, t: 1 },
-      { ...P0, dx: -4, rot: -0.1, sy: 1.05, sx: 1.1, open: 1, swoosh: 0.45, t: 1 },
-      { ...P0, dx: -6, rot: -0.14, sy: 0.97, sx: 1.12, open: 1, swoosh: 1, spark: true, t: 2 },
+      { ...P0, dx: 3, rot: 0.13, sy: 0.84, sx: 1.1, open: 0.45, t: 1, wing: 1, ph: 0.25 },
+      { ...P0, dx: -4, rot: -0.1, sy: 1.05, sx: 1.1, open: 1, swoosh: 0.45, t: 1, wing: 0, blur: 1, ph: 0.5 },
+      { ...P0, dx: -6, rot: -0.14, sy: 0.97, sx: 1.12, open: 1, swoosh: 1, spark: true, t: 2, wing: 0.2, blur: 0.5, ph: 0.6 },
       { ...P0, dx: -5, rot: -0.08, open: 0.7, swoosh: 0.4, t: 2 },
       { ...P0, dx: -2, rot: -0.02, sy: 1.03, open: 0.3, t: 1 },
       { ...P0, dx: -1, rot: 0.01, sy: 0.98 },
@@ -159,7 +161,9 @@ const painters: Record<string, Painter> = {
 
   // Slime: an inky jelly with a glowing nucleus, bubbles and a bright rim at the base.
   slime(ctx, w, h, P, p) {
-    const cx = w / 2 + p.dx, base = h - 4, rx = 15 * p.sx, ry = 12 * p.sy, cy = base - ry;
+    // Jelly wobble: width and height trade places twice per cycle.
+    const wob = Math.sin(p.ph * Math.PI * 4) * 0.05;
+    const cx = w / 2 + p.dx, base = h - 4, rx = 15 * p.sx * (1 + wob), ry = 12 * p.sy * (1 - wob), cy = base - ry;
     ellipse(ctx, cx, cy, rx, ry, P.k1);
     ellipse(ctx, cx - 2, cy - 2, rx * 0.78, ry * 0.7, P.k2);
     alpha(ctx, 0.45, () => ellipse(ctx, cx + 3, cy + 3, rx * 0.45, ry * 0.4, P.g));
@@ -244,7 +248,7 @@ const painters: Record<string, Painter> = {
   // Spore: a floating puffball with glowing pores and drifting light spores.
   spore(ctx, w, h, P, p) {
     const cx = w / 2 + p.dx, base = h - 6 + p.dy;
-    for (let i = 0; i < 6; i++) { const sx = cx - 14 + i * 6, sy = base - 34 - ((i * 7 + p.wing * 5) % 9); px(ctx, sx, sy, 2, 2, P.g); px(ctx, sx, sy, 1, 1, P.gl); }
+    for (let i = 0; i < 6; i++) { const sx = cx - 14 + i * 6 + Math.sin((p.ph + i / 6) * Math.PI * 2) * 1.5, sy = base - 34 - ((i * 7 + p.ph * 9) % 9); px(ctx, sx, sy, 2, 2, P.g); px(ctx, sx, sy, 1, 1, P.gl); }
     ellipse(ctx, cx, base - 16, 14 * p.sx, 14 * p.sy, P.k1);
     ellipse(ctx, cx - 3, base - 19, 9 * p.sx, 8 * p.sy, P.k2);
     for (const [x, y] of [[-8, -24], [6, -26], [9, -12], [-10, -10], [1, -6], [10, -20]]) orb(ctx, cx + x, base + y, 1, P.g, P.gl);
@@ -257,12 +261,17 @@ const painters: Record<string, Painter> = {
   // Wolf: a lean shadow hound with glowing spines down its back and a burning eye.
   wolf(ctx, w, h, P, p) {
     const cx = w / 2 + p.dx, base = h - 4;
-    for (const [x, s] of [[-14, 1], [-6, -1], [6, 1], [13, -1]] as const) px(ctx, cx + x + p.legs * 2 * s, base - 9, 4, 9, P.k0);
+    // Four legs in a trot: diagonal pairs move together; a leg swinging forward is lifted.
+    for (const [x, o] of [[-14, 0], [-6, 0.5], [6, 0.5], [13, 0]] as const) {
+      const a = Math.sin((p.ph + o) * Math.PI * 2) * Math.min(1, Math.abs(p.legs)), lift = Math.max(0, Math.cos((p.ph + o) * Math.PI * 2)) * 2 * Math.min(1, Math.abs(p.legs));
+      px(ctx, cx + x - a * 2.5, base - 9, 4, 9 - lift, P.k0); px(ctx, cx + x - a * 2.5 - 1, base - 2 - lift, 5, 2, P.k0);
+    }
     ellipse(ctx, cx + 2, base - 15, 16 * p.sx, 8 * p.sy, P.k1);
     ellipse(ctx, cx, base - 17, 12 * p.sx, 4 * p.sy, P.k2);
     for (let i = -10; i <= 12; i += 5) { poly(ctx, [[cx + i - 1, base - 21], [cx + i + 1, base - 27 - (i % 2 ? 1 : 0)], [cx + i + 3, base - 21]], P.k1); mark(ctx, cx + i + 1, base - 25, 1, 3, P.g); }
-    poly(ctx, [[cx + 15, base - 18], [cx + 26, base - 25 + p.wing], [cx + 24, base - 21], [cx + 16, base - 14]], P.k1);
-    mark(ctx, cx + 22, base - 23 + p.wing, 2, 1, P.g);
+    const tail = Math.sin(p.ph * Math.PI * 2) * 2.5;
+    poly(ctx, [[cx + 15, base - 18], [cx + 26, base - 25 + tail], [cx + 24, base - 21 + tail * 0.5], [cx + 16, base - 14]], P.k1);
+    mark(ctx, cx + 22, base - 23 + tail, 2, 1, P.g);
     ellipse(ctx, cx - 16, base - 19, 8, 7, P.k1); ellipse(ctx, cx - 17, base - 20, 5, 4, P.k2);
     px(ctx, cx - 27, base - 18, 9, 5, P.k1); px(ctx, cx - 28, base - 19, 2, 2, P.k3);
     poly(ctx, [[cx - 19, base - 24], [cx - 18, base - 32], [cx - 15, base - 25]], P.k1);
@@ -292,7 +301,7 @@ const painters: Record<string, Painter> = {
 
   // Bat: wide shadow wings with glowing veins, ember eyes and pale fangs.
   bat(ctx, w, h, P, p) {
-    const cx = w / 2 + p.dx, cy = h / 2 - 4 + p.dy - p.wing * 2, flap = p.wing ? -5 : 3;
+    const cx = w / 2 + p.dx, cy = h / 2 - 4 + p.dy - p.wing * 2, flap = 3 - 9 * p.wing;
     for (const dir of [-1, 1]) {
       poly(ctx, [[cx + dir * 4, cy], [cx + dir * 20, cy + flap - 7], [cx + dir * 17, cy + flap + 2], [cx + dir * 12, cy + flap], [cx + dir * 8, cy + 5]], P.k1);
       alpha(ctx, 0.7, () => { seg(ctx, cx + dir * 5, cy + 1, cx + dir * 19, cy + flap - 6, 1, P.g); seg(ctx, cx + dir * 7, cy + 3, cx + dir * 12, cy + flap, 1, P.g); });
@@ -306,7 +315,7 @@ const painters: Record<string, Painter> = {
   // Crab: an armoured shell with glowing seams, glowing claw tips and eyes on stalks.
   crab(ctx, w, h, P, p) {
     const cx = w / 2 + p.dx, base = h - 4, pinch = p.open * 4;
-    for (let i = -1; i <= 1; i++) { px(ctx, cx - 16 + i * 3 + p.legs, base - 6, 2, 6, P.k0); px(ctx, cx + 14 - i * 3 - p.legs, base - 6, 2, 6, P.k0); }
+    for (let i = -1; i <= 1; i++) { const a = Math.sin((p.ph + i / 3) * Math.PI * 2) * 1.5; px(ctx, cx - 16 + i * 3 + a, base - 6, 2, 6 - Math.max(0, a), P.k0); px(ctx, cx + 14 - i * 3 - a, base - 6, 2, 6 - Math.max(0, -a), P.k0); }
     ellipse(ctx, cx, base - 9, 14 * p.sx, 8 * p.sy, P.k1);
     ellipse(ctx, cx - 2, base - 11, 10 * p.sx, 5 * p.sy, P.k2);
     alpha(ctx, 0.9, () => { seg(ctx, cx - 9, base - 7, cx + 9, base - 7, 1, P.g); px(ctx, cx - 1, base - 14, 1, 6, P.g); });
@@ -348,14 +357,14 @@ const painters: Record<string, Painter> = {
     const body = () => {
       ellipse(ctx, cx, base - 20, 12 * p.sx, 14 * p.sy, P.k2);
       px(ctx, cx - 12, base - 20, 24, 12, P.k2);
-      for (let i = 0; i < 4; i++) ellipse(ctx, cx - 9 + i * 6, base - 8 + ((i + p.wing) % 2) * 2, 3, 3, P.k2);
+      for (let i = 0; i < 4; i++) ellipse(ctx, cx - 9 + i * 6, base - 7 + Math.sin((p.ph + i / 4) * Math.PI * 2) * 1.5, 3, 3, P.k2);
     };
     alpha(ctx, 0.35, () => { ctx.save(); ctx.translate(0, -1); body(); ctx.restore(); });
     // glowing outline: draw the body in the glow colour one pixel bigger, then the dark body inside
     alpha(ctx, 0.7, () => {
       ellipse(ctx, cx, base - 20, 12 * p.sx + 1, 14 * p.sy + 1, P.g);
       px(ctx, cx - 13, base - 20, 26, 12, P.g);
-      for (let i = 0; i < 4; i++) ellipse(ctx, cx - 9 + i * 6, base - 8 + ((i + p.wing) % 2) * 2, 4, 4, P.g);
+      for (let i = 0; i < 4; i++) ellipse(ctx, cx - 9 + i * 6, base - 7 + Math.sin((p.ph + i / 4) * Math.PI * 2) * 1.5, 4, 4, P.g);
     });
     alpha(ctx, 0.92, body);
     alpha(ctx, 0.8, () => ellipse(ctx, cx - 3, base - 25, 6, 5, P.k3));
@@ -368,14 +377,14 @@ const painters: Record<string, Painter> = {
 
   // Scorpion: segmented black armour, glowing joints and a burning stinger.
   scorpion(ctx, w, h, P, p) {
-    const cx = w / 2 + p.dx, base = h - 4, sting = p.open * 5;
-    for (let i = 0; i < 4; i++) { seg(ctx, cx - 9 + i * 5, base - 6, cx - 11 + i * 5 + p.legs, base, 1, P.k0); }
+    const cx = w / 2 + p.dx, base = h - 4, sting = p.open * 5, sway = Math.sin(p.ph * Math.PI * 2) * 1.5;
+    for (let i = 0; i < 4; i++) { seg(ctx, cx - 9 + i * 5, base - 6, cx - 11 + i * 5 + Math.sin((p.ph + i * 0.25) * Math.PI * 2) * 2 * Math.min(1, Math.abs(p.legs) + 0.2), base, 1, P.k0); }
     ellipse(ctx, cx, base - 8, 13 * p.sx, 6 * p.sy, P.k1); ellipse(ctx, cx - 1, base - 9, 9 * p.sx, 3 * p.sy, P.k2);
     for (let i = -8; i <= 8; i += 4) mark(ctx, cx + i, base - 12, 1, 1, P.g);
-    for (let i = 0; i < 4; i++) { ellipse(ctx, cx + 12 + i * 3, base - 12 - i * 5, 4, 3, i % 2 ? P.k1 : P.k2); mark(ctx, cx + 12 + i * 3, base - 14 - i * 5, 1, 1, P.g); }
-    ellipse(ctx, cx + 20 - sting, base - 33 + sting, 4, 4, P.k1);
-    poly(ctx, [[cx + 17 - sting, base - 34 + sting], [cx + 11 - sting, base - 30 + sting], [cx + 17 - sting, base - 30 + sting]], P.k0);
-    orb(ctx, cx + 20 - sting, base - 33 + sting, 2, P.g2, P.gl);
+    for (let i = 0; i < 4; i++) { const sw = sway * (i / 3); ellipse(ctx, cx + 12 + i * 3 + sw, base - 12 - i * 5, 4, 3, i % 2 ? P.k1 : P.k2); mark(ctx, cx + 12 + i * 3 + sw, base - 14 - i * 5, 1, 1, P.g); }
+    ellipse(ctx, cx + 20 - sting + sway, base - 33 + sting, 4, 4, P.k1);
+    poly(ctx, [[cx + 17 - sting + sway, base - 34 + sting], [cx + 11 - sting + sway, base - 30 + sting], [cx + 17 - sting + sway, base - 30 + sting]], P.k0);
+    orb(ctx, cx + 20 - sting + sway, base - 33 + sting, 2, P.g2, P.gl);
     for (const y of [-12, -9]) { ellipse(ctx, cx - 17, base + y + 2, 5, 3, P.k1); }
     ellipse(ctx, cx - 22, base - 12, 4, 3, P.k2); px(ctx, cx - 27, base - 15, 3, 2, P.k1); px(ctx, cx - 27, base - 11, 3, 2, P.k1);
     mark(ctx, cx - 27, base - 15, 1, 1, P.g2);
@@ -431,6 +440,115 @@ const painters: Record<string, Painter> = {
     for (const [x, y] of [[-8, -6], [8, -2], [0, -12], [-6, 6], [7, 8], [1, 1]]) mark(ctx, ax + 3 + x, ay + y, 2, 2, P.g, P.gl);
   },
 };
+
+
+// ------------------------------------------------------------------ texture and volume
+type Material = 'gel' | 'fur' | 'fungus' | 'chitin' | 'skin' | 'spore' | 'bone' | 'membrane' | 'stone' | 'mist' | 'scales' | 'bark' | 'straw';
+const MATERIAL: Record<string, Material> = {
+  slime: 'gel', rabbit: 'fur', mushroom: 'fungus', wasp: 'chitin', goblin: 'skin', spore: 'spore', wolf: 'fur', skeleton: 'bone',
+  bat: 'membrane', crab: 'chitin', golem: 'stone', ghost: 'mist', scorpion: 'chitin', drake: 'scales', goblin_king: 'bark', dummy: 'straw',
+};
+/** How shiny each material is (specular strength) and how much light passes into it (gel, mist). */
+const GLOSS: Record<Material, number> = { gel: 1, fur: 0.05, fungus: 0.15, chitin: 0.7, skin: 0.25, spore: 0.2, bone: 0.35, membrane: 0.3, stone: 0.1, mist: 0.2, scales: 0.8, bark: 0.1, straw: 0.05 };
+
+const hash2 = (x: number, y: number) => ((Math.imul(x | 0, 374761393) + Math.imul(y | 0, 668265263)) ^ 0x5bd1e995) >>> 0;
+const rnd = (x: number, y: number) => {
+  let h = hash2(x, y); h = Math.imul(h ^ (h >>> 13), 1274126177); return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
+};
+/** Smooth value noise in 0..1. */
+function vnoise(x: number, y: number): number {
+  const x0 = Math.floor(x), y0 = Math.floor(y), fx = x - x0, fy = y - y0;
+  const sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy);
+  const a = rnd(x0, y0), b = rnd(x0 + 1, y0), c = rnd(x0, y0 + 1), d = rnd(x0 + 1, y0 + 1);
+  return a + (b - a) * sx + (c - a) * sy + (a - b - c + d) * sx * sy;
+}
+/** Cells (scales, stones, pores): distance to the nearest cell centre f1 and to the second f2. */
+function cells(x: number, y: number, size: number): [number, number] {
+  const gx = Math.floor(x / size), gy = Math.floor(y / size);
+  let f1 = 9, f2 = 9;
+  for (let j = -1; j <= 1; j++) for (let i = -1; i <= 1; i++) {
+    const cx = (gx + i + 0.15 + rnd(gx + i, gy + j) * 0.7) * size, cy = (gy + j + 0.15 + rnd(gy + j, gx + i + 99) * 0.7) * size;
+    const d = Math.hypot(x - cx, y - cy) / size;
+    if (d < f1) { f2 = f1; f1 = d; } else if (d < f2) f2 = d;
+  }
+  return [f1, f2];
+}
+/** Surface relief of a material at a body point: -1 (groove, shadow) .. 1 (raised, lit). */
+function relief(m: Material, x: number, y: number, seed: number): number {
+  switch (m) {
+    case 'fur': { const n = rnd(Math.floor(x + y * 0.35), Math.floor(y / 3) + seed); return (n - 0.5) * 1.4 + (vnoise(x / 4, y / 4) - 0.5) * 0.6; }
+    case 'straw': return (rnd(Math.floor(x), Math.floor(y / 4) + seed) - 0.5) * 1.6;
+    case 'scales': { const [f1, f2] = cells(x + (Math.floor(y / 3) % 2) * 1.5, y * 1.3, 3.2); return f2 - f1 < 0.12 ? -1 : 0.7 - f1 * 1.2; }
+    case 'stone': { const [f1, f2] = cells(x, y, 5.5); return f2 - f1 < 0.09 ? -1.2 : (vnoise(x / 2, y / 2) - 0.5) * 0.9 + (rnd(x | 0, y | 0) - 0.5) * 0.4; }
+    case 'chitin': return Math.sin(y * 1.15 + vnoise(x / 6, y / 6) * 2) * 0.55 + (vnoise(x / 3, y / 3) - 0.5) * 0.3;
+    case 'bone': return Math.sin(y * 0.9 + x * 0.15) * 0.25 + (vnoise(x / 2, y / 5) - 0.5) * 0.7 - (rnd(x | 0, y | 0) > 0.94 ? 0.8 : 0);
+    case 'spore': { const [f1] = cells(x, y, 3.5); return f1 < 0.22 ? -1 : (vnoise(x / 3, y / 3) - 0.5) * 0.6; }
+    case 'fungus': return (vnoise(x / 2.5, y / 2.5) - 0.5) * 0.9 + (rnd(x | 0, y | 0) - 0.5) * 0.3;
+    case 'membrane': return (vnoise(x / 5, y / 2) - 0.5) * 0.8 + (Math.abs(vnoise(x / 3, y / 3) - 0.5) < 0.04 ? -0.9 : 0);
+    case 'bark': return (vnoise(x / 1.5, y / 6) - 0.5) * 1.5 + (rnd(Math.floor(x / 2), Math.floor(y / 7)) - 0.5) * 0.4;
+    case 'mist': return (vnoise(x / 3, y / 8 - seed * 0.3) - 0.5) * 1.1;
+    case 'gel': return (vnoise(x / 6, y / 6) - 0.5) * 0.3;
+    case 'skin': return (vnoise(x / 2, y / 2) - 0.5) * 0.6 + (rnd(x | 0, y | 0) > 0.95 ? 0.6 : 0);
+  }
+}
+
+/**
+ * Gives the flat silhouette volume and a surface: a height map from the distance to the edge
+ * (bodies bulge in the middle), lit from the upper left with soft shadow underneath, the material's
+ * relief and sheen, and light coloured by the monster. Bright glowing parts (eyes, marks) stay as they are.
+ */
+function sculpt(ctx: Ctx, w: number, h: number, def: MonsterDef, P: Pal, p: MPose) {
+  const m = MATERIAL[def.art.shape] ?? 'skin', gloss = GLOSS[m];
+  const img = ctx.getImageData(0, 0, w, h), d = img.data, n = w * h;
+  // Distance to the silhouette edge (chamfer 3-4).
+  const dist = new Float32Array(n);
+  for (let i = 0; i < n; i++) dist[i] = d[i * 4 + 3] > 100 ? 1e4 : 0;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const i = y * w + x; if (!dist[i]) continue;
+    let v = dist[i];
+    if (x > 0) v = Math.min(v, dist[i - 1] + 3); else v = Math.min(v, 3);
+    if (y > 0) { v = Math.min(v, dist[i - w] + 3); if (x > 0) v = Math.min(v, dist[i - w - 1] + 4); if (x < w - 1) v = Math.min(v, dist[i - w + 1] + 4); } else v = Math.min(v, 3);
+    dist[i] = v;
+  }
+  for (let y = h - 1; y >= 0; y--) for (let x = w - 1; x >= 0; x--) {
+    const i = y * w + x; if (!dist[i]) continue;
+    let v = dist[i];
+    if (x < w - 1) v = Math.min(v, dist[i + 1] + 3); else v = Math.min(v, 3);
+    if (y < h - 1) { v = Math.min(v, dist[i + w] + 3); if (x < w - 1) v = Math.min(v, dist[i + w + 1] + 4); if (x > 0) v = Math.min(v, dist[i + w - 1] + 4); } else v = Math.min(v, 3);
+    dist[i] = v;
+  }
+  const R = Math.max(3, Math.min(w, h) * 0.16) * 3;
+  const H = (x: number, y: number) => (x < 0 || y < 0 || x >= w || y >= h ? 0 : Math.sqrt(Math.min(1, dist[y * w + x] / R)));
+  const [tr, tg, tb] = toRgb(def.art.colors[0] ?? '#808080'), [gr, gg, gb] = toRgb(P.gl);
+  const L = [-0.55, -0.7, 0.45], Ll = Math.hypot(L[0], L[1], L[2]);
+  const seed = def.id.length * 7;
+  // Texture stays on the body as it moves.
+  const ox = Math.round(p.dx), oy = Math.round(p.dy);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const i = y * w + x, o = i * 4;
+    if (d[o + 3] < 100) continue;
+    const r = d[o], g = d[o + 1], b = d[o + 2];
+    if (Math.max(r, g, b) > 95) continue; // glowing parts, teeth, highlights
+    const bx = x - ox, by = y - oy;
+    const rel = relief(m, bx, by, seed);
+    // Normal from the height map plus the material's relief.
+    const nx = (H(x - 1, y) - H(x + 1, y)) * 2.2 + (relief(m, bx - 1, by, seed) - relief(m, bx + 1, by, seed)) * 0.18;
+    const ny = (H(x, y - 1) - H(x, y + 1)) * 2.2 + (relief(m, bx, by - 1, seed) - relief(m, bx, by + 1, seed)) * 0.18;
+    const nl = Math.hypot(nx, ny, 1);
+    const diff = Math.max(0, (nx * L[0] + ny * L[1] + L[2]) / (nl * Ll));
+    const spec = gloss * Math.pow(diff, 12) * (0.4 + 0.6 * H(x, y));
+    // Underside and deep folds darker (ambient occlusion).
+    const ao = 0.62 + 0.38 * Math.min(1, H(x, y) * 1.6) - Math.max(0, (y - h * 0.6) / h) * 0.35;
+    const k = Math.max(0.22, (0.4 + 1.15 * diff + rel * 0.34) * ao);
+    // Base keeps the dark shadow look; light picks up the monster's own colour.
+    const lit = (0.3 + rel * 0.08) * diff * ao;
+    let nr = r * k + tr * lit, ng = g * k + tg * lit, nb = b * k + tb * lit;
+    if (m === 'gel' || m === 'mist') { const sub = H(x, y) * 0.22; nr += gr * sub * 0.35; ng += gg * sub * 0.35; nb += gb * sub * 0.35; }
+    nr += gr * spec * 0.55 + 255 * spec * 0.25; ng += gg * spec * 0.55 + 255 * spec * 0.25; nb += gb * spec * 0.55 + 255 * spec * 0.25;
+    d[o] = Math.min(132, nr); d[o + 1] = Math.min(132, ng); d[o + 2] = Math.min(132, nb);
+  }
+  ctx.putImageData(img, 0, 0);
+}
 
 /** Neon rim light: dark body pixels on the upper and outer edges pick up the glow colour. */
 function rimLight(ctx: Ctx, w: number, h: number, glow: string) {
@@ -503,6 +621,7 @@ export function generateMonsterSheet(def: MonsterDef): HTMLCanvasElement {
       if (k !== 1) { c.translate(w / 2, h - 2); c.scale(k, k); c.translate(-w / (2 * k), -(h / k - 2 / k)); }
       paint(c, k !== 1 ? Math.round(w / k) : w, k !== 1 ? Math.round(h / k) : h, P, p);
       c.restore();
+      sculpt(c, w, h, def, P, p);
       rimLight(c, w, h, P.g);
       addOutline(c, 0, 0, w, h, '#05040a');
       if (p.tint) {
@@ -535,6 +654,13 @@ export function generateMonsterSheet(def: MonsterDef): HTMLCanvasElement {
         const sx = Math.max(3, w * 0.12), sy = h * 0.55;
         c.globalAlpha = 0.35; ellipse(c, sx, sy, 4, 4, P.g); c.globalAlpha = 1;
         px(c, sx - 4, sy, 9, 1, P.gl); px(c, sx, sy - 4, 1, 9, P.gl); px(c, sx - 1, sy - 1, 3, 3, '#ffffff');
+      }
+      // Afterimage behind a lunge: a faint copy of the body where it came from.
+      if (p.blur) {
+        const ghost = makeCanvas(w, h);
+        ghost.ctx.globalAlpha = 0.28 * p.blur; ghost.ctx.drawImage(tmp.canvas, 7, 0); ghost.ctx.globalAlpha = 0.14 * p.blur; ghost.ctx.drawImage(tmp.canvas, 13, 0);
+        ghost.ctx.globalCompositeOperation = 'source-atop'; ghost.ctx.fillStyle = P.g; ghost.ctx.globalAlpha = 0.35; ghost.ctx.fillRect(0, 0, w, h);
+        c.globalCompositeOperation = 'destination-over'; c.drawImage(ghost.canvas, 0, 0); c.globalCompositeOperation = 'source-over';
       }
       // Ground shadow last, underneath (it shrinks as the body melts away).
       c.globalCompositeOperation = 'destination-over';

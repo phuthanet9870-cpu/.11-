@@ -302,8 +302,8 @@ export class GameScene extends Phaser.Scene {
     };
     const [tintColor, tintAlpha] = TINT[map.def.tileset] ?? (map.def.type === 'dungeon' ? [0x000008, 0.3] : [0xffe0b0, 0.05]);
     this.track(this.add.rectangle(0, 0, W, H, tintColor, tintAlpha).setOrigin(0).setDepth(1e5 - 1));
-    // The whole world a touch darker (5%), so lights stand out; the glow layer below shines above it.
-    this.track(this.add.rectangle(0, 0, W, H, 0x05030a, 0.05).setOrigin(0).setDepth(1e5 - 1));
+    // The whole world darker (25%), so lights stand out; the glow layer (eyes, neon) shines above it.
+    this.track(this.add.rectangle(0, 0, W, H, 0x05030a, 0.25).setOrigin(0).setDepth(1e5 - 1));
     if (this.fxOn) this.addWeather(map.def.weather[0]);
 
     const cam = this.cameras.main;
