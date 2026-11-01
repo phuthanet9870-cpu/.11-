@@ -161,6 +161,7 @@ export function equipItem(data: GameData, c: CharacterState, uid: string, prefer
 
   let slot = slotForItem(def, c)!;
   if (def.slot === 'accessory' && preferSlot && preferSlot.startsWith('accessory')) slot = preferSlot;
+  if (def.slot === 'rune' && preferSlot && preferSlot.startsWith('rune')) slot = preferSlot;
   const toUnequip: EquipSlot[] = [];
   if (c.equipment[slot]) toUnequip.push(slot);
   if (slot === 'shield') {

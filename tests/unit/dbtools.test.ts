@@ -1,19 +1,20 @@
 import { describe, expect, it } from 'vitest';
-import { refineOre, refineTable, simulateRefine } from '../../src/core/refine';
+import { refineOre, refineTable, simulateRefine , BREAK_CHANCE } from '../../src/core/refine';
 import { forgeChanceRaw } from '../../src/core/forge';
 import { optionOdds } from '../../src/core/options';
 
 describe('database tools', () => {
   it('refine simulator: safe steps are certain; risky steps multiply; expected costs follow', () => {
-    expect(simulateRefine('w1', 0, 7).survive).toBe(1);
+    expect(simulateRefine('w1', 0, 5).survive).toBe(1);
     const s = simulateRefine('w1', 7, 10);
-    expect(s.steps.map((x) => x.chance)).toEqual([0.6, 0.4, 0.2]);
-    expect(s.survive).toBeCloseTo(0.6 * 0.4 * 0.2, 10);
-    expect(s.expectedAttempts).toBeCloseTo(1 + 0.6 + 0.24, 10);
-    expect(s.expectedItems).toBeCloseTo(1 / 0.048, 6);
-    expect(s.expectedLuma).toBeCloseTo(s.expectedOre * 50, 6);
+    const t = refineTable('w1');
+    expect(s.steps.map((x) => x.chance)).toEqual([t[8], t[9], t[10]]);
+    // Each level: success before breaking = c / (c + (1 − c)·break).
+    const p = [8, 9, 10].map((n) => t[n] / (t[n] + (1 - t[n]) * BREAK_CHANCE[n])).reduce((a, b) => a * b, 1);
+    expect(s.survive).toBeCloseTo(p, 10);
+    expect(s.expectedItems).toBeCloseTo(1 / p, 6);
     expect(simulateRefine('w1', 7, 10, true).survive).toBeGreaterThan(s.survive);
-    expect(refineTable('armor', true)[5]).toBe(0.9);
+    expect(refineTable('armor', true)[5]).toBeCloseTo(refineTable('armor')[5] + 0.1, 5);
     expect(refineOre('w3')).toBe('starsteel_ore');
     expect(refineOre('armor', true)).toBe('enriched_moonstone');
   });

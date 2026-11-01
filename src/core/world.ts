@@ -37,6 +37,7 @@ import type {
   NpcDef, SkillDef, SkillEffect, StatKey, StatModifiers, StatusId,
 } from './types';
 import { EQUIP_SLOTS } from './types';
+import { RUNE_BY_ID, RUNE_DROP, RUNE_KINDS, runeItemId } from './runestones';
 
 // ------------------------------------------------------------------ runtime types
 export type ArenaDifficulty = 'easy' | 'normal' | 'hard' | 'hardest';
@@ -1318,6 +1319,7 @@ export class World {
         const heal = Math.min(this.stats.maxHp - this.char.hp, Math.floor((res.damage * this.stats.hpDrainPct) / 100));
         if (heal > 0) { this.char.hp += heal; this.player.hp = this.char.hp; this.emit({ type: 'damage', targetId: 'player', amount: heal, crit: false, miss: false, kind: 'heal' }); }
       }
+      if (this.stats.mpDrainPct > 0) this.drainMp(res.damage, this.stats.mpDrainPct);
     };
     if (kind === 'melee') {
       this.emit({ type: 'sound', key: 'swing' });
@@ -1373,6 +1375,40 @@ export class World {
     this.message(`Training: ${t.total.toLocaleString()} damage in ${secs.toFixed(1)}s — ${Math.round(t.total / secs).toLocaleString()} DPS · ${t.hits} hits, ${t.crits} crits, best hit ${t.best.toLocaleString()}.`, 'quest');
     this.training = null;
     for (const m of this.monsters.values()) if (m.def.aiFlags?.includes('dummy')) m.hp = m.maxHp;
+  }
+
+  // ---------------------------------------------------------------- rune stones
+  /** MP back from damage dealt (rune stones). */
+  private drainMp(damage: number, pct: number) {
+    if (this.player.dead || pct <= 0) return;
+    const mp = Math.min(this.stats.maxMp - this.char.mp, Math.max(1, Math.floor((damage * pct) / 100)));
+    if (mp > 0) { this.char.mp += mp; this.emit({ type: 'damage', targetId: 'player', amount: mp, crit: false, miss: false, kind: 'mp' }); }
+  }
+
+  /** Skill hits: HP and MP back from rune stones (Bloodrite, Soul Siphon). */
+  private skillDrain(damage: number) {
+    const s = this.stats;
+    if (s.skillHpDrainPct > 0 && !this.player.dead) {
+      const heal = Math.min(s.maxHp - this.char.hp, Math.max(1, Math.floor((damage * s.skillHpDrainPct) / 100)));
+      if (heal > 0) { this.char.hp += heal; this.player.hp = this.char.hp; this.emit({ type: 'damage', targetId: 'player', amount: heal, crit: false, miss: false, kind: 'heal' }); }
+    }
+    if (s.skillMpDrainPct > 0) this.drainMp(damage, s.skillMpDrainPct);
+  }
+
+  /** A rune stone may drop from any monster; higher levels need stronger monsters and are rarer. */
+  private rollRuneDrop(m: MonsterActor) {
+    if (m.summoned || m.def.hidden) return;
+    for (let lv = RUNE_DROP.length; lv >= 1; lv--) {
+      const d = RUNE_DROP[lv - 1];
+      if (m.def.level < d.minMonsterLevel) continue;
+      if (!this.rng.chance(d.chance * this.bonus().drop * (this.gm.dropRate ?? 100) / 100)) continue;
+      const kind = this.rng.pick(RUNE_KINDS).id, id = runeItemId(kind, lv);
+      if (!this.data.items.has(id)) return;
+      const g = this.dropToGround(id, 1, m.x + this.rng.range(-12, 12), m.y + this.rng.range(-8, 8), true);
+      if (this.autoLoot) this.pickup(g.id, true);
+      this.message(`A Lv ${lv} ${RUNE_BY_ID.get(kind)!.name} rune stone dropped!`, 'loot');
+      return;
+    }
   }
 
   // ---------------------------------------------------------------- MVP sanctum
@@ -1729,6 +1765,7 @@ export class World {
         if (lv) this.message(`${hm.name} reached Lv ${hm.level}!`, 'quest');
       }
       this.rollDrops(m);
+      this.rollRuneDrop(m);
       for (const l of m.loot ?? []) { const g = this.dropToGround(l.itemId, l.qty, m.x + this.rng.range(-16, 16), m.y + this.rng.range(-10, 10), true); if (l.options) g.options = l.options; if (this.autoLoot) this.pickup(g.id, true); }
       m.loot = [];
       const updated = questEvents.kill(this.data, this.char, m.def.id);
@@ -2404,6 +2441,7 @@ export class World {
                 });
                 if (!res.hit) { this.emit({ type: 'damage', targetId: m.id, amount: 0, crit: false, miss: true, kind: e.kind }); this.aggroMonster(m, 1); return; }
                 this.damageMonster(m, res.damage, e.kind, element, res.crit, false);
+                this.skillDrain(res.damage);
               };
               if (h === 0) doHit(); else this.schedule(h * 160, doHit);
             }

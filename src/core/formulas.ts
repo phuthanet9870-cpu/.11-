@@ -1,3 +1,4 @@
+import { runeStoneMods } from './runestones';
 // Character progression & derived-stat formulas. Every coefficient lives in
 // src/config/balance.json so balance can be tuned without touching code.
 import type { GameData } from './data';
@@ -109,6 +110,7 @@ export function equipmentMods(data: GameData, c: CharacterState): StatModifiers 
     const def = data.items.get(inst.itemId);
     if (!def) continue;
     mergeMods(mods, def.mods);
+    if (def.runeStone) { mergeMods(mods, runeStoneMods(def.runeStone.kind, def.runeStone.level, inst.refine ?? 0)); continue; }
     mergeMods(mods, refineMods(def, inst.refine ?? 0));
     for (const cardId of inst.cards ?? []) mergeMods(mods, data.items.get(cardId)?.card?.mods);
     if (inst.starCrumbs) mergeMods(mods, { patk: [0, 5, 10, 40][inst.starCrumbs] });
@@ -237,6 +239,7 @@ export function computeDerivedStats(data: GameData, c: CharacterState, runtimeMo
     perfectDodge: B.perfectDodgeBase + luk / B.perfectDodgeLukDiv + (mods.perfectDodge ?? 0),
     onHitStatusPct: mods.onHitStatusPct ?? {},
     hpDrainPct: Math.min(20, mods.hpDrainPct ?? 0),
+    mpDrainPct: Math.min(20, mods.mpDrainPct ?? 0), skillHpDrainPct: Math.min(12, mods.skillHpDrainPct ?? 0), skillMpDrainPct: Math.min(15, mods.skillMpDrainPct ?? 0),
     weaponType: weapon?.weaponType ?? 'unarmed',
     totalStats: total,
   };
@@ -267,5 +270,6 @@ export function canRaiseStat(data: GameData, c: CharacterState, stat: StatKey): 
 export function slotForItem(def: ItemDef, c: CharacterState): EquipSlot | null {
   if (!def.slot) return null;
   if (def.slot === 'accessory') return c.equipment.accessory1 ? (c.equipment.accessory2 ? 'accessory1' : 'accessory2') : 'accessory1';
+  if (def.slot === 'rune') return c.equipment.rune1 ? (c.equipment.rune2 ? 'rune1' : 'rune2') : 'rune1';
   return def.slot;
 }

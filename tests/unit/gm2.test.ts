@@ -36,7 +36,7 @@ describe('GM full control', () => {
     const r = say(w, `@item ${eq.id} refine=15 element=fire cards=${card.id}`);
     expect(r.ok).toBe(true);
     const inst = w.char.inventory.find((i) => i.itemId === eq.id)!;
-    expect(inst.refine).toBe(15);
+    expect(inst.refine).toBe(10); // refines stop at +10
     expect(inst.element).toBe('fire');
     expect(inst.cards).toEqual([card.id]);
     expect(say(w, '@item not_an_item').ok).toBe(false);

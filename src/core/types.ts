@@ -44,6 +44,8 @@ export interface StatModifiers {
   onHitStatusPct?: Partial<Record<string, number>>;
   /** % of basic-attack damage returned as HP. */
   hpDrainPct?: number;
+  /** Rune stones: MP from basic-attack damage, HP / MP from skill damage (% of the damage). */
+  mpDrainPct?: number; skillHpDrainPct?: number; skillMpDrainPct?: number;
   /** % chance for a dagger basic attack to strike twice. */
   doubleAttackPct?: number;
   /** % off NPC shop prices / % more when selling to NPCs. */
@@ -144,9 +146,9 @@ export interface SkillDef {
 
 // ---------------------------------------------------------------- items
 export type EquipSlot =
-  | 'weapon' | 'armor' | 'headgear' | 'shield' | 'garment' | 'boots' | 'accessory1' | 'accessory2';
+  | 'weapon' | 'armor' | 'headgear' | 'shield' | 'garment' | 'boots' | 'accessory1' | 'accessory2' | 'rune1' | 'rune2';
 export const EQUIP_SLOTS: EquipSlot[] = [
-  'weapon', 'armor', 'headgear', 'shield', 'garment', 'boots', 'accessory1', 'accessory2',
+  'weapon', 'armor', 'headgear', 'shield', 'garment', 'boots', 'accessory1', 'accessory2', 'rune1', 'rune2',
 ];
 
 export type ItemRarity = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
@@ -180,7 +182,9 @@ export interface ItemDef {
   bound?: boolean;
   icon: { shape: string; color: string; accent?: string };
   // equipment
-  slot?: 'weapon' | 'armor' | 'headgear' | 'shield' | 'garment' | 'boots' | 'accessory';
+  slot?: 'weapon' | 'armor' | 'headgear' | 'shield' | 'garment' | 'boots' | 'accessory' | 'rune';
+  /** Rune stones: kind and level (1–5); refining a stone scales its effect. */
+  runeStone?: { kind: string; level: number };
   weaponType?: string;
   /** Weapon level 1–4 (Ragnarok-style): sets refine safety, ATK per refine and ore grade. */
   weaponLevel?: number;
@@ -679,6 +683,7 @@ export interface DerivedStats {
   perfectDodge: number;
   onHitStatusPct: Partial<Record<string, number>>;
   hpDrainPct: number;
+  mpDrainPct: number; skillHpDrainPct: number; skillMpDrainPct: number;
   /** Weapon type for the size table ('unarmed' without a weapon). */
   weaponType: string;
   totalStats: BaseStats;

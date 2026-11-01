@@ -53,7 +53,7 @@ describe('monster cards', () => {
     const knife = c.inventory.find((i) => i.itemId === 'training_knife')!;
     compoundCard(data, c, c.inventory.find((i) => i.itemId === card.id)!.uid, knife.uid);
     for (let i = 0; i < 7; i++) refineItem(data, c, knife.uid, 0);
-    const r = refineItem(data, c, knife.uid, 0.999);
+    const r = refineItem(data, c, knife.uid, 0.999, false, 0);
     expect(r.outcome).toBe('broken');
     expect(r.ok && r.message).toContain('card');
     expect(c.inventory.some((i) => i.cards?.length)).toBe(false);

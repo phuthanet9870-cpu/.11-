@@ -339,6 +339,26 @@ const PAINT: Record<string, Painter> = {
     for (let i = 0; i < 4; i++) { ln(c, 10 + i * 4, 22 - i * 4, 7 + i * 4, 16 - i * 4, R[3]); ln(c, 10 + i * 4, 22 - i * 4, 15 + i * 4, 21 - i * 4, R[1]); }
     if (v % 2) px(c, 20, 8, 2, 2, R[4]);
   },
+  // ---------------------------------------------------------------- rune stones
+  rune: ({ c, R, A, h, item }) => {
+    // A cut hexagonal stone with a glowing engraved rune; small gems along the bottom show its level.
+    const S = ramp('#4a4458');
+    P(c, [[16, 2], [28, 9], [28, 23], [16, 30], [4, 23], [4, 9]], S[2]);
+    P(c, [[16, 2], [28, 9], [16, 16]], S[3]); P(c, [[4, 9], [16, 2], [16, 16]], S[4]); P(c, [[4, 23], [4, 9], [16, 16]], S[3]);
+    P(c, [[16, 30], [28, 23], [16, 16]], S[1]); P(c, [[28, 23], [28, 9], [16, 16]], S[1]);
+    P(c, [[16, 6], [24, 11], [24, 21], [16, 26], [8, 21], [8, 11]], S[2]);
+    // Engraved rune: a stave with two branches, placed by the stone's kind.
+    // Same rune mark for every level of a kind (its glyph comes from the kind, not the item).
+    const k = hashId(item.runeStone?.kind ?? '') % 12; void h;
+    const glowLine = (x0: number, y0: number, x1: number, y1: number) => { ln(c, x0, y0, x1, y1, R[1], 3); ln(c, x0, y0, x1, y1, R[3]); };
+    glowLine(16, 9, 16, 23);
+    const b1 = 10 + (k % 4) * 2, b2 = 14 + (k % 3) * 3, d1 = k % 2 ? 1 : -1;
+    glowLine(16, b1, 16 + 5 * d1, b1 + 4); glowLine(16, b2, 16 - 5 * d1, b2 + (k % 2 ? -4 : 4));
+    if (k % 3 === 0) glowLine(12, 9, 20, 9);
+    px(c, 15, 15, 2, 2, R[4]);
+    const lv = item.runeStone?.level ?? 1;
+    for (let i = 0; i < lv; i++) { const x = 16 - (lv - 1) * 2.5 + i * 5; px(c, x - 1, 27, 2, 2, A[2]); px(c, x - 1, 27, 1, 1, '#ffffff'); }
+  },
   // ---------------------------------------------------------------- cards (portrait drawn by itemIconCanvas)
   card: ({ c, R, A }) => {
     P(c, [[5, 2], [27, 2], [27, 30], [5, 30]], A[1]); P(c, [[6, 3], [26, 3], [26, 29], [6, 29]], '#f2e8cf');

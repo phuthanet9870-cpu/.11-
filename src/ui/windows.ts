@@ -12,6 +12,7 @@ import { isTouchDevice } from './touch';
 import { getLang, LANGS, type Lang } from './i18n';
 import { ARENA_DIFFICULTY, type ArenaDifficulty } from '../core/world';
 import { mapThumbnail } from './mapThumb';
+import { RUNE_BY_ID, runeText } from '../core/runestones';
 import { itemIconUrl, monsterIconUrl, skillIconUrl } from '../game/art/icons';
 import { generateCharacterSheet, npcLook, portraitFromSheet, useShadowStyle } from '../game/art/characterSprite';
 import { lookForCharacter, SpritePreview } from './screens';
@@ -51,6 +52,7 @@ const MOD_LABEL: Record<string, string> = {
   str: 'STR', agi: 'AGI', vit: 'VIT', int: 'INT', dex: 'DEX', luk: 'LUK', maxHp: 'Max HP', maxMp: 'Max MP', maxHpPct: 'Max HP %', maxMpPct: 'Max MP %',
   patk: 'ATK', matk: 'MATK', patkPct: 'ATK %', matkPct: 'MATK %', pdef: 'DEF', mdef: 'MDEF', pdefPct: 'DEF %', hit: 'HIT', flee: 'FLEE', crit: 'CRIT',
   critDmg: 'Crit DMG %', aspdPct: 'Attack Speed %', moveSpeedPct: 'Move Speed %', castTimePct: 'Cast Time %', cdrPct: 'Cooldown -%', hpRegen: 'HP Regen', mpRegen: 'MP Regen',
+  mpDrainPct: 'MP from attack damage %', skillHpDrainPct: 'HP from skill damage %', skillMpDrainPct: 'MP from skill damage %', hpDrainPct: 'HP from attack damage %',
   weightLimit: 'Weight Limit', attackRange: 'Range', counterChance: 'Counter %', damageToMpPct: 'Damage → MP %', stealth: 'Stealth',
 };
 
@@ -214,6 +216,12 @@ export class WindowManager {
       : `${def.rarity} ${def.type}`;
     out.push(h('div', { class: 'tt' }, typeLine));
     for (const line of modsText(def.mods)) out.push(h('div', { class: 'good' }, line));
+    if (def.runeStone) {
+      const rf = inst?.refine ?? 0, k = RUNE_BY_ID.get(def.runeStone.kind);
+      out.push(h('div', { style: `color:${k?.color ?? '#fff'};font-weight:bold` }, `${k?.name ?? ''} rune · Level ${def.runeStone.level}${rf ? ` · +${rf}` : ''}`));
+      out.push(h('div', { class: 'good' }, runeText(def.runeStone.kind, def.runeStone.level, rf)));
+      if (rf < 10) out.push(h('div', { class: 'muted', style: 'font-size:10px' }, `At +${rf + 1}: ${runeText(def.runeStone.kind, def.runeStone.level, rf + 1)}`));
+    }
     if (def.card) {
       out.push(h('div', { class: 'tt' }, `Compounds into: ${def.card.equip}`));
       for (const line of modsText(def.card.mods)) out.push(h('div', { class: 'good' }, line));
@@ -471,7 +479,7 @@ export class WindowManager {
     const slotEl = (slot: EquipSlot) => {
       const inst = w.char.equipment[slot];
       const def = inst ? w.data.items.get(inst.itemId)! : null;
-      const el = h('div', { class: 'eslot', title: slot }, def ? h('img', { src: itemIconUrl(def) }) : null, h('span', { class: 'lbl' }, slot.replace('accessory', 'acc ')));
+      const el = h('div', { class: 'eslot', title: slot }, def ? h('img', { src: itemIconUrl(def) }) : null, h('span', { class: 'lbl' }, slot.replace('accessory', 'acc ').replace('rune', 'rune ')));
       if (def && inst) {
         el.draggable = true;
         el.addEventListener('dragstart', (e) => setDragData(e, { type: 'equip', id: slot }));
@@ -497,6 +505,7 @@ export class WindowManager {
         slotEl('armor'), slotEl('accessory2'),
         slotEl('weapon'), slotEl('shield'),
         slotEl('garment'), slotEl('boots')),
+      h('div', { class: 'rune-row' }, h('span', { class: 'gold small' }, 'Rune stones'), slotEl('rune1'), slotEl('rune2')),
       h('div', { class: 'muted', style: 'font-size:11px;margin-top:8px;text-align:center' }, 'Drag items here · Double-click a slot to unequip'),
       h('table', { class: 'stat-table', style: 'margin-top:6px' },
         h('tr', {}, h('td', {}, 'ATK'), h('td', { class: 'v' }, String(w.stats.patk)), h('td', {}, 'DEF'), h('td', { class: 'v' }, String(w.stats.pdef))),
@@ -738,9 +747,9 @@ export class WindowManager {
       const sim = simulateRefine(t.rk, t.from, t.to, t.enriched);
       const ore = [...new Set(sim.steps.map((s) => d.items.get(refineOre(t.rk, t.enriched && s.level <= 10, s.level))?.name ?? ''))].join(' / ');
       return h('div', { id: 'db-refine' },
-        h('div', { class: 'muted' }, 'Refine simulator. Up to +10 a failure above the safe limit destroys the item; from +11 to +20 a failure breaks it 20% of the time and otherwise drops it 3 levels. Totals assume you start again from the "from" level with another copy after a break. Enriched ore only applies up to +10.'),
+        h('div', { class: 'muted' }, 'Refine simulator (up to +10). Every level is harder than the last. +1…+5 never break; from +6 a failure rolls separately to break the item (15% at +6 up to 55% at +10), otherwise it stays. Totals assume you start again from the "from" level with another copy after a break. Enriched ore adds 10% to the chance.'),
         row('Equipment', select('dbt-rk', t.rk, [['w1', 'Weapon Lv 1'], ['w2', 'Weapon Lv 2'], ['w3', 'Weapon Lv 3'], ['w4', 'Weapon Lv 4'], ['armor', 'Armor']], (v) => { t.rk = v; }),
-          'from +', num('dbt-from', t.from, 0, 19, (n) => { t.from = n; t.to = Math.max(t.to, n + 1); }), 'to +', num('dbt-to', t.to, 1, 20, (n) => { t.to = Math.max(n, t.from + 1); }),
+          'from +', num('dbt-from', t.from, 0, 9, (n) => { t.from = n; t.to = Math.max(t.to, n + 1); }), 'to +', num('dbt-to', t.to, 1, 10, (n) => { t.to = Math.max(n, t.from + 1); }),
           h('label', {}, check('dbt-enriched', t.enriched, (v) => { t.enriched = v; }), ' enriched ore')),
         h('table', { style: 'margin-top:6px' }, th('Step', 'Chance', 'All in a row'),
           ...sim.steps.map((s, i) => td(`+${s.level - 1} → +${s.level}`, pct(s.chance), pct(sim.steps.slice(0, i + 1).reduce((a, x) => a * x.chance, 1))))),
@@ -749,7 +758,7 @@ export class WindowManager {
           td('Expected items used', Number.isFinite(sim.expectedItems) ? sim.expectedItems.toFixed(2) : '∞'),
           td(`Expected ${ore}`, Number.isFinite(sim.expectedOre) ? sim.expectedOre.toFixed(1) : '∞'),
           td('Expected Luma', Number.isFinite(sim.expectedLuma) ? Math.round(sim.expectedLuma).toLocaleString() : '∞'),
-          td('Fee per attempt', `${refineFee(t.rk).toLocaleString()} Luma (+11 and up: ${refineFee(t.rk, 11).toLocaleString()})`)));
+          td('Fee per attempt', `${refineFee(t.rk, t.from + 1).toLocaleString()} Luma at +${t.from + 1} (+${t.to}: ${refineFee(t.rk, t.to).toLocaleString()})`)));
     }
     if (st.tab === 'forge') {
       const p = forgeChanceRaw({ jobLevel: t.jl, dex: t.dex, luk: t.luk, weaponLevel: t.wl, stone: t.stone, crumbs: t.crumbs });
@@ -1499,6 +1508,7 @@ export class WindowManager {
   /** Item category of the GM browser. */
   private gmCategory(it: ItemDef): string {
     if (it.type === 'card') return 'card';
+    if (it.runeStone) return 'rune';
     if (it.petEgg || it.petFood || it.lure || it.petAccessory) return 'pet';
     if (it.type === 'equipment') return it.weaponType ? 'weapon' : it.slot === 'accessory' ? 'accessory' : 'armor';
     if (it.type === 'consumable') return 'consumable';
@@ -1548,7 +1558,7 @@ export class WindowManager {
 
   private renderGmItems(run: (r: { ok: boolean; message?: string; error?: string }) => void, tabs: HTMLElement) {
     const w = this.app.world!, d = w.data, st = this.gmItems, body = this.wins.get('admin')!.body;
-    const CATS: [string, string, string][] = [['all', '🎒', 'All'], ['weapon', '⚔', 'Weapons'], ['armor', '🛡', 'Armor'], ['accessory', '💍', 'Accessories'], ['consumable', '🧪', 'Consumables'], ['material', '🪨', 'Materials'], ['card', '🃏', 'Cards'], ['pet', '🐾', 'Pet items'], ['misc', '📦', 'Misc & quest']];
+    const CATS: [string, string, string][] = [['all', '🎒', 'All'], ['weapon', '⚔', 'Weapons'], ['armor', '🛡', 'Armor'], ['accessory', '💍', 'Accessories'], ['consumable', '🧪', 'Consumables'], ['material', '🪨', 'Materials'], ['card', '🃏', 'Cards'], ['rune', '🔷', 'Runes'], ['pet', '🐾', 'Pet items'], ['misc', '📦', 'Misc & quest']];
     const all = [...d.items.values()];
     const count = (cat: string) => cat === 'all' ? all.length : all.filter((x) => this.gmCategory(x) === cat).length;
     const q = st.q.toLowerCase();
@@ -1801,7 +1811,7 @@ export class WindowManager {
         .filter((i) => { const def = d.items.get(i.itemId)!; return def.type === 'equipment' && def.slot && def.slot !== 'accessory'; });
       const opts: [string, () => void][] = items.slice(0, 8).map((i) => [`${label(i)}${Object.values(c.equipment).includes(i) ? ' (equipped)' : ''}`, () => this.refineDialog(npc, i.uid)]);
       opts.push(['Never mind', () => this.openNpcDialog(npc.id)]);
-      this.showDialog(npc, [items.length ? 'Which piece shall I work on? Weapons need ore of their level (Glimmer Lv1, Bright Lv2, Starsteel Lv3–4); armor takes Moonstone Ore. Enriched ores work on any level and fail less often.' : 'You have nothing I can refine. Bring me a weapon or some armor.'], opts, null, 'Refine');
+      this.showDialog(npc, [items.length ? 'Which piece shall I work on? Everything goes up to +10, each level harder than the last. Weapons need ore of their level (Glimmer Lv1, Bright Lv2, Starsteel Lv3–4); armor takes Moonstone Ore; rune stones only Luma. Enriched ores add 10% to the chance. Up to +5 nothing ever breaks; from +6 a failure may also break the item.' : 'You have nothing I can refine. Bring me a weapon, armor or a rune stone.'], opts, null, 'Refine');
       return;
     }
     const info = refineInfo(d, c, picked, enriched);
@@ -1810,18 +1820,19 @@ export class WindowManager {
     const pct = Math.round(info.chance * 100);
     const lines = [
       `${label(inst)} → +${info.next}`,
-      `Success chance ${pct}%. Cost: 1 ${d.items.get(info.ore)?.name ?? info.ore} (you have ${countItem(c, info.ore)}) and ${info.fee.toLocaleString()} Luma.`,
-      info.next > 10 ? 'Over-upgrade (+11…+20): a failure breaks the item 20% of the time, otherwise it drops 3 levels (never below +10).'
-        : info.chance < 1 ? `Safe up to +${info.safe}. Past that, a failed attempt DESTROYS the item.` : `Safe refine (up to +${info.safe} never fails).`,
+      `Success chance ${pct}%. Cost: ${info.ore ? `1 ${d.items.get(info.ore)?.name ?? info.ore} (you have ${countItem(c, info.ore)}) and ` : ''}${info.fee.toLocaleString()} Luma.`,
+      info.breakChance > 0 ? `If it fails, there is a separate ${Math.round(info.breakChance * 100)}% chance the item BREAKS; otherwise it simply stays +${info.current}.`
+        : `Up to +${info.safe} a failure never breaks anything — the item just stays +${info.current}.`,
     ];
     const opts: [string, () => void][] = [];
     const go = () => {
       const r = w.refine(picked, enriched);
-      if (r.ok) this.app.hud?.banner(r.outcome === 'success' ? `Refine success: +${r.level}` : r.outcome === 'downgraded' ? `Refine failed: now +${r.level}` : 'Refine failed', r.message!);
+      if (r.ok) this.app.hud?.banner(r.outcome === 'success' ? `Refine success: +${r.level}` : r.outcome === 'failed' ? `Refine failed: still +${r.level}` : 'The item broke!', r.message!);
       if (r.ok && r.outcome !== 'broken' && (inst.refine ?? 0) < MAX_REFINE) this.refineDialog(npc, picked, enriched); else this.refineDialog(npc);
     };
-    if (info.ok) opts.push([`Refine (${pct}%)`, () => (info.chance < 1 ? this.confirmTyped(
-      'Risky refine', info.next > 10 ? `${label(inst)} fails ${100 - pct}% of the time: then 20% it breaks, otherwise it drops 3 levels. Type REFINE to continue.` : `${label(inst)} has a ${100 - pct}% chance to be destroyed. Type REFINE to continue.`, 'REFINE', 'Refine', go) : go())]);
+    const breakPct = Math.round((1 - info.chance) * info.breakChance * 100);
+    if (info.ok) opts.push([`Refine (${pct}%)`, () => (info.breakChance > 0 ? this.confirmTyped(
+      'Risky refine', `${label(inst)} fails ${100 - pct}% of the time; a failure breaks it ${Math.round(info.breakChance * 100)}% of the time (${breakPct}% overall). Type REFINE to continue.`, 'REFINE', 'Refine', go) : go())]);
     else lines.push(info.error ?? '');
     opts.push([enriched ? 'Use normal ore' : 'Use enriched ore (better odds)', () => this.refineDialog(npc, picked, !enriched)]);
     opts.push(['Choose another item', () => this.refineDialog(npc)]);

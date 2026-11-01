@@ -11992,5 +11992,1545 @@
    "accent": "#ffffff"
   },
   "generated": true
+ },
+ {
+  "id": "rune_siphon_1",
+  "name": "Siphon Rune Lv 1",
+  "type": "equipment",
+  "rarity": "common",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "siphon",
+   "level": 1
+  },
+  "description": "Basic attacks restore MP equal to 1% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 200,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#5aa8ff",
+   "accent": "#c8c8d8"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_siphon_2",
+  "name": "Siphon Rune Lv 2",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "siphon",
+   "level": 2
+  },
+  "description": "Basic attacks restore MP equal to 2% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 1000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#5aa8ff",
+   "accent": "#7fe08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_siphon_3",
+  "name": "Siphon Rune Lv 3",
+  "type": "equipment",
+  "rarity": "rare",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "siphon",
+   "level": 3
+  },
+  "description": "Basic attacks restore MP equal to 3% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 4000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#5aa8ff",
+   "accent": "#7fb0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_siphon_4",
+  "name": "Siphon Rune Lv 4",
+  "type": "equipment",
+  "rarity": "epic",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "siphon",
+   "level": 4
+  },
+  "description": "Basic attacks restore MP equal to 4.5% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 12000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#5aa8ff",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_siphon_5",
+  "name": "Siphon Rune Lv 5",
+  "type": "equipment",
+  "rarity": "legendary",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "siphon",
+   "level": 5
+  },
+  "description": "Basic attacks restore MP equal to 6% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 30000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#5aa8ff",
+   "accent": "#ffb84d"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_soulsiphon_1",
+  "name": "Soul Siphon Rune Lv 1",
+  "type": "equipment",
+  "rarity": "common",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "soulsiphon",
+   "level": 1
+  },
+  "description": "Skill hits restore MP equal to 1% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 200,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#8a7aff",
+   "accent": "#c8c8d8"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_soulsiphon_2",
+  "name": "Soul Siphon Rune Lv 2",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "soulsiphon",
+   "level": 2
+  },
+  "description": "Skill hits restore MP equal to 1.5% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 1000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#8a7aff",
+   "accent": "#7fe08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_soulsiphon_3",
+  "name": "Soul Siphon Rune Lv 3",
+  "type": "equipment",
+  "rarity": "rare",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "soulsiphon",
+   "level": 3
+  },
+  "description": "Skill hits restore MP equal to 2.5% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 4000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#8a7aff",
+   "accent": "#7fb0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_soulsiphon_4",
+  "name": "Soul Siphon Rune Lv 4",
+  "type": "equipment",
+  "rarity": "epic",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "soulsiphon",
+   "level": 4
+  },
+  "description": "Skill hits restore MP equal to 3.5% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 12000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#8a7aff",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_soulsiphon_5",
+  "name": "Soul Siphon Rune Lv 5",
+  "type": "equipment",
+  "rarity": "legendary",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "soulsiphon",
+   "level": 5
+  },
+  "description": "Skill hits restore MP equal to 5% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 30000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#8a7aff",
+   "accent": "#ffb84d"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_leech_1",
+  "name": "Leech Rune Lv 1",
+  "type": "equipment",
+  "rarity": "common",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "leech",
+   "level": 1
+  },
+  "description": "Basic attacks restore HP equal to 1% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 200,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff4a5a",
+   "accent": "#c8c8d8"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_leech_2",
+  "name": "Leech Rune Lv 2",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "leech",
+   "level": 2
+  },
+  "description": "Basic attacks restore HP equal to 2% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 1000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff4a5a",
+   "accent": "#7fe08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_leech_3",
+  "name": "Leech Rune Lv 3",
+  "type": "equipment",
+  "rarity": "rare",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "leech",
+   "level": 3
+  },
+  "description": "Basic attacks restore HP equal to 3% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 4000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff4a5a",
+   "accent": "#7fb0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_leech_4",
+  "name": "Leech Rune Lv 4",
+  "type": "equipment",
+  "rarity": "epic",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "leech",
+   "level": 4
+  },
+  "description": "Basic attacks restore HP equal to 4% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 12000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff4a5a",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_leech_5",
+  "name": "Leech Rune Lv 5",
+  "type": "equipment",
+  "rarity": "legendary",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "leech",
+   "level": 5
+  },
+  "description": "Basic attacks restore HP equal to 5% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 30000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff4a5a",
+   "accent": "#ffb84d"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_bloodrite_1",
+  "name": "Bloodrite Rune Lv 1",
+  "type": "equipment",
+  "rarity": "common",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "bloodrite",
+   "level": 1
+  },
+  "description": "Skill hits restore HP equal to 0.5% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 200,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#c81a3a",
+   "accent": "#c8c8d8"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_bloodrite_2",
+  "name": "Bloodrite Rune Lv 2",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "bloodrite",
+   "level": 2
+  },
+  "description": "Skill hits restore HP equal to 1% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 1000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#c81a3a",
+   "accent": "#7fe08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_bloodrite_3",
+  "name": "Bloodrite Rune Lv 3",
+  "type": "equipment",
+  "rarity": "rare",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "bloodrite",
+   "level": 3
+  },
+  "description": "Skill hits restore HP equal to 1.5% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 4000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#c81a3a",
+   "accent": "#7fb0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_bloodrite_4",
+  "name": "Bloodrite Rune Lv 4",
+  "type": "equipment",
+  "rarity": "epic",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "bloodrite",
+   "level": 4
+  },
+  "description": "Skill hits restore HP equal to 2.5% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 12000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#c81a3a",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_bloodrite_5",
+  "name": "Bloodrite Rune Lv 5",
+  "type": "equipment",
+  "rarity": "legendary",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "bloodrite",
+   "level": 5
+  },
+  "description": "Skill hits restore HP equal to 3.5% of the damage dealt. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 30000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#c81a3a",
+   "accent": "#ffb84d"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_fury_1",
+  "name": "Fury Rune Lv 1",
+  "type": "equipment",
+  "rarity": "common",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "fury",
+   "level": 1
+  },
+  "description": "+2 critical rate. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 200,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff8a2e",
+   "accent": "#c8c8d8"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_fury_2",
+  "name": "Fury Rune Lv 2",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "fury",
+   "level": 2
+  },
+  "description": "+4 critical rate. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 1000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff8a2e",
+   "accent": "#7fe08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_fury_3",
+  "name": "Fury Rune Lv 3",
+  "type": "equipment",
+  "rarity": "rare",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "fury",
+   "level": 3
+  },
+  "description": "+6 critical rate. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 4000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff8a2e",
+   "accent": "#7fb0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_fury_4",
+  "name": "Fury Rune Lv 4",
+  "type": "equipment",
+  "rarity": "epic",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "fury",
+   "level": 4
+  },
+  "description": "+9 critical rate. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 12000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff8a2e",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_fury_5",
+  "name": "Fury Rune Lv 5",
+  "type": "equipment",
+  "rarity": "legendary",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "fury",
+   "level": 5
+  },
+  "description": "+12 critical rate. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 30000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff8a2e",
+   "accent": "#ffb84d"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_haste_1",
+  "name": "Haste Rune Lv 1",
+  "type": "equipment",
+  "rarity": "common",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "haste",
+   "level": 1
+  },
+  "description": "+2% attack speed. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 200,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#b6f0d0",
+   "accent": "#c8c8d8"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_haste_2",
+  "name": "Haste Rune Lv 2",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "haste",
+   "level": 2
+  },
+  "description": "+4% attack speed. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 1000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#b6f0d0",
+   "accent": "#7fe08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_haste_3",
+  "name": "Haste Rune Lv 3",
+  "type": "equipment",
+  "rarity": "rare",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "haste",
+   "level": 3
+  },
+  "description": "+6% attack speed. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 4000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#b6f0d0",
+   "accent": "#7fb0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_haste_4",
+  "name": "Haste Rune Lv 4",
+  "type": "equipment",
+  "rarity": "epic",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "haste",
+   "level": 4
+  },
+  "description": "+8% attack speed. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 12000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#b6f0d0",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_haste_5",
+  "name": "Haste Rune Lv 5",
+  "type": "equipment",
+  "rarity": "legendary",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "haste",
+   "level": 5
+  },
+  "description": "+11% attack speed. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 30000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#b6f0d0",
+   "accent": "#ffb84d"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_wisdom_1",
+  "name": "Wisdom Rune Lv 1",
+  "type": "equipment",
+  "rarity": "common",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "wisdom",
+   "level": 1
+  },
+  "description": "2% shorter skill cooldowns. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 200,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#7fd6ff",
+   "accent": "#c8c8d8"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_wisdom_2",
+  "name": "Wisdom Rune Lv 2",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "wisdom",
+   "level": 2
+  },
+  "description": "3% shorter skill cooldowns. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 1000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#7fd6ff",
+   "accent": "#7fe08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_wisdom_3",
+  "name": "Wisdom Rune Lv 3",
+  "type": "equipment",
+  "rarity": "rare",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "wisdom",
+   "level": 3
+  },
+  "description": "5% shorter skill cooldowns. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 4000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#7fd6ff",
+   "accent": "#7fb0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_wisdom_4",
+  "name": "Wisdom Rune Lv 4",
+  "type": "equipment",
+  "rarity": "epic",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "wisdom",
+   "level": 4
+  },
+  "description": "7% shorter skill cooldowns. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 12000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#7fd6ff",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_wisdom_5",
+  "name": "Wisdom Rune Lv 5",
+  "type": "equipment",
+  "rarity": "legendary",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "wisdom",
+   "level": 5
+  },
+  "description": "9% shorter skill cooldowns. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 30000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#7fd6ff",
+   "accent": "#ffb84d"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_focus_1",
+  "name": "Focus Rune Lv 1",
+  "type": "equipment",
+  "rarity": "common",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "focus",
+   "level": 1
+  },
+  "description": "-3% cast time. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 200,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#c9a6ff",
+   "accent": "#c8c8d8"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_focus_2",
+  "name": "Focus Rune Lv 2",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "focus",
+   "level": 2
+  },
+  "description": "-5% cast time. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 1000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#c9a6ff",
+   "accent": "#7fe08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_focus_3",
+  "name": "Focus Rune Lv 3",
+  "type": "equipment",
+  "rarity": "rare",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "focus",
+   "level": 3
+  },
+  "description": "-8% cast time. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 4000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#c9a6ff",
+   "accent": "#7fb0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_focus_4",
+  "name": "Focus Rune Lv 4",
+  "type": "equipment",
+  "rarity": "epic",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "focus",
+   "level": 4
+  },
+  "description": "-11% cast time. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 12000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#c9a6ff",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_focus_5",
+  "name": "Focus Rune Lv 5",
+  "type": "equipment",
+  "rarity": "legendary",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "focus",
+   "level": 5
+  },
+  "description": "-15% cast time. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 30000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#c9a6ff",
+   "accent": "#ffb84d"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_titan_1",
+  "name": "Titan Rune Lv 1",
+  "type": "equipment",
+  "rarity": "common",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "titan",
+   "level": 1
+  },
+  "description": "+3% max HP. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 200,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#e2b23a",
+   "accent": "#c8c8d8"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_titan_2",
+  "name": "Titan Rune Lv 2",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "titan",
+   "level": 2
+  },
+  "description": "+5% max HP. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 1000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#e2b23a",
+   "accent": "#7fe08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_titan_3",
+  "name": "Titan Rune Lv 3",
+  "type": "equipment",
+  "rarity": "rare",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "titan",
+   "level": 3
+  },
+  "description": "+8% max HP. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 4000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#e2b23a",
+   "accent": "#7fb0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_titan_4",
+  "name": "Titan Rune Lv 4",
+  "type": "equipment",
+  "rarity": "epic",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "titan",
+   "level": 4
+  },
+  "description": "+11% max HP. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 12000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#e2b23a",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_titan_5",
+  "name": "Titan Rune Lv 5",
+  "type": "equipment",
+  "rarity": "legendary",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "titan",
+   "level": 5
+  },
+  "description": "+15% max HP. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 30000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#e2b23a",
+   "accent": "#ffb84d"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_mystic_1",
+  "name": "Mystic Rune Lv 1",
+  "type": "equipment",
+  "rarity": "common",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "mystic",
+   "level": 1
+  },
+  "description": "+3% max MP. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 200,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#4ad0ff",
+   "accent": "#c8c8d8"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_mystic_2",
+  "name": "Mystic Rune Lv 2",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "mystic",
+   "level": 2
+  },
+  "description": "+6% max MP. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 1000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#4ad0ff",
+   "accent": "#7fe08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_mystic_3",
+  "name": "Mystic Rune Lv 3",
+  "type": "equipment",
+  "rarity": "rare",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "mystic",
+   "level": 3
+  },
+  "description": "+9% max MP. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 4000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#4ad0ff",
+   "accent": "#7fb0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_mystic_4",
+  "name": "Mystic Rune Lv 4",
+  "type": "equipment",
+  "rarity": "epic",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "mystic",
+   "level": 4
+  },
+  "description": "+12% max MP. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 12000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#4ad0ff",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_mystic_5",
+  "name": "Mystic Rune Lv 5",
+  "type": "equipment",
+  "rarity": "legendary",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "mystic",
+   "level": 5
+  },
+  "description": "+16% max MP. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 30000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#4ad0ff",
+   "accent": "#ffb84d"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_might_1",
+  "name": "Might Rune Lv 1",
+  "type": "equipment",
+  "rarity": "common",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "might",
+   "level": 1
+  },
+  "description": "+2% ATK. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 200,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff5a3a",
+   "accent": "#c8c8d8"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_might_2",
+  "name": "Might Rune Lv 2",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "might",
+   "level": 2
+  },
+  "description": "+4% ATK. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 1000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff5a3a",
+   "accent": "#7fe08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_might_3",
+  "name": "Might Rune Lv 3",
+  "type": "equipment",
+  "rarity": "rare",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "might",
+   "level": 3
+  },
+  "description": "+6% ATK. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 4000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff5a3a",
+   "accent": "#7fb0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_might_4",
+  "name": "Might Rune Lv 4",
+  "type": "equipment",
+  "rarity": "epic",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "might",
+   "level": 4
+  },
+  "description": "+8% ATK. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 12000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff5a3a",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_might_5",
+  "name": "Might Rune Lv 5",
+  "type": "equipment",
+  "rarity": "legendary",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "might",
+   "level": 5
+  },
+  "description": "+11% ATK. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 30000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff5a3a",
+   "accent": "#ffb84d"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_sorcery_1",
+  "name": "Sorcery Rune Lv 1",
+  "type": "equipment",
+  "rarity": "common",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "sorcery",
+   "level": 1
+  },
+  "description": "+2% MATK. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 200,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff5aff",
+   "accent": "#c8c8d8"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_sorcery_2",
+  "name": "Sorcery Rune Lv 2",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "sorcery",
+   "level": 2
+  },
+  "description": "+4% MATK. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 1000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff5aff",
+   "accent": "#7fe08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_sorcery_3",
+  "name": "Sorcery Rune Lv 3",
+  "type": "equipment",
+  "rarity": "rare",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "sorcery",
+   "level": 3
+  },
+  "description": "+6% MATK. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 4000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff5aff",
+   "accent": "#7fb0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_sorcery_4",
+  "name": "Sorcery Rune Lv 4",
+  "type": "equipment",
+  "rarity": "epic",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "sorcery",
+   "level": 4
+  },
+  "description": "+8% MATK. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 12000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff5aff",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_sorcery_5",
+  "name": "Sorcery Rune Lv 5",
+  "type": "equipment",
+  "rarity": "legendary",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "sorcery",
+   "level": 5
+  },
+  "description": "+11% MATK. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 30000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#ff5aff",
+   "accent": "#ffb84d"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_bulwark_1",
+  "name": "Bulwark Rune Lv 1",
+  "type": "equipment",
+  "rarity": "common",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "bulwark",
+   "level": 1
+  },
+  "description": "+3% DEF. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 200,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#a8b0c0",
+   "accent": "#c8c8d8"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_bulwark_2",
+  "name": "Bulwark Rune Lv 2",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "bulwark",
+   "level": 2
+  },
+  "description": "+5% DEF. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 1000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#a8b0c0",
+   "accent": "#7fe08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_bulwark_3",
+  "name": "Bulwark Rune Lv 3",
+  "type": "equipment",
+  "rarity": "rare",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "bulwark",
+   "level": 3
+  },
+  "description": "+8% DEF. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 4000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#a8b0c0",
+   "accent": "#7fb0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_bulwark_4",
+  "name": "Bulwark Rune Lv 4",
+  "type": "equipment",
+  "rarity": "epic",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "bulwark",
+   "level": 4
+  },
+  "description": "+11% DEF. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 12000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#a8b0c0",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_bulwark_5",
+  "name": "Bulwark Rune Lv 5",
+  "type": "equipment",
+  "rarity": "legendary",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "bulwark",
+   "level": 5
+  },
+  "description": "+15% DEF. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 30000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#a8b0c0",
+   "accent": "#ffb84d"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_gale_1",
+  "name": "Gale Rune Lv 1",
+  "type": "equipment",
+  "rarity": "common",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "gale",
+   "level": 1
+  },
+  "description": "+2% move speed. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 200,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#9ad8a8",
+   "accent": "#c8c8d8"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_gale_2",
+  "name": "Gale Rune Lv 2",
+  "type": "equipment",
+  "rarity": "uncommon",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "gale",
+   "level": 2
+  },
+  "description": "+3% move speed. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 1000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#9ad8a8",
+   "accent": "#7fe08a"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_gale_3",
+  "name": "Gale Rune Lv 3",
+  "type": "equipment",
+  "rarity": "rare",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "gale",
+   "level": 3
+  },
+  "description": "+5% move speed. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 4000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#9ad8a8",
+   "accent": "#7fb0ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_gale_4",
+  "name": "Gale Rune Lv 4",
+  "type": "equipment",
+  "rarity": "epic",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "gale",
+   "level": 4
+  },
+  "description": "+7% move speed. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 12000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#9ad8a8",
+   "accent": "#c9a6ff"
+  },
+  "generated": true
+ },
+ {
+  "id": "rune_gale_5",
+  "name": "Gale Rune Lv 5",
+  "type": "equipment",
+  "rarity": "legendary",
+  "slot": "rune",
+  "runeStone": {
+   "kind": "gale",
+   "level": 5
+  },
+  "description": "+9% move speed. Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.",
+  "weight": 1,
+  "price": 30000,
+  "stackable": false,
+  "maxStack": 1,
+  "icon": {
+   "shape": "rune",
+   "color": "#9ad8a8",
+   "accent": "#ffb84d"
+  },
+  "generated": true
  }
 ]

@@ -1220,6 +1220,17 @@ export async function main() {
   }
 
   // Write data, then compile + check every map with the real data loader rules.
+  // Rune stones: 14 kinds × 5 levels, socketed into the two rune slots (drops are rolled by the world).
+  {
+    const { RUNE_KINDS, runeText } = await import('../../src/core/runestones');
+    const RAR = ['common', 'uncommon', 'rare', 'epic', 'legendary'];
+    for (const k of RUNE_KINDS) for (let lv = 1; lv <= 5; lv++) {
+      items.push({ id: `rune_${k.id}_${lv}`, name: `${k.name} Rune Lv ${lv}`, type: 'equipment', rarity: RAR[lv - 1], slot: 'rune', runeStone: { kind: k.id, level: lv },
+        description: `${runeText(k.id, lv)} Refining it (+1…+10) strengthens the effect by 12% of its base per level. Socket it in one of the two rune slots.`,
+        weight: 1, price: [200, 1000, 4000, 12000, 30000][lv - 1], stackable: false, maxStack: 1, icon: { shape: 'rune', color: k.color, accent: ['#c8c8d8', '#7fe08a', '#7fb0ff', '#c9a6ff', '#ffb84d'][lv - 1] }, generated: true });
+    }
+  }
+
   // Training dummy and the shadow-fighter template (the arena fills in stats from the player).
   drops.push({ id: 'no_drops', luma: [0, 0], entries: [], generated: true });
   monsters.push({ id: 'training_dummy', name: 'Training Dummy', level: 1, element: 'neutral', race: 'formless', size: 'medium', maxHp: 1000000, attack: 0, defense: 0, magicDefense: 0, exp: 0, jobExp: 0,

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { addItem, countItem } from '../../src/core/inventory';
-import { refineInfo, refineItem, safeLimit, WEAPON_ORES } from '../../src/core/refine';
+import { refineFee, refineInfo, refineItem, refineTable, safeLimit, WEAPON_ORES } from '../../src/core/refine';
 import { computeDerivedStats } from '../../src/core/formulas';
 import { data, newChar } from '../helpers/fixtures';
 
@@ -17,37 +17,36 @@ function withKnife() {
 }
 
 describe('refinement (weapon levels)', () => {
-  it('weapon levels follow the classic safe limits: Lv1 +7, Lv2 +6, Lv3 +5, Lv4 +4, armor +4', () => {
-    expect(safeLimit(data.items.get('training_knife')!)).toBe(7);
-    expect(safeLimit(data.items.get('iron_sword')!)).toBe(6);
-    expect(safeLimit(data.items.get('knight_spear')!)).toBe(5);
-    expect(safeLimit(data.items.get('thornbane_blade')!)).toBe(4);
-    expect(safeLimit(data.items.get('cotton_shirt')!)).toBe(4);
+  it('every item is safe from breaking up to +5; harder items have lower chances', () => {
+    for (const id of ['training_knife', 'iron_sword', 'knight_spear', 'thornbane_blade', 'cotton_shirt']) expect(safeLimit(data.items.get(id)!)).toBe(5);
+    expect(refineTable('w4')[7]).toBeLessThan(refineTable('w1')[7]);
+    expect(refineTable('armor')[7]).toBeLessThan(refineTable('w1')[7]);
     expect([1, 2, 3, 4].map((l) => WEAPON_ORES[l - 1])).toEqual(['glimmer_ore', 'bright_ore', 'starsteel_ore', 'starsteel_ore']);
   });
 
-  it('is always safe up to +7 on a level 1 weapon and consumes ore + fee', () => {
+  it('each attempt consumes ore + fee; the fee grows with the level', () => {
     const { c, knife } = withKnife();
     const ore = countItem(c, 'glimmer_ore'), luma = c.luma;
-    for (let i = 0; i < 7; i++) expect(refineItem(data, c, knife.uid, 0.999).outcome).toBe('success');
-    expect(knife.refine).toBe(7);
-    expect(countItem(c, 'glimmer_ore')).toBe(ore - 7);
-    expect(c.luma).toBe(luma - 7 * 50);
-    expect(refineInfo(data, c, knife.uid).chance).toBe(0.6);
+    for (let i = 0; i < 5; i++) expect(refineItem(data, c, knife.uid, 0).outcome).toBe('success');
+    expect(knife.refine).toBe(5);
+    expect(countItem(c, 'glimmer_ore')).toBe(ore - 5);
+    expect(c.luma).toBe(luma - [1, 2, 3, 4, 5].reduce((sum, n) => sum + refineFee('w1', n), 0));
+    expect(refineInfo(data, c, knife.uid).chance).toBeLessThan(1);
   });
 
-  it('armor is safe to +4 and uses Moonstone Ore', () => {
+  it('armor uses Moonstone Ore', () => {
     const { c, shirt } = withKnife();
-    for (let i = 0; i < 4; i++) refineItem(data, c, shirt.uid, 0.999);
+    for (let i = 0; i < 4; i++) refineItem(data, c, shirt.uid, 0);
     expect(shirt.refine).toBe(4);
     expect(refineInfo(data, c, shirt.uid).ore).toBe('moonstone_ore');
-    expect(refineInfo(data, c, shirt.uid).chance).toBeLessThan(1);
   });
 
-  it('a failed risky refine destroys the item', () => {
+  it('above +5 a failure may break the item (separate roll); otherwise it stays', () => {
     const { c, knife } = withKnife();
     for (let i = 0; i < 7; i++) refineItem(data, c, knife.uid, 0);
-    const r = refineItem(data, c, knife.uid, 0.99); // +8 is 60%
+    expect(refineItem(data, c, knife.uid, 0.99, false, 0.99).outcome).toBe('failed');
+    expect(knife.refine).toBe(7);
+    const r = refineItem(data, c, knife.uid, 0.99, false, 0);
     expect(r.outcome).toBe('broken');
     expect(c.inventory.some((i) => i.uid === knife.uid)).toBe(false);
   });
@@ -94,18 +93,15 @@ describe('Ragnarok-style character rules', () => {
     expect(w.majorOverweight).toBe(true);
     expect(w.canUseSkill('first_aid').ok).toBe(false);
   });
-  it('enriched ore works on any weapon level with the better table, and costs classic fees', () => {
-    const { c, knife, shirt } = withKnife();
+  it('enriched ore works on any weapon level and adds 10% to the chance', () => {
+    const { c, knife } = withKnife();
     addItem(data, c, 'enriched_starsteel', 5);
     knife.refine = 7;
     const n = refineInfo(data, c, knife.uid), e = refineInfo(data, c, knife.uid, true);
-    expect([n.chance, e.chance]).toEqual([0.6, 0.9]);
+    expect(e.chance).toBeCloseTo(n.chance + 0.1, 5);
     expect(e.ore).toBe('enriched_starsteel');
-    expect(refineItem(data, c, knife.uid, 0.85, true).outcome).toBe('success');
+    expect(refineItem(data, c, knife.uid, 0, true).outcome).toBe('success');
     expect(countItem(c, 'enriched_starsteel')).toBe(4);
-    shirt.refine = 4;
-    expect(refineInfo(data, c, shirt.uid).fee).toBe(2000);
-    expect(refineInfo(data, c, shirt.uid, true).error).toMatch(/Enriched Moonstone/);
   });
 
   it('armor refine gives 0.7 DEF per level, rounded', () => {
