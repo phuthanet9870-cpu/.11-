@@ -291,7 +291,7 @@ try {
   await page.evaluate(() => { window.__veyloria.world.char.skillPoints = 3; });
   await page.keyboard.press('k');
   await page.waitForSelector('#win-skills:not(.hidden)');
-  await page.click('#win-skills .skill:has-text("Bash") button');
+  await page.click('#win-skills .skill:has-text("Bash") .st-plus');
   await sleep(150);
   const bashLv = await page.evaluate(() => window.__veyloria.world.char.skills.bash ?? 0);
   check('learn a skill in the skill tree', bashLv === 1, `bash=${bashLv}`);

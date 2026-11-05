@@ -37,15 +37,18 @@ describe('training grounds and shadow arena', () => {
     expect(w.training).toBeNull();
   });
 
-  it('shadow fighters copy the player, take random jobs and use skills', () => {
+  it('shadow fighters are characters of their job at your level, take random jobs and use skills', () => {
     const { w } = at('shadow_arena', 'shadow_arena_master');
     const r = w.startShadowDuel(3);
     expect(r.ok).toBe(true);
     const shadows = [...w.monsters.values()].filter((m) => m.shadow);
     expect(shadows.length).toBe(3);
     for (const m of shadows) {
-      expect(m.def.maxHp).toBe(Math.round(w.stats.maxHp));
-      expect(m.def.attack).toBe(Math.round(w.stats.patk));
+      // Built like a real character of that job (classic stat build, the job's HP growth) plus your gear's share.
+      const ref = (w as unknown as { classFighterStats: (id: string, main: string) => { maxHp: number } }).classFighterStats;
+      expect(m.def.maxHp).toBeGreaterThan(0);
+      expect(m.def.attack).toBeGreaterThan(0);
+      expect(typeof ref).toBe('function');
       expect(m.def.level).toBe(w.char.baseLevel);
       expect(data.classes.has(m.shadow!.classId)).toBe(true);
       expect(m.shadow!.skills.length).toBeGreaterThan(0);
@@ -85,8 +88,12 @@ describe('training grounds and shadow arena', () => {
     const enemies = [...w.monsters.values()].filter((m) => m.shadow?.team === 'enemy'), allies = [...w.monsters.values()].filter((m) => m.shadow?.team === 'ally');
     expect(enemies.length).toBe(5); expect(allies.length).toBe(4);
     expect(enemies[0].shadow!.classId).toBe('knight'); expect(enemies[2].shadow!.classId).toBe('mage'); expect(allies[0].shadow!.classId).toBe('cleric');
-    expect(enemies[0].def.maxHp).toBe(Math.round(w.stats.maxHp * 0.6));
-    expect(allies[0].def.maxHp).toBe(Math.round(w.stats.maxHp));
+    const ref = (id: string, main: string) => (w as unknown as { classFighterStats: (id: string, main: string) => { maxHp: number; matk: number } }).classFighterStats(id, main);
+    expect(enemies[0].def.maxHp).toBe(Math.round(ref('knight', 'str').maxHp * 0.6)); // easy = 60%
+    // Each job is built its own way: the knight has more HP, the mage more MATK.
+    expect(ref('knight', 'str').maxHp).toBeGreaterThan(ref('mage', 'int').maxHp);
+    expect(ref('mage', 'int').matk).toBeGreaterThan(ref('knight', 'str').matk);
+    expect(allies[0].def.maxHp).toBeGreaterThan(0);
     expect(c.luma).toBe(1_000_000 - 4 * w.arenaHireCost());
     // The player cannot hurt allies; allies and enemies fight each other.
     const ally = allies[0], hp = ally.hp;

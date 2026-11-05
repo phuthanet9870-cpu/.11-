@@ -17,7 +17,8 @@ import { canEquip, countItem } from './inventory';
 import { isQuestAvailable, objectiveTarget } from './quests';
 import { refineInfo, safeLimit } from './refine';
 
-export type AutoMode = 'off' | 'farm' | 'quest';
+/** travel: walk to another map through portals (picked on the World Map). */
+export type AutoMode = 'off' | 'farm' | 'quest' | 'travel';
 
 export interface AutoSettings {
   /** Fight within this many pixels of the start point (farm mode). */
@@ -80,6 +81,21 @@ export class AutoPilot {
   private get data(): GameData { return this.w.data; }
   private get c() { return this.w.char; }
 
+  /** Destination of Auto Travel. */
+  travelTarget: string | null = null;
+
+  /** Walk to a map (World Map click). Returns false when there is no walking route. */
+  startTravel(mapId: string): boolean {
+    const w = this.w, dest = this.data.maps.get(mapId);
+    if (!dest || mapId === w.map.def.id) return false;
+    if (!this.nextHop(w.map.def.id, mapId)) { w.message(`No walking route to ${dest.name} — try a warp NPC.`, 'error'); return false; }
+    this.mode = 'travel';
+    this.travelTarget = mapId;
+    this.lastProgress = { key: '', at: w.time };
+    w.message(`Auto Travel to ${dest.name}. Click anywhere or press a movement key to take control.`, 'system');
+    return true;
+  }
+
   start(mode: 'farm' | 'quest') {
     this.mode = mode;
     this.anchor = { mapId: this.w.map.def.id, x: this.w.player.x, y: this.w.player.y };
@@ -106,7 +122,14 @@ export class AutoPilot {
     if (w.majorOverweight) return this.stop('carrying too much (90%+ weight)');
     this.usePotions();
     if (this.mode === 'farm') this.farmTick(null);
-    else this.questTick();
+    else if (this.mode === 'travel') {
+      if (this.travelTarget && this.travelTo(this.travelTarget)) {
+        const name = this.data.maps.get(this.travelTarget)?.name;
+        this.mode = 'off'; this.status = ''; this.travelTarget = null;
+        w.message(`Arrived at ${name}.`, 'system');
+        return;
+      }
+    } else this.questTick();
     // Give up if nothing has changed for a long time (stuck somewhere).
     const key = `${w.map.def.id}|${Math.round(p.x / 64)}|${Math.round(p.y / 64)}|${this.c.baseExp}|${this.c.jobExp}|${JSON.stringify(Object.values(this.c.quests).map((q) => [q.status, q.counts]))}`;
     if (key !== this.lastProgress.key || p.cast || p.intent.type === 'attack') this.lastProgress = { key, at: w.time };

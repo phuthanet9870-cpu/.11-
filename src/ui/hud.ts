@@ -159,7 +159,7 @@ export class Hud {
 
   private updateAutoButtons() {
     const mode = this.app.world?.auto.mode ?? 'off';
-    setChildren(this.autoBtn, h('b', {}, 'AUTO'), h('small', {}, mode === 'farm' ? 'ON' : mode === 'quest' ? 'Quest' : 'OFF'));
+    setChildren(this.autoBtn, h('b', {}, 'AUTO'), h('small', {}, mode === 'farm' ? 'ON' : mode === 'quest' ? 'Quest' : mode === 'travel' ? 'Travel' : 'OFF'));
     this.autoBtn.classList.toggle('on', mode !== 'off');
     this.autoQuestBtn.textContent = mode === 'quest' ? '■ Stop Auto Quest' : '▶ Auto Quest';
     this.autoQuestBtn.classList.toggle('primary', mode === 'quest');
@@ -373,7 +373,7 @@ export class Hud {
     const au = w.auto;
     this.updateAutoButtons();
     this.autoEl.style.display = au.mode === 'off' ? 'none' : 'block';
-    if (au.mode !== 'off') this.autoEl.textContent = `● ${au.mode === 'farm' ? 'AUTO FARM' : 'AUTO QUEST'} — ${au.status || '…'}   (click to stop)`;
+    if (au.mode !== 'off') this.autoEl.textContent = `● ${au.mode === 'farm' ? 'AUTO FARM' : au.mode === 'travel' ? 'AUTO TRAVEL' : 'AUTO QUEST'} — ${au.status || '…'}   (click to stop)`;
     const ev = w.event;
     const evLeft = ev ? Math.max(0, Math.ceil((ev.endsAt - w.time) / 1000)) : 0;
     const raid = ev && !ev.done ? `⚔ Raid: ${ev.mapName} ${Math.floor(evLeft / 60)}:${String(evLeft % 60).padStart(2, '0')}` : '';

@@ -1506,7 +1506,35 @@ export class World {
     return { ok: true };
   }
 
-  /** One shadow fighter of a job, with the player's own strength scaled by the difficulty. */
+  /**
+   * Stats of a real character of a job at your level: Ragnarok stat points spent the way that job is
+   * usually built (STR melee, DEX archers, INT casters, AGI fist fighters), the job's own HP/MP growth
+   * and job bonuses — plus what your own equipment adds to you, so the fight stays even.
+   */
+  private classFighterStats(classId: string, main: 'str' | 'dex' | 'int' | 'agi') {
+    const c = JSON.parse(JSON.stringify(this.char)) as CharacterState;
+    const cls = this.data.classes.get(classId)!;
+    c.classId = classId;
+    c.jobLevel = Math.min(cls.maxJobLevel ?? 50, Math.max(this.char.jobLevel, cls.tier >= 2 ? 30 : 15));
+    resetStats(this.data, c);
+    const order: Record<typeof main, StatKey[]> = {
+      str: ['str', 'str', 'vit', 'agi', 'dex'], dex: ['dex', 'dex', 'agi', 'luk', 'vit'], int: ['int', 'int', 'dex', 'vit'], agi: ['agi', 'str', 'str', 'vit', 'dex'],
+    };
+    for (let i = 0, fails = 0; fails < 8 && c.statPoints > 0; i++) { if (allocateStat(this.data, c, order[main][i % order[main].length], 1).ok) fails = 0; else fails++; }
+    const naked = (x: CharacterState) => computeDerivedStats(this.data, { ...x, equipment: {} });
+    const mine = this.stats, bare = naked(this.char), gearAdds = (a: number, b: number) => Math.max(0, a - b);
+    c.equipment = {};
+    const s = computeDerivedStats(this.data, c);
+    // Archers fight with a bow: Ragnarok ranged status ATK (DEX main, STR minor).
+    if (main === 'dex') { const t = s.totalStats; s.patk = t.dex + Math.floor(t.dex / 10) ** 2 + Math.floor(t.str / 5) + Math.floor(t.luk / 5); }
+    return {
+      ...s,
+      maxHp: s.maxHp + gearAdds(mine.maxHp, bare.maxHp), patk: s.patk + gearAdds(mine.patk, bare.patk), matk: s.matk + gearAdds(mine.matk, bare.matk),
+      pdef: s.pdef + gearAdds(mine.pdef, bare.pdef), mdef: s.mdef + gearAdds(mine.mdef, bare.mdef),
+    };
+  }
+
+  /** One shadow fighter of a job: a character of that job at your level, scaled by the difficulty. */
   private makeShadow(classId: string, team: 'enemy' | 'ally', diff: ArenaDifficulty, at: { x: number; y: number }): MonsterActor {
     const base = this.data.monsters.get('shadow_fighter')!;
     const cls = this.data.classes.get(classId)!;
@@ -1515,7 +1543,7 @@ export class World {
     const wt = cls.weaponTypes ?? [];
     const ranged = wt.some((w) => w === 'bow' || w === 'crossbow') && !wt.includes('sword');
     const caster = wt.some((w) => w === 'staff' || w === 'wand') && !wt.includes('sword');
-    const st = this.stats, k = ARENA_DIFFICULTY[diff].stat;
+    const st = this.classFighterStats(cls.id, caster ? 'int' : ranged ? 'dex' : wt.includes('knuckle') ? 'agi' : 'str'), k = ARENA_DIFFICULTY[diff].stat;
     const def: MonsterDef = {
       ...base, name: `${team === 'ally' ? 'Ally' : 'Shadow'} ${cls.name}`, level: this.char.baseLevel,
       maxHp: Math.round(st.maxHp * k), attack: Math.round(st.patk * k), magicAttack: Math.round(st.matk * k), defense: Math.round(st.pdef * k), magicDefense: Math.round(st.mdef * k),

@@ -566,3 +566,67 @@ body.mobile .jp-info { padding: 8px 10px; gap: 5px; overflow-y: auto; }
 body.mobile .jp-intro { grid-template-columns: 104px 1fr; }
 body.mobile .jp-radar { width: 104px; height: 104px; }
 body.mobile .jp-desc { font-size: 11px; }
+.wm-node { cursor: pointer; }
+.wm-node:not(.here):hover .dot { transform: scale(1.5); box-shadow: 0 0 8px #fff; }
+.wm-node.dest .dot { box-shadow: 0 0 0 3px #7fd6ff, 0 0 10px #7fd6ff; }
+/* GM job tree */
+.class-tree { overflow: auto; max-height: 360px; background: radial-gradient(ellipse at 50% 0%, rgba(80,90,140,0.25), transparent 70%), #0e0b16; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 6px; }
+.class-tree .ct-inner { position: relative; margin: 0 auto; }
+.class-tree .ct-lines { position: absolute; left: 0; top: 0; pointer-events: none; }
+.class-tree .ln { fill: none; stroke: #4a90c8; stroke-width: 1.6; }
+.class-tree .ln.reborn { stroke: #c9a6ff; stroke-dasharray: 4 3; }
+.class-tree .ln.high { stroke: rgba(201,166,255,0.7); stroke-width: 1.4; }
+.class-tree .ct-node { position: absolute; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+.class-tree .ct-ring { width: 46px; height: 46px; border-radius: 50%; padding: 3px; background: linear-gradient(#f4f0ff, #9aa4c0); box-shadow: 0 2px 6px rgba(0,0,0,0.6); transition: transform .12s; }
+.class-tree .ct-ring img { width: 100%; height: 100%; border-radius: 50%; image-rendering: pixelated; background: radial-gradient(circle, #3a3060, #12101c); object-fit: cover; }
+.class-tree .t0 .ct-ring { background: linear-gradient(#d6ff8a, #6a9a2e); }
+.class-tree .t1 .ct-ring { background: linear-gradient(#ffd38a, #b0602e); }
+.class-tree .t2 .ct-ring { background: linear-gradient(#ff9a8a, #a02a3a); }
+.class-tree .t3 .ct-ring { background: linear-gradient(#e6d0ff, #6a3ab0); }
+.class-tree .ct-node:hover .ct-ring { transform: scale(1.08); }
+.class-tree .ct-node.cur .ct-ring { box-shadow: 0 0 0 3px #ffd34d, 0 0 12px #ffd34d; }
+.class-tree .ct-node.sel .ct-ring { box-shadow: 0 0 0 3px #7fd6ff, 0 0 12px #7fd6ff; }
+.class-tree .ct-name { margin-top: 2px; font-size: 10px; line-height: 12px; color: #fff; text-align: center; padding: 0 3px; border-radius: 3px; background: rgba(40,40,60,0.85); white-space: nowrap; max-width: 72px; overflow: hidden; text-overflow: ellipsis; }
+.class-tree .ct-bonus { font-size: 9px; color: #9ad0ff; }
+.class-tree .ct-legend { display: flex; gap: 12px; font-size: 10px; color: #8fb8e8; margin-top: 4px; }
+.class-tree .ct-legend .r { color: #c9a6ff; } .class-tree .ct-legend .g { color: #ffd34d; } .class-tree .ct-legend .b { color: #7fd6ff; }
+/* ---------------------------------------------------------------- skill tree (Ragnarok M style) */
+.skill-tree { width: 720px; display: flex; flex-direction: column; gap: 8px; }
+.st-tabs { display: flex; gap: 4px; padding: 4px; border-radius: 10px; background: rgba(255,255,255,0.06); align-self: flex-start; }
+.st-tab { position: relative; min-width: 110px; padding: 7px 16px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; font-size: 14px; color: #9aa4c0; background: none; }
+.st-tab.on { color: #fff; background: linear-gradient(#5a8ae0, #3a62b8); box-shadow: 0 2px 8px rgba(60,100,200,0.5); }
+.st-tab.locked { cursor: default; opacity: 0.6; }
+.st-tab .lock { margin-left: 6px; }
+.skill-tree .st-main { display: grid !important; grid-template-columns: 150px 1fr; gap: 10px; align-items: start; }
+.st-banner { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px 8px 26px; border-radius: 8px 8px 0 0;
+  background: linear-gradient(#4a72c8, #2e4a8e); clip-path: polygon(0 0, 100% 0, 100% 92%, 50% 100%, 0 92%); color: #fff; }
+.st-job { width: 100%; text-align: center; padding: 4px; border-radius: 12px; background: rgba(10,20,50,0.45); font-weight: bold; font-size: 15px; }
+.st-jobicon { width: 56px; height: 56px; border-radius: 50%; image-rendering: pixelated; background: rgba(255,255,255,0.15); }
+.st-dist { font-size: 12px; font-weight: bold; opacity: 0.9; }
+.st-ring { width: 84px; height: 84px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.st-ring > div { width: 66px; height: 66px; border-radius: 50%; background: #2e4a8e; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 15px; }
+.st-pts { font-size: 12px; color: #ffe9a8; }
+.st-board { overflow: auto; max-height: 420px; border-radius: 8px; padding: 6px; background: radial-gradient(ellipse at 30% 0%, rgba(90,138,224,0.18), transparent 60%), rgba(12,12,26,0.92); }
+.st-grid { position: relative; }
+.st-lines { position: absolute; left: 0; top: 0; pointer-events: none; }
+.st-lines path { fill: none; stroke: rgba(150,170,210,0.45); stroke-width: 3; }
+.st-lines path.on { stroke: #7fa8ff; }
+.st-node { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 0; border: none; }
+.st-node .st-lv { font-size: 11px; font-weight: bold; color: #fff; padding: 1px 8px; border-radius: 4px; background: rgba(70,80,110,0.9); }
+.st-node.max .st-lv { background: linear-gradient(#e2b44a, #a8782a); }
+.st-node .st-ico { position: relative; width: 58px; height: 58px; border-radius: 50%; padding: 3px; cursor: pointer; background: linear-gradient(#e8ecf8, #9aa8c8); box-shadow: 0 3px 8px rgba(0,0,0,0.5); }
+.st-node .st-ico img { width: 100%; height: 100%; border-radius: 50%; image-rendering: pixelated; background: #1a1830; cursor: grab; }
+.st-node.locked .st-ico img { filter: grayscale(1) brightness(0.75); }
+.st-node.sel .st-ico { box-shadow: 0 0 0 3px #7fd6ff, 0 0 14px #7fd6ff; }
+.st-node .st-plus { position: absolute; right: -14px; top: 18px; width: 24px; height: 24px; padding: 0; border-radius: 6px; border: 1px solid #fff; cursor: pointer; color: #fff; font-size: 18px; font-weight: bold; line-height: 20px; background: linear-gradient(#6a9aff, #3a62c8); }
+.st-node .st-hot { position: absolute; left: -12px; top: 18px; width: 22px; height: 22px; padding: 0; border-radius: 50%; border: 1px solid #ffd34d; cursor: pointer; font-size: 12px; background: #2a2238; }
+.st-node .st-name { max-width: 104px; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: linear-gradient(#5a7ad0, #3a58a8); }
+.st-node.locked .st-name { background: rgba(80,90,120,0.85); color: #ccd; }
+.st-info { display: flex; gap: 10px; align-items: flex-start; min-height: 48px; padding: 8px 10px; border-radius: 8px; background: rgba(255,255,255,0.05); font-size: 12px; line-height: 1.4; }
+.st-info img { width: 40px; height: 40px; border-radius: 50%; image-rendering: pixelated; }
+.st-info .bad { color: #ff9a8a; }
+body.mobile .skill-tree { width: 760px; }
+body.mobile .st-board { max-height: 250px; }
+body.mobile .skill-tree .st-main { grid-template-columns: 130px 1fr; }
+body.mobile .st-banner { padding-bottom: 18px; gap: 4px; }
+body.mobile .st-ring { width: 66px; height: 66px; } body.mobile .st-ring > div { width: 52px; height: 52px; font-size: 13px; }

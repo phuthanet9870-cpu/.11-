@@ -573,45 +573,86 @@ export class WindowManager {
   }
 
   // ---------------------------------------------------------------- skills
+  private skillTab: string | null = null;
+  private skillSel: string | null = null;
+
+  /**
+   * Skill tree (Ragnarok M style): tabs per job tier (Basic / 1st Job / 2nd Job / Transcendent; the next
+   * tier shows locked), a banner with the job and the points spent in it, and the job's skills as round
+   * icons with a level badge, a + button and a name tag, joined by lines to the skills they require.
+   * Tap a skill for its details; drag it (or ⚡) to the hotbar.
+   */
   private renderSkills() {
-    const w = this.app.world!;
-    const c = w.char;
+    const w = this.app.world!, d = w.data, c = w.char;
     const body = this.wins.get('skills')!.body;
-    const lineage = classLineage(w.data, c.classId);
-    const sections = lineage.map((clsId) => {
-      const cls = w.data.classes.get(clsId)!;
-      return h('div', {},
-        h('div', { class: 'gold', style: 'margin:8px 0 2px;font-weight:bold' }, `${cls.name} Skills`),
-        cls.skills.map((sid) => {
-          const sk = w.data.skills.get(sid)!;
-          const lvl = c.skills[sid] ?? 0;
-          const chk = skillCheck(w.data, c, sk);
-          const reqs = [
-            ...(sk.requires ?? []).map((r) => `${w.data.skills.get(r.skillId)?.name} Lv.${r.level}`),
-            sk.requiresJobLevel ? `Job Lv.${sk.requiresJobLevel}` : '',
-            sk.requiresWeapon ? `${sk.requiresWeapon.join('/')}` : '',
-          ].filter(Boolean);
-          const img = h('img', { src: skillIconUrl(sk), draggable: lvl > 0 && sk.kind !== 'passive', title: lvl > 0 ? 'Drag to the hotbar' : '' });
-          img.addEventListener('dragstart', (e) => setDragData(e, { type: 'skill', id: sid }));
-          img.addEventListener('dblclick', () => { if (lvl > 0 && sk.kind !== 'passive') this.app.assignHotbar(-1, { type: 'skill', id: sid }); });
-          const mp = sk.kind === 'passive' ? '' : ` · MP ${w.skillMpCost(sk, Math.max(1, lvl))}`;
-          const timing = sk.kind === 'passive' ? 'Passive' : `${sk.castTimeMs ? `Cast ${(sk.castTimeMs / 1000).toFixed(1)}s · ` : ''}CD ${(sk.cooldownMs / 1000).toFixed(1)}s${mp}`;
-          return h('div', { class: `skill${lvl === 0 ? ' locked' : ''}` },
-            img,
-            h('div', {},
-              h('div', { class: 'sn' }, sk.name, h('span', { class: 'muted', style: 'font-weight:normal' }, `  Lv ${lvl}/${sk.maxLevel}  · ${sk.kind}`)),
-              h('div', { class: 'sd' }, sk.description),
-              h('div', { class: 'sd' }, timing),
-              reqs.length ? h('div', { class: 'req' }, `Requires: ${reqs.join(', ')}`) : null),
-            h('div', { class: 'skbtns' },
-              lvl > 0 && sk.kind !== 'passive' ? h('button', { class: 'btn small sk-hot', title: 'Put on the hotbar', onclick: () => this.app.assignHotbar(-1, { type: 'skill', id: sid }) }, '⚡') : null,
-              h('button', { class: 'btn small', disabled: !chk.ok, title: chk.ok ? 'Learn / level up' : chk.error, onclick: () => w.learn(sid) }, '+')));
-        }));
+    const lineage = classLineage(d, c.classId);
+    const tierName = (t: number) => (t === 0 ? 'Basic' : t === 1 ? '1st Job' : t === 2 ? '2nd Job' : 'Transcendent');
+    const last = d.classes.get(lineage[lineage.length - 1])!;
+    const next = [...d.classes.values()].find((x) => x.requirements?.fromClass === last.id && (!x.requirements.rebornFrom || x.requirements.rebornFrom === c.flags.rebornFrom));
+    if (!this.skillTab || !lineage.includes(this.skillTab)) this.skillTab = c.classId;
+    const tabs = h('div', { class: 'st-tabs' },
+      lineage.map((id) => { const x = d.classes.get(id)!; return h('button', { class: `st-tab${id === this.skillTab ? ' on' : ''}`, dataset: { tab: id }, onclick: () => { this.skillTab = id; this.skillSel = null; this.renderSkills(); } }, tierName(x.tier)); }),
+      next ? h('button', { class: 'st-tab locked', disabled: true, title: `Become a ${next.name} to open these skills` }, tierName(next.tier), h('span', { class: 'lock' }, '🔒')) : null);
+    const cls = d.classes.get(this.skillTab)!;
+    const ids = cls.skills.filter((id) => d.skills.has(id));
+    const used = ids.reduce((a, id) => a + (c.skills[id] ?? 0), 0), cap = ids.reduce((a, id) => a + d.skills.get(id)!.maxLevel, 0);
+    // Layout: each skill under the skill it requires (same job); roots start new columns.
+    const parentOf = (id: string) => d.skills.get(id)!.requires?.map((r) => r.skillId).find((p) => ids.includes(p)) ?? null;
+    const kids = new Map<string, string[]>();
+    for (const id of ids) { const p = parentOf(id); if (p) kids.set(p, [...(kids.get(p) ?? []), id]); }
+    const pos = new Map<string, [number, number]>();
+    let col = 0;
+    const place = (id: string, cl: number, row: number) => {
+      pos.set(id, [cl, row]);
+      (kids.get(id) ?? []).forEach((k, i) => place(k, i === 0 ? cl : ++col, row + 1));
+    };
+    for (const id of ids) if (!parentOf(id)) { place(id, col, 0); col++; }
+    const CW = 108, RH = 112, cols = Math.max(...[...pos.values()].map((p) => p[0])) + 1, rows = Math.max(...[...pos.values()].map((p) => p[1])) + 1;
+    const svgNS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('width', String(cols * CW)); svg.setAttribute('height', String(rows * RH)); svg.setAttribute('class', 'st-lines');
+    for (const id of ids) {
+      const p = parentOf(id); if (!p) continue;
+      const [c0, r0] = pos.get(p)!, [c1, r1] = pos.get(id)!;
+      const x0 = c0 * CW + CW / 2, y0 = r0 * RH + 76, x1 = c1 * CW + CW / 2, y1 = r1 * RH + 26;
+      const e = document.createElementNS(svgNS, 'path');
+      e.setAttribute('d', `M${x0},${y0} V${(y0 + y1) / 2} H${x1} V${y1}`);
+      e.setAttribute('class', (c.skills[p] ?? 0) > 0 ? 'on' : '');
+      svg.appendChild(e);
+    }
+    const nodes = ids.map((sid) => {
+      const sk = d.skills.get(sid)!, lvl = c.skills[sid] ?? 0, chk = skillCheck(d, c, sk), [cl, rw] = pos.get(sid)!;
+      const img = h('img', { src: skillIconUrl(sk), draggable: lvl > 0 && sk.kind !== 'passive', alt: '' });
+      img.addEventListener('dragstart', (e) => setDragData(e, { type: 'skill', id: sid }));
+      img.addEventListener('dblclick', () => { if (lvl > 0 && sk.kind !== 'passive') this.app.assignHotbar(-1, { type: 'skill', id: sid }); });
+      return h('div', { class: `skill st-node${lvl === 0 ? ' locked' : ''}${lvl >= sk.maxLevel ? ' max' : ''}${this.skillSel === sid ? ' sel' : ''}`, dataset: { skill: sid }, style: { left: `${cl * CW}px`, top: `${rw * RH}px`, width: `${CW}px` } },
+        h('div', { class: 'st-lv' }, `${lvl}/${sk.maxLevel}`),
+        h('div', { class: 'st-ico', onclick: () => { this.skillSel = sid; this.renderSkills(); } }, img,
+          chk.ok ? h('button', { class: 'st-plus', title: 'Learn / level up', onclick: (e: MouseEvent) => { e.stopPropagation(); w.learn(sid); } }, '+') : null,
+          lvl > 0 && sk.kind !== 'passive' ? h('button', { class: 'st-hot', title: 'Put on the hotbar', onclick: (e: MouseEvent) => { e.stopPropagation(); this.app.assignHotbar(-1, { type: 'skill', id: sid }); } }, '⚡') : null),
+        h('div', { class: 'st-name' }, sk.name));
     });
-    setChildren(body,
-      h('div', { class: 'row' }, h('span', { class: 'gold' }, `Skill Points: ${c.skillPoints}`), h('span', { class: 'spacer' }),
-        h('span', { class: 'muted', style: 'font-size:11px' }, 'Drag learned skills onto the hotbar, or press ⚡')),
-      h('div', { style: 'width:470px' }, sections));
+    // Details of the tapped skill.
+    const sel = this.skillSel && ids.includes(this.skillSel) ? d.skills.get(this.skillSel)! : null;
+    let info: HTMLElement;
+    if (sel) {
+      const lvl = c.skills[sel.id] ?? 0, chk = skillCheck(d, c, sel);
+      const mp = sel.kind === 'passive' ? '' : ` · MP ${w.skillMpCost(sel, Math.max(1, lvl))}`;
+      const timing = sel.kind === 'passive' ? 'Passive' : `${sel.castTimeMs ? `Cast ${(sel.castTimeMs / 1000).toFixed(1)}s · ` : ''}CD ${(sel.cooldownMs / 1000).toFixed(1)}s${mp}`;
+      const reqs = [...(sel.requires ?? []).map((r) => `${d.skills.get(r.skillId)?.name} Lv.${r.level}`), sel.requiresJobLevel ? `Job Lv.${sel.requiresJobLevel}` : '', sel.requiresWeapon ? sel.requiresWeapon.join('/') : ''].filter(Boolean);
+      info = h('div', { class: 'st-info' }, h('img', { src: skillIconUrl(sel), alt: '' }),
+        h('div', {}, h('b', {}, sel.name), h('span', { class: 'muted' }, `  Lv ${lvl}/${sel.maxLevel} · ${sel.kind} · ${timing}`), h('div', {}, sel.description),
+          reqs.length ? h('div', { class: chk.ok || lvl ? 'muted' : 'bad' }, `Requires: ${reqs.join(', ')}`) : null));
+    } else info = h('div', { class: 'st-info muted' }, 'Tap a skill to see what it does. + learns it, ⚡ puts it on the hotbar (or drag the icon).');
+    const banner = h('div', { class: 'st-banner' },
+      h('div', { class: 'st-job' }, cls.name),
+      h('img', { class: 'st-jobicon', src: this.classIconUrl(cls.id), alt: '' }),
+      h('div', { class: 'st-dist' }, 'Distributed'),
+      h('div', { class: 'st-ring', style: { background: `conic-gradient(#ffd34d ${(used / Math.max(1, cap)) * 360}deg, rgba(255,255,255,0.12) 0)` } }, h('div', {}, `${used}/${cap}`)),
+      h('div', { class: 'st-pts' }, `Skill Points: ${c.skillPoints}`),
+      h('button', { class: 'btn small primary', id: 'btn-auto-skills', title: 'Put every usable learned skill on the hotbar, strongest first', onclick: () => this.app.autoArrangeSkills() }, '⚡ Auto-arrange'));
+    setChildren(body, h('div', { class: 'skill-tree' }, tabs,
+      h('div', { class: 'st-main' }, banner, h('div', { class: 'st-board' }, h('div', { class: 'st-grid', style: { width: `${cols * CW}px`, height: `${rows * RH}px` } }, svg, nodes))),
+      info));
   }
 
   // ---------------------------------------------------------------- quests
@@ -671,7 +712,8 @@ export class WindowManager {
       if (m.type === 'instance' || m.type === 'arena') continue;
       const here = m.id === w.map.def.id;
       const col = m.type === 'town' ? '#ffd34d' : m.type === 'field' ? '#6fe08a' : '#ff6a5a';
-      const node = h('div', { class: `wm-node ${m.type}${here ? ' here' : ''}`, title: `${m.name} — ${m.region}${m.levelRange ? ` (Lv.${m.levelRange[0]}–${m.levelRange[1]})` : ''}`, style: { left: `${m.worldMapPos.x * MW}px`, top: `${m.worldMapPos.y * MH}px` } },
+      const node = h('div', { class: `wm-node ${m.type}${here ? ' here' : ''}${w.auto.mode === 'travel' && w.auto.travelTarget === m.id ? ' dest' : ''}`, dataset: { map: m.id },
+        onclick: () => { if (here) return; if (w.auto.startTravel(m.id)) { this.close('worldMap'); this.app.hud?.toast(`Auto Travel → ${m.name}`); } else this.app.hud?.toast(`No walking route to ${m.name}.`, true); }, title: `${m.name} — ${m.region}${m.levelRange ? ` (Lv.${m.levelRange[0]}–${m.levelRange[1]})` : ''}`, style: { left: `${m.worldMapPos.x * MW}px`, top: `${m.worldMapPos.y * MH}px` } },
         h('div', { class: 'dot', style: { background: col } }),
         w.event && !w.event.done && w.event.mapId === m.id ? h('div', { style: 'position:absolute;left:10px;top:-14px;font-size:13px', title: 'Raid in progress' }, '⚔') : '',
         h('div', { class: 'wm-name' }, m.type === 'town' ? m.name.replace(/^(Royal Capital|Tower City|Desert City|Port Town|Snow Town) /, '').replace(/ Village$/, '') : m.name),
@@ -680,7 +722,7 @@ export class WindowManager {
     }
     setChildren(body, box, h('div', { class: 'muted', style: 'font-size:11px;margin-top:6px;display:flex;gap:14px' },
       h('span', {}, h('b', { style: 'color:#ffd34d' }, '●'), ' Town'), h('span', {}, h('b', { style: 'color:#6fe08a' }, '●'), ' Field'), h('span', {}, h('b', { style: 'color:#ff6a5a' }, '●'), ' Dungeon'),
-      h('span', {}, `You are in ${w.map.def.name} — ${w.map.def.region}. Hover a place for details; Courier Guild NPCs warp between towns.`)));
+      h('span', {}, `You are in ${w.map.def.name} — ${w.map.def.region}. Click a place to walk there automatically (any click or movement key takes control back); Courier Guild NPCs warp between towns.`)));
   }
 
   // ---------------------------------------------------------------- settings
@@ -1459,6 +1501,62 @@ export class WindowManager {
     return url;
   }
 
+  /**
+   * The job tree (Ragnarok style): Novice on top, first jobs, their two second jobs, then the reborn path
+   * (High first jobs and the transcendent jobs under the second job they come from), joined by lines.
+   * Each job shows its icon, name and its biggest job-level stat bonus (e.g. STR+9). Click to pick.
+   */
+  private classTree(selected: string, current: string, on: (id: string) => void): HTMLElement {
+    const d = this.app.world!.data, all = [...d.classes.values()];
+    const firsts = all.filter((x) => x.tier === 1 && x.requirements?.fromClass === 'novice');
+    const COL = 74, ROW = 92, NODE = 46;
+    const cols: string[] = [];
+    for (const f of firsts) for (const s of all.filter((x) => x.tier === 2 && x.requirements?.fromClass === f.id)) cols.push(s.id);
+    // One extra column on the left holds High Novice (start of the reborn path).
+    const W = (cols.length + 1) * COL, H = ROW * 5 + 20;
+    const pos = new Map<string, [number, number]>();
+    const colX = (i: number) => (i + 1) * COL + COL / 2;
+    cols.forEach((id, i) => pos.set(id, [colX(i), ROW * 2 + 30]));
+    for (const f of firsts) {
+      const kids = cols.map((id, i) => [id, i] as const).filter(([id]) => d.classes.get(id)!.requirements?.fromClass === f.id);
+      const x = kids.reduce((a, [, i]) => a + colX(i), 0) / Math.max(1, kids.length);
+      pos.set(f.id, [x, ROW + 30]);
+      const high = all.find((h2) => h2.requirements?.fromClass === 'high_novice' && h2.id === `high_${f.id}`);
+      if (high) pos.set(high.id, [x, ROW * 3 + 30]);
+    }
+    pos.set('novice', [W / 2, 30]);
+    if (d.classes.has('high_novice')) pos.set('high_novice', [COL / 2, ROW * 3 + 30]);
+    for (const t of all.filter((x) => x.tier === 3)) { const from = t.requirements?.rebornFrom; const p = from && pos.get(from); if (p) pos.set(t.id, [p[0], ROW * 4 + 30]); }
+    // Lines: parent → child (elbow), reborn (second job → transcendent) dashed.
+    const svgNS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('width', String(W)); svg.setAttribute('height', String(H)); svg.setAttribute('class', 'ct-lines');
+    const path = (a: [number, number], b: [number, number], cls: string) => {
+      const e = document.createElementNS(svgNS, 'path'), my = (a[1] + b[1]) / 2;
+      e.setAttribute('d', `M${a[0]},${a[1] + NODE / 2} V${my} H${b[0]} V${b[1] - NODE / 2}`); e.setAttribute('class', cls); svg.appendChild(e);
+    };
+    for (const x of all) {
+      const p = pos.get(x.id), from = x.requirements?.fromClass, pp = from ? pos.get(from) : undefined;
+      if (!p) continue;
+      if (pp && from !== 'high_novice') path(pp, p, 'ln');
+      if (x.tier === 3) { const rb = pos.get(x.requirements!.rebornFrom!); if (rb) path(rb, p, 'ln reborn'); }
+      if (from === 'high_novice') { const hn = pos.get('high_novice'); if (hn) { const e = document.createElementNS(svgNS, 'path'), y = p[1] - NODE / 2 - 10; e.setAttribute('d', `M${hn[0]},${hn[1] - NODE / 2} V${y} H${p[0]} V${p[1] - NODE / 2}`); e.setAttribute('class', 'ln high'); svg.appendChild(e); } }
+    }
+    const best = (x: { jobBonus?: string; maxJobLevel?: number }) => {
+      const n: Record<string, number> = {}; for (const ch of (x.jobBonus ?? '').slice(0, (x.maxJobLevel ?? 50) - 1)) if (ch !== '.') n[ch] = (n[ch] ?? 0) + 1;
+      const [k, v] = Object.entries(n).sort((a, b) => b[1] - a[1])[0] ?? [];
+      const name: Record<string, string> = { s: 'str', a: 'agi', v: 'vit', i: 'int', d: 'dex', l: 'luk' };
+      return k ? `${name[k]}+${v}` : '';
+    };
+    const nodes = [...pos.entries()].map(([id, [x, y]]) => {
+      const cls = d.classes.get(id)!;
+      return h('div', { class: `ct-node t${cls.tier}${id === selected ? ' sel' : ''}${id === current ? ' cur' : ''}`, dataset: { cls: id }, style: { left: `${x - COL / 2}px`, top: `${y - NODE / 2}px`, width: `${COL}px` }, title: `${cls.name} — ${cls.role}`, onclick: () => on(id) },
+        h('div', { class: 'ct-ring' }, h('img', { src: this.classIconUrl(id), alt: '' })),
+        h('div', { class: 'ct-name' }, cls.name), h('div', { class: 'ct-bonus' }, best(cls)));
+    });
+    return h('div', { class: 'class-tree', id: 'gm-class-tree' }, h('div', { class: 'ct-inner', style: { width: `${W}px`, height: `${H}px` } }, svg, nodes),
+      h('div', { class: 'ct-legend' }, h('span', {}, '── job change'), h('span', { class: 'r' }, '┄┄ rebirth path'), h('span', { class: 'g' }, '● current job'), h('span', { class: 'b' }, '● selected')));
+  }
+
   /** A searchable grid of icon tiles; `on` gets the picked id. */
   private iconPicker(list: { id: string; label: string; icon?: string; emoji?: string; sub?: string; color?: string }[], selected: string, on: (id: string) => void, opts: { search?: string; onSearch?: (q: string) => void; height?: number } = {}) {
     const q = (opts.search ?? '').toLowerCase();
@@ -1720,7 +1818,7 @@ export class WindowManager {
         row('Luma', num('luma', 1000, 80), btn('Give', () => run(gm.gmGiveLuma(w, val('luma', 1000))))),
         row('Stat pts', num('sp', 5, 48), 'Skill pts', num('kp', 1, 48), btn('Give', () => run(gm.gmGivePoints(w, val('sp', 5), val('kp', 1))))),
         h('div', { class: 'small muted' }, '🧙 Job (click a portrait, then Set job)'),
-        this.iconPicker([...d.classes.values()].map((x) => ({ id: x.id, label: x.name, icon: this.classIconUrl(x.id), sub: `Tier ${x.tier}`, color: x.id === c.classId ? '#ffd34d' : undefined })), this.adminSel.cls ?? c.classId, (id) => { this.adminSel.cls = id; this.renderAdmin(); }, { height: 120 }),
+        this.classTree(this.adminSel.cls ?? c.classId, c.classId, (id) => { this.adminSel.cls = id; this.renderAdmin(); }),
         row(btn(`Set job: ${d.classes.get(this.adminSel.cls ?? c.classId)?.name}`, () => run(gm.gmSetClass(w, this.adminSel.cls ?? c.classId)), 'btn small primary'))),
       section('🎒 Items', row(h('span', { class: 'muted small' }, 'Every item, by category with icons:'), btn('Open the item browser', () => { this.adminTab = 'items'; this.renderAdmin(); }, 'btn small primary'))),
       section('🌍 World',

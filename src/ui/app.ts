@@ -398,6 +398,34 @@ export class App implements GameHost {
     this.hud?.buildHotbar();
   }
 
+  /**
+   * Puts every learned skill you can use on the hotbar, strongest first: ultimates, then attacks
+   * (higher learned level first), then buffs. Items (potions…) stay where they are. Slots fill in
+   * the order the phone ring and the 1–8 keys use: 1–8, then Shift+1–8 (the second page), then the rest.
+   */
+  autoArrangeSkills(): number {
+    const w = this.world;
+    if (!w) return 0;
+    const c = w.char, bar = c.hotbar;
+    const rank: Record<string, number> = { ultimate: 0, active: 1, buff: 2 };
+    const list = Object.entries(c.skills)
+      .map(([id, lv]) => ({ sk: this.data.skills.get(id), lv }))
+      .filter((x): x is { sk: NonNullable<typeof x.sk>; lv: number } => !!x.sk && x.lv > 0 && x.sk.kind !== 'passive')
+      .sort((a, b) => (rank[a.sk.kind] ?? 3) - (rank[b.sk.kind] ?? 3) || b.lv - a.lv || a.sk.name.localeCompare(b.sk.name));
+    for (let k = 0; k < bar.length; k++) if (bar[k]?.type === 'skill') bar[k] = null;
+    const order = [0, 1, 2, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17, 8, 9, 18, 19].filter((k) => k < bar.length);
+    let placed = 0;
+    for (const k of order) {
+      if (placed >= list.length) break;
+      if (bar[k]) continue; // an item lives here
+      bar[k] = { type: 'skill', id: list[placed++].sk.id };
+    }
+    this.hud?.buildHotbar();
+    this.persist();
+    this.hud?.toast(placed ? `${placed} skill(s) arranged on the hotbar.` : 'No usable skills learned yet.', !placed);
+    return placed;
+  }
+
   useHotbar(i: number) {
     const w = this.world;
     if (!w) return;
