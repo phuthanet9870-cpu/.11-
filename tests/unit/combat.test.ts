@@ -99,8 +99,9 @@ describe('resolveAttack', () => {
 
   it('monster profile uses data file values', () => {
     const slime = profileFromMonster(data, data.monsters.get('leaf_slime')!);
-    expect(slime.patk).toBe(8);
-    expect(slime.pdef).toBe(2);
+    const k = (data.balance as { monsterScale?: { atk?: number; def?: number } }).monsterScale ?? {};
+    expect(slime.patk).toBe(Math.round(8 * (k.atk ?? 1))); // leaf_slime attack 8 in the data file, scaled by balance.monsterScale
+    expect(slime.pdef).toBe(Math.round(2 * (k.def ?? 1)));
     expect(slime.element).toBe('earth');
   });
 });

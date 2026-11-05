@@ -65,7 +65,7 @@ describe('card album, autocast, elites, looters', () => {
     expect(withElite).toBeGreaterThanOrEqual(10);
     const e = [...data.monsters.values()].find((m) => m.elite)!;
     const base = data.monsters.get(e.id.replace(/^elite_/, ''))!;
-    expect(e.maxHp).toBe(base.maxHp * 6);
+    expect(Math.abs(e.maxHp - base.maxHp * 6)).toBeLessThanOrEqual(6); // ×6 (both rounded after balance.monsterScale)
     expect(data.drops.get(e.dropTableId)!.entries.some((x) => x.itemId === 'card_album')).toBe(true);
   });
 

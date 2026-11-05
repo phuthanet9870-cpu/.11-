@@ -83,7 +83,7 @@ export function allocateStat(data: GameData, c: CharacterState, stat: StatKey, a
 
 export function resetStats(data: GameData, c: CharacterState): OpResult {
   c.stats = { ...data.balance.levels.startingStats };
-  c.statPoints = totalStatPointsAtLevel(data, c.baseLevel);
+  c.statPoints = totalStatPointsAtLevel(data, c.baseLevel, !!c.flags.reborn);
   return ok('Stats have been reset.');
 }
 

@@ -3,7 +3,7 @@
 import { Online } from './online';
 import Phaser from 'phaser';
 import { loadGameData, type GameData } from '../core/data';
-import { createCharacter } from '../core/character';
+import { createCharacter, resetStats } from '../core/character';
 import { DEFAULT_KEYBINDS, loadSave, newSaveFile, SAVE_KEY, writeSave } from '../core/save';
 import type { Appearance, HotbarSlot, SaveFile, Settings } from '../core/types';
 import { World, type WorldEvent } from '../core/world';
@@ -210,6 +210,14 @@ export class App implements GameHost {
     if (!c) return;
     audio.unlock();
     this.slot = slot;
+    // Stats now follow Ragnarok Classic costs: characters made before get every point back once.
+    let statsRefunded = false;
+    if (!c.flags.statRulesRO) {
+      const spent = Object.entries(c.stats).some(([k, v]) => v !== (this.data.balance.levels.startingStats as Record<string, number>)[k]);
+      resetStats(this.data, c);
+      c.flags.statRulesRO = true;
+      statsRefunded = spent || c.baseLevel > 1;
+    }
     this.world = new World(this.data, c, { autoLoot: this.settings.autoLoot });
     this.setScreen(null);
     this.hud?.root.remove();
@@ -225,6 +233,7 @@ export class App implements GameHost {
     else this.hud.log('Keys: I inventory · E equipment · C status · K skills · Q quests · M map · O settings · 1-0 hotbar · Tab target · Z loot · F talk', 'system');
     this.lastAutosave = performance.now();
     this.applyTouch();
+    if (statsRefunded) this.windows.showModal('Stat rules changed', `Stats now follow Ragnarok Classic: raising a stat from x costs ⌊(x−1)/10⌋+2 points, and ATK, MATK, FLEE, MDEF and ASPD use the classic formulas. Your stats were reset and all ${c.statPoints} points refunded — spend them again in the Status window (C).`, [['Open Status', () => this.windows.open('status')], ['Later', () => undefined]], true);
     if (dailyStatus(c, this.world.now()).canClaim) this.windows.open('daily');
     this.online.join();
   }

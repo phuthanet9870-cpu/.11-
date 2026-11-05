@@ -38,7 +38,9 @@ describe('game data', () => {
 
   it('every monster spawned on a map has the documented data fields', () => {
     const slime = data.monsters.get('leaf_slime')!;
-    expect(slime).toMatchObject({ level: 1, element: 'earth', maxHp: 80, attack: 8, defense: 2, exp: 12, jobExp: 8, aiType: 'passive', respawnSeconds: 12 });
+    // Data file values (maxHp 80, attack 8, defense 2) scaled by balance.monsterScale when the game loads.
+    const k = (data.balance as { monsterScale?: { hp?: number; atk?: number; def?: number } }).monsterScale ?? {};
+    expect(slime).toMatchObject({ level: 1, element: 'earth', maxHp: Math.round(80 * (k.hp ?? 1)), attack: Math.round(8 * (k.atk ?? 1)), defense: Math.round(2 * (k.def ?? 1)), exp: 12, jobExp: 8, aiType: 'passive', respawnSeconds: 12 });
   });
 });
 

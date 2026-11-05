@@ -659,7 +659,7 @@ export interface SaveFile {
 
 export interface DerivedStats {
   maxHp: number; maxMp: number;
-  patk: number; matk: number; pdef: number; mdef: number;
+  patk: number; matk: number; /** Ragnarok MATK range (status part plus equipment). */ matkMin?: number; matkMax?: number; pdef: number; mdef: number;
   hit: number; flee: number; crit: number; critDmg: number;
   attackIntervalMs: number; moveSpeed: number;
   /** Ragnarok-style ASPD (0–190): 200 − attack delay / 20 ms. */

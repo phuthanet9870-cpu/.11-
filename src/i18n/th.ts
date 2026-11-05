@@ -761,7 +761,7 @@ const UI: Record<string, string> = {
   'Sort: Name': 'เรียง: ชื่อ',
   'Sort: Rarity': 'เรียง: ความหายาก',
   'acc 1': 'ประดับ 1', 'acc 2': 'ประดับ 2', 'boots': 'รองเท้า',
-  'STR: ATK & weight · AGI: attack speed & FLEE · VIT: HP & DEF · INT: MATK & MP · DEX: HIT & cast speed · LUK: CRIT. Shift-click + adds 10.': 'STR: ATK และน้ำหนัก · AGI: ความเร็วโจมตีและ FLEE · VIT: HP และ DEF · INT: MATK และ MP · DEX: HIT และความเร็วร่าย · LUK: CRIT  Shift-คลิก + เพิ่มทีละ 10',
+  'Ragnarok rules — raising a stat from x costs ⌊(x−1)/10⌋+2 points. STR: melee ATK (bonus every 10) & weight · AGI: ASPD & FLEE · VIT: HP, DEF · INT: MATK, MP, MDEF · DEX: HIT, bow ATK, cast time · LUK: CRIT, perfect dodge. Shift-click + adds 10.': 'กฎ Ragnarok — อัพค่าจาก x ใช้ ⌊(x−1)/10⌋+2 แต้ม · STR: ATK ระยะใกล้ (โบนัสทุก 10) และน้ำหนัก · AGI: ASPD และ FLEE · VIT: HP, DEF · INT: MATK, MP, MDEF · DEX: HIT, ATK ธนู, ร่ายเร็ว · LUK: CRIT, หลบสมบูรณ์ · Shift-คลิก + เพิ่ม 10',
   'beast': 'สัตว์', 'humanoid': 'มนุษย์', 'large-size': 'ขนาดใหญ่', 'medium-size': 'ขนาดกลาง', 'small-size': 'ขนาดเล็ก',
   'neutral {}': 'ไม่มีธาตุ {}', 'fire {}': 'ไฟ {}', 'water {}': 'น้ำ {}', 'earth {}': 'ดิน {}', 'wind {}': 'ลม {}', 'holy {}': 'ศักดิ์สิทธิ์ {}',
   'shadow {}': 'มืด {}', 'ghost {}': 'วิญญาณ {}', 'poison {}': 'พิษ {}', 'undead {}': 'อมตะ {}',

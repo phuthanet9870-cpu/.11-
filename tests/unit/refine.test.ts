@@ -77,7 +77,9 @@ describe('Ragnarok-style character rules', () => {
     const { allocateStat } = await import('../../src/core/character');
     const ro = { ...data, balance: { ...data.balance, levels: { ...data.balance.levels, statCost: { ...data.balance.levels.statCost, mode: 'ro' } } } } as typeof data;
     expect([1, 9, 10, 11, 20, 21, 50, 98].map((v) => statRaiseCost(ro, v))).toEqual([2, 2, 2, 3, 3, 4, 6, 11]);
-    expect(statRaiseCost(data, 50)).toBe(1); // default: flat
+    expect(statRaiseCost(data, 50)).toBe(6); // default: Ragnarok Classic
+    const flat = { ...data, balance: { ...data.balance, levels: { ...data.balance.levels, statCost: { ...data.balance.levels.statCost, mode: 'flat' } } } } as typeof data;
+    expect(statRaiseCost(flat, 50)).toBe(1);
     const c = newChar(); c.stats.str = 10; c.statPoints = 4;
     expect(allocateStat(ro, c, 'str', 2).ok).toBe(false); // 10→11 costs 2, 11→12 costs 3
     expect(allocateStat(ro, c, 'str', 1).ok).toBe(true);

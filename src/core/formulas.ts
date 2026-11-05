@@ -21,13 +21,16 @@ export function expToNextJob(data: GameData, jobLevel: number): number {
 
 /** Stat points granted when reaching `level`. */
 export function statPointsForLevel(data: GameData, level: number): number {
-  const s = data.balance.levels.statPointsPerLevel;
+  const s = data.balance.levels.statPointsPerLevel as { ro?: boolean; base: number; perFiveLevels: number };
+  // Ragnarok Classic: floor((L-1)/5)+3 (3 points at Lv 2–5, 4 at 6–10, … 22 at 96–99).
+  if (s.ro) return Math.floor((level - 1) / 5) + 3;
   return s.base + Math.floor(level / 5) * s.perFiveLevels;
 }
 
 /** Total stat points a character of this level should own (allocated + free). */
-export function totalStatPointsAtLevel(data: GameData, level: number): number {
-  let total = data.balance.levels.startingStatPoints;
+export function totalStatPointsAtLevel(data: GameData, level: number, reborn = false): number {
+  // Reborn characters start their second life with 100 points instead of 48 (as in Ragnarok).
+  let total = reborn ? 100 : data.balance.levels.startingStatPoints;
   for (let l = 2; l <= level; l++) total += statPointsForLevel(data, l);
   return total;
 }
@@ -197,16 +200,24 @@ export function computeDerivedStats(data: GameData, c: CharacterState, runtimeMo
     (Math.floor((B.mpBase + L * cls.mpPerLevel) * trans * (1 + (int * B.mpIntPct) / 100)) + (mods.maxMp ?? 0)) * pct(mods.maxMpPct)));
 
   const unarmed = weapon ? 0 : data.balance.combat.unarmedAtk;
-  const patk = Math.max(1, Math.floor(
-    (str * B.patkStr + Math.floor(dex / B.patkDexDiv) + Math.floor(luk / B.patkLukDiv) + Math.floor(L / B.patkLevelDiv) +
-      unarmed + (mods.patk ?? 0)) * pct(mods.patkPct)));
-  const matk = Math.max(1, Math.floor(
-    (Math.floor(int * B.matkInt) + Math.floor(dex / B.matkDexDiv) + Math.floor(L / B.matkLevelDiv) + (mods.matk ?? 0)) * pct(mods.matkPct)));
+  const ro = (B as { formula?: string }).formula === 'ro';
+  // Ragnarok Classic status ATK: the main stat plus a bonus every 10 points (squared); bows and other
+  // ranged weapons use DEX as the main stat and STR as the minor one.
+  const ranged = attackKind === 'ranged';
+  const main = ranged ? dex : str, minor = ranged ? str : dex;
+  const statusAtk = ro ? main + Math.floor(main / 10) ** 2 + Math.floor(minor / 5) + Math.floor(luk / 5)
+    : str * B.patkStr + Math.floor(dex / B.patkDexDiv) + Math.floor(luk / B.patkLukDiv) + Math.floor(L / B.patkLevelDiv);
+  const patk = Math.max(1, Math.floor((statusAtk + unarmed + (mods.patk ?? 0)) * pct(mods.patkPct)));
+  // Ragnarok Classic MATK: a range from INT+(INT/7)^2 to INT+(INT/5)^2; the stat sheet shows both,
+  // spells use the middle.
+  const matkMin = ro ? int + Math.floor(int / 7) ** 2 : 0, matkMax = ro ? int + Math.floor(int / 5) ** 2 : 0;
+  const statusMatk = ro ? Math.floor((matkMin + matkMax) / 2) : Math.floor(int * B.matkInt) + Math.floor(dex / B.matkDexDiv) + Math.floor(L / B.matkLevelDiv);
+  const matk = Math.max(1, Math.floor((statusMatk + (mods.matk ?? 0)) * pct(mods.matkPct)));
   const pdef = Math.max(0, Math.floor((vit * B.pdefVit + (mods.pdef ?? 0)) * pct(mods.pdefPct)));
   const mdef = Math.max(0, Math.floor(int * B.mdefInt + vit * B.mdefVit + (mods.mdef ?? 0)));
   const hit = Math.floor(L + B.hitBase + dex * B.hitDex + (mods.hit ?? 0));
   const flee = Math.floor(L + agi * B.fleeAgi + luk * B.fleeLuk + (mods.flee ?? 0));
-  const crit = Math.max(0, B.critBase + luk * B.critLuk + (mods.crit ?? 0));
+  const crit = Math.max(0, B.critBase + Math.floor(luk * B.critLuk) + (mods.crit ?? 0));
   const critDmg = B.critDmgBase + (mods.critDmg ?? 0);
 
   const weaponIntervalPct = (weapon?.attackIntervalPct ?? 100) / 100;
@@ -222,7 +233,7 @@ export function computeDerivedStats(data: GameData, c: CharacterState, runtimeMo
   const attackRange = baseRange + (attackKind !== 'melee' ? mods.attackRange ?? 0 : 0);
 
   return {
-    maxHp, maxMp, patk, matk, pdef, mdef, hit, flee, crit, critDmg,
+    maxHp, maxMp, patk, matk, matkMin: Math.floor((matkMin + (mods.matk ?? 0)) * pct(mods.matkPct)), matkMax: Math.floor((matkMax + (mods.matk ?? 0)) * pct(mods.matkPct)), pdef, mdef, hit, flee, crit, critDmg,
     attackIntervalMs, aspd: Math.max(0, Math.round((200 - attackIntervalMs / 20) * 10) / 10), moveSpeed, castTimeMul, cdrPct, hpRegen, mpRegen,
     attackRange, attackKind,
     weaponElement: c.equipment.weapon?.element ?? weapon?.element ?? 'neutral',
@@ -236,7 +247,7 @@ export function computeDerivedStats(data: GameData, c: CharacterState, runtimeMo
     raceDamagePct: mods.raceDamagePct ?? {},
     sizeDamagePct: mods.sizeDamagePct ?? {},
     raceResistPct: mods.raceResistPct ?? {},
-    perfectDodge: B.perfectDodgeBase + luk / B.perfectDodgeLukDiv + (mods.perfectDodge ?? 0),
+    perfectDodge: B.perfectDodgeBase + Math.floor(luk / B.perfectDodgeLukDiv) + (mods.perfectDodge ?? 0),
     onHitStatusPct: mods.onHitStatusPct ?? {},
     hpDrainPct: Math.min(20, mods.hpDrainPct ?? 0),
     mpDrainPct: Math.min(20, mods.mpDrainPct ?? 0), skillHpDrainPct: Math.min(12, mods.skillHpDrainPct ?? 0), skillMpDrainPct: Math.min(15, mods.skillMpDrainPct ?? 0),

@@ -104,7 +104,30 @@ export function loadGameData(): GameData {
   for (const t of STUDIO_TILESETS) cached.tilesets.set(t.id, t);
   for (const m of STUDIO_MAPS) cached.maps.set(m.id, m);
   for (const [k, list] of Object.entries(STUDIO_DATA)) replaceCollection(cached, k as StudioCollection, list);
+  scaleMonsters(cached);
   return cached;
+}
+
+/**
+ * Monster strength relative to the data files (balance.json "monsterScale"): set when the player side
+ * moved to Ragnarok Classic stat rules (cheaper early stats, costlier late ones), so monsters keep the
+ * same time-to-kill. Applied once, on copies, so everything (combat, database, GM tools) sees the same numbers.
+ */
+function scaleMonsters(d: GameData) {
+  const k = (d.balance as { monsterScale?: { hp?: number; def?: number; mdef?: number; flee?: number; atk?: number } }).monsterScale;
+  if (!k) return;
+  for (const [id, m] of d.monsters) {
+    if (m.aiFlags?.includes('dummy')) continue;
+    d.monsters.set(id, {
+      ...m,
+      maxHp: Math.max(1, Math.round(m.maxHp * (k.hp ?? 1))),
+      defense: Math.round(m.defense * (k.def ?? 1)),
+      ...(m.magicDefense !== undefined ? { magicDefense: Math.round(m.magicDefense * (k.mdef ?? 1)) } : {}),
+      ...(m.flee !== undefined ? { flee: Math.round(m.flee * (k.flee ?? 1)) } : {}),
+      attack: Math.round(m.attack * (k.atk ?? 1)),
+      ...(m.magicAttack !== undefined ? { magicAttack: Math.round(m.magicAttack * (k.atk ?? 1)) } : {}),
+    });
+  }
 }
 
 /** Every PixelLab object (src/data/pixellab/library.json) as a placeable object kind `pl_<slug>`,

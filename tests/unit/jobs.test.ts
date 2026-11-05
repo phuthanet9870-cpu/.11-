@@ -82,6 +82,7 @@ describe('first jobs', () => {
     let stolen = 0;
     for (let i = 0; i < 20 && !stolen; i++) {
       const m = w.spawnMonsterAt('leaf_slime', w.player.x + 30, w.player.y)!;
+      m.hp = m.maxHp = 1e6; // survives, so a kill's loot does not count as stolen
       const before = c.inventory.reduce((a, x) => a + x.qty, 0);
       w.castSkill('pilfer', { targetId: m.id });
       run(w, 1100);

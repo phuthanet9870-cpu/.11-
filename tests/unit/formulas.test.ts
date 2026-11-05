@@ -39,7 +39,10 @@ describe('derived stats', () => {
     const s0 = computeDerivedStats(data, c);
     c.stats.str += 10;
     const s1 = computeDerivedStats(data, c);
-    expect(s1.patk - s0.patk).toBe(10 * data.balance.stats.patkStr);
+    // Ragnarok Classic melee status ATK: STR + floor(STR/10)^2 (+ DEX/5 + LUK/5, unchanged here).
+    const atk = (x: number) => x + Math.floor(x / 10) ** 2;
+    const str0 = s0.totalStats.str;
+    expect(s1.patk - s0.patk).toBe(atk(str0 + 10) - atk(str0));
     expect(s1.weightLimit - s0.weightLimit).toBe(10 * data.balance.stats.weightStr);
 
     c.skills.basic_training = 5;
@@ -123,5 +126,25 @@ describe('character management', () => {
     expect(c.classId).toBe('mage');
     expect(c.jobLevel).toBe(1);
     expect(changeJob(data, c, 'knight').ok).toBe(false);
+  });
+});
+
+describe('Ragnarok Classic stat rules', () => {
+  it('points per level, status ATK/MATK, FLEE, CRIT and ASPD follow the classic formulas', async () => {
+    const { statPointsForLevel, totalStatPointsAtLevel } = await import('../../src/core/formulas');
+    expect([2, 5, 6, 10, 11, 99].map((l) => statPointsForLevel(data, l))).toEqual([3, 3, 4, 4, 5, 22]);
+    expect(totalStatPointsAtLevel(data, 1)).toBe(48);
+    expect(totalStatPointsAtLevel(data, 99)).toBe(1273); // the classic total at Base Lv 99
+    expect(totalStatPointsAtLevel(data, 1, true)).toBe(100); // reborn
+    const c = newChar();
+    c.stats = { str: 30, agi: 40, vit: 20, int: 35, dex: 25, luk: 10 };
+    const s = computeDerivedStats(data, c);
+    const t = s.totalStats;
+    expect(s.matkMin).toBe(t.int + Math.floor(t.int / 7) ** 2);
+    expect(s.matkMax).toBe(t.int + Math.floor(t.int / 5) ** 2);
+    expect(s.flee).toBe(c.baseLevel + t.agi);
+    expect(s.hit).toBe(c.baseLevel + t.dex);
+    expect(s.crit).toBe(1 + Math.floor(t.luk * 0.3));
+    expect(s.mdef).toBe(t.int);
   });
 });
