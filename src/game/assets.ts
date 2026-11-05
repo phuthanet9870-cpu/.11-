@@ -30,7 +30,7 @@ export function ensureCharacterTexture(scene: Phaser.Scene, look: CharacterLook)
   const key = lookKey(look);
   if (!scene.textures.exists(key) || !layouts.has(key)) {
     const layout = characterLayout(look);
-    addCanvasSheet(scene, key, generateCharacterSheet(look), CHAR_FRAME_W, CHAR_FRAME_H, layout.cols, CHAR_DIRECTIONS.length);
+    addCanvasSheet(scene, key, generateCharacterSheet(look), layout.fw ?? CHAR_FRAME_W, layout.fh ?? CHAR_FRAME_H, layout.cols, CHAR_DIRECTIONS.length);
     layouts.set(key, layout);
   }
   return key;

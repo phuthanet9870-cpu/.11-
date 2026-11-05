@@ -22,7 +22,7 @@ export class SpritePreview {
     const loop = () => { this.draw(); this.raf = requestAnimationFrame(loop); };
     this.raf = requestAnimationFrame(loop);
   }
-  private layout = { anims: CHAR_ANIMS, cols: CHAR_SHEET_COLS };
+  private layout: { anims: typeof CHAR_ANIMS; cols: number; fw?: number; fh?: number } = { anims: CHAR_ANIMS, cols: CHAR_SHEET_COLS };
   setLook(look: CharacterLook) { this.sheet = generateCharacterSheet(look); this.layout = characterLayout(look); }
   private draw() {
     if (!this.canvas.isConnected) { cancelAnimationFrame(this.raf); return; }
@@ -33,7 +33,10 @@ export class SpritePreview {
     const meta = this.layout.anims[this.anim];
     const f = Math.floor(performance.now() / meta.frameMs) % meta.count;
     const col = meta.start + f, row = CHAR_DIRECTIONS.indexOf(this.dir);
-    ctx.drawImage(this.sheet, col * CHAR_FRAME_W, row * CHAR_FRAME_H, CHAR_FRAME_W, CHAR_FRAME_H, 0, 0, this.canvas.width, this.canvas.height);
+    // Bigger drawn cells: a 3:4 window of the cell's full height, centred (the preview canvas is 3:4).
+    const fw = this.layout.fw ?? CHAR_FRAME_W, fh = this.layout.fh ?? CHAR_FRAME_H;
+    const ww = fw > CHAR_FRAME_W ? Math.round(fh * 0.75) : CHAR_FRAME_W, wh = fw > CHAR_FRAME_W ? fh : CHAR_FRAME_H;
+    ctx.drawImage(this.sheet, col * fw + (fw - ww) / 2, row * fh, ww, wh, 0, 0, this.canvas.width, this.canvas.height);
   }
 }
 

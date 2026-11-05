@@ -251,12 +251,17 @@ function shadowOf(look: CharacterLook) {
 
 /** Frame layout of the sheet generateCharacterSheet makes for a look. */
 export function characterLayout(look: CharacterLook): CharLayout {
-  return shadowOf(look) ? { anims: SHADOW_ANIMS, cols: SHADOW_SHEET_COLS } : { anims: CHAR_ANIMS, cols: CHAR_SHEET_COLS };
+  if (shadowOf(look)) return { anims: SHADOW_ANIMS, cols: SHADOW_SHEET_COLS };
+  // A drawn sheet with bigger cells keeps them (no rescale): 16 columns × 4 rows of its own size.
+  const img = look.sheet ? spriteOverride(`sprites/${look.sheet}`) : null;
+  if (img && Math.round(img.width / CHAR_SHEET_COLS) > W) return { anims: CHAR_ANIMS, cols: CHAR_SHEET_COLS, fw: Math.round(img.width / CHAR_SHEET_COLS), fh: Math.round(img.height / CHAR_DIRECTIONS.length) };
+  return { anims: CHAR_ANIMS, cols: CHAR_SHEET_COLS };
 }
 
 /** `classicLayout`: shadow sheets in the classic 16-column layout (Studio templates). */
 export function generateCharacterSheet(look: CharacterLook, opts: { classicLayout?: boolean } = {}): HTMLCanvasElement {
-  const drawn = look.sheet ? overrideCanvas(`sprites/${look.sheet}`, W * CHAR_SHEET_COLS, H * CHAR_DIRECTIONS.length) : null;
+  const lay = characterLayout(look);
+  const drawn = look.sheet ? overrideCanvas(`sprites/${look.sheet}`, (lay.fw ?? W) * CHAR_SHEET_COLS, (lay.fh ?? H) * CHAR_DIRECTIONS.length) : null;
   if (drawn) return drawn;
   const design = shadowOf(look);
   if (design) {
@@ -310,6 +315,9 @@ export function generateCharacterSheet(look: CharacterLook, opts: { classicLayou
 export function portraitFromSheet(sheet: HTMLCanvasElement, scale = 3): HTMLCanvasElement {
   const { canvas, ctx } = makeCanvas(32 * scale, 32 * scale);
   ctx.imageSmoothingEnabled = false;
-  ctx.drawImage(sheet, 8, 6, 32, 32, 0, 0, 32 * scale, 32 * scale);
+  // Cells are 48×64 (or bigger for drawn sheets): the head sits 54–58 px above the cell bottom, centred.
+  const fw = Math.round(sheet.width / CHAR_SHEET_COLS), fh = Math.round(sheet.height / CHAR_DIRECTIONS.length);
+  const big = fw > W;
+  ctx.drawImage(sheet, fw / 2 - 16, big ? fh - 66 : 6, 32, 32, 0, 0, 32 * scale, 32 * scale);
   return canvas;
 }

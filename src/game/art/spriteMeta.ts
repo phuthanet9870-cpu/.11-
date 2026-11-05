@@ -29,7 +29,8 @@ export const SHADOW_ANIMS: Record<CharAnim, { start: number; count: number; fram
   death: { start: 33, count: 8, frameMs: 150, loop: false },
 };
 export const SHADOW_SHEET_COLS = 41;
-export type CharLayout = { anims: typeof CHAR_ANIMS; cols: number };
+/** fw/fh: cell size when it differs from 48×64 (bigger drawn sheets, e.g. PixelLab art with the feet 4 px above the cell bottom). */
+export type CharLayout = { anims: typeof CHAR_ANIMS; cols: number; fw?: number; fh?: number };
 
 /** Monster sheets: one row (facing left; right is mirrored at runtime). */
 export type MonAnim = 'idle' | 'walk' | 'attack' | 'hit' | 'death';

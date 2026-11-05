@@ -277,7 +277,7 @@ export class GameScene extends Phaser.Scene {
     // NPCs
     for (const n of w.npcs) {
       const key = ensureCharacterTexture(this, npcLook(n.def));
-      const s = this.track(this.add.sprite(n.x, n.y, key, npcFrame(key, n.dir, 0)).setOrigin(CHAR_PIVOT.x, CHAR_PIVOT.y));
+      const s = this.track(this.add.sprite(n.x, n.y, key, npcFrame(key, n.dir, 0)).setOrigin(CHAR_PIVOT.x, characterTextureLayout(key).fh ? (characterTextureLayout(key).fh! - 4) / characterTextureLayout(key).fh! : CHAR_PIVOT.y));
       s.setDepth(n.y);
       // Name with its role badge (🛒 shop, ⚒ smith, 🎓 job master…) and the role in its colour underneath.
       const role = npcRole(n.def);
@@ -957,7 +957,8 @@ const procClips = <A extends string>(key: string, anims: Record<A, { start: numb
   })) as Record<string, Clip>;
 function proceduralCharRig(key: string): Rig {
   const layout = characterTextureLayout(key);
-  return { clips: procClips(key, layout.anims, layout.cols, CHAR_DIRECTIONS.length), originX: CHAR_PIVOT.x, originY: CHAR_PIVOT.y };
+  // Bigger drawn cells keep the feet 4 px above their bottom edge.
+  return { clips: procClips(key, layout.anims, layout.cols, CHAR_DIRECTIONS.length), originX: CHAR_PIVOT.x, originY: layout.fh ? (layout.fh - 4) / layout.fh : CHAR_PIVOT.y };
 }
 function proceduralMonRig(key: string): Rig {
   return { clips: procClips(key, MON_ANIMS, MON_SHEET_COLS, 1), originX: 0.5, originY: 1 };
