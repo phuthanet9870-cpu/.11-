@@ -1,0 +1,5334 @@
+{
+ "source": "PixelLab",
+ "objects": [
+  {
+   "id": "0015ab89-d7aa-4e32-9434-8d6e4bc319b4",
+   "slug": "leafless_bare_tree_frosted_0015",
+   "name": "leafless bare tree frosted with ice and white hoarfrost, pale blue-grey bark, icicles on branches, front view, Ragnarok Online classic dark fantasy style",
+   "w": 192,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/leafless_bare_tree_frosted_0015",
+   "bgRemoved": true
+  },
+  {
+   "id": "01314155-a66a-4676-8cf0-bedf6e2333b0",
+   "slug": "boulder_covered_green_moss_0131",
+   "name": "large boulder covered in green moss and ivy, grey stone, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 80,
+   "frames": 1,
+   "art": "pl/obj/boulder_covered_green_moss_0131"
+  },
+  {
+   "id": "01af9f4e-29d2-457b-a322-843927778563",
+   "slug": "wooden_crossroads_signpost_two_01af",
+   "name": "wooden crossroads signpost with two plank arrows, weathered, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 96,
+   "frames": 1,
+   "art": "pl/obj/wooden_crossroads_signpost_two_01af"
+  },
+  {
+   "id": "028dd9ca-4c1a-4aa0-bd86-f249e0484e91",
+   "slug": "owl_eye_golden_bird_028d",
+   "name": "owl eye golden bird eye",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/owl_eye_golden_bird_028d"
+  },
+  {
+   "id": "02bcff83-eb87-4697-a78f-f3e76e5a4453",
+   "slug": "frozen_dead_tree_covered_02bc",
+   "name": "frozen dead tree covered in snow",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/frozen_dead_tree_covered_02bc"
+  },
+  {
+   "id": "02bd563e-87ac-4c4a-be31-7ea404c19b77",
+   "slug": "strip_armor_broken_armor_02bd",
+   "name": "strip armor broken armor",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/strip_armor_broken_armor_02bd"
+  },
+  {
+   "id": "02d66467-7a98-4b20-9f84-773589843633",
+   "slug": "iron_will_clenched_fist_02d6",
+   "name": "iron will clenched fist glowing",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/iron_will_clenched_fist_02d6"
+  },
+  {
+   "id": "0304d154-2e58-48ed-afbd-bd6361a12180",
+   "slug": "treasure_chest_closed_0304",
+   "name": "treasure chest closed",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/treasure_chest_closed_0304"
+  },
+  {
+   "id": "03892a5f-90b2-4b64-a9d7-187b2462f9b0",
+   "slug": "wooden_ladder_0389",
+   "name": "wooden ladder",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/wooden_ladder_0389"
+  },
+  {
+   "id": "03c203a7-c712-4bcf-b9fe-f574f0498061",
+   "slug": "bundle_arrows_03c2",
+   "name": "bundle of arrows",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/bundle_arrows_03c2"
+  },
+  {
+   "id": "0467de08-9b49-4172-9b21-ad812d4aeded",
+   "slug": "discount_coin_tag_percent_0467",
+   "name": "discount coin tag percent",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/discount_coin_tag_percent_0467"
+  },
+  {
+   "id": "051350c9-0652-4a54-9f34-c5425494a22e",
+   "slug": "aspersio_holy_water_bottle_0513",
+   "name": "aspersio holy water bottle splash",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/aspersio_holy_water_bottle_0513"
+  },
+  {
+   "id": "05345319-7069-4802-9da1-0d8f96d74e49",
+   "slug": "psychic_wave_purple_ripple_0534",
+   "name": "psychic wave purple ripple",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/psychic_wave_purple_ripple_0534"
+  },
+  {
+   "id": "06c5841b-8441-48bf-b852-ef28ffc789e6",
+   "slug": "dark_brown_underground_cave_06c5",
+   "name": "dark brown underground cave rock wall, rough boulders and stalagmites, front view, fantasy RPG terrain",
+   "w": 256,
+   "h": 192,
+   "frames": 1,
+   "art": "pl/obj/dark_brown_underground_cave_06c5",
+   "bgRemoved": true
+  },
+  {
+   "id": "0786ac02-bc05-4107-b60b-42fa2b2a35da",
+   "slug": "bleached_driftwood_branch_pile_0786",
+   "name": "bleached driftwood branch pile washed ashore, front view, Ragnarok Online classic dark fantasy style",
+   "w": 80,
+   "h": 48,
+   "frames": 1,
+   "art": "pl/obj/bleached_driftwood_branch_pile_0786"
+  },
+  {
+   "id": "079f500b-8c2d-4485-9d9f-7ce69dcec5e8",
+   "slug": "cooking_pot_over_fire_079f",
+   "name": "cooking pot over fire",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/cooking_pot_over_fire_079f"
+  },
+  {
+   "id": "0acdd7cf-e8f4-43f7-9608-cf0147386075",
+   "slug": "fireball_projectile_0acd",
+   "name": "fireball projectile",
+   "w": 32,
+   "h": 32,
+   "frames": 8,
+   "art": "pl/obj/fireball_projectile_0acd"
+  },
+  {
+   "id": "0afa4efe-d92c-470d-843b-a6b7da7f0c6d",
+   "slug": "snowy_rock_pile_0afa",
+   "name": "snowy rock pile",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/snowy_rock_pile_0afa"
+  },
+  {
+   "id": "0c06a5c1-fa52-4b80-aca5-18c93de4fd56",
+   "slug": "giant_bug_cocoon_0c06",
+   "name": "giant bug cocoon",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/giant_bug_cocoon_0c06"
+  },
+  {
+   "id": "0c63e749-85c3-42ea-8538-4b176d797481",
+   "slug": "pile_dust_powder_pouch_0c63",
+   "name": "pile of dust powder in a pouch",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pile_dust_powder_pouch_0c63"
+  },
+  {
+   "id": "0d6eb6fa-cfb1-45f3-b1b2-e9427b6d8f81",
+   "slug": "iron_graveyard_fence_section_0d6e",
+   "name": "iron graveyard fence section",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/iron_graveyard_fence_section_0d6e"
+  },
+  {
+   "id": "0dc877d0-9b35-4462-90db-7a48902c8301",
+   "slug": "holy_light_beam_cross_0dc8",
+   "name": "holy light beam cross",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/holy_light_beam_cross_0dc8"
+  },
+  {
+   "id": "0de18731-8a27-4e15-b87b-b71a98a16a19",
+   "slug": "royal_fantasy_castle_palace_0de1",
+   "name": "royal fantasy castle palace with a central keep, two tall flanking round towers with conical blue roofs, gold-trimmed gate with portcullis, crenellated walls, b",
+   "w": 400,
+   "h": 300,
+   "frames": 1,
+   "art": "pl/obj/royal_fantasy_castle_palace_0de1",
+   "bgRemoved": true
+  },
+  {
+   "id": "0e4a623c-3bd9-448c-a991-bfe3d2446485",
+   "slug": "sonic_blow_rapid_slashes_0e4a",
+   "name": "sonic blow rapid slashes",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/sonic_blow_rapid_slashes_0e4a"
+  },
+  {
+   "id": "0ef5d165-ebad-4c3f-ba69-4a62bc1e41c0",
+   "slug": "floating_dark_rune_stone_0ef5",
+   "name": "floating dark rune stone",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/floating_dark_rune_stone_0ef5"
+  },
+  {
+   "id": "0f3609f1-264a-43c6-ac15-d32933ce23b3",
+   "slug": "envenom_poison_dagger_dripping_0f36",
+   "name": "envenom poison dagger dripping green",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/envenom_poison_dagger_dripping_0f36"
+  },
+  {
+   "id": "103e38a9-5ae5-485f-b6c1-6a0d541e77cf",
+   "slug": "leafy_green_deciduous_tree_103e",
+   "name": "leafy green deciduous tree with brown trunk, game prop",
+   "w": 48,
+   "h": 56,
+   "frames": 1,
+   "art": "pl/obj/leafy_green_deciduous_tree_103e"
+  },
+  {
+   "id": "10518526-1032-4a93-a621-0bd0d4532e93",
+   "slug": "lucky_kiss_lips_sparkles_1051",
+   "name": "lucky kiss lips with sparkles",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/lucky_kiss_lips_sparkles_1051"
+  },
+  {
+   "id": "10c3661c-a5f4-4992-bff7-e646fb926be7",
+   "slug": "agility_winged_boot_10c3",
+   "name": "agility winged boot",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/agility_winged_boot_10c3"
+  },
+  {
+   "id": "11978ae4-81bf-41e7-ab4d-fc71653fb91e",
+   "slug": "grand_royal_castle_keep_1197",
+   "name": "grand royal castle keep with central tower, gatehouse arch, red banners, crenellated stone walls and four corner turrets with conical red roofs, seen from the f",
+   "w": 400,
+   "h": 360,
+   "frames": 1,
+   "art": "pl/obj/grand_royal_castle_keep_1197",
+   "bgRemoved": true
+  },
+  {
+   "id": "11c5a9fa-0986-45b3-b3ee-439783fee2ea",
+   "slug": "thatched_roof_stone_cottage_11c5",
+   "name": "small thatched-roof stone cottage, single storey, straw roof, round wooden door, flower garden, seen from the front at a slight angle, fantasy RPG village",
+   "w": 224,
+   "h": 224,
+   "frames": 1,
+   "art": "pl/obj/thatched_roof_stone_cottage_11c5",
+   "bgRemoved": true
+  },
+  {
+   "id": "12c2b5cb-a83c-495a-9ee6-cc7a9cae634d",
+   "slug": "single_wooden_arrow_12c2",
+   "name": "single wooden arrow",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/single_wooden_arrow_12c2"
+  },
+  {
+   "id": "13641b37-08a1-4bc9-b450-002e5b721df8",
+   "slug": "hide_ninja_cloak_invisible_1364",
+   "name": "hide ninja cloak invisible",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/hide_ninja_cloak_invisible_1364"
+  },
+  {
+   "id": "137c6b5f-a933-41a3-969d-24e783af1b87",
+   "slug": "medieval_fantasy_shop_building_137c",
+   "name": "medieval fantasy shop building with a striped awning over a display window, hanging wooden sign, two storeys, strict flat 2D front elevation facing the viewer, ",
+   "w": 224,
+   "h": 224,
+   "frames": 1,
+   "art": "pl/obj/medieval_fantasy_shop_building_137c",
+   "bgRemoved": true
+  },
+  {
+   "id": "13bf119e-0133-4bdb-af5d-345cd7d053eb",
+   "slug": "golden_scarab_beetle_statue_13bf",
+   "name": "golden scarab beetle statue",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/golden_scarab_beetle_statue_13bf"
+  },
+  {
+   "id": "13fec51e-92a2-44bf-b4b9-0d6cded71179",
+   "slug": "brandish_spear_sweeping_slash_13fe",
+   "name": "brandish spear sweeping slash",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/brandish_spear_sweeping_slash_13fe"
+  },
+  {
+   "id": "14077fc4-71c4-4a6a-9e30-f57400c92985",
+   "slug": "fiery_explosion_ring_around_1407",
+   "name": "fiery explosion ring around a sword",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/fiery_explosion_ring_around_1407"
+  },
+  {
+   "id": "14b5daa2-c351-4c99-aabc-fe52b64eaa38",
+   "slug": "peat_mound_14b5",
+   "name": "peat mound",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/peat_mound_14b5"
+  },
+  {
+   "id": "14d35e18-e5a7-461a-ad84-9f57e074d7cc",
+   "slug": "mossy_fallen_log_14d3",
+   "name": "mossy fallen log",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/mossy_fallen_log_14d3"
+  },
+  {
+   "id": "15c7b447-537e-41a9-a69b-53982900bf88",
+   "slug": "hay_pile_15c7",
+   "name": "hay pile",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/hay_pile_15c7"
+  },
+  {
+   "id": "1702df04-b0a9-4fb2-b797-5d49777be681",
+   "slug": "weathered_stone_statue_armoured_1702",
+   "name": "weathered stone statue of an armoured knight holding a sword point-down in front, mossy pedestal, front view, Ragnarok Online classic dark fantasy style",
+   "w": 128,
+   "h": 192,
+   "frames": 1,
+   "art": "pl/obj/weathered_stone_statue_armoured_1702"
+  },
+  {
+   "id": "170b4790-d903-43a1-a55e-eecf84a1f8a8",
+   "slug": "green_herb_leaf_170b",
+   "name": "green herb leaf",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/green_herb_leaf_170b"
+  },
+  {
+   "id": "174c8512-7da7-4f29-bed9-62d6f047fed0",
+   "slug": "dark_green_pine_fir_174c",
+   "name": "dark green pine fir tree, game prop",
+   "w": 40,
+   "h": 56,
+   "frames": 1,
+   "art": "pl/obj/dark_green_pine_fir_174c"
+  },
+  {
+   "id": "17713867-ce70-4eb3-b859-5fe10ac2b718",
+   "slug": "grimtooth_fang_bursting_from_1771",
+   "name": "grimtooth fang bursting from ground",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/grimtooth_fang_bursting_from_1771"
+  },
+  {
+   "id": "17c2d80e-de4b-46fc-b2cc-0a9982f9991f",
+   "slug": "glowing_cave_mushroom_17c2",
+   "name": "glowing cave mushroom",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/glowing_cave_mushroom_17c2"
+  },
+  {
+   "id": "18ac9fad-e49c-4fd8-831f-2c2aaf2f2451",
+   "slug": "crumbled_stone_archway_pieces_18ac",
+   "name": "crumbled stone archway pieces",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/crumbled_stone_archway_pieces_18ac"
+  },
+  {
+   "id": "18c89a45-dcb8-4cee-854b-747f22ae9457",
+   "slug": "patch_red_poppies_orange_18c8",
+   "name": "small patch of red poppies and orange wildflowers in grass, front view, Ragnarok Online classic dark fantasy style",
+   "w": 48,
+   "h": 48,
+   "frames": 1,
+   "art": "pl/obj/patch_red_poppies_orange_18c8"
+  },
+  {
+   "id": "18d649eb-b6a5-4339-a103-320f6f56aa5f",
+   "slug": "axe_mastery_battle_axe_18d6",
+   "name": "axe mastery battle axe",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/axe_mastery_battle_axe_18d6"
+  },
+  {
+   "id": "18de2c1f-9847-4c1c-9305-ef82e02e9ef1",
+   "slug": "steal_hand_grabbing_coin_18de",
+   "name": "steal hand grabbing coin purse",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/steal_hand_grabbing_coin_18de"
+  },
+  {
+   "id": "199ad6fd-d1ee-405a-9583-5d8d4d37cb82",
+   "slug": "magic_token_coin_gem_199a",
+   "name": "magic token coin with gem",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/magic_token_coin_gem_199a"
+  },
+  {
+   "id": "19d2ca08-5ed1-4da6-a9d7-2c8de9345e67",
+   "slug": "wooden_treasure_box_chest_19d2",
+   "name": "wooden treasure box chest",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/wooden_treasure_box_chest_19d2"
+  },
+  {
+   "id": "19de55ee-6cde-49f6-805a-849f16c3a39b",
+   "slug": "blessing_glowing_angel_wings_19de",
+   "name": "blessing glowing angel wings",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/blessing_glowing_angel_wings_19de"
+  },
+  {
+   "id": "1a75ef32-d239-4c49-9fca-80eb22d3ef1d",
+   "slug": "humming_musical_hum_1a75",
+   "name": "humming musical hum",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/humming_musical_hum_1a75"
+  },
+  {
+   "id": "1afb07e2-1533-403f-81f5-19ac216572e2",
+   "slug": "faith_defense_shield_cross_1afb",
+   "name": "faith defense shield with cross",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/faith_defense_shield_cross_1afb"
+  },
+  {
+   "id": "1bcd7787-01ad-444a-97f0-dcf149981390",
+   "slug": "rusty_mining_minecart_filled_1bcd",
+   "name": "rusty mining minecart filled with ore rocks on short rail section, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 80,
+   "frames": 1,
+   "art": "pl/obj/rusty_mining_minecart_filled_1bcd"
+  },
+  {
+   "id": "1c1dcaa2-41a4-4300-b55b-37d7768b76aa",
+   "slug": "vitality_heart_shield_1c1d",
+   "name": "vitality heart shield",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/vitality_heart_shield_1c1d"
+  },
+  {
+   "id": "1d9bacc4-9fa3-4402-a11e-5d4b0978c1ae",
+   "slug": "medieval_fantasy_timber_frame_1d9b",
+   "name": "medieval fantasy timber-frame townhouse, two storeys, red tile gabled roof, wooden door and shuttered windows, strict flat 2D front elevation facing the viewer,",
+   "w": 192,
+   "h": 224,
+   "frames": 1,
+   "art": "pl/obj/medieval_fantasy_timber_frame_1d9b",
+   "bgRemoved": true
+  },
+  {
+   "id": "1dae7bd9-d95a-437d-a9d5-b14461fe37a0",
+   "slug": "heal_glowing_green_healing_1dae",
+   "name": "heal glowing green healing cross",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/heal_glowing_green_healing_1dae"
+  },
+  {
+   "id": "1f35cff2-ab64-4d3c-8ed2-e364f7e0111b",
+   "slug": "bronze_torch_brazier_fire_1f35",
+   "name": "bronze torch brazier with fire",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/bronze_torch_brazier_fire_1f35"
+  },
+  {
+   "id": "1f647e47-9fba-48a4-b633-71039f3afc6b",
+   "slug": "steel_dagger_knife_1f64",
+   "name": "steel dagger knife",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/steel_dagger_knife_1f64"
+  },
+  {
+   "id": "1fc7015d-1304-4525-9a3b-2d6c33459895",
+   "slug": "back_slide_dashing_backward_1fc7",
+   "name": "back slide dashing backward arrow",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/back_slide_dashing_backward_1fc7"
+  },
+  {
+   "id": "206c78c8-f3d2-4e55-9761-3aaa44023569",
+   "slug": "clump_tall_green_marsh_206c",
+   "name": "clump of tall green marsh reeds and cattails, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 96,
+   "frames": 1,
+   "art": "pl/obj/clump_tall_green_marsh_206c"
+  },
+  {
+   "id": "20a89fa0-ec8c-47fd-b307-365bca171084",
+   "slug": "pile_three_grey_pebbles_20a8",
+   "name": "small pile of three grey pebbles and stones, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 40,
+   "frames": 1,
+   "art": "pl/obj/pile_three_grey_pebbles_20a8"
+  },
+  {
+   "id": "210a5a40-925d-459a-a683-836c4bdb381e",
+   "slug": "endow_earth_brown_earth_210a",
+   "name": "endow earth brown earth sword",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/endow_earth_brown_earth_210a"
+  },
+  {
+   "id": "224d6f25-2f31-4e02-8e0e-ef45afb44b48",
+   "slug": "party_three_heroes_224d",
+   "name": "party of three heroes",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/party_three_heroes_224d"
+  },
+  {
+   "id": "23f5071a-819c-4f0e-99e2-a5ff5ab4302d",
+   "slug": "card_album_book_23f5",
+   "name": "card album book",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/card_album_book_23f5"
+  },
+  {
+   "id": "2411fd76-880a-4993-a48b-6069b119d20f",
+   "slug": "iron_anvil_2411",
+   "name": "iron anvil",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/iron_anvil_2411"
+  },
+  {
+   "id": "2526fd22-d314-429b-be4c-372006d6fedd",
+   "slug": "arrow_shower_rain_arrows_2526",
+   "name": "arrow shower rain of arrows",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/arrow_shower_rain_arrows_2526"
+  },
+  {
+   "id": "25b6ceb8-979a-479f-8528-651c2361be27",
+   "slug": "auto_guard_shield_glow_25b6",
+   "name": "auto guard shield glow",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/auto_guard_shield_glow_25b6"
+  },
+  {
+   "id": "260a83f0-b8ef-44a7-9fcb-0791ab0d2595",
+   "slug": "knight_helmet_260a",
+   "name": "knight helmet",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/knight_helmet_260a"
+  },
+  {
+   "id": "260ca96d-99df-4db0-8dd1-5d3874c3497e",
+   "slug": "dense_dark_green_leafy_260c",
+   "name": "dense dark green leafy shrub bush, front view, Ragnarok Online classic dark fantasy style",
+   "w": 80,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/dense_dark_green_leafy_260c"
+  },
+  {
+   "id": "2628fe5e-c5aa-462e-b157-fb04c00ab610",
+   "slug": "meteor_storm_falling_fireballs_2628",
+   "name": "meteor storm falling fireballs",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/meteor_storm_falling_fireballs_2628"
+  },
+  {
+   "id": "2631a253-6ac7-4472-8aa7-a91b72180659",
+   "slug": "backstab_dagger_stab_back_2631",
+   "name": "backstab dagger stab in back",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/backstab_dagger_stab_back_2631"
+  },
+  {
+   "id": "2641c6f6-69df-481d-bf82-f1427072c60f",
+   "slug": "cut_faceted_gemstone_2641",
+   "name": "cut faceted gemstone",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/cut_faceted_gemstone_2641"
+  },
+  {
+   "id": "27236005-2cad-4d39-8830-019e213a052f",
+   "slug": "broadleaf_oak_tree_thick_2723",
+   "name": "broadleaf oak tree, thick gnarled brown trunk with roots, full dense dark green leafy crown, front view, Ragnarok Online classic dark fantasy style",
+   "w": 192,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/broadleaf_oak_tree_thick_2723",
+   "bgRemoved": true
+  },
+  {
+   "id": "27d6bd70-fc65-4b74-a101-a2e831f3157f",
+   "slug": "cracked_weathered_stone_tombstone_27d6",
+   "name": "cracked weathered stone tombstone gravestone with moss, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 80,
+   "frames": 1,
+   "art": "pl/obj/cracked_weathered_stone_tombstone_27d6"
+  },
+  {
+   "id": "2876b65d-01bb-49af-9c8b-6d5a890f4253",
+   "slug": "skill_book_star_2876",
+   "name": "skill book with star",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/skill_book_star_2876"
+  },
+  {
+   "id": "289956b4-a0a0-42fc-8f33-760522717732",
+   "slug": "campfire_logs_burning_flames_2899",
+   "name": "small campfire with logs and burning flames and a ring of stones, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/campfire_logs_burning_flames_2899"
+  },
+  {
+   "id": "28da233a-2979-43f9-a480-300daad74eff",
+   "slug": "patch_blue_purple_bellflowers_28da",
+   "name": "small patch of blue and purple bellflowers in grass, front view, Ragnarok Online classic dark fantasy style",
+   "w": 48,
+   "h": 48,
+   "frames": 1,
+   "art": "pl/obj/patch_blue_purple_bellflowers_28da"
+  },
+  {
+   "id": "28e56b4b-9f51-4f4f-a973-10b9f9181f45",
+   "slug": "medieval_fantasy_tavern_inn_28e5",
+   "name": "medieval fantasy tavern inn with a hanging beer mug sign, warm lit windows, two storeys, dark wood and plaster, strict flat 2D front elevation facing the viewer",
+   "w": 224,
+   "h": 224,
+   "frames": 1,
+   "art": "pl/obj/medieval_fantasy_tavern_inn_28e5",
+   "bgRemoved": true
+  },
+  {
+   "id": "2974cac1-7bc6-467d-a3bd-eecba97f560c",
+   "slug": "chemical_protection_armor_glowing_2974",
+   "name": "chemical protection armor glowing flask",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/chemical_protection_armor_glowing_2974"
+  },
+  {
+   "id": "29ab15a5-e271-43f4-8c98-e7de8da4fb18",
+   "slug": "bleached_desert_skull_29ab",
+   "name": "bleached desert skull",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/bleached_desert_skull_29ab"
+  },
+  {
+   "id": "2a42b8b3-9ca1-41c2-9760-d4e78ddae763",
+   "slug": "strength_clenched_fist_2a42",
+   "name": "strength clenched fist",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/strength_clenched_fist_2a42"
+  },
+  {
+   "id": "2a540200-d8a9-4704-a01c-b3c700db697e",
+   "slug": "front_facade_thatched_roof_2a54",
+   "name": "flat front facade of a small thatched-roof stone cottage seen from directly in front, wide low front wall with a round wooden door in the centre and two small w",
+   "w": 192,
+   "h": 160,
+   "frames": 1,
+   "art": "pl/obj/front_facade_thatched_roof_2a54"
+  },
+  {
+   "id": "2b63411a-0961-4be9-a855-2250f1040ad5",
+   "slug": "pointed_crystal_cluster_2b63",
+   "name": "pointed crystal cluster",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pointed_crystal_cluster_2b63"
+  },
+  {
+   "id": "2b8cc4b4-34f1-4374-b94f-81a711dbd537",
+   "slug": "bare_dead_twisted_tree_2b8c",
+   "name": "bare dead twisted tree with no leaves, grey brown",
+   "w": 40,
+   "h": 48,
+   "frames": 1,
+   "art": "pl/obj/bare_dead_twisted_tree_2b8c"
+  },
+  {
+   "id": "2c25d63b-d1ba-43e0-9029-667b5f404c86",
+   "slug": "stone_milestone_marker_2c25",
+   "name": "stone milestone marker",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/stone_milestone_marker_2c25"
+  },
+  {
+   "id": "2c7323dc-14b6-491b-bcc5-7b363ff69623",
+   "slug": "old_mossy_gravestone_tombstone_2c73",
+   "name": "old mossy gravestone tombstone with cross",
+   "w": 32,
+   "h": 40,
+   "frames": 1,
+   "art": "pl/obj/old_mossy_gravestone_tombstone_2c73"
+  },
+  {
+   "id": "2cc06b29-676d-4ce1-bd02-cab54405bb5f",
+   "slug": "dragonology_dragon_head_2cc0",
+   "name": "dragonology dragon head",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/dragonology_dragon_head_2cc0"
+  },
+  {
+   "id": "2d6ac9fa-a1ef-4751-9681-8e17e388138f",
+   "slug": "cozy_medieval_house_blue_2d6a",
+   "name": "cozy medieval house with blue slate roof, white plaster walls, brown timber beams, green shutters, stone chimney, seen from the front at a slight angle, fantasy",
+   "w": 256,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/cozy_medieval_house_blue_2d6a",
+   "bgRemoved": true
+  },
+  {
+   "id": "2d91cb88-f52e-49cc-a740-b5983edef47a",
+   "slug": "glowing_carved_rune_stone_2d91",
+   "name": "glowing carved rune stone",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/glowing_carved_rune_stone_2d91"
+  },
+  {
+   "id": "2e0c060b-73ad-4a40-a053-3ec3474591f5",
+   "slug": "round_potion_bottle_cork_2e0c",
+   "name": "round potion bottle with cork",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/round_potion_bottle_cork_2e0c"
+  },
+  {
+   "id": "2e258491-0d40-455f-b3ce-78d5e7052870",
+   "slug": "double_strafe_two_arrows_2e25",
+   "name": "double strafe two arrows",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/double_strafe_two_arrows_2e25"
+  },
+  {
+   "id": "2f2d0793-a31c-4a36-97a5-912820f14d65",
+   "slug": "pushcart_heavy_cart_2f2d",
+   "name": "pushcart heavy cart",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pushcart_heavy_cart_2f2d"
+  },
+  {
+   "id": "2fb8a114-9434-4c09-afb6-b497ecb4b077",
+   "slug": "pink_cherry_blossom_tree_2fb8",
+   "name": "pink cherry blossom tree",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/pink_cherry_blossom_tree_2fb8"
+  },
+  {
+   "id": "30512228-4eb6-45df-9cac-39dd4084f650",
+   "slug": "settings_gear_cog_3051",
+   "name": "settings gear cog",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/settings_gear_cog_3051"
+  },
+  {
+   "id": "306d2d96-83cc-4cfe-a4db-a7603eb5d935",
+   "slug": "weathered_stone_cross_306d",
+   "name": "weathered stone cross",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/weathered_stone_cross_306d"
+  },
+  {
+   "id": "30e4119d-1646-4834-af88-12965a7de59c",
+   "slug": "snowman_carrot_nose_30e4",
+   "name": "small snowman with carrot nose",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/snowman_carrot_nose_30e4"
+  },
+  {
+   "id": "30faff9f-3d31-4c39-9571-83a395ba4c84",
+   "slug": "animal_hide_drying_wooden_30fa",
+   "name": "animal hide drying on wooden frame",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/animal_hide_drying_wooden_30fa"
+  },
+  {
+   "id": "31089e38-d454-4a2a-9e78-a806f5cba85d",
+   "slug": "amplify_magic_glowing_rune_3108",
+   "name": "amplify magic glowing rune circle",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/amplify_magic_glowing_rune_3108"
+  },
+  {
+   "id": "31235d8a-bcd9-485d-b1d7-6cb4078396ab",
+   "slug": "cracked_clay_pot_3123",
+   "name": "cracked clay pot",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/cracked_clay_pot_3123"
+  },
+  {
+   "id": "31625f2f-08fc-48ba-a801-6d4579820065",
+   "slug": "dark_purple_crystal_cluster_3162",
+   "name": "dark purple crystal cluster",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/dark_purple_crystal_cluster_3162"
+  },
+  {
+   "id": "31e46b98-0234-4474-bad1-361594661a17",
+   "slug": "mossy_round_boulder_31e4",
+   "name": "mossy round boulder",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/mossy_round_boulder_31e4"
+  },
+  {
+   "id": "32308d47-8679-4bd4-a2f8-3be144b5d777",
+   "slug": "tall_cluster_glowing_violet_3230",
+   "name": "tall cluster of glowing violet purple crystals growing from dark rock, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 112,
+   "frames": 1,
+   "art": "pl/obj/tall_cluster_glowing_violet_3230"
+  },
+  {
+   "id": "32982d87-6db4-4ccd-89b2-733afeff33c2",
+   "slug": "ice_crystal_shard_3298",
+   "name": "ice crystal shard",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/ice_crystal_shard_3298"
+  },
+  {
+   "id": "32c6a584-d67e-465d-b79d-6c21ebb1a78f",
+   "slug": "thorny_bramble_bush_32c6",
+   "name": "thorny bramble bush",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/thorny_bramble_bush_32c6"
+  },
+  {
+   "id": "331a5b54-2d41-4ec7-b1f9-42e74f48e114",
+   "slug": "medieval_house_moss_green_331a",
+   "name": "medieval house with moss green tiled roof, stone walls with ivy, arched door, small garden with flowers and picket fence, seen from the front at a slight angle,",
+   "w": 256,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/medieval_house_moss_green_331a",
+   "bgRemoved": true
+  },
+  {
+   "id": "343576ed-93e8-4808-898e-269e374ae6f4",
+   "slug": "cluster_red_capped_forest_3435",
+   "name": "cluster of red-capped forest mushrooms with white spots",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/cluster_red_capped_forest_3435"
+  },
+  {
+   "id": "34c6dc52-38f6-46d4-893b-bfb760448472",
+   "slug": "leather_boot_34c6",
+   "name": "leather boot",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/leather_boot_34c6"
+  },
+  {
+   "id": "34f55325-5822-44fe-9d68-1d87ec0d84a3",
+   "slug": "shield_charge_rushing_shield_34f5",
+   "name": "shield charge rushing shield",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/shield_charge_rushing_shield_34f5"
+  },
+  {
+   "id": "3522c03b-d12d-46a7-a412-28b7650afd7d",
+   "slug": "royal_fantasy_banner_flag_3522",
+   "name": "royal fantasy banner flag on a tall dark wooden pole, deep crimson cloth with a golden crest emblem and gold fringe, front view, Ragnarok Online classic style",
+   "w": 48,
+   "h": 128,
+   "frames": 1,
+   "art": "pl/obj/royal_fantasy_banner_flag_3522"
+  },
+  {
+   "id": "36e8501e-21cd-4271-9de5-e75012d24a92",
+   "slug": "wind_worn_sandy_rock_36e8",
+   "name": "wind-worn sandy rock",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/wind_worn_sandy_rock_36e8"
+  },
+  {
+   "id": "36f349e0-066e-43c2-b528-4ccb07720153",
+   "slug": "gnarled_bog_tree_exposed_36f3",
+   "name": "gnarled bog tree with exposed roots",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/gnarled_bog_tree_exposed_36f3"
+  },
+  {
+   "id": "37e9bc75-6715-4af5-9e3e-91e1f4f06d30",
+   "slug": "water_element_droplet_37e9",
+   "name": "water element droplet",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/water_element_droplet_37e9"
+  },
+  {
+   "id": "387adf5b-8a0a-4398-b3da-4fdb2bc3351e",
+   "slug": "pile_grey_rocks_387a",
+   "name": "pile of grey rocks",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pile_grey_rocks_387a"
+  },
+  {
+   "id": "38978109-b46e-4d95-9c89-2d0cf0d36f34",
+   "slug": "wooden_training_dummy_3897",
+   "name": "wooden training dummy",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/wooden_training_dummy_3897"
+  },
+  {
+   "id": "38d1efb2-2aac-40ea-8e36-254731341620",
+   "slug": "steel_crow_metallic_hawk_38d1",
+   "name": "steel crow metallic hawk",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/steel_crow_metallic_hawk_38d1"
+  },
+  {
+   "id": "3937f170-f15b-48ed-b43d-9dfd88e60ccf",
+   "slug": "fantasy_rpg_outdoor_map_3937",
+   "name": "fantasy RPG outdoor map decoration prop, top-down 3/4 view, dark outline, centered on transparent background",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/fantasy_rpg_outdoor_map_3937"
+  },
+  {
+   "id": "39b9a29d-2622-42fa-8abf-512d57820382",
+   "slug": "wide_medieval_fantasy_row_39b9",
+   "name": "wide medieval fantasy row house, three storeys, long terrace of connected narrow timber and brick facades with varied gabled roofs, strict flat 2D front elevati",
+   "w": 320,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/wide_medieval_fantasy_row_39b9",
+   "bgRemoved": true
+  },
+  {
+   "id": "3a132699-ed65-4f08-8aed-1545919a6a2c",
+   "slug": "patch_yellow_white_wildflowers_3a13",
+   "name": "small patch of yellow and white wildflowers in grass, front view, Ragnarok Online classic dark fantasy style",
+   "w": 48,
+   "h": 48,
+   "frames": 1,
+   "art": "pl/obj/patch_yellow_white_wildflowers_3a13"
+  },
+  {
+   "id": "3a43caaf-8a09-4a92-a459-ba5a4a28885d",
+   "slug": "kite_shield_emblem_3a43",
+   "name": "kite shield with emblem",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/kite_shield_emblem_3a43"
+  },
+  {
+   "id": "3b115ecf-63f5-4a18-b5d8-ec207626199f",
+   "slug": "sword_attack_button_3b11",
+   "name": "sword attack button",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/sword_attack_button_3b11"
+  },
+  {
+   "id": "3c50e30c-5d21-47ed-a3c9-36f1196064a7",
+   "slug": "black_volcanic_boulder_glowing_3c50",
+   "name": "large black volcanic boulder with glowing orange lava cracks, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 80,
+   "frames": 1,
+   "art": "pl/obj/black_volcanic_boulder_glowing_3c50"
+  },
+  {
+   "id": "3c9e47d3-42c4-49e3-8007-9636652db2bd",
+   "slug": "stack_old_books_3c9e",
+   "name": "stack of old books",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/stack_old_books_3c9e"
+  },
+  {
+   "id": "3cd06295-c0bd-4917-b7b4-6d30b3132c76",
+   "slug": "cluster_glowing_blue_crystals_3cd0",
+   "name": "cluster of glowing blue crystals",
+   "w": 32,
+   "h": 40,
+   "frames": 1,
+   "art": "pl/obj/cluster_glowing_blue_crystals_3cd0"
+  },
+  {
+   "id": "3cfb0448-2a2d-457a-9260-cd578cbee7ba",
+   "slug": "octagonal_stone_town_square_3cfb",
+   "name": "octagonal stone town square fountain with water basin, central statue column with water jets, stone rim, top-down fantasy RPG",
+   "w": 192,
+   "h": 192,
+   "frames": 1,
+   "art": "pl/obj/octagonal_stone_town_square_3cfb"
+  },
+  {
+   "id": "3d0ec4bf-6f93-422a-af51-e187caa997e8",
+   "slug": "bomb_flaming_bottle_3d0e",
+   "name": "bomb flaming bottle",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/bomb_flaming_bottle_3d0e"
+  },
+  {
+   "id": "3dab8875-34d8-424a-a17b-45e1e21942fa",
+   "slug": "throw_arrow_whip_3dab",
+   "name": "throw arrow whip",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/throw_arrow_whip_3dab"
+  },
+  {
+   "id": "3f2394a0-a0b4-4b57-bcb4-7f6b9c95ef18",
+   "slug": "tan_sandstone_boulder_weathered_3f23",
+   "name": "large tan sandstone boulder, weathered, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 80,
+   "frames": 1,
+   "art": "pl/obj/tan_sandstone_boulder_weathered_3f23"
+  },
+  {
+   "id": "3f9d6936-a89d-420f-9076-a4ff6677c6c8",
+   "slug": "torn_banner_ground_3f9d",
+   "name": "torn banner on ground",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/torn_banner_ground_3f9d"
+  },
+  {
+   "id": "40aeb587-ba9e-4821-9899-d332ae60d215",
+   "slug": "holy_cavalry_mastery_white_40ae",
+   "name": "holy cavalry mastery white horse",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/holy_cavalry_mastery_white_40ae"
+  },
+  {
+   "id": "40b1eb57-d58f-4bd7-b56b-9db7da559c53",
+   "slug": "mushroom_ring_fairy_circle_40b1",
+   "name": "mushroom ring fairy circle",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/mushroom_ring_fairy_circle_40b1"
+  },
+  {
+   "id": "40d9d2d3-7e3f-4de7-b7de-29dc436e4c59",
+   "slug": "cosy_thatched_roof_stone_40d9",
+   "name": "small cosy thatched-roof stone cottage with one storey, round wooden door, smoking chimney, strict flat 2D front elevation facing the viewer, symmetrical, no pe",
+   "w": 160,
+   "h": 160,
+   "frames": 1,
+   "art": "pl/obj/cosy_thatched_roof_stone_40d9"
+  },
+  {
+   "id": "4126e716-01d1-4738-902b-c97cae703184",
+   "slug": "endow_wind_green_wind_4126",
+   "name": "endow wind green wind sword",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/endow_wind_green_wind_4126"
+  },
+  {
+   "id": "4182e9ba-ec5b-4407-bbc1-940e31ea0811",
+   "slug": "skull_wooden_stake_4182",
+   "name": "skull on a wooden stake",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/skull_wooden_stake_4182"
+  },
+  {
+   "id": "4194480f-a9cd-422e-96d8-ae9ebb825275",
+   "slug": "dark_stone_altar_purple_4194",
+   "name": "dark stone altar with purple flame",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/dark_stone_altar_purple_4194"
+  },
+  {
+   "id": "43d89b1f-0f18-4ebe-82d9-55bbe4785b0b",
+   "slug": "character_profile_silhouette_43d8",
+   "name": "character profile silhouette",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/character_profile_silhouette_43d8"
+  },
+  {
+   "id": "44991609-927f-4b54-9f66-fc289b253806",
+   "slug": "glowing_green_swamp_mushrooms_4499",
+   "name": "glowing green swamp mushrooms",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/glowing_green_swamp_mushrooms_4499"
+  },
+  {
+   "id": "459d63fb-ce56-44a3-89ab-d859e4a9d3ab",
+   "slug": "stone_water_well_wooden_459d",
+   "name": "stone water well with wooden roof and bucket, round stone rim, fantasy RPG village",
+   "w": 128,
+   "h": 128,
+   "frames": 1,
+   "art": "pl/obj/stone_water_well_wooden_459d"
+  },
+  {
+   "id": "45b76801-abe5-42cb-b64e-2dbd00b1a0bf",
+   "slug": "stack_wooden_supply_crates_45b7",
+   "name": "stack of wooden supply crates",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/stack_wooden_supply_crates_45b7"
+  },
+  {
+   "id": "45f7342a-b24b-4be1-bdfc-b9a2e32e5594",
+   "slug": "open_spellbook_tome_45f7",
+   "name": "open spellbook tome",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/open_spellbook_tome_45f7"
+  },
+  {
+   "id": "464121fc-0dc0-4481-8ee9-62ff07abed4c",
+   "slug": "patched_canvas_merchant_tent_4641",
+   "name": "small patched canvas merchant tent with open front and a wooden counter, striped red and cream roof, front view, Ragnarok Online classic dark fantasy style",
+   "w": 192,
+   "h": 160,
+   "frames": 1,
+   "art": "pl/obj/patched_canvas_merchant_tent_4641"
+  },
+  {
+   "id": "46c5a363-e283-4d11-8a8b-52cb4a28b736",
+   "slug": "frozen_log_46c5",
+   "name": "frozen log",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/frozen_log_46c5"
+  },
+  {
+   "id": "4753e85b-fa61-41da-9a8c-967e098af61b",
+   "slug": "wheat_sheaf_bundle_4753",
+   "name": "wheat sheaf bundle",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/wheat_sheaf_bundle_4753"
+  },
+  {
+   "id": "48c7147b-a010-43fb-b140-a99fc08055e5",
+   "slug": "safety_wall_glowing_blue_48c7",
+   "name": "safety wall glowing blue barrier",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/safety_wall_glowing_blue_48c7"
+  },
+  {
+   "id": "48e26d67-75b4-49f6-9c45-bc2b5b30113e",
+   "slug": "yellow_flower_patch_48e2",
+   "name": "yellow flower patch",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/yellow_flower_patch_48e2"
+  },
+  {
+   "id": "49ffd770-18ef-4374-98fe-8bdaf9ec0df9",
+   "slug": "leafy_fern_plant_49ff",
+   "name": "leafy fern plant",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/leafy_fern_plant_49ff"
+  },
+  {
+   "id": "4a9e392a-6a61-460e-8757-9e9ef701bfce",
+   "slug": "campfire_logs_flames_4a9e",
+   "name": "campfire with logs and flames",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/campfire_logs_flames_4a9e"
+  },
+  {
+   "id": "4abb7d98-a500-45c7-bacf-d3cf28542ade",
+   "slug": "wooden_stool_4abb",
+   "name": "wooden stool",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/wooden_stool_4abb"
+  },
+  {
+   "id": "4b1a0226-0e8b-494b-8666-fdbf241d3188",
+   "slug": "devotion_guardian_oath_shield_4b1a",
+   "name": "devotion guardian oath shield with chains",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/devotion_guardian_oath_shield_4b1a"
+  },
+  {
+   "id": "4c62e82c-b22f-45d5-90fe-5d2636e1d30e",
+   "slug": "wrapped_candy_sweet_4c62",
+   "name": "wrapped candy sweet",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/wrapped_candy_sweet_4c62"
+  },
+  {
+   "id": "4d87414f-0c95-40e8-a5f0-1963f283d807",
+   "slug": "jagged_shards_pale_blue_4d87",
+   "name": "small jagged shards of pale blue ice sticking out of the ground, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 48,
+   "frames": 1,
+   "art": "pl/obj/jagged_shards_pale_blue_4d87"
+  },
+  {
+   "id": "4daa65b6-a9e1-4358-9c48-0a585e8b0536",
+   "slug": "double_attack_crossed_daggers_4daa",
+   "name": "double attack crossed daggers",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/double_attack_crossed_daggers_4daa"
+  },
+  {
+   "id": "4dcc82b9-65ee-4927-8da8-16e38d705a06",
+   "slug": "black_volcanic_rock_glowing_4dcc",
+   "name": "black volcanic rock with glowing orange lava cracks and embers",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/black_volcanic_rock_glowing_4dcc"
+  },
+  {
+   "id": "4e5f70ea-00e4-4fac-b928-40b723e3f26f",
+   "slug": "riding_giant_bird_mount_4e5f",
+   "name": "riding giant bird mount",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/riding_giant_bird_mount_4e5f"
+  },
+  {
+   "id": "4ed04330-9139-4bb1-a758-2c690ab6b87f",
+   "slug": "blue_flower_patch_4ed0",
+   "name": "blue flower patch",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/blue_flower_patch_4ed0"
+  },
+  {
+   "id": "4fe25343-e517-43c9-948a-502d67dd6500",
+   "slug": "potion_mastery_alchemist_cauldron_4fe2",
+   "name": "potion mastery alchemist cauldron",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/potion_mastery_alchemist_cauldron_4fe2"
+  },
+  {
+   "id": "5067a176-291a-4034-956f-e8b9384ad38f",
+   "slug": "dark_grey_jagged_cave_5067",
+   "name": "dark grey jagged cave rock boulder",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/dark_grey_jagged_cave_5067"
+  },
+  {
+   "id": "50b82dde-cd9d-4ef6-ade4-e224b7b68a1a",
+   "slug": "armored_trousers_leggings_50b8",
+   "name": "armored trousers leggings",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/armored_trousers_leggings_50b8"
+  },
+  {
+   "id": "5138d4b4-da10-41c7-8e07-581f0d988840",
+   "slug": "guild_banner_flag_5138",
+   "name": "guild banner flag",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/guild_banner_flag_5138"
+  },
+  {
+   "id": "5143af4e-bd96-4126-8eee-512eefbc593f",
+   "slug": "dark_blue_grey_slate_5143",
+   "name": "dark blue-grey slate cave rock wall with pebbles and small glowing blue crystals, front view, fantasy RPG terrain",
+   "w": 256,
+   "h": 192,
+   "frames": 1,
+   "art": "pl/obj/dark_blue_grey_slate_5143"
+  },
+  {
+   "id": "5246522e-da65-4a8c-ace3-88b23264955e",
+   "slug": "concentration_focused_eye_target_5246",
+   "name": "concentration focused eye target",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/concentration_focused_eye_target_5246"
+  },
+  {
+   "id": "52dcb04e-658e-408b-91ce-a8b38831a2e9",
+   "slug": "wooden_direction_signpost_52dc",
+   "name": "wooden direction signpost",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/wooden_direction_signpost_52dc"
+  },
+  {
+   "id": "5376ae1b-cfc9-417e-b8a9-4fba21ab3a60",
+   "slug": "lily_pad_cluster_pink_5376",
+   "name": "lily pad cluster with pink flower",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/lily_pad_cluster_pink_5376"
+  },
+  {
+   "id": "53b37825-101b-4030-9a70-d0f0456ffcce",
+   "slug": "tall_grass_tuft_53b3",
+   "name": "tall grass tuft",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/tall_grass_tuft_53b3"
+  },
+  {
+   "id": "53b74c1a-ed22-4345-acff-a5e03f5e40e3",
+   "slug": "leather_whip_coiled_53b7",
+   "name": "leather whip coiled",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/leather_whip_coiled_53b7"
+  },
+  {
+   "id": "54a71a33-0ada-4d45-9061-bfb7a00ea547",
+   "slug": "wooden_sign_board_54a7",
+   "name": "wooden sign board",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/wooden_sign_board_54a7"
+  },
+  {
+   "id": "54b7cec4-fd65-4242-b94b-f8e1f31b6009",
+   "slug": "closed_wooden_coffin_54b7",
+   "name": "closed wooden coffin",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/closed_wooden_coffin_54b7"
+  },
+  {
+   "id": "552b85b0-91ce-4f8e-b330-2410e4123dcc",
+   "slug": "pink_spiral_seashell_sand_552b",
+   "name": "pink spiral seashell on sand",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pink_spiral_seashell_sand_552b"
+  },
+  {
+   "id": "55434618-77ad-405c-a783-a7446a455fc3",
+   "slug": "plain_face_mask_5543",
+   "name": "plain face mask",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/plain_face_mask_5543"
+  },
+  {
+   "id": "559a2147-c7c5-426d-b3da-0aa0da02519d",
+   "slug": "skeleton_remains_horned_skull_559a",
+   "name": "skeleton remains with horned skull",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/skeleton_remains_horned_skull_559a"
+  },
+  {
+   "id": "55cb7c02-44de-454d-a1f4-e08d07fd04da",
+   "slug": "charred_burnt_tree_stump_55cb",
+   "name": "charred burnt tree stump",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/charred_burnt_tree_stump_55cb"
+  },
+  {
+   "id": "55e8e7d7-6281-439c-abb0-fec1bf901a9c",
+   "slug": "grand_cross_massive_holy_55e8",
+   "name": "grand cross massive holy cross explosion",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/grand_cross_massive_holy_55e8"
+  },
+  {
+   "id": "566ba80d-f0a8-4cb0-be07-75efabf9b332",
+   "slug": "sandstone_statue_anubis_jackal_566b",
+   "name": "sandstone statue of Anubis jackal-headed god standing with a staff, gold trim, front view, Ragnarok Online classic dark fantasy style",
+   "w": 112,
+   "h": 176,
+   "frames": 1,
+   "art": "pl/obj/sandstone_statue_anubis_jackal_566b"
+  },
+  {
+   "id": "56f0c007-1c88-412c-8183-8ddabafb0124",
+   "slug": "luck_four_leaf_clover_56f0",
+   "name": "luck four-leaf clover",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/luck_four_leaf_clover_56f0"
+  },
+  {
+   "id": "56fb0b70-2477-4b56-b84b-e28a83f8b326",
+   "slug": "jagged_obsidian_spire_lava_56fb",
+   "name": "jagged obsidian spire with lava glow",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/jagged_obsidian_spire_lava_56fb"
+  },
+  {
+   "id": "579af028-6519-4525-b830-c6681c5ecc41",
+   "slug": "triple_attack_three_fists_579a",
+   "name": "triple attack three fists",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/triple_attack_three_fists_579a"
+  },
+  {
+   "id": "579de645-8caa-47e1-ac59-52c249ea9402",
+   "slug": "coastal_rock_covered_pink_579d",
+   "name": "coastal rock covered with pink coral and barnacles and seaweed, front view, Ragnarok Online classic dark fantasy style",
+   "w": 80,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/coastal_rock_covered_pink_579d"
+  },
+  {
+   "id": "584496d1-f513-4e0b-8233-7bdad858bb21",
+   "slug": "neck_scarf_5844",
+   "name": "neck scarf",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/neck_scarf_5844"
+  },
+  {
+   "id": "585b3718-6331-47db-9d35-9af2a0259d9d",
+   "slug": "falcon_bond_hawk_hand_585b",
+   "name": "falcon bond hawk and hand",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/falcon_bond_hawk_hand_585b"
+  },
+  {
+   "id": "588f6515-d398-43d8-a640-f920a0ffac0e",
+   "slug": "canvas_merchant_tent_strict_588f",
+   "name": "canvas merchant tent drawn in strict flat 2D front elevation, symmetrical, triangular red and cream striped roof, open doorway at centre, no perspective, no iso",
+   "w": 192,
+   "h": 160,
+   "frames": 1,
+   "art": "pl/obj/canvas_merchant_tent_strict_588f"
+  },
+  {
+   "id": "5a0a99af-440d-4575-8339-f0ea5005df28",
+   "slug": "sandstone_block_pile_5a0a",
+   "name": "sandstone block pile",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/sandstone_block_pile_5a0a"
+  },
+  {
+   "id": "5bbd7ea2-22d1-4310-aef6-83b66fff4b45",
+   "slug": "long_spear_polearm_5bbd",
+   "name": "long spear polearm",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/long_spear_polearm_5bbd"
+  },
+  {
+   "id": "5bc1cf9f-313b-404c-8071-37af56e89dc4",
+   "slug": "defender_fortress_shield_wall_5bc1",
+   "name": "defender fortress shield wall",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/defender_fortress_shield_wall_5bc1"
+  },
+  {
+   "id": "5be32554-43b5-41da-a798-a92c133238e0",
+   "slug": "dragon_breath_fire_dragon_5be3",
+   "name": "dragon breath fire dragon head",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/dragon_breath_fire_dragon_5be3"
+  },
+  {
+   "id": "5c2d6aa0-75d8-44f9-bcdd-c7122f8dc648",
+   "slug": "broken_statue_head_5c2d",
+   "name": "broken statue head",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/broken_statue_head_5c2d"
+  },
+  {
+   "id": "5c636748-d99c-4791-b683-ce7ea3db6363",
+   "slug": "pile_old_bones_skull_5c63",
+   "name": "pile of old bones with a skull",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pile_old_bones_skull_5c63"
+  },
+  {
+   "id": "5c8d94d8-e809-475e-a4de-2d3d678b6af2",
+   "slug": "medieval_fantasy_stone_townhouse_5c8d",
+   "name": "medieval fantasy stone townhouse, two storeys, dark slate grey roof with a small chimney, arched door, strict flat 2D front elevation facing the viewer, symmetr",
+   "w": 192,
+   "h": 224,
+   "frames": 1,
+   "art": "pl/obj/medieval_fantasy_stone_townhouse_5c8d",
+   "bgRemoved": true
+  },
+  {
+   "id": "5de23142-037b-4918-9d7d-62980372eb94",
+   "slug": "red_orange_canyon_cliff_5de2",
+   "name": "red-orange canyon cliff, steep terracotta rock wall with vertical striations and flat plateau top, front view, fantasy RPG terrain",
+   "w": 256,
+   "h": 192,
+   "frames": 1,
+   "art": "pl/obj/red_orange_canyon_cliff_5de2",
+   "bgRemoved": true
+  },
+  {
+   "id": "5f0304cf-88bc-4f87-8c95-96bdf0bdc3ed",
+   "slug": "bandage_first_aid_cross_5f03",
+   "name": "bandage first aid cross",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/bandage_first_aid_cross_5f03"
+  },
+  {
+   "id": "5fc34cda-9ae0-412b-b05c-ef5f84c3ae53",
+   "slug": "acid_terror_green_acid_5fc3",
+   "name": "acid terror green acid bottle",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/acid_terror_green_acid_5fc3"
+  },
+  {
+   "id": "60f468cf-d9d4-402d-b9b8-b24cdc0c281b",
+   "slug": "tall_stalagmite_rock_pillar_60f4",
+   "name": "tall stalagmite rock pillar",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/tall_stalagmite_rock_pillar_60f4"
+  },
+  {
+   "id": "613ad4fb-080e-4fcb-98d3-4e750a4beaa5",
+   "slug": "medieval_merchant_shop_building_613a",
+   "name": "medieval merchant shop building with striped red and white awning over a market counter with goods, hanging wooden sign, timber and plaster walls, tile roof, se",
+   "w": 256,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/medieval_merchant_shop_building_613a",
+   "bgRemoved": true
+  },
+  {
+   "id": "61f60a85-0c2d-4084-a332-9222d216455e",
+   "slug": "pet_paw_print_61f6",
+   "name": "pet paw print",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pet_paw_print_61f6"
+  },
+  {
+   "id": "6229ab97-d2ca-4107-b368-89700e903eeb",
+   "slug": "abandoned_shield_6229",
+   "name": "abandoned shield",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/abandoned_shield_6229"
+  },
+  {
+   "id": "62611346-d394-4645-a9ac-15ae86a6f86a",
+   "slug": "driftwood_log_6261",
+   "name": "driftwood log",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/driftwood_log_6261"
+  },
+  {
+   "id": "62632566-2840-4b5d-ab41-348d91a276ac",
+   "slug": "right_hand_mastery_dagger_6263",
+   "name": "right hand mastery dagger",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/right_hand_mastery_dagger_6263"
+  },
+  {
+   "id": "62fbe7bf-07ff-46ac-b427-939bddfb076d",
+   "slug": "green_saguaro_cactus_desert_62fb",
+   "name": "green saguaro cactus in desert",
+   "w": 32,
+   "h": 48,
+   "frames": 1,
+   "art": "pl/obj/green_saguaro_cactus_desert_62fb"
+  },
+  {
+   "id": "64dfb92b-614f-4b09-926e-cfba9aa3ad3f",
+   "slug": "quest_scroll_exclamation_mark_64df",
+   "name": "quest scroll with exclamation mark",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/quest_scroll_exclamation_mark_64df"
+  },
+  {
+   "id": "661d5eec-3dc0-4c20-8a8f-fc2e0ecf171d",
+   "slug": "stone_cairn_stacked_stones_661d",
+   "name": "stone cairn stacked stones",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/stone_cairn_stacked_stones_661d"
+  },
+  {
+   "id": "6669bbe4-4198-4b16-b04d-d3236ae0f747",
+   "slug": "sand_dune_rock_formation_6669",
+   "name": "sand dune rock formation",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/sand_dune_rock_formation_6669"
+  },
+  {
+   "id": "672fcd66-d697-4dcd-8697-2b93d0f4738f",
+   "slug": "pitch_potion_throwing_bottle_672f",
+   "name": "pitch potion throwing bottle",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pitch_potion_throwing_bottle_672f"
+  },
+  {
+   "id": "683db332-5758-4a58-924b-808437c395ce",
+   "slug": "ragged_straw_scarecrow_wooden_683d",
+   "name": "ragged straw scarecrow on a wooden cross post with a burlap sack head and a crow, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 160,
+   "frames": 1,
+   "art": "pl/obj/ragged_straw_scarecrow_wooden_683d"
+  },
+  {
+   "id": "68c0c6cd-2ed6-46f6-90e7-b225c2d4dfe6",
+   "slug": "katar_mastery_twin_blades_68c0",
+   "name": "katar mastery twin blades",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/katar_mastery_twin_blades_68c0"
+  },
+  {
+   "id": "68d5f576-01a0-45ca-b83f-c7c9a81adcd1",
+   "slug": "ancient_broken_stone_pillar_68d5",
+   "name": "ancient broken stone pillar column ruin",
+   "w": 32,
+   "h": 56,
+   "frames": 1,
+   "art": "pl/obj/ancient_broken_stone_pillar_68d5"
+  },
+  {
+   "id": "6a65548f-cdc5-491e-b50e-29dc0b1f3a9f",
+   "slug": "dead_leafless_gnarled_grey_6a65",
+   "name": "dead leafless gnarled grey tree with twisting bare branches and cracked bark, front view, Ragnarok Online classic dark fantasy style",
+   "w": 192,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/dead_leafless_gnarled_grey_6a65",
+   "bgRemoved": true
+  },
+  {
+   "id": "6ac13231-0d06-4179-87de-85727ce222e0",
+   "slug": "ancient_egyptian_stone_sarcophagus_6ac1",
+   "name": "ancient Egyptian stone sarcophagus coffin standing upright with golden pharaoh mask carving, front view, Ragnarok Online classic dark fantasy style",
+   "w": 80,
+   "h": 128,
+   "frames": 1,
+   "art": "pl/obj/ancient_egyptian_stone_sarcophagus_6ac1"
+  },
+  {
+   "id": "6ae8b349-6559-4fef-a81a-07e09d06e801",
+   "slug": "iron_torch_brazier_tall_6ae8",
+   "name": "iron torch brazier on a tall stand with burning orange flame, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 112,
+   "frames": 1,
+   "art": "pl/obj/iron_torch_brazier_tall_6ae8"
+  },
+  {
+   "id": "6b29e27d-9302-4cda-9f57-9f619e306430",
+   "slug": "storefront_facade_medieval_fantasy_6b29",
+   "name": "flat storefront facade of a medieval fantasy shop seen from directly in front, tall rectangular two-storey front wall with a gabled roof edge on top, large disp",
+   "w": 224,
+   "h": 224,
+   "frames": 1,
+   "art": "pl/obj/storefront_facade_medieval_fantasy_6b29",
+   "bgRemoved": true
+  },
+  {
+   "id": "6b6e0748-95b7-47a4-9f66-8a27b258bcd0",
+   "slug": "animal_fang_tooth_6b6e",
+   "name": "animal fang tooth",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/animal_fang_tooth_6b6e"
+  },
+  {
+   "id": "6ba6f1a7-eadd-467c-839c-f9dc46d3c1c5",
+   "slug": "bush_red_berries_6ba6",
+   "name": "bush with red berries",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/bush_red_berries_6ba6"
+  },
+  {
+   "id": "6c03a478-894a-4125-acd9-f1164d8bf506",
+   "slug": "mace_mastery_club_6c03",
+   "name": "mace mastery club",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/mace_mastery_club_6c03"
+  },
+  {
+   "id": "6c0daca9-3c85-47be-a635-8c4bffeb55d7",
+   "slug": "round_archery_target_red_6c0d",
+   "name": "round archery target with red and white rings on a wooden tripod stand, arrows stuck in it, front view, Ragnarok Online classic dark fantasy style",
+   "w": 80,
+   "h": 112,
+   "frames": 1,
+   "art": "pl/obj/round_archery_target_red_6c0d"
+  },
+  {
+   "id": "6c8e62e1-bb68-405a-9c22-cef175fda363",
+   "slug": "weapon_perfection_golden_hammer_6c8e",
+   "name": "weapon perfection golden hammer anvil",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/weapon_perfection_golden_hammer_6c8e"
+  },
+  {
+   "id": "6d0c8ef1-11aa-4d10-a641-6bba643ce476",
+   "slug": "golden_trophy_cup_6d0c",
+   "name": "golden trophy cup",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/golden_trophy_cup_6d0c"
+  },
+  {
+   "id": "6d3e122f-8a8f-45bd-a968-c38ad2cfc849",
+   "slug": "archery_target_board_6d3e",
+   "name": "archery target board",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/archery_target_board_6d3e"
+  },
+  {
+   "id": "6d729d39-5964-4c9d-9035-9c6ee50ad68e",
+   "slug": "sword_stuck_ground_6d72",
+   "name": "sword stuck in the ground",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/sword_stuck_ground_6d72"
+  },
+  {
+   "id": "6d853826-57f1-41c1-9f97-c5c8451aa64e",
+   "slug": "cluster_glowing_cyan_crystals_6d85",
+   "name": "cluster of glowing cyan crystals growing from dark rock, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 96,
+   "frames": 1,
+   "art": "pl/obj/cluster_glowing_cyan_crystals_6d85"
+  },
+  {
+   "id": "6d9e3621-33b7-45bf-b20a-5925752321de",
+   "slug": "wooden_bucket_6d9e",
+   "name": "wooden bucket",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/wooden_bucket_6d9e"
+  },
+  {
+   "id": "6df3c4f9-f5e0-42cf-bbef-6e5c90754ff9",
+   "slug": "dark_purple_obsidian_rock_6df3",
+   "name": "dark purple obsidian rock cliff with glowing violet and blue crystals, mystical dimension terrain, front view, fantasy RPG",
+   "w": 256,
+   "h": 192,
+   "frames": 1,
+   "art": "pl/obj/dark_purple_obsidian_rock_6df3",
+   "bgRemoved": true
+  },
+  {
+   "id": "6e710fe3-cf4b-4783-bda0-9a30c826bfc4",
+   "slug": "left_hand_mastery_dagger_6e71",
+   "name": "left hand mastery dagger",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/left_hand_mastery_dagger_6e71"
+  },
+  {
+   "id": "6fbe03fb-52de-431c-8555-c2b19a575a2f",
+   "slug": "cluster_green_fern_fronds_6fbe",
+   "name": "cluster of green fern fronds, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/cluster_green_fern_fronds_6fbe"
+  },
+  {
+   "id": "6fc48018-a498-4887-977b-b12df0ca84e1",
+   "slug": "spiral_conch_shell_6fc4",
+   "name": "spiral conch shell",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/spiral_conch_shell_6fc4"
+  },
+  {
+   "id": "71b77c84-8451-4259-a873-2c0a7d15620a",
+   "slug": "lit_standing_candle_71b7",
+   "name": "lit standing candle",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/lit_standing_candle_71b7"
+  },
+  {
+   "id": "71cc93cd-3e28-40de-b8e7-6dcbe81a9804",
+   "slug": "pile_glowing_orange_embers_71cc",
+   "name": "pile of glowing orange embers and burnt charcoal with small flames, front view, Ragnarok Online classic dark fantasy style",
+   "w": 48,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pile_glowing_orange_embers_71cc"
+  },
+  {
+   "id": "71ce7a64-6673-4d52-8bc9-152e66580d22",
+   "slug": "swamp_tree_hanging_moss_71ce",
+   "name": "swamp tree with hanging moss and vines",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/swamp_tree_hanging_moss_71ce"
+  },
+  {
+   "id": "72596f12-391b-4af5-b715-706fb98a23bd",
+   "slug": "dry_desert_shrub_bush_7259",
+   "name": "dry desert shrub bush",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/dry_desert_shrub_bush_7259"
+  },
+  {
+   "id": "72f9d0f3-6917-4ac8-88dc-f9a5e951780f",
+   "slug": "fire_element_flame_72f9",
+   "name": "fire element flame",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/fire_element_flame_72f9"
+  },
+  {
+   "id": "738ac17b-027e-4d01-9c92-75462596bf50",
+   "slug": "auto_spell_glowing_rune_738a",
+   "name": "auto spell glowing rune book",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/auto_spell_glowing_rune_738a"
+  },
+  {
+   "id": "739298b1-55fd-41f9-8989-5edc703410dd",
+   "slug": "sanctuary_glowing_holy_ground_7392",
+   "name": "sanctuary glowing holy ground circle",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/sanctuary_glowing_holy_ground_7392"
+  },
+  {
+   "id": "74731a32-8814-453a-8fc1-c248b8997c9f",
+   "slug": "folded_cloth_fabric_7473",
+   "name": "folded cloth fabric",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/folded_cloth_fabric_7473"
+  },
+  {
+   "id": "761760f7-60ef-4406-bdc5-bd7bb9dd023d",
+   "slug": "rolled_parchment_scroll_ribbon_7617",
+   "name": "rolled parchment scroll with ribbon",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/rolled_parchment_scroll_ribbon_7617"
+  },
+  {
+   "id": "770d96cb-aa9a-491e-bc9e-4221115e4006",
+   "slug": "falcon_auto_attack_hawk_770d",
+   "name": "falcon auto attack hawk dive",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/falcon_auto_attack_hawk_770d"
+  },
+  {
+   "id": "77bceab7-f3a6-4007-86aa-ce78f900c15c",
+   "slug": "stacked_cairn_balanced_grey_77bc",
+   "name": "stacked cairn of balanced grey stones, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 80,
+   "frames": 1,
+   "art": "pl/obj/stacked_cairn_balanced_grey_77bc"
+  },
+  {
+   "id": "7811ab78-f905-4804-9f1a-15d149fe9593",
+   "slug": "angel_feather_wings_7811",
+   "name": "angel feather wings",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/angel_feather_wings_7811"
+  },
+  {
+   "id": "7871d0f9-e1dc-4a97-bc9d-00ba4f12bf5b",
+   "slug": "mail_envelope_letter_7871",
+   "name": "mail envelope letter",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/mail_envelope_letter_7871"
+  },
+  {
+   "id": "796970de-8498-4988-8429-43e8a2c67f3d",
+   "slug": "stone_gargoyle_statue_7969",
+   "name": "stone gargoyle statue",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/stone_gargoyle_statue_7969"
+  },
+  {
+   "id": "7a0cdfa7-3c58-48e7-8e1c-6b760e0ad01a",
+   "slug": "land_mine_explosive_mine_7a0c",
+   "name": "land mine explosive mine",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/land_mine_explosive_mine_7a0c"
+  },
+  {
+   "id": "7a57809d-fb11-4196-b27c-eb4dd101f123",
+   "slug": "jagged_pale_blue_ice_7a57",
+   "name": "jagged pale blue ice spire formation with frost, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 128,
+   "frames": 1,
+   "art": "pl/obj/jagged_pale_blue_ice_7a57"
+  },
+  {
+   "id": "7ac1f014-b838-4849-88ab-6e6a96c0497d",
+   "slug": "grey_brown_rocky_cliff_7ac1",
+   "name": "grey-brown rocky cliff outcrop with vertical stone columns, moss and green shrubs on top and base, front view, fantasy RPG terrain",
+   "w": 256,
+   "h": 192,
+   "frames": 1,
+   "art": "pl/obj/grey_brown_rocky_cliff_7ac1",
+   "bgRemoved": true
+  },
+  {
+   "id": "7bc78974-6771-427f-8337-4a6d4eaafe86",
+   "slug": "green_regeneration_heart_leaf_7bc7",
+   "name": "green regeneration heart with leaf",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/green_regeneration_heart_leaf_7bc7"
+  },
+  {
+   "id": "7ca3f45a-aafa-4063-89cd-dfdd5332fdec",
+   "slug": "wooden_training_dummy_post_7ca3",
+   "name": "wooden training dummy post with a straw-stuffed torso and crossed arms, sword cuts, front view, Ragnarok Online classic dark fantasy style",
+   "w": 80,
+   "h": 112,
+   "frames": 1,
+   "art": "pl/obj/wooden_training_dummy_post_7ca3"
+  },
+  {
+   "id": "7d6d82e2-8d50-4aac-b9f2-9e3f74a6673e",
+   "slug": "round_barrel_cactus_pink_7d6d",
+   "name": "small round barrel cactus with pink flower on top, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/round_barrel_cactus_pink_7d6d"
+  },
+  {
+   "id": "7dd574da-39ac-4386-9d4a-602a43a65c79",
+   "slug": "jackal_headed_anubis_statue_7dd5",
+   "name": "jackal-headed anubis statue",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/jackal_headed_anubis_statue_7dd5"
+  },
+  {
+   "id": "7df5afd3-1046-40aa-8d16-6c1d6b702586",
+   "slug": "loud_shout_cheering_horn_7df5",
+   "name": "loud shout cheering horn",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/loud_shout_cheering_horn_7df5"
+  },
+  {
+   "id": "7e73264b-d30f-4a7d-ae2e-964200bf54e7",
+   "slug": "stack_gold_coins_7e73",
+   "name": "stack of gold coins",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/stack_gold_coins_7e73"
+  },
+  {
+   "id": "7e9212ad-125b-4772-95bf-b425883c402e",
+   "slug": "medieval_town_house_cream_7e92",
+   "name": "medieval town house, cream plaster walls with dark timber frame, orange-red clay tile roof, wooden door, shuttered windows with flower boxes, small chimney, see",
+   "w": 256,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/medieval_town_house_cream_7e92",
+   "bgRemoved": true
+  },
+  {
+   "id": "7eb56c7a-5f48-4d58-8460-07781c977de0",
+   "slug": "recurve_hunting_bow_7eb5",
+   "name": "recurve hunting bow",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/recurve_hunting_bow_7eb5"
+  },
+  {
+   "id": "7ef48ad3-5f34-4ac2-b687-46f35904d4a1",
+   "slug": "rusted_broken_sword_stuck_7ef4",
+   "name": "rusted broken sword stuck upright in the ground with a tattered cloth tied to the hilt, front view, Ragnarok Online classic dark fantasy style",
+   "w": 48,
+   "h": 96,
+   "frames": 1,
+   "art": "pl/obj/rusted_broken_sword_stuck_7ef4"
+  },
+  {
+   "id": "7f03831d-fcec-4e29-a907-4fe5e5f1e6bf",
+   "slug": "dagger_mastery_knife_7f03",
+   "name": "dagger mastery knife",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/dagger_mastery_knife_7f03"
+  },
+  {
+   "id": "7f282907-4839-454c-994d-830044a51f93",
+   "slug": "animal_bone_7f28",
+   "name": "animal bone",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/animal_bone_7f28"
+  },
+  {
+   "id": "7f2b3a8e-074f-486c-a3f8-6d42289aed3c",
+   "slug": "bard_song_haste_musical_7f2b",
+   "name": "bard song of haste musical notes with speed lines",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/bard_song_haste_musical_7f2b"
+  },
+  {
+   "id": "7f780be4-cc8f-44d1-b10d-b151a1f37573",
+   "slug": "wide_medieval_row_house_7f78",
+   "name": "wide medieval row house, beige stone ground floor and timber upper floor, terracotta orange roof with two dormer windows, wooden balcony, seen from the front at",
+   "w": 300,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/wide_medieval_row_house_7f78",
+   "bgRemoved": true
+  },
+  {
+   "id": "7f859eb1-392a-4c86-bb06-14c5d87b005c",
+   "slug": "land_protector_earth_seal_7f85",
+   "name": "land protector earth seal circle",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/land_protector_earth_seal_7f85"
+  },
+  {
+   "id": "800a6055-928b-4330-8758-c5e66d8248e6",
+   "slug": "ancient_clay_burial_urn_800a",
+   "name": "large ancient clay burial urn with painted hieroglyph band, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 80,
+   "frames": 1,
+   "art": "pl/obj/ancient_clay_burial_urn_800a"
+  },
+  {
+   "id": "802ca4ef-ac5d-4e0c-8992-41a9e23b4dc4",
+   "slug": "metal_knuckle_claws_fist_802c",
+   "name": "metal knuckle claws fist weapon",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/metal_knuckle_claws_fist_802c"
+  },
+  {
+   "id": "80303907-e5e8-4176-960f-fba08dd3b70d",
+   "slug": "quagmire_swamp_mud_swirl_8030",
+   "name": "quagmire swamp mud swirl",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/quagmire_swamp_mud_swirl_8030"
+  },
+  {
+   "id": "80737373-7c4f-45fa-8e17-abe6348cdf44",
+   "slug": "sweet_talk_coins_lips_8073",
+   "name": "sweet talk coins and lips",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/sweet_talk_coins_lips_8073"
+  },
+  {
+   "id": "80e5abb6-3ff1-429a-bd88-8ab62776da3a",
+   "slug": "protective_ward_blessing_halo_80e5",
+   "name": "protective ward blessing halo shield",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/protective_ward_blessing_halo_80e5"
+  },
+  {
+   "id": "80f29a4e-f92c-49ae-87fd-dc13e66dc769",
+   "slug": "tan_sandstone_rock_boulder_80f2",
+   "name": "tan sandstone rock boulder",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/tan_sandstone_rock_boulder_80f2"
+  },
+  {
+   "id": "8137cbfc-72ff-4413-a1f3-d20f431bc2a2",
+   "slug": "plate_armor_chestplate_8137",
+   "name": "plate armor chestplate",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/plate_armor_chestplate_8137"
+  },
+  {
+   "id": "8196f982-4ecf-4d15-bc16-81db822dcc54",
+   "slug": "sandstone_egyptian_obelisk_8196",
+   "name": "sandstone egyptian obelisk",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/sandstone_egyptian_obelisk_8196"
+  },
+  {
+   "id": "81c9f252-7a7e-4d6a-ad13-52138a0af548",
+   "slug": "red_heart_health_81c9",
+   "name": "red heart health",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/red_heart_health_81c9"
+  },
+  {
+   "id": "825e9b20-e1f1-4e23-825d-172840c31b93",
+   "slug": "iron_cage_825e",
+   "name": "iron cage",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/iron_cage_825e"
+  },
+  {
+   "id": "83205843-1e0f-4d4a-ac65-98f70ba64f08",
+   "slug": "glowing_molten_lava_rock_8320",
+   "name": "glowing molten lava rock",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/glowing_molten_lava_rock_8320"
+  },
+  {
+   "id": "8487a5b9-25a3-4dcf-8979-8ce93c71bcbd",
+   "slug": "armored_gauntlet_glove_8487",
+   "name": "armored gauntlet glove",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/armored_gauntlet_glove_8487"
+  },
+  {
+   "id": "848db4ac-944d-49ab-b541-2e30ec97ef53",
+   "slug": "battle_axe_848d",
+   "name": "battle axe",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/battle_axe_848d"
+  },
+  {
+   "id": "84b6235c-1115-405b-b38b-0d6bde7bb973",
+   "slug": "round_green_leafy_bush_84b6",
+   "name": "round green leafy bush with tiny pink flowers",
+   "w": 40,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/round_green_leafy_bush_84b6"
+  },
+  {
+   "id": "854b0e39-f252-4aca-8052-081190791794",
+   "slug": "tall_iron_street_lamp_854b",
+   "name": "tall iron street lamp post with glowing yellow lantern, wrought iron base, medieval, front view, Ragnarok Online classic style",
+   "w": 48,
+   "h": 112,
+   "frames": 1,
+   "art": "pl/obj/tall_iron_street_lamp_854b"
+  },
+  {
+   "id": "85c66774-3c75-4454-ad5f-91e3e531add9",
+   "slug": "increase_agility_winged_shoe_85c6",
+   "name": "increase agility winged shoe",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/increase_agility_winged_shoe_85c6"
+  },
+  {
+   "id": "86421a8b-595a-41cd-a2c7-6a04fd91b793",
+   "slug": "plain_finger_ring_gem_8642",
+   "name": "plain finger ring with gem",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/plain_finger_ring_gem_8642"
+  },
+  {
+   "id": "8692e6eb-4b4b-435f-8f79-e4116a8a3b5d",
+   "slug": "mana_recovery_blue_droplet_8692",
+   "name": "mana recovery blue droplet with swirl",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/mana_recovery_blue_droplet_8692"
+  },
+  {
+   "id": "874270f7-716f-4538-a6a6-1c751300ca69",
+   "slug": "weeping_willow_tree_long_8742",
+   "name": "weeping willow tree with long drooping green-yellow fronds hanging down, thick mossy trunk, front view, Ragnarok Online classic dark fantasy style",
+   "w": 224,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/weeping_willow_tree_long_8742",
+   "bgRemoved": true
+  },
+  {
+   "id": "876b6f78-4615-4d38-9289-b2b96bc76c8d",
+   "slug": "broken_sword_ground_876b",
+   "name": "broken sword in ground",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/broken_sword_ground_876b"
+  },
+  {
+   "id": "87c81880-97bb-4c4d-b071-e2339f67caa9",
+   "slug": "vulture_eye_keen_hawk_87c8",
+   "name": "vulture eye keen hawk eye",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/vulture_eye_keen_hawk_87c8"
+  },
+  {
+   "id": "87f8fdab-8dfb-4f58-93b5-f864d655cd53",
+   "slug": "stone_water_well_87f8",
+   "name": "stone water well",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/stone_water_well_87f8"
+  },
+  {
+   "id": "88f7fb20-1ece-4b37-bdf9-5914e5c34344",
+   "slug": "striped_red_white_market_88f7",
+   "name": "striped red and white market stall with canvas awning, wooden counter with fruit, vegetables and potions, fantasy RPG market",
+   "w": 192,
+   "h": 192,
+   "frames": 1,
+   "art": "pl/obj/striped_red_white_market_88f7"
+  },
+  {
+   "id": "8a6c2740-1696-4551-86a9-6f1db6521cee",
+   "slug": "pile_gold_coins_8a6c",
+   "name": "pile of gold coins",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pile_gold_coins_8a6c"
+  },
+  {
+   "id": "8a9b7b65-d398-4bc2-830a-cb4da31e7945",
+   "slug": "pile_old_bones_8a9b",
+   "name": "pile of old bones",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pile_old_bones_8a9b"
+  },
+  {
+   "id": "8ab71969-9510-4774-9ef1-e3ffcdb89340",
+   "slug": "summon_spirit_sphere_glowing_8ab7",
+   "name": "summon spirit sphere glowing orbs around hand",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/summon_spirit_sphere_glowing_8ab7"
+  },
+  {
+   "id": "8ac696cb-1d64-4997-9580-53811fd5fb32",
+   "slug": "frozen_ice_crystal_formation_8ac6",
+   "name": "frozen ice crystal formation, pale blue",
+   "w": 32,
+   "h": 40,
+   "frames": 1,
+   "art": "pl/obj/frozen_ice_crystal_formation_8ac6"
+  },
+  {
+   "id": "8afbca37-c981-408b-87e6-f5ddf1c01f98",
+   "slug": "create_elemental_scroll_8afb",
+   "name": "create elemental scroll",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/create_elemental_scroll_8afb"
+  },
+  {
+   "id": "8c228d39-6a3b-4cbe-8afd-0ca4972ba8d7",
+   "slug": "two_hand_quicken_speed_8c22",
+   "name": "two-hand quicken speed lines on sword",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/two_hand_quicken_speed_8c22"
+  },
+  {
+   "id": "8cd176b7-f2f5-45c1-8da2-4f03d2d078f3",
+   "slug": "parry_blocking_sword_8cd1",
+   "name": "parry blocking sword",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/parry_blocking_sword_8cd1"
+  },
+  {
+   "id": "8e8d5c57-5991-42d8-adc3-2986af12c866",
+   "slug": "gold_star_experience_8e8d",
+   "name": "gold star experience",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/gold_star_experience_8e8d"
+  },
+  {
+   "id": "8f3faec4-ccff-4bcf-bc71-13f4b7f404b5",
+   "slug": "medieval_fantasy_shop_striped_8f3f",
+   "name": "medieval fantasy shop with a striped orange and white awning over a display window and a hanging wooden sign, drawn in strict flat 2D front elevation like a sid",
+   "w": 224,
+   "h": 224,
+   "frames": 1,
+   "art": "pl/obj/medieval_fantasy_shop_striped_8f3f",
+   "bgRemoved": true
+  },
+  {
+   "id": "8fc7466a-b789-4859-8a4d-966fbfc844f5",
+   "slug": "snow_mound_8fc7",
+   "name": "snow mound",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/snow_mound_8fc7"
+  },
+  {
+   "id": "901bf160-f75e-428f-a4f0-9f6784b9fd92",
+   "slug": "wooden_barrel_iron_hoops_901b",
+   "name": "wooden barrel with iron hoops, front view, Ragnarok Online classic dark fantasy style",
+   "w": 48,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/wooden_barrel_iron_hoops_901b"
+  },
+  {
+   "id": "9024c6fe-cc3d-4fa2-8387-cd3a862401f2",
+   "slug": "pink_blossom_flower_bush_9024",
+   "name": "pink blossom flower bush",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pink_blossom_flower_bush_9024"
+  },
+  {
+   "id": "9071e3a9-b4f3-4fd2-bbea-42ea9d6f6623",
+   "slug": "fire_bolt_flaming_arrow_9071",
+   "name": "fire bolt flaming arrow",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/fire_bolt_flaming_arrow_9071"
+  },
+  {
+   "id": "90b46c61-eae1-4e94-ba86-cd8f8595b33b",
+   "slug": "oasis_reed_plant_90b4",
+   "name": "oasis reed plant",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/oasis_reed_plant_90b4"
+  },
+  {
+   "id": "913417f2-0789-407c-b4ac-d9b115a9166a",
+   "slug": "red_flower_patch_9134",
+   "name": "red flower patch",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/red_flower_patch_9134"
+  },
+  {
+   "id": "91b123b0-9107-4d3d-94a2-6287192a3169",
+   "slug": "white_daisy_flower_patch_91b1",
+   "name": "white daisy flower patch",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/white_daisy_flower_patch_91b1"
+  },
+  {
+   "id": "93951fba-7d2f-488f-8a13-e92408345dde",
+   "slug": "long_section_grey_stone_9395",
+   "name": "long section of grey stone castle town wall with crenellated battlements and a walkway, brick pattern, drawn in strict flat 2D front elevation, front view, hori",
+   "w": 256,
+   "h": 128,
+   "frames": 1,
+   "art": "pl/obj/long_section_grey_stone_9395"
+  },
+  {
+   "id": "9445ce47-b50d-49b8-85b5-4fbd9be5bb03",
+   "slug": "mine_cart_full_gold_9445",
+   "name": "mine cart full of gold ore",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/mine_cart_full_gold_9445"
+  },
+  {
+   "id": "9600a4da-8c45-4a2b-8b13-b70fd7705e46",
+   "slug": "golden_hay_bale_9600",
+   "name": "golden hay bale",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/golden_hay_bale_9600"
+  },
+  {
+   "id": "960267c3-2f1f-4f6e-ba1a-8505b4e4911a",
+   "slug": "berserk_potion_red_bubbling_9602",
+   "name": "berserk potion red bubbling flask",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/berserk_potion_red_bubbling_9602"
+  },
+  {
+   "id": "96289e0b-9f0f-40e5-b63b-a00a77cdce37",
+   "slug": "golden_lyre_harp_9628",
+   "name": "golden lyre harp",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/golden_lyre_harp_9628"
+  },
+  {
+   "id": "967f02db-068f-4f35-b3b9-7813d9b5ca5f",
+   "slug": "bioluminescent_fantasy_tree_dark_967f",
+   "name": "bioluminescent fantasy tree with dark teal trunk and glowing blue-cyan leaves and tiny glowing spores, enchanted night forest, front view, Ragnarok Online class",
+   "w": 192,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/bioluminescent_fantasy_tree_dark_967f",
+   "bgRemoved": true
+  },
+  {
+   "id": "969f5381-0e85-437e-b612-99cdf03408a0",
+   "slug": "reflect_shield_mirror_shield_969f",
+   "name": "reflect shield mirror shield",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/reflect_shield_mirror_shield_969f"
+  },
+  {
+   "id": "96a0baea-80b7-4f5d-94a0-6c6dd63d3da3",
+   "slug": "throw_spirit_sphere_flying_96a0",
+   "name": "throw spirit sphere flying energy orb",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/throw_spirit_sphere_flying_96a0"
+  },
+  {
+   "id": "974a4fd8-71b5-4384-ba49-10d9e9947db3",
+   "slug": "scream_sound_waves_974a",
+   "name": "scream sound waves",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/scream_sound_waves_974a"
+  },
+  {
+   "id": "977d7ec6-ace9-4997-b8ff-27b12c57defb",
+   "slug": "adrenaline_rush_red_sweat_977d",
+   "name": "adrenaline rush red sweat bolt",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/adrenaline_rush_red_sweat_977d"
+  },
+  {
+   "id": "97fd0ce3-17bb-47e6-8f29-f07eb717de37",
+   "slug": "frozen_frosty_bush_97fd",
+   "name": "frozen frosty bush",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/frozen_frosty_bush_97fd"
+  },
+  {
+   "id": "98210284-ced0-4428-9362-16a1137465e1",
+   "slug": "blitz_beat_attacking_falcon_9821",
+   "name": "blitz beat attacking falcon",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/blitz_beat_attacking_falcon_9821"
+  },
+  {
+   "id": "98e32256-0775-49d6-a971-cba9876b0e87",
+   "slug": "raid_shadow_strike_98e3",
+   "name": "raid shadow strike",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/raid_shadow_strike_98e3"
+  },
+  {
+   "id": "98f78339-8683-4ed4-8b7e-68cf7cf4f483",
+   "slug": "claymore_trap_flame_trap_98f7",
+   "name": "claymore trap flame trap",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/claymore_trap_flame_trap_98f7"
+  },
+  {
+   "id": "99b2cdbe-371c-445d-8344-478d148fed3b",
+   "slug": "pierce_piercing_spear_thrust_99b2",
+   "name": "pierce piercing spear thrust",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pierce_piercing_spear_thrust_99b2"
+  },
+  {
+   "id": "9b727e89-1af3-4f43-a3b2-06abdb6f6a17",
+   "slug": "jupitel_thunder_ball_sparking_9b72",
+   "name": "jupitel thunder ball sparking orb",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/jupitel_thunder_ball_sparking_9b72"
+  },
+  {
+   "id": "9b8bc970-914e-411d-8fc6-81148ac9c1e8",
+   "slug": "faith_holy_cross_heart_9b8b",
+   "name": "faith holy cross heart",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/faith_holy_cross_heart_9b8b"
+  },
+  {
+   "id": "9bab0913-6098-454a-b3cb-b43fed49a358",
+   "slug": "kyrie_eleison_holy_barrier_9bab",
+   "name": "kyrie eleison holy barrier shield glowing",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/kyrie_eleison_holy_barrier_9bab"
+  },
+  {
+   "id": "9bb32849-a5a7-4dd6-bcd1-a90470a2bd75",
+   "slug": "dusk_song_twilight_sunset_9bb3",
+   "name": "dusk song twilight sunset notes",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/dusk_song_twilight_sunset_9bb3"
+  },
+  {
+   "id": "9bb46060-f5c3-431c-8b17-45dc7b76ee5b",
+   "slug": "straight_crenellated_grey_stone_9bb4",
+   "name": "straight crenellated grey stone castle wall section with stone brick texture and walkway top, front view, tileable horizontally, fantasy RPG",
+   "w": 192,
+   "h": 128,
+   "frames": 1,
+   "art": "pl/obj/straight_crenellated_grey_stone_9bb4"
+  },
+  {
+   "id": "9c1b0955-4bf7-4eb5-9934-83d72592bd0e",
+   "slug": "medieval_fantasy_plaster_house_9c1b",
+   "name": "medieval fantasy plaster house with blue painted walls, two storeys, blue-green tile roof, flower box under the window, strict flat 2D front elevation facing th",
+   "w": 192,
+   "h": 224,
+   "frames": 1,
+   "art": "pl/obj/medieval_fantasy_plaster_house_9c1b",
+   "bgRemoved": true
+  },
+  {
+   "id": "9c5a3ca1-3694-47de-8a9f-fe2b991a6320",
+   "slug": "round_circus_style_merchant_9c5a",
+   "name": "large round circus-style merchant tent, red and cream stripes, conical roof with flag, open entrance flaps, fantasy RPG",
+   "w": 256,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/round_circus_style_merchant_9c5a",
+   "bgRemoved": true
+  },
+  {
+   "id": "9c6e0fac-e4d5-4bbd-865a-e3e7df657451",
+   "slug": "ankle_snare_trap_closing_9c6e",
+   "name": "ankle snare trap closing",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/ankle_snare_trap_closing_9c6e"
+  },
+  {
+   "id": "9c8af38a-cdf6-4e13-aad2-71c8ebf7ca63",
+   "slug": "giant_monster_ribcage_skeleton_9c8a",
+   "name": "giant monster ribcage skeleton arching upward half buried in the ground, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 96,
+   "frames": 1,
+   "art": "pl/obj/giant_monster_ribcage_skeleton_9c8a"
+  },
+  {
+   "id": "9cb80220-df47-4254-a5af-fa717cbb5547",
+   "slug": "impositio_manus_blessing_hands_9cb8",
+   "name": "impositio manus blessing hands",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/impositio_manus_blessing_hands_9cb8"
+  },
+  {
+   "id": "9cebc6e1-6181-4b74-8b76-857eae0ea4df",
+   "slug": "wooden_stake_pole_topped_9ceb",
+   "name": "wooden stake pole topped with an impaled horned skull and tied bones, tribal totem, front view, Ragnarok Online classic dark fantasy style",
+   "w": 48,
+   "h": 96,
+   "frames": 1,
+   "art": "pl/obj/wooden_stake_pole_topped_9ceb"
+  },
+  {
+   "id": "9e2620cd-fa36-470b-9391-b3f9629fc8a7",
+   "slug": "advanced_katar_quicken_speed_9e26",
+   "name": "advanced katar quicken speed",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/advanced_katar_quicken_speed_9e26"
+  },
+  {
+   "id": "9e69399d-db58-4223-9eba-693515bb5255",
+   "slug": "fallen_mossy_tree_log_9e69",
+   "name": "fallen mossy tree log lying on the ground, side view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 48,
+   "frames": 1,
+   "art": "pl/obj/fallen_mossy_tree_log_9e69"
+  },
+  {
+   "id": "9e862ac3-7b78-4a49-b16f-5f9e3961213e",
+   "slug": "chat_speech_bubble_9e86",
+   "name": "chat speech bubble",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/chat_speech_bubble_9e86"
+  },
+  {
+   "id": "9f5f7760-8e7c-475d-b02c-68b8a38702b9",
+   "slug": "orange_coral_9f5f",
+   "name": "orange coral",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/orange_coral_9f5f"
+  },
+  {
+   "id": "a0015fa2-7c82-42c0-a438-578d2889324f",
+   "slug": "volcanic_vent_glowing_crack_a001",
+   "name": "volcanic vent with glowing crack",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/volcanic_vent_glowing_crack_a001"
+  },
+  {
+   "id": "a018ce9b-1001-47b0-b2a9-403a294ad777",
+   "slug": "round_golden_haystack_bale_a018",
+   "name": "round golden haystack bale with a pitchfork stuck in it, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 96,
+   "frames": 1,
+   "art": "pl/obj/round_golden_haystack_bale_a018"
+  },
+  {
+   "id": "a062cbdd-e1b1-46fc-8960-60ff480efbac",
+   "slug": "tall_carved_stone_tablet_a062",
+   "name": "tall carved stone tablet stele with glowing runes standing upright, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 112,
+   "frames": 1,
+   "art": "pl/obj/tall_carved_stone_tablet_a062"
+  },
+  {
+   "id": "a095ff94-3e05-41a5-b8e8-b0cb0d2867ac",
+   "slug": "silver_leafed_mystical_tree_a095",
+   "name": "silver-leafed mystical tree with pale trunk",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/silver_leafed_mystical_tree_a095"
+  },
+  {
+   "id": "a0c17c8b-b3b8-4c7c-9119-85944ca89d4b",
+   "slug": "snap_dash_teleport_steps_a0c1",
+   "name": "snap dash teleport steps",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/snap_dash_teleport_steps_a0c1"
+  },
+  {
+   "id": "a11e5dcf-a688-4e28-a861-db9cf8c010b7",
+   "slug": "cloaking_shadow_cloak_a11e",
+   "name": "cloaking shadow cloak",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/cloaking_shadow_cloak_a11e"
+  },
+  {
+   "id": "a1b1226e-eef6-4827-8992-d7982143adb1",
+   "slug": "green_shrub_bush_pink_a1b1",
+   "name": "green shrub bush with pink and white blossoms, front view, Ragnarok Online classic dark fantasy style",
+   "w": 80,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/green_shrub_bush_pink_a1b1"
+  },
+  {
+   "id": "a262260e-d84b-4d26-88ee-f85183093e49",
+   "slug": "fresh_grave_dirt_mound_a262",
+   "name": "fresh grave dirt mound",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/fresh_grave_dirt_mound_a262"
+  },
+  {
+   "id": "a2bb27b9-a68f-4b04-9cbc-0635bc7a55aa",
+   "slug": "iron_weapon_barrel_a2bb",
+   "name": "iron weapon barrel",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/iron_weapon_barrel_a2bb"
+  },
+  {
+   "id": "a43f7dd5-ae6a-4313-8f39-ee0bffe2b0dd",
+   "slug": "leafy_green_oak_tree_a43f",
+   "name": "leafy green oak tree with thick brown trunk, round full canopy, lush fantasy RPG town park tree",
+   "w": 192,
+   "h": 224,
+   "frames": 1,
+   "art": "pl/obj/leafy_green_oak_tree_a43f",
+   "bgRemoved": true
+  },
+  {
+   "id": "a447eed6-1f8e-41f2-9ad3-da39d049a2d5",
+   "slug": "blue_ice_cliff_jagged_a447",
+   "name": "blue ice cliff, jagged frozen glacier wall with pale blue and white ice crystals and snow on top, front view, fantasy RPG terrain",
+   "w": 256,
+   "h": 192,
+   "frames": 1,
+   "art": "pl/obj/blue_ice_cliff_jagged_a447",
+   "bgRemoved": true
+  },
+  {
+   "id": "a4bbb812-21ef-4724-878e-f25e8dc77818",
+   "slug": "dark_stone_sacrificial_altar_a4bb",
+   "name": "dark stone sacrificial altar with candles and glowing red runes, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 80,
+   "frames": 1,
+   "art": "pl/obj/dark_stone_sacrificial_altar_a4bb"
+  },
+  {
+   "id": "a4bfa857-f6af-4518-ae2e-4ce65c9f7cce",
+   "slug": "taunt_angry_red_face_a4bf",
+   "name": "taunt angry red face with shout lines",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/taunt_angry_red_face_a4bf"
+  },
+  {
+   "id": "a628bbbe-4773-447e-801e-1312acd68ff7",
+   "slug": "facade_medieval_fantasy_tavern_a628",
+   "name": "flat facade of a medieval fantasy tavern inn seen from directly in front, tall rectangular two-storey timber-framed front wall with a gabled roof edge on top, g",
+   "w": 224,
+   "h": 224,
+   "frames": 1,
+   "art": "pl/obj/facade_medieval_fantasy_tavern_a628",
+   "bgRemoved": true
+  },
+  {
+   "id": "a71b6434-146b-418a-999a-eba12c4682cf",
+   "slug": "spider_web_a71b",
+   "name": "spider web",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/spider_web_a71b"
+  },
+  {
+   "id": "a8c63f4d-7e77-4747-a028-9047075859bd",
+   "slug": "stack_firewood_logs_a8c6",
+   "name": "stack of firewood logs",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/stack_firewood_logs_a8c6"
+  },
+  {
+   "id": "a978a800-870e-4cc3-b094-faf9b49ecabc",
+   "slug": "pile_fallen_autumn_leaves_a978",
+   "name": "pile of fallen autumn leaves",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pile_fallen_autumn_leaves_a978"
+  },
+  {
+   "id": "a990dded-7fad-4226-98e6-b8242fa0f382",
+   "slug": "old_stone_village_well_a990",
+   "name": "old stone village well with a wooden roof, rope and bucket, mossy round stone base, drawn in strict flat 2D front elevation, front view, Ragnarok Online classic",
+   "w": 96,
+   "h": 112,
+   "frames": 1,
+   "art": "pl/obj/old_stone_village_well_a990"
+  },
+  {
+   "id": "aad38d9b-6e3a-4b38-9839-e2c3501b1ed5",
+   "slug": "lightning_bolt_yellow_thunder_aad3",
+   "name": "lightning bolt yellow thunder arrow",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/lightning_bolt_yellow_thunder_aad3"
+  },
+  {
+   "id": "ab02b23a-8663-44e9-ab7d-13adc425cf8f",
+   "slug": "wooden_drying_rack_animal_ab02",
+   "name": "wooden drying rack with animal hides stretched on a frame, tribal, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 96,
+   "frames": 1,
+   "art": "pl/obj/wooden_drying_rack_animal_ab02"
+  },
+  {
+   "id": "abe9614f-cd2f-4ead-9a5b-60d7fa9335d3",
+   "slug": "gacha_capsule_orb_abe9",
+   "name": "gacha capsule orb",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/gacha_capsule_orb_abe9"
+  },
+  {
+   "id": "abf0a8b2-4209-44d4-90c5-21e847bd46d1",
+   "slug": "glowing_blue_flower_abf0",
+   "name": "glowing blue flower",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/glowing_blue_flower_abf0"
+  },
+  {
+   "id": "ac024286-e204-4624-8220-e22322ad16a5",
+   "slug": "rotten_stump_mushrooms_ac02",
+   "name": "rotten stump with mushrooms",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/rotten_stump_mushrooms_ac02"
+  },
+  {
+   "id": "ac6ffdc9-cfb9-417c-89f8-ee2dd071f0e8",
+   "slug": "few_pink_white_seashells_ac6f",
+   "name": "few pink and white seashells and a starfish on sand, front view, Ragnarok Online classic dark fantasy style",
+   "w": 48,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/few_pink_white_seashells_ac6f"
+  },
+  {
+   "id": "acac3d14-d9e8-463b-8455-2c15e8329c12",
+   "slug": "intelligence_glowing_brain_acac",
+   "name": "intelligence glowing brain",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/intelligence_glowing_brain_acac"
+  },
+  {
+   "id": "acccd90b-8633-4f5d-b040-d29079837c9b",
+   "slug": "service_for_you_dancing_accc",
+   "name": "service for you dancing ribbons coins",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/service_for_you_dancing_accc"
+  },
+  {
+   "id": "ad4dafdb-3389-44f4-a6e5-63104748aeab",
+   "slug": "jagged_black_volcanic_rock_ad4d",
+   "name": "jagged black volcanic rock spire with glowing molten orange cracks, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 128,
+   "frames": 1,
+   "art": "pl/obj/jagged_black_volcanic_rock_ad4d"
+  },
+  {
+   "id": "ae592f52-267d-4bb6-b942-98cce35d5019",
+   "slug": "wooden_weapon_rack_holding_ae59",
+   "name": "wooden weapon rack holding swords, spears and axes, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 80,
+   "frames": 1,
+   "art": "pl/obj/wooden_weapon_rack_holding_ae59"
+  },
+  {
+   "id": "aeed101f-f67a-4a1d-8229-419d732749e9",
+   "slug": "resurrection_angel_wings_rising_aeed",
+   "name": "resurrection angel wings rising",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/resurrection_angel_wings_rising_aeed"
+  },
+  {
+   "id": "af72000c-94e0-46a3-acfb-63b83c6acdcb",
+   "slug": "sword_bash_strike_impact_af72",
+   "name": "sword bash strike impact",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/sword_bash_strike_impact_af72"
+  },
+  {
+   "id": "b09bd242-e0d3-49dc-afdf-d7bda7beda8f",
+   "slug": "raw_ore_rock_chunk_b09b",
+   "name": "raw ore rock chunk",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/raw_ore_rock_chunk_b09b"
+  },
+  {
+   "id": "b0d2c51c-1ef3-421c-a867-fc82295011b1",
+   "slug": "collectible_playing_card_b0d2",
+   "name": "collectible playing card",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/collectible_playing_card_b0d2"
+  },
+  {
+   "id": "b195ccbe-3449-46f8-a126-3fdbaa64e55f",
+   "slug": "skull_lit_candle_b195",
+   "name": "skull with lit candle",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/skull_lit_candle_b195"
+  },
+  {
+   "id": "b1c9c9b3-e675-40bc-aa3e-cec73a5b4a09",
+   "slug": "endow_water_blue_water_b1c9",
+   "name": "endow water blue water sword",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/endow_water_blue_water_b1c9"
+  },
+  {
+   "id": "b2c49e7f-5199-46c7-b35b-7318fa8c89a0",
+   "slug": "two_handed_greatsword_b2c4",
+   "name": "large two-handed greatsword",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/two_handed_greatsword_b2c4"
+  },
+  {
+   "id": "b3402ed3-618e-48bb-9609-93294de3a340",
+   "slug": "stone_sarcophagus_coffin_b340",
+   "name": "stone sarcophagus coffin",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/stone_sarcophagus_coffin_b340"
+  },
+  {
+   "id": "b348f2cf-34ae-4f5c-96c8-a656a83eefc5",
+   "slug": "drug_intoxication_green_vial_b348",
+   "name": "drug intoxication green vial with skull",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/drug_intoxication_green_vial_b348"
+  },
+  {
+   "id": "b3a38ec7-0f71-48fd-b6c0-15e3e7a2a13a",
+   "slug": "broken_ancient_stone_column_b3a3",
+   "name": "broken ancient stone column with cracked fluted shaft and rubble at the base, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 160,
+   "frames": 1,
+   "art": "pl/obj/broken_ancient_stone_column_b3a3"
+  },
+  {
+   "id": "b4221c8c-62e8-4818-b0cb-3a4b2bafc08a",
+   "slug": "short_wooden_fence_section_b422",
+   "name": "short wooden fence section",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/short_wooden_fence_section_b422"
+  },
+  {
+   "id": "b5015949-5a76-42c6-9dcd-42c7d2a93d4d",
+   "slug": "twisted_swamp_mangrove_tree_b501",
+   "name": "twisted swamp mangrove tree with exposed arched roots, hanging moss and vines, dark olive foliage, front view, Ragnarok Online classic dark fantasy style",
+   "w": 224,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/twisted_swamp_mangrove_tree_b501",
+   "bgRemoved": true
+  },
+  {
+   "id": "b546fffd-f426-4f58-8933-999126ae9cae",
+   "slug": "four_leaf_clover_patch_b546",
+   "name": "four-leaf clover patch",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/four_leaf_clover_patch_b546"
+  },
+  {
+   "id": "b557267a-4425-4820-bcb5-f764e5d37f47",
+   "slug": "blue_mana_droplet_b557",
+   "name": "blue mana droplet",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/blue_mana_droplet_b557"
+  },
+  {
+   "id": "b5cdbbec-8c21-451e-94d9-eb613d38d6d8",
+   "slug": "sharp_black_obsidian_shards_b5cd",
+   "name": "sharp black obsidian shards",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/sharp_black_obsidian_shards_b5cd"
+  },
+  {
+   "id": "b5e8dde0-08df-45be-a7fd-7c65b4ffb28e",
+   "slug": "cluster_red_mushrooms_white_b5e8",
+   "name": "cluster of red mushrooms with white spots, front view, Ragnarok Online classic dark fantasy style",
+   "w": 48,
+   "h": 48,
+   "frames": 1,
+   "art": "pl/obj/cluster_red_mushrooms_white_b5e8"
+  },
+  {
+   "id": "b62fdf02-7d81-4362-bb7e-3c2c9ab8e162",
+   "slug": "holy_cross_cross_slash_b62f",
+   "name": "holy cross cross slash",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/holy_cross_cross_slash_b62f"
+  },
+  {
+   "id": "b6996527-3d03-42ca-98b4-6129022b34f2",
+   "slug": "tall_spruce_pine_tree_b699",
+   "name": "tall spruce pine tree heavily covered with white snow on every branch, front view, Ragnarok Online classic dark fantasy style",
+   "w": 160,
+   "h": 288,
+   "frames": 1,
+   "art": "pl/obj/tall_spruce_pine_tree_b699",
+   "bgRemoved": true
+  },
+  {
+   "id": "b6b1bb47-57f3-449e-8ae0-5aab90521b7c",
+   "slug": "iron_street_lamp_post_b6b1",
+   "name": "iron street lamp post with glowing lantern",
+   "w": 32,
+   "h": 56,
+   "frames": 1,
+   "art": "pl/obj/iron_street_lamp_post_b6b1"
+  },
+  {
+   "id": "b756cbed-de9f-4adf-aeb3-9f1fc2ac6ff9",
+   "slug": "sage_book_mastery_spellbook_b756",
+   "name": "sage book mastery spellbook",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/sage_book_mastery_spellbook_b756"
+  },
+  {
+   "id": "b8c271c7-191c-417a-ab1e-6fff1340df96",
+   "slug": "pneuma_airtight_wall_b8c2",
+   "name": "pneuma airtight wall",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pneuma_airtight_wall_b8c2"
+  },
+  {
+   "id": "b9cc64ce-c6dd-4d39-b0b4-e23bcf10e6b4",
+   "slug": "speckled_egg_b9cc",
+   "name": "speckled egg",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/speckled_egg_b9cc"
+  },
+  {
+   "id": "b9f9a489-1872-4496-aec9-9b4a56cd1c5d",
+   "slug": "two_handed_sword_mastery_b9f9",
+   "name": "two-handed sword mastery greatsword",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/two_handed_sword_mastery_b9f9"
+  },
+  {
+   "id": "bb31a16a-4e51-424d-8b13-e9de8d1d4386",
+   "slug": "fishing_net_drying_bb31",
+   "name": "fishing net drying",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/fishing_net_drying_bb31"
+  },
+  {
+   "id": "bb9223d5-a4a5-4327-bcdd-856a671eaa14",
+   "slug": "pink_starfish_bb92",
+   "name": "pink starfish",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pink_starfish_bb92"
+  },
+  {
+   "id": "bb9e39ad-fd3b-44ec-bdeb-2781c96a2ce5",
+   "slug": "object_object_0_copy_bb9e",
+   "name": "Object: Object 0 (Copy) (Copy) (Copy) (Copy) (Copy) (unknown)",
+   "w": 20,
+   "h": 80,
+   "frames": 1,
+   "art": "pl/obj/object_object_0_copy_bb9e"
+  },
+  {
+   "id": "bbe8e082-8fb6-42c8-ab7f-e5dde973062f",
+   "slug": "adventurer_backpack_bag_bbe8",
+   "name": "adventurer backpack bag",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/adventurer_backpack_bag_bbe8"
+  },
+  {
+   "id": "bc730fc4-3c74-4b3e-95f7-56fdf4269709",
+   "slug": "hammer_fall_earth_shatter_bc73",
+   "name": "hammer fall earth shatter",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/hammer_fall_earth_shatter_bc73"
+  },
+  {
+   "id": "bcdf197a-e08e-4ef3-8a55-cbb3b9c54366",
+   "slug": "cold_bolt_ice_arrow_bcdf",
+   "name": "cold bolt ice arrow",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/cold_bolt_ice_arrow_bcdf"
+  },
+  {
+   "id": "bd17c23e-03ea-41ac-8be6-1f8449ba57f6",
+   "slug": "iron_weight_kettlebell_bd17",
+   "name": "iron weight kettlebell",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/iron_weight_kettlebell_bd17"
+  },
+  {
+   "id": "bd2d419f-4e83-4326-bf36-f42ac568367b",
+   "slug": "stone_pedestal_fire_bowl_bd2d",
+   "name": "stone pedestal with fire bowl",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/stone_pedestal_fire_bowl_bd2d"
+  },
+  {
+   "id": "bd76a224-dd28-48a1-ac22-2dfd4a8e3d30",
+   "slug": "tall_round_stone_gate_bd76",
+   "name": "tall round stone gate tower with crenellated top, arrow slits and a wooden door at the base, grey stone, drawn in strict flat 2D front elevation like a side-scr",
+   "w": 112,
+   "h": 224,
+   "frames": 1,
+   "art": "pl/obj/tall_round_stone_gate_bd76"
+  },
+  {
+   "id": "bde5f99f-1d16-472b-8831-b75d109373fc",
+   "slug": "burnt_charred_black_dead_bde5",
+   "name": "burnt charred black dead tree with glowing ember cracks in the bark and a few smouldering embers, front view, Ragnarok Online classic dark fantasy style",
+   "w": 192,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/burnt_charred_black_dead_bde5",
+   "bgRemoved": true
+  },
+  {
+   "id": "bdebda10-31b9-44e0-989d-a5937d3743fd",
+   "slug": "weapon_research_blueprint_hammer_bdeb",
+   "name": "weapon research blueprint hammer",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/weapon_research_blueprint_hammer_bdeb"
+  },
+  {
+   "id": "be1f9f97-8c06-4b96-a879-6c39e5cf5f7b",
+   "slug": "power_thrust_glowing_weapon_be1f",
+   "name": "power thrust glowing weapon fist",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/power_thrust_glowing_weapon_be1f"
+  },
+  {
+   "id": "bf6cff44-df10-4d23-8453-8505fb43cd69",
+   "slug": "thatched_roof_stone_cottage_bf6c",
+   "name": "small thatched-roof stone cottage with one storey and a smoking chimney, round wooden door in the middle, drawn in strict flat 2D front elevation like a side-sc",
+   "w": 160,
+   "h": 160,
+   "frames": 1,
+   "art": "pl/obj/thatched_roof_stone_cottage_bf6c"
+  },
+  {
+   "id": "c065bec0-d3c0-4150-b0f6-7937ba9fb5b6",
+   "slug": "enchant_poison_green_skull_c065",
+   "name": "enchant poison green skull dagger",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/enchant_poison_green_skull_c065"
+  },
+  {
+   "id": "c0968190-2cbe-4b08-aa2a-250f1c947c6b",
+   "slug": "merchant_coin_pouch_shop_c096",
+   "name": "merchant coin pouch shop",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/merchant_coin_pouch_shop_c096"
+  },
+  {
+   "id": "c19387a0-1edc-40b7-920d-322a7401e289",
+   "slug": "mammonite_coin_smash_fist_c193",
+   "name": "mammonite coin smash fist with gold",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/mammonite_coin_smash_fist_c193"
+  },
+  {
+   "id": "c1ad2567-4636-4f84-9f3a-ba1a040ea7b4",
+   "slug": "folded_world_map_pin_c1ad",
+   "name": "folded world map with pin",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/folded_world_map_pin_c1ad"
+  },
+  {
+   "id": "c1c98a24-9e02-4ff2-8a94-d66788365419",
+   "slug": "object_object_0_unknown_c1c9",
+   "name": "Object: Object 0 (unknown)",
+   "w": 84,
+   "h": 141,
+   "frames": 1,
+   "art": "pl/obj/object_object_0_unknown_c1c9"
+  },
+  {
+   "id": "c2e6dabb-2d18-4174-8246-2ce5a18ec9fc",
+   "slug": "poison_purple_lily_pad_c2e6",
+   "name": "poison purple lily pad",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/poison_purple_lily_pad_c2e6"
+  },
+  {
+   "id": "c31c279b-d23b-4439-b16c-a525cfda2545",
+   "slug": "rope_coil_c31c",
+   "name": "rope coil",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/rope_coil_c31c"
+  },
+  {
+   "id": "c3477d2f-7c3a-4db2-98a3-f1819b4dd97e",
+   "slug": "tall_coconut_palm_tree_c347",
+   "name": "tall coconut palm tree with curved trunk and drooping green fronds, front view, Ragnarok Online classic dark fantasy style",
+   "w": 192,
+   "h": 288,
+   "frames": 1,
+   "art": "pl/obj/tall_coconut_palm_tree_c347",
+   "bgRemoved": true
+  },
+  {
+   "id": "c3917fda-c806-44ff-a58b-09edccb2c37b",
+   "slug": "rotten_tree_stump_bog_c391",
+   "name": "rotten tree stump in bog",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/rotten_tree_stump_bog_c391"
+  },
+  {
+   "id": "c3e5f860-4909-4462-bc60-fc72b9c4bf81",
+   "slug": "object_japanese_animals_statues_c3e5",
+   "name": "Object: japanese animals statues (unknown)",
+   "w": 54,
+   "h": 54,
+   "frames": 1,
+   "art": "pl/obj/object_japanese_animals_statues_c3e5"
+  },
+  {
+   "id": "c4871ae8-2cf0-4a9f-b215-3f7d63ab2cd5",
+   "slug": "two_storey_stone_brick_c487",
+   "name": "two-storey stone and brick townhouse with slate blue roof, arched wooden door, glass windows, chimney with smoke, seen from the front at a slight angle, fantasy",
+   "w": 256,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/two_storey_stone_brick_c487",
+   "bgRemoved": true
+  },
+  {
+   "id": "c4d24158-626f-4b64-8250-b32687ab89f7",
+   "slug": "rotten_log_moss_c4d2",
+   "name": "rotten log with moss",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/rotten_log_moss_c4d2"
+  },
+  {
+   "id": "c4d3e923-a9fa-4886-8716-8795dbf832d4",
+   "slug": "weapon_rack_spears_c4d3",
+   "name": "weapon rack with spears",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/weapon_rack_spears_c4d3"
+  },
+  {
+   "id": "c59c3757-7a08-45c5-a3fa-2e3fb6fccd63",
+   "slug": "pointed_grey_limestone_stalagmite_c59c",
+   "name": "pointed grey limestone stalagmite rock column in a cave, damp, front view, Ragnarok Online classic dark fantasy style",
+   "w": 80,
+   "h": 128,
+   "frames": 1,
+   "art": "pl/obj/pointed_grey_limestone_stalagmite_c59c"
+  },
+  {
+   "id": "c62b724e-f0f5-4934-a688-802fe00b72fb",
+   "slug": "magic_staff_mastery_orb_c62b",
+   "name": "magic staff mastery orb staff",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/magic_staff_mastery_orb_c62b"
+  },
+  {
+   "id": "c76bb623-7879-4feb-a2f7-82d6132abc99",
+   "slug": "stack_wooden_supply_crates_c76b",
+   "name": "stack of wooden supply crates with rope, front view, Ragnarok Online classic dark fantasy style",
+   "w": 80,
+   "h": 80,
+   "frames": 1,
+   "art": "pl/obj/stack_wooden_supply_crates_c76b"
+  },
+  {
+   "id": "c81e3d7d-b826-4524-b0eb-2b86e5d0763e",
+   "slug": "sharp_broken_crystal_shard_c81e",
+   "name": "sharp broken crystal shard",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/sharp_broken_crystal_shard_c81e"
+  },
+  {
+   "id": "c8604da1-ebe9-4158-ad49-573b67ef3377",
+   "slug": "cattail_reeds_clump_c860",
+   "name": "cattail reeds in a clump",
+   "w": 32,
+   "h": 40,
+   "frames": 1,
+   "art": "pl/obj/cattail_reeds_clump_c860"
+  },
+  {
+   "id": "c887ebc8-c264-4599-87e8-9f950111ebb1",
+   "slug": "spiked_mace_club_c887",
+   "name": "spiked mace club",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/spiked_mace_club_c887"
+  },
+  {
+   "id": "c8bb6a22-636a-4cb5-ab7a-593bf69fc52b",
+   "slug": "medieval_tavern_inn_two_c8bb",
+   "name": "large medieval tavern inn, two storeys, timber frame, wide dark shingle roof, hanging beer mug sign, lit windows, wooden porch, seen from the front at a slight ",
+   "w": 300,
+   "h": 260,
+   "frames": 1,
+   "art": "pl/obj/medieval_tavern_inn_two_c8bb",
+   "bgRemoved": true
+  },
+  {
+   "id": "c92f5d80-4c91-4798-a4f3-a21508484264",
+   "slug": "medieval_fantasy_house_blue_c92f",
+   "name": "medieval fantasy house with blue painted plaster walls and a teal tile gabled roof, flower box under the window, drawn in strict flat 2D front elevation like a ",
+   "w": 192,
+   "h": 224,
+   "frames": 1,
+   "art": "pl/obj/medieval_fantasy_house_blue_c92f",
+   "bgRemoved": true
+  },
+  {
+   "id": "c9584bc7-8bc8-49b2-ad10-ffedfdf2c22c",
+   "slug": "soul_strike_floating_ghost_c958",
+   "name": "soul strike floating ghost spirit orbs",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/soul_strike_floating_ghost_c958"
+  },
+  {
+   "id": "ca348d12-8de4-432b-80e3-a32b34d43c85",
+   "slug": "sword_mastery_crossed_blade_ca34",
+   "name": "sword mastery crossed blade and book",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/sword_mastery_crossed_blade_ca34"
+  },
+  {
+   "id": "cabc6205-2eec-4feb-87f1-00853840fbc5",
+   "slug": "broken_ancient_hero_statue_cabc",
+   "name": "broken ancient hero statue",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/broken_ancient_hero_statue_cabc"
+  },
+  {
+   "id": "cb9e6383-4ec1-43d9-9c7a-07ddc02bce89",
+   "slug": "rock_covered_seaweed_cb9e",
+   "name": "rock covered with seaweed",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/rock_covered_seaweed_cb9e"
+  },
+  {
+   "id": "cc2c0ef7-d555-4f2d-a818-1cba771ac1a6",
+   "slug": "asura_strike_dragon_fist_cc2c",
+   "name": "asura strike dragon fist explosion",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/asura_strike_dragon_fist_cc2c"
+  },
+  {
+   "id": "cd9baab4-59d3-4f32-a4c0-cfce22cce47e",
+   "slug": "endow_fire_flaming_sword_cd9b",
+   "name": "endow fire flaming sword",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/endow_fire_flaming_sword_cd9b"
+  },
+  {
+   "id": "cda6f60c-13ce-4798-b89c-cc8c1ed971b5",
+   "slug": "hieroglyph_carved_stone_slab_cda6",
+   "name": "hieroglyph carved stone slab",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/hieroglyph_carved_stone_slab_cda6"
+  },
+  {
+   "id": "ce150af4-fdb0-4637-8a2a-66122c0c3385",
+   "slug": "magnus_exorcismus_holy_cross_ce15",
+   "name": "magnus exorcismus holy cross circle",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/magnus_exorcismus_holy_cross_ce15"
+  },
+  {
+   "id": "ce585140-fdae-41ff-9d9f-139f5b8a7f56",
+   "slug": "steel_short_sword_ce58",
+   "name": "steel short sword",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/steel_short_sword_ce58"
+  },
+  {
+   "id": "ce7a2256-8c36-406c-8cd4-490631eb19a0",
+   "slug": "scattered_pile_old_bones_ce7a",
+   "name": "scattered pile of old bones and a broken ribcage on the ground, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 40,
+   "frames": 1,
+   "art": "pl/obj/scattered_pile_old_bones_ce7a"
+  },
+  {
+   "id": "cefdfc34-591c-442f-8047-3407fcc963a0",
+   "slug": "wooden_barrel_cefd",
+   "name": "wooden barrel",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/wooden_barrel_cefd"
+  },
+  {
+   "id": "cfb4d6f2-0a36-45d4-beca-be67374977ee",
+   "slug": "will_o_wisp_blue_cfb4",
+   "name": "will-o-wisp blue flame lantern",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/will_o_wisp_blue_cfb4"
+  },
+  {
+   "id": "d08179c5-fb9b-462b-945e-0faa2044909f",
+   "slug": "flowing_cape_cloak_d081",
+   "name": "flowing cape cloak",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/flowing_cape_cloak_d081"
+  },
+  {
+   "id": "d1148905-32f7-4df5-b929-c354d7b75f1b",
+   "slug": "ice_spikes_cluster_d114",
+   "name": "ice spikes cluster",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/ice_spikes_cluster_d114"
+  },
+  {
+   "id": "d146c4c4-d71a-4694-ae5d-fec9fab8c68b",
+   "slug": "dark_stone_gargoyle_statue_d146",
+   "name": "dark stone gargoyle statue crouching on a pedestal with folded wings and horns, front view, Ragnarok Online classic dark fantasy style",
+   "w": 112,
+   "h": 144,
+   "frames": 1,
+   "art": "pl/obj/dark_stone_gargoyle_statue_d146"
+  },
+  {
+   "id": "d1fe2129-831f-4f96-a9ba-bc83e23b70b3",
+   "slug": "earth_spike_sharp_stone_d1fe",
+   "name": "earth spike sharp stone spikes",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/earth_spike_sharp_stone_d1fe"
+  },
+  {
+   "id": "d20dc2ad-7007-4e7f-bfcc-7f7963d9a677",
+   "slug": "storm_gust_blizzard_snowstorm_d20d",
+   "name": "storm gust blizzard snowstorm",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/storm_gust_blizzard_snowstorm_d20d"
+  },
+  {
+   "id": "d2f6552f-8f0e-4d64-88e2-d01d114a5d68",
+   "slug": "grand_medieval_stone_church_d2f6",
+   "name": "grand medieval stone church with a tall bell tower in the centre, rose window, pointed arch wooden doors, slate roof, buttresses, drawn in strict flat 2D front ",
+   "w": 288,
+   "h": 352,
+   "frames": 1,
+   "art": "pl/obj/grand_medieval_stone_church_d2f6",
+   "bgRemoved": true
+  },
+  {
+   "id": "d35ac94b-2c7e-4913-bb2e-9d4b55240eac",
+   "slug": "holy_riding_mount_saddle_d35a",
+   "name": "holy riding mount saddle white bird",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/holy_riding_mount_saddle_d35a"
+  },
+  {
+   "id": "d3900a17-8020-4d53-a817-8506ae6826af",
+   "slug": "dry_withered_brown_thorny_d390",
+   "name": "dry withered brown thorny desert shrub bush, front view, Ragnarok Online classic dark fantasy style",
+   "w": 80,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/dry_withered_brown_thorny_d390"
+  },
+  {
+   "id": "d39987c2-fb46-448b-bf4d-2acd2d3e3ef0",
+   "slug": "safety_wind_veil_d399",
+   "name": "safety wind veil",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/safety_wind_veil_d399"
+  },
+  {
+   "id": "d4912fe4-9331-4030-861b-8cb8cbb7fc1a",
+   "slug": "spiral_seashell_d491",
+   "name": "spiral seashell",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/spiral_seashell_d491"
+  },
+  {
+   "id": "d513b2cb-d3b9-454c-9075-2e3ebe403a19",
+   "slug": "round_barrel_cactus_flower_d513",
+   "name": "small round barrel cactus with flower",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/round_barrel_cactus_flower_d513"
+  },
+  {
+   "id": "d6748dbb-1c8f-4a4d-b8ba-f32aa40420b8",
+   "slug": "iron_chain_pile_d674",
+   "name": "iron chain pile",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/iron_chain_pile_d674"
+  },
+  {
+   "id": "d68473ae-7023-4783-9a90-c970c59fa91f",
+   "slug": "wooden_banner_pole_flag_d684",
+   "name": "wooden banner pole with flag",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/wooden_banner_pole_flag_d684"
+  },
+  {
+   "id": "d6938fe0-29f5-4a73-81d3-f34096c11900",
+   "slug": "stone_chapel_church_tall_d693",
+   "name": "small stone chapel church with tall bell tower, red roof, arched stained glass windows, large wooden double door, seen from the front at a slight angle, fantasy",
+   "w": 320,
+   "h": 320,
+   "frames": 1,
+   "art": "pl/obj/stone_chapel_church_tall_d693",
+   "bgRemoved": true
+  },
+  {
+   "id": "d780303d-dce9-4fbd-9527-6f85e586baed",
+   "slug": "wooden_rowboat_d780",
+   "name": "small wooden rowboat",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/wooden_rowboat_d780"
+  },
+  {
+   "id": "d7bdb367-7b3c-47c7-a546-aa4555d85787",
+   "slug": "tall_dark_green_spruce_d7bd",
+   "name": "tall dark green spruce pine tree, layered drooping branches, brown trunk base, front view, Ragnarok Online classic dark fantasy style",
+   "w": 160,
+   "h": 288,
+   "frames": 1,
+   "art": "pl/obj/tall_dark_green_spruce_d7bd",
+   "bgRemoved": true
+  },
+  {
+   "id": "d8ee4f8f-61dd-4437-abcb-05bcff645364",
+   "slug": "fallen_stone_pillar_d8ee",
+   "name": "fallen stone pillar",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/fallen_stone_pillar_d8ee"
+  },
+  {
+   "id": "d939f173-d5a3-4a16-afff-bc5a7babbde8",
+   "slug": "flee_dodge_dashing_footsteps_d939",
+   "name": "flee dodge dashing footsteps",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/flee_dodge_dashing_footsteps_d939"
+  },
+  {
+   "id": "d9670074-a9d0-4cd5-9b5b-ceffbd9fe53b",
+   "slug": "ancient_stone_tablet_d967",
+   "name": "ancient stone tablet",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/ancient_stone_tablet_d967"
+  },
+  {
+   "id": "d96e2de8-23a2-4f28-bb2b-c8507a1dcd28",
+   "slug": "cut_tree_stump_d96e",
+   "name": "cut tree stump",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/cut_tree_stump_d96e"
+  },
+  {
+   "id": "d9c83848-ca87-4cda-a25f-5f54501b142e",
+   "slug": "spear_mastery_lance_d9c8",
+   "name": "spear mastery lance",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/spear_mastery_lance_d9c8"
+  },
+  {
+   "id": "d9dd3508-6f7b-46c4-936e-ef1581dda050",
+   "slug": "dark_charcoal_basalt_boulder_d9dd",
+   "name": "large dark charcoal basalt boulder, jagged, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 80,
+   "frames": 1,
+   "art": "pl/obj/dark_charcoal_basalt_boulder_d9dd"
+  },
+  {
+   "id": "da4c583f-f760-4aa2-abfd-7a102fbf1b00",
+   "slug": "snow_covered_grey_rock_da4c",
+   "name": "snow-covered grey rock boulder",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/snow_covered_grey_rock_da4c"
+  },
+  {
+   "id": "da527c9c-a5cd-4c4b-a5c5-ff2403a5251f",
+   "slug": "ruined_stone_block_ivy_da52",
+   "name": "ruined stone block with ivy",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/ruined_stone_block_ivy_da52"
+  },
+  {
+   "id": "da815f1b-b7d6-45cc-b285-3901ff72db9e",
+   "slug": "bowling_bash_sword_spin_da81",
+   "name": "bowling bash sword spin shockwave",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/bowling_bash_sword_spin_da81"
+  },
+  {
+   "id": "dc0c329f-a941-4d4d-a440-c414fd4a6ecf",
+   "slug": "frost_joker_ice_mask_dc0c",
+   "name": "frost joker ice mask joker card",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/frost_joker_ice_mask_dc0c"
+  },
+  {
+   "id": "dc191d8c-06f6-4553-9fd2-84b897505e11",
+   "slug": "stalagmite_cluster_cave_dc19",
+   "name": "stalagmite cluster in cave",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/stalagmite_cluster_cave_dc19"
+  },
+  {
+   "id": "dc659768-1338-4b61-bd40-7f6b55e99127",
+   "slug": "washed_up_driftwood_branch_dc65",
+   "name": "washed up driftwood branch",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/washed_up_driftwood_branch_dc65"
+  },
+  {
+   "id": "dd3c562b-23ac-452c-b655-9a1b7ff89da9",
+   "slug": "ancient_weathered_stone_obelisk_dd3c",
+   "name": "ancient weathered stone obelisk with carved glowing teal runes and cracked base, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 224,
+   "frames": 1,
+   "art": "pl/obj/ancient_weathered_stone_obelisk_dd3c"
+  },
+  {
+   "id": "dd739a16-9f5a-4685-b01c-ae81fa123b00",
+   "slug": "heap_human_skulls_bones_dd73",
+   "name": "small heap of human skulls and bones, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 48,
+   "frames": 1,
+   "art": "pl/obj/heap_human_skulls_bones_dd73"
+  },
+  {
+   "id": "dd90d225-9a7d-42b2-b0c5-afd198928ba1",
+   "slug": "two_handed_axe_mastery_dd90",
+   "name": "two-handed axe mastery large axe",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/two_handed_axe_mastery_dd90"
+  },
+  {
+   "id": "dddacbc0-5265-4a22-9f71-263396ee2a00",
+   "slug": "cavalry_mastery_horse_lance_ddda",
+   "name": "cavalry mastery horse and lance",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/cavalry_mastery_horse_lance_ddda"
+  },
+  {
+   "id": "de30ef26-9d2b-46fc-96e4-82a5f3e6a88b",
+   "slug": "giant_animal_ribcage_bones_de30",
+   "name": "giant animal ribcage bones in sand",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/giant_animal_ribcage_bones_de30"
+  },
+  {
+   "id": "dea4ebb3-5a25-47ef-8263-0634df4c884f",
+   "slug": "rolling_dry_tumbleweed_dea4",
+   "name": "rolling dry tumbleweed",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/rolling_dry_tumbleweed_dea4"
+  },
+  {
+   "id": "e07c4b88-9b97-440c-adf7-f68584bde235",
+   "slug": "tattered_dark_red_war_e07c",
+   "name": "tattered dark red war banner on a tall wooden pole with a skull emblem, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 160,
+   "frames": 1,
+   "art": "pl/obj/tattered_dark_red_war_e07c"
+  },
+  {
+   "id": "e1430fc4-66c2-484d-88c5-bae1c5701cea",
+   "slug": "twin_katar_punch_daggers_e143",
+   "name": "twin katar punch daggers",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/twin_katar_punch_daggers_e143"
+  },
+  {
+   "id": "e1fa480f-7f5b-4c58-b238-4adcaeccd9d5",
+   "slug": "cluster_glowing_blue_cyan_e1fa",
+   "name": "cluster of glowing blue-cyan bioluminescent mushrooms, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/cluster_glowing_blue_cyan_e1fa"
+  },
+  {
+   "id": "e2235927-4059-4d19-a072-13b59e3a3f76",
+   "slug": "snatcher_stealing_hand_e223",
+   "name": "snatcher stealing hand",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/snatcher_stealing_hand_e223"
+  },
+  {
+   "id": "e2323c97-6220-4bb8-8a97-e6f144b7c245",
+   "slug": "medieval_blacksmith_workshop_stone_e232",
+   "name": "medieval blacksmith workshop, stone and wood building with forge chimney glowing, anvil and weapons rack outside, brown roof, seen from the front at a slight an",
+   "w": 256,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/medieval_blacksmith_workshop_stone_e232",
+   "bgRemoved": true
+  },
+  {
+   "id": "e39dc060-2474-40e3-8ad7-999b93432c77",
+   "slug": "black_volcanic_rock_cliff_e39d",
+   "name": "black volcanic rock cliff with glowing orange lava cracks and red embers, front view, fantasy RPG terrain",
+   "w": 256,
+   "h": 192,
+   "frames": 1,
+   "art": "pl/obj/black_volcanic_rock_cliff_e39d",
+   "bgRemoved": true
+  },
+  {
+   "id": "e4520836-ea41-4df0-9c42-f0301ebb8c65",
+   "slug": "melody_strike_bard_arrow_e452",
+   "name": "melody strike bard arrow notes",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/melody_strike_bard_arrow_e452"
+  },
+  {
+   "id": "e46ec1fa-c940-4b62-933c-d91703743d98",
+   "slug": "tropical_palm_tree_curved_e46e",
+   "name": "tropical palm tree with curved trunk and green fronds",
+   "w": 48,
+   "h": 56,
+   "frames": 1,
+   "art": "pl/obj/tropical_palm_tree_curved_e46e"
+  },
+  {
+   "id": "e493b2bb-e497-4186-8a3d-340b86840534",
+   "slug": "pickaxe_stuck_rock_e493",
+   "name": "pickaxe stuck in a rock",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pickaxe_stuck_rock_e493"
+  },
+  {
+   "id": "e4a2f5da-b33a-4afa-b2fb-43fd524d94a7",
+   "slug": "grey_granite_boulder_cracked_e4a2",
+   "name": "large grey granite boulder, cracked, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 80,
+   "frames": 1,
+   "art": "pl/obj/grey_granite_boulder_cracked_e4a2"
+  },
+  {
+   "id": "e5efe7ed-169c-4ef2-b7fb-febc06c9526e",
+   "slug": "palm_strike_energy_palm_e5ef",
+   "name": "palm strike energy palm",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/palm_strike_energy_palm_e5ef"
+  },
+  {
+   "id": "e732deff-f2fc-4663-b455-ecaf2cc762ba",
+   "slug": "wooden_market_stall_striped_e732",
+   "name": "wooden market stall with striped awning roof, counter with fruit crates and goods, front view, Ragnarok Online classic dark fantasy style",
+   "w": 160,
+   "h": 144,
+   "frames": 1,
+   "art": "pl/obj/wooden_market_stall_striped_e732"
+  },
+  {
+   "id": "e7d9255a-8e3a-4234-9476-70d1da584a2f",
+   "slug": "grey_boulder_rock_moss_e7d9",
+   "name": "grey boulder rock with moss, game prop",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/grey_boulder_rock_moss_e7d9"
+  },
+  {
+   "id": "e7fe280b-4276-40f8-b96f-a7fe50baa7b4",
+   "slug": "auto_battle_crossed_swords_e7fe",
+   "name": "auto battle crossed swords in circular arrows",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/auto_battle_crossed_swords_e7fe"
+  },
+  {
+   "id": "e80f1b09-b17c-4571-b50f-c974a31930e4",
+   "slug": "object_object_0_unknown_e80f",
+   "name": "Object: Object 0 (unknown)",
+   "w": 26,
+   "h": 54,
+   "frames": 1,
+   "art": "pl/obj/object_object_0_unknown_e80f"
+  },
+  {
+   "id": "e852f825-a755-4a08-8e77-0d0d64c52c9e",
+   "slug": "sack_grain_e852",
+   "name": "sack of grain",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/sack_grain_e852"
+  },
+  {
+   "id": "e8ac62a7-7821-407b-a14f-3f74fa8660c6",
+   "slug": "dexterity_bullseye_target_arrow_e8ac",
+   "name": "dexterity bullseye target with arrow",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/dexterity_bullseye_target_arrow_e8ac"
+  },
+  {
+   "id": "e8dc183b-2b01-49b1-9b31-21027e2aa754",
+   "slug": "round_stone_watch_tower_e8dc",
+   "name": "round stone watch tower with crenellated top and conical red roof, arrow slits, wooden door, seen from the front at a slight angle, fantasy RPG castle tower",
+   "w": 160,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/round_stone_watch_tower_e8dc",
+   "bgRemoved": true
+  },
+  {
+   "id": "e92016bb-e3bd-41e0-b18c-7710503288aa",
+   "slug": "mimic_copy_hand_e920",
+   "name": "mimic copy hand",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/mimic_copy_hand_e920"
+  },
+  {
+   "id": "e9da71e7-561d-423e-8201-c6a14d58377f",
+   "slug": "adventurer_training_star_badge_e9da",
+   "name": "adventurer training star badge",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/adventurer_training_star_badge_e9da"
+  },
+  {
+   "id": "ea0993c7-0780-496d-bd21-cf4ab08248e9",
+   "slug": "spiked_wooden_log_barricade_ea09",
+   "name": "spiked wooden log barricade",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/spiked_wooden_log_barricade_ea09"
+  },
+  {
+   "id": "ea2a9525-fd0d-443c-8363-2ac589a946f1",
+   "slug": "object_object_0_unknown_ea2a",
+   "name": "Object: Object 0 (unknown)",
+   "w": 18,
+   "h": 18,
+   "frames": 1,
+   "art": "pl/obj/object_object_0_unknown_ea2a"
+  },
+  {
+   "id": "ea7383a2-54f1-4885-aa0a-ff421a7c233f",
+   "slug": "single_pebbles_ground_ea73",
+   "name": "single pebbles on the ground",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/single_pebbles_ground_ea73"
+  },
+  {
+   "id": "ea8eddaa-c3d8-4111-8315-e7170d54b038",
+   "slug": "boulder_dusted_snow_frost_ea8e",
+   "name": "large boulder dusted with snow and frost on top, grey blue stone, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 80,
+   "frames": 1,
+   "art": "pl/obj/boulder_dusted_snow_frost_ea8e"
+  },
+  {
+   "id": "eb8e0bfe-101f-488c-93df-81d434054e41",
+   "slug": "giant_jungle_fern_eb8e",
+   "name": "giant jungle fern",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/giant_jungle_fern_eb8e"
+  },
+  {
+   "id": "eb9f2469-6ea8-419b-873f-c65cb3c81225",
+   "slug": "heal_cross_holy_healing_eb9f",
+   "name": "heal cross holy healing hands",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/heal_cross_holy_healing_eb9f"
+  },
+  {
+   "id": "ebe23b98-08b4-4765-8aed-53810d5efb31",
+   "slug": "wooden_magic_staff_orb_ebe2",
+   "name": "wooden magic staff with orb",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/wooden_magic_staff_orb_ebe2"
+  },
+  {
+   "id": "ec05b460-3678-4a82-9938-dfe8a2df48b8",
+   "slug": "spear_power_glowing_lance_ec05",
+   "name": "spear power glowing lance",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/spear_power_glowing_lance_ec05"
+  },
+  {
+   "id": "ec513bc8-ef45-4b65-bebf-fd36be437f26",
+   "slug": "object_object_0_copy_ec51",
+   "name": "Object: Object 0 (Copy) (Copy) (Copy) (unknown)",
+   "w": 95,
+   "h": 105,
+   "frames": 1,
+   "art": "pl/obj/object_object_0_copy_ec51"
+  },
+  {
+   "id": "ec562c45-81d2-406f-9fb8-ef0452fe840a",
+   "slug": "venom_dust_green_poison_ec56",
+   "name": "venom dust green poison cloud",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/venom_dust_green_poison_ec56"
+  },
+  {
+   "id": "ec74cc7a-b13d-4613-b33b-35ef74cd8583",
+   "slug": "gold_coin_ec74",
+   "name": "gold coin",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/gold_coin_ec74"
+  },
+  {
+   "id": "ecb1708c-55a5-451f-b836-ad4d2c7d090a",
+   "slug": "medieval_fantasy_tavern_inn_ecb1",
+   "name": "medieval fantasy tavern inn with dark timber frame and plaster walls, warm glowing yellow windows and a hanging beer mug sign, drawn in strict flat 2D front ele",
+   "w": 224,
+   "h": 224,
+   "frames": 1,
+   "art": "pl/obj/medieval_fantasy_tavern_inn_ecb1",
+   "bgRemoved": true
+  },
+  {
+   "id": "ed9a855d-979f-4453-9a76-d85522778f11",
+   "slug": "tall_green_saguaro_cactus_ed9a",
+   "name": "tall green saguaro cactus with two raised arms and small spines, front view, Ragnarok Online classic dark fantasy style",
+   "w": 128,
+   "h": 192,
+   "frames": 1,
+   "art": "pl/obj/tall_green_saguaro_cactus_ed9a"
+  },
+  {
+   "id": "edca78ad-f63f-4bc8-ae0f-5a5ef3176a7e",
+   "slug": "wooden_crate_open_edca",
+   "name": "wooden crate open",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/wooden_crate_open_edca"
+  },
+  {
+   "id": "edf09d63-4e9c-4593-ac43-6b30817617b8",
+   "slug": "rock_glowing_gold_ore_edf0",
+   "name": "rock with glowing gold ore veins",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/rock_glowing_gold_ore_edf0"
+  },
+  {
+   "id": "edf34a14-76a7-4cca-a48c-05586b7c207e",
+   "slug": "patch_colorful_wildflowers_grass_edf3",
+   "name": "patch of colorful wildflowers in grass",
+   "w": 40,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/patch_colorful_wildflowers_grass_edf3"
+  },
+  {
+   "id": "efe9ee61-90ff-4559-93ed-20b87e30489e",
+   "slug": "pile_black_coal_efe9",
+   "name": "pile of black coal",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/pile_black_coal_efe9"
+  },
+  {
+   "id": "f12dbb91-80dc-4bc0-83a5-5d2f836fe4eb",
+   "slug": "old_stone_cross_grave_f12d",
+   "name": "old stone cross grave marker leaning, with a mound of dirt, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 96,
+   "frames": 1,
+   "art": "pl/obj/old_stone_cross_grave_f12d"
+  },
+  {
+   "id": "f2639a7b-1ed6-4109-be99-3dc26f2929cd",
+   "slug": "mossy_gravestone_f263",
+   "name": "mossy gravestone",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/mossy_gravestone_f263"
+  },
+  {
+   "id": "f281b52d-f745-4b30-be10-4f5e674fc0c1",
+   "slug": "jelly_slime_blob_f281",
+   "name": "jelly slime blob",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/jelly_slime_blob_f281"
+  },
+  {
+   "id": "f2c60c8e-1c18-4ed0-bc29-87eda56e1fd7",
+   "slug": "cherry_blossom_tree_pink_f2c6",
+   "name": "cherry blossom tree with pink flower crown and twisted dark brown trunk, a few petals falling, front view, Ragnarok Online classic dark fantasy style",
+   "w": 192,
+   "h": 224,
+   "frames": 1,
+   "art": "pl/obj/cherry_blossom_tree_pink_f2c6",
+   "bgRemoved": true
+  },
+  {
+   "id": "f316ceec-e189-4b0f-a856-4f076462c993",
+   "slug": "sight_flame_eye_fire_f316",
+   "name": "sight flame eye of fire",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/sight_flame_eye_fire_f316"
+  },
+  {
+   "id": "f4b8481f-eefb-44d3-aed1-eb25e2be0243",
+   "slug": "charge_attack_dashing_knight_f4b8",
+   "name": "charge attack dashing knight",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/charge_attack_dashing_knight_f4b8"
+  },
+  {
+   "id": "f4fd6fb2-a543-46b0-ac92-e717d9b5d6ea",
+   "slug": "single_bird_feather_quill_f4fd",
+   "name": "single bird feather quill",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/single_bird_feather_quill_f4fd"
+  },
+  {
+   "id": "f54f4ceb-ba20-495c-9c01-d02095974833",
+   "slug": "lord_vermilion_lightning_storm_f54f",
+   "name": "lord of vermilion lightning storm",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/lord_vermilion_lightning_storm_f54f"
+  },
+  {
+   "id": "f5516200-f028-4fc2-a5c9-0496641b0819",
+   "slug": "shield_boomerang_flying_shield_f551",
+   "name": "shield boomerang flying shield",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/shield_boomerang_flying_shield_f551"
+  },
+  {
+   "id": "f704d8b7-8a49-46fd-b6a9-5e2bd951a1d1",
+   "slug": "ornate_brass_key_f704",
+   "name": "ornate brass key",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/ornate_brass_key_f704"
+  },
+  {
+   "id": "f780f455-d5cc-4da3-a04c-20e086efd811",
+   "slug": "blacksmith_hammer_f780",
+   "name": "blacksmith hammer",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/blacksmith_hammer_f780"
+  },
+  {
+   "id": "f890b0f3-2d37-4853-83df-874f6c26e757",
+   "slug": "iron_fist_metal_knuckle_f890",
+   "name": "iron fist metal knuckle punch",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/iron_fist_metal_knuckle_f890"
+  },
+  {
+   "id": "f8c2048b-9e45-4452-bd06-cafd66390120",
+   "slug": "tall_dark_green_pine_f8c2",
+   "name": "tall dark green pine fir tree, layered conical branches, brown trunk, fantasy RPG",
+   "w": 160,
+   "h": 256,
+   "frames": 1,
+   "art": "pl/obj/tall_dark_green_pine_f8c2",
+   "bgRemoved": true
+  },
+  {
+   "id": "fa682bbd-5719-4454-85a1-55bb762bd55f",
+   "slug": "old_cut_tree_stump_fa68",
+   "name": "old cut tree stump with roots and moss, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/old_cut_tree_stump_fa68"
+  },
+  {
+   "id": "faa702d1-fec3-432a-9443-5e36a8a65841",
+   "slug": "earth_heaven_s_drive_faa7",
+   "name": "earth heaven's drive rock spikes erupting",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/earth_heaven_s_drive_faa7"
+  },
+  {
+   "id": "fabd801e-73e6-4404-a7b7-9ca02980c2e3",
+   "slug": "tall_rocky_mountain_cliff_fabd",
+   "name": "tall rocky mountain cliff outcrop, layered tan and brown sandstone rock face with cracks and ledges, small green moss tufts at the base, front view, fantasy RPG",
+   "w": 256,
+   "h": 192,
+   "frames": 1,
+   "art": "pl/obj/tall_rocky_mountain_cliff_fabd",
+   "bgRemoved": true
+  },
+  {
+   "id": "fac2dcb4-99df-444c-a3fa-cb6bee2c7564",
+   "slug": "tall_dark_purple_obelisk_fac2",
+   "name": "tall dark purple obelisk with glowing runes",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/tall_dark_purple_obelisk_fac2"
+  },
+  {
+   "id": "fad1b7ca-a6e5-48cf-aadf-22230a6c33ea",
+   "slug": "renew_song_green_notes_fad1",
+   "name": "renew song green notes with heart",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/renew_song_green_notes_fad1"
+  },
+  {
+   "id": "fb22595b-a216-4bdb-92a3-e47fd07c9fc3",
+   "slug": "giant_glowing_mushroom_tree_fb22",
+   "name": "giant glowing mushroom tree",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/giant_glowing_mushroom_tree_fb22"
+  },
+  {
+   "id": "fb50ee63-0f86-4461-9604-809b11384a0a",
+   "slug": "mana_shield_blue_barrier_fb50",
+   "name": "mana shield blue barrier orb",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/mana_shield_blue_barrier_fb50"
+  },
+  {
+   "id": "fb59714c-5391-4529-864b-f82f8e6bb61e",
+   "slug": "object_object_0_unknown_fb59",
+   "name": "Object: Object 0 (unknown)",
+   "w": 28,
+   "h": 53,
+   "frames": 1,
+   "art": "pl/obj/object_object_0_unknown_fb59"
+  },
+  {
+   "id": "fbcfc5e1-6257-42ff-9d83-935e06750522",
+   "slug": "gloria_holy_praise_light_fbcf",
+   "name": "gloria holy praise light",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/gloria_holy_praise_light_fbcf"
+  },
+  {
+   "id": "fbf7aa7b-3c24-4308-b128-06951a77b505",
+   "slug": "section_rustic_wooden_picket_fbf7",
+   "name": "section of rustic wooden picket fence with a broken plank, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 56,
+   "frames": 1,
+   "art": "pl/obj/section_rustic_wooden_picket_fbf7"
+  },
+  {
+   "id": "fc25b80f-c617-480b-aaf6-0e12756183e1",
+   "slug": "dry_round_tumbleweed_ball_fc25",
+   "name": "dry round tumbleweed ball of tangled brown twigs, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/dry_round_tumbleweed_ball_fc25"
+  },
+  {
+   "id": "fc28a1db-9b7a-4727-bfbe-9520f9dda407",
+   "slug": "cluster_sharp_bone_iron_fc28",
+   "name": "cluster of sharp bone and iron spikes stuck in the ground as a barricade, front view, Ragnarok Online classic dark fantasy style",
+   "w": 96,
+   "h": 80,
+   "frames": 1,
+   "art": "pl/obj/cluster_sharp_bone_iron_fc28"
+  },
+  {
+   "id": "fd23496c-96d1-4950-bc9e-cefc8832212b",
+   "slug": "cabbage_patch_fd23",
+   "name": "cabbage patch",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/cabbage_patch_fd23"
+  },
+  {
+   "id": "fd40b06a-8f36-4323-bbb1-00892ed1bf2a",
+   "slug": "frost_diver_freezing_blue_fd40",
+   "name": "frost diver freezing blue ice spike",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/frost_diver_freezing_blue_fd40"
+  },
+  {
+   "id": "fd4842e2-f86e-44d8-bc82-5dff50563dcb",
+   "slug": "straw_scarecrow_pole_fd48",
+   "name": "straw scarecrow on a pole",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/straw_scarecrow_pole_fd48"
+  },
+  {
+   "id": "fdbd69d2-0569-40ee-9b90-17959635e3a0",
+   "slug": "glowing_blue_mushroom_cluster_fdbd",
+   "name": "glowing blue mushroom cluster",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/glowing_blue_mushroom_cluster_fdbd"
+  },
+  {
+   "id": "fe5a7dd0-3327-4fe3-bee8-161b4a885d5a",
+   "slug": "campsite_bedroll_fe5a",
+   "name": "campsite bedroll",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/campsite_bedroll_fe5a"
+  },
+  {
+   "id": "fe97659f-0654-42f1-a3ff-74e5b41c5e09",
+   "slug": "detect_hawk_eye_search_fe97",
+   "name": "detect hawk eye search",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/detect_hawk_eye_search_fe97"
+  },
+  {
+   "id": "fee877df-c2bc-4393-afa0-6e0d4186a954",
+   "slug": "wind_twisted_lone_tree_fee8",
+   "name": "wind-twisted lone tree",
+   "w": 64,
+   "h": 64,
+   "frames": 1,
+   "art": "pl/obj/wind_twisted_lone_tree_fee8"
+  },
+  {
+   "id": "ff0079fb-b675-4dc8-ba58-ce48a3ff7d9b",
+   "slug": "broken_wagon_wheel_ff00",
+   "name": "broken wagon wheel",
+   "w": 32,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/broken_wagon_wheel_ff00"
+  },
+  {
+   "id": "fff0afe0-84e1-4cc9-93fb-27912162e61e",
+   "slug": "mound_white_snow_drift_fff0",
+   "name": "small mound of white snow drift with a few pebbles, front view, Ragnarok Online classic dark fantasy style",
+   "w": 64,
+   "h": 32,
+   "frames": 1,
+   "art": "pl/obj/mound_white_snow_drift_fff0"
+  }
+ ],
+ "characters": [
+  {
+   "id": "0319a9ba-8d6c-45c7-b7a2-1b7716340187",
+   "slug": "girl_archer_light_blond_0319",
+   "name": "Chibi JRPG pixel art girl archer, light blond hair, green feathered cap, green hooded tunic with brown leather vest and bracers, brown quiver of arrows on back,",
+   "anims": [],
+   "chr": "pl/chr/girl_archer_light_blond_0319",
+   "mon": "pl/mon/girl_archer_light_blond_0319",
+   "monW": 46,
+   "monH": 56
+  },
+  {
+   "id": "1bfa4059-10e1-43a5-a075-257a47f0c0a1",
+   "slug": "knight_full_silver_plate_1bfa",
+   "name": "Chibi JRPG pixel art knight in full silver plate armor with gold trim, light brown hair, red scarf and long flowing red cape, holding a large steel broadsword w",
+   "anims": [],
+   "chr": "pl/chr/knight_full_silver_plate_1bfa",
+   "mon": "pl/mon/knight_full_silver_plate_1bfa",
+   "monW": 48,
+   "monH": 56
+  },
+  {
+   "id": "23e834c8-f6ef-42ed-ade1-74324192f784",
+   "slug": "warrior_woman_orange_hair_23e8",
+   "name": "warrior woman with orange hair",
+   "anims": [
+    "Idle",
+    "Jump",
+    "Run",
+    "Slash",
+    "Spell",
+    "Walk"
+   ],
+   "chr": "pl/chr/warrior_woman_orange_hair_23e8",
+   "mon": "pl/mon/warrior_woman_orange_hair_23e8",
+   "monW": 25,
+   "monH": 38
+  },
+  {
+   "id": "46e0e760-5275-43a2-8d8d-064c47fae8b8",
+   "slug": "thief_silver_white_hair_46e0",
+   "name": "Chibi JRPG pixel art thief, silver white hair, black hood, dark red scarf covering mouth, black and dark brown leather armor with belts and buckles, long dark r",
+   "anims": [],
+   "chr": "pl/chr/thief_silver_white_hair_46e0",
+   "mon": "pl/mon/thief_silver_white_hair_46e0",
+   "monW": 35,
+   "monH": 55
+  },
+  {
+   "id": "51b92644-84c4-444b-8e85-a616acd9cccc",
+   "slug": "light_brown_bear_51b9",
+   "name": "flat shaded light brown bear",
+   "anims": [
+    "Attack",
+    "Jump_Attack",
+    "Run",
+    "Walk"
+   ],
+   "chr": "pl/chr/light_brown_bear_51b9",
+   "mon": "pl/mon/light_brown_bear_51b9",
+   "monW": 51,
+   "monH": 45
+  },
+  {
+   "id": "52bb57cf-2844-42b3-81ee-121d752f04b4",
+   "slug": "girl_acolyte_very_long_52bb",
+   "name": "Chibi JRPG pixel art girl acolyte, very long blond hair, tall white and gold bishop mitre hat with cross, flowing white robe with gold trim and blue accents, ho",
+   "anims": [],
+   "chr": "pl/chr/girl_acolyte_very_long_52bb",
+   "mon": "pl/mon/girl_acolyte_very_long_52bb",
+   "monW": 43,
+   "monH": 56
+  },
+  {
+   "id": "5c39d66f-c2ff-4cad-acce-06b5db636717",
+   "slug": "young_swordsman_spiky_dark_5c39",
+   "name": "Chibi JRPG pixel art young swordsman, spiky dark red hair, steel pauldrons and bracers over brown leather armor, cream tabard with dark red cloth skirt, brown b",
+   "anims": [],
+   "chr": "pl/chr/young_swordsman_spiky_dark_5c39",
+   "mon": "pl/mon/young_swordsman_spiky_dark_5c39",
+   "monW": 41,
+   "monH": 56
+  },
+  {
+   "id": "6e589048-3763-4bc9-a613-eea2338f2154",
+   "slug": "boy_adventurer_spiky_messy_6e58",
+   "name": "Chibi JRPG pixel art boy adventurer, spiky messy light blond hair, big blue eyes, cream short-sleeve tunic with brown leather shoulder strap and belt, brown lea",
+   "anims": [
+    "Full_Sprint"
+   ],
+   "chr": "pl/chr/boy_adventurer_spiky_messy_6e58",
+   "mon": "pl/mon/boy_adventurer_spiky_messy_6e58",
+   "monW": 42,
+   "monH": 56
+  },
+  {
+   "id": "85086bd3-1669-4b4e-83ad-77149d9ea34c",
+   "slug": "girl_mage_long_lavender_8508",
+   "name": "Chibi JRPG pixel art girl mage, long lavender purple hair, large pointed dark blue witch hat with gold band, long dark blue robe with gold trim over cream dress",
+   "anims": [],
+   "chr": "pl/chr/girl_mage_long_lavender_8508",
+   "mon": "pl/mon/girl_mage_long_lavender_8508",
+   "monW": 39,
+   "monH": 56
+  },
+  {
+   "id": "85f1f092-caa0-4a63-be78-b5c314cc5ac6",
+   "slug": "blonde_farmer_long_hair_85f1",
+   "name": "blonde farmer with long hair and a dress",
+   "anims": [
+    "Idle",
+    "Walk"
+   ],
+   "chr": "pl/chr/blonde_farmer_long_hair_85f1",
+   "mon": "pl/mon/blonde_farmer_long_hair_85f1",
+   "monW": 24,
+   "monH": 38
+  },
+  {
+   "id": "a1131600-7066-4bf4-a67d-d346a7bcfc43",
+   "slug": "cheerful_boy_merchant_blond_a113",
+   "name": "Chibi JRPG pixel art cheerful boy merchant, blond hair, red and cream beret cap with white feather, cream shirt with red vest and many brown leather belts and p",
+   "anims": [],
+   "chr": "pl/chr/cheerful_boy_merchant_blond_a113",
+   "mon": "pl/mon/cheerful_boy_merchant_blond_a113",
+   "monW": 46,
+   "monH": 56
+  },
+  {
+   "id": "aec644ae-dd99-4373-bf05-a63c82ddfc1e",
+   "slug": "old_man_bald_aec6",
+   "name": "old man bald",
+   "anims": [
+    "The_character_walks_forward_with_a_steady_rhythmic"
+   ],
+   "chr": "pl/chr/old_man_bald_aec6",
+   "mon": "pl/mon/old_man_bald_aec6",
+   "monW": 23,
+   "monH": 38
+  }
+ ],
+ "tiles": [
+  {
+   "id": "0399d643-7709-4059-b70a-347af8bab6a2",
+   "slug": "trampled_dry_camp_ground_0399",
+   "name": "1) trampled dry camp ground earth 2) camp ground",
+   "kind": "tiles",
+   "count": 16,
+   "base": "dirt",
+   "art": "pl/tile/trampled_dry_camp_ground_0399"
+  },
+  {
+   "id": "0f06cda5-f369-4a8e-82a4-e0fb9ff7b50c",
+   "slug": "dark_green_clover_field_0f06",
+   "name": "1) dark green clover field grass 2) clover patch",
+   "kind": "tiles",
+   "count": 16,
+   "base": "grass",
+   "art": "pl/tile/dark_green_clover_field_0f06"
+  },
+  {
+   "id": "12709cb9-c2db-4aa0-9f8a-b5f5b0c9c231",
+   "slug": "dusty_packed_dirt_road_1270",
+   "name": "1) dusty packed dirt road 2) dirt road with cart",
+   "kind": "tiles",
+   "count": 16,
+   "base": "dirt",
+   "art": "pl/tile/dusty_packed_dirt_road_1270"
+  },
+  {
+   "id": "154d611b-13c4-4a89-aa9f-dab9fe9bd567",
+   "slug": "pale_cream_stone_cobblestone_154d",
+   "name": "1) pale cream stone cobblestone town plaza paveme",
+   "kind": "tiles",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/pale_cream_stone_cobblestone_154d"
+  },
+  {
+   "id": "1d35e60c-2f0e-4128-90ff-73c3299ed88d",
+   "slug": "grey_mine_stone_floor_1d35",
+   "name": "1) grey mine stone floor 2) mine floor with embe",
+   "kind": "tiles",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/grey_mine_stone_floor_1d35"
+  },
+  {
+   "id": "26125c96-8d82-4480-ad41-6e5a102231dd",
+   "slug": "dark_forest_floor_moss_2612",
+   "name": "1) dark forest floor with moss and fallen leaves",
+   "kind": "tiles",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/dark_forest_floor_moss_2612"
+  },
+  {
+   "id": "2f927503-2647-49d6-b523-e711e1129c6f",
+   "slug": "golden_desert_sand_soft_2f92",
+   "name": "1) golden desert sand with soft wind ripples 2",
+   "kind": "tiles",
+   "count": 16,
+   "base": "sand",
+   "art": "pl/tile/golden_desert_sand_soft_2f92"
+  },
+  {
+   "id": "2f9519c0-3d1a-4c59-bcc7-2c80e711f42d",
+   "slug": "windswept_tan_rocky_plateau_2f95",
+   "name": "1) windswept tan rocky plateau dirt 2) plateau g",
+   "kind": "tiles",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/windswept_tan_rocky_plateau_2f95"
+  },
+  {
+   "id": "3a47b7bd-9867-4ae9-bf42-268a75e7709a",
+   "slug": "deep_green_glowing_forest_3a47",
+   "name": "1) deep green glowing forest floor with biolumine",
+   "kind": "tiles",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/deep_green_glowing_forest_3a47"
+  },
+  {
+   "id": "3ec4623f-f509-4757-b74a-d118bc638f87",
+   "slug": "fresh_white_snow_ground_3ec4",
+   "name": "1) fresh white snow ground 2) snow with ice crys",
+   "kind": "tiles",
+   "count": 16,
+   "base": "sand",
+   "art": "pl/tile/fresh_white_snow_ground_3ec4"
+  },
+  {
+   "id": "4467b870-21a7-4f7b-8385-86679b12ac2f",
+   "slug": "dark_purple_void_stone_4467",
+   "name": "1) dark purple void stone floor with faint violet",
+   "kind": "tiles",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/dark_purple_void_stone_4467"
+  },
+  {
+   "id": "4deda312-3cdd-4d68-8216-311e8290854b",
+   "slug": "black_volcanic_basalt_rock_4ded",
+   "name": "1) black volcanic basalt rock floor 2) dark volc",
+   "kind": "tiles",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/black_volcanic_basalt_rock_4ded"
+  },
+  {
+   "id": "56185d7f-d8a0-4320-a648-cb15f7813e3f",
+   "slug": "warm_beige_cobblestone_town_5618",
+   "name": "1) warm beige cobblestone town plaza 2) sandy co",
+   "kind": "tiles",
+   "count": 16,
+   "base": "sand",
+   "art": "pl/tile/warm_beige_cobblestone_town_5618"
+  },
+  {
+   "id": "57793b4f-06dc-49ca-85b7-4662e105045c",
+   "slug": "lush_green_meadow_grass_5779",
+   "name": "1) lush green meadow grass tile 2) meadow grass",
+   "kind": "tiles",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/lush_green_meadow_grass_5779"
+  },
+  {
+   "id": "658c1ce7-8347-4e6c-a1db-6a187c070f35",
+   "slug": "dark_brown_cave_dirt_658c",
+   "name": "1) dark brown cave dirt floor 2) cave rock floor",
+   "kind": "tiles",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/dark_brown_cave_dirt_658c"
+  },
+  {
+   "id": "66b9aab9-8b89-44b5-ac6e-32e6afc9598a",
+   "slug": "golden_beach_sand_beach_66b9",
+   "name": "1) golden beach sand 2) beach sand with tiny sea",
+   "kind": "tiles",
+   "count": 16,
+   "base": "water",
+   "art": "pl/tile/golden_beach_sand_beach_66b9"
+  },
+  {
+   "id": "68f84f81-a081-48d3-991d-94d06d84cfde",
+   "slug": "frozen_blue_stone_tower_68f8",
+   "name": "1) frozen blue stone tower floor with frost 2) i",
+   "kind": "tiles",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/frozen_blue_stone_tower_68f8"
+  },
+  {
+   "id": "88eed2cb-662a-487a-89ae-bb89841ddcf4",
+   "slug": "gladiator_arena_sand_ground_88ee",
+   "name": "1) gladiator arena sand ground 2) dark sand with",
+   "kind": "tiles",
+   "count": 16,
+   "base": "sand",
+   "art": "pl/tile/gladiator_arena_sand_ground_88ee"
+  },
+  {
+   "id": "8d74b124-d66f-4a65-8cba-ad943fb8432c",
+   "slug": "misty_emerald_green_grass_8d74",
+   "name": "1) misty emerald green grass with ferns 2) lush",
+   "kind": "tiles",
+   "count": 16,
+   "base": "grass",
+   "art": "pl/tile/misty_emerald_green_grass_8d74"
+  },
+  {
+   "id": "a3846839-9533-483b-82f3-fab61c38f7b0",
+   "slug": "scorched_red_brown_tower_a384",
+   "name": "1) scorched red-brown tower floor stone 2) crack",
+   "kind": "tiles",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/scorched_red_brown_tower_a384"
+  },
+  {
+   "id": "c0c46e6b-a317-4acd-a9f5-9fc8f1b31153",
+   "slug": "sandstone_brick_floor_ancient_c0c4",
+   "name": "1) sandstone brick floor of an ancient pyramid to",
+   "kind": "tiles",
+   "count": 16,
+   "base": "sand",
+   "art": "pl/tile/sandstone_brick_floor_ancient_c0c4"
+  },
+  {
+   "id": "c38507b0-7576-4902-8b0f-21d904a6c745",
+   "slug": "murky_green_swamp_mud_c385",
+   "name": "1) murky green swamp mud and grass 2) swamp grou",
+   "kind": "tiles",
+   "count": 16,
+   "base": "dirt",
+   "art": "pl/tile/murky_green_swamp_mud_c385"
+  },
+  {
+   "id": "c769984c-45df-4420-b71f-ddab8f5ab722",
+   "slug": "dead_grey_purple_graveyard_c769",
+   "name": "1) dead grey-purple graveyard grass 2) dark grav",
+   "kind": "tiles",
+   "count": 16,
+   "base": "dirt",
+   "art": "pl/tile/dead_grey_purple_graveyard_c769"
+  },
+  {
+   "id": "d0b4e8b8-8ef3-4885-8b53-b439c0081a47",
+   "slug": "packed_earth_training_yard_d0b4",
+   "name": "1) packed earth training yard ground 2) trampled",
+   "kind": "tiles",
+   "count": 16,
+   "base": "dirt",
+   "art": "pl/tile/packed_earth_training_yard_d0b4"
+  },
+  {
+   "id": "d5a94c8d-73d9-4a6b-b2be-78b0cde48c51",
+   "slug": "grey_dungeon_tower_stone_d5a9",
+   "name": "1) grey dungeon tower stone brick floor 2) stone",
+   "kind": "tiles",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/grey_dungeon_tower_stone_d5a9"
+  },
+  {
+   "id": "d839f6c0-b647-4d04-9f3a-5cab47bb8b0d",
+   "slug": "green_lakeside_grass_wet_d839",
+   "name": "1) green lakeside grass with wet patches 2) gras",
+   "kind": "tiles",
+   "count": 16,
+   "base": "water",
+   "art": "pl/tile/green_lakeside_grass_wet_d839"
+  },
+  {
+   "id": "ec326f7c-0607-4ad3-a5d6-a17007530996",
+   "slug": "ancient_mossy_grey_stone_ec32",
+   "name": "1) ancient mossy grey stone ruins flagstone floor",
+   "kind": "tiles",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/ancient_mossy_grey_stone_ec32"
+  },
+  {
+   "id": "f3013339-d425-4268-8818-de0064bee694",
+   "slug": "golden_farmland_tilled_furrow_f301",
+   "name": "1) golden farmland with tilled furrow rows of soi",
+   "kind": "tiles",
+   "count": 16,
+   "base": "dirt",
+   "art": "pl/tile/golden_farmland_tilled_furrow_f301"
+  },
+  {
+   "id": "0a1f17fa-fe2a-4774-affe-bbdf8e685776",
+   "slug": "golden_beach_sand_seashells_0a1f",
+   "name": "golden beach sand with seashells → clear turquoise shallow sea water with foam",
+   "kind": "wang",
+   "count": 16,
+   "base": "water",
+   "art": "pl/tile/golden_beach_sand_seashells_0a1f"
+  },
+  {
+   "id": "2a9d8075-d461-424a-9318-1923ccd084ab",
+   "slug": "lush_green_lakeside_grass_2a9d",
+   "name": "lush green lakeside grass → clear shallow blue lake water with ripples",
+   "kind": "wang",
+   "count": 16,
+   "base": "water",
+   "art": "pl/tile/lush_green_lakeside_grass_2a9d"
+  },
+  {
+   "id": "32e80016-519c-4090-bc7c-12c186f74a6b",
+   "slug": "black_volcanic_basalt_rock_32e8",
+   "name": "black volcanic basalt rock with glowing cracks → pale ash-grey stone slab bridge path",
+   "kind": "wang",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/black_volcanic_basalt_rock_32e8"
+  },
+  {
+   "id": "42eb0dc3-3b42-4334-baa6-5f68403b0689",
+   "slug": "dark_forest_floor_moss_42eb",
+   "name": "dark forest floor with moss and leaf litter → reddish-brown dirt trail with scattered fallen",
+   "kind": "wang",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/dark_forest_floor_moss_42eb"
+  },
+  {
+   "id": "52240d06-3606-4888-b99d-2a387be4502e",
+   "slug": "dark_purple_void_stone_5224",
+   "name": "dark purple void stone floor → pale lilac runic stone slab path with faint",
+   "kind": "wang",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/dark_purple_void_stone_5224"
+  },
+  {
+   "id": "61f70d48-6063-45fd-8fd2-886f1920eb54",
+   "slug": "short_green_meadow_grass_61f7",
+   "name": "short green meadow grass → worn light-brown dirt footpath with small pebbles",
+   "kind": "wang",
+   "count": 16,
+   "base": "dirt",
+   "art": "pl/tile/short_green_meadow_grass_61f7"
+  },
+  {
+   "id": "6a0d7bf4-33e5-443c-a9e5-4739cac72f81",
+   "slug": "golden_desert_sand_dunes_6a0d",
+   "name": "golden desert sand dunes → pale sandstone brick paved road",
+   "kind": "wang",
+   "count": 16,
+   "base": "sand",
+   "art": "pl/tile/golden_desert_sand_dunes_6a0d"
+  },
+  {
+   "id": "6ed578d6-b8df-4378-b7fd-e69a666ceedf",
+   "slug": "black_volcanic_basalt_rock_6ed5",
+   "name": "black volcanic basalt rock with cracks → bright molten orange lava with glowing crust",
+   "kind": "wang",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/black_volcanic_basalt_rock_6ed5"
+  },
+  {
+   "id": "86498317-e5ec-4496-a715-65dfd791907e",
+   "slug": "dark_olive_peat_bog_8649",
+   "name": "dark olive peat bog moss ground → brown tea-colored bog water with lily pads",
+   "kind": "wang",
+   "count": 16,
+   "base": "water",
+   "art": "pl/tile/dark_olive_peat_bog_8649"
+  },
+  {
+   "id": "a71ebde5-4461-4568-af3d-f837c9a45fa6",
+   "slug": "murky_green_swamp_mud_a71e",
+   "name": "murky green swamp mud and moss → dark stagnant swamp water with green algae",
+   "kind": "wang",
+   "count": 16,
+   "base": "water",
+   "art": "pl/tile/murky_green_swamp_mud_a71e"
+  },
+  {
+   "id": "bbe36695-92f4-480e-abd9-3c90ced1ec9b",
+   "slug": "fresh_white_snow_blue_bbe3",
+   "name": "fresh white snow with blue shadows → trampled dark grey gravel and slush path",
+   "kind": "wang",
+   "count": 16,
+   "base": "dirt",
+   "art": "pl/tile/fresh_white_snow_blue_bbe3"
+  },
+  {
+   "id": "ca945a28-ad9b-4232-bcb1-274a1fcd6c31",
+   "slug": "lush_green_meadow_grass_ca94",
+   "name": "lush green meadow grass → packed brown dirt path",
+   "kind": "wang",
+   "count": 16,
+   "base": "dirt",
+   "art": "pl/tile/lush_green_meadow_grass_ca94"
+  },
+  {
+   "id": "cb8fe8b2-9d5f-4795-99a2-9879b844e05a",
+   "slug": "water_grass_cb8f",
+   "name": "water → grass",
+   "kind": "wang",
+   "count": 25,
+   "base": "water",
+   "art": "pl/tile/water_grass_cb8f"
+  },
+  {
+   "id": "dd89b5cc-5f92-41b6-b3f7-0712ee85e391",
+   "slug": "water_wood_dd89",
+   "name": "water → wood",
+   "kind": "wang",
+   "count": 16,
+   "base": "water",
+   "art": "pl/tile/water_wood_dd89"
+  },
+  {
+   "id": "e4c2fa93-ac5e-4155-ad88-36b262233b77",
+   "slug": "dark_grey_rough_cave_e4c2",
+   "name": "dark grey rough cave rock floor → light grey smooth stone flagstone path",
+   "kind": "wang",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/dark_grey_rough_cave_e4c2"
+  },
+  {
+   "id": "f0be83ce-f002-4d97-93c1-ac3ef26aa48d",
+   "slug": "dark_murky_swamp_mud_f0be",
+   "name": "dark murky swamp mud with moss → weathered wooden plank boardwalk",
+   "kind": "wang",
+   "count": 16,
+   "base": "dirt",
+   "art": "pl/tile/dark_murky_swamp_mud_f0be"
+  },
+  {
+   "id": "ff174d4d-0d3e-4b24-851d-fa586aea3537",
+   "slug": "dry_dusty_brown_earth_ff17",
+   "name": "dry dusty brown earth ground → grey cobblestone road with rounded stones",
+   "kind": "wang",
+   "count": 16,
+   "base": "path_stone",
+   "art": "pl/tile/dry_dusty_brown_earth_ff17"
+  }
+ ],
+ "ui": [
+  {
+   "id": "4b5a66f8-fcc4-44bd-bb13-7e474c758868",
+   "slug": "ui_panel_ragnarok_4b5a",
+   "name": "UI panel (Ragnarok style)",
+   "w": 192,
+   "h": 344,
+   "art": "pl/ui/ui_panel_ragnarok_4b5a"
+  }
+ ]
+}

@@ -1,977 +1,6021 @@
 [
- {
-  "id": "basic_training",
-  "name": "Basic Training",
-  "classId": "novice",
-  "kind": "passive",
-  "targeting": "passive",
-  "description": "Fundamental adventuring drills. +6 Max HP and +1 Accuracy per level.",
-  "maxLevel": 5,
-  "range": 0,
-  "mpCost": 0,
-  "mpCostPerLevel": 0,
-  "castTimeMs": 0,
-  "cooldownMs": 0,
-  "passive": {
-   "maxHp": 6,
-   "hit": 1
-  },
-  "effects": [],
-  "fx": "none",
-  "icon": {
-   "glyph": "BT",
-   "color": "#c8a26b"
-  }
- },
- {
-  "id": "first_aid",
-  "name": "First Aid",
-  "classId": "novice",
-  "kind": "active",
-  "targeting": "self",
-  "description": "Patch up wounds, restoring a small amount of HP.",
-  "maxLevel": 3,
-  "range": 0,
-  "mpCost": 3,
-  "mpCostPerLevel": 0,
-  "castTimeMs": 0,
-  "cooldownMs": 4000,
-  "effects": [
-   {
-    "type": "heal",
-    "base": 10,
-    "perLevel": 8,
-    "intScale": 0.5
-   }
-  ],
-  "fx": "heal",
-  "icon": {
-   "glyph": "+",
-   "color": "#6fe08a"
-  }
- },
- {
-  "id": "bash",
-  "name": "Bash",
-  "classId": "knight",
-  "kind": "active",
-  "targeting": "enemy",
-  "description": "A powerful strike. Higher levels can stun the target.",
-  "maxLevel": 10,
-  "range": 60,
-  "mpCost": 6,
-  "mpCostPerLevel": 1,
-  "castTimeMs": 0,
-  "cooldownMs": 700,
-  "effects": [
-   {
-    "type": "damage",
-    "kind": "physical",
-    "multiplier": 1.3,
-    "perLevel": 0.3,
-    "element": "weapon"
-   },
-   {
-    "type": "status",
-    "status": "stun",
-    "chance": 0,
-    "perLevel": 0.03,
-    "durationMs": 1500
-   }
-  ],
-  "fx": "slash",
-  "icon": {
-   "glyph": "Ba",
-   "color": "#e05a4a"
-  }
- },
- {
-  "id": "provoke",
-  "name": "Provoke",
-  "classId": "knight",
-  "kind": "active",
-  "targeting": "enemy",
-  "description": "Taunts the target and nearby monsters, forcing them to attack you.",
-  "maxLevel": 5,
-  "range": 260,
-  "mpCost": 4,
-  "mpCostPerLevel": 0,
-  "castTimeMs": 0,
-  "cooldownMs": 3000,
-  "effects": [
-   {
-    "type": "taunt",
-    "radius": 140
-   }
-  ],
-  "fx": "shout",
-  "icon": {
-   "glyph": "Pv",
-   "color": "#ff8d3a"
-  }
- },
- {
-  "id": "shield_guard",
-  "name": "Shield Guard",
-  "classId": "knight",
-  "kind": "buff",
-  "targeting": "self",
-  "description": "Brace behind your guard, greatly increasing defense.",
-  "maxLevel": 5,
-  "range": 0,
-  "mpCost": 12,
-  "mpCostPerLevel": 2,
-  "castTimeMs": 0,
-  "cooldownMs": 20000,
-  "requires": [
-   {
-    "skillId": "bash",
-    "level": 2
-   }
-  ],
-  "effects": [
-   {
-    "type": "buff",
-    "buffId": "shield_guard",
-    "durationMs": 20000,
-    "perLevelMs": 2000,
-    "mods": {
-     "pdef": 5,
-     "pdefPct": 10
+  {
+    "id": "basic_training",
+    "name": "Basic Training",
+    "classId": "novice",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "Fundamental adventuring drills. +6 Max HP and +1 Accuracy per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "maxHp": 6,
+      "hit": 1
     },
-    "modsPerLevel": {
-     "pdef": 4,
-     "pdefPct": 5
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "BT",
+      "color": "#c8a26b"
     }
-   }
-  ],
-  "fx": "holy",
-  "icon": {
-   "glyph": "SG",
-   "color": "#7fb0ff"
-  }
- },
- {
-  "id": "sword_mastery",
-  "name": "Sword Mastery",
-  "classId": "knight",
-  "kind": "passive",
-  "targeting": "passive",
-  "description": "Weapon discipline. +4 Physical Attack and +1 Accuracy per level.",
-  "maxLevel": 10,
-  "range": 0,
-  "mpCost": 0,
-  "mpCostPerLevel": 0,
-  "castTimeMs": 0,
-  "cooldownMs": 0,
-  "passive": {
-   "patk": 4,
-   "hit": 1
   },
-  "effects": [],
-  "fx": "none",
-  "icon": {
-   "glyph": "SM",
-   "color": "#c0c8d8"
-  }
- },
- {
-  "id": "spiral_pierce",
-  "name": "Spiral Pierce",
-  "classId": "knight",
-  "kind": "active",
-  "targeting": "enemy",
-  "description": "A spinning thrust that pierces armor and knocks the target back.",
-  "maxLevel": 10,
-  "range": 110,
-  "mpCost": 14,
-  "mpCostPerLevel": 1,
-  "castTimeMs": 300,
-  "cooldownMs": 2500,
-  "requires": [
-   {
-    "skillId": "bash",
-    "level": 5
-   }
-  ],
-  "effects": [
-   {
-    "type": "damage",
-    "kind": "physical",
-    "multiplier": 2.0,
-    "perLevel": 0.35,
-    "element": "weapon",
-    "ignoreDefPct": 30
-   },
-   {
-    "type": "knockback",
-    "distance": 64
-   }
-  ],
-  "fx": "pierce",
-  "icon": {
-   "glyph": "SP",
-   "color": "#ffd34d"
-  }
- },
- {
-  "id": "war_cry",
-  "name": "War Cry",
-  "classId": "knight",
-  "kind": "buff",
-  "targeting": "self",
-  "description": "A rallying shout that raises the attack of you and nearby allies.",
-  "maxLevel": 5,
-  "range": 0,
-  "mpCost": 20,
-  "mpCostPerLevel": 2,
-  "castTimeMs": 0,
-  "cooldownMs": 30000,
-  "requires": [
-   {
-    "skillId": "provoke",
-    "level": 3
-   }
-  ],
-  "effects": [
-   {
-    "type": "buff",
-    "buffId": "war_cry",
-    "durationMs": 45000,
-    "radius": 260,
-    "mods": {
-     "patkPct": 5
-    },
-    "modsPerLevel": {
-     "patkPct": 3
+  {
+    "id": "first_aid",
+    "name": "First Aid",
+    "classId": "novice",
+    "kind": "active",
+    "targeting": "self",
+    "description": "Patch up wounds, restoring a small amount of HP.",
+    "maxLevel": 3,
+    "range": 0,
+    "mpCost": 3,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 4000,
+    "effects": [
+      {
+        "type": "heal",
+        "base": 10,
+        "perLevel": 8,
+        "intScale": 0.5
+      }
+    ],
+    "fx": "heal",
+    "icon": {
+      "glyph": "+",
+      "color": "#6fe08a"
     }
-   }
-  ],
-  "fx": "shout",
-  "icon": {
-   "glyph": "WC",
-   "color": "#ff5a3a"
-  }
- },
- {
-  "id": "counter_attack",
-  "name": "Counter Attack",
-  "classId": "knight",
-  "kind": "buff",
-  "targeting": "self",
-  "description": "Enter a counter stance: chance to strike back whenever hit in melee.",
-  "maxLevel": 5,
-  "range": 0,
-  "mpCost": 15,
-  "mpCostPerLevel": 1,
-  "castTimeMs": 0,
-  "cooldownMs": 25000,
-  "requires": [
-   {
-    "skillId": "shield_guard",
-    "level": 2
-   }
-  ],
-  "effects": [
-   {
-    "type": "buff",
-    "buffId": "counter_attack",
-    "durationMs": 20000,
-    "mods": {
-     "counterChance": 15
-    },
-    "modsPerLevel": {
-     "counterChance": 7
+  },
+  {
+    "id": "bash",
+    "name": "Bash",
+    "classId": "knight",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "A powerful strike. Higher levels can stun the target.",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 6,
+    "mpCostPerLevel": 1,
+    "castTimeMs": 0,
+    "cooldownMs": 1200,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.3,
+        "perLevel": 0.3,
+        "element": "weapon"
+      },
+      {
+        "type": "status",
+        "status": "stun",
+        "chance": 0,
+        "perLevel": 0.03,
+        "durationMs": 1500
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "Ba",
+      "color": "#e05a4a"
     }
-   }
-  ],
-  "fx": "slash",
-  "icon": {
-   "glyph": "CA",
-   "color": "#e8e8e8"
-  }
- },
- {
-  "id": "blade_storm",
-  "name": "Blade Storm",
-  "classId": "knight",
-  "kind": "ultimate",
-  "targeting": "self",
-  "description": "ULTIMATE. Spin into a storm of steel, striking all nearby foes three times.",
-  "maxLevel": 5,
-  "range": 0,
-  "mpCost": 40,
-  "mpCostPerLevel": 5,
-  "castTimeMs": 400,
-  "cooldownMs": 18000,
-  "requiresJobLevel": 20,
-  "requires": [
-   {
-    "skillId": "spiral_pierce",
-    "level": 3
-   },
-   {
-    "skillId": "war_cry",
-    "level": 1
-   }
-  ],
-  "effects": [
-   {
-    "type": "damage",
-    "kind": "physical",
-    "multiplier": 1.3,
-    "perLevel": 0.2,
-    "element": "weapon",
-    "hits": 3,
-    "radius": 140
-   }
-  ],
-  "fx": "whirl",
-  "icon": {
-   "glyph": "BS",
-   "color": "#ffef8a"
-  }
- },
- {
-  "id": "double_shot",
-  "name": "Double Shot",
-  "classId": "ranger",
-  "kind": "active",
-  "targeting": "enemy",
-  "description": "Loose two arrows at once.",
-  "maxLevel": 10,
-  "range": 300,
-  "mpCost": 8,
-  "mpCostPerLevel": 1,
-  "castTimeMs": 0,
-  "cooldownMs": 600,
-  "effects": [
-   {
-    "type": "damage",
-    "kind": "physical",
-    "multiplier": 0.9,
-    "perLevel": 0.12,
-    "element": "weapon",
-    "hits": 2
-   }
-  ],
-  "fx": "arrow",
-  "icon": {
-   "glyph": "DS",
-   "color": "#9fe07a"
   },
-  "requiresWeapon": [
-   "bow",
-   "crossbow"
-  ]
- },
- {
-  "id": "arrow_rain",
-  "name": "Arrow Rain",
-  "classId": "ranger",
-  "kind": "active",
-  "targeting": "ground",
-  "description": "Rain arrows on an area, striking every enemy inside.",
-  "maxLevel": 10,
-  "range": 300,
-  "mpCost": 15,
-  "mpCostPerLevel": 1,
-  "castTimeMs": 500,
-  "cooldownMs": 3000,
-  "requires": [
-   {
-    "skillId": "double_shot",
-    "level": 3
-   }
-  ],
-  "effects": [
-   {
-    "type": "damage",
-    "kind": "physical",
-    "multiplier": 1.2,
-    "perLevel": 0.2,
-    "element": "weapon",
-    "radius": 96
-   }
-  ],
-  "fx": "arrow_rain",
-  "icon": {
-   "glyph": "AR",
-   "color": "#7ad0e0"
-  },
-  "requiresWeapon": [
-   "bow",
-   "crossbow"
-  ]
- },
- {
-  "id": "falcon_strike",
-  "name": "Falcon Strike",
-  "classId": "ranger",
-  "kind": "active",
-  "targeting": "enemy",
-  "description": "Your falcon dives at the target. Never misses.",
-  "maxLevel": 10,
-  "range": 340,
-  "mpCost": 12,
-  "mpCostPerLevel": 1,
-  "castTimeMs": 0,
-  "cooldownMs": 2000,
-  "requires": [
-   {
-    "skillId": "eagle_eye",
-    "level": 2
-   }
-  ],
-  "effects": [
-   {
-    "type": "damage",
-    "kind": "physical",
-    "multiplier": 1.8,
-    "perLevel": 0.3,
-    "element": "neutral",
-    "alwaysHit": true
-   }
-  ],
-  "fx": "falcon",
-  "icon": {
-   "glyph": "FS",
-   "color": "#d8b46a"
-  }
- },
- {
-  "id": "wind_trap",
-  "name": "Wind Trap",
-  "classId": "ranger",
-  "kind": "active",
-  "targeting": "ground",
-  "description": "Set a whirling wind trap that damages and slows enemies passing over it.",
-  "maxLevel": 5,
-  "range": 200,
-  "mpCost": 14,
-  "mpCostPerLevel": 2,
-  "castTimeMs": 300,
-  "cooldownMs": 6000,
-  "requires": [
-   {
-    "skillId": "double_shot",
-    "level": 2
-   }
-  ],
-  "effects": [
-   {
-    "type": "groundZone",
-    "zoneId": "wind_trap",
-    "durationMs": 12000,
-    "radius": 64,
-    "tickMs": 700,
-    "kind": "physical",
-    "multiplier": 0.5,
-    "perLevel": 0.12,
-    "element": "wind",
-    "status": "slow",
-    "statusChance": 0.6,
-    "statusDurationMs": 3000
-   }
-  ],
-  "fx": "wind",
-  "icon": {
-   "glyph": "WT",
-   "color": "#b6f0d0"
-  }
- },
- {
-  "id": "eagle_eye",
-  "name": "Eagle Eye",
-  "classId": "ranger",
-  "kind": "passive",
-  "targeting": "passive",
-  "description": "Sharpened sight. +2 Accuracy, +1 Critical and +8 attack range per level.",
-  "maxLevel": 10,
-  "range": 0,
-  "mpCost": 0,
-  "mpCostPerLevel": 0,
-  "castTimeMs": 0,
-  "cooldownMs": 0,
-  "passive": {
-   "hit": 2,
-   "crit": 1,
-   "attackRange": 8
-  },
-  "effects": [],
-  "fx": "none",
-  "icon": {
-   "glyph": "EE",
-   "color": "#ffe27a"
-  }
- },
- {
-  "id": "rapid_fire",
-  "name": "Rapid Fire",
-  "classId": "ranger",
-  "kind": "buff",
-  "targeting": "self",
-  "description": "Fire arrows in rapid succession, increasing attack speed.",
-  "maxLevel": 5,
-  "range": 0,
-  "mpCost": 18,
-  "mpCostPerLevel": 2,
-  "castTimeMs": 0,
-  "cooldownMs": 30000,
-  "requires": [
-   {
-    "skillId": "double_shot",
-    "level": 4
-   }
-  ],
-  "effects": [
-   {
-    "type": "buff",
-    "buffId": "rapid_fire",
-    "durationMs": 30000,
-    "mods": {
-     "aspdPct": 10
-    },
-    "modsPerLevel": {
-     "aspdPct": 5
+  {
+    "id": "provoke",
+    "name": "Provoke",
+    "classId": "knight",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Taunts the target and nearby monsters, forcing them to attack you.",
+    "maxLevel": 5,
+    "range": 260,
+    "mpCost": 4,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 3000,
+    "effects": [
+      {
+        "type": "taunt",
+        "radius": 140
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "Pv",
+      "color": "#ff8d3a"
     }
-   }
-  ],
-  "fx": "wind",
-  "icon": {
-   "glyph": "RF",
-   "color": "#ffa94d"
   },
-  "requiresWeapon": [
-   "bow",
-   "crossbow"
-  ]
- },
- {
-  "id": "camouflage",
-  "name": "Camouflage",
-  "classId": "ranger",
-  "kind": "buff",
-  "targeting": "self",
-  "description": "Blend into the surroundings. Monsters lose track of you until you attack.",
-  "maxLevel": 5,
-  "range": 0,
-  "mpCost": 15,
-  "mpCostPerLevel": 0,
-  "castTimeMs": 0,
-  "cooldownMs": 20000,
-  "requires": [
-   {
-    "skillId": "eagle_eye",
-    "level": 3
-   }
-  ],
-  "effects": [
-   {
-    "type": "buff",
-    "buffId": "camouflage",
-    "durationMs": 8000,
-    "perLevelMs": 2000,
-    "mods": {
-     "stealth": 1,
-     "moveSpeedPct": -20
+  {
+    "id": "shield_guard",
+    "name": "Shield Guard",
+    "classId": "knight",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Brace behind your guard, greatly increasing defense.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 12,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 0,
+    "cooldownMs": 20000,
+    "requires": [
+      {
+        "skillId": "bash",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "shield_guard",
+        "durationMs": 20000,
+        "perLevelMs": 2000,
+        "mods": {
+          "pdef": 5,
+          "pdefPct": 10
+        },
+        "modsPerLevel": {
+          "pdef": 4,
+          "pdefPct": 5
+        }
+      }
+    ],
+    "fx": "holy",
+    "icon": {
+      "glyph": "SG",
+      "color": "#7fb0ff"
+    }
+  },
+  {
+    "id": "sword_mastery",
+    "name": "Sword Mastery",
+    "classId": "knight",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "Weapon discipline. +4 Physical Attack and +1 Accuracy per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "patk": 4,
+      "hit": 1
     },
-    "flags": [
-     "breakOnAttack"
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "SM",
+      "color": "#c0c8d8"
+    }
+  },
+  {
+    "id": "spiral_pierce",
+    "name": "Spiral Pierce",
+    "classId": "knight",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "A spinning thrust that pierces armor and knocks the target back.",
+    "maxLevel": 10,
+    "range": 110,
+    "mpCost": 14,
+    "mpCostPerLevel": 1,
+    "castTimeMs": 300,
+    "cooldownMs": 4000,
+    "requires": [
+      {
+        "skillId": "bash",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 2,
+        "perLevel": 0.35,
+        "element": "weapon",
+        "ignoreDefPct": 30
+      },
+      {
+        "type": "knockback",
+        "distance": 64
+      }
+    ],
+    "fx": "pierce",
+    "icon": {
+      "glyph": "SP",
+      "color": "#ffd34d"
+    }
+  },
+  {
+    "id": "war_cry",
+    "name": "War Cry",
+    "classId": "knight",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "A rallying shout that raises the attack of you and nearby allies.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 20,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 0,
+    "cooldownMs": 30000,
+    "requires": [
+      {
+        "skillId": "provoke",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "war_cry",
+        "durationMs": 45000,
+        "radius": 260,
+        "mods": {
+          "patkPct": 5
+        },
+        "modsPerLevel": {
+          "patkPct": 3
+        }
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "WC",
+      "color": "#ff5a3a"
+    }
+  },
+  {
+    "id": "counter_attack",
+    "name": "Counter Attack",
+    "classId": "knight",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Enter a counter stance: chance to strike back whenever hit in melee.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 15,
+    "mpCostPerLevel": 1,
+    "castTimeMs": 0,
+    "cooldownMs": 25000,
+    "requires": [
+      {
+        "skillId": "shield_guard",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "counter_attack",
+        "durationMs": 20000,
+        "mods": {
+          "counterChance": 15
+        },
+        "modsPerLevel": {
+          "counterChance": 7
+        }
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "CA",
+      "color": "#e8e8e8"
+    }
+  },
+  {
+    "id": "blade_storm",
+    "name": "Blade Storm",
+    "classId": "knight",
+    "kind": "ultimate",
+    "targeting": "self",
+    "description": "ULTIMATE. Spin into a storm of steel, striking all nearby foes three times.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 40,
+    "mpCostPerLevel": 5,
+    "castTimeMs": 400,
+    "cooldownMs": 18000,
+    "requiresJobLevel": 20,
+    "requires": [
+      {
+        "skillId": "spiral_pierce",
+        "level": 3
+      },
+      {
+        "skillId": "war_cry",
+        "level": 1
+      }
+    ],
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.3,
+        "perLevel": 0.2,
+        "element": "weapon",
+        "hits": 3,
+        "radius": 140
+      }
+    ],
+    "fx": "whirl",
+    "icon": {
+      "glyph": "BS",
+      "color": "#ffef8a"
+    }
+  },
+  {
+    "id": "double_shot",
+    "name": "Double Shot",
+    "classId": "ranger",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Loose two arrows at once.",
+    "maxLevel": 10,
+    "range": 300,
+    "mpCost": 8,
+    "mpCostPerLevel": 1,
+    "castTimeMs": 0,
+    "cooldownMs": 1000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1,
+        "perLevel": 0.12,
+        "element": "weapon",
+        "hits": 2
+      }
+    ],
+    "fx": "arrow",
+    "icon": {
+      "glyph": "DS",
+      "color": "#9fe07a"
+    },
+    "requiresWeapon": [
+      "bow",
+      "crossbow"
     ]
-   }
-  ],
-  "fx": "shadow",
-  "icon": {
-   "glyph": "Cm",
-   "color": "#6f8f6f"
-  }
- },
- {
-  "id": "piercing_arrow",
-  "name": "Piercing Arrow",
-  "classId": "ranger",
-  "kind": "ultimate",
-  "targeting": "enemy",
-  "description": "ULTIMATE. A charged arrow that pierces through every enemy in a line.",
-  "maxLevel": 5,
-  "range": 360,
-  "mpCost": 35,
-  "mpCostPerLevel": 4,
-  "castTimeMs": 900,
-  "cooldownMs": 14000,
-  "requiresJobLevel": 20,
-  "requires": [
-   {
-    "skillId": "arrow_rain",
-    "level": 3
-   },
-   {
-    "skillId": "falcon_strike",
-    "level": 3
-   }
-  ],
-  "effects": [
-   {
-    "type": "line",
-    "length": 380,
-    "width": 44
-   },
-   {
-    "type": "damage",
-    "kind": "physical",
-    "multiplier": 2.6,
-    "perLevel": 0.5,
-    "element": "weapon",
-    "ignoreDefPct": 20
-   }
-  ],
-  "fx": "pierce",
-  "icon": {
-   "glyph": "PA",
-   "color": "#ffffff"
   },
-  "requiresWeapon": [
-   "bow",
-   "crossbow"
-  ]
- },
- {
-  "id": "fire_bolt",
-  "name": "Fire Bolt",
-  "classId": "mage",
-  "kind": "active",
-  "targeting": "enemy",
-  "description": "Hurl a bolt of fire. Strong against earth.",
-  "maxLevel": 10,
-  "range": 300,
-  "mpCost": 8,
-  "mpCostPerLevel": 2,
-  "castTimeMs": 700,
-  "cooldownMs": 400,
-  "element": "fire",
-  "effects": [
-   {
-    "type": "damage",
-    "kind": "magic",
-    "multiplier": 1.2,
-    "perLevel": 0.35,
-    "element": "fire"
-   },
-   {
-    "type": "status",
-    "status": "burn",
-    "chance": 0.05,
-    "perLevel": 0.02,
-    "durationMs": 4000
-   }
-  ],
-  "fx": "fire",
-  "icon": {
-   "glyph": "Fi",
-   "color": "#ff6a2e"
-  }
- },
- {
-  "id": "ice_bolt",
-  "name": "Ice Bolt",
-  "classId": "mage",
-  "kind": "active",
-  "targeting": "enemy",
-  "description": "A shard of ice that can freeze the target. Strong against fire.",
-  "maxLevel": 10,
-  "range": 300,
-  "mpCost": 9,
-  "mpCostPerLevel": 2,
-  "castTimeMs": 700,
-  "cooldownMs": 400,
-  "element": "water",
-  "effects": [
-   {
-    "type": "damage",
-    "kind": "magic",
-    "multiplier": 1.1,
-    "perLevel": 0.32,
-    "element": "water"
-   },
-   {
-    "type": "status",
-    "status": "freeze",
-    "chance": 0.05,
-    "perLevel": 0.03,
-    "durationMs": 2500
-   }
-  ],
-  "fx": "ice",
-  "icon": {
-   "glyph": "Ic",
-   "color": "#7fd6ff"
-  }
- },
- {
-  "id": "lightning_bolt",
-  "name": "Lightning Bolt",
-  "classId": "mage",
-  "kind": "active",
-  "targeting": "enemy",
-  "description": "Call lightning onto the target. Strong against water.",
-  "maxLevel": 10,
-  "range": 300,
-  "mpCost": 10,
-  "mpCostPerLevel": 2,
-  "castTimeMs": 800,
-  "cooldownMs": 400,
-  "element": "wind",
-  "effects": [
-   {
-    "type": "damage",
-    "kind": "magic",
-    "multiplier": 1.3,
-    "perLevel": 0.36,
-    "element": "wind"
-   },
-   {
-    "type": "status",
-    "status": "stun",
-    "chance": 0.03,
-    "perLevel": 0.01,
-    "durationMs": 1000
-   }
-  ],
-  "fx": "lightning",
-  "icon": {
-   "glyph": "Li",
-   "color": "#ffe94d"
-  }
- },
- {
-  "id": "fire_wall",
-  "name": "Fire Wall",
-  "classId": "mage",
-  "kind": "active",
-  "targeting": "ground",
-  "description": "Ignite the ground. Enemies standing in the flames are burned repeatedly.",
-  "maxLevel": 10,
-  "range": 260,
-  "mpCost": 20,
-  "mpCostPerLevel": 2,
-  "castTimeMs": 600,
-  "cooldownMs": 5000,
-  "element": "fire",
-  "requires": [
-   {
-    "skillId": "fire_bolt",
-    "level": 4
-   }
-  ],
-  "effects": [
-   {
-    "type": "groundZone",
-    "zoneId": "fire_wall",
-    "durationMs": 7000,
-    "radius": 60,
-    "tickMs": 500,
-    "kind": "magic",
-    "multiplier": 0.45,
-    "perLevel": 0.08,
-    "element": "fire",
-    "status": "burn",
-    "statusChance": 0.15,
-    "statusDurationMs": 4000
-   }
-  ],
-  "fx": "fire",
-  "icon": {
-   "glyph": "FW",
-   "color": "#ff3d1e"
-  }
- },
- {
-  "id": "frost_nova",
-  "name": "Frost Nova",
-  "classId": "mage",
-  "kind": "active",
-  "targeting": "self",
-  "description": "Release a burst of frost around you that can freeze enemies in place.",
-  "maxLevel": 10,
-  "range": 0,
-  "mpCost": 24,
-  "mpCostPerLevel": 2,
-  "castTimeMs": 300,
-  "cooldownMs": 8000,
-  "element": "water",
-  "requires": [
-   {
-    "skillId": "ice_bolt",
-    "level": 3
-   }
-  ],
-  "effects": [
-   {
-    "type": "damage",
-    "kind": "magic",
-    "multiplier": 1.0,
-    "perLevel": 0.18,
-    "element": "water",
-    "radius": 120
-   },
-   {
-    "type": "status",
-    "status": "freeze",
-    "chance": 0.25,
-    "perLevel": 0.05,
-    "durationMs": 3000,
-    "radius": 120
-   }
-  ],
-  "fx": "ice",
-  "icon": {
-   "glyph": "FN",
-   "color": "#bdf0ff"
-  }
- },
- {
-  "id": "thunderstorm",
-  "name": "Thunderstorm",
-  "classId": "mage",
-  "kind": "active",
-  "targeting": "ground",
-  "description": "Summon a storm that strikes an area three times.",
-  "maxLevel": 10,
-  "range": 300,
-  "mpCost": 28,
-  "mpCostPerLevel": 3,
-  "castTimeMs": 1400,
-  "cooldownMs": 4000,
-  "element": "wind",
-  "requires": [
-   {
-    "skillId": "lightning_bolt",
-    "level": 4
-   }
-  ],
-  "effects": [
-   {
-    "type": "damage",
-    "kind": "magic",
-    "multiplier": 0.75,
-    "perLevel": 0.12,
-    "element": "wind",
-    "hits": 3,
-    "radius": 110
-   }
-  ],
-  "fx": "lightning",
-  "icon": {
-   "glyph": "TS",
-   "color": "#fff27a"
-  }
- },
- {
-  "id": "meteor",
-  "name": "Meteor",
-  "classId": "mage",
-  "kind": "ultimate",
-  "targeting": "ground",
-  "description": "ULTIMATE. Call down falling stars that devastate a wide area and stun.",
-  "maxLevel": 5,
-  "range": 300,
-  "mpCost": 60,
-  "mpCostPerLevel": 8,
-  "castTimeMs": 2400,
-  "cooldownMs": 25000,
-  "element": "fire",
-  "requiresJobLevel": 20,
-  "requires": [
-   {
-    "skillId": "fire_wall",
-    "level": 3
-   },
-   {
-    "skillId": "thunderstorm",
-    "level": 3
-   }
-  ],
-  "effects": [
-   {
-    "type": "damage",
-    "kind": "magic",
-    "multiplier": 1.6,
-    "perLevel": 0.3,
-    "element": "fire",
-    "hits": 4,
-    "radius": 150
-   },
-   {
-    "type": "status",
-    "status": "stun",
-    "chance": 0.2,
-    "perLevel": 0.05,
-    "durationMs": 2000,
-    "radius": 150
-   }
-  ],
-  "fx": "meteor",
-  "icon": {
-   "glyph": "Me",
-   "color": "#ff9a3d"
-  }
- },
- {
-  "id": "mana_shield",
-  "name": "Mana Shield",
-  "classId": "mage",
-  "kind": "buff",
-  "targeting": "self",
-  "description": "A barrier of mana absorbs part of incoming damage using MP instead of HP.",
-  "maxLevel": 5,
-  "range": 0,
-  "mpCost": 20,
-  "mpCostPerLevel": 3,
-  "castTimeMs": 0,
-  "cooldownMs": 30000,
-  "effects": [
-   {
-    "type": "buff",
-    "buffId": "mana_shield",
-    "durationMs": 60000,
-    "mods": {
-     "damageToMpPct": 25
+  {
+    "id": "arrow_rain",
+    "name": "Arrow Rain",
+    "classId": "ranger",
+    "kind": "active",
+    "targeting": "ground",
+    "description": "Rain arrows on an area, striking every enemy inside.",
+    "maxLevel": 10,
+    "range": 300,
+    "mpCost": 15,
+    "mpCostPerLevel": 1,
+    "castTimeMs": 500,
+    "cooldownMs": 3000,
+    "requires": [
+      {
+        "skillId": "double_shot",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.2,
+        "perLevel": 0.2,
+        "element": "weapon",
+        "radius": 96
+      }
+    ],
+    "fx": "arrow_rain",
+    "icon": {
+      "glyph": "AR",
+      "color": "#7ad0e0"
     },
-    "modsPerLevel": {
-     "damageToMpPct": 7
-    }
-   }
-  ],
-  "fx": "arcane",
-  "icon": {
-   "glyph": "MS",
-   "color": "#9a7aff"
-  }
- },
- {
-  "id": "astral_attunement",
-  "name": "Astral Attunement",
-  "classId": "mage",
-  "kind": "passive",
-  "targeting": "passive",
-  "description": "Your mind resonates with the Astral Runes. +3 Magic Attack, +2 MP regeneration and -1% cast time per level.",
-  "maxLevel": 10,
-  "range": 0,
-  "mpCost": 0,
-  "mpCostPerLevel": 0,
-  "castTimeMs": 0,
-  "cooldownMs": 0,
-  "passive": {
-   "matk": 3,
-   "mpRegen": 2,
-   "castTimePct": -1
+    "requiresWeapon": [
+      "bow",
+      "crossbow"
+    ]
   },
-  "effects": [],
-  "fx": "none",
-  "icon": {
-   "glyph": "AA",
-   "color": "#b9a6ff"
+  {
+    "id": "falcon_strike",
+    "name": "Falcon Strike",
+    "classId": "ranger",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Your falcon dives at the target. Never misses.",
+    "maxLevel": 10,
+    "range": 340,
+    "mpCost": 12,
+    "mpCostPerLevel": 1,
+    "castTimeMs": 0,
+    "cooldownMs": 3000,
+    "requires": [
+      {
+        "skillId": "eagle_eye",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.8,
+        "perLevel": 0.3,
+        "element": "neutral",
+        "alwaysHit": true
+      }
+    ],
+    "fx": "falcon",
+    "icon": {
+      "glyph": "FS",
+      "color": "#d8b46a"
+    }
+  },
+  {
+    "id": "wind_trap",
+    "name": "Wind Trap",
+    "classId": "ranger",
+    "kind": "active",
+    "targeting": "ground",
+    "description": "Set a whirling wind trap that damages and slows enemies passing over it.",
+    "maxLevel": 5,
+    "range": 200,
+    "mpCost": 14,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 300,
+    "cooldownMs": 6000,
+    "requires": [
+      {
+        "skillId": "double_shot",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "type": "groundZone",
+        "zoneId": "wind_trap",
+        "durationMs": 12000,
+        "radius": 64,
+        "tickMs": 700,
+        "kind": "physical",
+        "multiplier": 0.5,
+        "perLevel": 0.12,
+        "element": "wind",
+        "status": "slow",
+        "statusChance": 0.6,
+        "statusDurationMs": 3000
+      }
+    ],
+    "fx": "wind",
+    "icon": {
+      "glyph": "WT",
+      "color": "#b6f0d0"
+    }
+  },
+  {
+    "id": "eagle_eye",
+    "name": "Eagle Eye",
+    "classId": "ranger",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "Sharpened sight. +2 Accuracy, +1 Critical and +8 attack range per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "hit": 2,
+      "crit": 1,
+      "attackRange": 8
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "EE",
+      "color": "#ffe27a"
+    }
+  },
+  {
+    "id": "rapid_fire",
+    "name": "Rapid Fire",
+    "classId": "ranger",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Fire arrows in rapid succession, increasing attack speed.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 18,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 0,
+    "cooldownMs": 30000,
+    "requires": [
+      {
+        "skillId": "double_shot",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "rapid_fire",
+        "durationMs": 30000,
+        "mods": {
+          "aspdPct": 10
+        },
+        "modsPerLevel": {
+          "aspdPct": 5
+        }
+      }
+    ],
+    "fx": "wind",
+    "icon": {
+      "glyph": "RF",
+      "color": "#ffa94d"
+    },
+    "requiresWeapon": [
+      "bow",
+      "crossbow"
+    ]
+  },
+  {
+    "id": "camouflage",
+    "name": "Camouflage",
+    "classId": "ranger",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Blend into the surroundings. Monsters lose track of you until you attack.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 15,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 20000,
+    "requires": [
+      {
+        "skillId": "eagle_eye",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "camouflage",
+        "durationMs": 8000,
+        "perLevelMs": 2000,
+        "mods": {
+          "stealth": 1,
+          "moveSpeedPct": -20
+        },
+        "flags": [
+          "breakOnAttack"
+        ]
+      }
+    ],
+    "fx": "shadow",
+    "icon": {
+      "glyph": "Cm",
+      "color": "#6f8f6f"
+    }
+  },
+  {
+    "id": "piercing_arrow",
+    "name": "Piercing Arrow",
+    "classId": "ranger",
+    "kind": "ultimate",
+    "targeting": "enemy",
+    "description": "ULTIMATE. A charged arrow that pierces through every enemy in a line.",
+    "maxLevel": 5,
+    "range": 360,
+    "mpCost": 35,
+    "mpCostPerLevel": 4,
+    "castTimeMs": 900,
+    "cooldownMs": 14000,
+    "requiresJobLevel": 20,
+    "requires": [
+      {
+        "skillId": "arrow_rain",
+        "level": 3
+      },
+      {
+        "skillId": "falcon_strike",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "line",
+        "length": 380,
+        "width": 44
+      },
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 2.6,
+        "perLevel": 0.5,
+        "element": "weapon",
+        "ignoreDefPct": 20
+      }
+    ],
+    "fx": "pierce",
+    "icon": {
+      "glyph": "PA",
+      "color": "#ffffff"
+    },
+    "requiresWeapon": [
+      "bow",
+      "crossbow"
+    ]
+  },
+  {
+    "id": "fire_bolt",
+    "name": "Fire Bolt",
+    "classId": "mage",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Hurl a bolt of fire. Strong against earth.",
+    "maxLevel": 10,
+    "range": 300,
+    "mpCost": 8,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 900,
+    "cooldownMs": 1000,
+    "element": "fire",
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 1,
+        "perLevel": 0.22,
+        "element": "fire"
+      },
+      {
+        "type": "status",
+        "status": "burn",
+        "chance": 0.05,
+        "perLevel": 0.02,
+        "durationMs": 4000
+      }
+    ],
+    "fx": "fire",
+    "icon": {
+      "glyph": "Fi",
+      "color": "#ff6a2e"
+    }
+  },
+  {
+    "id": "ice_bolt",
+    "name": "Ice Bolt",
+    "classId": "mage",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "A shard of ice that can freeze the target. Strong against fire.",
+    "maxLevel": 10,
+    "range": 300,
+    "mpCost": 9,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 900,
+    "cooldownMs": 1000,
+    "element": "water",
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 0.95,
+        "perLevel": 0.21,
+        "element": "water"
+      },
+      {
+        "type": "status",
+        "status": "freeze",
+        "chance": 0.05,
+        "perLevel": 0.03,
+        "durationMs": 2500
+      }
+    ],
+    "fx": "ice",
+    "icon": {
+      "glyph": "Ic",
+      "color": "#7fd6ff"
+    }
+  },
+  {
+    "id": "lightning_bolt",
+    "name": "Lightning Bolt",
+    "classId": "mage",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Call lightning onto the target. Strong against water.",
+    "maxLevel": 10,
+    "range": 300,
+    "mpCost": 10,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 1000,
+    "cooldownMs": 1000,
+    "element": "wind",
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 1.05,
+        "perLevel": 0.23,
+        "element": "wind"
+      },
+      {
+        "type": "status",
+        "status": "stun",
+        "chance": 0.03,
+        "perLevel": 0.01,
+        "durationMs": 1000
+      }
+    ],
+    "fx": "lightning",
+    "icon": {
+      "glyph": "Li",
+      "color": "#ffe94d"
+    }
+  },
+  {
+    "id": "fire_wall",
+    "name": "Fire Wall",
+    "classId": "mage",
+    "kind": "active",
+    "targeting": "ground",
+    "description": "Ignite the ground. Enemies standing in the flames are burned repeatedly.",
+    "maxLevel": 10,
+    "range": 260,
+    "mpCost": 20,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 600,
+    "cooldownMs": 5000,
+    "element": "fire",
+    "requires": [
+      {
+        "skillId": "fire_bolt",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "type": "groundZone",
+        "zoneId": "fire_wall",
+        "durationMs": 7000,
+        "radius": 60,
+        "tickMs": 500,
+        "kind": "magic",
+        "multiplier": 0.45,
+        "perLevel": 0.08,
+        "element": "fire",
+        "status": "burn",
+        "statusChance": 0.15,
+        "statusDurationMs": 4000
+      }
+    ],
+    "fx": "fire",
+    "icon": {
+      "glyph": "FW",
+      "color": "#ff3d1e"
+    }
+  },
+  {
+    "id": "frost_nova",
+    "name": "Frost Nova",
+    "classId": "mage",
+    "kind": "active",
+    "targeting": "self",
+    "description": "Release a burst of frost around you that can freeze enemies in place.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 24,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 300,
+    "cooldownMs": 8000,
+    "element": "water",
+    "requires": [
+      {
+        "skillId": "ice_bolt",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 1,
+        "perLevel": 0.18,
+        "element": "water",
+        "radius": 120
+      },
+      {
+        "type": "status",
+        "status": "freeze",
+        "chance": 0.25,
+        "perLevel": 0.05,
+        "durationMs": 3000,
+        "radius": 120
+      }
+    ],
+    "fx": "ice",
+    "icon": {
+      "glyph": "FN",
+      "color": "#bdf0ff"
+    }
+  },
+  {
+    "id": "thunderstorm",
+    "name": "Thunderstorm",
+    "classId": "mage",
+    "kind": "active",
+    "targeting": "ground",
+    "description": "Summon a storm that strikes an area three times.",
+    "maxLevel": 10,
+    "range": 300,
+    "mpCost": 28,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 1400,
+    "cooldownMs": 4000,
+    "element": "wind",
+    "requires": [
+      {
+        "skillId": "lightning_bolt",
+        "level": 4
+      }
+    ],
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 0.75,
+        "perLevel": 0.12,
+        "element": "wind",
+        "hits": 3,
+        "radius": 110
+      }
+    ],
+    "fx": "lightning",
+    "icon": {
+      "glyph": "TS",
+      "color": "#fff27a"
+    }
+  },
+  {
+    "id": "meteor",
+    "name": "Meteor",
+    "classId": "mage",
+    "kind": "ultimate",
+    "targeting": "ground",
+    "description": "ULTIMATE. Call down falling stars that devastate a wide area and stun.",
+    "maxLevel": 5,
+    "range": 300,
+    "mpCost": 60,
+    "mpCostPerLevel": 8,
+    "castTimeMs": 2400,
+    "cooldownMs": 25000,
+    "element": "fire",
+    "requiresJobLevel": 20,
+    "requires": [
+      {
+        "skillId": "fire_wall",
+        "level": 3
+      },
+      {
+        "skillId": "thunderstorm",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 1.6,
+        "perLevel": 0.3,
+        "element": "fire",
+        "hits": 4,
+        "radius": 150
+      },
+      {
+        "type": "status",
+        "status": "stun",
+        "chance": 0.2,
+        "perLevel": 0.05,
+        "durationMs": 2000,
+        "radius": 150
+      }
+    ],
+    "fx": "meteor",
+    "icon": {
+      "glyph": "Me",
+      "color": "#ff9a3d"
+    }
+  },
+  {
+    "id": "mana_shield",
+    "name": "Mana Shield",
+    "classId": "mage",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "A barrier of mana absorbs part of incoming damage using MP instead of HP.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 20,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 0,
+    "cooldownMs": 30000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "mana_shield",
+        "durationMs": 60000,
+        "mods": {
+          "damageToMpPct": 25
+        },
+        "modsPerLevel": {
+          "damageToMpPct": 7
+        }
+      }
+    ],
+    "fx": "arcane",
+    "icon": {
+      "glyph": "MS",
+      "color": "#9a7aff"
+    }
+  },
+  {
+    "id": "astral_attunement",
+    "name": "Astral Attunement",
+    "classId": "mage",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "Your mind resonates with the Astral Runes. +3 Magic Attack, +2 MP regeneration and -1% cast time per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "matk": 3,
+      "mpRegen": 2,
+      "castTimePct": -1
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "AA",
+      "color": "#b9a6ff"
+    }
+  },
+  {
+    "id": "holy_light",
+    "name": "Holy Light",
+    "classId": "cleric",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "A lance of dawnlight. Holy magic damage — devastating against the undead.",
+    "maxLevel": 10,
+    "range": 280,
+    "mpCost": 12,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 300,
+    "cooldownMs": 1000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 2,
+        "perLevel": 0.3,
+        "element": "holy"
+      }
+    ],
+    "fx": "arcane",
+    "icon": {
+      "glyph": "HL",
+      "color": "#fff3a0"
+    },
+    "element": "holy"
+  },
+  {
+    "id": "heal",
+    "name": "Heal",
+    "classId": "cleric",
+    "kind": "active",
+    "targeting": "self",
+    "description": "Restore HP. Scales strongly with INT and skill level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 13,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 300,
+    "cooldownMs": 1500,
+    "effects": [
+      {
+        "type": "heal",
+        "base": 30,
+        "perLevel": 24,
+        "intScale": 3
+      }
+    ],
+    "fx": "heal",
+    "icon": {
+      "glyph": "He",
+      "color": "#7aff9a"
+    }
+  },
+  {
+    "id": "benediction",
+    "name": "Benediction",
+    "classId": "cleric",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "A blessing: +1 STR, INT and DEX per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 24,
+    "mpCostPerLevel": 4,
+    "castTimeMs": 0,
+    "cooldownMs": 20000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "benediction",
+        "durationMs": 60000,
+        "perLevelMs": 20000,
+        "mods": {
+          "str": 1,
+          "int": 1,
+          "dex": 1
+        },
+        "modsPerLevel": {
+          "str": 1,
+          "int": 1,
+          "dex": 1
+        }
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "Bl",
+      "color": "#ffe27a"
+    },
+    "requires": [
+      {
+        "skillId": "heal",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "id": "swift_grace",
+    "name": "Swift Grace",
+    "classId": "cleric",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Lightens the step: +3 AGI (+1 per level), +5% attack speed and +20% move speed.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 18,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 0,
+    "cooldownMs": 20000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "swift_grace",
+        "durationMs": 60000,
+        "perLevelMs": 20000,
+        "mods": {
+          "agi": 3,
+          "aspdPct": 5,
+          "moveSpeedPct": 20
+        },
+        "modsPerLevel": {
+          "agi": 1
+        }
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "SG",
+      "color": "#9fe8ff"
+    },
+    "requires": [
+      {
+        "skillId": "benediction",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "id": "aegis_hymn",
+    "name": "Aegis Hymn",
+    "classId": "cleric",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "A hymn of warding: +5% DEF per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 23,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 0,
+    "cooldownMs": 30000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "aegis_hymn",
+        "durationMs": 30000,
+        "perLevelMs": 10000,
+        "mods": {
+          "pdefPct": 5
+        },
+        "modsPerLevel": {
+          "pdefPct": 5
+        }
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "AH",
+      "color": "#c0d8ff"
+    },
+    "requires": [
+      {
+        "skillId": "sacred_ward",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "id": "purify",
+    "name": "Purify",
+    "classId": "cleric",
+    "kind": "active",
+    "targeting": "self",
+    "description": "Cleanse poison, blindness, silence and curses.",
+    "maxLevel": 1,
+    "range": 0,
+    "mpCost": 15,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 3000,
+    "effects": [
+      {
+        "type": "cure",
+        "statuses": [
+          "poison",
+          "blind",
+          "silence",
+          "curse"
+        ]
+      }
+    ],
+    "fx": "heal",
+    "icon": {
+      "glyph": "Pu",
+      "color": "#d0fff0"
+    }
+  },
+  {
+    "id": "sacred_ward",
+    "name": "Sacred Ward",
+    "classId": "cleric",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "+1 DEF and 3% less damage from the undead per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "SW",
+      "color": "#e8e0c0"
+    },
+    "passive": {
+      "pdef": 1,
+      "raceResistPct": {
+        "undead": 3
+      }
+    }
+  },
+  {
+    "id": "smite_evil",
+    "name": "Smite Evil",
+    "classId": "cleric",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "+1 ATK and +3% damage against the undead per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "SE",
+      "color": "#ffb070"
+    },
+    "passive": {
+      "patk": 1,
+      "raceDamagePct": {
+        "undead": 3
+      }
+    },
+    "requires": [
+      {
+        "skillId": "sacred_ward",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "id": "sanctum_nova",
+    "name": "Sanctum Nova",
+    "classId": "cleric",
+    "kind": "ultimate",
+    "targeting": "ground",
+    "description": "ULTIMATE. Consecrate the ground: holy light strikes everything inside again and again.",
+    "maxLevel": 10,
+    "range": 260,
+    "mpCost": 40,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 1500,
+    "cooldownMs": 12000,
+    "effects": [
+      {
+        "type": "groundZone",
+        "zoneId": "sanctum_nova",
+        "durationMs": 5000,
+        "radius": 90,
+        "tickMs": 500,
+        "kind": "magic",
+        "multiplier": 0.6,
+        "perLevel": 0.08,
+        "element": "holy"
+      }
+    ],
+    "fx": "arcane",
+    "icon": {
+      "glyph": "SN",
+      "color": "#fffbd0"
+    },
+    "element": "holy",
+    "requiresJobLevel": 20,
+    "requires": [
+      {
+        "skillId": "holy_light",
+        "level": 5
+      },
+      {
+        "skillId": "smite_evil",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "id": "twin_fang",
+    "name": "Twin Fang",
+    "classId": "rogue",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "With a dagger, each basic attack has a 5% chance per level to strike twice. Also +1 HIT per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "TF",
+      "color": "#e0e0e0"
+    },
+    "passive": {
+      "doubleAttackPct": 5,
+      "hit": 1
+    }
+  },
+  {
+    "id": "evasion_instinct",
+    "name": "Evasion Instinct",
+    "classId": "rogue",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "+3 FLEE per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "EI",
+      "color": "#9ad0ff"
+    },
+    "passive": {
+      "flee": 3
+    }
+  },
+  {
+    "id": "pilfer",
+    "name": "Pilfer",
+    "classId": "rogue",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Try to steal an item from a monster's loot. Chance rises with DEX and skill level. One success per monster; bosses can't be robbed.",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 10,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 1000,
+    "effects": [
+      {
+        "type": "steal",
+        "chance": 10,
+        "perLevel": 6
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "Pi",
+      "color": "#ffd75a"
+    }
+  },
+  {
+    "id": "shadow_veil",
+    "name": "Shadow Veil",
+    "classId": "rogue",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Vanish into shadow: monsters lose you until you attack. Movement is slowed.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 10,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 5000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "shadow_veil",
+        "durationMs": 5000,
+        "perLevelMs": 2000,
+        "mods": {
+          "stealth": 1,
+          "moveSpeedPct": -50
+        },
+        "flags": [
+          "breakOnAttack"
+        ]
+      }
+    ],
+    "fx": "shadow",
+    "icon": {
+      "glyph": "SV",
+      "color": "#6a6a8a"
+    },
+    "requires": [
+      {
+        "skillId": "pilfer",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "id": "venom_edge",
+    "name": "Venom Edge",
+    "classId": "rogue",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "A poisoned strike. Poison-element damage that can poison the target.",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 12,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 1000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.4,
+        "perLevel": 0.2,
+        "element": "poison",
+        "alwaysHit": true
+      },
+      {
+        "type": "status",
+        "status": "poison",
+        "chance": 0.1,
+        "perLevel": 0.03,
+        "durationMs": 6000
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "VE",
+      "color": "#a0e060"
+    },
+    "element": "poison"
+  },
+  {
+    "id": "grit_toss",
+    "name": "Grit Toss",
+    "classId": "rogue",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Throw a fistful of sand: earth damage that can blind.",
+    "maxLevel": 5,
+    "range": 60,
+    "mpCost": 9,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 1500,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.3,
+        "perLevel": 0.1,
+        "element": "earth"
+      },
+      {
+        "type": "status",
+        "status": "blind",
+        "chance": 0.15,
+        "perLevel": 0.02,
+        "durationMs": 5000
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "GT",
+      "color": "#c8a060"
+    },
+    "element": "earth",
+    "requires": [
+      {
+        "skillId": "venom_edge",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "knife_throw",
+    "name": "Knife Throw",
+    "classId": "rogue",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Hurl a throwing knife at range.",
+    "maxLevel": 10,
+    "range": 250,
+    "mpCost": 6,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 800,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 0.9,
+        "perLevel": 0.1,
+        "element": "weapon"
+      }
+    ],
+    "fx": "arrow",
+    "icon": {
+      "glyph": "KT",
+      "color": "#d8dde8"
+    }
+  },
+  {
+    "id": "antidote",
+    "name": "Antidote",
+    "classId": "rogue",
+    "kind": "active",
+    "targeting": "self",
+    "description": "Neutralise poison.",
+    "maxLevel": 1,
+    "range": 0,
+    "mpCost": 10,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 3000,
+    "effects": [
+      {
+        "type": "cure",
+        "statuses": [
+          "poison"
+        ]
+      }
+    ],
+    "fx": "heal",
+    "icon": {
+      "glyph": "An",
+      "color": "#b0ff90"
+    },
+    "requires": [
+      {
+        "skillId": "venom_edge",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "id": "hundred_cuts",
+    "name": "Hundred Cuts",
+    "classId": "rogue",
+    "kind": "ultimate",
+    "targeting": "enemy",
+    "description": "ULTIMATE. Eight lightning-fast dagger cuts; may stun.",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 30,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 0,
+    "cooldownMs": 6000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 0.5,
+        "perLevel": 0.07,
+        "element": "weapon",
+        "hits": 8
+      },
+      {
+        "type": "status",
+        "status": "stun",
+        "chance": 0.1,
+        "perLevel": 0.02,
+        "durationMs": 1500
+      }
+    ],
+    "fx": "whirl",
+    "icon": {
+      "glyph": "HC",
+      "color": "#ff6a6a"
+    },
+    "requiresJobLevel": 20,
+    "requiresWeapon": [
+      "dagger"
+    ],
+    "requires": [
+      {
+        "skillId": "twin_fang",
+        "level": 5
+      },
+      {
+        "skillId": "venom_edge",
+        "level": 5
+      }
+    ]
+  },
+  {
+    "id": "pack_mule",
+    "name": "Pack Mule",
+    "classId": "merchant",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "+200 carrying capacity per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "PM",
+      "color": "#c8a26b"
+    },
+    "passive": {
+      "weightLimit": 200
+    }
+  },
+  {
+    "id": "haggle",
+    "name": "Haggle",
+    "classId": "merchant",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "NPC shop prices −2.4% per level (max 24%).",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "Hg",
+      "color": "#ffcc33"
+    },
+    "passive": {
+      "discountPct": 2.4
+    },
+    "requires": [
+      {
+        "skillId": "pack_mule",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "id": "silver_tongue",
+    "name": "Silver Tongue",
+    "classId": "merchant",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "NPCs pay 2.4% more per level when you sell (max 24%).",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "ST",
+      "color": "#e0e0f0"
+    },
+    "passive": {
+      "overchargePct": 2.4
+    },
+    "requires": [
+      {
+        "skillId": "haggle",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "id": "coin_strike",
+    "name": "Coin Strike",
+    "classId": "merchant",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Hit with the weight of your purse. Costs Luma: 100 + 100 per level.",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 5,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 2000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.5,
+        "perLevel": 0.5,
+        "element": "weapon"
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "CS",
+      "color": "#ffd700"
+    },
+    "lumaCost": 100,
+    "lumaCostPerLevel": 100
+  },
+  {
+    "id": "cart_sweep",
+    "name": "Cart Sweep",
+    "classId": "merchant",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Swing your trade cart: hits everything around the target and knocks it back.",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 12,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 4000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.5,
+        "perLevel": 0.1,
+        "element": "weapon",
+        "radius": 90
+      },
+      {
+        "type": "knockback",
+        "distance": 60
+      }
+    ],
+    "fx": "whirl",
+    "icon": {
+      "glyph": "CW",
+      "color": "#b07a3a"
+    },
+    "requires": [
+      {
+        "skillId": "pack_mule",
+        "level": 5
+      }
+    ]
+  },
+  {
+    "id": "market_shout",
+    "name": "Market Shout",
+    "classId": "merchant",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "A rousing sales pitch: +4 STR and +4% ATK for 5 minutes.",
+    "maxLevel": 1,
+    "range": 0,
+    "mpCost": 8,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 30000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "market_shout",
+        "durationMs": 300000,
+        "mods": {
+          "str": 4,
+          "patkPct": 4
+        }
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "MS",
+      "color": "#ff9a3a"
+    },
+    "requires": [
+      {
+        "skillId": "haggle",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "id": "steady_grip",
+    "name": "Steady Grip",
+    "classId": "merchant",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "Hard work: +3 ATK and +1 HIT per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "SG",
+      "color": "#a07040"
+    },
+    "passive": {
+      "patk": 3,
+      "hit": 1
+    }
+  },
+  {
+    "id": "golden_ruin",
+    "name": "Golden Ruin",
+    "classId": "merchant",
+    "kind": "ultimate",
+    "targeting": "enemy",
+    "description": "ULTIMATE. Pour a fortune into one blow. Costs Luma: 500 + 250 per level.",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 30,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 300,
+    "cooldownMs": 10000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 3,
+        "perLevel": 0.6,
+        "element": "weapon",
+        "ignoreDefPct": 30
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "GR",
+      "color": "#ffef8a"
+    },
+    "lumaCost": 500,
+    "lumaCostPerLevel": 250,
+    "requiresJobLevel": 20,
+    "requires": [
+      {
+        "skillId": "coin_strike",
+        "level": 5
+      },
+      {
+        "skillId": "cart_sweep",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "id": "drake_riding",
+    "name": "Drake Riding",
+    "classId": "dragoon",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "Ride a war-drake: +4% move speed and +60 carry weight per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "moveSpeedPct": 4,
+      "weightLimit": 60
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "DR",
+      "color": "#7fb0ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "lance_mastery",
+    "name": "Lance Mastery",
+    "classId": "dragoon",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "+5 ATK, +1 HIT and +1% damage to Large foes per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "patk": 5,
+      "hit": 1,
+      "sizeDamagePct": {
+        "large": 1
+      }
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "LM",
+      "color": "#c0c8d8"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "impale",
+    "name": "Impale",
+    "classId": "dragoon",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "A charging lance thrust that ignores part of the target's DEF.",
+    "maxLevel": 10,
+    "range": 90,
+    "mpCost": 10,
+    "mpCostPerLevel": 1,
+    "castTimeMs": 0,
+    "cooldownMs": 1500,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.8,
+        "perLevel": 0.35,
+        "element": "weapon",
+        "ignoreDefPct": 20
+      }
+    ],
+    "fx": "pierce",
+    "icon": {
+      "glyph": "Im",
+      "color": "#ff8a5a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "drake_sweep",
+    "name": "Drake Sweep",
+    "classId": "dragoon",
+    "kind": "active",
+    "targeting": "self",
+    "description": "Wheel the drake around: spear sweep that hits everything nearby and knocks it back.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 18,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 0,
+    "cooldownMs": 4000,
+    "requires": [
+      {
+        "skillId": "impale",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.6,
+        "perLevel": 0.25,
+        "element": "weapon",
+        "radius": 120
+      },
+      {
+        "type": "knockback",
+        "distance": 70
+      }
+    ],
+    "fx": "whirl",
+    "icon": {
+      "glyph": "DS",
+      "color": "#ffb05a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "war_banner",
+    "name": "War Banner",
+    "classId": "dragoon",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Raise the banner: +3% ATK and +2% attack speed per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 25,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 0,
+    "cooldownMs": 60000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "war_banner",
+        "durationMs": 90000,
+        "mods": {
+          "patkPct": 3,
+          "aspdPct": 2
+        },
+        "modsPerLevel": {
+          "patkPct": 3,
+          "aspdPct": 2
+        }
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "WB",
+      "color": "#ffd34d"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "iron_hide",
+    "name": "Iron Hide",
+    "classId": "dragoon",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Brace behind your armor: +8% DEF and +4% max HP per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 20,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 45000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "iron_hide",
+        "durationMs": 30000,
+        "mods": {
+          "pdefPct": 8,
+          "maxHpPct": 4
+        },
+        "modsPerLevel": {
+          "pdefPct": 8,
+          "maxHpPct": 4
+        }
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "IH",
+      "color": "#a0a8b8"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "skewer_line",
+    "name": "Skewer Line",
+    "classId": "dragoon",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Drive the lance through a whole line of enemies.",
+    "maxLevel": 10,
+    "range": 220,
+    "mpCost": 22,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 0,
+    "cooldownMs": 3000,
+    "requires": [
+      {
+        "skillId": "impale",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "type": "line",
+        "length": 260,
+        "width": 50
+      },
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 2.2,
+        "perLevel": 0.3,
+        "element": "weapon"
+      }
+    ],
+    "fx": "pierce",
+    "icon": {
+      "glyph": "SL",
+      "color": "#ff6a3a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "sky_dive",
+    "name": "Sky Dive",
+    "classId": "dragoon",
+    "kind": "ultimate",
+    "targeting": "ground",
+    "description": "ULTIMATE. The drake leaps and crashes down: huge damage in an area, stunning foes.",
+    "maxLevel": 10,
+    "range": 260,
+    "mpCost": 45,
+    "mpCostPerLevel": 5,
+    "castTimeMs": 500,
+    "cooldownMs": 15000,
+    "requires": [
+      {
+        "skillId": "skewer_line",
+        "level": 3
+      },
+      {
+        "skillId": "war_banner",
+        "level": 2
+      }
+    ],
+    "requiresJobLevel": 30,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 3.2,
+        "perLevel": 0.5,
+        "element": "weapon",
+        "radius": 140
+      },
+      {
+        "type": "status",
+        "status": "stun",
+        "chance": 0.3,
+        "perLevel": 0.04,
+        "durationMs": 2000,
+        "radius": 140
+      }
+    ],
+    "fx": "meteor",
+    "icon": {
+      "glyph": "SD",
+      "color": "#ffef8a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "faith",
+    "name": "Faith",
+    "classId": "templar",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "+3% max HP, +2 MDEF and 3% holy resist per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "maxHpPct": 3,
+      "mdef": 2,
+      "elementResistPct": {
+        "holy": 3
+      }
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "Fa",
+      "color": "#fff3a0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "holy_bulwark",
+    "name": "Holy Bulwark",
+    "classId": "templar",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Lift your shield: 4% chance per level to block with a counter, +5% DEF per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 20,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 30000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "holy_bulwark",
+        "durationMs": 60000,
+        "mods": {
+          "counterChance": 4,
+          "pdefPct": 5
+        },
+        "modsPerLevel": {
+          "counterChance": 4,
+          "pdefPct": 5
+        }
+      }
+    ],
+    "fx": "holy",
+    "icon": {
+      "glyph": "HB",
+      "color": "#c0d8ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "shield_bash",
+    "name": "Shield Bash",
+    "classId": "templar",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Slam your shield into the foe: may stun.",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 10,
+    "mpCostPerLevel": 1,
+    "castTimeMs": 0,
+    "cooldownMs": 2000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.5,
+        "perLevel": 0.25,
+        "element": "weapon"
+      },
+      {
+        "type": "status",
+        "status": "stun",
+        "chance": 0.1,
+        "perLevel": 0.03,
+        "durationMs": 1800
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "SB",
+      "color": "#a0a8b8"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "sacred_strike",
+    "name": "Sacred Strike",
+    "classId": "templar",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "A holy weapon strike.",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 12,
+    "mpCostPerLevel": 1,
+    "castTimeMs": 0,
+    "cooldownMs": 1200,
+    "element": "holy",
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.8,
+        "perLevel": 0.36,
+        "element": "holy"
+      }
+    ],
+    "fx": "holy",
+    "icon": {
+      "glyph": "SS",
+      "color": "#ffe27a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "devotion_aura",
+    "name": "Devotion Aura",
+    "classId": "templar",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "An aura of devotion: +2% max HP and +1 HP regen per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 25,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 60000,
+    "requires": [
+      {
+        "skillId": "faith",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "devotion_aura",
+        "durationMs": 120000,
+        "mods": {
+          "maxHpPct": 2,
+          "hpRegen": 1
+        },
+        "modsPerLevel": {
+          "maxHpPct": 2,
+          "hpRegen": 1
+        }
+      }
+    ],
+    "fx": "heal",
+    "icon": {
+      "glyph": "DA",
+      "color": "#ffd8a0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "judgement_cross",
+    "name": "Judgement Cross",
+    "classId": "templar",
+    "kind": "active",
+    "targeting": "self",
+    "description": "A blazing cross of light around you: holy damage to everything nearby.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 30,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 400,
+    "cooldownMs": 5000,
+    "element": "holy",
+    "requires": [
+      {
+        "skillId": "sacred_strike",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 1.6,
+        "perLevel": 0.25,
+        "element": "holy",
+        "radius": 130
+      }
+    ],
+    "fx": "holy",
+    "icon": {
+      "glyph": "JC",
+      "color": "#fffbd0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "provoking_vow",
+    "name": "Provoking Vow",
+    "classId": "templar",
+    "kind": "active",
+    "targeting": "self",
+    "description": "Draw every foe nearby to you.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 12,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 8000,
+    "effects": [
+      {
+        "type": "taunt",
+        "radius": 220
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "PV",
+      "color": "#ff8a5a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "heavens_shield",
+    "name": "Heaven's Shield",
+    "classId": "templar",
+    "kind": "ultimate",
+    "targeting": "self",
+    "description": "ULTIMATE. For a short time, a wall of light: +40% DEF, +20% max HP and immunity-like holy resist.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 60,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 60000,
+    "requires": [
+      {
+        "skillId": "holy_bulwark",
+        "level": 3
+      },
+      {
+        "skillId": "devotion_aura",
+        "level": 2
+      }
+    ],
+    "requiresJobLevel": 30,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "heavens_shield",
+        "durationMs": 12000,
+        "mods": {
+          "pdefPct": 40,
+          "maxHpPct": 20,
+          "elementResistPct": {
+            "holy": 50,
+            "shadow": 30
+          }
+        },
+        "perLevelMs": 2000
+      }
+    ],
+    "fx": "holy",
+    "icon": {
+      "glyph": "HS",
+      "color": "#ffffff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "falcon_bond",
+    "name": "Falcon Bond",
+    "classId": "beastmaster",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "Your falcon grows stronger: +2 DEX and +1 CRIT per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "dex": 2,
+      "crit": 1
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "FB",
+      "color": "#d8c080"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "blitz_falcon",
+    "name": "Blitz Falcon",
+    "classId": "beastmaster",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "The falcon dives: damage that always hits, ignoring FLEE.",
+    "maxLevel": 10,
+    "range": 320,
+    "mpCost": 12,
+    "mpCostPerLevel": 1,
+    "castTimeMs": 0,
+    "cooldownMs": 1500,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 2,
+        "perLevel": 0.3,
+        "element": "neutral",
+        "alwaysHit": true
+      }
+    ],
+    "fx": "falcon",
+    "icon": {
+      "glyph": "BF",
+      "color": "#ffd34d"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "snare_trap",
+    "name": "Snare Trap",
+    "classId": "beastmaster",
+    "kind": "active",
+    "targeting": "ground",
+    "description": "Set a trap that roots and wounds foes stepping in.",
+    "maxLevel": 10,
+    "range": 200,
+    "mpCost": 10,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 3000,
+    "effects": [
+      {
+        "type": "groundZone",
+        "zoneId": "snare",
+        "durationMs": 8000,
+        "radius": 60,
+        "tickMs": 600,
+        "kind": "physical",
+        "multiplier": 0.5,
+        "perLevel": 0.08,
+        "element": "neutral",
+        "status": "slow",
+        "statusChance": 0.6,
+        "statusDurationMs": 3000
+      }
+    ],
+    "fx": "wind",
+    "icon": {
+      "glyph": "ST",
+      "color": "#a0e060"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "blast_trap",
+    "name": "Blast Trap",
+    "classId": "beastmaster",
+    "kind": "active",
+    "targeting": "ground",
+    "description": "A trap that explodes in fire.",
+    "maxLevel": 10,
+    "range": 200,
+    "mpCost": 14,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 4000,
+    "element": "fire",
+    "requires": [
+      {
+        "skillId": "snare_trap",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "groundZone",
+        "zoneId": "blast",
+        "durationMs": 3000,
+        "radius": 80,
+        "tickMs": 500,
+        "kind": "physical",
+        "multiplier": 1.2,
+        "perLevel": 0.15,
+        "element": "fire",
+        "status": "burn",
+        "statusChance": 0.3,
+        "statusDurationMs": 4000
+      }
+    ],
+    "fx": "fire",
+    "icon": {
+      "glyph": "BT",
+      "color": "#ff6a2e"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "beast_bane",
+    "name": "Beast Bane",
+    "classId": "beastmaster",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "+4 ATK and +3% damage to beasts and insects per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "patk": 4,
+      "raceDamagePct": {
+        "beast": 3,
+        "insect": 3
+      }
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "BB",
+      "color": "#b07040"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "keen_senses",
+    "name": "Keen Senses",
+    "classId": "beastmaster",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "+10 HIT and +3% attack speed per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 20,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 60000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "keen_senses",
+        "durationMs": 120000,
+        "mods": {
+          "hit": 10,
+          "aspdPct": 3
+        },
+        "modsPerLevel": {
+          "hit": 10,
+          "aspdPct": 3
+        }
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "KS",
+      "color": "#9fe07a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "tri_shot",
+    "name": "Tri Shot",
+    "classId": "beastmaster",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Three arrows at once.",
+    "maxLevel": 10,
+    "range": 320,
+    "mpCost": 14,
+    "mpCostPerLevel": 1,
+    "castTimeMs": 0,
+    "cooldownMs": 1500,
+    "requiresWeapon": [
+      "bow",
+      "crossbow"
+    ],
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 0.9,
+        "perLevel": 0.12,
+        "element": "weapon",
+        "hits": 3
+      }
+    ],
+    "fx": "arrow",
+    "icon": {
+      "glyph": "TS",
+      "color": "#c0ff90"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "falcon_storm",
+    "name": "Falcon Storm",
+    "classId": "beastmaster",
+    "kind": "ultimate",
+    "targeting": "ground",
+    "description": "ULTIMATE. Your falcon calls its flock: a storm of talons over an area.",
+    "maxLevel": 10,
+    "range": 320,
+    "mpCost": 45,
+    "mpCostPerLevel": 5,
+    "castTimeMs": 400,
+    "cooldownMs": 15000,
+    "requires": [
+      {
+        "skillId": "blitz_falcon",
+        "level": 5
+      },
+      {
+        "skillId": "blast_trap",
+        "level": 2
+      }
+    ],
+    "requiresJobLevel": 30,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1,
+        "perLevel": 0.15,
+        "element": "neutral",
+        "alwaysHit": true,
+        "hits": 4,
+        "radius": 130
+      }
+    ],
+    "fx": "falcon",
+    "icon": {
+      "glyph": "FS",
+      "color": "#fff3a0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "music_lessons",
+    "name": "Music Lessons",
+    "classId": "minstrel",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "+5 ATK, +2 MATK and +1% attack speed per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "patk": 5,
+      "matk": 2,
+      "aspdPct": 1
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "ML",
+      "color": "#ffb0d8"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "song_of_haste",
+    "name": "Song of Haste",
+    "classId": "minstrel",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "+4% attack speed and −2% cast time per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 25,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 0,
+    "cooldownMs": 30000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "song_haste",
+        "durationMs": 120000,
+        "mods": {
+          "aspdPct": 4,
+          "castTimePct": -2
+        },
+        "modsPerLevel": {
+          "aspdPct": 4,
+          "castTimePct": -2
+        }
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "SH",
+      "color": "#9fe8ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "song_of_vigor",
+    "name": "Song of Vigor",
+    "classId": "minstrel",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "+4% max HP and +2 HP regen per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 25,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 0,
+    "cooldownMs": 30000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "song_vigor",
+        "durationMs": 120000,
+        "mods": {
+          "maxHpPct": 4,
+          "hpRegen": 2
+        },
+        "modsPerLevel": {
+          "maxHpPct": 4,
+          "hpRegen": 2
+        }
+      }
+    ],
+    "fx": "heal",
+    "icon": {
+      "glyph": "SV",
+      "color": "#7aff9a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "song_of_fortune",
+    "name": "Song of Fortune",
+    "classId": "minstrel",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "+2 CRIT and +2 perfect dodge per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 25,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 0,
+    "cooldownMs": 30000,
+    "requires": [
+      {
+        "skillId": "music_lessons",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "song_fortune",
+        "durationMs": 120000,
+        "mods": {
+          "crit": 2,
+          "perfectDodge": 2
+        },
+        "modsPerLevel": {
+          "crit": 2,
+          "perfectDodge": 2
+        }
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "SF",
+      "color": "#ffe27a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "discord",
+    "name": "Discord",
+    "classId": "minstrel",
+    "kind": "active",
+    "targeting": "self",
+    "description": "A grating chord: magic damage to nearby foes, and it may put them to sleep.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 20,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 8000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 1,
+        "perLevel": 0.15,
+        "element": "neutral",
+        "radius": 130
+      },
+      {
+        "type": "status",
+        "status": "sleep",
+        "chance": 0.15,
+        "perLevel": 0.04,
+        "durationMs": 3000,
+        "radius": 130
+      }
+    ],
+    "fx": "arcane",
+    "icon": {
+      "glyph": "Di",
+      "color": "#c9a6ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "melody_strike",
+    "name": "Melody Strike",
+    "classId": "minstrel",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "An arrow or chord that rings in the target's ears: may silence.",
+    "maxLevel": 10,
+    "range": 300,
+    "mpCost": 10,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 1200,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 2.3,
+        "perLevel": 0.35,
+        "element": "weapon"
+      },
+      {
+        "type": "status",
+        "status": "silence",
+        "chance": 0.1,
+        "perLevel": 0.03,
+        "durationMs": 4000
+      }
+    ],
+    "fx": "arrow",
+    "icon": {
+      "glyph": "MS",
+      "color": "#ffb0ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "lullaby_zone",
+    "name": "Lullaby",
+    "classId": "minstrel",
+    "kind": "active",
+    "targeting": "ground",
+    "description": "A drowsy melody fills an area: monsters fall asleep.",
+    "maxLevel": 10,
+    "range": 240,
+    "mpCost": 30,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 12000,
+    "requires": [
+      {
+        "skillId": "discord",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "groundZone",
+        "zoneId": "lullaby",
+        "durationMs": 6000,
+        "radius": 100,
+        "tickMs": 1000,
+        "kind": "magic",
+        "multiplier": 0.2,
+        "perLevel": 0.05,
+        "element": "neutral",
+        "status": "sleep",
+        "statusChance": 0.35,
+        "statusDurationMs": 3000
+      }
+    ],
+    "fx": "arcane",
+    "icon": {
+      "glyph": "Lu",
+      "color": "#a0b0ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "grand_finale",
+    "name": "Grand Finale",
+    "classId": "minstrel",
+    "kind": "ultimate",
+    "targeting": "self",
+    "description": "ULTIMATE. The last chord: heavy magic damage all around you and +15% ATK/MATK for a minute.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 60,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 600,
+    "cooldownMs": 30000,
+    "requires": [
+      {
+        "skillId": "song_of_haste",
+        "level": 3
+      },
+      {
+        "skillId": "melody_strike",
+        "level": 3
+      }
+    ],
+    "requiresJobLevel": 30,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 2.4,
+        "perLevel": 0.35,
+        "element": "neutral",
+        "radius": 160
+      },
+      {
+        "type": "buff",
+        "buffId": "finale",
+        "durationMs": 60000,
+        "mods": {
+          "patkPct": 15,
+          "matkPct": 15
+        }
+      }
+    ],
+    "fx": "meteor",
+    "icon": {
+      "glyph": "GF",
+      "color": "#fff3a0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "arcane_focus",
+    "name": "Arcane Focus",
+    "classId": "sorcerer",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "+4 MATK and −1% cast time per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "matk": 4,
+      "castTimePct": -1
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "AF",
+      "color": "#c9a6ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "storm_gust",
+    "name": "Frost Gale",
+    "classId": "sorcerer",
+    "kind": "active",
+    "targeting": "ground",
+    "description": "A freezing gale over an area: water damage, may freeze.",
+    "maxLevel": 10,
+    "range": 280,
+    "mpCost": 40,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 1500,
+    "cooldownMs": 6000,
+    "element": "water",
+    "effects": [
+      {
+        "type": "groundZone",
+        "zoneId": "frost_gale",
+        "durationMs": 4000,
+        "radius": 110,
+        "tickMs": 500,
+        "kind": "magic",
+        "multiplier": 0.6,
+        "perLevel": 0.08,
+        "element": "water",
+        "status": "freeze",
+        "statusChance": 0.15,
+        "statusDurationMs": 2500
+      }
+    ],
+    "fx": "ice",
+    "icon": {
+      "glyph": "FG",
+      "color": "#bdf0ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "lord_of_vermilion",
+    "name": "Crimson Sky",
+    "classId": "sorcerer",
+    "kind": "active",
+    "targeting": "ground",
+    "description": "Lightning rains from a red sky.",
+    "maxLevel": 10,
+    "range": 280,
+    "mpCost": 42,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 1600,
+    "cooldownMs": 6000,
+    "element": "wind",
+    "requires": [
+      {
+        "skillId": "storm_gust",
+        "level": 2
+      }
+    ],
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 1,
+        "perLevel": 0.14,
+        "element": "wind",
+        "radius": 140,
+        "hits": 3
+      }
+    ],
+    "fx": "lightning",
+    "icon": {
+      "glyph": "CS",
+      "color": "#ff8a5a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "heavens_drive",
+    "name": "Earth Spikes",
+    "classId": "sorcerer",
+    "kind": "active",
+    "targeting": "ground",
+    "description": "Stone spikes erupt from the ground.",
+    "maxLevel": 10,
+    "range": 260,
+    "mpCost": 24,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 800,
+    "cooldownMs": 3000,
+    "element": "earth",
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 1.4,
+        "perLevel": 0.2,
+        "element": "earth",
+        "radius": 100
+      }
+    ],
+    "fx": "meteor",
+    "icon": {
+      "glyph": "ES",
+      "color": "#c8a060"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "ice_wall",
+    "name": "Ice Wall",
+    "classId": "sorcerer",
+    "kind": "active",
+    "targeting": "ground",
+    "description": "A wall of ice that freezes and chills anything inside it.",
+    "maxLevel": 10,
+    "range": 220,
+    "mpCost": 20,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 10000,
+    "element": "water",
+    "effects": [
+      {
+        "type": "groundZone",
+        "zoneId": "ice_wall",
+        "durationMs": 6000,
+        "radius": 70,
+        "tickMs": 1000,
+        "kind": "magic",
+        "multiplier": 0.2,
+        "perLevel": 0.04,
+        "element": "water",
+        "status": "slow",
+        "statusChance": 0.8,
+        "statusDurationMs": 2000
+      }
+    ],
+    "fx": "ice",
+    "icon": {
+      "glyph": "IW",
+      "color": "#9ad8ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "sightrasher",
+    "name": "Flame Ring",
+    "classId": "sorcerer",
+    "kind": "active",
+    "targeting": "self",
+    "description": "A ring of fire bursts out around you.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 30,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 400,
+    "cooldownMs": 5000,
+    "element": "fire",
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 1.6,
+        "perLevel": 0.22,
+        "element": "fire",
+        "radius": 140
+      },
+      {
+        "type": "knockback",
+        "distance": 60
+      }
+    ],
+    "fx": "fire",
+    "icon": {
+      "glyph": "FR",
+      "color": "#ff6a2e"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "mana_well",
+    "name": "Mana Well",
+    "classId": "sorcerer",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "+3 MP regen and +2% MATK per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 10,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 60000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "mana_well",
+        "durationMs": 120000,
+        "mods": {
+          "mpRegen": 3,
+          "matkPct": 2
+        },
+        "modsPerLevel": {
+          "mpRegen": 3,
+          "matkPct": 2
+        }
+      }
+    ],
+    "fx": "arcane",
+    "icon": {
+      "glyph": "MW",
+      "color": "#7fd6ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "meteor_storm",
+    "name": "Meteor Storm",
+    "classId": "sorcerer",
+    "kind": "ultimate",
+    "targeting": "ground",
+    "description": "ULTIMATE. A rain of meteors over a wide area; may stun and burn.",
+    "maxLevel": 10,
+    "range": 300,
+    "mpCost": 80,
+    "mpCostPerLevel": 6,
+    "castTimeMs": 2200,
+    "cooldownMs": 20000,
+    "element": "fire",
+    "requires": [
+      {
+        "skillId": "lord_of_vermilion",
+        "level": 3
+      },
+      {
+        "skillId": "sightrasher",
+        "level": 3
+      }
+    ],
+    "requiresJobLevel": 30,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 1.5,
+        "perLevel": 0.2,
+        "element": "fire",
+        "radius": 170,
+        "hits": 4
+      },
+      {
+        "type": "status",
+        "status": "stun",
+        "chance": 0.15,
+        "perLevel": 0.03,
+        "durationMs": 2000,
+        "radius": 170
+      }
+    ],
+    "fx": "meteor",
+    "icon": {
+      "glyph": "MS",
+      "color": "#ff3a1e"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "study",
+    "name": "Study",
+    "classId": "sage",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "+3 ATK with books, +3 MATK and +1% attack speed per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "patk": 3,
+      "matk": 3,
+      "aspdPct": 1
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "St",
+      "color": "#e8dcc0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "endow_fire",
+    "name": "Endow Fire",
+    "classId": "sage",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Your weapon becomes fire (5 minutes + 1 per level).",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 30,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 5000,
+    "effects": [
+      {
+        "type": "endow",
+        "element": "fire",
+        "durationMs": 300000,
+        "perLevelMs": 60000
+      }
+    ],
+    "fx": "fire",
+    "icon": {
+      "glyph": "EF",
+      "color": "#ff6a2e"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "endow_water",
+    "name": "Endow Water",
+    "classId": "sage",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Your weapon becomes water.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 30,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 5000,
+    "effects": [
+      {
+        "type": "endow",
+        "element": "water",
+        "durationMs": 300000,
+        "perLevelMs": 60000
+      }
+    ],
+    "fx": "ice",
+    "icon": {
+      "glyph": "EW",
+      "color": "#7ab8ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "endow_wind",
+    "name": "Endow Wind",
+    "classId": "sage",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Your weapon becomes wind.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 30,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 5000,
+    "effects": [
+      {
+        "type": "endow",
+        "element": "wind",
+        "durationMs": 300000,
+        "perLevelMs": 60000
+      }
+    ],
+    "fx": "wind",
+    "icon": {
+      "glyph": "EA",
+      "color": "#b6f0d0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "endow_earth",
+    "name": "Endow Earth",
+    "classId": "sage",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Your weapon becomes earth.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 30,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 5000,
+    "effects": [
+      {
+        "type": "endow",
+        "element": "earth",
+        "durationMs": 300000,
+        "perLevelMs": 60000
+      }
+    ],
+    "fx": "meteor",
+    "icon": {
+      "glyph": "EE",
+      "color": "#8b6b3e"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "double_cast",
+    "name": "Double Cast",
+    "classId": "sage",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "−6% cast time and −3% cooldowns per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 40,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 60000,
+    "requires": [
+      {
+        "skillId": "study",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "double_cast",
+        "durationMs": 60000,
+        "mods": {
+          "castTimePct": -6,
+          "cdrPct": 3
+        },
+        "modsPerLevel": {
+          "castTimePct": -6,
+          "cdrPct": 3
+        }
+      }
+    ],
+    "fx": "arcane",
+    "icon": {
+      "glyph": "DC",
+      "color": "#c9a6ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "earth_spike_volley",
+    "name": "Stone Volley",
+    "classId": "sage",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "A volley of earth spikes at one target.",
+    "maxLevel": 10,
+    "range": 260,
+    "mpCost": 14,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 500,
+    "cooldownMs": 1500,
+    "element": "earth",
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 0.8,
+        "perLevel": 0.12,
+        "element": "earth",
+        "hits": 3
+      }
+    ],
+    "fx": "meteor",
+    "icon": {
+      "glyph": "SV",
+      "color": "#c8a060"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "elemental_cataclysm",
+    "name": "Cataclysm",
+    "classId": "sage",
+    "kind": "ultimate",
+    "targeting": "ground",
+    "description": "ULTIMATE. Four elements crash down at once: fire, water, wind and earth strikes in an area.",
+    "maxLevel": 10,
+    "range": 280,
+    "mpCost": 70,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 1500,
+    "cooldownMs": 20000,
+    "requires": [
+      {
+        "skillId": "double_cast",
+        "level": 3
+      },
+      {
+        "skillId": "earth_spike_volley",
+        "level": 3
+      }
+    ],
+    "requiresJobLevel": 30,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 1,
+        "perLevel": 0.15,
+        "element": "fire",
+        "radius": 140
+      },
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 1,
+        "perLevel": 0.15,
+        "element": "water",
+        "radius": 140
+      },
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 1,
+        "perLevel": 0.15,
+        "element": "wind",
+        "radius": 140
+      },
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 1,
+        "perLevel": 0.15,
+        "element": "earth",
+        "radius": 140
+      }
+    ],
+    "fx": "meteor",
+    "icon": {
+      "glyph": "Ca",
+      "color": "#ffef8a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "greater_heal",
+    "name": "Greater Heal",
+    "classId": "bishop",
+    "kind": "active",
+    "targeting": "self",
+    "description": "A large heal.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 30,
+    "mpCostPerLevel": 4,
+    "castTimeMs": 500,
+    "cooldownMs": 3000,
+    "effects": [
+      {
+        "type": "heal",
+        "base": 120,
+        "perLevel": 70,
+        "intScale": 6
+      }
+    ],
+    "fx": "heal",
+    "icon": {
+      "glyph": "GH",
+      "color": "#7aff9a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "kyrie",
+    "name": "Kyrie Shield",
+    "classId": "bishop",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "A shield of prayer: 20% (+3%/lv) of damage goes to MP and +5% DEF per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 25,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 20000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "kyrie",
+        "durationMs": 60000,
+        "mods": {
+          "damageToMpPct": 17,
+          "pdefPct": 5
+        },
+        "modsPerLevel": {
+          "damageToMpPct": 3,
+          "pdefPct": 5
+        }
+      }
+    ],
+    "fx": "holy",
+    "icon": {
+      "glyph": "KS",
+      "color": "#c0d8ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "holy_mastery",
+    "name": "Holy Mastery",
+    "classId": "bishop",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "+3 MATK and +2% holy damage per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "matk": 3,
+      "elementDamagePct": {
+        "holy": 2
+      }
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "HM",
+      "color": "#ffe27a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "magnificat",
+    "name": "Magnificat",
+    "classId": "bishop",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Doubles your MP regeneration for a while.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 40,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 60000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "magnificat",
+        "durationMs": 30000,
+        "mods": {
+          "mpRegen": 8
+        },
+        "modsPerLevel": {
+          "mpRegen": 3
+        },
+        "perLevelMs": 10000
+      }
+    ],
+    "fx": "holy",
+    "icon": {
+      "glyph": "Mg",
+      "color": "#7fd6ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "lex_divina",
+    "name": "Lex Divina",
+    "classId": "bishop",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Silence a foe with holy law.",
+    "maxLevel": 10,
+    "range": 260,
+    "mpCost": 18,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 3000,
+    "effects": [
+      {
+        "type": "status",
+        "status": "silence",
+        "chance": 0.5,
+        "perLevel": 0.05,
+        "durationMs": 6000
+      }
+    ],
+    "fx": "holy",
+    "icon": {
+      "glyph": "LD",
+      "color": "#ffffff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "turn_undead",
+    "name": "Turn Undead",
+    "classId": "bishop",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Huge holy damage against a single target, best against the undead.",
+    "maxLevel": 10,
+    "range": 260,
+    "mpCost": 30,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 1000,
+    "cooldownMs": 3000,
+    "element": "holy",
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 2.6,
+        "perLevel": 0.35,
+        "element": "holy"
+      }
+    ],
+    "fx": "holy",
+    "icon": {
+      "glyph": "TU",
+      "color": "#fffbd0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "sanctuary",
+    "name": "Sanctuary",
+    "classId": "bishop",
+    "kind": "active",
+    "targeting": "self",
+    "description": "Holy light around you heals you and burns the enemies nearby.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 40,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 600,
+    "cooldownMs": 10000,
+    "requires": [
+      {
+        "skillId": "greater_heal",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "heal",
+        "base": 60,
+        "perLevel": 40,
+        "intScale": 4
+      },
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 1.2,
+        "perLevel": 0.2,
+        "element": "holy",
+        "radius": 130
+      }
+    ],
+    "fx": "heal",
+    "icon": {
+      "glyph": "Sa",
+      "color": "#d0fff0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "magnus_judgement",
+    "name": "Magnus Judgement",
+    "classId": "bishop",
+    "kind": "ultimate",
+    "targeting": "ground",
+    "description": "ULTIMATE. A great cross of holy fire burns everything in it.",
+    "maxLevel": 10,
+    "range": 280,
+    "mpCost": 80,
+    "mpCostPerLevel": 5,
+    "castTimeMs": 2000,
+    "cooldownMs": 20000,
+    "element": "holy",
+    "requires": [
+      {
+        "skillId": "turn_undead",
+        "level": 3
+      },
+      {
+        "skillId": "sanctuary",
+        "level": 2
+      }
+    ],
+    "requiresJobLevel": 30,
+    "effects": [
+      {
+        "type": "groundZone",
+        "zoneId": "magnus_judgement",
+        "durationMs": 6000,
+        "radius": 120,
+        "tickMs": 500,
+        "kind": "magic",
+        "multiplier": 0.9,
+        "perLevel": 0.12,
+        "element": "holy"
+      }
+    ],
+    "fx": "holy",
+    "icon": {
+      "glyph": "MJ",
+      "color": "#fff3a0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "iron_fist",
+    "name": "Iron Fist",
+    "classId": "ascetic",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "+4 ATK and +1 FLEE per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "patk": 4,
+      "flee": 1
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "IF",
+      "color": "#c86a2a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "spirit_spheres",
+    "name": "Spirit Spheres",
+    "classId": "ascetic",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Summon spirit spheres: +3 ATK and +1% attack speed per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 8,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 10000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "spirit_spheres",
+        "durationMs": 120000,
+        "mods": {
+          "patk": 15,
+          "aspdPct": 5
+        },
+        "modsPerLevel": {
+          "patk": 3,
+          "aspdPct": 1
+        }
+      }
+    ],
+    "fx": "arcane",
+    "icon": {
+      "glyph": "SS",
+      "color": "#9ad8ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "triple_blow",
+    "name": "Triple Blow",
+    "classId": "ascetic",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "A quick three-hit combo.",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 6,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 800,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 0.8,
+        "perLevel": 0.12,
+        "element": "weapon",
+        "hits": 3
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "TB",
+      "color": "#ffb05a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "chain_combo",
+    "name": "Chain Combo",
+    "classId": "ascetic",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Four hits that follow a Triple Blow.",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 10,
+    "mpCostPerLevel": 1,
+    "castTimeMs": 0,
+    "cooldownMs": 1600,
+    "requires": [
+      {
+        "skillId": "triple_blow",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 0.9,
+        "perLevel": 0.14,
+        "element": "weapon",
+        "hits": 4
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "CC",
+      "color": "#ff8a3a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "steel_body",
+    "name": "Steel Body",
+    "classId": "ascetic",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Harden the body: +60% DEF, −30% move speed.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 40,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 60000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "steel_body",
+        "durationMs": 20000,
+        "mods": {
+          "pdefPct": 60,
+          "moveSpeedPct": -30
+        },
+        "perLevelMs": 5000
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "SB",
+      "color": "#a0a8b8"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "ki_explosion",
+    "name": "Ki Explosion",
+    "classId": "ascetic",
+    "kind": "active",
+    "targeting": "self",
+    "description": "Release ki around you, stunning nearby foes.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 20,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 8000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.3,
+        "perLevel": 0.2,
+        "element": "weapon",
+        "radius": 110
+      },
+      {
+        "type": "status",
+        "status": "stun",
+        "chance": 0.2,
+        "perLevel": 0.04,
+        "durationMs": 1800,
+        "radius": 110
+      }
+    ],
+    "fx": "whirl",
+    "icon": {
+      "glyph": "KE",
+      "color": "#fff3a0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "body_relocation",
+    "name": "Snap Step",
+    "classId": "ascetic",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Light feet: +20% move speed and +3 perfect dodge.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 15,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 20000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "snap_step",
+        "durationMs": 15000,
+        "mods": {
+          "moveSpeedPct": 20,
+          "perfectDodge": 3
+        },
+        "modsPerLevel": {
+          "moveSpeedPct": 2
+        }
+      }
+    ],
+    "fx": "wind",
+    "icon": {
+      "glyph": "SS",
+      "color": "#b6f0d0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "asura_strike",
+    "name": "Asura Strike",
+    "classId": "ascetic",
+    "kind": "ultimate",
+    "targeting": "enemy",
+    "description": "ULTIMATE. Pour all your spirit into a single blow that ignores DEF.",
+    "maxLevel": 10,
+    "range": 70,
+    "mpCost": 70,
+    "mpCostPerLevel": 5,
+    "castTimeMs": 800,
+    "cooldownMs": 25000,
+    "requires": [
+      {
+        "skillId": "chain_combo",
+        "level": 3
+      },
+      {
+        "skillId": "spirit_spheres",
+        "level": 3
+      }
+    ],
+    "requiresJobLevel": 30,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 6,
+        "perLevel": 1,
+        "element": "weapon",
+        "ignoreDefPct": 100,
+        "alwaysHit": true
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "AS",
+      "color": "#ff3a3a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "katar_mastery",
+    "name": "Katar Mastery",
+    "classId": "shadowblade",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "+4 ATK and +1 CRIT per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "patk": 4,
+      "crit": 1
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "KM",
+      "color": "#c0c0d8"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "cloak_of_shadows",
+    "name": "Cloak of Shadows",
+    "classId": "shadowblade",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Move unseen; monsters lose you until you attack.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 15,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 6000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "cloak",
+        "durationMs": 8000,
+        "mods": {
+          "stealth": 1,
+          "moveSpeedPct": -10
+        },
+        "perLevelMs": 2000,
+        "flags": [
+          "breakOnAttack"
+        ]
+      }
+    ],
+    "fx": "shadow",
+    "icon": {
+      "glyph": "Cl",
+      "color": "#3a3a5a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "sonic_blade",
+    "name": "Sonic Blade",
+    "classId": "shadowblade",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Eight lightning-fast katar slashes; may stun.",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 20,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 0,
+    "cooldownMs": 2000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 0.6,
+        "perLevel": 0.09,
+        "element": "weapon",
+        "hits": 8
+      },
+      {
+        "type": "status",
+        "status": "stun",
+        "chance": 0.1,
+        "perLevel": 0.02,
+        "durationMs": 1500
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "SB",
+      "color": "#ff5a5a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "venom_spray",
+    "name": "Venom Spray",
+    "classId": "shadowblade",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Spray poison on the target: poison damage, likely poisons.",
+    "maxLevel": 10,
+    "range": 120,
+    "mpCost": 14,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 2000,
+    "element": "poison",
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 1.4,
+        "perLevel": 0.2,
+        "element": "poison"
+      },
+      {
+        "type": "status",
+        "status": "poison",
+        "chance": 0.4,
+        "perLevel": 0.05,
+        "durationMs": 8000
+      }
+    ],
+    "fx": "shadow",
+    "icon": {
+      "glyph": "VS",
+      "color": "#a0e060"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "enchant_poison",
+    "name": "Enchant Poison",
+    "classId": "shadowblade",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Coat your blade: weapon becomes poison.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 20,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 5000,
+    "effects": [
+      {
+        "type": "endow",
+        "element": "poison",
+        "durationMs": 60000,
+        "perLevelMs": 20000
+      }
+    ],
+    "fx": "shadow",
+    "icon": {
+      "glyph": "EP",
+      "color": "#7ad04a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "grimtooth",
+    "name": "Grimtooth",
+    "classId": "shadowblade",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "A katar wave at range that hits around the target.",
+    "maxLevel": 10,
+    "range": 180,
+    "mpCost": 12,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 1500,
+    "requires": [
+      {
+        "skillId": "cloak_of_shadows",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.4,
+        "perLevel": 0.2,
+        "element": "weapon",
+        "radius": 80
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "Gr",
+      "color": "#c0c0d8"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "assassin_edge",
+    "name": "Lethal Focus",
+    "classId": "shadowblade",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "+5% crit damage and +2 CRIT per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 25,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 60000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "lethal_focus",
+        "durationMs": 60000,
+        "mods": {
+          "critDmg": 5,
+          "crit": 2
+        },
+        "modsPerLevel": {
+          "critDmg": 5,
+          "crit": 2
+        }
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "LF",
+      "color": "#ff8a8a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "soul_reap",
+    "name": "Soul Reap",
+    "classId": "shadowblade",
+    "kind": "ultimate",
+    "targeting": "enemy",
+    "description": "ULTIMATE. Appear behind the target and cut through its soul; ignores half its DEF.",
+    "maxLevel": 10,
+    "range": 200,
+    "mpCost": 60,
+    "mpCostPerLevel": 4,
+    "castTimeMs": 0,
+    "cooldownMs": 18000,
+    "requires": [
+      {
+        "skillId": "sonic_blade",
+        "level": 5
+      },
+      {
+        "skillId": "grimtooth",
+        "level": 3
+      }
+    ],
+    "requiresJobLevel": 30,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 5,
+        "perLevel": 0.7,
+        "element": "weapon",
+        "ignoreDefPct": 50,
+        "alwaysHit": true
+      }
+    ],
+    "fx": "shadow",
+    "icon": {
+      "glyph": "SR",
+      "color": "#7a1a2a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "snatch",
+    "name": "Snatch",
+    "classId": "outlaw",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "A better steal: higher chance than Pilfer.",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 12,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 1000,
+    "effects": [
+      {
+        "type": "steal",
+        "chance": 20,
+        "perLevel": 7
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "Sn",
+      "color": "#ffd75a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "rob_luma",
+    "name": "Mug",
+    "classId": "outlaw",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Hit the target and pocket Luma: monster level × (skill level × 3 + LUK / 10), once per monster.",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 10,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 1500,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.2,
+        "perLevel": 0.15,
+        "element": "weapon"
+      },
+      {
+        "type": "mug",
+        "perLevel": 3
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "Mu",
+      "color": "#ffcc33"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "strip_armor",
+    "name": "Strip Armor",
+    "classId": "outlaw",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Rip at the target's gear: may curse it (−25% ATK, slower).",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 14,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 4000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 0.8,
+        "perLevel": 0.1,
+        "element": "weapon"
+      },
+      {
+        "type": "status",
+        "status": "curse",
+        "chance": 0.3,
+        "perLevel": 0.05,
+        "durationMs": 8000
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "SA",
+      "color": "#c0a0a0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "backstab",
+    "name": "Backstab",
+    "classId": "outlaw",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "A brutal stab that never misses.",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 16,
+    "mpCostPerLevel": 1,
+    "castTimeMs": 0,
+    "cooldownMs": 2000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 2.6,
+        "perLevel": 0.45,
+        "element": "weapon",
+        "alwaysHit": true
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "BS",
+      "color": "#ff5a5a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "tunnel_drive",
+    "name": "Tunnel Drive",
+    "classId": "outlaw",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Move while hidden.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 12,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 5000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "tunnel",
+        "durationMs": 10000,
+        "mods": {
+          "stealth": 1
+        },
+        "perLevelMs": 2000,
+        "flags": [
+          "breakOnAttack"
+        ]
+      }
+    ],
+    "fx": "shadow",
+    "icon": {
+      "glyph": "TD",
+      "color": "#5a5a7a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "vulture_eye",
+    "name": "Vulture Eye",
+    "classId": "outlaw",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "+1 HIT and +6 bow range per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "hit": 1,
+      "attackRange": 6
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "VE",
+      "color": "#ffe27a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "arrow_storm_rogue",
+    "name": "Rain of Knives",
+    "classId": "outlaw",
+    "kind": "active",
+    "targeting": "ground",
+    "description": "Throw a fan of knives or arrows over an area.",
+    "maxLevel": 10,
+    "range": 260,
+    "mpCost": 20,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 0,
+    "cooldownMs": 4000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 0.8,
+        "perLevel": 0.1,
+        "element": "weapon",
+        "radius": 110,
+        "hits": 2
+      }
+    ],
+    "fx": "arrow_rain",
+    "icon": {
+      "glyph": "RK",
+      "color": "#d8dde8"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "plagiarism",
+    "name": "Grand Heist",
+    "classId": "outlaw",
+    "kind": "ultimate",
+    "targeting": "enemy",
+    "description": "ULTIMATE. A blinding raid: heavy damage, steals an item and blinds the target.",
+    "maxLevel": 10,
+    "range": 80,
+    "mpCost": 50,
+    "mpCostPerLevel": 4,
+    "castTimeMs": 0,
+    "cooldownMs": 18000,
+    "requires": [
+      {
+        "skillId": "backstab",
+        "level": 5
+      },
+      {
+        "skillId": "snatch",
+        "level": 3
+      }
+    ],
+    "requiresJobLevel": 30,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 4,
+        "perLevel": 0.6,
+        "element": "weapon"
+      },
+      {
+        "type": "steal",
+        "chance": 40,
+        "perLevel": 5
+      },
+      {
+        "type": "status",
+        "status": "blind",
+        "chance": 0.6,
+        "perLevel": 0.04,
+        "durationMs": 6000
+      }
+    ],
+    "fx": "shadow",
+    "icon": {
+      "glyph": "GH",
+      "color": "#ffef8a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "smithing",
+    "name": "Smithing",
+    "classId": "artisan",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "Practised hands: +3 ATK and +2 DEX per level, and +1% forging success per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "patk": 3,
+      "dex": 2
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "Sm",
+      "color": "#c8a26b"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "adrenaline_rush",
+    "name": "Adrenaline Rush",
+    "classId": "artisan",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "+5% attack speed per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 20,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 30000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "adrenaline",
+        "durationMs": 30000,
+        "mods": {
+          "aspdPct": 5
+        },
+        "modsPerLevel": {
+          "aspdPct": 5
+        },
+        "perLevelMs": 10000
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "AR",
+      "color": "#ff8a3a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "power_thrust",
+    "name": "Power Thrust",
+    "classId": "artisan",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "+5% ATK per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 18,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 30000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "power_thrust",
+        "durationMs": 30000,
+        "mods": {
+          "patkPct": 5
+        },
+        "modsPerLevel": {
+          "patkPct": 5
+        },
+        "perLevelMs": 10000
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "PT",
+      "color": "#ff5a3a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "weapon_perfection",
+    "name": "Weapon Perfection",
+    "classId": "artisan",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Ignore size penalties: +12% damage to every size per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 18,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 30000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "weapon_perfection",
+        "durationMs": 30000,
+        "mods": {
+          "sizeDamagePct": {
+            "small": 6,
+            "medium": 6,
+            "large": 6
+          }
+        },
+        "modsPerLevel": {
+          "sizeDamagePct": {
+            "small": 6,
+            "medium": 6,
+            "large": 6
+          }
+        },
+        "perLevelMs": 10000
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "WP",
+      "color": "#ffe27a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "hammerfall",
+    "name": "Hammerfall",
+    "classId": "artisan",
+    "kind": "active",
+    "targeting": "self",
+    "description": "Slam the ground: stuns everything nearby.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 15,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 6000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1,
+        "perLevel": 0.15,
+        "element": "weapon",
+        "radius": 110
+      },
+      {
+        "type": "status",
+        "status": "stun",
+        "chance": 0.3,
+        "perLevel": 0.05,
+        "durationMs": 2000,
+        "radius": 110
+      }
+    ],
+    "fx": "meteor",
+    "icon": {
+      "glyph": "Hf",
+      "color": "#a0a8b8"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "skin_tempering",
+    "name": "Skin Tempering",
+    "classId": "artisan",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "+4% fire and +1% neutral resist per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "elementResistPct": {
+        "fire": 4,
+        "neutral": 1
+      }
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "Sk",
+      "color": "#ff6a2e"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "cart_crash",
+    "name": "Cart Crash",
+    "classId": "artisan",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Ram your loaded cart into the target. Costs Luma.",
+    "maxLevel": 10,
+    "range": 70,
+    "mpCost": 15,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 2000,
+    "lumaCost": 200,
+    "lumaCostPerLevel": 50,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 2.6,
+        "perLevel": 0.4,
+        "element": "weapon",
+        "radius": 70
+      }
+    ],
+    "fx": "whirl",
+    "icon": {
+      "glyph": "CC",
+      "color": "#b07a3a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "meltdown",
+    "name": "Meltdown",
+    "classId": "artisan",
+    "kind": "ultimate",
+    "targeting": "self",
+    "description": "ULTIMATE. Forge-fire in the veins: +25% ATK, +20% attack speed and fire weapon.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 60,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 90000,
+    "requires": [
+      {
+        "skillId": "power_thrust",
+        "level": 3
+      },
+      {
+        "skillId": "adrenaline_rush",
+        "level": 3
+      }
+    ],
+    "requiresJobLevel": 30,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "meltdown",
+        "durationMs": 30000,
+        "mods": {
+          "patkPct": 20,
+          "aspdPct": 15
+        },
+        "modsPerLevel": {
+          "patkPct": 1,
+          "aspdPct": 1
+        }
+      },
+      {
+        "type": "endow",
+        "element": "fire",
+        "durationMs": 30000,
+        "perLevelMs": 5000
+      }
+    ],
+    "fx": "fire",
+    "icon": {
+      "glyph": "Md",
+      "color": "#ff3a1e"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "potion_research",
+    "name": "Potion Research",
+    "classId": "alchemist",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "Know-how: +3% max HP, +2% max MP and +1 HP regen per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "maxHpPct": 3,
+      "maxMpPct": 2,
+      "hpRegen": 1
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "PR",
+      "color": "#7fff7a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "acid_terror",
+    "name": "Acid Terror",
+    "classId": "alchemist",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "Throw acid: ignores DEF and may cause bleeding.",
+    "maxLevel": 10,
+    "range": 220,
+    "mpCost": 14,
+    "mpCostPerLevel": 1,
+    "castTimeMs": 300,
+    "cooldownMs": 1500,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.6,
+        "perLevel": 0.3,
+        "element": "neutral",
+        "ignoreDefPct": 100
+      },
+      {
+        "type": "status",
+        "status": "bleed",
+        "chance": 0.1,
+        "perLevel": 0.03,
+        "durationMs": 6000
+      }
+    ],
+    "fx": "shadow",
+    "icon": {
+      "glyph": "AT",
+      "color": "#c0ff60"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "demonstration",
+    "name": "Bomb Flask",
+    "classId": "alchemist",
+    "kind": "active",
+    "targeting": "ground",
+    "description": "A fire flask that burns the ground.",
+    "maxLevel": 10,
+    "range": 220,
+    "mpCost": 12,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 3000,
+    "element": "fire",
+    "effects": [
+      {
+        "type": "groundZone",
+        "zoneId": "bomb_flask",
+        "durationMs": 6000,
+        "radius": 70,
+        "tickMs": 500,
+        "kind": "physical",
+        "multiplier": 0.5,
+        "perLevel": 0.08,
+        "element": "fire",
+        "status": "burn",
+        "statusChance": 0.2,
+        "statusDurationMs": 4000
+      }
+    ],
+    "fx": "fire",
+    "icon": {
+      "glyph": "BF",
+      "color": "#ff6a2e"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "chemical_shield",
+    "name": "Chemical Shield",
+    "classId": "alchemist",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "Coat your armor: +6% DEF and 3% resist to every element per level.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 25,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 60000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "chem_shield",
+        "durationMs": 300000,
+        "mods": {
+          "pdefPct": 6,
+          "elementResistPct": {
+            "fire": 3,
+            "water": 3,
+            "wind": 3,
+            "earth": 3,
+            "poison": 3
+          }
+        },
+        "modsPerLevel": {
+          "pdefPct": 6,
+          "elementResistPct": {
+            "fire": 3,
+            "water": 3,
+            "wind": 3,
+            "earth": 3,
+            "poison": 3
+          }
+        }
+      }
+    ],
+    "fx": "heal",
+    "icon": {
+      "glyph": "CS",
+      "color": "#9fe8ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "aid_potion",
+    "name": "Aid Potion",
+    "classId": "alchemist",
+    "kind": "active",
+    "targeting": "self",
+    "description": "Throw a healing potion at yourself.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 10,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 2000,
+    "effects": [
+      {
+        "type": "heal",
+        "base": 80,
+        "perLevel": 40,
+        "intScale": 2
+      }
+    ],
+    "fx": "heal",
+    "icon": {
+      "glyph": "AP",
+      "color": "#ff8a8a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "call_homunculus",
+    "name": "Bioethics",
+    "classId": "alchemist",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "The secret of artificial life. Required to create a homunculus.",
+    "maxLevel": 1,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {},
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "Bi",
+      "color": "#c9a6ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "acid_rain",
+    "name": "Acid Rain",
+    "classId": "alchemist",
+    "kind": "active",
+    "targeting": "ground",
+    "description": "Acid falls over an area.",
+    "maxLevel": 10,
+    "range": 240,
+    "mpCost": 30,
+    "mpCostPerLevel": 2,
+    "castTimeMs": 600,
+    "cooldownMs": 6000,
+    "requires": [
+      {
+        "skillId": "acid_terror",
+        "level": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 0.7,
+        "perLevel": 0.1,
+        "element": "neutral",
+        "radius": 110,
+        "hits": 3,
+        "ignoreDefPct": 50
+      }
+    ],
+    "fx": "arrow_rain",
+    "icon": {
+      "glyph": "AR",
+      "color": "#c0ff60"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "acid_demonstration",
+    "name": "Acid Bomb",
+    "classId": "alchemist",
+    "kind": "ultimate",
+    "targeting": "enemy",
+    "description": "ULTIMATE. Acid and fire together: huge damage that ignores DEF, twice.",
+    "maxLevel": 10,
+    "range": 220,
+    "mpCost": 60,
+    "mpCostPerLevel": 4,
+    "castTimeMs": 800,
+    "cooldownMs": 15000,
+    "requires": [
+      {
+        "skillId": "acid_terror",
+        "level": 5
+      },
+      {
+        "skillId": "demonstration",
+        "level": 3
+      }
+    ],
+    "requiresJobLevel": 30,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 2.4,
+        "perLevel": 0.4,
+        "element": "neutral",
+        "ignoreDefPct": 100,
+        "hits": 2
+      }
+    ],
+    "fx": "fire",
+    "icon": {
+      "glyph": "AB",
+      "color": "#ffef8a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "dragon_fury",
+    "name": "Dragon Fury",
+    "classId": "dragon_lord",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "TRANSCENDENT. +20% ATK and +15% attack speed, but −20% DEF.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 50,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 90000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "dragon_fury",
+        "durationMs": 60000,
+        "mods": {
+          "patkPct": 12,
+          "aspdPct": 10,
+          "pdefPct": -20
+        },
+        "modsPerLevel": {
+          "patkPct": 2,
+          "aspdPct": 1
+        }
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "DF",
+      "color": "#ff3a3a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "wyrm_spiral",
+    "name": "Wyrm Spiral",
+    "classId": "dragon_lord",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "TRANSCENDENT. A spiralling dragon-lance that hits five times.",
+    "maxLevel": 10,
+    "range": 90,
+    "mpCost": 40,
+    "mpCostPerLevel": 4,
+    "castTimeMs": 0,
+    "cooldownMs": 6000,
+    "requires": [
+      {
+        "skillId": "impale",
+        "level": 5
+      }
+    ],
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.2,
+        "perLevel": 0.18,
+        "element": "weapon",
+        "hits": 5,
+        "ignoreDefPct": 30
+      }
+    ],
+    "fx": "pierce",
+    "icon": {
+      "glyph": "WS",
+      "color": "#ffb0ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "martyrs_grace",
+    "name": "Martyr's Grace",
+    "classId": "high_templar",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "TRANSCENDENT. 30% of damage taken goes to MP instead, +10% DEF.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 40,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 60000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "martyrs_grace",
+        "durationMs": 60000,
+        "mods": {
+          "damageToMpPct": 20,
+          "pdefPct": 10
+        },
+        "modsPerLevel": {
+          "damageToMpPct": 2
+        }
+      }
+    ],
+    "fx": "holy",
+    "icon": {
+      "glyph": "MG",
+      "color": "#c8d4ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "divine_lance",
+    "name": "Divine Lance",
+    "classId": "high_templar",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "TRANSCENDENT. A spear of light from the sky.",
+    "maxLevel": 10,
+    "range": 260,
+    "mpCost": 35,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 600,
+    "cooldownMs": 4000,
+    "element": "holy",
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 3,
+        "perLevel": 0.4,
+        "element": "holy"
+      }
+    ],
+    "fx": "holy",
+    "icon": {
+      "glyph": "DL",
+      "color": "#fffbd0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "wolf_pack",
+    "name": "Wolf Pack",
+    "classId": "wildlord",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "TRANSCENDENT. Spirit wolves maul the target six times.",
+    "maxLevel": 10,
+    "range": 260,
+    "mpCost": 40,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 0,
+    "cooldownMs": 6000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 0.7,
+        "perLevel": 0.1,
+        "element": "weapon",
+        "hits": 6,
+        "alwaysHit": true
+      }
+    ],
+    "fx": "falcon",
+    "icon": {
+      "glyph": "WP",
+      "color": "#c8c8d8"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "true_sight",
+    "name": "True Sight",
+    "classId": "wildlord",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "TRANSCENDENT. +5 all stats, +10% CRIT damage, +20 attack range.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 35,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 90000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "true_sight",
+        "durationMs": 60000,
+        "mods": {
+          "str": 3,
+          "agi": 3,
+          "vit": 3,
+          "int": 3,
+          "dex": 3,
+          "luk": 3,
+          "critDmg": 10,
+          "attackRange": 20
+        },
+        "modsPerLevel": {
+          "dex": 1,
+          "agi": 1
+        }
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "TS",
+      "color": "#ffe27a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "symphony",
+    "name": "Symphony",
+    "classId": "maestro",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "TRANSCENDENT. Every song at once: +10% attack speed, +10% max HP, +5 CRIT.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 60,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 120000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "symphony",
+        "durationMs": 90000,
+        "mods": {
+          "aspdPct": 8,
+          "maxHpPct": 8,
+          "crit": 4
+        },
+        "modsPerLevel": {
+          "aspdPct": 1,
+          "crit": 1
+        }
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "Sy",
+      "color": "#ffd8f0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "sonic_wave",
+    "name": "Sonic Wave",
+    "classId": "maestro",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "TRANSCENDENT. A shock of sound through a line of enemies.",
+    "maxLevel": 10,
+    "range": 280,
+    "mpCost": 35,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 4000,
+    "effects": [
+      {
+        "type": "line",
+        "length": 300,
+        "width": 60
+      },
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 2.4,
+        "perLevel": 0.35,
+        "element": "neutral"
+      }
+    ],
+    "fx": "arcane",
+    "icon": {
+      "glyph": "SW",
+      "color": "#c9a6ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "mystic_amplify",
+    "name": "Mystic Amplify",
+    "classId": "archsorcerer",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "TRANSCENDENT. +30% MATK for a short time.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 50,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 60000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "mystic_amplify",
+        "durationMs": 20000,
+        "mods": {
+          "matkPct": 20
+        },
+        "modsPerLevel": {
+          "matkPct": 2
+        }
+      }
+    ],
+    "fx": "arcane",
+    "icon": {
+      "glyph": "MA",
+      "color": "#e8b0ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "napalm_vulcan",
+    "name": "Soul Vulcan",
+    "classId": "archsorcerer",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "TRANSCENDENT. Ghost-element blasts that strike five times.",
+    "maxLevel": 10,
+    "range": 280,
+    "mpCost": 45,
+    "mpCostPerLevel": 4,
+    "castTimeMs": 900,
+    "cooldownMs": 5000,
+    "element": "ghost",
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "magic",
+        "multiplier": 0.9,
+        "perLevel": 0.12,
+        "element": "ghost",
+        "hits": 5
+      }
+    ],
+    "fx": "arcane",
+    "icon": {
+      "glyph": "SV",
+      "color": "#c8d4ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "endow_holy",
+    "name": "Endow Holy",
+    "classId": "archsage",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "TRANSCENDENT. Your weapon becomes holy.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 40,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 5000,
+    "effects": [
+      {
+        "type": "endow",
+        "element": "holy",
+        "durationMs": 300000,
+        "perLevelMs": 60000
+      }
+    ],
+    "fx": "holy",
+    "icon": {
+      "glyph": "EH",
+      "color": "#fff6c0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "foresight",
+    "name": "Foresight",
+    "classId": "archsage",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "TRANSCENDENT. −40% cast time for a short time.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 40,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 60000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "foresight",
+        "durationMs": 15000,
+        "mods": {
+          "castTimePct": -30
+        },
+        "modsPerLevel": {
+          "castTimePct": -2
+        }
+      }
+    ],
+    "fx": "arcane",
+    "icon": {
+      "glyph": "Fo",
+      "color": "#9fe8ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "assumptio",
+    "name": "Assumptio",
+    "classId": "archbishop",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "TRANSCENDENT. Halve incoming damage for a short time (+50% DEF, +30% MDEF-like resist).",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 60,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 90000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "assumptio",
+        "durationMs": 20000,
+        "mods": {
+          "pdefPct": 50,
+          "elementResistPct": {
+            "neutral": 20,
+            "fire": 20,
+            "water": 20,
+            "wind": 20,
+            "earth": 20,
+            "shadow": 30
+          }
+        },
+        "perLevelMs": 4000
+      }
+    ],
+    "fx": "holy",
+    "icon": {
+      "glyph": "As",
+      "color": "#ffffff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "meditatio",
+    "name": "Meditatio",
+    "classId": "archbishop",
+    "kind": "passive",
+    "targeting": "passive",
+    "description": "TRANSCENDENT. +2% max MP, +1 MP regen and +4% heal power (MATK) per level.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 0,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 0,
+    "passive": {
+      "maxMpPct": 2,
+      "mpRegen": 1,
+      "matkPct": 2
+    },
+    "effects": [],
+    "fx": "none",
+    "icon": {
+      "glyph": "Me",
+      "color": "#c8f0ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "tiger_cannon",
+    "name": "Tiger Cannon",
+    "classId": "grandmaster",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "TRANSCENDENT. A crushing palm strike that knocks the target back.",
+    "maxLevel": 10,
+    "range": 70,
+    "mpCost": 40,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 0,
+    "cooldownMs": 5000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 3.4,
+        "perLevel": 0.45,
+        "element": "weapon",
+        "ignoreDefPct": 40
+      },
+      {
+        "type": "knockback",
+        "distance": 80
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "TC",
+      "color": "#ffb05a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "root_of_mountain",
+    "name": "Mountain Root",
+    "classId": "grandmaster",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "TRANSCENDENT. +20% max HP and 20% counter chance.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 40,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 90000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "mountain_root",
+        "durationMs": 60000,
+        "mods": {
+          "maxHpPct": 15,
+          "counterChance": 15
+        },
+        "modsPerLevel": {
+          "maxHpPct": 1,
+          "counterChance": 1
+        }
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "MR",
+      "color": "#c8a060"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "meteor_assault",
+    "name": "Meteor Assault",
+    "classId": "shadow_reaper",
+    "kind": "active",
+    "targeting": "self",
+    "description": "TRANSCENDENT. A blur of blades around you; may blind and stun.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 40,
+    "mpCostPerLevel": 3,
+    "castTimeMs": 0,
+    "cooldownMs": 5000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 2.4,
+        "perLevel": 0.35,
+        "element": "weapon",
+        "radius": 130
+      },
+      {
+        "type": "status",
+        "status": "blind",
+        "chance": 0.2,
+        "perLevel": 0.03,
+        "durationMs": 4000,
+        "radius": 130
+      }
+    ],
+    "fx": "whirl",
+    "icon": {
+      "glyph": "MA",
+      "color": "#ff5a5a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "enchant_deadly_poison",
+    "name": "Deadly Venom",
+    "classId": "shadow_reaper",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "TRANSCENDENT. +30% ATK and poison weapon for a short time.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 50,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 90000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "deadly_venom",
+        "durationMs": 30000,
+        "mods": {
+          "patkPct": 20,
+          "elementDamagePct": {
+            "poison": 20
+          }
+        },
+        "modsPerLevel": {
+          "patkPct": 2
+        }
+      },
+      {
+        "type": "endow",
+        "element": "poison",
+        "durationMs": 30000
+      }
+    ],
+    "fx": "shadow",
+    "icon": {
+      "glyph": "DV",
+      "color": "#4aff4a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "full_strip",
+    "name": "Full Strip",
+    "classId": "phantom_outlaw",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "TRANSCENDENT. Strip everything: curse, blind and slow the target.",
+    "maxLevel": 10,
+    "range": 60,
+    "mpCost": 40,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 15000,
+    "effects": [
+      {
+        "type": "status",
+        "status": "curse",
+        "chance": 0.4,
+        "perLevel": 0.05,
+        "durationMs": 8000
+      },
+      {
+        "type": "status",
+        "status": "blind",
+        "chance": 0.4,
+        "perLevel": 0.05,
+        "durationMs": 8000
+      },
+      {
+        "type": "status",
+        "status": "slow",
+        "chance": 0.6,
+        "perLevel": 0.04,
+        "durationMs": 8000
+      }
+    ],
+    "fx": "slash",
+    "icon": {
+      "glyph": "FS",
+      "color": "#c0a0a0"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "shadow_bounce",
+    "name": "Shadow Bounce",
+    "classId": "phantom_outlaw",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "TRANSCENDENT. Blades bounce between foes near the target.",
+    "maxLevel": 10,
+    "range": 200,
+    "mpCost": 35,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 5000,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 1.6,
+        "perLevel": 0.25,
+        "element": "weapon",
+        "radius": 120,
+        "hits": 3
+      }
+    ],
+    "fx": "shadow",
+    "icon": {
+      "glyph": "SB",
+      "color": "#5a5a7a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "maximum_power",
+    "name": "Maximum Power",
+    "classId": "mastersmith",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "TRANSCENDENT. +50 CRIT damage and +30% ATK for a short time.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 50,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 90000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "max_power",
+        "durationMs": 15000,
+        "mods": {
+          "critDmg": 30,
+          "patkPct": 20
+        },
+        "modsPerLevel": {
+          "critDmg": 4,
+          "patkPct": 2
+        }
+      }
+    ],
+    "fx": "shout",
+    "icon": {
+      "glyph": "MP",
+      "color": "#ffd34d"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "cart_termination",
+    "name": "Cart Termination",
+    "classId": "mastersmith",
+    "kind": "active",
+    "targeting": "enemy",
+    "description": "TRANSCENDENT. The cart, the Luma and the hammer in one blow. Costs a lot of Luma.",
+    "maxLevel": 10,
+    "range": 70,
+    "mpCost": 30,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 3000,
+    "lumaCost": 800,
+    "lumaCostPerLevel": 150,
+    "effects": [
+      {
+        "type": "damage",
+        "kind": "physical",
+        "multiplier": 4.5,
+        "perLevel": 0.6,
+        "element": "weapon",
+        "ignoreDefPct": 30
+      }
+    ],
+    "fx": "whirl",
+    "icon": {
+      "glyph": "CT",
+      "color": "#ffef8a"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "full_chemical_protection",
+    "name": "Full Protection",
+    "classId": "grand_alchemist",
+    "kind": "buff",
+    "targeting": "self",
+    "description": "TRANSCENDENT. +20% DEF and +10% max HP for a long time.",
+    "maxLevel": 5,
+    "range": 0,
+    "mpCost": 50,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 120000,
+    "effects": [
+      {
+        "type": "buff",
+        "buffId": "full_protect",
+        "durationMs": 600000,
+        "mods": {
+          "pdefPct": 15,
+          "maxHpPct": 8
+        },
+        "modsPerLevel": {
+          "pdefPct": 1,
+          "maxHpPct": 1
+        }
+      }
+    ],
+    "fx": "heal",
+    "icon": {
+      "glyph": "FP",
+      "color": "#9fe8ff"
+    },
+    "jobgen": true
+  },
+  {
+    "id": "elixir_rain",
+    "name": "Elixir Rain",
+    "classId": "grand_alchemist",
+    "kind": "active",
+    "targeting": "self",
+    "description": "TRANSCENDENT. Drink and spill elixir: big heal and +10% MATK.",
+    "maxLevel": 10,
+    "range": 0,
+    "mpCost": 40,
+    "mpCostPerLevel": 0,
+    "castTimeMs": 0,
+    "cooldownMs": 20000,
+    "effects": [
+      {
+        "type": "heal",
+        "base": 300,
+        "perLevel": 120,
+        "intScale": 4
+      },
+      {
+        "type": "buff",
+        "buffId": "elixir",
+        "durationMs": 30000,
+        "mods": {
+          "matkPct": 10
+        }
+      }
+    ],
+    "fx": "heal",
+    "icon": {
+      "glyph": "ER",
+      "color": "#7aff9a"
+    },
+    "jobgen": true
   }
- }
 ]

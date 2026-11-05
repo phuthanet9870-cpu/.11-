@@ -13,6 +13,8 @@
       "c": 8
     },
     "statPointsPerLevel": {
+      "$comment": "Ragnarok Classic: reaching level L gives floor((L-1)/5)+3 points.",
+      "ro": true,
       "base": 3,
       "perFiveLevels": 1
     },
@@ -25,13 +27,19 @@
       "dex": 5,
       "luk": 5
     },
-    "startingStatPoints": 6,
+    "startingStatPoints": 48,
     "maxStat": 99,
     "deathExpPenaltyPct": 1,
     "firstJobLevel": 10,
     "advancedJob": {
       "baseLevel": 50,
       "jobLevel": 40
+    },
+    "statCost": {
+      "$comment": "'ro' = Ragnarok Classic: raising a stat from x costs floor((x-1)/10)+2 points. 'flat' = 1 point per stat.",
+      "mode": "ro",
+      "every": 10,
+      "base": 2
     }
   },
   "stats": {
@@ -47,18 +55,18 @@
     "matkDexDiv": 5,
     "matkLevelDiv": 4,
     "pdefVit": 1,
-    "mdefInt": 0.5,
-    "mdefVit": 0.2,
+    "mdefInt": 1,
+    "mdefVit": 0,
     "hitBase": 0,
     "hitDex": 1,
     "fleeAgi": 1,
-    "fleeLuk": 0.2,
+    "fleeLuk": 0,
     "critBase": 1,
     "critLuk": 0.3,
-    "critDmgBase": 150,
-    "aspdAgiPct": 0.6,
+    "critDmgBase": 140,
+    "aspdAgiPct": 0.4,
     "aspdDexPct": 0.1,
-    "minAttackIntervalMs": 280,
+    "minAttackIntervalMs": 200,
     "moveSpeed": 130,
     "castDexDivisor": 150,
     "hpRegenVitDiv": 5,
@@ -69,7 +77,12 @@
     "weightBase": 2000,
     "weightStr": 30,
     "overweightRegenStopPct": 70,
-    "outOfCombatRegenMul": 3
+    "outOfCombatRegenMul": 3,
+    "perfectDodgeBase": 1,
+    "perfectDodgeLukDiv": 10,
+    "overweightActionStopPct": 90,
+    "formula": "ro",
+    "$comment": "formula 'ro' = Ragnarok Classic (pre-renewal): ATK melee STR+(STR/10)^2+DEX/5+LUK/5, ranged DEX+(DEX/10)^2+STR/5+LUK/5; MATK INT+(INT/7)^2 .. INT+(INT/5)^2; HIT Lv+DEX; FLEE Lv+AGI; CRIT 1+LUK*0.3; perfect dodge 1+LUK/10; soft DEF VIT; soft MDEF INT; ASPD delay x(1-(4*AGI+DEX)/1000); cast time x(1-DEX/150); HP/SP +1% per VIT/INT; weight 2000+30*STR."
   },
   "combat": {
     "hitChanceBase": 80,
@@ -98,7 +111,75 @@
     "playerRespawnHpPct": 0.5,
     "deathSlowmoMs": 1500,
     "projectileSpeed": 520,
-    "assistMax": 2
+    "assistMax": 2,
+    "sizeModifiers": {
+      "$comment": "% damage by weapon type vs target size (Ragnarok-style table).",
+      "unarmed": {
+        "small": 100,
+        "medium": 100,
+        "large": 100
+      },
+      "dagger": {
+        "small": 100,
+        "medium": 75,
+        "large": 50
+      },
+      "sword": {
+        "small": 75,
+        "medium": 100,
+        "large": 75
+      },
+      "spear": {
+        "small": 75,
+        "medium": 75,
+        "large": 100
+      },
+      "club": {
+        "small": 75,
+        "medium": 100,
+        "large": 100
+      },
+      "bow": {
+        "small": 100,
+        "medium": 100,
+        "large": 75
+      },
+      "staff": {
+        "small": 100,
+        "medium": 100,
+        "large": 100
+      },
+      "wand": {
+        "small": 100,
+        "medium": 100,
+        "large": 100
+      },
+      "axe": {
+        "small": 50,
+        "medium": 75,
+        "large": 100
+      },
+      "katar": {
+        "small": 75,
+        "medium": 100,
+        "large": 75
+      },
+      "knuckle": {
+        "small": 100,
+        "medium": 100,
+        "large": 75
+      },
+      "instrument": {
+        "small": 75,
+        "medium": 100,
+        "large": 75
+      },
+      "book": {
+        "small": 100,
+        "medium": 100,
+        "large": 50
+      }
+    }
   },
   "economy": {
     "sellPriceRatio": 0.5,
@@ -113,5 +194,17 @@
   },
   "save": {
     "autosaveIntervalMs": 30000
+  },
+  "drops": {
+    "$comment": "Card drop chance per kill (Ragnarok: 0.01%).",
+    "cardChance": 0.0001
+  },
+  "monsterScale": {
+    "$comment": "Multipliers on every monster's data stats (see scaleMonsters in src/core/data.ts), tuned with the bots in tests/integration after the switch to Ragnarok Classic stat rules.",
+    "hp": 0.55,
+    "def": 0.7,
+    "mdef": 0.7,
+    "flee": 0.7,
+    "atk": 0.9
   }
 }

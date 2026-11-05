@@ -1,0 +1,1063 @@
+{
+ "id": "frostholm",
+ "name": "Snow Town Frostholm",
+ "region": "Frostpeak Mountains",
+ "type": "town",
+ "width": 96,
+ "height": 76,
+ "tileset": "snow",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "town_snow",
+ "ambient": "snow",
+ "weather": [
+  "snow"
+ ],
+ "isSavePoint": true,
+ "worldMapPos": {
+  "x": 0.1,
+  "y": 0.42
+ },
+ "paint": [
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     7,
+     8
+    ],
+    [
+     46,
+     35
+    ],
+    [
+     86,
+     66
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     22,
+     19
+    ],
+    [
+     22,
+     5
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     39,
+     31
+    ],
+    [
+     39,
+     69
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     54,
+     42
+    ],
+    [
+     54,
+     5
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     75,
+     58
+    ],
+    [
+     75,
+     69
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     47,
+     71
+    ],
+    [
+     47,
+     70
+    ],
+    [
+     40,
+     70
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     47,
+     3
+    ],
+    [
+     47,
+     5
+    ],
+    [
+     54,
+     5
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     91,
+     37
+    ],
+    [
+     85,
+     37
+    ],
+    [
+     85,
+     63
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     49,
+     28
+    ],
+    [
+     49,
+     29
+    ],
+    [
+     49,
+     30
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     38,
+     22
+    ],
+    [
+     38,
+     23
+    ],
+    [
+     38,
+     24
+    ],
+    [
+     38,
+     25
+    ],
+    [
+     38,
+     26
+    ],
+    [
+     38,
+     27
+    ],
+    [
+     38,
+     28
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     34,
+     44
+    ],
+    [
+     35,
+     44
+    ],
+    [
+     36,
+     44
+    ],
+    [
+     37,
+     44
+    ],
+    [
+     38,
+     44
+    ],
+    [
+     39,
+     44
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     46,
+     51
+    ],
+    [
+     45,
+     51
+    ],
+    [
+     44,
+     51
+    ],
+    [
+     43,
+     51
+    ],
+    [
+     42,
+     51
+    ],
+    [
+     41,
+     51
+    ],
+    [
+     40,
+     51
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     49,
+     15
+    ],
+    [
+     50,
+     15
+    ],
+    [
+     51,
+     15
+    ],
+    [
+     52,
+     15
+    ],
+    [
+     53,
+     15
+    ],
+    [
+     54,
+     15
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     61,
+     28
+    ],
+    [
+     60,
+     28
+    ],
+    [
+     59,
+     28
+    ],
+    [
+     58,
+     28
+    ],
+    [
+     57,
+     28
+    ],
+    [
+     56,
+     28
+    ],
+    [
+     55,
+     28
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     28,
+     36
+    ],
+    [
+     29,
+     36
+    ],
+    [
+     30,
+     36
+    ],
+    [
+     31,
+     36
+    ],
+    [
+     32,
+     36
+    ],
+    [
+     33,
+     36
+    ],
+    [
+     34,
+     36
+    ],
+    [
+     35,
+     36
+    ],
+    [
+     36,
+     36
+    ],
+    [
+     37,
+     36
+    ],
+    [
+     38,
+     36
+    ],
+    [
+     39,
+     36
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     63,
+     63
+    ],
+    [
+     64,
+     63
+    ],
+    [
+     65,
+     63
+    ],
+    [
+     66,
+     63
+    ],
+    [
+     67,
+     63
+    ],
+    [
+     68,
+     63
+    ],
+    [
+     69,
+     63
+    ],
+    [
+     70,
+     63
+    ],
+    [
+     71,
+     63
+    ],
+    [
+     72,
+     63
+    ],
+    [
+     73,
+     63
+    ],
+    [
+     74,
+     63
+    ],
+    [
+     75,
+     63
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     65,
+     19
+    ],
+    [
+     64,
+     19
+    ],
+    [
+     63,
+     19
+    ],
+    [
+     62,
+     19
+    ],
+    [
+     61,
+     19
+    ],
+    [
+     60,
+     19
+    ],
+    [
+     59,
+     19
+    ],
+    [
+     58,
+     19
+    ],
+    [
+     57,
+     19
+    ],
+    [
+     56,
+     19
+    ],
+    [
+     55,
+     19
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     80,
+     32
+    ],
+    [
+     80,
+     33
+    ],
+    [
+     80,
+     34
+    ],
+    [
+     80,
+     35
+    ],
+    [
+     80,
+     36
+    ],
+    [
+     80,
+     37
+    ],
+    [
+     81,
+     37
+    ],
+    [
+     82,
+     37
+    ],
+    [
+     83,
+     37
+    ],
+    [
+     84,
+     37
+    ],
+    [
+     85,
+     37
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     27,
+     64
+    ],
+    [
+     28,
+     64
+    ],
+    [
+     29,
+     64
+    ],
+    [
+     30,
+     64
+    ],
+    [
+     31,
+     64
+    ],
+    [
+     32,
+     64
+    ],
+    [
+     33,
+     64
+    ],
+    [
+     34,
+     64
+    ],
+    [
+     35,
+     64
+    ],
+    [
+     36,
+     64
+    ],
+    [
+     37,
+     64
+    ],
+    [
+     38,
+     64
+    ],
+    [
+     39,
+     64
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     73,
+     48
+    ],
+    [
+     73,
+     49
+    ],
+    [
+     73,
+     50
+    ],
+    [
+     73,
+     51
+    ],
+    [
+     73,
+     52
+    ],
+    [
+     73,
+     53
+    ],
+    [
+     73,
+     54
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 40,
+   "y": 30,
+   "w": 13,
+   "h": 10
+  },
+  {
+   "op": "building",
+   "style": "inn",
+   "x": 45,
+   "y": 22,
+   "w": 8,
+   "h": 6,
+   "door": 4,
+   "sign": "Inn"
+  },
+  {
+   "op": "building",
+   "style": "guild",
+   "x": 34,
+   "y": 16,
+   "w": 8,
+   "h": 6,
+   "door": 4,
+   "sign": "Guild Hall"
+  },
+  {
+   "op": "building",
+   "style": "smithy",
+   "x": 30,
+   "y": 38,
+   "w": 8,
+   "h": 6,
+   "door": 4,
+   "sign": "Smithy"
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 42,
+   "y": 46,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "Tools"
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 45,
+   "y": 10,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "Market Hall"
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 57,
+   "y": 23,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "Courier"
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 24,
+   "y": 31,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 59,
+   "y": 58,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 61,
+   "y": 14,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 76,
+   "y": 27,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 23,
+   "y": 59,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 69,
+   "y": 43,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "object",
+   "kind": "fountain",
+   "x": 45,
+   "y": 33,
+   "id": "frostholm_fountain"
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 40,
+   "y": 30
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 52,
+   "y": 30
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 40,
+   "y": 39
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 52,
+   "y": 39
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 46,
+   "y": 29
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 41,
+   "y": 40
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 42,
+   "y": 40
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 45,
+   "y": 40
+  },
+  {
+   "op": "object",
+   "kind": "anvil",
+   "x": 38,
+   "y": 43
+  },
+  {
+   "op": "object",
+   "kind": "crate",
+   "x": 48,
+   "y": 16
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 49,
+   "y": 16
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 61,
+   "y": 64
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 68,
+   "y": 64
+  },
+  {
+   "op": "object",
+   "kind": "bush",
+   "x": 61,
+   "y": 69
+  },
+  {
+   "op": "object",
+   "kind": "bush",
+   "x": 68,
+   "y": 69
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 44,
+   "y": 69
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 46,
+   "y": 3
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 91,
+   "y": 36
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "area": {
+    "x": 61,
+    "y": 64,
+    "w": 8,
+    "h": 6
+   },
+   "density": 0.35,
+   "seed": 2631916384
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_pine",
+   "density": 0.015,
+   "seed": 2631916388
+  },
+  {
+   "op": "scatter",
+   "kind": "rock",
+   "density": 0.005,
+   "seed": 2631916389
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.03,
+   "seed": 2631916380
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.03,
+   "seed": 2631916382
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_frostpeak_slopes",
+   "x": 46,
+   "y": 74,
+   "w": 4,
+   "h": 2,
+   "targetMap": "frostpeak_slopes",
+   "targetSpawn": "from_frostholm",
+   "label": "Frostpeak Slopes"
+  },
+  {
+   "id": "to_ice_caverns",
+   "x": 46,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "targetMap": "ice_caverns",
+   "targetSpawn": "from_frostholm",
+   "label": "Ice Caverns"
+  },
+  {
+   "id": "to_cinder_wastes",
+   "x": 94,
+   "y": 36,
+   "w": 2,
+   "h": 4,
+   "targetMap": "cinder_wastes",
+   "targetSpawn": "from_frostholm",
+   "label": "Cinder Wastes"
+  }
+ ],
+ "spawnPoints": {
+  "from_frostpeak_slopes": {
+   "x": 48,
+   "y": 71
+  },
+  "from_ice_caverns": {
+   "x": 48,
+   "y": 4
+  },
+  "from_cinder_wastes": {
+   "x": 91,
+   "y": 38
+  },
+  "default": {
+   "x": 46,
+   "y": 36
+  }
+ },
+ "npcs": [
+  {
+   "npcId": "frostholm_innkeeper",
+   "x": 48,
+   "y": 30,
+   "facing": "down"
+  },
+  {
+   "npcId": "frostholm_smith",
+   "x": 35,
+   "y": 45,
+   "facing": "down"
+  },
+  {
+   "npcId": "frostholm_merchant",
+   "x": 45,
+   "y": 52,
+   "facing": "down"
+  },
+  {
+   "npcId": "frostholm_courier",
+   "x": 60,
+   "y": 29,
+   "facing": "down"
+  },
+  {
+   "npcId": "frostholm_jobmaster",
+   "x": 39,
+   "y": 24,
+   "facing": "down"
+  },
+  {
+   "npcId": "mvp_guide",
+   "x": 42,
+   "y": 35,
+   "facing": "down"
+  },
+  {
+   "npcId": "crypt_keeper",
+   "x": 48,
+   "y": 38,
+   "facing": "down"
+  },
+  {
+   "npcId": "frostholm_trader",
+   "x": 43,
+   "y": 52,
+   "facing": "down"
+  },
+  {
+   "npcId": "frostholm_market",
+   "x": 50,
+   "y": 16,
+   "facing": "down"
+  }
+ ],
+ "monsterSpawns": [],
+ "objects": [
+  {
+   "id": "frostholm_fountain",
+   "kind": "fountain",
+   "x": 45,
+   "y": 33,
+   "name": "Frostholm Fountain",
+   "interact": {
+    "text": "Snow Town Frostholm. Frostpeak Mountains."
+   }
+  }
+ ],
+ "areas": [
+  {
+   "id": "plaza",
+   "name": "Hearth Square",
+   "rect": {
+    "x": 40,
+    "y": 30,
+    "w": 13,
+    "h": 10
+   }
+  }
+ ],
+ "generated": true
+}

@@ -4,3 +4,7 @@ coverage/
 *.log
 tests/e2e/screenshots/
 tests/scratch/
+server-data/
+dist-portable
+dist-android
+android/*.keystore

@@ -1,0 +1,314 @@
+{
+ "id": "cinder_throne",
+ "name": "Cinder Throne",
+ "region": "Abyssal Frontier",
+ "type": "field",
+ "levelRange": [
+  98,
+  106
+ ],
+ "width": 160,
+ "height": 120,
+ "tileset": "volcano",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "field_volcano",
+ "ambient": "volcano",
+ "weather": [
+  "ash"
+ ],
+ "worldMapPos": {
+  "x": 0.92,
+  "y": 0.07
+ },
+ "paint": [
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 37,
+   "cy": 27,
+   "rx": 8,
+   "ry": 5,
+   "seed": 3277392623
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 123,
+   "cy": 88,
+   "rx": 7,
+   "ry": 7,
+   "seed": 3277392631
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 120,
+   "cy": 27,
+   "rx": 9,
+   "ry": 6,
+   "seed": 3277392629
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 38,
+   "cy": 88,
+   "rx": 6,
+   "ry": 4,
+   "seed": 3277392625
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     3,
+     59
+    ],
+    [
+     44,
+     61
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     156,
+     59
+    ],
+    [
+     120,
+     57
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "scatter",
+   "kind": "rock",
+   "density": 0.0081,
+   "seed": 3277392637,
+   "baseDensity": 0.018
+  },
+  {
+   "op": "scatter",
+   "kind": "rock_big",
+   "density": 0.0027,
+   "seed": 3277392638,
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:pebbles",
+   "density": 0.025,
+   "seed": 887580512,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 5,
+   "y": 58,
+   "id": "sign_cinder_throne"
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_frozen_abyss",
+   "x": 0,
+   "y": 58,
+   "w": 2,
+   "h": 4,
+   "targetMap": "frozen_abyss",
+   "targetSpawn": "from_cinder_throne",
+   "label": "Frozen Abyss"
+  },
+  {
+   "id": "to_blighted_mire",
+   "x": 158,
+   "y": 58,
+   "w": 2,
+   "h": 4,
+   "targetMap": "blighted_mire",
+   "targetSpawn": "from_cinder_throne",
+   "label": "Blighted Mire"
+  }
+ ],
+ "spawnPoints": {
+  "from_frozen_abyss": {
+   "x": 4,
+   "y": 60
+  },
+  "from_blighted_mire": {
+   "x": 155,
+   "y": 60
+  },
+  "default": {
+   "x": 4,
+   "y": 60
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "cinder_drake",
+   "count": 16,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "cinder_drake",
+   "count": 16,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "cinder_drake",
+   "count": 16,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "hellfire_scorpion",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "hellfire_scorpion",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "hellfire_scorpion",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "obsidian_golem",
+   "count": 12,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "obsidian_golem",
+   "count": 12,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "obsidian_golem",
+   "count": 12,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "pyre_spirit",
+   "count": 16,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "pyre_spirit",
+   "count": 16,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "pyre_spirit",
+   "count": 16,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "elite_pyre_spirit",
+   "count": 1,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  }
+ ],
+ "objects": [
+  {
+   "id": "sign_cinder_throne",
+   "kind": "signpost",
+   "x": 5,
+   "y": 58,
+   "name": "Signpost",
+   "interact": {
+    "text": "Cinder Throne (Lv.98–106).  WEST → Frozen Abyss.  EAST → Blighted Mire."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

@@ -1,0 +1,321 @@
+{
+ "id": "frozen_abyss",
+ "name": "Frozen Abyss",
+ "region": "Abyssal Frontier",
+ "type": "field",
+ "levelRange": [
+  92,
+  100
+ ],
+ "width": 160,
+ "height": 120,
+ "tileset": "snow",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "field_snow",
+ "ambient": "snow",
+ "weather": [
+  "snow"
+ ],
+ "worldMapPos": {
+  "x": 0.8,
+  "y": 0.07
+ },
+ "paint": [
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 42,
+   "cy": 31,
+   "rx": 6,
+   "ry": 6,
+   "seed": 1288985236
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 126,
+   "cy": 88,
+   "rx": 9,
+   "ry": 6,
+   "seed": 1288985244
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 125,
+   "cy": 34,
+   "rx": 7,
+   "ry": 4,
+   "seed": 1288985242
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 32,
+   "cy": 85,
+   "rx": 9,
+   "ry": 4,
+   "seed": 1288985238
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     79,
+     116
+    ],
+    [
+     77,
+     86
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     156,
+     59
+    ],
+    [
+     119,
+     57
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_pine",
+   "density": 0.0081,
+   "seed": 1288985250,
+   "baseDensity": 0.018
+  },
+  {
+   "op": "scatter",
+   "kind": "rock",
+   "density": 0.0027,
+   "seed": 1288985251,
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:pebbles",
+   "density": 0.025,
+   "seed": 279078173,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.025,
+   "seed": 1549479985,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 81,
+   "y": 113,
+   "id": "sign_frozen_abyss"
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_astral_wastes",
+   "x": 78,
+   "y": 118,
+   "w": 4,
+   "h": 2,
+   "targetMap": "astral_wastes",
+   "targetSpawn": "from_frozen_abyss",
+   "label": "Astral Wastes"
+  },
+  {
+   "id": "to_cinder_throne",
+   "x": 158,
+   "y": 58,
+   "w": 2,
+   "h": 4,
+   "targetMap": "cinder_throne",
+   "targetSpawn": "from_frozen_abyss",
+   "label": "Cinder Throne"
+  }
+ ],
+ "spawnPoints": {
+  "from_astral_wastes": {
+   "x": 80,
+   "y": 115
+  },
+  "from_cinder_throne": {
+   "x": 155,
+   "y": 60
+  },
+  "default": {
+   "x": 80,
+   "y": 115
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "rime_wolf",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "rime_wolf",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "rime_wolf",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "glacial_drake",
+   "count": 14,
+   "area": {
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "glacial_drake",
+   "count": 14,
+   "area": {
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "glacial_drake",
+   "count": 14,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "rime_wraith",
+   "count": 16,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "rime_wraith",
+   "count": 16,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "rime_wraith",
+   "count": 16,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "frost_titan",
+   "count": 12,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "frost_titan",
+   "count": 12,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "frost_titan",
+   "count": 12,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "elite_frost_titan",
+   "count": 1,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  }
+ ],
+ "objects": [
+  {
+   "id": "sign_frozen_abyss",
+   "kind": "signpost",
+   "x": 81,
+   "y": 113,
+   "name": "Signpost",
+   "interact": {
+    "text": "Frozen Abyss (Lv.92–100).  SOUTH → Astral Wastes.  EAST → Cinder Throne."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

@@ -1,0 +1,322 @@
+{
+ "id": "blighted_mire",
+ "name": "Blighted Mire",
+ "region": "Abyssal Frontier",
+ "type": "field",
+ "levelRange": [
+  104,
+  112
+ ],
+ "width": 160,
+ "height": 120,
+ "tileset": "swamp",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "field_swamp",
+ "ambient": "swamp",
+ "weather": [
+  "fog",
+  "rain"
+ ],
+ "worldMapPos": {
+  "x": 0.98,
+  "y": 0.14
+ },
+ "paint": [
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 40,
+   "cy": 31,
+   "rx": 10,
+   "ry": 6,
+   "seed": 2049274840
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 127,
+   "cy": 84,
+   "rx": 8,
+   "ry": 6,
+   "seed": 2049274848
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 121,
+   "cy": 36,
+   "rx": 7,
+   "ry": 6,
+   "seed": 2049274846
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 37,
+   "cy": 89,
+   "rx": 8,
+   "ry": 6,
+   "seed": 2049274842
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     3,
+     59
+    ],
+    [
+     42,
+     57
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     79,
+     116
+    ],
+    [
+     81,
+     88
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_dark",
+   "density": 0.0081,
+   "seed": 2049274854,
+   "baseDensity": 0.018
+  },
+  {
+   "op": "scatter",
+   "kind": "stump",
+   "density": 0.0027,
+   "seed": 2049274855,
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.025,
+   "seed": 3690992752,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.025,
+   "seed": 963198229,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 5,
+   "y": 58,
+   "id": "sign_blighted_mire"
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_cinder_throne",
+   "x": 0,
+   "y": 58,
+   "w": 2,
+   "h": 4,
+   "targetMap": "cinder_throne",
+   "targetSpawn": "from_blighted_mire",
+   "label": "Cinder Throne"
+  },
+  {
+   "id": "to_fallen_citadel",
+   "x": 78,
+   "y": 118,
+   "w": 4,
+   "h": 2,
+   "targetMap": "fallen_citadel",
+   "targetSpawn": "from_blighted_mire",
+   "label": "Fallen Citadel"
+  }
+ ],
+ "spawnPoints": {
+  "from_cinder_throne": {
+   "x": 4,
+   "y": 60
+  },
+  "from_fallen_citadel": {
+   "x": 80,
+   "y": 115
+  },
+  "default": {
+   "x": 4,
+   "y": 60
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "plague_spore",
+   "count": 18,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "plague_spore",
+   "count": 18,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "plague_spore",
+   "count": 18,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "rot_crab",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "rot_crab",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "rot_crab",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "mire_hornet",
+   "count": 18,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "mire_hornet",
+   "count": 18,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "mire_hornet",
+   "count": 18,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "venom_drake",
+   "count": 12,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "venom_drake",
+   "count": 12,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "venom_drake",
+   "count": 12,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "elite_venom_drake",
+   "count": 1,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  }
+ ],
+ "objects": [
+  {
+   "id": "sign_blighted_mire",
+   "kind": "signpost",
+   "x": 5,
+   "y": 58,
+   "name": "Signpost",
+   "interact": {
+    "text": "Blighted Mire (Lv.104–112).  WEST → Cinder Throne.  SOUTH → Fallen Citadel."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

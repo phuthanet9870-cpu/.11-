@@ -1,0 +1,497 @@
+[
+ {
+  "id": "pet_leaf_slime",
+  "monsterId": "leaf_slime",
+  "name": "Leaf Slime",
+  "lureItem": "lure_leaf_slime",
+  "eggItem": "egg_leaf_slime",
+  "foodItem": "pet_dewdrop",
+  "accessoryItem": "acc_leaf_slime",
+  "evolution": {
+   "name": "Elder Leaf Slime",
+   "materials": [
+    {
+     "itemId": "jelly",
+     "qty": 10
+    },
+    {
+     "itemId": "spirit_chime",
+     "qty": 1
+    }
+   ]
+  },
+  "captureRate": 2460,
+  "fullness": 3,
+  "hungerTickMs": 60000,
+  "intimacyStart": 250,
+  "intimacyFed": 50,
+  "intimacyOverfed": 100,
+  "intimacyHungry": 5,
+  "intimacyOwnerDie": 20,
+  "loyalBonus": {
+   "maxHp": 120,
+   "hpRegen": 2
+  },
+  "loyalText": "Max HP +120, HP regen +2",
+  "generated": true
+ },
+ {
+  "id": "pet_clover_slime",
+  "monsterId": "clover_slime",
+  "name": "Clover Slime",
+  "lureItem": "lure_clover_slime",
+  "eggItem": "egg_clover_slime",
+  "foodItem": "pet_dewdrop",
+  "accessoryItem": "acc_clover_slime",
+  "evolution": {
+   "name": "Elder Clover Slime",
+   "materials": [
+    {
+     "itemId": "clover_slime_gel",
+     "qty": 10
+    },
+    {
+     "itemId": "spirit_chime",
+     "qty": 1
+    }
+   ]
+  },
+  "captureRate": 2260,
+  "fullness": 3,
+  "hungerTickMs": 60000,
+  "intimacyStart": 250,
+  "intimacyFed": 50,
+  "intimacyOverfed": 100,
+  "intimacyHungry": 5,
+  "intimacyOwnerDie": 20,
+  "loyalBonus": {
+   "maxHp": 120,
+   "hpRegen": 2
+  },
+  "loyalText": "Max HP +120, HP regen +2",
+  "generated": true
+ },
+ {
+  "id": "pet_forest_goblin",
+  "monsterId": "forest_goblin",
+  "name": "Forest Goblin",
+  "lureItem": "lure_forest_goblin",
+  "eggItem": "egg_forest_goblin",
+  "foodItem": "pet_honey_bun",
+  "accessoryItem": "acc_forest_goblin",
+  "evolution": {
+   "name": "Elder Forest Goblin",
+   "materials": [
+    {
+     "itemId": "goblin_fang",
+     "qty": 10
+    },
+    {
+     "itemId": "spirit_chime",
+     "qty": 1
+    }
+   ]
+  },
+  "captureRate": 2140,
+  "fullness": 3,
+  "hungerTickMs": 60000,
+  "intimacyStart": 250,
+  "intimacyFed": 50,
+  "intimacyOverfed": 100,
+  "intimacyHungry": 5,
+  "intimacyOwnerDie": 20,
+  "loyalBonus": {
+   "hit": 6
+  },
+  "loyalText": "HIT +6",
+  "generated": true
+ },
+ {
+  "id": "pet_thorn_wolf",
+  "monsterId": "thorn_wolf",
+  "name": "Thorn Wolf",
+  "lureItem": "lure_thorn_wolf",
+  "eggItem": "egg_thorn_wolf",
+  "foodItem": "pet_jerky",
+  "accessoryItem": "acc_thorn_wolf",
+  "evolution": {
+   "name": "Elder Thorn Wolf",
+   "materials": [
+    {
+     "itemId": "wolf_pelt",
+     "qty": 10
+    },
+    {
+     "itemId": "spirit_chime",
+     "qty": 1
+    }
+   ]
+  },
+  "captureRate": 1980,
+  "fullness": 3,
+  "hungerTickMs": 60000,
+  "intimacyStart": 250,
+  "intimacyFed": 50,
+  "intimacyOverfed": 100,
+  "intimacyHungry": 5,
+  "intimacyOwnerDie": 20,
+  "loyalBonus": {
+   "patk": 6
+  },
+  "loyalText": "ATK +6",
+  "generated": true
+ },
+ {
+  "id": "pet_road_goblin",
+  "monsterId": "road_goblin",
+  "name": "Road Goblin",
+  "lureItem": "lure_road_goblin",
+  "eggItem": "egg_road_goblin",
+  "foodItem": "pet_honey_bun",
+  "accessoryItem": "acc_road_goblin",
+  "evolution": {
+   "name": "Elder Road Goblin",
+   "materials": [
+    {
+     "itemId": "road_goblin_tusk",
+     "qty": 10
+    },
+    {
+     "itemId": "spirit_chime",
+     "qty": 1
+    }
+   ]
+  },
+  "captureRate": 1820,
+  "fullness": 3,
+  "hungerTickMs": 60000,
+  "intimacyStart": 250,
+  "intimacyFed": 50,
+  "intimacyOverfed": 100,
+  "intimacyHungry": 5,
+  "intimacyOwnerDie": 20,
+  "loyalBonus": {
+   "hit": 6
+  },
+  "loyalText": "HIT +6",
+  "generated": true
+ },
+ {
+  "id": "pet_crypt_bat",
+  "monsterId": "crypt_bat",
+  "name": "Crypt Bat",
+  "lureItem": "lure_crypt_bat",
+  "eggItem": "egg_crypt_bat",
+  "foodItem": "pet_soul_candy",
+  "accessoryItem": "acc_crypt_bat",
+  "evolution": {
+   "name": "Elder Crypt Bat",
+   "materials": [
+    {
+     "itemId": "crypt_bat_wing",
+     "qty": 10
+    },
+    {
+     "itemId": "spirit_chime",
+     "qty": 1
+    }
+   ]
+  },
+  "captureRate": 1660,
+  "fullness": 4,
+  "hungerTickMs": 60000,
+  "intimacyStart": 250,
+  "intimacyFed": 30,
+  "intimacyOverfed": 100,
+  "intimacyHungry": 5,
+  "intimacyOwnerDie": 20,
+  "loyalBonus": {
+   "mdef": 4,
+   "elementResistPct": {
+    "shadow": 5
+   }
+  },
+  "loyalText": "MDEF +4, shadow resist +5%",
+  "generated": true
+ },
+ {
+  "id": "pet_sea_slime",
+  "monsterId": "sea_slime",
+  "name": "Sea Slime",
+  "lureItem": "lure_sea_slime",
+  "eggItem": "egg_sea_slime",
+  "foodItem": "pet_star_sugar",
+  "accessoryItem": "acc_sea_slime",
+  "evolution": {
+   "name": "Elder Sea Slime",
+   "materials": [
+    {
+     "itemId": "sea_slime_gel",
+     "qty": 10
+    },
+    {
+     "itemId": "spirit_chime",
+     "qty": 1
+    }
+   ]
+  },
+  "captureRate": 1660,
+  "fullness": 4,
+  "hungerTickMs": 60000,
+  "intimacyStart": 250,
+  "intimacyFed": 30,
+  "intimacyOverfed": 100,
+  "intimacyHungry": 5,
+  "intimacyOwnerDie": 20,
+  "loyalBonus": {
+   "matk": 6
+  },
+  "loyalText": "MATK +6",
+  "generated": true
+ },
+ {
+  "id": "pet_reef_gull",
+  "monsterId": "reef_gull",
+  "name": "Reef Gull",
+  "lureItem": "lure_reef_gull",
+  "eggItem": "egg_reef_gull",
+  "foodItem": "pet_jerky",
+  "accessoryItem": "acc_reef_gull",
+  "evolution": {
+   "name": "Elder Reef Gull",
+   "materials": [
+    {
+     "itemId": "reef_gull_wing",
+     "qty": 10
+    },
+    {
+     "itemId": "spirit_chime",
+     "qty": 1
+    }
+   ]
+  },
+  "captureRate": 1540,
+  "fullness": 4,
+  "hungerTickMs": 60000,
+  "intimacyStart": 250,
+  "intimacyFed": 30,
+  "intimacyOverfed": 100,
+  "intimacyHungry": 5,
+  "intimacyOwnerDie": 20,
+  "loyalBonus": {
+   "patk": 6
+  },
+  "loyalText": "ATK +6",
+  "generated": true
+ },
+ {
+  "id": "pet_bramble_hornet",
+  "monsterId": "bramble_hornet",
+  "name": "Bramble Hornet",
+  "lureItem": "lure_bramble_hornet",
+  "eggItem": "egg_bramble_hornet",
+  "foodItem": "pet_nectar",
+  "accessoryItem": "acc_bramble_hornet",
+  "evolution": {
+   "name": "Elder Bramble Hornet",
+   "materials": [
+    {
+     "itemId": "bramble_hornet_stinger",
+     "qty": 10
+    },
+    {
+     "itemId": "spirit_chime",
+     "qty": 1
+    }
+   ]
+  },
+  "captureRate": 1460,
+  "fullness": 4,
+  "hungerTickMs": 60000,
+  "intimacyStart": 250,
+  "intimacyFed": 30,
+  "intimacyOverfed": 100,
+  "intimacyHungry": 5,
+  "intimacyOwnerDie": 20,
+  "loyalBonus": {
+   "flee": 6
+  },
+  "loyalText": "FLEE +6",
+  "generated": true
+ },
+ {
+  "id": "pet_arcane_wisp",
+  "monsterId": "arcane_wisp",
+  "name": "Arcane Wisp",
+  "lureItem": "lure_arcane_wisp",
+  "eggItem": "egg_arcane_wisp",
+  "foodItem": "pet_star_sugar",
+  "accessoryItem": "acc_arcane_wisp",
+  "evolution": {
+   "name": "Elder Arcane Wisp",
+   "materials": [
+    {
+     "itemId": "arcane_wisp_ectoplasm",
+     "qty": 10
+    },
+    {
+     "itemId": "spirit_chime",
+     "qty": 1
+    }
+   ]
+  },
+  "captureRate": 1420,
+  "fullness": 4,
+  "hungerTickMs": 60000,
+  "intimacyStart": 250,
+  "intimacyFed": 30,
+  "intimacyOverfed": 100,
+  "intimacyHungry": 5,
+  "intimacyOwnerDie": 20,
+  "loyalBonus": {
+   "matk": 6
+  },
+  "loyalText": "MATK +6",
+  "generated": true
+ },
+ {
+  "id": "pet_grotto_crab",
+  "monsterId": "grotto_crab",
+  "name": "Grotto Crab",
+  "lureItem": "lure_grotto_crab",
+  "eggItem": "egg_grotto_crab",
+  "foodItem": "pet_fishcake",
+  "accessoryItem": "acc_grotto_crab",
+  "evolution": {
+   "name": "Elder Grotto Crab",
+   "materials": [
+    {
+     "itemId": "grotto_crab_shell",
+     "qty": 10
+    },
+    {
+     "itemId": "spirit_chime",
+     "qty": 1
+    }
+   ]
+  },
+  "captureRate": 1300,
+  "fullness": 4,
+  "hungerTickMs": 60000,
+  "intimacyStart": 250,
+  "intimacyFed": 30,
+  "intimacyOverfed": 100,
+  "intimacyHungry": 5,
+  "intimacyOwnerDie": 20,
+  "loyalBonus": {
+   "maxMp": 60
+  },
+  "loyalText": "Max MP +60",
+  "generated": true
+ },
+ {
+  "id": "pet_oasis_crab",
+  "monsterId": "oasis_crab",
+  "name": "Oasis Crab",
+  "lureItem": "lure_oasis_crab",
+  "eggItem": "egg_oasis_crab",
+  "foodItem": "pet_fishcake",
+  "accessoryItem": "acc_oasis_crab",
+  "evolution": {
+   "name": "Elder Oasis Crab",
+   "materials": [
+    {
+     "itemId": "oasis_crab_shell",
+     "qty": 10
+    },
+    {
+     "itemId": "spirit_chime",
+     "qty": 1
+    }
+   ]
+  },
+  "captureRate": 1220,
+  "fullness": 4,
+  "hungerTickMs": 60000,
+  "intimacyStart": 250,
+  "intimacyFed": 30,
+  "intimacyOverfed": 100,
+  "intimacyHungry": 5,
+  "intimacyOwnerDie": 20,
+  "loyalBonus": {
+   "maxMp": 60
+  },
+  "loyalText": "Max MP +60",
+  "generated": true
+ },
+ {
+  "id": "pet_mirage_wisp",
+  "monsterId": "mirage_wisp",
+  "name": "Mirage Wisp",
+  "lureItem": "lure_mirage_wisp",
+  "eggItem": "egg_mirage_wisp",
+  "foodItem": "pet_star_sugar",
+  "accessoryItem": "acc_mirage_wisp",
+  "evolution": {
+   "name": "Elder Mirage Wisp",
+   "materials": [
+    {
+     "itemId": "mirage_wisp_ectoplasm",
+     "qty": 10
+    },
+    {
+     "itemId": "spirit_chime",
+     "qty": 1
+    }
+   ]
+  },
+  "captureRate": 1100,
+  "fullness": 4,
+  "hungerTickMs": 60000,
+  "intimacyStart": 250,
+  "intimacyFed": 30,
+  "intimacyOverfed": 100,
+  "intimacyHungry": 5,
+  "intimacyOwnerDie": 20,
+  "loyalBonus": {
+   "matk": 6
+  },
+  "loyalText": "MATK +6",
+  "generated": true
+ },
+ {
+  "id": "pet_tomb_bat",
+  "monsterId": "tomb_bat",
+  "name": "Tomb Bat",
+  "lureItem": "lure_tomb_bat",
+  "eggItem": "egg_tomb_bat",
+  "foodItem": "pet_jerky",
+  "accessoryItem": "acc_tomb_bat",
+  "evolution": {
+   "name": "Elder Tomb Bat",
+   "materials": [
+    {
+     "itemId": "tomb_bat_wing",
+     "qty": 10
+    },
+    {
+     "itemId": "spirit_chime",
+     "qty": 1
+    }
+   ]
+  },
+  "captureRate": 940,
+  "fullness": 4,
+  "hungerTickMs": 60000,
+  "intimacyStart": 250,
+  "intimacyFed": 30,
+  "intimacyOverfed": 100,
+  "intimacyHungry": 5,
+  "intimacyOwnerDie": 20,
+  "loyalBonus": {
+   "patk": 6
+  },
+  "loyalText": "ATK +6",
+  "generated": true
+ }
+]

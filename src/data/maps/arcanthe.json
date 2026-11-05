@@ -1,0 +1,1036 @@
+{
+ "id": "arcanthe",
+ "name": "Tower City Arcanthe",
+ "region": "Arcanthe — City of Magic",
+ "type": "town",
+ "width": 96,
+ "height": 76,
+ "tileset": "arcane",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "town_mage",
+ "ambient": "village",
+ "weather": [
+  "sunny"
+ ],
+ "isSavePoint": true,
+ "worldMapPos": {
+  "x": 0.67,
+  "y": 0.48
+ },
+ "paint": [
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     47,
+     41
+    ],
+    [
+     23,
+     61
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     47,
+     41
+    ],
+    [
+     11,
+     38
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     47,
+     41
+    ],
+    [
+     29,
+     18
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     47,
+     41
+    ],
+    [
+     58,
+     15
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     47,
+     41
+    ],
+    [
+     81,
+     31
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     47,
+     41
+    ],
+    [
+     78,
+     56
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     47,
+     41
+    ],
+    [
+     51,
+     66
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     11,
+     38
+    ],
+    [
+     29,
+     18
+    ],
+    [
+     58,
+     15
+    ],
+    [
+     81,
+     31
+    ],
+    [
+     78,
+     56
+    ],
+    [
+     51,
+     66
+    ],
+    [
+     23,
+     61
+    ],
+    [
+     11,
+     38
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     3,
+     37
+    ],
+    [
+     12,
+     37
+    ],
+    [
+     12,
+     37
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     47,
+     3
+    ],
+    [
+     47,
+     16
+    ],
+    [
+     47,
+     16
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     47,
+     71
+    ],
+    [
+     47,
+     66
+    ],
+    [
+     47,
+     66
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     27,
+     36
+    ],
+    [
+     27,
+     37
+    ],
+    [
+     27,
+     38
+    ],
+    [
+     27,
+     39
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     46,
+     31
+    ],
+    [
+     46,
+     32
+    ],
+    [
+     46,
+     33
+    ],
+    [
+     46,
+     34
+    ],
+    [
+     46,
+     35
+    ],
+    [
+     46,
+     36
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     61,
+     35
+    ],
+    [
+     61,
+     36
+    ],
+    [
+     61,
+     37
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     44,
+     62
+    ],
+    [
+     44,
+     63
+    ],
+    [
+     44,
+     64
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     31,
+     50
+    ],
+    [
+     31,
+     51
+    ],
+    [
+     31,
+     52
+    ],
+    [
+     31,
+     53
+    ],
+    [
+     31,
+     54
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     62,
+     59
+    ],
+    [
+     62,
+     60
+    ],
+    [
+     62,
+     61
+    ],
+    [
+     62,
+     62
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     55,
+     14
+    ],
+    [
+     55,
+     15
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     79,
+     23
+    ],
+    [
+     79,
+     24
+    ],
+    [
+     79,
+     25
+    ],
+    [
+     79,
+     26
+    ],
+    [
+     79,
+     27
+    ],
+    [
+     79,
+     28
+    ],
+    [
+     79,
+     29
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     73,
+     44
+    ],
+    [
+     74,
+     44
+    ],
+    [
+     75,
+     44
+    ],
+    [
+     76,
+     44
+    ],
+    [
+     77,
+     44
+    ],
+    [
+     78,
+     44
+    ],
+    [
+     79,
+     44
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     75,
+     15
+    ],
+    [
+     75,
+     16
+    ],
+    [
+     75,
+     17
+    ],
+    [
+     74,
+     17
+    ],
+    [
+     74,
+     18
+    ],
+    [
+     74,
+     19
+    ],
+    [
+     74,
+     20
+    ],
+    [
+     74,
+     21
+    ],
+    [
+     74,
+     22
+    ],
+    [
+     74,
+     23
+    ],
+    [
+     74,
+     24
+    ],
+    [
+     74,
+     25
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     80,
+     68
+    ],
+    [
+     79,
+     68
+    ],
+    [
+     78,
+     68
+    ],
+    [
+     78,
+     67
+    ],
+    [
+     78,
+     66
+    ],
+    [
+     78,
+     65
+    ],
+    [
+     78,
+     64
+    ],
+    [
+     78,
+     63
+    ],
+    [
+     78,
+     62
+    ],
+    [
+     78,
+     61
+    ],
+    [
+     78,
+     60
+    ],
+    [
+     78,
+     59
+    ],
+    [
+     78,
+     58
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     85,
+     61
+    ],
+    [
+     84,
+     61
+    ],
+    [
+     83,
+     61
+    ],
+    [
+     82,
+     61
+    ],
+    [
+     81,
+     61
+    ],
+    [
+     80,
+     61
+    ],
+    [
+     79,
+     61
+    ],
+    [
+     78,
+     61
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 40,
+   "y": 36,
+   "w": 14,
+   "h": 11
+  },
+  {
+   "op": "building",
+   "style": "inn",
+   "x": 23,
+   "y": 30,
+   "w": 8,
+   "h": 6,
+   "door": 4,
+   "sign": "Inn"
+  },
+  {
+   "op": "building",
+   "style": "guild",
+   "x": 42,
+   "y": 25,
+   "w": 8,
+   "h": 6,
+   "door": 4,
+   "sign": "Guild Hall"
+  },
+  {
+   "op": "building",
+   "style": "smithy",
+   "x": 57,
+   "y": 29,
+   "w": 8,
+   "h": 6,
+   "door": 4,
+   "sign": "Smithy"
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 40,
+   "y": 57,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "Tools"
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 27,
+   "y": 45,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "Market Hall"
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 58,
+   "y": 54,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "Courier"
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 51,
+   "y": 9,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 75,
+   "y": 18,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 69,
+   "y": 39,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 71,
+   "y": 10,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 76,
+   "y": 63,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 81,
+   "y": 56,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "object",
+   "kind": "fountain",
+   "x": 46,
+   "y": 39,
+   "id": "arcanthe_fountain"
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 40,
+   "y": 36
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 53,
+   "y": 36
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 40,
+   "y": 46
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 53,
+   "y": 46
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 42,
+   "y": 48
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 48,
+   "y": 34
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 47,
+   "y": 47
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 52,
+   "y": 35
+  },
+  {
+   "op": "object",
+   "kind": "anvil",
+   "x": 64,
+   "y": 35
+  },
+  {
+   "op": "object",
+   "kind": "crate",
+   "x": 30,
+   "y": 51
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 30,
+   "y": 52
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 81,
+   "y": 49
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 88,
+   "y": 49
+  },
+  {
+   "op": "object",
+   "kind": "bush",
+   "x": 81,
+   "y": 54
+  },
+  {
+   "op": "object",
+   "kind": "bush",
+   "x": 88,
+   "y": 54
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 3,
+   "y": 36
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 46,
+   "y": 3
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 46,
+   "y": 71
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "area": {
+    "x": 81,
+    "y": 49,
+    "w": 8,
+    "h": 6
+   },
+   "density": 0.35,
+   "seed": 3761048128
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_pine",
+   "density": 0.006,
+   "seed": 3761048132
+  },
+  {
+   "op": "scatter",
+   "kind": "obelisk",
+   "density": 0.002,
+   "seed": 3761048133
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.03,
+   "seed": 3761048124
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.03,
+   "seed": 3761048126
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_arcanthe_heath",
+   "x": 0,
+   "y": 36,
+   "w": 2,
+   "h": 4,
+   "targetMap": "arcanthe_heath",
+   "targetSpawn": "from_arcanthe",
+   "label": "Arcanthe Heath"
+  },
+  {
+   "id": "to_arcanthe_tower",
+   "x": 46,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "targetMap": "arcanthe_tower",
+   "targetSpawn": "from_arcanthe",
+   "label": "Arcanthe Tower Depths"
+  },
+  {
+   "id": "to_sunscar_dunes",
+   "x": 46,
+   "y": 74,
+   "w": 4,
+   "h": 2,
+   "targetMap": "sunscar_dunes",
+   "targetSpawn": "from_arcanthe",
+   "label": "Sunscar Dunes"
+  }
+ ],
+ "spawnPoints": {
+  "from_arcanthe_heath": {
+   "x": 4,
+   "y": 38
+  },
+  "from_arcanthe_tower": {
+   "x": 48,
+   "y": 4
+  },
+  "from_sunscar_dunes": {
+   "x": 48,
+   "y": 71
+  },
+  "default": {
+   "x": 47,
+   "y": 42
+  }
+ },
+ "npcs": [
+  {
+   "npcId": "arcanthe_innkeeper",
+   "x": 28,
+   "y": 38,
+   "facing": "down"
+  },
+  {
+   "npcId": "arcanthe_smith",
+   "x": 60,
+   "y": 37,
+   "facing": "down"
+  },
+  {
+   "npcId": "arcanthe_merchant",
+   "x": 45,
+   "y": 64,
+   "facing": "down"
+  },
+  {
+   "npcId": "arcanthe_courier",
+   "x": 61,
+   "y": 61,
+   "facing": "down"
+  },
+  {
+   "npcId": "arcanthe_enchanter",
+   "x": 62,
+   "y": 37,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_mage",
+   "x": 47,
+   "y": 33,
+   "facing": "down"
+  },
+  {
+   "npcId": "arcanthe_astrologer",
+   "x": 42,
+   "y": 39,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_sorcerer",
+   "x": 45,
+   "y": 33,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_sage",
+   "x": 48,
+   "y": 35,
+   "facing": "down"
+  },
+  {
+   "npcId": "arcanthe_jobmaster",
+   "x": 44,
+   "y": 35,
+   "facing": "down"
+  },
+  {
+   "npcId": "mvp_guide",
+   "x": 45,
+   "y": 41,
+   "facing": "down"
+  },
+  {
+   "npcId": "arcanthe_trader",
+   "x": 43,
+   "y": 64,
+   "facing": "down"
+  },
+  {
+   "npcId": "arcanthe_market",
+   "x": 32,
+   "y": 52,
+   "facing": "down"
+  }
+ ],
+ "monsterSpawns": [],
+ "objects": [
+  {
+   "id": "arcanthe_fountain",
+   "kind": "fountain",
+   "x": 46,
+   "y": 39,
+   "name": "Arcanthe Fountain",
+   "interact": {
+    "text": "Tower City Arcanthe. Arcanthe — City of Magic."
+   }
+  }
+ ],
+ "areas": [
+  {
+   "id": "plaza",
+   "name": "Star Court",
+   "rect": {
+    "x": 40,
+    "y": 36,
+    "w": 14,
+    "h": 11
+   }
+  }
+ ],
+ "generated": true
+}

@@ -1,0 +1,248 @@
+{
+ "id": "sunscar_dunes",
+ "name": "Sunscar Dunes",
+ "region": "Sandara Desert",
+ "type": "field",
+ "levelRange": [
+  25,
+  35
+ ],
+ "width": 160,
+ "height": 120,
+ "tileset": "desert",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "field_desert",
+ "ambient": "desert",
+ "weather": [
+  "sunny"
+ ],
+ "worldMapPos": {
+  "x": 0.67,
+  "y": 0.64
+ },
+ "paint": [
+  {
+   "op": "path",
+   "tile": "sand",
+   "points": [
+    [
+     79,
+     3
+    ],
+    [
+     81,
+     29
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "sand",
+   "points": [
+    [
+     79,
+     116
+    ],
+    [
+     77,
+     89
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "scatter",
+   "kind": "rock",
+   "density": 0.0081,
+   "seed": 3339745514,
+   "baseDensity": 0.018
+  },
+  {
+   "op": "scatter",
+   "kind": "rock_big",
+   "density": 0.0027,
+   "seed": 3339745515,
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:pebbles",
+   "density": 0.025,
+   "seed": 1285666277,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 81,
+   "y": 2,
+   "id": "sign_sunscar_dunes"
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_arcanthe",
+   "x": 78,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "targetMap": "arcanthe",
+   "targetSpawn": "from_sunscar_dunes",
+   "label": "Tower City Arcanthe"
+  },
+  {
+   "id": "to_sandara",
+   "x": 78,
+   "y": 118,
+   "w": 4,
+   "h": 2,
+   "targetMap": "sandara",
+   "targetSpawn": "from_sunscar_dunes",
+   "label": "Desert City Sandara"
+  }
+ ],
+ "spawnPoints": {
+  "from_arcanthe": {
+   "x": 80,
+   "y": 4
+  },
+  "from_sandara": {
+   "x": 80,
+   "y": 115
+  },
+  "default": {
+   "x": 80,
+   "y": 4
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "dune_slime",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "dune_slime",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "dune_slime",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "sand_scorpion",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "sand_scorpion",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "sand_scorpion",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "desert_wolf",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "desert_wolf",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "desert_wolf",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "elite_desert_wolf",
+   "count": 1,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  }
+ ],
+ "objects": [
+  {
+   "id": "sign_sunscar_dunes",
+   "kind": "signpost",
+   "x": 81,
+   "y": 2,
+   "name": "Signpost",
+   "interact": {
+    "text": "Sunscar Dunes (Lv.25–35).  NORTH → Tower City Arcanthe.  SOUTH → Desert City Sandara."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

@@ -2,24 +2,33 @@
   "name": "veyloria-online",
   "version": "0.1.0",
   "private": true,
-  "description": "Veyloria Online — 2D Fantasy MMORPG (Phase 1: playable single-player foundation)",
+  "description": "Veyloria Online \u2014 2D Fantasy MMORPG (Phase 1: playable single-player foundation)",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && tsc --noEmit -p server && vite build",
     "preview": "vite preview --port 4173 --strictPort",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:unit": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration",
     "test:e2e": "npm run build && node tests/e2e/run-e2e.mjs",
-    "validate:data": "vitest run tests/unit/data.test.ts"
+    "validate:data": "vitest run tests/unit/data.test.ts",
+    "world:build": "node scripts/run-ts.mjs ./tools/world-gen/build-world.ts",
+    "jobs:build": "node scripts/run-ts.mjs ./tools/world-gen/build-jobs.ts",
+    "server": "node scripts/run-ts.mjs ./server/main.ts",
+    "typecheck:server": "tsc --noEmit -p server",
+    "test:online": "npm run build && node tests/e2e/online-e2e.mjs",
+    "build:portable": "npm run build && node scripts/build-portable.mjs",
+    "build:apk": "npm run build:portable && bash android/build-apk.sh && mkdir -p releases && cp dist-android/Veyloria.apk releases/Veyloria.apk"
   },
   "license": "UNLICENSED",
   "dependencies": {
-    "phaser": "^3.90.0"
+    "phaser": "^3.90.0",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
+    "@types/ws": "^8.5.12",
     "typescript": "^5.8.3",
     "vite": "^8.3.5",
     "vitest": "^5.0.5"

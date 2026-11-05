@@ -1,0 +1,292 @@
+{
+ "id": "coral_beach",
+ "name": "Coral Beach",
+ "region": "Tidewatch Coast",
+ "type": "field",
+ "levelRange": [
+  18,
+  28
+ ],
+ "width": 160,
+ "height": 120,
+ "tileset": "coast",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "field_coast",
+ "ambient": "coast",
+ "weather": [
+  "sunny",
+  "rain"
+ ],
+ "worldMapPos": {
+  "x": 0.27,
+  "y": 0.86
+ },
+ "paint": [
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 45,
+   "cy": 28,
+   "rx": 8,
+   "ry": 4,
+   "seed": 1115110274
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 121,
+   "cy": 88,
+   "rx": 7,
+   "ry": 7,
+   "seed": 1115110282
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 121,
+   "cy": 33,
+   "rx": 8,
+   "ry": 5,
+   "seed": 1115110280
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 41,
+   "cy": 93,
+   "rx": 9,
+   "ry": 6,
+   "seed": 1115110276
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     3,
+     59
+    ],
+    [
+     39,
+     59
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     156,
+     59
+    ],
+    [
+     121,
+     60
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_oak",
+   "density": 0.0081,
+   "seed": 1115110288,
+   "baseDensity": 0.018
+  },
+  {
+   "op": "scatter",
+   "kind": "rock",
+   "density": 0.0027,
+   "seed": 1115110289,
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.025,
+   "seed": 3562140706,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.025,
+   "seed": 2113917947,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 5,
+   "y": 58,
+   "id": "sign_coral_beach"
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_aurelion_fields_south",
+   "x": 0,
+   "y": 58,
+   "w": 2,
+   "h": 4,
+   "targetMap": "aurelion_fields_south",
+   "targetSpawn": "from_coral_beach",
+   "label": "Aurelion Fields South"
+  },
+  {
+   "id": "to_tidewatch",
+   "x": 158,
+   "y": 58,
+   "w": 2,
+   "h": 4,
+   "targetMap": "tidewatch",
+   "targetSpawn": "from_coral_beach",
+   "label": "Port Town Tidewatch"
+  }
+ ],
+ "spawnPoints": {
+  "from_aurelion_fields_south": {
+   "x": 4,
+   "y": 60
+  },
+  "from_tidewatch": {
+   "x": 155,
+   "y": 60
+  },
+  "default": {
+   "x": 4,
+   "y": 60
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "shore_crab",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "shore_crab",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "shore_crab",
+   "count": 21,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "sea_slime",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "sea_slime",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "sea_slime",
+   "count": 18,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "reef_gull",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "reef_gull",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "reef_gull",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "elite_reef_gull",
+   "count": 1,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  }
+ ],
+ "objects": [
+  {
+   "id": "sign_coral_beach",
+   "kind": "signpost",
+   "x": 5,
+   "y": 58,
+   "name": "Signpost",
+   "interact": {
+    "text": "Coral Beach (Lv.18–28).  WEST → Aurelion Fields South.  EAST → Port Town Tidewatch."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

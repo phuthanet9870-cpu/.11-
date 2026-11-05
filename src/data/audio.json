@@ -1,0 +1,402 @@
+{
+ "$comment": "Procedural music tracks. Each map's 'bgm' key points here. Real audio files can replace a track via the asset manifest (key bgm_<id>).",
+ "tracks": {
+  "title": {
+   "tempo": 72,
+   "root": 64,
+   "mode": "major",
+   "progression": [
+    0,
+    5,
+    3,
+    4
+   ],
+   "lead": "triangle",
+   "pad": "sine",
+   "bass": "sine",
+   "density": 0.45,
+   "seed": 7
+  },
+  "town_willowbrook": {
+   "tempo": 96,
+   "root": 60,
+   "mode": "major",
+   "progression": [
+    0,
+    4,
+    5,
+    3
+   ],
+   "lead": "triangle",
+   "pad": "sine",
+   "bass": "triangle",
+   "density": 0.6,
+   "seed": 11
+  },
+  "field_meadow": {
+   "tempo": 112,
+   "root": 62,
+   "mode": "lydian",
+   "progression": [
+    0,
+    3,
+    0,
+    4
+   ],
+   "lead": "square",
+   "pad": "triangle",
+   "bass": "triangle",
+   "density": 0.55,
+   "seed": 23
+  },
+  "field_forest": {
+   "tempo": 84,
+   "root": 57,
+   "mode": "dorian",
+   "progression": [
+    0,
+    6,
+    5,
+    6
+   ],
+   "lead": "triangle",
+   "pad": "sine",
+   "bass": "sine",
+   "density": 0.4,
+   "seed": 31
+  },
+  "boss_battle": {
+   "tempo": 152,
+   "root": 52,
+   "mode": "harmonic",
+   "progression": [
+    0,
+    5,
+    3,
+    4
+   ],
+   "lead": "sawtooth",
+   "pad": "square",
+   "bass": "sawtooth",
+   "density": 0.8,
+   "seed": 47
+  },
+  "town_capital": {
+   "tempo": 104,
+   "root": 62,
+   "mode": "major",
+   "progression": [
+    0,
+    3,
+    4,
+    0
+   ],
+   "lead": "square",
+   "pad": "triangle",
+   "bass": "triangle",
+   "density": 0.6,
+   "seed": 41,
+   "generated": true
+  },
+  "town_forest": {
+   "tempo": 88,
+   "root": 57,
+   "mode": "dorian",
+   "progression": [
+    0,
+    3,
+    6,
+    4
+   ],
+   "lead": "triangle",
+   "pad": "sine",
+   "bass": "sine",
+   "density": 0.5,
+   "seed": 43,
+   "generated": true
+  },
+  "town_desert": {
+   "tempo": 92,
+   "root": 58,
+   "mode": "phrygian",
+   "progression": [
+    0,
+    1,
+    0,
+    6
+   ],
+   "lead": "square",
+   "pad": "sine",
+   "bass": "triangle",
+   "density": 0.55,
+   "seed": 47,
+   "generated": true
+  },
+  "town_mage": {
+   "tempo": 80,
+   "root": 60,
+   "mode": "lydian",
+   "progression": [
+    0,
+    1,
+    4,
+    3
+   ],
+   "lead": "sine",
+   "pad": "triangle",
+   "bass": "sine",
+   "density": 0.45,
+   "seed": 53,
+   "generated": true
+  },
+  "town_port": {
+   "tempo": 108,
+   "root": 64,
+   "mode": "mixolydian",
+   "progression": [
+    0,
+    6,
+    3,
+    4
+   ],
+   "lead": "triangle",
+   "pad": "sine",
+   "bass": "triangle",
+   "density": 0.6,
+   "seed": 59,
+   "generated": true
+  },
+  "town_snow": {
+   "tempo": 76,
+   "root": 61,
+   "mode": "minor",
+   "progression": [
+    0,
+    5,
+    3,
+    6
+   ],
+   "lead": "sine",
+   "pad": "sine",
+   "bass": "sine",
+   "density": 0.4,
+   "seed": 61,
+   "generated": true
+  },
+  "field_plains": {
+   "tempo": 116,
+   "root": 64,
+   "mode": "major",
+   "progression": [
+    0,
+    4,
+    5,
+    3
+   ],
+   "lead": "square",
+   "pad": "triangle",
+   "bass": "triangle",
+   "density": 0.55,
+   "seed": 67,
+   "generated": true
+  },
+  "field_desert": {
+   "tempo": 100,
+   "root": 57,
+   "mode": "phrygian",
+   "progression": [
+    0,
+    1,
+    6,
+    0
+   ],
+   "lead": "triangle",
+   "pad": "sine",
+   "bass": "triangle",
+   "density": 0.5,
+   "seed": 71,
+   "generated": true
+  },
+  "field_coast": {
+   "tempo": 110,
+   "root": 65,
+   "mode": "mixolydian",
+   "progression": [
+    0,
+    3,
+    6,
+    4
+   ],
+   "lead": "triangle",
+   "pad": "sine",
+   "bass": "triangle",
+   "density": 0.55,
+   "seed": 73,
+   "generated": true
+  },
+  "field_snow": {
+   "tempo": 84,
+   "root": 59,
+   "mode": "minor",
+   "progression": [
+    0,
+    3,
+    5,
+    4
+   ],
+   "lead": "sine",
+   "pad": "triangle",
+   "bass": "sine",
+   "density": 0.4,
+   "seed": 79,
+   "generated": true
+  },
+  "field_volcano": {
+   "tempo": 128,
+   "root": 50,
+   "mode": "harmonic",
+   "progression": [
+    0,
+    5,
+    1,
+    4
+   ],
+   "lead": "sawtooth",
+   "pad": "triangle",
+   "bass": "square",
+   "density": 0.6,
+   "seed": 83,
+   "generated": true
+  },
+  "field_swamp": {
+   "tempo": 78,
+   "root": 52,
+   "mode": "dorian",
+   "progression": [
+    0,
+    1,
+    0,
+    6
+   ],
+   "lead": "triangle",
+   "pad": "sine",
+   "bass": "sine",
+   "density": 0.4,
+   "seed": 89,
+   "generated": true
+  },
+  "dungeon_dark": {
+   "tempo": 70,
+   "root": 50,
+   "mode": "minor",
+   "progression": [
+    0,
+    1,
+    5,
+    6
+   ],
+   "lead": "sine",
+   "pad": "triangle",
+   "bass": "sine",
+   "density": 0.35,
+   "seed": 97,
+   "generated": true
+  },
+  "dungeon_cave": {
+   "tempo": 82,
+   "root": 53,
+   "mode": "dorian",
+   "progression": [
+    0,
+    6,
+    0,
+    3
+   ],
+   "lead": "triangle",
+   "pad": "sine",
+   "bass": "sine",
+   "density": 0.4,
+   "seed": 101,
+   "generated": true
+  },
+  "dungeon_ice": {
+   "tempo": 74,
+   "root": 58,
+   "mode": "minor",
+   "progression": [
+    0,
+    3,
+    6,
+    5
+   ],
+   "lead": "sine",
+   "pad": "sine",
+   "bass": "sine",
+   "density": 0.35,
+   "seed": 103,
+   "generated": true
+  }
+ },
+ "ambient": {
+  "village": {
+   "wind": 0.15,
+   "birds": 0.6,
+   "crickets": 0,
+   "drips": 0
+  },
+  "meadow": {
+   "wind": 0.3,
+   "birds": 0.8,
+   "crickets": 0.1,
+   "drips": 0
+  },
+  "forest": {
+   "wind": 0.25,
+   "birds": 0.25,
+   "crickets": 0.6,
+   "drips": 0.2
+  },
+  "desert": {
+   "wind": 0.5,
+   "birds": 0.05,
+   "crickets": 0.1,
+   "drips": 0,
+   "generated": true
+  },
+  "snow": {
+   "wind": 0.6,
+   "birds": 0,
+   "crickets": 0,
+   "drips": 0.05,
+   "generated": true
+  },
+  "cave": {
+   "wind": 0.1,
+   "birds": 0,
+   "crickets": 0,
+   "drips": 0.6,
+   "generated": true
+  },
+  "coast": {
+   "wind": 0.35,
+   "birds": 0.5,
+   "crickets": 0,
+   "drips": 0.1,
+   "generated": true
+  },
+  "volcano": {
+   "wind": 0.45,
+   "birds": 0,
+   "crickets": 0,
+   "drips": 0,
+   "generated": true
+  },
+  "swamp": {
+   "wind": 0.15,
+   "birds": 0.1,
+   "crickets": 0.7,
+   "drips": 0.4,
+   "generated": true
+  }
+ }
+}

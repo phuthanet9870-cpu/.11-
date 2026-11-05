@@ -1,0 +1,258 @@
+{
+ "id": "deepwood_hollow",
+ "name": "Deepwood Hollow",
+ "region": "Fernhollow Woods",
+ "type": "field",
+ "levelRange": [
+  22,
+  32
+ ],
+ "width": 160,
+ "height": 120,
+ "tileset": "fernwood",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "field_forest",
+ "ambient": "forest",
+ "weather": [
+  "fog"
+ ],
+ "worldMapPos": {
+  "x": 0.57,
+  "y": 0.1
+ },
+ "paint": [
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 42,
+   "cy": 29,
+   "rx": 6,
+   "ry": 7,
+   "seed": 3941808244
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 117,
+   "cy": 85,
+   "rx": 10,
+   "ry": 4,
+   "seed": 3941808252
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 124,
+   "cy": 34,
+   "rx": 10,
+   "ry": 6,
+   "seed": 3941808250
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 44,
+   "cy": 85,
+   "rx": 7,
+   "ry": 7,
+   "seed": 3941808246
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     3,
+     59
+    ],
+    [
+     43,
+     59
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_dark",
+   "density": 0.0081,
+   "seed": 3941808258,
+   "baseDensity": 0.018
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_pine",
+   "density": 0.0027,
+   "seed": 3941808259,
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.025,
+   "seed": 3469561036,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.025,
+   "seed": 166413841,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 5,
+   "y": 58,
+   "id": "sign_deepwood_hollow"
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_fernhollow",
+   "x": 0,
+   "y": 58,
+   "w": 2,
+   "h": 4,
+   "targetMap": "fernhollow",
+   "targetSpawn": "from_deepwood_hollow",
+   "label": "Fernhollow Village"
+  }
+ ],
+ "spawnPoints": {
+  "from_fernhollow": {
+   "x": 4,
+   "y": 60
+  },
+  "default": {
+   "x": 4,
+   "y": 60
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "elder_mushling",
+   "count": 18,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "elder_mushling",
+   "count": 18,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "elder_mushling",
+   "count": 18,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "shadow_wolf",
+   "count": 16,
+   "area": {
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "shadow_wolf",
+   "count": 16,
+   "area": {
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "shadow_wolf",
+   "count": 16,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "bramble_hornet",
+   "count": 16,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "bramble_hornet",
+   "count": 16,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "bramble_hornet",
+   "count": 16,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "elite_shadow_wolf",
+   "count": 1,
+   "area": {
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  }
+ ],
+ "objects": [
+  {
+   "id": "sign_deepwood_hollow",
+   "kind": "signpost",
+   "x": 5,
+   "y": 58,
+   "name": "Signpost",
+   "interact": {
+    "text": "Deepwood Hollow (Lv.22–32).  WEST → Fernhollow Village."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

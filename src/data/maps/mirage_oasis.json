@@ -1,0 +1,284 @@
+{
+ "id": "mirage_oasis",
+ "name": "Mirage Oasis",
+ "region": "Sandara Desert",
+ "type": "field",
+ "levelRange": [
+  30,
+  40
+ ],
+ "width": 160,
+ "height": 120,
+ "tileset": "desert",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "field_desert",
+ "ambient": "desert",
+ "weather": [
+  "sunny"
+ ],
+ "worldMapPos": {
+  "x": 0.79,
+  "y": 0.8
+ },
+ "paint": [
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 43,
+   "cy": 28,
+   "rx": 10,
+   "ry": 4,
+   "seed": 3491583980
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 128,
+   "cy": 92,
+   "rx": 7,
+   "ry": 7,
+   "seed": 3491583988
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 116,
+   "cy": 28,
+   "rx": 8,
+   "ry": 7,
+   "seed": 3491583986
+  },
+  {
+   "op": "blob",
+   "tile": "water",
+   "cx": 32,
+   "cy": 91,
+   "rx": 7,
+   "ry": 7,
+   "seed": 3491583982
+  },
+  {
+   "op": "path",
+   "tile": "sand",
+   "points": [
+    [
+     3,
+     59
+    ],
+    [
+     44,
+     62
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "sand",
+   "points": [
+    [
+     156,
+     59
+    ],
+    [
+     120,
+     62
+    ],
+    [
+     79,
+     59
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_oak",
+   "density": 0.0081,
+   "seed": 3491583994,
+   "baseDensity": 0.018
+  },
+  {
+   "op": "scatter",
+   "kind": "rock",
+   "density": 0.0027,
+   "seed": 3491583995,
+   "baseDensity": 0.006
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:pebbles",
+   "density": 0.025,
+   "seed": 1450208085,
+   "baseDensity": 0.05
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 5,
+   "y": 58,
+   "id": "sign_mirage_oasis"
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_sandara",
+   "x": 0,
+   "y": 58,
+   "w": 2,
+   "h": 4,
+   "targetMap": "sandara",
+   "targetSpawn": "from_mirage_oasis",
+   "label": "Desert City Sandara"
+  },
+  {
+   "id": "to_shadowmere_marsh",
+   "x": 158,
+   "y": 58,
+   "w": 2,
+   "h": 4,
+   "targetMap": "shadowmere_marsh",
+   "targetSpawn": "from_mirage_oasis",
+   "label": "Shadowmere Marsh"
+  }
+ ],
+ "spawnPoints": {
+  "from_sandara": {
+   "x": 4,
+   "y": 60
+  },
+  "from_shadowmere_marsh": {
+   "x": 155,
+   "y": 60
+  },
+  "default": {
+   "x": 4,
+   "y": 60
+  }
+ },
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "oasis_crab",
+   "count": 18,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "oasis_crab",
+   "count": 18,
+   "area": {
+    "x": 4,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "oasis_crab",
+   "count": 18,
+   "area": {
+    "x": 4,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "mirage_wisp",
+   "count": 16,
+   "area": {
+    "x": 54,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "mirage_wisp",
+   "count": 16,
+   "area": {
+    "x": 54,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "mirage_wisp",
+   "count": 16,
+   "area": {
+    "x": 54,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "giant_scorpion",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "giant_scorpion",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 41,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "giant_scorpion",
+   "count": 14,
+   "area": {
+    "x": 104,
+    "y": 78,
+    "w": 48,
+    "h": 35
+   }
+  },
+  {
+   "monsterId": "elite_giant_scorpion",
+   "count": 1,
+   "area": {
+    "x": 104,
+    "y": 4,
+    "w": 48,
+    "h": 35
+   }
+  }
+ ],
+ "objects": [
+  {
+   "id": "sign_mirage_oasis",
+   "kind": "signpost",
+   "x": 5,
+   "y": 58,
+   "name": "Signpost",
+   "interact": {
+    "text": "Mirage Oasis (Lv.30–40).  WEST → Desert City Sandara.  EAST → Shadowmere Marsh."
+   }
+  }
+ ],
+ "areas": [],
+ "generated": true
+}

@@ -1,0 +1,1094 @@
+{
+ "id": "sandara",
+ "name": "Desert City Sandara",
+ "region": "Sandara Desert",
+ "type": "town",
+ "width": 96,
+ "height": 76,
+ "tileset": "desert",
+ "base": "sand",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "town_desert",
+ "ambient": "desert",
+ "weather": [
+  "sunny"
+ ],
+ "isSavePoint": true,
+ "worldMapPos": {
+  "x": 0.67,
+  "y": 0.8
+ },
+ "paint": [
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 6,
+   "y": 6,
+   "w": 36,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 6,
+   "y": 22,
+   "w": 36,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 6,
+   "y": 6,
+   "w": 1,
+   "h": 17
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 41,
+   "y": 6,
+   "w": 1,
+   "h": 17
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 67,
+   "y": 6,
+   "w": 23,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 67,
+   "y": 22,
+   "w": 23,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 67,
+   "y": 6,
+   "w": 1,
+   "h": 17
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 89,
+   "y": 6,
+   "w": 1,
+   "h": 17
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 6,
+   "y": 48,
+   "w": 36,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 6,
+   "y": 69,
+   "w": 36,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 6,
+   "y": 48,
+   "w": 1,
+   "h": 22
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 41,
+   "y": 48,
+   "w": 1,
+   "h": 22
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 67,
+   "y": 48,
+   "w": 23,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 67,
+   "y": 69,
+   "w": 23,
+   "h": 1
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 67,
+   "y": 48,
+   "w": 1,
+   "h": 22
+  },
+  {
+   "op": "rect",
+   "tile": "ruin_wall",
+   "layer": "wall",
+   "x": 89,
+   "y": 48,
+   "w": 1,
+   "h": 22
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     53,
+     4
+    ],
+    [
+     53,
+     70
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     4,
+     34
+    ],
+    [
+     90,
+     34
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     26,
+     34
+    ],
+    [
+     26,
+     9
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     53,
+     9
+    ],
+    [
+     26,
+     9
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     81,
+     34
+    ],
+    [
+     81,
+     13
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     53,
+     13
+    ],
+    [
+     81,
+     13
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     37,
+     34
+    ],
+    [
+     37,
+     58
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     53,
+     58
+    ],
+    [
+     37,
+     58
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     75,
+     34
+    ],
+    [
+     75,
+     51
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     53,
+     51
+    ],
+    [
+     75,
+     51
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     47,
+     3
+    ],
+    [
+     47,
+     9
+    ],
+    [
+     47,
+     9
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     91,
+     37
+    ],
+    [
+     91,
+     37
+    ],
+    [
+     91,
+     36
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     47,
+     71
+    ],
+    [
+     47,
+     71
+    ],
+    [
+     53,
+     71
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     67,
+     33
+    ],
+    [
+     67,
+     34
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     47,
+     57
+    ],
+    [
+     47,
+     58
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     35,
+     33
+    ],
+    [
+     35,
+     34
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     48,
+     28
+    ],
+    [
+     48,
+     29
+    ],
+    [
+     48,
+     30
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     61,
+     50
+    ],
+    [
+     61,
+     51
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     48,
+     19
+    ],
+    [
+     49,
+     19
+    ],
+    [
+     50,
+     19
+    ],
+    [
+     51,
+     19
+    ],
+    [
+     52,
+     19
+    ],
+    [
+     53,
+     19
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     11,
+     44
+    ],
+    [
+     11,
+     43
+    ],
+    [
+     11,
+     42
+    ],
+    [
+     11,
+     41
+    ],
+    [
+     11,
+     40
+    ],
+    [
+     11,
+     39
+    ],
+    [
+     11,
+     38
+    ],
+    [
+     11,
+     37
+    ],
+    [
+     11,
+     36
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     61,
+     12
+    ],
+    [
+     61,
+     13
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     19,
+     20
+    ],
+    [
+     20,
+     20
+    ],
+    [
+     21,
+     20
+    ],
+    [
+     22,
+     20
+    ],
+    [
+     23,
+     20
+    ],
+    [
+     24,
+     20
+    ],
+    [
+     25,
+     20
+    ],
+    [
+     26,
+     20
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     20,
+     32
+    ],
+    [
+     20,
+     33
+    ],
+    [
+     20,
+     34
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     9,
+     33
+    ],
+    [
+     9,
+     34
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     48,
+     66
+    ],
+    [
+     48,
+     67
+    ],
+    [
+     48,
+     68
+    ],
+    [
+     48,
+     69
+    ],
+    [
+     48,
+     70
+    ],
+    [
+     48,
+     71
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "path_stone",
+   "points": [
+    [
+     61,
+     25
+    ],
+    [
+     61,
+     26
+    ],
+    [
+     61,
+     27
+    ],
+    [
+     61,
+     28
+    ],
+    [
+     61,
+     29
+    ],
+    [
+     61,
+     30
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "rect",
+   "tile": "path_stone",
+   "x": 47,
+   "y": 30,
+   "w": 15,
+   "h": 10
+  },
+  {
+   "op": "building",
+   "style": "inn",
+   "x": 63,
+   "y": 27,
+   "w": 8,
+   "h": 6,
+   "door": 4,
+   "sign": "Inn"
+  },
+  {
+   "op": "building",
+   "style": "guild",
+   "x": 43,
+   "y": 51,
+   "w": 8,
+   "h": 6,
+   "door": 4,
+   "sign": "Guild Hall"
+  },
+  {
+   "op": "building",
+   "style": "smithy",
+   "x": 31,
+   "y": 27,
+   "w": 8,
+   "h": 6,
+   "door": 4,
+   "sign": "Smithy"
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 44,
+   "y": 23,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "Tools"
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 57,
+   "y": 45,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "Market Hall"
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 44,
+   "y": 14,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "Courier"
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 7,
+   "y": 39,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 57,
+   "y": 7,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 15,
+   "y": 15,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 16,
+   "y": 27,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 5,
+   "y": 28,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 44,
+   "y": 61,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 57,
+   "y": 20,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "object",
+   "kind": "fountain",
+   "x": 53,
+   "y": 33,
+   "id": "sandara_fountain"
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 47,
+   "y": 30
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 61,
+   "y": 30
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 47,
+   "y": 39
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 61,
+   "y": 39
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 57,
+   "y": 29
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 59,
+   "y": 40
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 49,
+   "y": 40
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 52,
+   "y": 27
+  },
+  {
+   "op": "object",
+   "kind": "anvil",
+   "x": 32,
+   "y": 33
+  },
+  {
+   "op": "object",
+   "kind": "crate",
+   "x": 64,
+   "y": 50
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 63,
+   "y": 50
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 18,
+   "y": 7
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 25,
+   "y": 7
+  },
+  {
+   "op": "object",
+   "kind": "bush",
+   "x": 18,
+   "y": 12
+  },
+  {
+   "op": "object",
+   "kind": "bush",
+   "x": 25,
+   "y": 12
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 46,
+   "y": 3
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 90,
+   "y": 37
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 46,
+   "y": 71
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "area": {
+    "x": 18,
+    "y": 7,
+    "w": 8,
+    "h": 6
+   },
+   "density": 0.35,
+   "seed": 608705220
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.03,
+   "seed": 608705216
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.03,
+   "seed": 608705218
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_sunscar_dunes",
+   "x": 46,
+   "y": 0,
+   "w": 4,
+   "h": 2,
+   "targetMap": "sunscar_dunes",
+   "targetSpawn": "from_sandara",
+   "label": "Sunscar Dunes"
+  },
+  {
+   "id": "to_mirage_oasis",
+   "x": 94,
+   "y": 36,
+   "w": 2,
+   "h": 4,
+   "targetMap": "mirage_oasis",
+   "targetSpawn": "from_sandara",
+   "label": "Mirage Oasis"
+  },
+  {
+   "id": "to_kings_tomb",
+   "x": 46,
+   "y": 74,
+   "w": 4,
+   "h": 2,
+   "targetMap": "kings_tomb",
+   "targetSpawn": "from_sandara",
+   "label": "Royal Tomb of Ankhar"
+  }
+ ],
+ "spawnPoints": {
+  "from_sunscar_dunes": {
+   "x": 48,
+   "y": 4
+  },
+  "from_mirage_oasis": {
+   "x": 91,
+   "y": 38
+  },
+  "from_kings_tomb": {
+   "x": 48,
+   "y": 71
+  },
+  "default": {
+   "x": 54,
+   "y": 36
+  }
+ },
+ "npcs": [
+  {
+   "npcId": "sandara_innkeeper",
+   "x": 66,
+   "y": 35,
+   "facing": "down"
+  },
+  {
+   "npcId": "sandara_smith",
+   "x": 34,
+   "y": 35,
+   "facing": "down"
+  },
+  {
+   "npcId": "sandara_merchant",
+   "x": 49,
+   "y": 30,
+   "facing": "down"
+  },
+  {
+   "npcId": "sandara_courier",
+   "x": 49,
+   "y": 20,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_rogue",
+   "x": 48,
+   "y": 59,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_shadowblade",
+   "x": 46,
+   "y": 59,
+   "facing": "down"
+  },
+  {
+   "npcId": "guild_outlaw",
+   "x": 49,
+   "y": 57,
+   "facing": "down"
+  },
+  {
+   "npcId": "sandara_jobmaster",
+   "x": 45,
+   "y": 57,
+   "facing": "down"
+  },
+  {
+   "npcId": "mvp_guide",
+   "x": 49,
+   "y": 37,
+   "facing": "down"
+  },
+  {
+   "npcId": "sandara_trader",
+   "x": 47,
+   "y": 29,
+   "facing": "down"
+  },
+  {
+   "npcId": "sandara_market",
+   "x": 62,
+   "y": 52,
+   "facing": "down"
+  }
+ ],
+ "monsterSpawns": [],
+ "objects": [
+  {
+   "id": "sandara_fountain",
+   "kind": "fountain",
+   "x": 53,
+   "y": 33,
+   "name": "Sandara Fountain",
+   "interact": {
+    "text": "Desert City Sandara. Sandara Desert."
+   }
+  }
+ ],
+ "areas": [
+  {
+   "id": "plaza",
+   "name": "Bazaar Square",
+   "rect": {
+    "x": 47,
+    "y": 30,
+    "w": 15,
+    "h": 10
+   }
+  }
+ ],
+ "generated": true
+}

@@ -1,0 +1,112 @@
+{
+ "id": "endless_spire_f42",
+ "name": "Endless Spire — Floor 42",
+ "region": "Endless Spire",
+ "type": "instance",
+ "instanceId": "endless_spire",
+ "floor": 42,
+ "width": 30,
+ "height": 24,
+ "tileset": "dg_tower",
+ "base": "ruin_floor",
+ "border": {
+  "kind": "ruin_wall",
+  "thickness": 2
+ },
+ "bgm": "dungeon_dark",
+ "ambient": "cave",
+ "weather": [],
+ "worldMapPos": {
+  "x": -1,
+  "y": -1
+ },
+ "paint": [
+  {
+   "op": "object",
+   "kind": "ruin_pillar",
+   "x": 23,
+   "y": 10
+  },
+  {
+   "op": "object",
+   "kind": "ruin_pillar",
+   "x": 23,
+   "y": 11
+  },
+  {
+   "op": "object",
+   "kind": "ruin_pillar",
+   "x": 18,
+   "y": 9
+  },
+  {
+   "op": "object",
+   "kind": "ruin_pillar",
+   "x": 7,
+   "y": 9
+  },
+  {
+   "op": "object",
+   "kind": "ruin_pillar",
+   "x": 10,
+   "y": 10
+  },
+  {
+   "op": "object",
+   "kind": "ruin_pillar",
+   "x": 19,
+   "y": 12
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:pebbles",
+   "density": 0.025,
+   "seed": 1734147792,
+   "baseDensity": 0.05
+  }
+ ],
+ "spawnPoints": {
+  "default": {
+   "x": 15,
+   "y": 20
+  }
+ },
+ "portals": [
+  {
+   "id": "next",
+   "x": 14,
+   "y": 1,
+   "w": 3,
+   "h": 2,
+   "targetMap": "endless_spire_f43",
+   "targetSpawn": "default",
+   "label": "Floor 43"
+  }
+ ],
+ "npcs": [],
+ "monsterSpawns": [
+  {
+   "monsterId": "tomb_bat",
+   "count": 6,
+   "area": {
+    "x": 4,
+    "y": 4,
+    "w": 10,
+    "h": 10
+   }
+  },
+  {
+   "monsterId": "frost_slime",
+   "count": 6,
+   "area": {
+    "x": 15,
+    "y": 4,
+    "w": 10,
+    "h": 10
+   }
+  }
+ ],
+ "objects": [],
+ "areas": [],
+ "generated": true
+}

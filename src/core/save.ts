@@ -5,12 +5,18 @@ import type { CharacterState, SaveFile, Settings } from './types';
 
 export const SAVE_VERSION = 2;
 export const SAVE_KEY = 'veyloria.save';
+/** Two hotbar rows of ten (keys 1–0 and Shift+1–0). */
+export const HOTBAR_SLOTS = 20;
 
 export const DEFAULT_KEYBINDS: Record<string, string> = {
   hotbar1: '1', hotbar2: '2', hotbar3: '3', hotbar4: '4', hotbar5: '5',
   hotbar6: '6', hotbar7: '7', hotbar8: '8', hotbar9: '9', hotbar10: '0',
+  // Second hotbar row: Shift + number.
+  hotbar11: 'shift+1', hotbar12: 'shift+2', hotbar13: 'shift+3', hotbar14: 'shift+4', hotbar15: 'shift+5',
+  hotbar16: 'shift+6', hotbar17: 'shift+7', hotbar18: 'shift+8', hotbar19: 'shift+9', hotbar20: 'shift+0',
+  zoomIn: '=', zoomOut: '-',
   inventory: 'i', equipment: 'e', status: 'c', skills: 'k', quests: 'q',
-  worldMap: 'm', settings: 'o', pickup: 'z', interact: 'f', cancel: 'Escape',
+  worldMap: 'm', settings: 'o', database: 'b', pet: 'p', homun: 'h', cart: 'v', runes: 'n', social: 'g', auto: 'u', pickup: 'z', interact: 'f', cancel: 'Escape',
   up: 'w', down: 's', left: 'a', right: 'd',
 };
 
@@ -21,6 +27,10 @@ export function defaultSettings(): Settings {
     showDamageNumbers: true,
     autoLoot: false,
     showCollision: false,
+    cellCursor: true,
+    showGrid: false,
+    zoom: 1.5,
+    effects: false,
     wasdMovement: true,
   };
 }
@@ -99,13 +109,14 @@ export function sanitizeCharacter(data: GameData, c: CharacterState): string[] {
   for (const id of Object.keys(c.skills)) if (!data.skills.has(id)) delete c.skills[id];
   for (const id of Object.keys(c.quests)) if (!data.quests.has(id)) delete c.quests[id];
   if (!data.maps.has(c.position.mapId)) {
-    c.position = { mapId: 'willowbrook', x: 24 * 32 + 16, y: 21 * 32 + 16 };
+    const home = data.maps.get('willowbrook')!.spawnPoints.default;
+    c.position = { mapId: 'willowbrook', x: home.x * 32 + 16, y: home.y * 32 + 16 };
     warnings.push('unknown map → Willowbrook');
   }
   if (!data.maps.has(c.savePoint.mapId)) c.savePoint = { mapId: 'willowbrook', spawn: 'default' };
   c.luma = Math.max(0, Math.floor(c.luma || 0));
-  c.hotbar = (c.hotbar ?? []).slice(0, 10);
-  while (c.hotbar.length < 10) c.hotbar.push(null);
+  c.hotbar = (c.hotbar ?? []).slice(0, HOTBAR_SLOTS);
+  while (c.hotbar.length < HOTBAR_SLOTS) c.hotbar.push(null);
   return warnings;
 }
 

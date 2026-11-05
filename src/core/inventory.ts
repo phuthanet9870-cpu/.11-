@@ -1,6 +1,7 @@
 // Inventory, equipment, storage and shop operations on CharacterState.
 // Every operation validates first and only mutates when it can fully succeed,
 // so a failed call never leaves items half-moved (no duplication / loss).
+import { classLineage } from './lineage';
 import type { GameData } from './data';
 import { slotForItem } from './formulas';
 import type { CharacterState, EquipSlot, ItemDef, ItemInstance, ItemType } from './types';
@@ -139,7 +140,7 @@ export function canDiscard(data: GameData, inst: ItemInstance): OpResult {
 export function canEquip(data: GameData, c: CharacterState, def: ItemDef): OpResult {
   if (def.type !== 'equipment' || !def.slot) return fail('That item cannot be equipped.');
   if ((def.equipLevel ?? 1) > c.baseLevel) return fail(`Requires base level ${def.equipLevel}.`);
-  if (def.classes && !def.classes.includes(c.classId)) {
+  if (def.classes && !classLineage(data, c.classId).some((id) => def.classes!.includes(id))) {
     const names = def.classes.map((id) => data.classes.get(id)?.name ?? id).join(', ');
     return fail(`Only ${names} can equip this.`);
   }
@@ -160,6 +161,7 @@ export function equipItem(data: GameData, c: CharacterState, uid: string, prefer
 
   let slot = slotForItem(def, c)!;
   if (def.slot === 'accessory' && preferSlot && preferSlot.startsWith('accessory')) slot = preferSlot;
+  if (def.slot === 'rune' && preferSlot && preferSlot.startsWith('rune')) slot = preferSlot;
   const toUnequip: EquipSlot[] = [];
   if (c.equipment[slot]) toUnequip.push(slot);
   if (slot === 'shield') {
@@ -232,7 +234,7 @@ export function buyItem(data: GameData, c: CharacterState, shopId: string, itemI
   if (!shop || !shop.items.includes(itemId)) return fail('That item is not sold here.');
   if (!Number.isInteger(qty) || qty <= 0 || qty > 999) return fail('Invalid quantity.');
   const def = itemDef(data, itemId);
-  const cost = def.price * qty;
+  const cost = buyPrice(data, c, itemId) * qty;
   if (cost > c.luma) return fail('Not enough Luma.');
   const check = canAddItem(data, c, itemId, qty, { weightLimit });
   if (!check.ok) return check;
@@ -241,8 +243,24 @@ export function buyItem(data: GameData, c: CharacterState, shopId: string, itemI
   return ok(`Bought ${qty}× ${def.name} for ${cost} Luma.`);
 }
 
-export function sellPrice(data: GameData, itemId: string): number {
-  return Math.floor(itemDef(data, itemId).price * data.balance.economy.sellPriceRatio);
+/** Passive trade skills (Discount / Overcharge): total % from learned skills. */
+function tradePct(data: GameData, c: CharacterState | undefined, key: 'discountPct' | 'overchargePct'): number {
+  if (!c) return 0;
+  let pct = 0;
+  for (const [id, lv] of Object.entries(c.skills)) pct += (data.skills.get(id)?.passive?.[key] ?? 0) * lv;
+  return Math.min(24, pct);
+}
+
+/** NPC shop price for this character (Discount applies). */
+export function buyPrice(data: GameData, c: CharacterState | undefined, itemId: string): number {
+  const p = itemDef(data, itemId).price;
+  return Math.max(1, Math.floor((p * (100 - tradePct(data, c, 'discountPct'))) / 100));
+}
+
+/** What an NPC pays for one (Overcharge applies). */
+export function sellPrice(data: GameData, itemId: string, c?: CharacterState): number {
+  const base = itemDef(data, itemId).price * data.balance.economy.sellPriceRatio;
+  return Math.floor((base * (100 + tradePct(data, c, 'overchargePct'))) / 100);
 }
 
 export function sellItem(data: GameData, c: CharacterState, uid: string, qty: number): OpResult {
@@ -252,7 +270,7 @@ export function sellItem(data: GameData, c: CharacterState, uid: string, qty: nu
   if (!can.ok) return can;
   if (!Number.isInteger(qty) || qty <= 0 || qty > inst.qty) return fail('Invalid quantity.');
   const def = itemDef(data, inst.itemId);
-  const gain = sellPrice(data, inst.itemId) * qty;
+  const gain = sellPrice(data, inst.itemId, c) * qty;
   const r = removeByUid(c, uid, qty);
   if (!r.ok) return r;
   c.luma += gain;
@@ -260,6 +278,41 @@ export function sellItem(data: GameData, c: CharacterState, uid: string, qty: nu
 }
 
 // ------------------------------------------------------------------ storage
+// ------------------------------------------------------------------ pushcart (Merchant line)
+export const CART_SLOTS = 100;
+export const CART_WEIGHT = 8000;
+export function cartWeight(data: GameData, c: CharacterState): number {
+  return (c.cart ?? []).reduce((a, i) => a + itemDef(data, i.itemId).weight * i.qty, 0);
+}
+/** Move items into the cart: they no longer count toward your own weight. */
+export function putInCart(data: GameData, c: CharacterState, uid: string, qty: number): OpResult {
+  if (!c.cart) return fail('You have no pushcart.');
+  const inst = findInstance(c, uid);
+  if (!inst) return fail('Item not found.');
+  if (inst.locked) return fail('This item is locked.');
+  if (!Number.isInteger(qty) || qty <= 0 || qty > inst.qty) return fail('Invalid quantity.');
+  const def = itemDef(data, inst.itemId);
+  if (def.type === 'quest') return fail('Quest items cannot go in the cart.');
+  if (cartWeight(data, c) + def.weight * qty > CART_WEIGHT) return fail(`The cart can hold ${CART_WEIGHT} weight.`);
+  const need = def.stackable ? slotsNeeded(data, c.cart, inst.itemId, qty) : 1;
+  if (c.cart.length + need > CART_SLOTS) return fail('The cart is full.');
+  if (def.stackable) { removeByUid(c, uid, qty); pushItems(data, c.cart, inst.itemId, qty, inst.bound); }
+  else { c.inventory.splice(c.inventory.indexOf(inst), 1); c.cart.push(inst); }
+  return ok(`Put ${def.name} in the cart.`);
+}
+export function takeFromCart(data: GameData, c: CharacterState, uid: string, qty: number, weightLimit: number): OpResult {
+  if (!c.cart) return fail('You have no pushcart.');
+  const inst = c.cart.find((i) => i.uid === uid);
+  if (!inst) return fail('Item not found.');
+  if (!Number.isInteger(qty) || qty <= 0 || qty > inst.qty) return fail('Invalid quantity.');
+  const def = itemDef(data, inst.itemId);
+  const check = canAddItem(data, c, inst.itemId, qty, { weightLimit });
+  if (!check.ok) return check;
+  if (def.stackable) { inst.qty -= qty; if (inst.qty <= 0) c.cart.splice(c.cart.indexOf(inst), 1); pushItems(data, c.inventory, inst.itemId, qty, inst.bound); }
+  else { c.cart.splice(c.cart.indexOf(inst), 1); c.inventory.push(inst); }
+  return ok(`Took ${def.name} from the cart.`);
+}
+
 export function depositToStorage(data: GameData, c: CharacterState, uid: string, qty: number): OpResult {
   const inst = findInstance(c, uid);
   if (!inst) return fail('Item not found.');

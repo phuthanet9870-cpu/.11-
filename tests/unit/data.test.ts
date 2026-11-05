@@ -8,13 +8,23 @@ describe('game data', () => {
     expect(validateGameData(data)).toEqual([]);
   });
 
-  it('meets Phase 1 content targets', () => {
-    expect([...data.maps.keys()]).toEqual(expect.arrayContaining(['willowbrook', 'sunny_meadow', 'whispering_forest']));
+  it('meets content targets (36 world maps, RO-style regions)', () => {
+    expect([...data.maps.keys()]).toEqual(expect.arrayContaining(['willowbrook', 'sunny_meadow', 'whispering_forest', 'aurelion', 'sandara', 'ravenhold_crypt']));
+    const world = [...data.maps.values()].filter((m) => m.type !== 'instance' && m.type !== 'arena' && !m.mvp);
+    expect(world.length).toBe(36);
+    expect(new Set(world.map((m) => m.region)).size).toBeGreaterThanOrEqual(10);
+    // Monsters reach Lv 120; ten MVP bosses up to Lv 150 share the MVP Sanctum.
+    expect(Math.max(...[...data.monsters.values()].filter((m) => m.aiType !== 'boss' && !m.hidden && !m.elite).map((m) => m.level))).toBe(120);
+    const sanctum = [...data.maps.values()].find((m) => m.mvp)!;
+    expect(sanctum.mvp!.bossIds.length).toBe(10);
+    expect(Math.max(...sanctum.mvp!.bossIds.map((id) => data.monsters.get(data.bosses.get(id)!.monsterId)!.level))).toBe(150);
+    for (const id of sanctum.mvp!.bossIds) expect(data.bosses.get(id)!.skills.length).toBe(3);
+    expect([...data.maps.values()].filter((m) => m.type === 'town').length).toBe(7);
     expect(['knight', 'ranger', 'mage'].every((c) => data.classes.has(c))).toBe(true);
     const normal = [...data.monsters.values()].filter((m) => m.aiType !== 'boss');
     expect(normal.length).toBeGreaterThanOrEqual(8);
     expect(data.bosses.size).toBeGreaterThanOrEqual(1);
-    expect(data.quests.size).toBeGreaterThanOrEqual(15);
+    expect(data.quests.size).toBe(5);
     for (const cls of ['knight', 'ranger', 'mage']) {
       const skills = data.classes.get(cls)!.skills.map((s) => data.skills.get(s)!);
       expect(skills.length).toBeGreaterThanOrEqual(8);
@@ -28,7 +38,9 @@ describe('game data', () => {
 
   it('every monster spawned on a map has the documented data fields', () => {
     const slime = data.monsters.get('leaf_slime')!;
-    expect(slime).toMatchObject({ level: 1, element: 'earth', maxHp: 80, attack: 8, defense: 2, exp: 12, jobExp: 8, aiType: 'passive', respawnSeconds: 12 });
+    // Data file values (maxHp 80, attack 8, defense 2) scaled by balance.monsterScale when the game loads.
+    const k = (data.balance as { monsterScale?: { hp?: number; atk?: number; def?: number } }).monsterScale ?? {};
+    expect(slime).toMatchObject({ level: 1, element: 'earth', maxHp: Math.round(80 * (k.hp ?? 1)), attack: Math.round(8 * (k.atk ?? 1)), defense: Math.round(2 * (k.def ?? 1)), exp: 12, jobExp: 8, aiType: 'passive', respawnSeconds: 12 });
   });
 });
 

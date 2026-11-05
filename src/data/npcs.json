@@ -1,52 +1,3171 @@
 [
-  { "id": "lyra", "name": "Lyra Starborn", "title": "Astral Mage",
-    "appearance": { "body": "b", "hairStyle": "long", "hairColor": "#dfe6ff", "eyeColor": "#7fd6ff", "skinTone": "#f6dcc8" },
-    "outfit": { "primary": "#5b3d8f", "secondary": "#2b2347", "accent": "#f2d23a", "style": "robe" },
-    "greeting": ["The stars have been restless since the Fracture...", "Every great adventurer starts somewhere. Yours starts here."],
-    "services": [] },
-  { "id": "garrick", "name": "Garrick Ironhand", "title": "Blacksmith",
-    "appearance": { "body": "a", "hairStyle": "spiky", "hairColor": "#8a3a1e", "eyeColor": "#5a3a1e", "skinTone": "#d9a77e" },
-    "outfit": { "primary": "#6a4a2a", "secondary": "#3a2a1a", "accent": "#c8ccd8", "style": "apron" },
-    "greeting": ["Steel doesn't lie. Neither do I.", "Need something sharper? You've come to the right anvil."],
-    "services": [ { "type": "shop", "shopId": "garrick_smithy", "label": "Browse weapons & armor" } ] },
-  { "id": "seraphine", "name": "Seraphine Vale", "title": "Adventurer's Guild Master",
-    "appearance": { "body": "b", "hairStyle": "ponytail", "hairColor": "#e0a13a", "eyeColor": "#3a8a5a", "skinTone": "#f2d0b4" },
-    "outfit": { "primary": "#8a2a2a", "secondary": "#e8dcc0", "accent": "#f2d23a", "style": "coat" },
-    "greeting": ["Welcome to the Adventurer's Guild of Willowbrook.", "Novices who reach Job Level 10 may take a Job Trial here."],
-    "services": [ { "type": "resetStats", "cost": 0 }, { "type": "resetSkills", "cost": 0 } ] },
-  { "id": "marla", "name": "Marla", "title": "Innkeeper",
-    "appearance": { "body": "b", "hairStyle": "bob", "hairColor": "#6a3a2a", "eyeColor": "#5a3a1e", "skinTone": "#e8bfa0" },
-    "outfit": { "primary": "#c86a5a", "secondary": "#f2ead8", "accent": "#e8dcc0", "style": "apron" },
-    "greeting": ["Rest your feet, dear. The Sleeping Willow always has a bed."],
-    "services": [ { "type": "heal", "cost": 10 }, { "type": "save" } ] },
-  { "id": "pip", "name": "Pip Tumbleweed", "title": "Tool Merchant",
-    "appearance": { "body": "a", "hairStyle": "short", "hairColor": "#d8b46a", "eyeColor": "#3a6aa5", "skinTone": "#f2d0b4" },
-    "outfit": { "primary": "#3a7a8a", "secondary": "#e8dcc0", "accent": "#f2d23a", "style": "tunic" },
-    "greeting": ["Potions! Wings! Everything a hero needs, at prices a hero can afford!"],
-    "services": [ { "type": "shop", "shopId": "pip_tools", "label": "Buy potions & supplies" } ] },
-  { "id": "bram", "name": "Bram", "title": "Storage Keeper",
-    "appearance": { "body": "a", "hairStyle": "short", "hairColor": "#9a9a9a", "eyeColor": "#3a3a3a", "skinTone": "#d9a77e" },
-    "outfit": { "primary": "#4a4a6a", "secondary": "#2a2a3a", "accent": "#f2d23a", "style": "coat" },
-    "greeting": ["Your belongings are safe with me. Small fee, big peace of mind."],
-    "services": [ { "type": "storage" } ] },
-  { "id": "theo", "name": "Old Man Theo", "title": "Village Elder",
-    "appearance": { "body": "a", "hairStyle": "bob", "hairColor": "#f2f2f2", "eyeColor": "#5a5a5a", "skinTone": "#e8bfa0" },
-    "outfit": { "primary": "#6a7a4a", "secondary": "#4a3a2a", "accent": "#e8dcc0", "style": "robe" },
-    "greeting": ["In my day, the stars stayed in the sky where they belonged."],
-    "services": [] },
-  { "id": "rowan", "name": "Guard Rowan", "title": "Village Guard",
-    "appearance": { "body": "a", "hairStyle": "short", "hairColor": "#3a2a1a", "eyeColor": "#3a5a8a", "skinTone": "#d9a77e" },
-    "outfit": { "primary": "#4a6fa5", "secondary": "#b8c4d6", "accent": "#c83a3a", "style": "plate" },
-    "greeting": ["East gate leads to Sunny Meadow. Watch for slimes. And wasps. Mostly wasps."],
-    "services": [] },
-  { "id": "hollis", "name": "Farmer Hollis", "title": "Meadow Farmer",
-    "appearance": { "body": "a", "hairStyle": "spiky", "hairColor": "#c8a26b", "eyeColor": "#3a5a2a", "skinTone": "#d9a77e" },
-    "outfit": { "primary": "#3a6aa5", "secondary": "#c8a26b", "accent": "#f2d23a", "style": "tunic" },
-    "greeting": ["Those rabbits are eating my carrots again!"],
-    "services": [] },
-  { "id": "elwin", "name": "Ranger Elwin", "title": "Forest Warden",
-    "appearance": { "body": "a", "hairStyle": "long", "hairColor": "#2a4a2a", "eyeColor": "#d8b46a", "skinTone": "#e8bfa0" },
-    "outfit": { "primary": "#3f7a45", "secondary": "#8b6b3e", "accent": "#d9c27a", "style": "hood" },
-    "greeting": ["Quiet... the forest is listening.", "Goblins have grown bold since the Thornking claimed the clearing."],
-    "services": [ { "type": "shop", "shopId": "elwin_camp", "label": "Trade supplies" }, { "type": "save" } ] }
+ {
+  "id": "lyra",
+  "name": "Lyra Starborn",
+  "title": "Astral Mage",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#dfe6ff",
+   "eyeColor": "#7fd6ff",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#2b2347",
+   "accent": "#f2d23a",
+   "style": "robe"
+  },
+  "greeting": [
+   "The stars have been restless since the Fracture...",
+   "Every great adventurer starts somewhere. Yours starts here."
+  ],
+  "services": []
+ },
+ {
+  "id": "garrick",
+  "name": "Garrick Ironhand",
+  "title": "Blacksmith & Refiner",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#d9a77e"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "apron"
+  },
+  "greeting": [
+   "Steel doesn't lie. Neither do I.",
+   "Need something sharper? You've come to the right anvil."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "garrick_smithy",
+    "label": "Browse weapons & armor"
+   },
+   {
+    "type": "refine"
+   },
+   {
+    "type": "forge"
+   }
+  ]
+ },
+ {
+  "id": "seraphine",
+  "name": "Seraphine Vale",
+  "title": "Adventurer's Guild Master",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#e0a13a",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f2d0b4"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "coat"
+  },
+  "greeting": [
+   "Welcome to the Adventurer's Guild of Willowbrook.",
+   "Novices who reach Job Level 10 may take a Job Trial here."
+  ],
+  "services": [
+   {
+    "type": "resetStats",
+    "cost": 0
+   },
+   {
+    "type": "resetSkills",
+    "cost": 0
+   }
+  ]
+ },
+ {
+  "id": "marla",
+  "name": "Marla",
+  "title": "Innkeeper",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#6a3a2a",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#e8bfa0"
+  },
+  "outfit": {
+   "primary": "#c86a5a",
+   "secondary": "#f2ead8",
+   "accent": "#e8dcc0",
+   "style": "apron"
+  },
+  "greeting": [
+   "Rest your feet, dear. The Sleeping Willow always has a bed."
+  ],
+  "services": [
+   {
+    "type": "heal",
+    "cost": 10
+   },
+   {
+    "type": "save"
+   }
+  ]
+ },
+ {
+  "id": "pip",
+  "name": "Pip Tumbleweed",
+  "title": "Tool Merchant",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#d8b46a",
+   "eyeColor": "#3a6aa5",
+   "skinTone": "#f2d0b4"
+  },
+  "outfit": {
+   "primary": "#3a7a8a",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Potions! Wings! Everything a hero needs, at prices a hero can afford!"
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "pip_tools",
+    "label": "Buy potions & supplies"
+   }
+  ]
+ },
+ {
+  "id": "bram",
+  "name": "Bram",
+  "title": "Storage Keeper",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#9a9a9a",
+   "eyeColor": "#3a3a3a",
+   "skinTone": "#d9a77e"
+  },
+  "outfit": {
+   "primary": "#4a4a6a",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "coat"
+  },
+  "greeting": [
+   "Your belongings are safe with me. Small fee, big peace of mind."
+  ],
+  "services": [
+   {
+    "type": "storage"
+   }
+  ]
+ },
+ {
+  "id": "theo",
+  "name": "Old Man Theo",
+  "title": "Village Elder",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "bob",
+   "hairColor": "#f2f2f2",
+   "eyeColor": "#5a5a5a",
+   "skinTone": "#e8bfa0"
+  },
+  "outfit": {
+   "primary": "#6a7a4a",
+   "secondary": "#4a3a2a",
+   "accent": "#e8dcc0",
+   "style": "robe"
+  },
+  "greeting": [
+   "In my day, the stars stayed in the sky where they belonged."
+  ],
+  "services": []
+ },
+ {
+  "id": "rowan",
+  "name": "Guard Rowan",
+  "title": "Village Guard",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#3a2a1a",
+   "eyeColor": "#3a5a8a",
+   "skinTone": "#d9a77e"
+  },
+  "outfit": {
+   "primary": "#4a6fa5",
+   "secondary": "#b8c4d6",
+   "accent": "#c83a3a",
+   "style": "plate"
+  },
+  "greeting": [
+   "East gate leads to Sunny Meadow. Watch for slimes. And wasps. Mostly wasps."
+  ],
+  "services": []
+ },
+ {
+  "id": "hollis",
+  "name": "Farmer Hollis",
+  "title": "Meadow Farmer",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#c8a26b",
+   "eyeColor": "#3a5a2a",
+   "skinTone": "#d9a77e"
+  },
+  "outfit": {
+   "primary": "#3a6aa5",
+   "secondary": "#c8a26b",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Those rabbits are eating my carrots again!"
+  ],
+  "services": []
+ },
+ {
+  "id": "elwin",
+  "name": "Ranger Elwin",
+  "title": "Forest Warden",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "long",
+   "hairColor": "#2a4a2a",
+   "eyeColor": "#d8b46a",
+   "skinTone": "#e8bfa0"
+  },
+  "outfit": {
+   "primary": "#3f7a45",
+   "secondary": "#8b6b3e",
+   "accent": "#d9c27a",
+   "style": "hood"
+  },
+  "greeting": [
+   "Quiet... the forest is listening.",
+   "Goblins have grown bold since the Thornking claimed the clearing."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "elwin_camp",
+    "label": "Trade supplies"
+   },
+   {
+    "type": "save"
+   }
+  ]
+ },
+ {
+  "id": "aurelion_courier",
+  "name": "Courier Nadia",
+  "title": "Courier Guild Service",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "bob",
+   "hairColor": "#e8d090",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "coat"
+  },
+  "greeting": [
+   "Welcome to Aurelion! The Courier Guild can save your position, keep your belongings, or send you to another town."
+  ],
+  "services": [
+   {
+    "type": "save"
+   },
+   {
+    "type": "storage"
+   },
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "willowbrook",
+      "spawn": "default",
+      "cost": 300
+     },
+     {
+      "mapId": "fernhollow",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "arcanthe",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "sandara",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "tidewatch",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "frostholm",
+      "spawn": "default",
+      "cost": 600
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "aurelion_merchant",
+  "name": "Zahra",
+  "title": "Tool Merchant",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#e8d090",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Potions, wings, tonics — everything a traveller needs."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "aurelion_tools",
+    "label": "Buy potions & supplies"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "aurelion_smith",
+  "name": "Yara",
+  "title": "Blacksmith & Refiner",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#e8d090",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "apron"
+  },
+  "greeting": [
+   "Fine steel, fair prices."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "aurelion_arms",
+    "label": "Browse weapons & armor"
+   },
+   {
+    "type": "refine"
+   },
+   {
+    "type": "forge"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "aurelion_innkeeper",
+  "name": "Sabine",
+  "title": "Innkeeper",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "A warm bed and a hot meal, traveller?"
+  ],
+  "services": [
+   {
+    "type": "heal",
+    "cost": 20
+   },
+   {
+    "type": "save"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_knight",
+  "name": "Commander Aldric",
+  "title": "Knight Guild Master",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "spiky",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "plate"
+  },
+  "greeting": [
+   "So you wish to walk the path of the Knight? Prove you've reached Job Level 10 as a Novice and I will accept you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "knight"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_cleric",
+  "name": "Mother Seraphine",
+  "title": "Cleric of the Dawn Chapel",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "robe"
+  },
+  "greeting": [
+   "So you wish to walk the path of the Cleric? Prove you've reached Job Level 10 as a Novice and I will accept you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "cleric"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_courier",
+  "name": "Courier Rosa",
+  "title": "Courier Guild Service",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "ponytail",
+   "hairColor": "#e8d090",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "coat"
+  },
+  "greeting": [
+   "Welcome to Village! The Courier Guild can save your position, keep your belongings, or send you to another town."
+  ],
+  "services": [
+   {
+    "type": "save"
+   },
+   {
+    "type": "storage"
+   },
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "willowbrook",
+      "spawn": "default",
+      "cost": 300
+     },
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "arcanthe",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "sandara",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "tidewatch",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "frostholm",
+      "spawn": "default",
+      "cost": 600
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_merchant",
+  "name": "Fenwick",
+  "title": "Tool Merchant",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "ponytail",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Potions, wings, tonics — everything a traveller needs."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "fernhollow_tools",
+    "label": "Buy potions & supplies"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_smith",
+  "name": "Darius",
+  "title": "Armorer",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "ponytail",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "apron"
+  },
+  "greeting": [
+   "Fine steel, fair prices."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "fernhollow_arms",
+    "label": "Browse weapons & armor"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_innkeeper",
+  "name": "Amos",
+  "title": "Innkeeper",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "ponytail",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#e8dcc0",
+   "accent": "#c8ccd8",
+   "style": "tunic"
+  },
+  "greeting": [
+   "A warm bed and a hot meal, traveller?"
+  ],
+  "services": [
+   {
+    "type": "heal",
+    "cost": 20
+   },
+   {
+    "type": "save"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_ranger",
+  "name": "Ranger Sylvi",
+  "title": "Ranger Guild Master",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#2a2a3a",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "hood"
+  },
+  "greeting": [
+   "So you wish to walk the path of the Ranger? Prove you've reached Job Level 10 as a Novice and I will accept you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "ranger"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_courier",
+  "name": "Courier Tessa",
+  "title": "Courier Guild Service",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#a35d30",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "coat"
+  },
+  "greeting": [
+   "Welcome to Arcanthe! The Courier Guild can save your position, keep your belongings, or send you to another town."
+  ],
+  "services": [
+   {
+    "type": "save"
+   },
+   {
+    "type": "storage"
+   },
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "willowbrook",
+      "spawn": "default",
+      "cost": 300
+     },
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "fernhollow",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "sandara",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "tidewatch",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "frostholm",
+      "spawn": "default",
+      "cost": 600
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_merchant",
+  "name": "Hilde",
+  "title": "Tool Merchant",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#e8d090",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#e8dcc0",
+   "accent": "#e8dcc0",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Potions, wings, tonics — everything a traveller needs."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "arcanthe_tools",
+    "label": "Buy potions & supplies"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_smith",
+  "name": "Ulf",
+  "title": "Armorer",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#e8d090",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "apron"
+  },
+  "greeting": [
+   "Fine steel, fair prices."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "arcanthe_arms",
+    "label": "Browse weapons & armor"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_innkeeper",
+  "name": "Fae",
+  "title": "Innkeeper",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "tunic"
+  },
+  "greeting": [
+   "A warm bed and a hot meal, traveller?"
+  ],
+  "services": [
+   {
+    "type": "heal",
+    "cost": 20
+   },
+   {
+    "type": "save"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_enchanter",
+  "name": "Enchantress Viveka",
+  "title": "Equipment Enchanter",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "robe"
+  },
+  "greeting": [
+   "I weave hidden power into equipment. One more option, or a fresh roll of them all, for a price."
+  ],
+  "services": [
+   {
+    "type": "enchant"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_mage",
+  "name": "Magister Ophelia",
+  "title": "Mage Guild Master",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#2a2a3a",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "robe"
+  },
+  "greeting": [
+   "So you wish to walk the path of the Mage? Prove you've reached Job Level 10 as a Novice and I will accept you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "mage"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sandara_courier",
+  "name": "Courier Rosa",
+  "title": "Courier Guild Service",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#2a2a3a",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "coat"
+  },
+  "greeting": [
+   "Welcome to Sandara! The Courier Guild can save your position, keep your belongings, or send you to another town."
+  ],
+  "services": [
+   {
+    "type": "save"
+   },
+   {
+    "type": "storage"
+   },
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "willowbrook",
+      "spawn": "default",
+      "cost": 300
+     },
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "fernhollow",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "arcanthe",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "tidewatch",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "frostholm",
+      "spawn": "default",
+      "cost": 600
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sandara_merchant",
+  "name": "Pell",
+  "title": "Tool Merchant",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Potions, wings, tonics — everything a traveller needs."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "sandara_tools",
+    "label": "Buy potions & supplies"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sandara_smith",
+  "name": "Torvald",
+  "title": "Blacksmith & Refiner",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#e8dcc0",
+   "accent": "#c8ccd8",
+   "style": "apron"
+  },
+  "greeting": [
+   "Fine steel, fair prices."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "sandara_arms",
+    "label": "Browse weapons & armor"
+   },
+   {
+    "type": "refine"
+   },
+   {
+    "type": "forge"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sandara_innkeeper",
+  "name": "Gunnar",
+  "title": "Innkeeper",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "A warm bed and a hot meal, traveller?"
+  ],
+  "services": [
+   {
+    "type": "heal",
+    "cost": 20
+   },
+   {
+    "type": "save"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_rogue",
+  "name": "Vex the Quiet",
+  "title": "Rogue Guild Master",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "coat"
+  },
+  "greeting": [
+   "So you wish to walk the path of the Rogue? Prove you've reached Job Level 10 as a Novice and I will accept you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "rogue"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_courier",
+  "name": "Courier Tessa",
+  "title": "Courier Guild Service",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#e8dcc0",
+   "accent": "#e8dcc0",
+   "style": "coat"
+  },
+  "greeting": [
+   "Welcome to Tidewatch! The Courier Guild can save your position, keep your belongings, or send you to another town."
+  ],
+  "services": [
+   {
+    "type": "save"
+   },
+   {
+    "type": "storage"
+   },
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "willowbrook",
+      "spawn": "default",
+      "cost": 300
+     },
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "fernhollow",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "arcanthe",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "sandara",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "frostholm",
+      "spawn": "default",
+      "cost": 600
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_merchant",
+  "name": "Bertram",
+  "title": "Tool Merchant",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#e8dcc0",
+   "accent": "#e8dcc0",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Potions, wings, tonics — everything a traveller needs."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "tidewatch_tools",
+    "label": "Buy potions & supplies"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_smith",
+  "name": "Darius",
+  "title": "Armorer",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "apron"
+  },
+  "greeting": [
+   "Fine steel, fair prices."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "tidewatch_arms",
+    "label": "Browse weapons & armor"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_innkeeper",
+  "name": "Fae",
+  "title": "Innkeeper",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#e8d090",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#2a2a3a",
+   "accent": "#c8ccd8",
+   "style": "tunic"
+  },
+  "greeting": [
+   "A warm bed and a hot meal, traveller?"
+  ],
+  "services": [
+   {
+    "type": "heal",
+    "cost": 20
+   },
+   {
+    "type": "save"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_merchant",
+  "name": "Guildmaster Hollis",
+  "title": "Merchant Guild Master",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "apron"
+  },
+  "greeting": [
+   "So you wish to walk the path of the Merchant? Prove you've reached Job Level 10 as a Novice and I will accept you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "merchant"
+    ]
+   },
+   {
+    "type": "cart",
+    "cost": 800
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frostholm_courier",
+  "name": "Courier Mira",
+  "title": "Courier Guild Service",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "coat"
+  },
+  "greeting": [
+   "Welcome to Frostholm! The Courier Guild can save your position, keep your belongings, or send you to another town."
+  ],
+  "services": [
+   {
+    "type": "save"
+   },
+   {
+    "type": "storage"
+   },
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "willowbrook",
+      "spawn": "default",
+      "cost": 300
+     },
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "fernhollow",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "arcanthe",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "sandara",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "tidewatch",
+      "spawn": "default",
+      "cost": 600
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frostholm_merchant",
+  "name": "Odile",
+  "title": "Tool Merchant",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Potions, wings, tonics — everything a traveller needs."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "frostholm_tools",
+    "label": "Buy potions & supplies"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frostholm_smith",
+  "name": "Bruna",
+  "title": "Blacksmith & Refiner",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "apron"
+  },
+  "greeting": [
+   "Fine steel, fair prices."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "frostholm_arms",
+    "label": "Browse weapons & armor"
+   },
+   {
+    "type": "refine"
+   },
+   {
+    "type": "forge"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frostholm_innkeeper",
+  "name": "Sabine",
+  "title": "Innkeeper",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#2a2a3a",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "tunic"
+  },
+  "greeting": [
+   "A warm bed and a hot meal, traveller?"
+  ],
+  "services": [
+   {
+    "type": "heal",
+    "cost": 20
+   },
+   {
+    "type": "save"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_petkeeper",
+  "name": "Pet Keeper Lumi",
+  "title": "Pet Keeper",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#2a2a3a",
+   "accent": "#c8ccd8",
+   "style": "hood"
+  },
+  "greeting": [
+   "Tame a monster with its lure: weaken it first, the lower its HP the better your chance. Feed your pet when it is hungry — never when it is full — and it will grow Loyal."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "fernhollow_pets",
+    "label": "Lures & pet food"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "willowbrook_courier",
+  "name": "Courier Fiona",
+  "title": "Courier Guild Service",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "long",
+   "hairColor": "#e8d090",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "coat"
+  },
+  "greeting": [
+   "The Courier Guild connects every town in Veyloria. Where to?"
+  ],
+  "services": [
+   {
+    "type": "save"
+   },
+   {
+    "type": "storage"
+   },
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "fernhollow",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "arcanthe",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "sandara",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "tidewatch",
+      "spawn": "default",
+      "cost": 600
+     },
+     {
+      "mapId": "frostholm",
+      "spawn": "default",
+      "cost": 600
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_astrologer",
+  "name": "Astrologer Nim",
+  "title": "Reader of the Rune Constellation",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#2a2a3a",
+   "accent": "#c8ccd8",
+   "style": "robe"
+  },
+  "greeting": [
+   "From Base Level 30 the stars answer you: one rune point every two levels. Spend them in the Rune window (N). For 10,000 Luma I can clear the sky and give the points back."
+  ],
+  "services": [
+   {
+    "type": "runeReset",
+    "cost": 10000
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "aurelion_stable",
+  "name": "Stablemaster Rook",
+  "title": "War-drake Stable",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "bob",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "apron"
+  },
+  "greeting": [
+   "Knights ride war-drakes: faster, and they carry 1,000 more weight, but you swing slower until you train Drake Riding."
+  ],
+  "services": [
+   {
+    "type": "stable",
+    "cost": 2500
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_dragoon",
+  "name": "Sir Caldus",
+  "title": "Dragoon Captain",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "spiky",
+   "hairColor": "#a35d30",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#e8dcc0",
+   "accent": "#e8dcc0",
+   "style": "plate"
+  },
+  "greeting": [
+   "Knights who ride war-drakes and break lines with the spear. Come back as a Knight of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "dragoon"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_templar",
+  "name": "Dame Ysolde",
+  "title": "Templar Commander",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "plate"
+  },
+  "greeting": [
+   "Shield-bearing knights sworn to the dawn; holy strikes and unbreakable defence. Come back as a Knight of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "templar"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_beastmaster",
+  "name": "Old Brannoc",
+  "title": "Beastmaster Elder",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "hood"
+  },
+  "greeting": [
+   "Rangers who hunt with traps and a trained falcon. Come back as a Ranger of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "beastmaster"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_minstrel",
+  "name": "Lysander",
+  "title": "Master of Songs",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "ponytail",
+   "hairColor": "#a35d30",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "coat"
+  },
+  "greeting": [
+   "Travelling musicians whose songs strengthen and whose arrows sing. Come back as a Ranger of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "minstrel"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_sorcerer",
+  "name": "Archmagus Theron",
+  "title": "Sorcerer Council",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "robe"
+  },
+  "greeting": [
+   "Mages who master storms, quakes and walls of ice. Come back as a Mage of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "sorcerer"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_sage",
+  "name": "Scholar Imre",
+  "title": "Sage Academy Dean",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#a35d30",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "robe"
+  },
+  "greeting": [
+   "Scholars of every element who endow weapons and hit with the book. Come back as a Mage of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "sage"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_bishop",
+  "name": "Bishop Aurenne",
+  "title": "Bishop of the Dawn",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "ponytail",
+   "hairColor": "#2a2a3a",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "robe"
+  },
+  "greeting": [
+   "High clerics: great heals, blessings and holy judgement. Come back as a Cleric of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "bishop"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_ascetic",
+  "name": "Master Kaito",
+  "title": "Ascetic of the Peak",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "long",
+   "hairColor": "#e8d090",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "tunic"
+  },
+  "greeting": [
+   "Clerics who left the chapel for the mountain, fighting with fists and spirit. Come back as a Cleric of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "ascetic"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_shadowblade",
+  "name": "The Veiled One",
+  "title": "Shadowblade Guild",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#a35d30",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "coat"
+  },
+  "greeting": [
+   "Rogues who kill from the shadows with katars and poison. Come back as a Rogue of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "shadowblade"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_outlaw",
+  "name": "Jax Silverhand",
+  "title": "Outlaw Boss",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "ponytail",
+   "hairColor": "#a35d30",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "coat"
+  },
+  "greeting": [
+   "Rogues who rob, strip and outsmart, with blade or bow. Come back as a Rogue of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "outlaw"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_artisan",
+  "name": "Forge-master Brenna",
+  "title": "Artisan Guild",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "apron"
+  },
+  "greeting": [
+   "Merchants turned smiths: they forge better and fight with heavy weapons. Come back as a Merchant of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "artisan"
+    ]
+   },
+   {
+    "type": "cart",
+    "cost": 800
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "guild_alchemist",
+  "name": "Professor Quill",
+  "title": "Alchemy Guild",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "long",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#e8dcc0",
+   "accent": "#e8dcc0",
+   "style": "apron"
+  },
+  "greeting": [
+   "Merchants of the laboratory: acid, fire flasks and an artificial life-form. Come back as a Merchant of Job Level 40 and I will promote you."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "alchemist"
+    ]
+   },
+   {
+    "type": "cart",
+    "cost": 800
+   },
+   {
+    "type": "shop",
+    "shopId": "tidewatch_alchemy",
+    "label": "Alchemy supplies"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "oracle_rebirth",
+  "name": "Oracle Seraphel",
+  "title": "Oracle of Rebirth",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "bob",
+   "hairColor": "#a35d30",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "robe"
+  },
+  "greeting": [
+   "At Base Level 99 and Job Level 50 a second job may be reborn: you start again as a High Novice with 100 stat points, and your body grows stronger (+25% HP and MP).",
+   "Reborn ones return to me to take their High job, and later the transcendent job of the path they walked before."
+  ],
+  "services": [
+   {
+    "type": "rebirth"
+   },
+   {
+    "type": "jobChange",
+    "classIds": [
+     "high_knight",
+     "high_ranger",
+     "high_mage",
+     "high_cleric",
+     "high_rogue",
+     "high_merchant",
+     "dragon_lord",
+     "high_templar",
+     "wildlord",
+     "maestro",
+     "archsorcerer",
+     "archsage",
+     "archbishop",
+     "grandmaster",
+     "shadow_reaper",
+     "phantom_outlaw",
+     "mastersmith",
+     "grand_alchemist"
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "willowbrook_jobmaster",
+  "name": "Master Corvin",
+  "title": "Job Master",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "long",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "robe"
+  },
+  "greeting": [
+   "I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "knight",
+     "ranger",
+     "mage",
+     "cleric",
+     "rogue",
+     "merchant",
+     "dragoon",
+     "templar",
+     "beastmaster",
+     "minstrel",
+     "sorcerer",
+     "sage",
+     "bishop",
+     "ascetic",
+     "shadowblade",
+     "outlaw",
+     "artisan",
+     "alchemist",
+     "high_knight",
+     "high_ranger",
+     "high_mage",
+     "high_cleric",
+     "high_rogue",
+     "high_merchant",
+     "dragon_lord",
+     "high_templar",
+     "wildlord",
+     "maestro",
+     "archsorcerer",
+     "archsage",
+     "archbishop",
+     "grandmaster",
+     "shadow_reaper",
+     "phantom_outlaw",
+     "mastersmith",
+     "grand_alchemist"
+    ]
+   },
+   {
+    "type": "rebirth"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "aurelion_jobmaster",
+  "name": "Master Elodie",
+  "title": "Job Master",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "robe"
+  },
+  "greeting": [
+   "I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "knight",
+     "ranger",
+     "mage",
+     "cleric",
+     "rogue",
+     "merchant",
+     "dragoon",
+     "templar",
+     "beastmaster",
+     "minstrel",
+     "sorcerer",
+     "sage",
+     "bishop",
+     "ascetic",
+     "shadowblade",
+     "outlaw",
+     "artisan",
+     "alchemist",
+     "high_knight",
+     "high_ranger",
+     "high_mage",
+     "high_cleric",
+     "high_rogue",
+     "high_merchant",
+     "dragon_lord",
+     "high_templar",
+     "wildlord",
+     "maestro",
+     "archsorcerer",
+     "archsage",
+     "archbishop",
+     "grandmaster",
+     "shadow_reaper",
+     "phantom_outlaw",
+     "mastersmith",
+     "grand_alchemist"
+    ]
+   },
+   {
+    "type": "rebirth"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_jobmaster",
+  "name": "Master Faramir",
+  "title": "Job Master",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "robe"
+  },
+  "greeting": [
+   "I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "knight",
+     "ranger",
+     "mage",
+     "cleric",
+     "rogue",
+     "merchant",
+     "dragoon",
+     "templar",
+     "beastmaster",
+     "minstrel",
+     "sorcerer",
+     "sage",
+     "bishop",
+     "ascetic",
+     "shadowblade",
+     "outlaw",
+     "artisan",
+     "alchemist",
+     "high_knight",
+     "high_ranger",
+     "high_mage",
+     "high_cleric",
+     "high_rogue",
+     "high_merchant",
+     "dragon_lord",
+     "high_templar",
+     "wildlord",
+     "maestro",
+     "archsorcerer",
+     "archsage",
+     "archbishop",
+     "grandmaster",
+     "shadow_reaper",
+     "phantom_outlaw",
+     "mastersmith",
+     "grand_alchemist"
+    ]
+   },
+   {
+    "type": "rebirth"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_jobmaster",
+  "name": "Master Ilse",
+  "title": "Job Master",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "ponytail",
+   "hairColor": "#2a2a3a",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "robe"
+  },
+  "greeting": [
+   "I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "knight",
+     "ranger",
+     "mage",
+     "cleric",
+     "rogue",
+     "merchant",
+     "dragoon",
+     "templar",
+     "beastmaster",
+     "minstrel",
+     "sorcerer",
+     "sage",
+     "bishop",
+     "ascetic",
+     "shadowblade",
+     "outlaw",
+     "artisan",
+     "alchemist",
+     "high_knight",
+     "high_ranger",
+     "high_mage",
+     "high_cleric",
+     "high_rogue",
+     "high_merchant",
+     "dragon_lord",
+     "high_templar",
+     "wildlord",
+     "maestro",
+     "archsorcerer",
+     "archsage",
+     "archbishop",
+     "grandmaster",
+     "shadow_reaper",
+     "phantom_outlaw",
+     "mastersmith",
+     "grand_alchemist"
+    ]
+   },
+   {
+    "type": "rebirth"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sandara_jobmaster",
+  "name": "Master Oren",
+  "title": "Job Master",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "robe"
+  },
+  "greeting": [
+   "I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "knight",
+     "ranger",
+     "mage",
+     "cleric",
+     "rogue",
+     "merchant",
+     "dragoon",
+     "templar",
+     "beastmaster",
+     "minstrel",
+     "sorcerer",
+     "sage",
+     "bishop",
+     "ascetic",
+     "shadowblade",
+     "outlaw",
+     "artisan",
+     "alchemist",
+     "high_knight",
+     "high_ranger",
+     "high_mage",
+     "high_cleric",
+     "high_rogue",
+     "high_merchant",
+     "dragon_lord",
+     "high_templar",
+     "wildlord",
+     "maestro",
+     "archsorcerer",
+     "archsage",
+     "archbishop",
+     "grandmaster",
+     "shadow_reaper",
+     "phantom_outlaw",
+     "mastersmith",
+     "grand_alchemist"
+    ]
+   },
+   {
+    "type": "rebirth"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_jobmaster",
+  "name": "Master Talia",
+  "title": "Job Master",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "bob",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#e8dcc0",
+   "accent": "#c8ccd8",
+   "style": "robe"
+  },
+  "greeting": [
+   "I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "knight",
+     "ranger",
+     "mage",
+     "cleric",
+     "rogue",
+     "merchant",
+     "dragoon",
+     "templar",
+     "beastmaster",
+     "minstrel",
+     "sorcerer",
+     "sage",
+     "bishop",
+     "ascetic",
+     "shadowblade",
+     "outlaw",
+     "artisan",
+     "alchemist",
+     "high_knight",
+     "high_ranger",
+     "high_mage",
+     "high_cleric",
+     "high_rogue",
+     "high_merchant",
+     "dragon_lord",
+     "high_templar",
+     "wildlord",
+     "maestro",
+     "archsorcerer",
+     "archsage",
+     "archbishop",
+     "grandmaster",
+     "shadow_reaper",
+     "phantom_outlaw",
+     "mastersmith",
+     "grand_alchemist"
+    ]
+   },
+   {
+    "type": "rebirth"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frostholm_jobmaster",
+  "name": "Master Wendel",
+  "title": "Job Master",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#2a2a3a",
+   "accent": "#f2d23a",
+   "style": "robe"
+  },
+  "greeting": [
+   "I can change your class here: first job at Job Level 10, second job at Job Level 40, rebirth at Base 99 / Job 50, then the High and transcendent jobs."
+  ],
+  "services": [
+   {
+    "type": "jobChange",
+    "classIds": [
+     "knight",
+     "ranger",
+     "mage",
+     "cleric",
+     "rogue",
+     "merchant",
+     "dragoon",
+     "templar",
+     "beastmaster",
+     "minstrel",
+     "sorcerer",
+     "sage",
+     "bishop",
+     "ascetic",
+     "shadowblade",
+     "outlaw",
+     "artisan",
+     "alchemist",
+     "high_knight",
+     "high_ranger",
+     "high_mage",
+     "high_cleric",
+     "high_rogue",
+     "high_merchant",
+     "dragon_lord",
+     "high_templar",
+     "wildlord",
+     "maestro",
+     "archsorcerer",
+     "archsage",
+     "archbishop",
+     "grandmaster",
+     "shadow_reaper",
+     "phantom_outlaw",
+     "mastersmith",
+     "grand_alchemist"
+    ]
+   },
+   {
+    "type": "rebirth"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "aurelion_arena",
+  "name": "Arena Master Kord",
+  "title": "Proving Grounds & Castle Veyl",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "bob",
+   "hairColor": "#2a2a3a",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#e8dcc0",
+   "accent": "#e8dcc0",
+   "style": "plate"
+  },
+  "greeting": [
+   "The Proving Grounds and Castle Veyl are for online play: other players can fight you there. Castle Veyl opens for the guild war every evening, 20:00–21:00 server time."
+  ],
+  "services": [
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "proving_grounds",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "castle_veyl",
+      "spawn": "default",
+      "cost": 0
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "training_master",
+  "name": "Drillmaster Brann",
+  "title": "Training Grounds",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#2a2a3a",
+   "accent": "#c8ccd8",
+   "style": "plate"
+  },
+  "greeting": [
+   "The Training Grounds have dummies that never hit back — test your damage there."
+  ],
+  "services": [
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "training_grounds",
+      "spawn": "default",
+      "cost": 0
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arena_gatekeeper",
+  "name": "Gatekeeper Varr",
+  "title": "Shadow Arena",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#e8d090",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "plate"
+  },
+  "greeting": [
+   "Beyond this gate lies the Shadow Arena. The Shadow Keeper inside summons fighters as strong as you are."
+  ],
+  "services": [
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "shadow_arena",
+      "spawn": "default",
+      "cost": 0
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "shadow_arena_master",
+  "name": "Shadow Keeper Nyx",
+  "title": "Shadow Arena",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#a35d30",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "robe"
+  },
+  "greeting": [
+   "Pick a mode — 1v1, 3v3, 5v5 or 10v10 — the enemy jobs and the difficulty. You may hire shadows for your own team, or go in alone."
+  ],
+  "services": [
+   {
+    "type": "shadowArena",
+    "maxCount": 10
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "mvp_guide",
+  "name": "MVP Herald Orin",
+  "title": "Warp to the MVP Sanctum",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#e8d090",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "plate"
+  },
+  "greeting": [
+   "Ten great bosses take turns in the MVP Sanctum. Check the MVP timers in the menu to see who is out, then I can send you there."
+  ],
+  "services": [
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "mvp_sanctum",
+      "spawn": "default",
+      "cost": 0
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "mvp_keeper",
+  "name": "Sanctum Keeper Ilsa",
+  "title": "Way home from the MVP Sanctum",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#a35d30",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#e8dcc0",
+   "accent": "#c8ccd8",
+   "style": "robe"
+  },
+  "greeting": [
+   "Back to town? I can send you to any of them."
+  ],
+  "services": [
+   {
+    "type": "warp",
+    "destinations": [
+     {
+      "mapId": "willowbrook",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "aurelion",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "fernhollow",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "arcanthe",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "sandara",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "tidewatch",
+      "spawn": "default",
+      "cost": 0
+     },
+     {
+      "mapId": "frostholm",
+      "spawn": "default",
+      "cost": 0
+     }
+    ]
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "spire_warden",
+  "name": "Warden Isolde",
+  "title": "Keeper of the Endless Spire",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#2a2a3a",
+   "accent": "#c8ccd8",
+   "style": "robe"
+  },
+  "greeting": [
+   "A hundred floors, each sealed until every monster on it is defeated. Monsters grow stronger every floor and an elite guards every tenth. Rewards at floors 25, 50 and 75, and at the top. 3 hours; once per day."
+  ],
+  "services": [
+   {
+    "type": "instance",
+    "instanceId": "endless_spire"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "crypt_keeper",
+  "name": "Brother Halvard",
+  "title": "Keeper of the Sealed Crypt",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "bob",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "robe"
+  },
+  "greeting": [
+   "Four sealed rooms of restless dead and a Revenant guardian at the bottom. 20 minutes; once per hour."
+  ],
+  "services": [
+   {
+    "type": "instance",
+    "instanceId": "sealed_crypt"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "willowbrook_trader",
+  "name": "Trader Moss",
+  "title": "Market Trader",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#a35d30",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "apron"
+  },
+  "greeting": [
+   "I buy anything — at today's price. Prices change every hour, and my wares change every two hours: gear of every level, potions and more. Check the graph before you trade."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "moss_wares",
+    "label": "Browse today's wares"
+   },
+   {
+    "type": "trader"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "willowbrook_market",
+  "name": "Market Hall Clerk",
+  "title": "Market Hall",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#e8d090",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "coat"
+  },
+  "greeting": [
+   "The Market Hall lists goods from other adventurers. Only real players buy here, so price your goods well."
+  ],
+  "services": [
+   {
+    "type": "market"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "aurelion_trader",
+  "name": "Trader Ilka",
+  "title": "Goods Trader",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "bob",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "apron"
+  },
+  "greeting": [
+   "Starter goods at fair, fixed prices. For market prices, see Trader Moss in Willowbrook."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "starter_goods",
+    "label": "Buy starter goods"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "aurelion_market",
+  "name": "Market Hall Clerk",
+  "title": "Market Hall",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#9a6a4a"
+  },
+  "outfit": {
+   "primary": "#c8a26b",
+   "secondary": "#e8dcc0",
+   "accent": "#c8ccd8",
+   "style": "coat"
+  },
+  "greeting": [
+   "The Market Hall lists goods from other adventurers. Only real players buy here, so price your goods well."
+  ],
+  "services": [
+   {
+    "type": "market"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_trader",
+  "name": "Trader Bodo",
+  "title": "Goods Trader",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "long",
+   "hairColor": "#2a2a3a",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#2a2a3a",
+   "accent": "#e8dcc0",
+   "style": "apron"
+  },
+  "greeting": [
+   "Starter goods at fair, fixed prices. For market prices, see Trader Moss in Willowbrook."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "starter_goods",
+    "label": "Buy starter goods"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "fernhollow_market",
+  "name": "Market Hall Clerk",
+  "title": "Market Hall",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "coat"
+  },
+  "greeting": [
+   "The Market Hall lists goods from other adventurers. Only real players buy here, so price your goods well."
+  ],
+  "services": [
+   {
+    "type": "market"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_trader",
+  "name": "Trader Nesrin",
+  "title": "Goods Trader",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "short",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#e8dcc0",
+   "accent": "#f2d23a",
+   "style": "apron"
+  },
+  "greeting": [
+   "Starter goods at fair, fixed prices. For market prices, see Trader Moss in Willowbrook."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "starter_goods",
+    "label": "Buy starter goods"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "arcanthe_market",
+  "name": "Market Hall Clerk",
+  "title": "Market Hall",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "long",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#3a2a1a",
+   "accent": "#e8dcc0",
+   "style": "coat"
+  },
+  "greeting": [
+   "The Market Hall lists goods from other adventurers. Only real players buy here, so price your goods well."
+  ],
+  "services": [
+   {
+    "type": "market"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sandara_trader",
+  "name": "Trader Quay",
+  "title": "Goods Trader",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#c8c8d8",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#2a6a4a",
+   "secondary": "#e8dcc0",
+   "accent": "#c8ccd8",
+   "style": "apron"
+  },
+  "greeting": [
+   "Starter goods at fair, fixed prices. For market prices, see Trader Moss in Willowbrook."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "starter_goods",
+    "label": "Buy starter goods"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "sandara_market",
+  "name": "Market Hall Clerk",
+  "title": "Market Hall",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "long",
+   "hairColor": "#8a3a1e",
+   "eyeColor": "#5a3a1e",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#f2d23a",
+   "style": "coat"
+  },
+  "greeting": [
+   "The Market Hall lists goods from other adventurers. Only real players buy here, so price your goods well."
+  ],
+  "services": [
+   {
+    "type": "market"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_trader",
+  "name": "Trader Ruta",
+  "title": "Goods Trader",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "ponytail",
+   "hairColor": "#3a2a1e",
+   "eyeColor": "#4f8fe0",
+   "skinTone": "#c89a78"
+  },
+  "outfit": {
+   "primary": "#6a4a2a",
+   "secondary": "#e8dcc0",
+   "accent": "#e8dcc0",
+   "style": "apron"
+  },
+  "greeting": [
+   "Starter goods at fair, fixed prices. For market prices, see Trader Moss in Willowbrook."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "starter_goods",
+    "label": "Buy starter goods"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "tidewatch_market",
+  "name": "Market Hall Clerk",
+  "title": "Market Hall",
+  "appearance": {
+   "body": "b",
+   "hairStyle": "spiky",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#8a2a2a",
+   "secondary": "#3a2a1a",
+   "accent": "#c8ccd8",
+   "style": "coat"
+  },
+  "greeting": [
+   "The Market Hall lists goods from other adventurers. Only real players buy here, so price your goods well."
+  ],
+  "services": [
+   {
+    "type": "market"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frostholm_trader",
+  "name": "Trader Vane",
+  "title": "Goods Trader",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "short",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#8a3ad8",
+   "skinTone": "#e8c0a0"
+  },
+  "outfit": {
+   "primary": "#3a6ab8",
+   "secondary": "#e8dcc0",
+   "accent": "#c8ccd8",
+   "style": "apron"
+  },
+  "greeting": [
+   "Starter goods at fair, fixed prices. For market prices, see Trader Moss in Willowbrook."
+  ],
+  "services": [
+   {
+    "type": "shop",
+    "shopId": "starter_goods",
+    "label": "Buy starter goods"
+   }
+  ],
+  "generated": true
+ },
+ {
+  "id": "frostholm_market",
+  "name": "Market Hall Clerk",
+  "title": "Market Hall",
+  "appearance": {
+   "body": "a",
+   "hairStyle": "spiky",
+   "hairColor": "#5a3a8a",
+   "eyeColor": "#3a8a5a",
+   "skinTone": "#f6dcc8"
+  },
+  "outfit": {
+   "primary": "#5b3d8f",
+   "secondary": "#e8dcc0",
+   "accent": "#e8dcc0",
+   "style": "coat"
+  },
+  "greeting": [
+   "The Market Hall lists goods from other adventurers. Only real players buy here, so price your goods well."
+  ],
+  "services": [
+   {
+    "type": "market"
+   }
+  ],
+  "generated": true
+ }
 ]

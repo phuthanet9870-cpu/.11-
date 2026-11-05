@@ -1,9 +1,12 @@
+import { runeStoneMods } from './runestones';
 // Character progression & derived-stat formulas. Every coefficient lives in
 // src/config/balance.json so balance can be tuned without touching code.
 import type { GameData } from './data';
 import type {
-  BaseStats, CharacterState, DerivedStats, Element, EquipSlot, ItemDef, StatModifiers, StatKey,
+  Autocast, BaseStats, CharacterState, DerivedStats, EquipSlot, ItemDef, StatModifiers, StatKey,
 } from './types';
+import { runeModList } from './runes';
+import { HIGH_ARMOR_DEF, HIGH_WEAPON_ATK } from './refine';
 import { STAT_KEYS } from './types';
 
 export function expToNextBase(data: GameData, level: number): number {
@@ -18,13 +21,16 @@ export function expToNextJob(data: GameData, jobLevel: number): number {
 
 /** Stat points granted when reaching `level`. */
 export function statPointsForLevel(data: GameData, level: number): number {
-  const s = data.balance.levels.statPointsPerLevel;
+  const s = data.balance.levels.statPointsPerLevel as { ro?: boolean; base: number; perFiveLevels: number };
+  // Ragnarok Classic: floor((L-1)/5)+3 (3 points at Lv 2–5, 4 at 6–10, … 22 at 96–99).
+  if (s.ro) return Math.floor((level - 1) / 5) + 3;
   return s.base + Math.floor(level / 5) * s.perFiveLevels;
 }
 
 /** Total stat points a character of this level should own (allocated + free). */
-export function totalStatPointsAtLevel(data: GameData, level: number): number {
-  let total = data.balance.levels.startingStatPoints;
+export function totalStatPointsAtLevel(data: GameData, level: number, reborn = false): number {
+  // Reborn characters start their second life with 100 points instead of 48 (as in Ragnarok).
+  let total = reborn ? 100 : data.balance.levels.startingStatPoints;
   for (let l = 2; l <= level; l++) total += statPointsForLevel(data, l);
   return total;
 }
@@ -68,10 +74,10 @@ export function mergeMods(target: StatModifiers, src: StatModifiers | undefined,
   if (!src) return target;
   for (const [k, v] of Object.entries(src)) {
     if (v == null) continue;
-    if (k === 'elementDamagePct' || k === 'elementResistPct') {
-      const t = (target[k] ??= {}) as Partial<Record<Element, number>>;
+    if (k === 'elementDamagePct' || k === 'elementResistPct' || k === 'raceDamagePct' || k === 'sizeDamagePct' || k === 'raceResistPct' || k === 'onHitStatusPct') {
+      const t = (target[k] ??= {}) as Record<string, number>;
       for (const [el, n] of Object.entries(v as Record<string, number>)) {
-        t[el as Element] = (t[el as Element] ?? 0) + n * scale;
+        t[el] = (t[el] ?? 0) + n * scale;
       }
     } else {
       const key = k as keyof StatModifiers;
@@ -81,11 +87,23 @@ export function mergeMods(target: StatModifiers, src: StatModifiers | undefined,
   return target;
 }
 
+/** Random option (affix) → stat modifiers. Keys are plain StatModifiers keys, or race/element bonuses as "raceDamagePct.undead". */
+export function optionMods(o: { key: string; value: number }): StatModifiers {
+  const [k, sub] = o.key.split('.');
+  return (sub ? { [k]: { [sub]: o.value } } : { [k]: o.value }) as StatModifiers;
+}
+
 /** Bonus applied per refine level (Phase 2 refinement plugs in here). */
 export function refineMods(item: ItemDef, refine: number): StatModifiers {
   if (!refine) return {};
-  if (item.slot === 'weapon') return { patk: refine * 3, matk: item.attackKind === 'magic' ? refine * 3 : 0 };
-  return { pdef: refine };
+  if (item.slot === 'weapon') {
+    const wl = Math.min(4, Math.max(1, item.weaponLevel ?? 1));
+    // +1…+10: classic ATK per level; +11…+20: renewal totals.
+    const atk = refine <= 10 ? refine * [2, 3, 5, 7][wl - 1] : HIGH_WEAPON_ATK[wl - 1][Math.min(20, refine) - 11];
+    return { patk: atk, matk: item.attackKind === 'magic' ? atk : 0 };
+  }
+  // Armor: 0.7 DEF per refine level, rounded (classic rule); +11…+20 from the renewal table.
+  return { pdef: refine <= 10 ? Math.floor((refine * 70 + 50) / 100) : HIGH_ARMOR_DEF[Math.min(20, refine) - 11] };
 }
 
 export function equipmentMods(data: GameData, c: CharacterState): StatModifiers {
@@ -95,9 +113,39 @@ export function equipmentMods(data: GameData, c: CharacterState): StatModifiers 
     const def = data.items.get(inst.itemId);
     if (!def) continue;
     mergeMods(mods, def.mods);
+    if (def.runeStone) { mergeMods(mods, runeStoneMods(def.runeStone.kind, def.runeStone.level, inst.refine ?? 0)); continue; }
     mergeMods(mods, refineMods(def, inst.refine ?? 0));
+    for (const cardId of inst.cards ?? []) mergeMods(mods, data.items.get(cardId)?.card?.mods);
+    if (inst.starCrumbs) mergeMods(mods, { patk: [0, 5, 10, 40][inst.starCrumbs] });
+    for (const o of inst.options ?? []) mergeMods(mods, optionMods(o));
   }
+  for (const id of activeCombos(data, c)) mergeMods(mods, data.combos.get(id)!.mods);
   return mods;
+}
+
+/** Item ids and compounded card ids on the character's equipment. */
+function equippedParts(c: CharacterState): Set<string> {
+  const out = new Set<string>();
+  for (const inst of Object.values(c.equipment)) if (inst) { out.add(inst.itemId); for (const cd of inst.cards ?? []) out.add(cd); }
+  return out;
+}
+
+/** Combos whose parts are all equipped / compounded. */
+export function activeCombos(data: GameData, c: CharacterState): string[] {
+  const have = equippedParts(c);
+  return [...data.combos.values()].filter((cb) => cb.parts.every((p) => have.has(p))).map((cb) => cb.id);
+}
+
+/** Autocasts from equipped items and their cards. */
+export function equipmentAutocasts(data: GameData, c: CharacterState): Autocast[] {
+  const out: Autocast[] = [];
+  for (const inst of Object.values(c.equipment)) {
+    if (!inst) continue;
+    const def = data.items.get(inst.itemId);
+    if (def?.autocast) out.push(def.autocast);
+    for (const cd of inst.cards ?? []) { const a = data.items.get(cd)?.card?.autocast; if (a) out.push(a); }
+  }
+  return out;
 }
 
 export function passiveSkillMods(data: GameData, c: CharacterState): StatModifiers {
@@ -118,16 +166,26 @@ export function weaponOf(data: GameData, c: CharacterState): ItemDef | undefined
  * Derived stats = base stats + equipment + passives + runtime modifiers
  * (buffs, status effects; later cards and runes).
  */
+const BONUS_KEY: Record<string, StatKey> = { s: 'str', a: 'agi', v: 'vit', i: 'int', d: 'dex', l: 'luk' };
+/** Stats a job grants at a job level (Ragnarok job bonus): one point per pattern letter reached. */
+export function jobBonus(cls: { jobBonus?: string }, jobLevel: number): BaseStats {
+  const out = { str: 0, agi: 0, vit: 0, int: 0, dex: 0, luk: 0 } as BaseStats;
+  for (const ch of (cls.jobBonus ?? '').slice(0, Math.max(0, jobLevel - 1))) if (BONUS_KEY[ch]) out[BONUS_KEY[ch]]++;
+  return out;
+}
+
 export function computeDerivedStats(data: GameData, c: CharacterState, runtimeMods: StatModifiers[] = []): DerivedStats {
   const B = data.balance.stats;
   const cls = data.classes.get(c.classId)!;
   const mods: StatModifiers = {};
   mergeMods(mods, equipmentMods(data, c));
   mergeMods(mods, passiveSkillMods(data, c));
+  for (const r of runeModList(data, c)) mergeMods(mods, r.mods, r.rank);
   for (const m of runtimeMods) mergeMods(mods, m);
 
+  const jobBonusStats = jobBonus(cls, c.jobLevel);
   const total = {} as BaseStats;
-  for (const k of STAT_KEYS) total[k] = Math.max(k === 'luk' ? 0 : 1, c.stats[k] + (mods[k] ?? 0));
+  for (const k of STAT_KEYS) total[k] = Math.max(k === 'luk' ? 0 : 1, c.stats[k] + jobBonusStats[k] + (mods[k] ?? 0));
   const { str, agi, vit, int, dex, luk } = total;
   const L = c.baseLevel;
 
@@ -135,22 +193,31 @@ export function computeDerivedStats(data: GameData, c: CharacterState, runtimeMo
   const attackKind = weapon?.attackKind ?? 'melee';
   const pct = (n: number | undefined) => 1 + (n ?? 0) / 100;
 
+  const trans = cls.hpMpMul ?? 1;
   const maxHp = Math.max(1, Math.floor(
-    (Math.floor((B.hpBase + L * cls.hpPerLevel) * (1 + (vit * B.hpVitPct) / 100)) + (mods.maxHp ?? 0)) * pct(mods.maxHpPct)));
+    (Math.floor((B.hpBase + L * cls.hpPerLevel) * trans * (1 + (vit * B.hpVitPct) / 100)) + (mods.maxHp ?? 0)) * pct(mods.maxHpPct)));
   const maxMp = Math.max(1, Math.floor(
-    (Math.floor((B.mpBase + L * cls.mpPerLevel) * (1 + (int * B.mpIntPct) / 100)) + (mods.maxMp ?? 0)) * pct(mods.maxMpPct)));
+    (Math.floor((B.mpBase + L * cls.mpPerLevel) * trans * (1 + (int * B.mpIntPct) / 100)) + (mods.maxMp ?? 0)) * pct(mods.maxMpPct)));
 
   const unarmed = weapon ? 0 : data.balance.combat.unarmedAtk;
-  const patk = Math.max(1, Math.floor(
-    (str * B.patkStr + Math.floor(dex / B.patkDexDiv) + Math.floor(luk / B.patkLukDiv) + Math.floor(L / B.patkLevelDiv) +
-      unarmed + (mods.patk ?? 0)) * pct(mods.patkPct)));
-  const matk = Math.max(1, Math.floor(
-    (Math.floor(int * B.matkInt) + Math.floor(dex / B.matkDexDiv) + Math.floor(L / B.matkLevelDiv) + (mods.matk ?? 0)) * pct(mods.matkPct)));
+  const ro = (B as { formula?: string }).formula === 'ro';
+  // Ragnarok Classic status ATK: the main stat plus a bonus every 10 points (squared); bows and other
+  // ranged weapons use DEX as the main stat and STR as the minor one.
+  const ranged = attackKind === 'ranged';
+  const main = ranged ? dex : str, minor = ranged ? str : dex;
+  const statusAtk = ro ? main + Math.floor(main / 10) ** 2 + Math.floor(minor / 5) + Math.floor(luk / 5)
+    : str * B.patkStr + Math.floor(dex / B.patkDexDiv) + Math.floor(luk / B.patkLukDiv) + Math.floor(L / B.patkLevelDiv);
+  const patk = Math.max(1, Math.floor((statusAtk + unarmed + (mods.patk ?? 0)) * pct(mods.patkPct)));
+  // Ragnarok Classic MATK: a range from INT+(INT/7)^2 to INT+(INT/5)^2; the stat sheet shows both,
+  // spells use the middle.
+  const matkMin = ro ? int + Math.floor(int / 7) ** 2 : 0, matkMax = ro ? int + Math.floor(int / 5) ** 2 : 0;
+  const statusMatk = ro ? Math.floor((matkMin + matkMax) / 2) : Math.floor(int * B.matkInt) + Math.floor(dex / B.matkDexDiv) + Math.floor(L / B.matkLevelDiv);
+  const matk = Math.max(1, Math.floor((statusMatk + (mods.matk ?? 0)) * pct(mods.matkPct)));
   const pdef = Math.max(0, Math.floor((vit * B.pdefVit + (mods.pdef ?? 0)) * pct(mods.pdefPct)));
   const mdef = Math.max(0, Math.floor(int * B.mdefInt + vit * B.mdefVit + (mods.mdef ?? 0)));
   const hit = Math.floor(L + B.hitBase + dex * B.hitDex + (mods.hit ?? 0));
   const flee = Math.floor(L + agi * B.fleeAgi + luk * B.fleeLuk + (mods.flee ?? 0));
-  const crit = Math.max(0, B.critBase + luk * B.critLuk + (mods.crit ?? 0));
+  const crit = Math.max(0, B.critBase + Math.floor(luk * B.critLuk) + (mods.crit ?? 0));
   const critDmg = B.critDmgBase + (mods.critDmg ?? 0);
 
   const weaponIntervalPct = (weapon?.attackIntervalPct ?? 100) / 100;
@@ -166,13 +233,25 @@ export function computeDerivedStats(data: GameData, c: CharacterState, runtimeMo
   const attackRange = baseRange + (attackKind !== 'melee' ? mods.attackRange ?? 0 : 0);
 
   return {
-    maxHp, maxMp, patk, matk, pdef, mdef, hit, flee, crit, critDmg,
-    attackIntervalMs, moveSpeed, castTimeMul, cdrPct, hpRegen, mpRegen,
+    maxHp, maxMp, patk, matk, matkMin: Math.floor((matkMin + (mods.matk ?? 0)) * pct(mods.matkPct)), matkMax: Math.floor((matkMax + (mods.matk ?? 0)) * pct(mods.matkPct)), pdef, mdef, hit, flee, crit, critDmg,
+    attackIntervalMs, aspd: Math.max(0, Math.round((200 - attackIntervalMs / 20) * 10) / 10), moveSpeed, castTimeMul, cdrPct, hpRegen, mpRegen,
     attackRange, attackKind,
-    weaponElement: weapon?.element ?? 'neutral',
-    weightLimit: B.weightBase + str * B.weightStr + (mods.weightLimit ?? 0),
+    weaponElement: c.equipment.weapon?.element ?? weapon?.element ?? 'neutral',
+    weightLimit: B.weightBase + str * B.weightStr + (cls.weightBonus ?? 0) + (mods.weightLimit ?? 0),
+    doubleAttackPct: weapon?.weaponType === 'dagger' ? Math.min(50, mods.doubleAttackPct ?? 0) : 0,
+    jobBonusStats,
+    autocasts: equipmentAutocasts(data, c),
+    activeCombos: activeCombos(data, c),
     elementDamagePct: mods.elementDamagePct ?? {},
     elementResistPct: mods.elementResistPct ?? {},
+    raceDamagePct: mods.raceDamagePct ?? {},
+    sizeDamagePct: mods.sizeDamagePct ?? {},
+    raceResistPct: mods.raceResistPct ?? {},
+    perfectDodge: B.perfectDodgeBase + Math.floor(luk / B.perfectDodgeLukDiv) + (mods.perfectDodge ?? 0),
+    onHitStatusPct: mods.onHitStatusPct ?? {},
+    hpDrainPct: Math.min(20, mods.hpDrainPct ?? 0),
+    mpDrainPct: Math.min(20, mods.mpDrainPct ?? 0), skillHpDrainPct: Math.min(12, mods.skillHpDrainPct ?? 0), skillMpDrainPct: Math.min(15, mods.skillMpDrainPct ?? 0),
+    weaponType: weapon?.weaponType ?? 'unarmed',
     totalStats: total,
   };
 }
@@ -188,12 +267,20 @@ export function specialMods(runtimeMods: StatModifiers[]): { counterChance: numb
   return { counterChance, damageToMpPct: Math.min(90, damageToMpPct), stealth };
 }
 
+/** Status points needed to raise a stat that is currently `value` by one (Ragnarok rule by default). */
+export function statRaiseCost(data: GameData, value: number): number {
+  const sc = data.balance.levels.statCost;
+  if (!sc || sc.mode === 'flat') return 1;
+  return Math.floor((value - 1) / sc.every) + sc.base;
+}
+
 export function canRaiseStat(data: GameData, c: CharacterState, stat: StatKey): boolean {
-  return c.statPoints > 0 && c.stats[stat] < data.balance.levels.maxStat;
+  return c.statPoints >= statRaiseCost(data, c.stats[stat]) && c.stats[stat] < data.balance.levels.maxStat;
 }
 
 export function slotForItem(def: ItemDef, c: CharacterState): EquipSlot | null {
   if (!def.slot) return null;
   if (def.slot === 'accessory') return c.equipment.accessory1 ? (c.equipment.accessory2 ? 'accessory1' : 'accessory2') : 'accessory1';
+  if (def.slot === 'rune') return c.equipment.rune1 ? (c.equipment.rune2 ? 'rune1' : 'rune2') : 'rune1';
   return def.slot;
 }

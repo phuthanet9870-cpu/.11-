@@ -1,88 +1,1109 @@
 {
-  "id": "willowbrook",
-  "name": "Willowbrook Village",
-  "region": "Willowbrook Region",
-  "type": "town",
-  "width": 50,
-  "height": 38,
-  "tileset": "willowbrook",
-  "base": "grass",
-  "border": { "kind": "thicket", "thickness": 2 },
-  "bgm": "town_willowbrook",
-  "ambient": "village",
-  "weather": ["sunny"],
-  "isSavePoint": true,
-  "worldMapPos": { "x": 0.18, "y": 0.62 },
-  "paint": [
-    { "op": "path", "tile": "dirt", "points": [[6, 18], [49, 18]], "width": 2 },
-    { "op": "path", "tile": "dirt", "points": [[24, 3], [24, 35]], "width": 2 },
-    { "op": "path", "tile": "dirt", "points": [[11, 12], [11, 18]], "width": 1 },
-    { "op": "path", "tile": "dirt", "points": [[37, 12], [37, 18]], "width": 1 },
-    { "op": "path", "tile": "dirt", "points": [[19, 9], [19, 12], [24, 12]], "width": 1 },
-    { "op": "path", "tile": "dirt", "points": [[10, 30], [10, 32], [24, 32]], "width": 1 },
-    { "op": "path", "tile": "dirt", "points": [[38, 31], [38, 32], [26, 32]], "width": 1 },
-    { "op": "path", "tile": "dirt", "points": [[19, 34], [24, 34]], "width": 1 },
-    { "op": "path", "tile": "dirt", "points": [[8, 34], [8, 32], [10, 32]], "width": 1 },
-    { "op": "rect", "tile": "path_stone", "x": 19, "y": 14, "w": 12, "h": 10 },
-    { "op": "building", "x": 7, "y": 6, "w": 8, "h": 6, "style": "inn", "door": 4, "sign": "Sleeping Willow Inn" },
-    { "op": "building", "x": 34, "y": 6, "w": 8, "h": 6, "style": "smithy", "door": 3, "sign": "Ironhand Smithy" },
-    { "op": "building", "x": 7, "y": 25, "w": 7, "h": 5, "style": "shop", "door": 3, "sign": "Pip's Tools" },
-    { "op": "building", "x": 33, "y": 25, "w": 10, "h": 6, "style": "guild", "door": 5, "sign": "Adventurer's Guild" },
-    { "op": "building", "x": 16, "y": 4, "w": 6, "h": 5, "style": "house", "door": 3 },
-    { "op": "building", "x": 16, "y": 29, "w": 6, "h": 5, "style": "house", "door": 3 },
-    { "op": "building", "x": 28, "y": 3, "w": 5, "h": 4, "style": "house", "door": 2 },
-    { "op": "object", "kind": "fountain", "x": 23, "y": 17 },
-    { "op": "object", "kind": "well", "x": 4, "y": 32, "id": "old_well" },
-    { "op": "object", "kind": "anvil", "x": 35, "y": 12 },
-    { "op": "object", "kind": "barrel", "x": 33, "y": 12 },
-    { "op": "object", "kind": "crate", "x": 42, "y": 10 },
-    { "op": "object", "kind": "crate", "x": 43, "y": 10 },
-    { "op": "object", "kind": "barrel", "x": 14, "y": 27 },
-    { "op": "object", "kind": "crate", "x": 6, "y": 27 },
-    { "op": "object", "kind": "lamp_post", "x": 19, "y": 14 },
-    { "op": "object", "kind": "lamp_post", "x": 30, "y": 14 },
-    { "op": "object", "kind": "lamp_post", "x": 19, "y": 23 },
-    { "op": "object", "kind": "lamp_post", "x": 30, "y": 23 },
-    { "op": "object", "kind": "planter", "x": 20, "y": 14 },
-    { "op": "object", "kind": "planter", "x": 29, "y": 14 },
-    { "op": "object", "kind": "signpost", "x": 45, "y": 20, "id": "sign_east" },
-    { "op": "object", "kind": "haystack", "x": 3, "y": 16 },
-    { "op": "object", "kind": "haystack", "x": 4, "y": 15 },
-    { "op": "fence", "x": 2, "y": 13, "length": 4, "dir": "h" },
-    { "op": "fence", "x": 44, "y": 26, "length": 5, "dir": "v" },
-    { "op": "rect", "tile": "soil", "x": 45, "y": 26, "w": 3, "h": 5 },
-    { "op": "rect", "tile": "crops", "x": 45, "y": 26, "w": 3, "h": 5, "layer": "deco" },
-    { "op": "scatter", "kind": "tree_oak", "density": 0.05, "seed": 11 },
-    { "op": "scatter", "kind": "bush", "density": 0.012, "seed": 12 },
-    { "op": "scatter", "kind": "deco:flowers", "density": 0.07, "seed": 13 },
-    { "op": "scatter", "kind": "deco:tuft", "density": 0.08, "seed": 14 }
-  ],
-  "portals": [
-    { "id": "to_meadow", "x": 48, "y": 17, "w": 2, "h": 4, "targetMap": "sunny_meadow", "targetSpawn": "from_village", "label": "Sunny Meadow" }
-  ],
-  "spawnPoints": {
-    "default": { "x": 24, "y": 21 },
-    "from_meadow": { "x": 45, "y": 18 },
-    "inn": { "x": 12, "y": 13 }
+ "id": "willowbrook",
+ "name": "Willowbrook Village",
+ "region": "Willowbrook Region",
+ "type": "town",
+ "width": 100,
+ "height": 76,
+ "tileset": "willowbrook",
+ "base": "grass",
+ "border": {
+  "kind": "thicket",
+  "thickness": 2
+ },
+ "bgm": "town_willowbrook",
+ "ambient": "village",
+ "weather": [
+  "sunny"
+ ],
+ "isSavePoint": true,
+ "worldMapPos": {
+  "x": 0.19,
+  "y": 0.6
+ },
+ "paint": [
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 33,
+   "y": 2,
+   "w": 6,
+   "h": 2
   },
-  "npcs": [
-    { "npcId": "lyra", "x": 21, "y": 17, "facing": "right" },
-    { "npcId": "seraphine", "x": 40, "y": 32, "facing": "down" },
-    { "npcId": "garrick", "x": 39, "y": 13, "facing": "down" },
-    { "npcId": "marla", "x": 13, "y": 13, "facing": "down" },
-    { "npcId": "pip", "x": 12, "y": 31, "facing": "down" },
-    { "npcId": "bram", "x": 28, "y": 21, "facing": "left" },
-    { "npcId": "theo", "x": 7, "y": 33, "facing": "left" },
-    { "npcId": "rowan", "x": 46, "y": 16, "facing": "left" }
-  ],
-  "monsterSpawns": [],
-  "objects": [
-    { "id": "old_well", "kind": "well", "x": 4, "y": 32, "name": "Old Well",
-      "interact": { "text": "You lower the bucket into the old well and draw up clear, cold water.", "questFlag": "old_well", "giveItem": { "itemId": "well_water", "qty": 1 } } },
-    { "id": "sign_east", "kind": "signpost", "x": 45, "y": 20, "name": "Signpost",
-      "interact": { "text": "EAST → Sunny Meadow. Beware of slimes (and wasps)." } }
-  ],
-  "areas": [
-    { "id": "plaza", "name": "Fountain Plaza", "rect": { "x": 19, "y": 14, "w": 12, "h": 10 } }
-  ]
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 32,
+   "y": 4,
+   "w": 5,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 32,
+   "y": 6,
+   "w": 6,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 31,
+   "y": 8,
+   "w": 5,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 32,
+   "y": 10,
+   "w": 5,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 32,
+   "y": 12,
+   "w": 4,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 31,
+   "y": 14,
+   "w": 5,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 31,
+   "y": 16,
+   "w": 5,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 31,
+   "y": 18,
+   "w": 6,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 31,
+   "y": 20,
+   "w": 5,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 30,
+   "y": 22,
+   "w": 5,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 31,
+   "y": 24,
+   "w": 4,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 31,
+   "y": 26,
+   "w": 4,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 31,
+   "y": 28,
+   "w": 6,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 32,
+   "y": 30,
+   "w": 6,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 33,
+   "y": 32,
+   "w": 6,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 34,
+   "y": 34,
+   "w": 4,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 35,
+   "y": 36,
+   "w": 5,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 36,
+   "y": 38,
+   "w": 4,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 36,
+   "y": 40,
+   "w": 6,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 35,
+   "y": 42,
+   "w": 6,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 34,
+   "y": 44,
+   "w": 6,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 35,
+   "y": 46,
+   "w": 6,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 34,
+   "y": 48,
+   "w": 4,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 35,
+   "y": 50,
+   "w": 6,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 35,
+   "y": 52,
+   "w": 4,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 34,
+   "y": 54,
+   "w": 6,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 34,
+   "y": 56,
+   "w": 4,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 34,
+   "y": 58,
+   "w": 4,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 33,
+   "y": 60,
+   "w": 4,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 33,
+   "y": 62,
+   "w": 4,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 33,
+   "y": 64,
+   "w": 5,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 34,
+   "y": 66,
+   "w": 4,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 33,
+   "y": 68,
+   "w": 6,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 33,
+   "y": 70,
+   "w": 4,
+   "h": 2
+  },
+  {
+   "op": "rect",
+   "tile": "water",
+   "x": 34,
+   "y": 72,
+   "w": 6,
+   "h": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     5,
+     35
+    ],
+    [
+     93,
+     35
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     5,
+     14
+    ],
+    [
+     55,
+     14
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     5,
+     47
+    ],
+    [
+     55,
+     47
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     55,
+     14
+    ],
+    [
+     55,
+     47
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     43,
+     6
+    ],
+    [
+     43,
+     68
+    ]
+   ],
+   "width": 2
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     95,
+     37
+    ],
+    [
+     95,
+     37
+    ],
+    [
+     95,
+     37
+    ]
+   ],
+   "width": 3
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     73,
+     34
+    ],
+    [
+     73,
+     35
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     50,
+     30
+    ],
+    [
+     50,
+     31
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     62,
+     30
+    ],
+    [
+     62,
+     31
+    ],
+    [
+     61,
+     31
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     50,
+     46
+    ],
+    [
+     50,
+     47
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     50,
+     13
+    ],
+    [
+     50,
+     14
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     62,
+     21
+    ],
+    [
+     61,
+     21
+    ],
+    [
+     60,
+     21
+    ],
+    [
+     59,
+     21
+    ],
+    [
+     58,
+     21
+    ],
+    [
+     57,
+     21
+    ],
+    [
+     56,
+     21
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     20,
+     31
+    ],
+    [
+     20,
+     32
+    ],
+    [
+     20,
+     33
+    ],
+    [
+     20,
+     34
+    ],
+    [
+     20,
+     35
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     8,
+     28
+    ],
+    [
+     8,
+     29
+    ],
+    [
+     8,
+     30
+    ],
+    [
+     8,
+     31
+    ],
+    [
+     8,
+     32
+    ],
+    [
+     8,
+     33
+    ],
+    [
+     8,
+     34
+    ],
+    [
+     8,
+     35
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     70,
+     48
+    ],
+    [
+     70,
+     47
+    ],
+    [
+     70,
+     46
+    ],
+    [
+     70,
+     45
+    ],
+    [
+     70,
+     44
+    ],
+    [
+     70,
+     43
+    ],
+    [
+     70,
+     42
+    ],
+    [
+     70,
+     41
+    ],
+    [
+     70,
+     40
+    ],
+    [
+     70,
+     39
+    ],
+    [
+     70,
+     38
+    ],
+    [
+     70,
+     37
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     20,
+     46
+    ],
+    [
+     20,
+     47
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     23,
+     13
+    ],
+    [
+     23,
+     14
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "path",
+   "tile": "dirt",
+   "points": [
+    [
+     89,
+     34
+    ],
+    [
+     89,
+     35
+    ]
+   ],
+   "width": 1
+  },
+  {
+   "op": "rect",
+   "tile": "dirt",
+   "x": 49,
+   "y": 31,
+   "w": 13,
+   "h": 9
+  },
+  {
+   "op": "building",
+   "style": "inn",
+   "x": 69,
+   "y": 28,
+   "w": 8,
+   "h": 6,
+   "door": 4,
+   "sign": "Sleeping Willow Inn"
+  },
+  {
+   "op": "building",
+   "style": "guild",
+   "x": 46,
+   "y": 24,
+   "w": 8,
+   "h": 6,
+   "door": 4,
+   "sign": "Adventurer's Guild"
+  },
+  {
+   "op": "building",
+   "style": "smithy",
+   "x": 58,
+   "y": 24,
+   "w": 8,
+   "h": 6,
+   "door": 4,
+   "sign": "Ironhand Smithy"
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 46,
+   "y": 41,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "Pip's Tools"
+  },
+  {
+   "op": "building",
+   "style": "shop",
+   "x": 46,
+   "y": 8,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "Moss's Market"
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 58,
+   "y": 16,
+   "w": 8,
+   "h": 5,
+   "door": 4,
+   "sign": "Courier"
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 16,
+   "y": 26,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 4,
+   "y": 23,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 66,
+   "y": 43,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 16,
+   "y": 41,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 19,
+   "y": 8,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "building",
+   "style": "house",
+   "x": 85,
+   "y": 29,
+   "w": 8,
+   "h": 5,
+   "door": 4
+  },
+  {
+   "op": "object",
+   "kind": "fountain",
+   "x": 54,
+   "y": 33,
+   "id": "willowbrook_fountain"
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 49,
+   "y": 31
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 61,
+   "y": 31
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 49,
+   "y": 39
+  },
+  {
+   "op": "object",
+   "kind": "lamp_post",
+   "x": 61,
+   "y": 39
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 49,
+   "y": 40
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 60,
+   "y": 40
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 59,
+   "y": 30
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 57,
+   "y": 28
+  },
+  {
+   "op": "object",
+   "kind": "anvil",
+   "x": 58,
+   "y": 30
+  },
+  {
+   "op": "object",
+   "kind": "crate",
+   "x": 53,
+   "y": 13
+  },
+  {
+   "op": "object",
+   "kind": "barrel",
+   "x": 52,
+   "y": 13
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 12,
+   "y": 16
+  },
+  {
+   "op": "object",
+   "kind": "planter",
+   "x": 19,
+   "y": 16
+  },
+  {
+   "op": "object",
+   "kind": "bush",
+   "x": 12,
+   "y": 21
+  },
+  {
+   "op": "object",
+   "kind": "bush",
+   "x": 19,
+   "y": 21
+  },
+  {
+   "op": "object",
+   "kind": "well",
+   "x": 13,
+   "y": 16,
+   "id": "old_well"
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 96,
+   "y": 36,
+   "id": "sign_east"
+  },
+  {
+   "op": "object",
+   "kind": "signpost",
+   "x": 96,
+   "y": 35
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "area": {
+    "x": 12,
+    "y": 16,
+    "w": 8,
+    "h": 6
+   },
+   "density": 0.35,
+   "seed": 2144401385
+  },
+  {
+   "op": "scatter",
+   "kind": "tree_oak",
+   "density": 0.011,
+   "seed": 2144401389
+  },
+  {
+   "op": "scatter",
+   "kind": "bush",
+   "density": 0.0036666666666666666,
+   "seed": 2144401390
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:flowers",
+   "density": 0.03,
+   "seed": 2144401381
+  },
+  {
+   "op": "scatter",
+   "kind": "deco:tuft",
+   "density": 0.03,
+   "seed": 2144401383
+  }
+ ],
+ "portals": [
+  {
+   "id": "to_meadow",
+   "x": 98,
+   "y": 36,
+   "w": 2,
+   "h": 4,
+   "targetMap": "sunny_meadow",
+   "targetSpawn": "from_village",
+   "label": "Sunny Meadow"
+  }
+ ],
+ "spawnPoints": {
+  "default": {
+   "x": 55,
+   "y": 36
+  },
+  "from_meadow": {
+   "x": 95,
+   "y": 38
+  },
+  "inn": {
+   "x": 73,
+   "y": 35
+  }
+ },
+ "npcs": [
+  {
+   "npcId": "lyra",
+   "x": 52,
+   "y": 35,
+   "facing": "down"
+  },
+  {
+   "npcId": "seraphine",
+   "x": 51,
+   "y": 32,
+   "facing": "down"
+  },
+  {
+   "npcId": "garrick",
+   "x": 61,
+   "y": 32,
+   "facing": "down"
+  },
+  {
+   "npcId": "marla",
+   "x": 72,
+   "y": 36,
+   "facing": "down"
+  },
+  {
+   "npcId": "pip",
+   "x": 51,
+   "y": 48,
+   "facing": "down"
+  },
+  {
+   "npcId": "bram",
+   "x": 61,
+   "y": 22,
+   "facing": "down"
+  },
+  {
+   "npcId": "theo",
+   "x": 10,
+   "y": 16,
+   "facing": "down"
+  },
+  {
+   "npcId": "rowan",
+   "x": 82,
+   "y": 36,
+   "facing": "down"
+  },
+  {
+   "npcId": "willowbrook_courier",
+   "x": 59,
+   "y": 22,
+   "facing": "down"
+  },
+  {
+   "npcId": "willowbrook_jobmaster",
+   "x": 49,
+   "y": 32,
+   "facing": "down"
+  },
+  {
+   "npcId": "mvp_guide",
+   "x": 53,
+   "y": 33,
+   "facing": "down"
+  },
+  {
+   "npcId": "willowbrook_trader",
+   "x": 51,
+   "y": 15,
+   "facing": "down"
+  },
+  {
+   "npcId": "willowbrook_market",
+   "x": 49,
+   "y": 15,
+   "facing": "down"
+  }
+ ],
+ "monsterSpawns": [],
+ "objects": [
+  {
+   "id": "old_well",
+   "kind": "well",
+   "x": 13,
+   "y": 16,
+   "name": "Old Well",
+   "interact": {
+    "text": "You lower the bucket into the old well and draw up clear, cold water.",
+    "questFlag": "old_well",
+    "giveItem": {
+     "itemId": "well_water",
+     "qty": 1
+    }
+   }
+  },
+  {
+   "id": "sign_east",
+   "kind": "signpost",
+   "x": 96,
+   "y": 36,
+   "name": "Signpost",
+   "interact": {
+    "text": "EAST → Sunny Meadow. Beware of slimes (and wasps)."
+   }
+  }
+ ],
+ "areas": [
+  {
+   "id": "plaza",
+   "name": "Fountain Plaza",
+   "rect": {
+    "x": 49,
+    "y": 31,
+    "w": 13,
+    "h": 9
+   }
+  }
+ ]
 }
