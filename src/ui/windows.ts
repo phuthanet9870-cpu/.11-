@@ -16,8 +16,9 @@ import { RUNE_BY_ID, runeText } from '../core/runestones';
 import { itemIconUrl, monsterIconUrl, skillIconUrl } from '../game/art/icons';
 import { generateCharacterSheet, npcLook, portraitFromSheet, useShadowStyle } from '../game/art/characterSprite';
 import { lookForCharacter, SpritePreview } from './screens';
+import { attackStyle } from '../game/art/shadowSprite';
 import { getDragData, setDragData } from './hud';
-import { canRebirth, classLineage, skillCheck } from '../core/character';
+import { canChangeJob, canRebirth, classLineage, skillCheck } from '../core/character';
 import { buyPrice, canEquip, countItem, filterInventory, inventoryWeight, sellPrice } from '../core/inventory';
 import { refineFee, refineOre, simulateRefine, type RefineKind } from '../core/refine';
 import { forgeChanceRaw } from '../core/forge';
@@ -1800,24 +1801,109 @@ export class WindowManager {
           this.confirmAction(ins.name, `${ins.description} Requires Base Level ${ins.minLevel}. Leaving, dying or running out of time ends the run, and the cooldown starts when you enter.${clears ? ` You have cleared it ${clears}×.` : ''}`, 'Enter', () => w.enterInstance(ins.id));
         }]);
       }
-      if (s.type === 'jobChange') for (const id of s.classIds) {
-        const cls = w.data.classes.get(id)!;
-        const req = cls.requirements ?? {};
-        // NPCs offering many jobs (the Oracle) only list the ones open to your current class and path.
-        if (s.classIds.length > 1 && (req.fromClass !== w.char.classId || (req.rebornFrom && req.rebornFrom !== w.char.flags.rebornFrom))) continue;
-        opts.push([`Become a ${cls.name}${req.jobLevel ? ` (needs Job Lv ${req.jobLevel})` : ''}`, () => {
-          this.closeDialog();
-          this.confirmAction(`Become a ${cls.name}`, `${cls.description} Your job level resets to 1; base level, stats and learned skills are kept.`, 'Change job', () => {
-            const r = w.changeJobAt(id);
-            if (r.ok) this.app.hud?.banner(`You are now a ${cls.name}!`, 'New skills are available in the Skill Tree (K).');
-          });
-        }]);
+      if (s.type === 'jobChange') {
+        // One option opens the job preview: every job open from your current class, this NPC's first.
+        const offered = s.classIds.filter((id) => {
+          const req = w.data.classes.get(id)?.requirements ?? {};
+          return !(s.classIds.length > 1 && (req.fromClass !== w.char.classId || (req.rebornFrom && req.rebornFrom !== w.char.flags.rebornFrom)));
+        });
+        if (offered.length) {
+          const names = offered.map((id) => w.data.classes.get(id)!.name).join(' / ');
+          opts.push([`Job change: ${names}`, () => { this.closeDialog(); this.jobPreview(offered); }]);
+        }
       }
       if (s.type === 'resetSkills') opts.push([`Reset skill points${s.cost ? ` (${s.cost} Luma)` : ' (free)'}`, () => { this.closeDialog(); this.confirmAction('Reset skills', 'Forget every learned skill and refund the skill points? Hotbar skill slots are cleared.', 'Reset skills', () => w.doResetSkills(s.cost)); }]);
     }
     opts.push(['Goodbye', () => this.closeDialog()]);
     const text = npc.greeting[Math.floor(Math.random() * npc.greeting.length)];
     this.showDialog(npc, [text], opts);
+  }
+
+  // ---------------------------------------------------------------- job preview (class change)
+  /**
+   * Job preview: jobs on the left (icon + name), the job's character in the middle (animated, attacking
+   * now and then), and on the right its introduction: a stat radar from its job bonuses, the description,
+   * key skills with icons, and the Change Job button. `offered` are the jobs this NPC can give; other jobs
+   * open from your class are listed too, to compare, with a note on who teaches them.
+   */
+  jobPreview(offered: string[], selected = offered[0]) {
+    const w = this.app.world!, d = w.data, c = w.char;
+    const fromHere = [...d.classes.values()].filter((x) => x.requirements?.fromClass === c.classId && (!x.requirements.rebornFrom || x.requirements.rebornFrom === c.flags.rebornFrom)).map((x) => x.id);
+    const list = [...new Set([...offered, ...fromHere])];
+    const cls = d.classes.get(selected)!;
+    const weapon = (cls.weaponTypes ?? []).find((x) => x !== 'dagger' && x !== 'club') ?? cls.weaponTypes?.[0] ?? null;
+    // Left: job list.
+    const jobs = h('div', { class: 'jp-jobs' }, list.map((id) => {
+      const x = d.classes.get(id)!, here = offered.includes(id);
+      return h('button', { class: `jp-job${id === selected ? ' on' : ''}${here ? '' : ' far'}`, dataset: { job: id }, onclick: () => this.jobPreview(offered, id) },
+        h('img', { src: this.classIconUrl(id), alt: '' }), h('span', {}, x.name));
+    }));
+    // Middle: the character, idle in a guard, attacking every few seconds; the arrows turn it.
+    const prev = new SpritePreview(192, 256, 'jp-sprite');
+    prev.setLook({ appearance: c.appearance, outfit: cls.outfit, weapon, sheet: `class/${cls.id}`, shadow: useShadowStyle() });
+    prev.dir = 'down';
+    const dirs = ['down', 'left', 'up', 'right'] as const;
+    const turn = (k: number) => { prev.dir = dirs[(dirs.indexOf(prev.dir as typeof dirs[number]) + k + 4) % 4]; };
+    const stage = h('div', { class: 'jp-stage' },
+      h('div', { class: 'jp-aura' }), prev.canvas,
+      h('button', { class: 'jp-turn l', onclick: () => turn(1) }, '⟲'), h('button', { class: 'jp-turn r', onclick: () => turn(-1) }, '⟳'),
+      h('div', { class: 'jp-plate' }, h('div', { class: 'jp-job-name' }, `Job: ${cls.name}`), h('div', { class: 'jp-role' }, `${cls.role} · Tier ${cls.tier} · ${(cls.weaponTypes ?? []).join(', ')}`)));
+    let tick = 0;
+    const timer = window.setInterval(() => {
+      if (!prev.canvas.isConnected) { window.clearInterval(timer); return; }
+      tick++;
+      prev.anim = tick % 4 === 3 ? 'attack' : tick % 8 === 5 ? 'cast' : 'idle';
+    }, 900);
+    // Right: introduction — radar, text, key skills, buttons.
+    const counts: Record<string, number> = { str: 0, agi: 0, vit: 0, int: 0, dex: 0, luk: 0 };
+    const letter: Record<string, string> = { s: 'str', a: 'agi', v: 'vit', i: 'int', d: 'dex', l: 'luk' };
+    for (const ch of cls.jobBonus ?? '') if (letter[ch]) counts[letter[ch]]++;
+    const max = Math.max(1, ...Object.values(counts));
+    const axes = ['str', 'agi', 'vit', 'int', 'dex', 'luk'] as const;
+    const R = 46, C = 62, pt = (i: number, r: number) => [C + r * Math.sin((i / 6) * Math.PI * 2), C - r * Math.cos((i / 6) * Math.PI * 2)];
+    const poly = (f: (i: number) => number) => axes.map((_, i) => pt(i, f(i)).map((v) => v.toFixed(1)).join(',')).join(' ');
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('viewBox', '0 0 124 124'); svg.setAttribute('class', 'jp-radar');
+    const add = (tag: string, attrs: Record<string, string>, text?: string) => { const e = document.createElementNS(svgNS, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); if (text) e.textContent = text; svg.appendChild(e); };
+    for (const f of [1, 0.66, 0.33]) add('polygon', { points: poly(() => R * f), class: 'grid' });
+    axes.forEach((_, i) => { const [x, y] = pt(i, R); add('line', { x1: String(C), y1: String(C), x2: x.toFixed(1), y2: y.toFixed(1), class: 'grid' }); });
+    add('polygon', { points: poly((i) => R * (0.18 + 0.82 * counts[axes[i]] / max)), class: 'val' });
+    axes.forEach((a, i) => { const [x, y] = pt(i, R + 10); add('text', { x: x.toFixed(1), y: (y + 3).toFixed(1), class: 'lbl' }, a.toUpperCase()); });
+    const skills = (cls.skills ?? []).map((id) => d.skills.get(id)).filter((x): x is NonNullable<typeof x> => !!x);
+    const key = [...skills.filter((x) => x.kind !== 'passive'), ...skills.filter((x) => x.kind === 'passive')].slice(0, 4);
+    const chk = canChangeJob(d, c, cls.id), here = offered.includes(cls.id);
+    const go = h('button', { class: 'btn primary jp-go', id: 'jp-change', disabled: !here || !chk.ok, onclick: () => {
+      // Cancel goes back to the preview.
+      this.modal(`Become a ${cls.name}`, [h('p', {}, `${cls.description} Your job level resets to 1; base level, stats and learned skills are kept.`)], [
+        ['Change job', () => {
+          this.closeModal();
+          const r = w.changeJobAt(cls.id);
+          if (r.ok) this.app.hud?.banner(`You are now a ${cls.name}!`, 'New skills are available in the Skill Tree (K).');
+          else this.app.hud?.toast(r.error, true);
+        }],
+        ['Cancel', () => this.jobPreview(offered, cls.id)],
+      ], true);
+    } }, 'Change Job');
+    const note = !here ? `Taught by the ${cls.name} Master — find them in town.` : !chk.ok ? chk.error : `Job Lv ${c.jobLevel} ${d.classes.get(c.classId)?.name} → ${cls.name}`;
+    const info = h('div', { class: 'jp-info' },
+      h('div', { class: 'jp-h' }, 'Job Introduction'),
+      h('div', { class: 'jp-intro' }, svg, h('div', { class: 'jp-desc' }, cls.description, h('div', { class: 'jp-stats' }, `HP +${cls.hpPerLevel}/lv · MP +${cls.mpPerLevel}/lv · ${attackStyle(weapon)} · weight +${cls.weightBonus ?? 0}`))),
+      h('div', { class: 'jp-h' }, 'Key Skills'),
+      h('div', { class: 'jp-skills' }, key.map((sk) => {
+        const el = h('div', { class: 'jp-skill' }, h('img', { src: skillIconUrl(sk), alt: '' }), h('div', {}, h('b', {}, sk.name), h('small', {}, sk.kind === 'passive' ? 'Passive' : `Max Lv ${sk.maxLevel}`)));
+        el.addEventListener('mousemove', (e) => this.showTooltip(e, [h('div', { class: 'tn' }, sk.name), h('div', {}, sk.description)]));
+        el.addEventListener('mouseleave', () => this.hideTooltip());
+        return el;
+      })),
+      h('div', { class: `jp-note${chk.ok && here ? '' : ' bad'}` }, note),
+      h('div', { class: 'jp-btns' }, h('button', { class: 'btn', onclick: () => this.closeModal() }, 'Close'), go));
+    this.closeModal();
+    this.modalEl = h('div', { class: 'modal-back jp-back', dataset: { dismissable: '1' } },
+      h('div', { class: 'panel job-preview', id: 'job-preview' },
+        h('div', { class: 'jp-title' }, '⚜ Job Preview', h('span', { class: 'x', onclick: () => this.closeModal() }, '✕')),
+        h('div', { class: 'jp-body' }, jobs, stage, info)));
+    this.root.appendChild(this.modalEl);
   }
 
   /** Refine flow: pick an item, see the chance and cost, then try. */

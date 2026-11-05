@@ -260,6 +260,8 @@ The map art is painted in 16×16-tile chunks around the camera and freed when yo
 
 Every town, Willowbrook included, has a **Job Master** next to the plaza. It handles every class change in one place, with the normal requirements: first job (Novice, Job Lv 10), second job (Job Lv 40), rebirth (second job, Base 99 / Job 50), the High first jobs and the transcendent jobs. The dialog lists only the jobs open to your current class and path. The class guild masters and the Oracle of Rebirth still work as before.
 
+
+**Job preview window.** Talking to a Job Master (or the Oracle) and choosing *Job change* opens a full preview: on the left every job open from your current class (icon and name; the master's own jobs first, the others dimmed for comparison); in the middle the job's character, big and animated in its guard stance, attacking and casting every few seconds, with arrows to turn it and a name plate (role, tier, weapons); on the right the job introduction — a STR/AGI/VIT/INT/DEX/LUK radar from the job's bonus stats, the description, HP/MP per level, attack style and weight bonus — four key skills with icons (hover for their text), whether you can take it now (or who teaches it), and **Change Job** (asks once more; Cancel returns to the preview). It fits phone screens and has Thai text.
 ## Language (English / ไทย)
 
 Pick **English** or **ภาษาไทย** at the top right of the title screen, or under **Settings → Language** in game. The choice is saved with your settings and applies at once, without reloading.

@@ -277,8 +277,10 @@ try {
     w.interactNpc('guild_knight');
   });
   await page.waitForSelector('#npc-dialog', { timeout: 20000 });
-  await page.click('#npc-dialog .dopt >> text=Become a Knight');
-  await page.click('button:has-text("Change job")');
+  await page.click('#npc-dialog .dopt >> text=Job change: Knight');
+  await page.waitForSelector('#job-preview .jp-job.on[data-job="knight"]');
+  await page.click('#jp-change');
+  await page.click('.modal button:has-text("Change job")');
   await sleep(400);
   const cls = await page.evaluate(() => window.__veyloria.world.char.classId);
   check('job change to Knight at the guild master in Aurelion', cls === 'knight', cls);
