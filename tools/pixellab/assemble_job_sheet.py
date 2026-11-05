@@ -32,16 +32,41 @@ rot = Image.open(os.path.join(src, 'rotations', 'south.png')).convert('RGBA')
 bb = rot.getbbox(); sh = bb[3] - bb[1]
 scale = 1.0
 cx_src = (bb[0] + bb[2]) / 2; feet_src = bb[3]
+# Clips with no PixelLab animation are posed from the still sprite: (dx forward, dy, tilt degrees forward).
+FWD = {'south': (0, 1), 'west': (-1, 0), 'east': (1, 0), 'north': (0, -1)}
+POSES = {
+    'idle': [(0, 0, 0), (0, 1, 0)],
+    'attack': [(-2, 0, -6), (5, 0, 10), (2, 0, 4)],
+    'cast': [(0, 0, 0), (0, -2, -3), (0, -1, 0)],
+    'hit': [(-3, 0, -8)],
+    'death': [(-1, 1, -30), (-2, 2, -60), (-3, 3, -88)],
+}
+def place(fr):
+    img = fr.resize((round(fr.width * scale), round(fr.height * scale)), Image.NEAREST) if scale != 1 else fr
+    # Frames on a bigger canvas are centred on the same point as the rotation canvas.
+    pad_x = (fr.width - rot.width) / 2; pad_y = (fr.height - rot.height) / 2
+    ox = round(W / 2 - (cx_src + pad_x) * scale); oy = round(FEET - (feet_src + pad_y) * scale)
+    cell = Image.new('RGBA', (W, H)); cell.paste(img, (ox, oy), img)
+    return cell
+def posed(d, fwd, dy, tilt):
+    cell = place(Image.open(os.path.join(src, 'rotations', f'{d}.png')).convert('RGBA'))
+    fx, fy = FWD[d]
+    side = d in ('west', 'east')
+    if tilt and side:  # lean toward the facing side (or fall back), about the feet
+        cell = cell.rotate(-tilt * fx, resample=Image.NEAREST, center=(W / 2, FEET))
+    elif tilt and abs(tilt) > 20:  # front/back views fall over sideways
+        cell = cell.rotate(tilt, resample=Image.NEAREST, center=(W / 2, FEET))
+    out = Image.new('RGBA', (W, H)); out.paste(cell, (round(fx * fwd), round(fy * fwd * 0.6 + dy)), cell)
+    return out
 sheet = Image.new('RGBA', (W * 16, H * 4))
 for row, (_, d) in enumerate(DIRS):
     for clip, start, k in CLIPS:
-        for i, fr in enumerate(pick(frames(clip, d), k)):
-            img = fr.resize((round(fr.width * scale), round(fr.height * scale)), Image.NEAREST) if scale != 1 else fr
-            # Frames on a bigger canvas are centred on the same point as the rotation canvas.
-            pad_x = (fr.width - rot.width) / 2; pad_y = (fr.height - rot.height) / 2
-            ox = round(W / 2 - (cx_src + pad_x) * scale); oy = round(FEET - (feet_src + pad_y) * scale)
-            cell = Image.new('RGBA', (W, H))
-            cell.paste(img, (ox, oy), img)
+        anim = raw(clip, d) or (raw(clip, 'west') if d == 'east' else None)
+        if anim is None and clip in POSES:
+            cells = [posed(d, *p) for p in POSES[clip]]
+        else:
+            cells = [place(fr) for fr in pick(frames(clip, d), k)]
+        for i, cell in enumerate(cells[:k]):
             sheet.alpha_composite(cell, ((start + i) * W, row * H))
 sheet.save(out)
 print('scale', scale, 'sprite h', sh, '->', out)

@@ -1,0 +1,19 @@
+# Walk animation ids per job (PixelLab): <job> walk <dir>=<animation uuid> ... (8 frames each)
+novice walk south=dfc26ba6-b6c8-4cb7-8204-53ea3165c5b0 west=bfd1567a-8d5e-4ebd-9a4f-6326a43af7f6 north=2bb377d7-773a-4e33-a300-cca39e5d9cc9
+knight walk south=de6a2f92-d5ae-4140-942f-ed405bf44541 west=5edc35cd-5d87-4457-9eaf-2d5ee9d155e2 north=c75dca54-4d25-4d1c-a9de-4a9b96b6622b
+ranger walk south=d91671ec-1897-46bd-b947-58c7139cadca west=1401d9ae-871f-4b5d-8647-0d9d13e9744c north=5e7f9dca-7695-4152-ac94-9f9eee1e9752
+mage walk south=8f2d5281-9e15-40eb-89c4-cf72b4a37cb9 west=c19dc58d-5b68-48f4-ab0b-b77dd6c35c8c north=57b09594-ad8e-40ec-86a8-6d7caa79f33a
+cleric walk south=c77c8d73-b593-4649-a701-ea9335d18341 west=9c18bcda-c743-450f-b31a-32ce7e7539d5 north=3fb9aa5e-96d8-43f0-afe6-a4bc8efed7ec
+rogue walk south=4a5a683e-8372-47ef-be7e-9e17c9dbd2d0 west=b8eac20f-bcf1-4ad7-9a60-d2c85c4782b7 north=74c4f7d5-6f5e-45ce-b5d3-b76c71a8eb50
+dragoon walk south=d82d7e00-2211-4716-872b-1083ec098bf9 west=12490cd4-fad0-4c37-85d8-fd3c3ff0c83b north=cdaf2506-3ec7-4053-b857-dba117ad47f5
+minstrel walk south=2580d7a8-46a7-4b67-a3a1-8fbf6c8988a2 west=3c877a97-2223-4a63-af34-33f247490d8b north=a3bec60e-590a-40d6-a3db-fe862e2037be
+beastmaster walk south=75e96c06-a185-45ad-a0c2-01c15e5a65cd west=9ffe2cfc-2bd9-4ded-9178-c3153f65b87a north=52f5dd23-7d2a-4b45-b525-78c79d4279bb
+sorcerer walk south=ee1c1ed9-9903-40c1-af5d-d2035f8fd6b9 west=b9f7c605-532b-48bc-8740-09476710ec87 north=e46d99aa-dac9-4244-8610-55cd429f0c56
+sage walk south=5582dc94-93a1-4be3-af7a-9bd05a6a852d west=fce27f71-968b-40b4-9a62-6b0fbc4481e8 north=799027a2-ec17-4236-99db-0f6fa48c06ad
+bishop walk south=03da7d5e-4db5-41c2-b555-8bbc527d21eb west=a360f277-d654-435e-8999-9b056bd0426a north=04a49405-fa57-4660-a9f2-9cccc4b4bef9
+ascetic walk south=6b3704c9-0bce-4336-b204-997fbd99facf west=fcdd54f1-2f4d-46dc-a6b4-a59cc0a949b1 north=afe0313c-d8f0-4a02-a967-b899d7508b9d
+shadowblade walk south=8a8662e5-8451-4837-a07d-94d58bb4a136 west=333e77e1-5dd1-4afa-83e5-cae0c9d22c32 north=7e5a36f3-dd40-40f8-a8a7-97c657b9fb56
+outlaw walk south=3426dd4d-8477-49bf-a0db-8838a9528b4b west=7d49b199-1e63-4d55-a761-1ad0813c5f7b north=8983823a-5c2b-4a8f-b1c3-ccfdbc879953
+artisan walk south=a013d606-b5fa-44de-ad26-f1986bdd2274 west=24ed1bc8-3b6c-41b6-82b5-65bd3fcfef36 north=625c7b58-8a12-4fff-bb7c-39690df2bc81
+alchemist walk south=203f0e34-b76c-4acb-b34d-a9ca7c3ab036 west=f79d8d6e-40bb-48c2-b4df-22753ba5ce06 north=51feb1d7-b51f-4efb-98f1-b87c61a5795a
+merchant walk south=ee41a81d-86ae-4d6e-b3cc-f5ad8ecfc41d west=598c3654-0f8e-4860-a6aa-1f66f52d7521 north=1307621d-34ec-4ea8-a59b-ae30821b2b36
